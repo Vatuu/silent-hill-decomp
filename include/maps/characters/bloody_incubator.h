@@ -1,6 +1,46 @@
 #ifndef _MAPS_CHARACTERS_BLOODYINCUBATOR_H
 #define _MAPS_CHARACTERS_BLOODYINCUBATOR_H
 
+/** @brief Bloody Incubator character animation indices. */
+typedef enum _BloodyIncubatorAnim
+{
+    BloodyIncubatorAnim_Still = 0,
+    BloodyIncubatorAnim_1     = 1,
+    BloodyIncubatorAnim_2     = 2,
+    BloodyIncubatorAnim_3     = 3,
+    BloodyIncubatorAnim_4     = 4,
+    BloodyIncubatorAnim_5     = 5,
+    BloodyIncubatorAnim_6     = 6,
+    BloodyIncubatorAnim_7     = 7,
+    BloodyIncubatorAnim_8     = 8,
+    BloodyIncubatorAnim_9     = 9,
+    BloodyIncubatorAnim_10    = 10,
+    BloodyIncubatorAnim_11    = 11
+} e_BloodyIncubatorAnim;
+
+/** @brief Bloody Incubator character control states. */
+typedef enum _BloodyIncubatorControl
+{
+    BloodyIncubatorControl_None = 0,
+    BloodyIncubatorControl_1    = 1,
+    BloodyIncubatorControl_2    = 2,
+    BloodyIncubatorControl_3    = 3,
+    BloodyIncubatorControl_4    = 4,
+    BloodyIncubatorControl_5    = 5,
+    BloodyIncubatorControl_6    = 6,
+    BloodyIncubatorControl_7    = 7,
+    BloodyIncubatorControl_8    = 8,
+    BloodyIncubatorControl_9    = 9,
+    BloodyIncubatorControl_10   = 10,
+    BloodyIncubatorControl_11   = 11
+} e_BloodyIncubatorControl;
+
+/** @brief Bloody Incubator character model bone indices. */
+typedef enum _BloodyIncubatorBone
+{
+    BloodyIncubatorBone_Root = 0
+} e_BloodyIncubatorBone;
+
 /*s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(0,  false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_PlaybackLoop, ANIM_STATUS(0,  true),  false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },

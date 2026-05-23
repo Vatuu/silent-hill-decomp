@@ -3,6 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/text/text_draw.h"
+#include "bodyprog/screen/screen_draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
@@ -229,7 +230,7 @@ s32 Demo_StateGet(s32 gameState)
         case GameState_MapEvent:
         case GameState_ExitMovie:
         case GameState_InventoryScreen:
-        case GameState_MapScreen:
+        case GameState_PaperMapScreen:
             return DemoState_Step;
 
         case GameState_OptionScreen:

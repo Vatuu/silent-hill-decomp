@@ -47,70 +47,70 @@ void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) /
     bloodyIncubator->position.vy  = Q12(0.0f);
     bloodyIncubator->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(bloodyIncubator->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(bloodyIncubator->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(bloodyIncubator->position.vz);
+    boneCoords[BloodyIncubatorBone_Root].coord.t[0] = Q12_TO_Q8(bloodyIncubator->position.vx);
+    boneCoords[BloodyIncubatorBone_Root].coord.t[1] = Q12_TO_Q8(bloodyIncubator->position.vy);
+    boneCoords[BloodyIncubatorBone_Root].coord.t[2] = Q12_TO_Q8(bloodyIncubator->position.vz);
 }
 
 void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* boneCoords) // 0x800D38D8
 {
     switch (bloodyIncubatorProps.controlState)
     {
-        case 0:
+        case BloodyIncubatorControl_None:
             break;
 
-        case 1:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 9, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_1:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_9, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 2:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 1, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_2:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_1, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 3:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 2, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_3:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_2, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 4:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 3, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_4:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_3, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 5:
-            Model_AnimStatusSet(&bloodyIncubator->model, 10, false);
+        case BloodyIncubatorControl_5:
+            Model_AnimStatusSet(&bloodyIncubator->model, BloodyIncubatorAnim_10, false);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 6:
-            Model_AnimStatusSet(&bloodyIncubator->model, 4, false);
+        case BloodyIncubatorControl_6:
+            Model_AnimStatusSet(&bloodyIncubator->model, BloodyIncubatorAnim_4, false);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 7:
-            Model_AnimStatusSet(&bloodyIncubator->model, 5, false);
+        case BloodyIncubatorControl_7:
+            Model_AnimStatusSet(&bloodyIncubator->model, BloodyIncubatorAnim_5, false);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 8:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 6, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_8:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_6, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 9:
-            Model_AnimStatusSet(&bloodyIncubator->model, 7, false);
+        case BloodyIncubatorControl_9:
+            Model_AnimStatusSet(&bloodyIncubator->model, BloodyIncubatorAnim_7, false);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 10:
-            Model_AnimStatusSet(&bloodyIncubator->model, 8, false);
+        case BloodyIncubatorControl_10:
+            Model_AnimStatusSet(&bloodyIncubator->model, BloodyIncubatorAnim_8, false);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 
-        case 11:
-            Model_AnimStatusKeyframeSet(bloodyIncubator->model, 11, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+        case BloodyIncubatorControl_11:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model, BloodyIncubatorAnim_11, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(bloodyIncubator);
             break;
 

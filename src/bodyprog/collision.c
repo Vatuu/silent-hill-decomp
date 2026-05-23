@@ -1466,17 +1466,17 @@ void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY) // 0x800
 
 void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
 {
-    s32 temp_a3;
+    s32 negRadius;
     s32 var_a2;
     s32 var_a1;
     u32 var_v1;
     s32 temp;
 
     var_a1  = 0;
-    temp_a3 = -collState->charaMoveInfo.radius;
+    negRadius = -collState->charaMoveInfo.radius;
     var_a2  = 0;
 
-    if (collState->field_CC.field_20.field_0.vz >= temp_a3)
+    if (collState->field_CC.field_20.field_0.vz >= negRadius)
     {
         if (collState->field_CC.field_20.field_0.vx >= 0)
         {
@@ -1499,7 +1499,8 @@ void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
     {
         if (collState->field_CC.field_20.field_14.vz == 0)
         {
-            if ((collState->field_CC.field_20.field_0.vx > 0) && (collState->field_CC.field_20.field_0.vx < collState->field_CC.field_6.vz))
+            if (collState->field_CC.field_20.field_0.vx > 0 &&
+                collState->field_CC.field_20.field_0.vx < collState->field_CC.field_6.vz)
             {
                 var_a1 = 0;
                 var_a2 = collState->field_CC.field_20.field_0.vx;
@@ -1507,7 +1508,8 @@ void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
         }
         else
         {
-            var_a1 = FP_TO(temp_a3 - collState->field_CC.field_20.field_0.vz, Q12_SHIFT) / collState->field_CC.field_20.field_14.vz;
+            var_a1 = FP_TO(negRadius - collState->field_CC.field_20.field_0.vz, Q12_SHIFT) /
+                     collState->field_CC.field_20.field_14.vz;
             temp   = collState->field_CC.field_20.field_14.vx * var_a1;
             temp   = FP_FROM(temp, Q12_SHIFT);
             var_a2 = temp + collState->field_CC.field_20.field_0.vx;
@@ -1637,7 +1639,7 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B
 
 q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
 {
-    DVECTOR sp10;
+    DVECTOR sp10; // Q19.12
     s16     temp_v0;
     s16     dist;
     q3_12   alpha;
@@ -1721,7 +1723,7 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     s32    temp2;
 
     distMax = collState->charaMoveInfo.radius + collState->field_CC.field_C.field_0;
-    bound   = distMax + 8;
+    bound   = distMax + Q12(0.002f);
     temp_v1 = collState->field_CC.field_6.vx - bound;
 
     if (collState->charaPos.offset.vx < temp_v1 &&
@@ -1945,7 +1947,7 @@ q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState) // 0x8006CB90
     }
 
     return Q12_DIV(collState->charaMoveInfo.moveDistance, Math_Vector2MagCalc(collState->charaMoveInfo.moveDistance,
-                                                                      groundHeight - collState->charaMoveInfo.bottomPos));
+                                                                              groundHeight - collState->charaMoveInfo.bottomPos));
 }
 
 q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState) // 0x8006CC44
@@ -2241,7 +2243,8 @@ void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1) // 0x8006D2B4
             else
             {
                 arg1->field_0.field_0 += arg1->field_8.field_0;
-                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy,
+                                   arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
             }
         }
     }
@@ -2324,9 +2327,9 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax,
     normAngleMin = Q12_FRACT(angleMin);
     normAngleMax = Q12_FRACT(angleMax);
 
-    if (arg4 > 0x100)
+    if (arg4 > Q12(0.0625f))
     {
-        arg4 = 0x100;
+        arg4 = Q12(0.0625f);
     }
 
     x      = Q12_MULT(arg4, Math_Cos(normAngle));

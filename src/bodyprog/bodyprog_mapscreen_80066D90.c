@@ -16,11 +16,7 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-// ========================================
-// MAP
-// ========================================
-
-void GameState_MapScreen_Update(void) // 0x80066EB0
+void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 {
     s32           temp_s0_2;
     s32           temp_s4;

@@ -215,6 +215,15 @@
 #define Math_Vector3MagCalcSafeToQ8(x, y, z) \
     Q8_TO_Q12(SquareRoot0(Math_SqrMagCalcToQ8(x) + Math_SqrMagCalcToQ8(y) + Math_SqrMagCalcToQ8(z)))
 
+/** @brief Sets a `DVECTOR` using a fast bitwise method.
+ *
+ * @param vec Vector to set.
+ * @param x X component.
+ * @param y Y component.
+ */
+#define Math_DVectorSetFast(vec, x, y) \
+    *((s32*)&(vec)->vx) = ((x) & 0xFFFF) + ((y) << 16)
+
 /** @brief Sets an `SVECTOR` using a fast bitwise method.
  *
  * @param vec Vector to set.

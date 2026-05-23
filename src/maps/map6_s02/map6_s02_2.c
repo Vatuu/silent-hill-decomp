@@ -1745,7 +1745,7 @@ void func_800D2364(void) // 0x800D2364
 
 void func_800D32D0(void) // 0x800D32D0
 {
-    g_Screen_FadeStatus = 5;
+    g_Screen_FadeStatus = ScreenFadeState_FadeOutComplete;
 
     switch (g_SysWork.sysStateSteps[0])
     {

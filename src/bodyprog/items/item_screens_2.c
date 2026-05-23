@@ -272,7 +272,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             if (ScreenFade_IsFinished())
             {
                 func_8004C040();
-                Game_StateSetNext(GameState_MapScreen);
+                Game_StateSetNext(GameState_PaperMapScreen);
                 return;
             }
             break;

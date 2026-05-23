@@ -738,7 +738,7 @@ s16 D_800AE73E = 0x0000;
 s16 D_800AE73E = 0x8002;
 #endif
 
-// Used by `func_80068CC0` and `GameState_MapScreen_Update`.
+// Used by `func_80068CC0` and `GameState_PaperMapScreen_Update`.
 // I think this is save file flags related to
 // placing the markings on the map.
 u8 D_800AE740[][2] = {
@@ -768,7 +768,7 @@ u8 D_800AE740[][2] = {
     { 0x00, 0x16 }
 };
 
-bool D_800AE770 = false; // Used by `GameState_MapScreen_Update`.
+bool D_800AE770 = false; // Used by `GameState_PaperMapScreen_Update`.
 
 // `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`. TODO: Use `DVECTOR` for these?
 s8 D_800AE774[8][7][2] = {

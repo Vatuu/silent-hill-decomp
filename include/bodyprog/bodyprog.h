@@ -335,7 +335,7 @@ typedef struct
     s16  field_2;  /** Prim vertex Y. */
     s16  field_4;  /** Width? */
     s8   field_6;  /** Height? */
-    s8   field_7;  /** Blend flag. */
+    s8   field_7;  /** `bool` | Blend flag. */
     s32  field_8;  /** Rgb24 color + code. */
     s16* field_C;  /** Points to 0x801E5C24, data size 400. */
     s32* field_10; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
@@ -1038,21 +1038,6 @@ extern u16 D_800BCCB0;
 extern u32 D_800A999C;
 
 extern u16 D_800BCCB2;
-
-/** @brief Packed screen fade effect data. Uses `e_ScreenFadeState`.
- *
- * Data is packed as follows:
- * State as `e_ScreenFadeState`: bits 0-2.
- * Is white:                     bit 3.
- *
- * TODO: Reference enum entries for details below.
- * 0-1   - Nothing.
- * 2-5   - Fades to black and keeps the screen black.
- * 6-7   - Fades from black.
- * 10-15 - Fades to white and keeps the screen white.
- * 16    - Fades to black.
- */
-extern s32 g_Screen_FadeStatus;
 
 extern s32 D_800BCD5C;
 
@@ -2664,7 +2649,7 @@ void GameState_InGame_Update(void);
 void GameState_MapEvent_Update(void);
 void GameState_ExitMovie_Update(void);
 void GameState_ItemScreens_Update(void);
-void GameState_MapScreen_Update(void);
+void GameState_PaperMapScreen_Update(void);
 void GameState_LoadSavegameScreen_Update(void);
 void GameState_DebugMoviePlayer_Update(void);
 void GameState_Options_Update(void);

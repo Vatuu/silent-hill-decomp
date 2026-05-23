@@ -266,7 +266,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     }
 
     // Reset base string position?
-    *((u32*)&g_StringPosition) = (posX & 0xFFFF) + (posY << 16);
+    Math_DVectorSetFast(&g_StringPosition, posX, posY);
 
     return result;
 
@@ -687,7 +687,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
         GsOUT_PACKET_P = packet;
     }
 
-    *((s32*)&g_StringPosition) = (glyphPosX & 0xFFFF) + (glyphPosY << 16);
+    Math_DVectorSetFast(&g_StringPosition, glyphPosX, glyphPosY);
     return result;
 
     #undef LINE_SPACE_SIZE
@@ -704,11 +704,11 @@ void func_8004B658(void) // 0x8004B658
 
 void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
 {
-    g_MapMsg_WidthIdx               = 1;
-    D_800C38B0.unused                    = 0;
-    D_800C38B0.positionIdx             = 1;
-    g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
-    g_StringColorId                      = StringColorId_White;
+    g_MapMsg_WidthIdx             = 1;
+    D_800C38B0.unused             = 0;
+    D_800C38B0.positionIdx        = 1;
+    g_StringPositionX1            = SCREEN_POSITION_X(-37.5f);
+    g_StringColorId               = StringColorId_White;
     g_SysWork.enableHighResGlyphs = false;
 }
 

@@ -55,7 +55,7 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_MapEvent_Update,
     GameState_ExitMovie_Update,
     GameState_ItemScreens_Update,
-    GameState_MapScreen_Update,
+    GameState_PaperMapScreen_Update,
     GameState_LoadSavegameScreen_Update,
     GameState_DebugMoviePlayer_Update,
     GameState_Options_Update,

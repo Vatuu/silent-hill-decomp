@@ -1124,7 +1124,7 @@ func_80066E7C                                = 0x80068984; // type:func
 //------------------------------------------------------------------------------
 //--- PA: 0x043E58   VA: 0x800689B8   subsegment: c, bodyprog_mapscreen_80066D90
 //------------------------------------------------------------------------------
-GameState_MapScreen_Update                   = 0x800689B8; // type:func
+GameState_PaperMapScreen_Update              = 0x800689B8; // type:func
 func_80067914                                = 0x8006941C; // type:func
 func_80068CC0                                = 0x8006A7D0; // type:func
 func_80068E0C                                = 0x8006A91C; // type:func

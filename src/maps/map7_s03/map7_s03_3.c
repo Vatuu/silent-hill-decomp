@@ -1049,7 +1049,7 @@ void func_800E3390(void) // 0x800E3390
             break;
 
         case 7:
-            if ((g_Screen_FadeStatus & 7) == 5)
+            if (ScreenFade_IsFinished())
             {
                 D_800F4805++;
             }

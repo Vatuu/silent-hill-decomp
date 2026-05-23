@@ -6,6 +6,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/screen_fade.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "screens/saveload.h"

@@ -531,7 +531,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 
         if (D_800A9A0C != 0)
         {
-            Game_StateSetNext(GameState_MapScreen);
+            Game_StateSetNext(GameState_PaperMapScreen);
         }
     }
 }
@@ -559,7 +559,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
 
     if (Fs_QueueChunksLoad())
     {
-        Game_StateSetNext(GameState_MapScreen);
+        Game_StateSetNext(GameState_PaperMapScreen);
     }
 }
 
