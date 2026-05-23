@@ -403,8 +403,6 @@ extern s32 D_800ED9B8;
 
 extern s_800ED7E0_ptr* D_800ED9BC[];
 
-extern s32 D_800EDA00;
-
 extern s32 D_800EDA04;
 
 extern u8 D_800EDA08;
