@@ -518,12 +518,12 @@ void Gfx_Results_Save(void) // 0x8004D1A0
 
         setPolyFT4(poly);
         poly->tpage = 4;
-        poly->clut  = 0x7f93;
+        poly->clut  = 0x7F93;
         setRGB0(poly, 0x80, 0x80, 0x80);
 
         if (isSecondLoop)
         {
-            setUV4(poly, 0x6c, 0x10, 0x6c, 0x20, 0xf0, 0x10, 0xf0, 0x20);
+            setUV4(poly, 0x6c, 0x10, 0x6C, 0x20, 0xF0, 0x10, 0xF0, 0x20);
             setXY4(poly, -0x3F, 0x10, -0x3F, 0x30, 0x45, 0x10, 0x45, 0x30);
         }
         else
@@ -1849,7 +1849,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
 
     setSprt(sprt);
 
-    setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+    setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
     setXY0Fast(sprt, -120, 116);
 
     if (strIdx)

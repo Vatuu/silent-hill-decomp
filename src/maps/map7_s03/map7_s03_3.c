@@ -1370,10 +1370,10 @@ void func_800E3F30(void) // 0x800E3F30
         for (i = 0; i < 2; i++)
         {
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, COLOR_RGBC(128, 128, 128, 0));
-            setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+            setXY0Fast(scratchData->sprt_0, ((i << 8) - (SCREEN_WIDTH / 2)), -(FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2));
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
-            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;

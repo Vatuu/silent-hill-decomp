@@ -123,7 +123,7 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
         var_a1 = 0;
     }
 
-    setRGBC0(*poly, var_a1, var_a1, var_a1, 0x2E);
+    setRGBC0(*poly, var_a1, var_a1, var_a1, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
 
     temp_v0_2 = sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 6;
     temp_v0_3 = sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 6;

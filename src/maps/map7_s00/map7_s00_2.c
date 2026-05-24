@@ -405,10 +405,10 @@ void func_800D1604(void) // 0x800D1604
             j    = i & 0x1;
             temp = Q12_MULT_PRECISE(temp_v1, temp_v0);
 
-            setRGBC0(ptr->field_14, temp, temp, temp, 0x62);
-            setXY0Fast(ptr->field_14, (j << 8) - 160, -112);
+            setRGBC0(ptr->field_14, temp, temp, temp, PRIM_RECT | RECT_BLEND);
+            setXY0Fast(ptr->field_14, (j << 8) - (SCREEN_WIDTH / 2), -(FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2));
 
-            setWH(ptr->field_14, (j != 0) ? 64 : 256, 224);
+            setWH(ptr->field_14, (j != 0) ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[3], ptr->field_14, 3);
             ptr->field_14++;
@@ -427,10 +427,10 @@ void func_800D1604(void) // 0x800D1604
 
     for (j = 0; j < 2; j++)
     {
-        setRGBC0(ptr->field_0, 0x80, 0x80, 0x80, 0x66);
+        setRGBC0(ptr->field_0, 0x80, 0x80, 0x80, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
         setXY0Fast(ptr->field_0, ((j) << 8) - 160, -112);
         setUV0(ptr->field_0, 0, (ptr->field_18 == 0) << 5);
-        setWH(ptr->field_0, (j != 0) ? 64 : 256, 224);
+        setWH(ptr->field_0, (j != 0) ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], ptr->field_0, 4);
         ptr->field_0++;
 

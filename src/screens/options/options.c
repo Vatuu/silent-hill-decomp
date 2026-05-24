@@ -770,17 +770,17 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
             if (i < (vol / 8))
             {
                 color0 = 0xA0 + (0x40 * j);
-                setRGBC0(poly, color0, color0, color0, 0x28);
+                setRGBC0(poly, color0, color0, color0, PRIM_POLY | RECT_SIZE_1);
             }
             else if (i > (vol / 8))
             {
                 color1 = 0x40 + (0x40 * j);
-                setRGBC0(poly, color1, color1, color1, 0x28);
+                setRGBC0(poly, color1, color1, color1, PRIM_POLY | RECT_SIZE_1);
             }
             else
             {
                 color2 = colorComp + (0x40 * j);
-                setRGBC0(poly, color2, color2, color2, 0x28);
+                setRGBC0(poly, color2, color2, color2, PRIM_POLY | RECT_SIZE_1);
             }
 
             xOffset = 24 + (i * 6);
@@ -1559,12 +1559,12 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
         if (i < 3)
         {
             setXY0(tile, -160, -97 + (96 * i));
-            setWH(tile, 320, 2);
+            setWH(tile, SCREEN_WIDTH, 2);
         }
         else
         {
             setXY0(tile, -577 + (144 * i), -120);
-            setWH(tile, 2, 240);
+            setWH(tile, 2, SCREEN_HEIGHT);
         }
 
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, (TILE*)packet);
@@ -1591,12 +1591,12 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
         if (i < 11)
         {
             setXY0(tile, -160, -81 + (16 * i));
-            setWH(tile, 0x140, 2);
+            setWH(tile, SCREEN_WIDTH, 2);
         }
         else
         {
             setXY0(tile, -305 + (16 * i), -120);
-            setWH(tile, 2, 0xF0);
+            setWH(tile, 2, SCREEN_HEIGHT);
         }
 
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, (TILE*)packet);
@@ -1793,13 +1793,15 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
         case BrightnessMenuState_Leave:
             // Switch to previous menu.
             // TODO: Odd check for `ScreenFade_IsFinished()`.
-            if (g_Screen_FadeStatus & (1 << 2) && !(g_Screen_FadeStatus & (1 << 1)) && g_Screen_FadeStatus & (1 << 0))
+            if ( (g_Screen_FadeStatus & (1 << 2)) &&
+                !(g_Screen_FadeStatus & (1 << 1)) &&
+                 (g_Screen_FadeStatus & (1 << 0)))
             {
                 ScreenFade_Start(true, true, false);
-                g_GameWork.gameStateSteps[0]    = OptionsMenuState_LeaveBrightness;
-                g_SysWork.counters_1C[1]                 = 0;
-                g_GameWork.gameStateSteps[1]    = 0;
-                g_GameWork.gameStateSteps[2]    = 0;
+                g_GameWork.gameStateSteps[0]   = OptionsMenuState_LeaveBrightness;
+                g_SysWork.counters_1C[1]       = 0;
+                g_GameWork.gameStateSteps[1]   = 0;
+                g_GameWork.gameStateSteps[2]   = 0;
                 g_GameWork.background2dColor.r = 0;
                 g_GameWork.background2dColor.g = 0;
                 g_GameWork.background2dColor.b = 0;
@@ -1824,7 +1826,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 
 void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
-    const char* LEVEL_STR = "LEVEL_________"; // 0x801E2C64
+    const char* LEVEL_STR = "LEVEL_________";
 
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringSetPosition(SCREEN_POSITION_X(25.0f), SCREEN_POSITION_Y(79.5f));
@@ -1900,13 +1902,13 @@ void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool 
     // which itself is always passed as `false`. Purpose is guessed based on a similar parameter in `Options_Selection_BulletPointDraw`.
     if (invertGradient)
     {
-        setRGBC0(linePrim, 176, 176, 176, 0x50);
-        setRGBC1(linePrim, 160, 128, 64,  0x50);
+        setRGBC0(linePrim, 176, 176, 176, PRIM_LINE | RECT_SIZE_8);
+        setRGBC1(linePrim, 160, 128, 64,  PRIM_LINE | RECT_SIZE_8);
     }
     else
     {
-        setRGBC0(linePrim, 176, 176, 176, 0x50);
-        setRGBC1(linePrim, 160, 128, 64,  0x50);
+        setRGBC0(linePrim, 176, 176, 176, PRIM_LINE | RECT_SIZE_8);
+        setRGBC1(linePrim, 160, 128, 64,  PRIM_LINE | RECT_SIZE_8);
     }
 
     setXY0Fast(linePrim, localLine->vertex0.vx, localLine->vertex0.vy);
@@ -2006,16 +2008,16 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
     if (isFlashing)
     {
         // Base color is blue. `* 0x700` Shifts green component into place.
-        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + COLOR_RGBC(0, 0, 255, 0x30);
-        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + COLOR_RGBC(0, 0, 255, 0x30);
-        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + COLOR_RGBC(0, 0, 255, 0x30);
+        *((u32*)&arrowPoly->r0) = (colorEnd   * 0x700) + COLOR_RGBC(0, 0, 255, PRIM_POLY | RECT_SIZE_8);
+        *((u32*)&arrowPoly->r1) = (colorStart * 0x700) + COLOR_RGBC(0, 0, 255, PRIM_POLY | RECT_SIZE_8);
+        *((u32*)&arrowPoly->r2) = (colorStart * 0x700) + COLOR_RGBC(0, 0, 255, PRIM_POLY | RECT_SIZE_8);
     }
     // Set solid cyan color.
     else
     {
-        setRGBC0(arrowPoly, 0, 240, 240, 0x30);
-        setRGBC1(arrowPoly, 0, 240, 240, 0x30);
-        setRGBC2(arrowPoly, 0, 240, 240, 0x30);
+        setRGBC0(arrowPoly, 0, 240, 240, PRIM_POLY | RECT_SIZE_8);
+        setRGBC1(arrowPoly, 0, 240, 240, PRIM_POLY | RECT_SIZE_8);
+        setRGBC2(arrowPoly, 0, 240, 240, PRIM_POLY | RECT_SIZE_8);
     }
 
     setXY0Fast(arrowPoly, arrow->vertex0.vx, arrow->vertex0.vy);
@@ -2045,15 +2047,15 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, 255, 255, 255, 0x30);
-                    setRGBC1(poly, 160, 128, 64,  0x30);
-                    setRGBC2(poly, 64,  64,  64,  0x30);
+                    setRGBC0(poly, 255, 255, 255, PRIM_POLY | RECT_SIZE_8);
+                    setRGBC1(poly, 160, 128, 64,  PRIM_POLY | RECT_SIZE_8);
+                    setRGBC2(poly, 64,  64,  64,  PRIM_POLY | RECT_SIZE_8);
                     break;
 
                 case true:
-                    setRGBC0(poly, 128, 128, 128, 0x30);
-                    setRGBC1(poly, 40,  32,  16,  0x30);
-                    setRGBC2(poly, 16,  16,  16,  0x30);
+                    setRGBC0(poly, 128, 128, 128, PRIM_POLY | RECT_SIZE_8);
+                    setRGBC1(poly, 40,  32,  16,  PRIM_POLY | RECT_SIZE_8);
+                    setRGBC2(poly, 16,  16,  16,  PRIM_POLY | RECT_SIZE_8);
                     break;
             }
 
@@ -2077,15 +2079,15 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
             switch (isInactive)
             {
                 case false:
-                    setRGBC0(poly, 160, 128, 64,  0x30);
-                    setRGBC1(poly, 255, 255, 255, 0x30);
-                    setRGBC2(poly, 255, 255, 255, 0x30);
+                    setRGBC0(poly, 160, 128, 64,  PRIM_POLY | RECT_SIZE_8);
+                    setRGBC1(poly, 255, 255, 255, PRIM_POLY | RECT_SIZE_8);
+                    setRGBC2(poly, 255, 255, 255, PRIM_POLY | RECT_SIZE_8);
                     break;
 
                 case true:
-                    setRGBC0(poly, 80,  64,  32,  0x30);
-                    setRGBC1(poly, 160, 160, 160, 0x30);
-                    setRGBC2(poly, 160, 160, 160, 0x30);
+                    setRGBC0(poly, 80,  64,  32,  PRIM_POLY | RECT_SIZE_8);
+                    setRGBC1(poly, 160, 160, 160, PRIM_POLY | RECT_SIZE_8);
+                    setRGBC2(poly, 160, 160, 160, PRIM_POLY | RECT_SIZE_8);
                     break;
             }
 

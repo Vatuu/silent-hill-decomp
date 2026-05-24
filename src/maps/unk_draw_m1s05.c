@@ -121,7 +121,7 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
     var_v1 = ((u32)func_80055D78(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].vy_8, sharedData_800DFB7C_0_s00[idx].field_4.vz_4) * 0x31) >> 5;
     var_v1 = MIN(var_v1, 0xC4);
 
-    setRGBC0(*poly, var_v1, var_v1, var_v1, 0x2E);
+    setRGBC0(*poly, var_v1, var_v1, var_v1, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - 8) >> 3], *poly, 9);
     *poly += 1;
 
@@ -349,7 +349,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
     *(u16*)&(*poly)->u2 = ptr->field_16C + ptr->field_178 + ((ptr->field_180 + ptr->field_18C) << 8);
     *(u16*)&(*poly)->u3 = ptr->field_16C + ptr->field_17C + ((ptr->field_180 + ptr->field_190) << 8);
 
-    setRGBC0(*poly, ptr->field_160, ptr->field_160, ptr->field_160, 0x2E);
+    setRGBC0(*poly, ptr->field_160, ptr->field_160, ptr->field_160, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_14C.vx - 16) >> 3], *poly, 9);
     *poly += 1;
 
@@ -511,7 +511,7 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
     }
     temp_v1_3 = var_a0;
 
-    setRGBC0(*poly, temp_v1_3, temp_v1_3, temp_v1_3, 0x2E);
+    setRGBC0(*poly, temp_v1_3, temp_v1_3, temp_v1_3, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_134 >> 3], *poly, 9);
     *poly += 1;
 

@@ -187,7 +187,7 @@ void func_800D0608(void) // 0x800D0608
                     setRGBC0(scratch->sprt_0, colorVal, colorVal, colorVal, PRIM_RECT | RECT_TEXTURE | RECT_BLEND);
                 }
 
-                setWH(scratch->sprt_0, (i == 0) ? 256 : 64, 224);
+                setWH(scratch->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
                 addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->sprt_0, 4);
 
                 scratch->sprt_0++;

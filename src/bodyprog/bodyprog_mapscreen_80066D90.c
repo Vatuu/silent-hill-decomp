@@ -927,7 +927,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
             *((s16*)&ptr->field_0->u3) = ptr->field_4.field_2 + (ptr->field_4.field_0 + 0x80) + ((ptr->field_4.field_1 + ptr->field_4.field_3) << 8);
 
             // Set polygon color.
-            setRGBC0(ptr->field_0, shade, shade, shade, 0x2E);
+            setRGBC0(ptr->field_0, shade, shade, shade, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[3], ptr->field_0);
             ptr->field_0++;

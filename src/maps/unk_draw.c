@@ -201,7 +201,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         *(u16*)&(*poly)->u2 = 0x7F00;
         *(u16*)&(*poly)->u3 = 0x7F07;
 
-        setRGBC0(*poly, 0x78, 0x80, 0x80, PRIM_POLY | 0xC | RECT_BLEND);
+        setRGBC0(*poly, 0x78, 0x80, 0x80, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     }
 
     sharedData_800DFB7C_0_s00[idx].vy_8 = sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_0.field_C4;
@@ -344,7 +344,7 @@ bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx) // 0x800CCF50
 
         var_s1 = MAX(0x40 - (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 >> 6), 0);
 
-        setRGBC0(*poly, var_s1, var_s1, var_s1, 0x2E);
+        setRGBC0(*poly, var_s1, var_s1, var_s1, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     }
     else
     {
@@ -355,7 +355,7 @@ bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx) // 0x800CCF50
 
         ptr->field_144 = 2;
 
-        setRGBC0(*poly, 0xFF, CLAMP_LOW(0xC0 - (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 >> 6), 0), 0x80, 0x2E);
+        setRGBC0(*poly, 0xFF, CLAMP_LOW(0xC0 - (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 >> 6), 0), 0x80, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     }
 
     sharedData_800DFB7C_0_s00[idx].vy_8 = sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_0.field_C4;

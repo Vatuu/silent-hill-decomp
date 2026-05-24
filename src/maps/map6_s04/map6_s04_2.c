@@ -3112,7 +3112,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
-            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;
@@ -3305,7 +3305,7 @@ void func_800E558C(void) // 0x800E558C
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
-            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;
@@ -3872,9 +3872,9 @@ void func_800E74C4(void) // 0x800E74C4
 
     tile = GsOUT_PACKET_P;
 
-    setRGBC0(tile, 0, 8, 0x30, 0x62);
+    setRGBC0(tile, 0, 8, 48, PRIM_RECT | RECT_BLEND);
     setXY0Fast(tile, 0xFF60, 0xFF90);
-    setWH(tile, 0x140, 0xE0);
+    setWH(tile, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
     addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[2], tile, 3);
     tile++;
 

@@ -1410,7 +1410,7 @@ void func_800DD2D4(void) // 0x800DD2D4
                 setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
                 scratchData->sprt_0->u0 = 0;
                 scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
-                setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
+                setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
                 addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
                 scratchData->sprt_0++;
@@ -1778,7 +1778,7 @@ void func_800DE1FC(void) // 0x800DE1FC
                 scratch->sprt_0->u0 = 0;
                 scratch->sprt_0->v0 = (g_ActiveBufferIdx != 0) << 5;
 
-                setWH(scratch->sprt_0, i != 0 ? 64 : 256, 224);
+                setWH(scratch->sprt_0, i != 0 ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 
                 addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->sprt_0, 4);
 
@@ -1847,12 +1847,12 @@ void func_800DE1FC(void) // 0x800DE1FC
                 }
 
                 setRGBC0(scratch->sprt_0, colorBase, colorBase, colorBase, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
-                setXY0Fast(scratch->sprt_0, ((i & 1) << 8) - 160, -112);
+                setXY0Fast(scratch->sprt_0, ((i & 0x1) << 8) - (SCREEN_WIDTH / 2), -(FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2));
 
                 scratch->sprt_0->u0 = 0;
                 scratch->sprt_0->v0 = vOffset;
 
-                setWH(scratch->sprt_0, (i & 0x1) ? 64 : 256, 224);
+                setWH(scratch->sprt_0, (i & 0x1) ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 
                 if (i < 4)
                 {

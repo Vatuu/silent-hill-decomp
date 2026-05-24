@@ -27,7 +27,7 @@ void sharedFunc_800DB60C_7_s01(void)
                     {
                         if (sharedData_800E1694_7_s01 & (1 << (((i * 9) + (k * 3)) + j)))
                         {
-                            setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+                            setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
 
                             x = sharedData_800E1578_7_s01[i][j][k][0];
                             y = sharedData_800E1578_7_s01[i][j][k][1];

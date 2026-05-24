@@ -162,11 +162,12 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
             {
                 continue;
             }
-            setRGBC0(sprt, arg1 >> 5, arg1 >> 5, arg1 >> 5, 0x66);
+
+            setRGBC0(sprt, arg1 >> 5, arg1 >> 5, arg1 >> 5, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
         }
         else
         {
-            setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+            setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
         }
 
         idx = (i < 4) ? i : arg0;

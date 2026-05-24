@@ -117,9 +117,9 @@ bool func_801E2FC0(void) // 0x801E2FC0
 {
     switch (g_Screen_FadeStatus)
     {
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,   false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,   true):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             if (Fs_QueueGetLength() != 0)
             {
@@ -146,12 +146,16 @@ bool func_801E2FC0(void) // 0x801E2FC0
 
 void GameState_Unk15_Update(void) // 0x801E3094
 {
-    bool (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
+    bool (*funcs[3])() = {
+        func_801E3124,
+        func_801E342C,
+        func_801E3304
+    };
 
     D_800C48F0 += g_VBlanks;
-    if (routines[g_GameWork.gameStateSteps[0]]())
+    if (funcs[g_GameWork.gameStateSteps[0]]())
     {
-        g_SysWork.counters_1C[1]              = 0;
+        g_SysWork.counters_1C[1]     = 0;
         g_GameWork.gameStateSteps[1] = 0;
         g_GameWork.gameStateSteps[2] = 0;
         g_GameWork.gameStateSteps[0]++;
@@ -206,7 +210,7 @@ bool func_801E3124(void) // 0x801E3124
             Screen_Init(512, true);
 
             g_IntervalVBlanks = 1;
-            D_801E5E74        = 0x3C;
+            D_801E5E74        = 60;
             g_GameWork.gameStateSteps[1]++;
             break;
 
@@ -227,7 +231,7 @@ bool func_801E3124(void) // 0x801E3124
     return false;
 }
 
-s32 func_801E3304(void) // 0x801E3304
+bool func_801E3304(void) // 0x801E3304
 {
     if (g_GameWork.gameStatePrev == GameState_InGame)
     {
@@ -253,10 +257,10 @@ s32 func_801E3304(void) // 0x801E3304
             Game_StateSetPrevious();
         }
 
-        return 0;
+        return false;
     }
 
-    return 0;
+    return false;
 }
 
 bool func_801E342C(void) // 0x801E342C
@@ -319,7 +323,7 @@ bool func_801E342C(void) // 0x801E342C
             D_801E5E78--;
             if (D_801E5E78 <= 0)
             {
-                g_Screen_FadeStatus             = g_GameWork.gameStateSteps[1];
+                g_Screen_FadeStatus          = g_GameWork.gameStateSteps[1];
                 g_GameWork.gameStateSteps[1] = 3;
             }
             break;

@@ -1512,9 +1512,9 @@ void func_800D2364(void) // 0x800D2364
     {
         i = j & 1;
 
-        setRGBC0(ptr->field_4, temp, temp, temp, 0x62);
+        setRGBC0(ptr->field_4, temp, temp, temp, PRIM_RECT | RECT_BLEND);
         setXY0Fast(ptr->field_4, (i << 8) - 0xA0, 0xFF90);
-        setWH(ptr->field_4, i ? 0x40 : 0x100, 0xE0);
+        setWH(ptr->field_4, i ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_4, 3);
         ptr->field_4++;
@@ -1537,10 +1537,10 @@ void func_800D2364(void) // 0x800D2364
 
     for (i = 0; i < 2; i++)
     {
-        setRGBC0(ptr->field_0, 0x70, 0x70, 0x70, 0x66);
+        setRGBC0(ptr->field_0, 0x70, 0x70, 0x70, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
         setXY0Fast(ptr->field_0, (i << 8) - 0xA0, 0xFF90);
         setUV0(ptr->field_0, 0, (ptr->field_68 == 0) << 5);
-        setWH(ptr->field_0, i ? 0x40 : 0x100, 0xE0);
+        setWH(ptr->field_0, i ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_0, 4);
         ptr->field_0++;

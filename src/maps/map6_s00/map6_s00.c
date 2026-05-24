@@ -114,7 +114,7 @@ void func_800EB11C(void) // 0x800EB11C
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
             scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
-            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;

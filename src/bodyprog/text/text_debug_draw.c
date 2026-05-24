@@ -71,7 +71,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
             default:
                 glyphSprt = (SPRT_8*)packet;
                 addPrimFast(ot, glyphSprt, 3);
-                setRGBC0(glyphSprt, Q8_COLOR(0.5f), Q8_COLOR(0.5f), Q8_COLOR(0.5f), 0x74);
+                setRGBC0(glyphSprt, Q8_COLOR(0.5f), Q8_COLOR(0.5f), Q8_COLOR(0.5f), PRIM_RECT | RECT_TEXTURE | RECT_SIZE_8);
                 setXY0Fast(glyphSprt, posX, posY);
 
                 charIdx = (char)toupper(charCode) - '*';

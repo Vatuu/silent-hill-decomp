@@ -46,7 +46,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
             sprt = (SPRT*)packet;
 
             addPrimFast(ot, sprt, 4);
-            setRGBC0(sprt, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, 100);
+            setRGBC0(sprt, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, PRIM_RECT | RECT_TEXTURE);
 
             if (y == 0)
             {

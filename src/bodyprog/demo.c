@@ -139,8 +139,8 @@ void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
     g_GameWork.config = DEMO_WORK()->config;
 
     // Restore user system settings over demo values.
-    g_GameWork.config.screenPositionX       = g_Demo_OptionsConfigBackup.screenPositionX;
-    g_GameWork.config.screenPositionY       = g_Demo_OptionsConfigBackup.screenPositionY;
+    g_GameWork.config.screenPositionX  = g_Demo_OptionsConfigBackup.screenPositionX;
+    g_GameWork.config.screenPositionY  = g_Demo_OptionsConfigBackup.screenPositionY;
     g_GameWork.config.soundType        = g_Demo_OptionsConfigBackup.soundType;
     g_GameWork.config.volumeBgm        = OPT_SOUND_VOLUME_MIN; // Disable BGM during demo.
     g_GameWork.config.volumeSe         = g_Demo_OptionsConfigBackup.volumeSe;
@@ -153,7 +153,6 @@ void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
 void Demo_GameGlobalsRestore(void) // 0x8008F2BC
 {
     g_GameWork.config = g_Demo_OptionsConfigBackup;
-
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
 }
 
@@ -172,7 +171,7 @@ bool g_Demo_Play = false;
 
 void Demo_Start(void) // 0x8008F398
 {
-    g_Demo_Play = true;
+    g_Demo_Play         = true;
     g_SysWork.sysFlags |= SysFlag_DemoActive;
 
     Demo_GameGlobalsUpdate();
@@ -184,7 +183,7 @@ void Demo_Start(void) // 0x8008F398
 
 void Demo_Stop(void) // 0x8008f3f0
 {
-    g_Demo_Play = false;
+    g_Demo_Play         = false;
     g_SysWork.sysFlags &= ~SysFlag_DemoActive;
 
     Demo_GameGlobalsRestore();
@@ -199,13 +198,13 @@ bool Gfx_ScreenFadeIn_IsInProgress(s32 arg0)
 
     switch (screenFadeStatus)
     {
-        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart,    false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps,    false):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,   false):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, true):
-        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps, true):
-        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart,    true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutSteps,    true):
+        case SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,   true):
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
             return false;
     }
@@ -242,9 +241,9 @@ s32 Demo_StateGet(s32 gameState)
 
 void Demo_ExitDemo(void) // 0x8008F4E4
 {
-    g_Demo_FrameCount     = 999 * TICKS_PER_SECOND;
-    g_Demo_CurFrameData   = NULL;
-    g_Demo_DemoStep       = 0;
+    g_Demo_FrameCount   = 999 * TICKS_PER_SECOND;
+    g_Demo_CurFrameData = NULL;
+    g_Demo_DemoStep     = 0;
     g_SysWork.sysFlags |= SysFlag_DoWarmReset;
 }
 
@@ -368,14 +367,15 @@ bool Demo_Update(void) // 0x8008F5D8
     return true;
 }
 
+// Junk padding?
 #if VERSION_IS(USA)
-const s16 unkRodata_8002B2F2 = 0x8008;
+    const s16 unkRodata_8002B2F2 = 0x8008;
 #elif VERSION_IS(JAP0)
-const s16 unkRodata_8002B2F2 = 0x2009;
+    const s16 unkRodata_8002B2F2 = 0x2009;
 #elif VERSION_IS(JAP1)
-const s16 unkRodata_8002B2F2 = 0x8008;
+    const s16 unkRodata_8002B2F2 = 0x8008;
 #elif VERSION_IS(JAP2)
-const s16 unkRodata_8002B2F2 = 0x8EA4;
+    const s16 unkRodata_8002B2F2 = 0x8EA4;
 #endif
 
 bool Demo_ControllerDataUpdate(void) // 0x8008F7CC

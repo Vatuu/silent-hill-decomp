@@ -69,7 +69,7 @@ bool func_801E3124(void);
 
 bool func_801E342C(void);
 
-s32 func_801E3304(void);
+bool func_801E3304(void);
 
 bool func_801E3684(void);
 

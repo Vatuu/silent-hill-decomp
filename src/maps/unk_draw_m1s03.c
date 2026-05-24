@@ -73,7 +73,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
             setXY0Fast(scratchData->sprt_12C, ((i << 8) - 160), -112);
             scratchData->sprt_12C->u0 = 0;
             scratchData->sprt_12C->v0 = (scratchData->field_148.u8[1] == 0) ? 32 : 0;
-            setWH(scratchData->sprt_12C, (i == 0) ? 256 : 64, 224);
+            setWH(scratchData->sprt_12C, (i == 0) ? 256 : 64, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_12C, 4);
 
             scratchData->sprt_12C++;

@@ -272,7 +272,8 @@ void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType,
                     break;
                 }
             }
-            else if ((cond || g_SysWork.cutsceneBorderState != activeStateStep) && !(cond == activeStateStep && g_SysWork.cutsceneBorderState == 21))
+            else if ( (cond || g_SysWork.cutsceneBorderState != activeStateStep) &&
+                     !(cond == activeStateStep && g_SysWork.cutsceneBorderState == 21))
             {
                 break;
             }

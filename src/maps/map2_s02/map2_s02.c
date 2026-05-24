@@ -84,7 +84,9 @@ void func_800E9EAC(void) // 0x800E9EAC
     {
         case 0:
             Player_ControlFreeze();
+
             g_Screen_FadeStatus = 12; // TODO: Can't be created with `ScreenFade_Start` macro?
+
             Sd_SfxStop(Sfx_Unk1522);
             SysWork_StateStepIncrement(0);
             break;

@@ -95,7 +95,7 @@ typedef struct
     struct s_800F3D48_0* (*field_44)(struct s_800F3D48*);
     void                 (*field_48)(struct s_800F3D48*, s_800F3D48_0_0*);
 } s_800F3D48_4;
-STATIC_ASSERT_SIZEOF(s_800F3D48_4, 0x4C);
+STATIC_ASSERT_SIZEOF(s_800F3D48_4, 76);
 
 typedef struct _800F3D48_0
 {
@@ -103,14 +103,14 @@ typedef struct _800F3D48_0
     struct _800F3D48_0* next_4;
     s32                 field_8; // Some kind of enum? 0 / 1 / 2
 } s_800F3D48_0;
-STATIC_ASSERT_SIZEOF(s_800F3D48_0, 0xC);
+STATIC_ASSERT_SIZEOF(s_800F3D48_0, 12);
 
 typedef struct
 {
     s_800F3D48_0* ptr_0;
     s_800F3D48_4  field_4;
 } s_800F3D48;
-STATIC_ASSERT_SIZEOF(s_800F3D48, 0x50);
+STATIC_ASSERT_SIZEOF(s_800F3D48, 80);
 
 typedef struct _800F3DAC
 {
