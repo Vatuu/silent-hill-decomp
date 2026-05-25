@@ -336,10 +336,10 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
     {
         g_SysWork.playerCombat.weaponAttack = weaponAttack;
 
-        if (!(playerProps.flags_11C & PlayerFlag_Unk2))
+        if (!(playerProps.flags & PlayerFlag_Unk2))
         {
             player->field_44.field_0                                     = 1;
-            playerProps.flags_11C |= PlayerFlag_Unk2;
+            playerProps.flags |= PlayerFlag_Unk2;
         }
     }
 
@@ -362,7 +362,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
     if (player->model.anim.status == animStatus &&
         player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[animStatus].endKeyframeIdx)
     {
-        playerProps.flags_11C &= ~PlayerFlag_Unk2;
+        playerProps.flags &= ~PlayerFlag_Unk2;
 
         Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -471,7 +471,7 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
 
     if (player->model.anim.keyframeIdx >= keyframe1)
     {
-        if (!(playerProps.flags_11C & PlayerFlag_Unk4))
+        if (!(playerProps.flags & PlayerFlag_Unk4))
         {
             if (pitch < 0x20)
             {
@@ -497,18 +497,18 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                 player->properties.player.field_10C = pitch + 0x40;
             }
 
-            playerProps.flags_11C |= PlayerFlag_Unk4;
+            playerProps.flags |= PlayerFlag_Unk4;
             return true;
         }
     }
     else
     {
-        playerProps.flags_11C &= ~PlayerFlag_Unk4;
+        playerProps.flags &= ~PlayerFlag_Unk4;
     }
 
     if (player->model.anim.keyframeIdx >= keyframe0)
     {
-        if (!(playerProps.flags_11C & PlayerFlag_Unk5))
+        if (!(playerProps.flags & PlayerFlag_Unk5))
         {
             if (pitch < 32)
             {
@@ -534,13 +534,13 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                 player->properties.player.field_10C = pitch + 64;
             }
 
-            playerProps.flags_11C |= PlayerFlag_Unk5;
+            playerProps.flags |= PlayerFlag_Unk5;
             return true;
         }
     }
     else
     {
-        playerProps.flags_11C &= ~PlayerFlag_Unk5;
+        playerProps.flags &= ~PlayerFlag_Unk5;
     }
 
     return false;
@@ -555,7 +555,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
 
     if (player->model.anim.keyframeIdx >= keyframeIdx)
     {
-        if (playerProps.flags_11C & PlayerFlag_SfxActive)
+        if (playerProps.flags & PlayerFlag_SfxActive)
         {
             return false;
         }
@@ -596,12 +596,12 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
                 break;
         }
 
-        playerProps.flags_11C |= PlayerFlag_SfxActive;
+        playerProps.flags |= PlayerFlag_SfxActive;
         return true;
     }
     else
     {
-        playerProps.flags_11C &= ~PlayerFlag_SfxActive;
+        playerProps.flags &= ~PlayerFlag_SfxActive;
 
         do {} while (false); // @hack Required for match.
 
@@ -917,8 +917,8 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
         case PlayerState_Unk52:
         case PlayerState_Unk53:
         case PlayerState_Unk55:
-        case PlayerState_Unk56:
-        case PlayerState_Unk57:
+        case PlayerState_TurnRight:
+        case PlayerState_TurnLeft:
         case PlayerState_Unk58:
         case PlayerState_Unk59: // Interacting with vines. (Hospital Basement Otherworld)
         case PlayerState_Unk60: // Interacting with vines without disinfective alcohol applied. (Hospital Basement Otherworld)
@@ -1152,7 +1152,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 player->attackReceived = NO_VALUE;
 
                 g_SysWork.targetNpcIdx                                      = NO_VALUE;
-                playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                playerProps.flags &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -1819,7 +1819,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                        playerProps.flags &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -1858,7 +1858,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                        playerProps.flags &= ~PlayerFlag_DamageReceived;
                         switch (playerExtra.state)
                         {
                             case PlayerState_EnemyReleasePinnedFront:
@@ -1894,7 +1894,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                        playerProps.flags &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -2232,7 +2232,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 player->attackReceived = NO_VALUE;
                 g_SysWork.targetNpcIdx = NO_VALUE;
-                playerProps.flags_11C     &= ~PlayerFlag_DamageReceived;
+                playerProps.flags     &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
@@ -2563,8 +2563,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             g_Player_MeleeAttackType  = 0;
             g_Player_IsMultiTapAttack = 0;
 
-            playerProps.flags_11C &= ~PlayerFlag_Shooting;
-            playerProps.flags_11C &= ~PlayerFlag_Unk6;
+            playerProps.flags &= ~PlayerFlag_Shooting;
+            playerProps.flags &= ~PlayerFlag_Unk6;
 
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
@@ -2705,7 +2705,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (playerProps.flags_11C & PlayerFlag_Unk11)
+                if (playerProps.flags & PlayerFlag_Unk11)
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -2766,28 +2766,28 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx)
                 {
-                    if (!(playerProps.flags_11C & PlayerFlag_Unk2))
+                    if (!(playerProps.flags & PlayerFlag_Unk2))
                     {
                         player->field_44.field_0 = 1;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), 0);
 
                         player->properties.player.field_10C                       = 0x40;
-                        playerProps.flags_11C |= PlayerFlag_Unk2;
+                        playerProps.flags |= PlayerFlag_Unk2;
                     }
                 }
                 else if (D_800C44D4 < extra->model.anim.keyframeIdx)
                 {
-                    playerProps.flags_11C &= ~PlayerFlag_Unk2;
+                    playerProps.flags &= ~PlayerFlag_Unk2;
                 }
             }
             else if (playerProps.gasWeaponPowerTimer == Q12(0.0f))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                    !(playerProps.flags_11C & PlayerFlag_Unk2))
+                    !(playerProps.flags & PlayerFlag_Unk2))
                 {
                     player->field_44.field_0                                     = 1;
-                    playerProps.flags_11C |= PlayerFlag_Unk2;
+                    playerProps.flags |= PlayerFlag_Unk2;
                 }
             }
             else
@@ -2803,9 +2803,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         else
         {
             if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                !(playerProps.flags_11C & PlayerFlag_Shooting))
+                !(playerProps.flags & PlayerFlag_Shooting))
             {
-                playerProps.flags_11C |= PlayerFlag_Shooting;
+                playerProps.flags |= PlayerFlag_Shooting;
 
                 if (g_SysWork.playerCombat.currentWeaponAmmo != 0)
                 {
@@ -2864,7 +2864,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.anim.keyframeIdx = D_800C44F0[0].field_6;
                     extra->model.anim.time         = Q12(extra->model.anim.keyframeIdx);
 
-                    if (playerProps.flags_11C & PlayerFlag_Unk0)
+                    if (playerProps.flags & PlayerFlag_Unk0)
                     {
                         g_SysWork.playerWork.extra.state          = PlayerState_Combat;
                         g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
@@ -2883,13 +2883,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Aim;
-                            playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                            playerProps.flags &= ~PlayerFlag_Unk10;
                         }
                     }
 
                     playerProps.field_104  = 0;
-                    playerProps.flags_11C &= ~PlayerFlag_Unk2;
-                    playerProps.flags_11C &= ~PlayerFlag_Shooting;
+                    playerProps.flags &= ~PlayerFlag_Unk2;
+                    playerProps.flags &= ~PlayerFlag_Shooting;
                     g_SysWork.playerCombat.weaponAttack                = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack), AttackInputType_Tap);
                     return true;
                 }
@@ -2900,7 +2900,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                   extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk36, true)) &&
                  extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_6)
         {
-            if (playerProps.flags_11C & PlayerFlag_Unk0)
+            if (playerProps.flags & PlayerFlag_Unk0)
             {
                 g_SysWork.playerWork.extra.state          = PlayerState_Combat;
                 g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
@@ -2919,7 +2919,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
                     g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Aim;
-                    playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                    playerProps.flags &= ~PlayerFlag_Unk10;
                     player->model.controlState                                      =
                     player->model.stateStep                                  = 0;
                 }
@@ -2928,11 +2928,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             D_800C4556                                                  = NO_VALUE;
             D_800C4554                                                  = NO_VALUE;
             playerProps.field_104  = 0;
-            playerProps.flags_11C &= ~PlayerFlag_Shooting;
+            playerProps.flags &= ~PlayerFlag_Shooting;
             return true;
         }
 
-        playerProps.flags_11C |= PlayerFlag_Unk6;
+        playerProps.flags |= PlayerFlag_Unk6;
 
         // Handles multitap attack.
         if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -2977,7 +2977,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                              D_800AD4C8[g_SysWork.playerCombat.weaponAttack].field_F;
                 g_Player_IsMultiTapAttack = 0;
 
-                playerProps.flags_11C &= ~PlayerFlag_Unk2;
+                playerProps.flags &= ~PlayerFlag_Unk2;
             }
         }
 
@@ -3102,7 +3102,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             break;
 
         case PlayerUpperBodyState_RunWallStop:
-            if (playerProps.flags_11C & PlayerFlag_WallStopRight)
+            if (playerProps.flags & PlayerFlag_WallStopRight)
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3355,7 +3355,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Unk6;
+            playerProps.flags &= ~PlayerFlag_Unk6;
             player->angleToTarget = player->rotation.vy;
 
             if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -3366,11 +3366,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (g_Player_IsAttacking || g_Player_IsShooting)
                     {
-                        playerProps.flags_11C |= PlayerFlag_Unk11;
+                        playerProps.flags |= PlayerFlag_Unk11;
                     }
                     else
                     {
-                        playerProps.flags_11C &= ~PlayerFlag_Unk11;
+                        playerProps.flags &= ~PlayerFlag_Unk11;
 
                         if (extra->model.stateStep == 0)
                         {
@@ -3381,14 +3381,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
                 else
                 {
-                    playerProps.flags_11C &= ~PlayerFlag_Unk11;
+                    playerProps.flags &= ~PlayerFlag_Unk11;
                 }
             }
             break;
 
         case PlayerUpperBodyState_AimTargetLock:
             playerProps.field_104 += g_DeltaTime;
-            playerProps.flags_11C &= ~PlayerFlag_Unk6;
+            playerProps.flags &= ~PlayerFlag_Unk6;
 
             if (g_Player_IsTurningRight)
             {
@@ -3413,7 +3413,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (playerTurn != 0)
             {
-                playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                playerProps.flags &= ~PlayerFlag_Unk9;
                 player->properties.player.field_F4                 = g_Player_FlexRotationX;
 
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
@@ -3427,7 +3427,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (g_Player_TargetNpcIdx == NO_VALUE)
                 {
-                    playerProps.flags_11C &= ~PlayerFlag_Unk12;
+                    playerProps.flags &= ~PlayerFlag_Unk12;
                     player->model.stateStep                                  = 0;
                     playerProps.field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
@@ -3445,7 +3445,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 else
                 {
                     g_SysWork.playerWork.extra.upperBodyState         = PlayerUpperBodyState_AimTargetLockSwitch;
-                    playerProps.flags_11C |= PlayerFlag_Unk12;
+                    playerProps.flags |= PlayerFlag_Unk12;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
                 }
 
@@ -3492,7 +3492,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
                 else
                 {
-                    playerProps.flags_11C &= ~PlayerFlag_Unk12;
+                    playerProps.flags &= ~PlayerFlag_Unk12;
                     player->model.stateStep                                  = 0;
                     playerProps.field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.targetNpcIdx                                 = NO_VALUE;
@@ -3534,14 +3534,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                      (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 9))) &&
-                    !(playerProps.flags_11C & PlayerFlag_Unk2))
+                    !(playerProps.flags & PlayerFlag_Unk2))
                 {
                     playerProps.gasWeaponPowerTimer = Q12(60.0f);
 
                     func_8004C564(g_SysWork.playerCombat.weaponAttack, 0);
 
                     player->properties.player.field_10C                       = 0x40;
-                    playerProps.flags_11C |= PlayerFlag_Unk2;
+                    playerProps.flags |= PlayerFlag_Unk2;
                 }
             }
             else if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
@@ -3574,7 +3574,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
-                    playerProps.flags_11C &= ~PlayerFlag_Unk2;
+                    playerProps.flags &= ~PlayerFlag_Unk2;
 
                     if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
                     {
@@ -3664,7 +3664,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 playerProps.field_122  = Q12_ANGLE(90.0f);
                 g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                 g_SysWork.playerWork.extra.state                      = PlayerState_None;
-                playerProps.flags_11C &= ~PlayerFlag_Unk12;
+                playerProps.flags &= ~PlayerFlag_Unk12;
                 extra->model.controlState                                      = extra->model.stateStep = 0;
                 break;
             }
@@ -3707,14 +3707,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                     {
-                        playerProps.flags_11C &= ~PlayerFlag_Unk8;
+                        playerProps.flags &= ~PlayerFlag_Unk8;
                     }
                     else
                     {
-                        playerProps.flags_11C |= PlayerFlag_Unk8;
+                        playerProps.flags |= PlayerFlag_Unk8;
                     }
 
-                    if (playerProps.flags_11C & PlayerFlag_Unk9)
+                    if (playerProps.flags & PlayerFlag_Unk9)
                     {
                         if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                         {
@@ -3727,7 +3727,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                                 player->model.stateStep                      = 0;
                             }
 
-                            playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                            playerProps.flags &= ~PlayerFlag_Unk9;
                             extra->model.controlState                                      =
                             extra->model.stateStep                                  = 0;
                         }
@@ -3778,14 +3778,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
-                    playerProps.flags_11C &= ~PlayerFlag_Unk8;
+                    playerProps.flags &= ~PlayerFlag_Unk8;
                 }
                 else
                 {
-                    playerProps.flags_11C |= PlayerFlag_Unk8;
+                    playerProps.flags |= PlayerFlag_Unk8;
                 }
 
-                if (playerProps.flags_11C & PlayerFlag_Unk9)
+                if (playerProps.flags & PlayerFlag_Unk9)
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
                     {
@@ -3797,7 +3797,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                             player->model.controlState                          = player->model.stateStep = 0;
                         }
 
-                        playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                        playerProps.flags &= ~PlayerFlag_Unk9;
                         extra->model.controlState                                      = extra->model.stateStep = 0;
                     }
                 }
@@ -3869,12 +3869,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model.anim.keyframeIdx &&
-                !(playerProps.flags_11C & PlayerFlag_Unk2))
+                !(playerProps.flags & PlayerFlag_Unk2))
             {
                 func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx, &player->position, Q8(0.5f), 0);
 
                 player->properties.player.field_10C                       = 0x20;
-                playerProps.flags_11C |= PlayerFlag_Unk2;
+                playerProps.flags |= PlayerFlag_Unk2;
             }
 
             if (extra->model.anim.keyframeIdx == D_800AF626)
@@ -3883,7 +3883,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Aim;
                 g_SysWork.targetNpcIdx                                 = NO_VALUE;
                 g_SysWork.playerWork.extra.state                      = PlayerState_None;
-                playerProps.flags_11C &= ~PlayerFlag_Unk2;
+                playerProps.flags &= ~PlayerFlag_Unk2;
                 extra->model.anim.status                              = ANIM_STATUS(HarryAnim_HandgunAim, true);
                 extra->model.anim.keyframeIdx                         = 588;
                 extra->model.anim.time                                = Q12(588.0f);
@@ -4072,10 +4072,10 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 player->properties.player.field_F4                        = 0;
                 g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_AimStop;
                 g_SysWork.targetNpcIdx                                 = NO_VALUE;
-                playerProps.flags_11C &= ~PlayerFlag_Unk0;
+                playerProps.flags &= ~PlayerFlag_Unk0;
                 g_SysWork.playerWork.extra.state                      = PlayerState_None;
                 g_SysWork.playerCombat.isAiming                   = false;
-                playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                playerProps.flags &= ~PlayerFlag_Unk9;
 
                 if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim ||
                     g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
@@ -4160,7 +4160,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     }
                 }
 
-                playerProps.flags_11C &= ~PlayerFlag_Unk0;
+                playerProps.flags &= ~PlayerFlag_Unk0;
 
                 if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
@@ -4193,7 +4193,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
                             g_SysWork.playerWork.extra.state                      = PlayerState_Combat;
-                            playerProps.flags_11C |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
+                            playerProps.flags |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
 
                             if (g_SysWork.targetNpcIdx != g_Player_TargetNpcIdx)
                             {
@@ -4227,7 +4227,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     case NO_VALUE:
                         playerProps.field_122  = Q12_ANGLE(90.0f);
                         g_SysWork.playerWork.extra.upperBodyState             = PlayerUpperBodyState_Attack;
-                        playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                        playerProps.flags &= ~PlayerFlag_Unk9;
 
                         if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim)
                         {
@@ -4245,7 +4245,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         g_SysWork.playerCombat.totalWeaponAmmo != 0)
                     {
                         g_SysWork.playerWork.extra.upperBodyState              = PlayerUpperBodyState_Reload;
-                        playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                        playerProps.flags &= ~PlayerFlag_Unk9;
 
                         if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Aim ||
                             g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_Attack)
@@ -4277,7 +4277,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
             }
             else
             {
-                playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                playerProps.flags &= ~PlayerFlag_Unk9;
             }
             break;
     }
@@ -4475,7 +4475,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (playerProps.flags_11C & PlayerFlag_Unk6)
+                else if (playerProps.flags & PlayerFlag_Unk6)
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4508,7 +4508,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                playerProps.flags_11C &= ~PlayerFlag_Unk6;
+                playerProps.flags &= ~PlayerFlag_Unk6;
             }
 
             // Set idle to move depending on user input.
@@ -4815,7 +4815,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                 g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 36;
                                 HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_RunForward, true);
-                                playerProps.flags_11C |= PlayerFlag_Unk5;
+                                playerProps.flags |= PlayerFlag_Unk5;
                             }
                             else if (player->model.anim.keyframeIdx >= 21 && player->model.anim.keyframeIdx <= 22)
                             {
@@ -4841,7 +4841,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                              g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags_11C |= PlayerFlag_Unk10;
+                            playerProps.flags |= PlayerFlag_Unk10;
                             player->model.stateStep                                  = 0;
                             player->model.controlState                                      = 0;
                             g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
@@ -4849,13 +4849,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         else
                         {
                             g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                            playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                            playerProps.flags &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
                         g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                        playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                        playerProps.flags &= ~PlayerFlag_Unk10;
                     }
                 }
 
@@ -5034,13 +5034,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                     player->model.anim.keyframeIdx <= 34)
                                 {
                                     g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags_11C &= ~PlayerFlag_WallStopRight;
+                                    playerProps.flags &= ~PlayerFlag_WallStopRight;
                                 }
                                 else if (player->model.anim.keyframeIdx >= 43 &&
                                          player->model.anim.keyframeIdx <= 44)
                                 {
                                     g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags_11C |= PlayerFlag_WallStopRight;
+                                    playerProps.flags |= PlayerFlag_WallStopRight;
                                 }
                             }
                             // Change state from running to walking. Difference with first conditional is this only triggers if
@@ -5097,7 +5097,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Depending on frame of gait cycle, set left or right wall stop anim variant.
-            if (playerProps.flags_11C & PlayerFlag_WallStopRight)
+            if (playerProps.flags & PlayerFlag_WallStopRight)
             {
                 if (player->model.stateStep == 0)
                 {
@@ -5250,7 +5250,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags_11C |= PlayerFlag_Unk10;
+                            playerProps.flags |= PlayerFlag_Unk10;
                             player->model.stateStep                                  = 0;
                             player->model.controlState                                      = 0;
                             g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
@@ -5258,13 +5258,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         else
                         {
                             g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                            playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                            playerProps.flags &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
                         g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                        playerProps.flags_11C &= ~PlayerFlag_Unk10;
+                        playerProps.flags &= ~PlayerFlag_Unk10;
                     }
                 }
 
@@ -5332,7 +5332,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags_11C |= PlayerFlag_Unk10;
+                            playerProps.flags |= PlayerFlag_Unk10;
                             player->model.stateStep                                  = 0;
                             player->model.controlState                                      = 0;
                             g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
@@ -5413,7 +5413,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                              extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags_11C |= PlayerFlag_Unk10;
+                            playerProps.flags |= PlayerFlag_Unk10;
                             player->model.stateStep                                  = 0;
                             player->model.controlState                                      = 0;
                             g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
@@ -6094,7 +6094,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (playerProps.flags_11C & PlayerFlag_Unk11)
+                    if (playerProps.flags & PlayerFlag_Unk11)
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -6111,7 +6111,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         }
                     }
                 }
-                else if (playerProps.flags_11C & PlayerFlag_Unk10)
+                else if (playerProps.flags & PlayerFlag_Unk10)
                 {
                     if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) ||
                         g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -6358,7 +6358,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnLeft, true), player, 187, 191, sfxId, pitch0);
             }
 
-            if ((playerProps.flags_11C & PlayerFlag_Moving) &&
+            if ((playerProps.flags & PlayerFlag_Moving) &&
                 ((player->model.anim.status >= ANIM_STATUS(HarryAnim_Idle, true) &&
                   player->model.anim.status <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
                  player->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true)))
@@ -6366,16 +6366,16 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 func_8005DD44(sfxId, &player->position, Q8_CLAMPED(0.095f), pitch0);
 
                 player->properties.player.field_10C                        = pitch0 + 0x10;
-                playerProps.flags_11C &= ~PlayerFlag_Moving;
+                playerProps.flags &= ~PlayerFlag_Moving;
             }
 
             if (player->model.anim.keyframeIdx == 246 &&
-                !(playerProps.flags_11C & PlayerFlag_Unk5))
+                !(playerProps.flags & PlayerFlag_Unk5))
             {
                 func_8005DD44(sfxId, &player->position, Q8(0.5f), pitch1);
 
                 player->properties.player.field_10C                       = pitch1 + 0x20;
-                playerProps.flags_11C |= PlayerFlag_Unk5;
+                playerProps.flags |= PlayerFlag_Unk5;
             }
             break;
 
@@ -6385,13 +6385,13 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkBackward, true), player, 52, 63, sfxId, pitch0);
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_AimWalkForward:
         case PlayerLowerBodyState_WalkForward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkForward, true), player, 18, 6, sfxId, pitch0);
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForward:
@@ -6400,17 +6400,17 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runTimer_F8++;
             }
 
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepRight, true), player, 118, 108, sfxId, pitch0);
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepLeft, true), player, 93, 83, sfxId, pitch0);
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRight:
@@ -6419,7 +6419,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runTimer_F8++;
             }
 
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeft:
@@ -6428,11 +6428,11 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runTimer_F8++;
             }
 
-            playerProps.flags_11C |= PlayerFlag_Moving;
+            playerProps.flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (playerProps.flags_11C & PlayerFlag_WallStopRight)
+            if (playerProps.flags & PlayerFlag_WallStopRight)
             {
                 if (player->model.anim.keyframeIdx < 152)
                 {
@@ -6455,7 +6455,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 }
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
@@ -6468,7 +6468,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), player, 327, 324, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
@@ -6481,7 +6481,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightWallStop, true), player, 353, 356, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_Stumble:
@@ -6494,7 +6494,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardStumble, true), player, 176, 174, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
@@ -6511,7 +6511,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), player, 356, 346, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
@@ -6528,26 +6528,26 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), player, 385, 375, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), player, 222, 224, sfxId, pitch0);
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnRight, true), player, 209, 211, sfxId, pitch0);
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_JumpBackward:
         case PlayerLowerBodyState_Unk31:
             if (player->model.anim.keyframeIdx < 243)
             {
-                playerProps.flags_11C &= ~PlayerFlag_Unk5;
+                playerProps.flags &= ~PlayerFlag_Unk5;
             }
 
             if (player->position.vy == g_Player_CollisionResult.surface.groundHeight)
@@ -6555,7 +6555,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
 
-            playerProps.flags_11C &= ~PlayerFlag_Moving;
+            playerProps.flags &= ~PlayerFlag_Moving;
             break;
     }
 }
@@ -6798,16 +6798,16 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // Related to enemy grabbing.
-            if (player->damage.amount != Q12(0.0f) && !(playerProps.flags_11C & PlayerFlag_DamageReceived))
+            if (player->damage.amount != Q12(0.0f) && !(playerProps.flags & PlayerFlag_DamageReceived))
             {
-                playerProps.flags_11C |= PlayerFlag_DamageReceived;
+                playerProps.flags |= PlayerFlag_DamageReceived;
                 func_8005DC1C(sfxId, &player->position, Q8(1.0f / 8.0f), 0);
                 player->properties.player.field_10C = 64;
             }
 
             if (player->damage.amount == Q12(0.0f))
             {
-                playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+                playerProps.flags &= ~PlayerFlag_DamageReceived;
             }
 
             func_80089494();
@@ -7059,9 +7059,9 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             {
                 player->properties.player.afkTimer                     = Q12(0.0f);
                 player->properties.player.field_F4                        = 0;
-                playerProps.flags_11C &= ~PlayerFlag_Unk12;
+                playerProps.flags &= ~PlayerFlag_Unk12;
                 g_SysWork.playerCombat.isAiming                   = false;
-                playerProps.flags_11C &= ~PlayerFlag_Unk9;
+                playerProps.flags &= ~PlayerFlag_Unk9;
                 player->field_44.field_0                                     = NO_VALUE;
             }
             break;
@@ -7075,11 +7075,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
     if (player->damage.amount != Q12(0.0f))
     {
-        playerProps.flags_11C &= ~PlayerFlag_Unk2;
-        if (!(playerProps.flags_11C & PlayerFlag_DamageReceived))
+        playerProps.flags &= ~PlayerFlag_Unk2;
+        if (!(playerProps.flags & PlayerFlag_DamageReceived))
         {
             func_8005DC1C(sfxId, &player->position, Q8(1.0f / 8.0f), 0);
-            playerProps.flags_11C |= PlayerFlag_DamageReceived;
+            playerProps.flags |= PlayerFlag_DamageReceived;
             player->properties.player.field_10C = 0x40;
         }
 
@@ -7211,7 +7211,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                 if (player->properties.player.field_100 != 0 || g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
                     g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimTargetLockSwitch)
                 {
-                    if (playerProps.flags_11C & PlayerFlag_Unk8)
+                    if (playerProps.flags & PlayerFlag_Unk8)
                     {
                         var_v1 = Q12_ANGLE(0.0f);
                     }
@@ -7971,7 +7971,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     player->properties.player.field_104        = 0;
     player->properties.player.runTimer_108     = Q12(0.0f);
     player->properties.player.timer_110        = 0;
-    player->properties.player.flags_11C        = 0;
+    player->properties.player.flags        = 0;
     player->properties.player.moveDistance_126 = 0;
 
     Chara_DamageClear(player);
@@ -8610,7 +8610,7 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
     player->field_40               = NO_VALUE;
 
-    playerProps.flags_11C &= ~PlayerFlag_DamageReceived;
+    playerProps.flags &= ~PlayerFlag_DamageReceived;
 
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs); i++)
     {

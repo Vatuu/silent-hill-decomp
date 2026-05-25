@@ -7,8 +7,8 @@
 #define HAS_PlayerState_Unk53
 #define HAS_PlayerState_Unk54
 #define HAS_PlayerState_Unk55
-#define HAS_PlayerState_Unk56
-#define HAS_PlayerState_Unk57
+#define HAS_PlayerState_TurnRight
+#define HAS_PlayerState_TurnLeft
 #define HAS_PlayerState_Unk74
 #define HAS_PlayerState_Unk84
 

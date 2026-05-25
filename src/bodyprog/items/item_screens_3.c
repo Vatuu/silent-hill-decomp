@@ -3942,7 +3942,7 @@ void Inventory_ExitAnimFixes(void) // 0x80054634
     else
     {
         g_SysWork.playerCombat.weaponAttack = NO_VALUE;
-        g_SysWork.playerCombat.isAiming    = false;
+        g_SysWork.playerCombat.isAiming     = false;
     }
 
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);

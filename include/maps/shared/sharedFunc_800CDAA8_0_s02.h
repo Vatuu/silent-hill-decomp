@@ -236,11 +236,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -277,11 +277,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -320,11 +320,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             switch (D_800C457C)
             {
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -377,11 +377,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -429,11 +429,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -470,8 +470,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             break;
 #endif
 
-#ifdef HAS_PlayerState_Unk56
-        case PlayerState_Unk56:
+#ifdef HAS_PlayerState_TurnRight
+        case PlayerState_TurnRight:
             if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
                 g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -503,7 +503,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
 
                 case 4:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk57);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
 
@@ -520,8 +520,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             break;
 #endif
 
-#ifdef HAS_PlayerState_Unk57
-        case PlayerState_Unk57:
+#ifdef HAS_PlayerState_TurnLeft
+        case PlayerState_TurnLeft:
             if (g_SysWork.playerWork.player.properties.player.moveDistance_126 != Q12(0.0f))
             {
                 g_SysWork.playerWork.player.properties.player.moveDistance_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)) * 2;
@@ -553,7 +553,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
 
                 case 3:
-                    Player_ExtraStateSet(player, extra, PlayerState_Unk56);
+                    Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
             }
 
@@ -1640,17 +1640,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             if (player->model.anim.keyframeIdx == (keyframeIdx + 11) ||
                 player->model.anim.keyframeIdx == (keyframeIdx + 7))
             {
-                if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
+                if (!(g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_Unk6))
                 {
                     func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(14.94f), Q12(-0.05f), Q12(102.0f) }, 3, 3);
-                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
+                    g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Unk6;
                 }
             }
 
             if (player->model.anim.keyframeIdx == (keyframeIdx + 8) ||
                 player->model.anim.keyframeIdx == (keyframeIdx + 19))
             {
-                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+                g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk6;
             }
 
             func_8007FB94(player, extra, ANIM_STATUS(213, false));
@@ -1884,18 +1884,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             if (player->model.anim.keyframeIdx == keyframeIdx + 5)
             {
-                if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Unk6))
+                if (!(g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_Unk6))
                 {
                     // TODO: `0x340` is `Q12_ANGLE(73.2f)`?
                     func_8006342C(EquippedWeaponId_Handgun, 0x340, player->rotation.vy, boneCoords);
                     func_8005F6B0(&g_SysWork.npcs[1], &(VECTOR3){ Q12(140.39f), Q12(-0.55f), Q12(22.76f) }, 3, 3);
-                    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk6;
+                    g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Unk6;
                 }
             }
 
             if (player->model.anim.keyframeIdx == (keyframeIdx + 22))
             {
-                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk6;
+                g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk6;
             }
 
             func_8007FC48(player, extra, ANIM_STATUS(220, false)); // TODO: Demagic
@@ -2234,13 +2234,13 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
     {
 #ifdef HAS_PlayerState_Unk52
         case PlayerState_Unk52:
-            if (g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_Moving)
+            if (g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_Moving)
             {
                 if (player->model.anim.status == ANIM_STATUS(HarryAnim_Idle, false))
                 {
                     func_8005DD44(sfxId, &player->position, 64, pitch0);
                     player->properties.player.field_10C                 = pitch0 + 16;
-                    g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+                    g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
                 }
             }
             break;
@@ -2249,7 +2249,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk53
         case PlayerState_Unk53:
             Player_FootstepSfxPlay(5, player, 18, 6, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Moving;
             break;
 #endif
 
@@ -2260,21 +2260,21 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 player->properties.player.runTimer_F8++;
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Moving;
             break;
 #endif
 
-#ifdef HAS_PlayerState_Unk56
-        case PlayerState_Unk56:
+#ifdef HAS_PlayerState_TurnRight
+        case PlayerState_TurnRight:
             Player_FootstepSfxPlay(27, player, 204, 200, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
-#ifdef HAS_PlayerState_Unk57
-        case PlayerState_Unk57:
+#ifdef HAS_PlayerState_TurnLeft
+        case PlayerState_TurnLeft:
             Player_FootstepSfxPlay(25, player, 187, 191, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2317,35 +2317,35 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 31, keyframeIdx + 40, sfxId, pitch0);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
             Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 35, keyframeIdx + 17, Sfx_Unk1423, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
             Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 15, keyframeIdx + 31, Sfx_Unk1423, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk91
         case PlayerState_Unk91:
             Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 6, keyframeIdx + 6, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk92
         case PlayerState_Unk92:
             Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 9, keyframeIdx + 9, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2355,7 +2355,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             {
                 func_80071620(player->model.anim.status, player, keyframeIdx + 6, Sfx_Unk1385);
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 18, 0, sfxId, pitch0);
-                g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+                g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             }
             break;
 #endif
@@ -2371,7 +2371,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 74, keyframeIdx + 77, sfxId, pitch0);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2393,7 +2393,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk105
         case PlayerState_Unk105:
             Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 5, keyframeIdx + 12, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2408,7 +2408,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 14, keyframeIdx + 21, sfxId, pitch0);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2419,7 +2419,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 11, keyframeIdx + 21, sfxId, pitch0);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2434,7 +2434,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 Player_FootstepSfxPlay(player->model.anim.status, player, keyframeIdx + 13, keyframeIdx + 18, sfxId, pitch0);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
 #endif
 
@@ -2820,7 +2820,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk186
         case PlayerState_Unk186:
             Player_FootstepSfxPlay(player->model.anim.status, player, 0, keyframeIdx + 12, sfxId, pitch0);
-            g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Moving;
             break;
 #endif
 
@@ -2910,7 +2910,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             break;
 #endif
         default:
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Moving;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Moving;
             break;
     }
 

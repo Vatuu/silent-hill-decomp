@@ -7,14 +7,11 @@
 #include "bodyprog/player.h"
 #include "bodyprog/math/math.h"
 
-static const s32 pad_rodata_80025E90 = 0;
+static const s32 __pad_rodata_80025E90 = 0;
 
 s8 D_800C3960;
-
 s8 D_800C3961;
-
 s8 D_800C3962;
-
 u8 D_800C3963;
 
 s32 __pad_bss_800C3964;
@@ -30,11 +27,15 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     s_Model* modelPtr0;
     s_Model* modelPtr1;
 
+    #define playerChara g_SysWork.playerWork.player
+    #define playerExtra g_SysWork.playerWork.extra
+    #define playerProps playerChara.properties.player
+
     Game_PlayerMovementsReset();
 
-    playerState = g_SysWork.playerWork.extra.state;
+    playerState = playerExtra.state;
 
-    if (g_SysWork.playerWork.extra.state < PlayerState_Idle &&
+    if (playerExtra.state < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
         if (g_Player_WeaponAttack != g_SysWork.playerCombat.weaponAttack)
@@ -53,11 +54,11 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
             g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
-            g_SysWork.playerWork.player.field_44.field_0                             = 0;
-            g_SysWork.playerWork.player.properties.player.gasWeaponPowerTimer = Q12(0.0f);
+            playerChara.field_44.field_0    = 0;
+            playerProps.gasWeaponPowerTimer = Q12(0.0f);
         }
 
-        switch (g_SysWork.playerWork.extra.lowerBodyState)
+        switch (playerExtra.lowerBodyState)
         {
             case PlayerLowerBodyState_QuickTurnRight:
             case PlayerLowerBodyState_QuickTurnLeft:
@@ -68,61 +69,61 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 
             default:
 
-                if (g_SysWork.playerWork.extra.state == PlayerState_Combat &&
+                if (playerExtra.state == PlayerState_Combat &&
                     g_Player_WeaponAttack != g_SysWork.playerCombat.weaponAttack)
                 {
-                    g_SysWork.playerWork.extra.state                     = PlayerState_None;
-                    g_SysWork.playerWork.player.properties.player.flags_11C = PlayerFlag_None;
+                    playerExtra.state = PlayerState_None;
+                    playerProps.flags = PlayerFlag_None;
                 }
 
-                if (g_SysWork.playerWork.extra.lowerBodyState >= PlayerLowerBodyState_Aim &&
+                if (playerExtra.lowerBodyState >= PlayerLowerBodyState_Aim &&
                     g_SysWork.playerCombat.weaponAttack != NO_VALUE &&
                     g_Player_WeaponAttack == g_SysWork.playerCombat.weaponAttack)
                 {
-                    extraModelPtr0 = &g_SysWork.playerWork.extra.model;
+                    extraModelPtr0 = &playerExtra.model;
                     if (extraModelPtr0->anim.status >= ANIM_STATUS(33, false))
                     {
-                        modelPtr0                                         = &g_SysWork.playerWork.player.model;
-                        extraModelPtr0->anim.status                 -= 10;
-                        g_SysWork.playerWork.player.model.controlState       = 0;
-                        g_SysWork.playerWork.player.model.stateStep   = 0;
-                        g_SysWork.playerWork.extra.model.controlState     = 0;
-                        g_SysWork.playerWork.extra.model.stateStep = 0;
-                        modelPtr0->anim.status                      -= 10;
+                        modelPtr0                      = &playerChara.model;
+                        extraModelPtr0->anim.status   -= 10;
+                        playerChara.model.controlState = 0;
+                        playerChara.model.stateStep    = 0;
+                        playerExtra.model.controlState = 0;
+                        playerExtra.model.stateStep    = 0;
+                        modelPtr0->anim.status        -= 10;
                     }
                 }
                 else
                 {
-                    modelPtr1      = &g_SysWork.playerWork.player.model;
-                    extraModelPtr1 = &g_SysWork.playerWork.extra.model;
+                    modelPtr1      = &playerChara.model;
+                    extraModelPtr1 = &playerExtra.model;
 
-                    modelPtr1->anim.status                        = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-                    modelPtr1->anim.keyframeIdx                   = 0;
-                    extraModelPtr1->anim.status                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-                    extraModelPtr1->anim.keyframeIdx              = 0;
+                    modelPtr1->anim.status           = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+                    modelPtr1->anim.keyframeIdx      = 0;
+                    extraModelPtr1->anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+                    extraModelPtr1->anim.keyframeIdx = 0;
 
-                    g_SysWork.playerWork.player.model.controlState       = 0;
-                    g_SysWork.playerWork.player.model.stateStep   = 0;
-                    g_SysWork.playerWork.extra.upperBodyState   = PlayerUpperBodyState_None;
-                    g_SysWork.playerWork.extra.lowerBodyState   = PlayerLowerBodyState_None;
-                    g_SysWork.playerWork.extra.model.controlState     = 0;
-                    g_SysWork.playerWork.extra.model.stateStep = 0;
+                    playerChara.model.controlState = 0;
+                    playerChara.model.stateStep    = 0;
+                    playerExtra.upperBodyState     = PlayerUpperBodyState_None;
+                    playerExtra.lowerBodyState     = PlayerLowerBodyState_None;
+                    playerExtra.model.controlState = 0;
+                    playerExtra.model.stateStep    = 0;
                 }
 
-                g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
-                g_SysWork.playerWork.player.properties.player.afkTimer            = Q12(0.0f);
+                playerProps.moveDistance_126 = Q12(0.0f);
+                playerProps.afkTimer         = Q12(0.0f);
         }
     }
 
-    modelPtr3      = &g_SysWork.playerWork.player.model;
-    extraModelPtr2 = &g_SysWork.playerWork.extra.model;
+    modelPtr3      = &playerChara.model;
+    extraModelPtr2 = &playerExtra.model;
 
     // Set animation alpha.
     modelPtr3->anim.alpha      = Q12(1.0f);
     extraModelPtr2->anim.alpha = Q12(1.0f);
 
     // Disable upper body bones.
-    g_SysWork.playerWork.extra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
 
     // Set animation time.
     modelPtr3->anim.time      = Q12(modelPtr3->anim.keyframeIdx);
@@ -131,10 +132,14 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
-    g_SysWork.playerWork.extra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
 
     Anim_BoneUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
     func_8004C040();
+
+    #undef playerChara
+    #undef playerExtra
+    #undef playerProps
 }
 
 bool func_8004C328(bool unused) // 0x8004C328
@@ -281,7 +286,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 
     switch (weaponAttack)
     {
-        case -1:
+        case NO_VALUE:
             D_800C3960 = g_SavegamePtr->mapIdx;
             D_800C3962 = 0;
             D_800C3963 = 0;

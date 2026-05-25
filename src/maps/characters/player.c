@@ -271,7 +271,7 @@ void Player_ControlFreeze(void)
     sharedData_800E39D8_0_s00 = 0;
 
     playerChara->collision.cylinder.field_2                  = Q12(0.0f);
-    g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     playerChara->flags                                      |= CharaFlag_Unk4;
     playerChara->collision.state                             = CharaCollisionState_4;
 
@@ -339,7 +339,7 @@ void Player_ControlUnfreeze(bool setIdle)
 
     player->collision.cylinder.field_2 = Q12(0.23f);
     Player_CollisionReset();
-    g_SysWork.playerWork.player.properties.player.flags_11C &= ~(PlayerFlag_Unk2 |
+    g_SysWork.playerWork.player.properties.player.flags &= ~(PlayerFlag_Unk2 |
                                                                  PlayerFlag_SfxActive |
                                                                  PlayerFlag_DamageReceived |
                                                                  PlayerFlag_Moving);
@@ -407,13 +407,13 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             if (playerRotDelta < Q12_ANGLE(0.0f))
             {
                 D_800C457C = 4;
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk57);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnLeft);
                 D_800C4588 = 2;
             }
             else
             {
                 D_800C457C = 3;
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk56);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnRight);
                 D_800C4588 = 2;
             }
 
@@ -550,12 +550,12 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             if (playerRotDelta < Q12_ANGLE(0.0f))
             {
                 D_800C457C = 4;
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk57);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnLeft);
             }
             else
             {
                 D_800C457C = 3;
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk56);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_TurnRight);
             }
 
             D_800C4588 = 7;
@@ -605,11 +605,11 @@ void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
             D_800C457C = 1;
             break;
 
-        case PlayerState_Unk56:
+        case PlayerState_TurnRight:
             D_800C457C = 3;
             break;
 
-        case PlayerState_Unk57:
+        case PlayerState_TurnLeft:
             D_800C457C = 4;
             break;
     }
@@ -821,14 +821,14 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk12;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk12;
 
             playerChara->properties.player.afkTimer = Q12(0.0f);
             playerChara->properties.player.field_F4    = 0;
             g_SysWork.playerCombat.isAiming     = false;
             playerChara->field_44.field_0                 = NO_VALUE;
 
-            g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk9;
+            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk9;
 
             playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
         }
@@ -843,18 +843,18 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         playerChara->damage.amount = SquareRoot0(vecSqr) * 64;
     }
 
-    if (!(g_SysWork.playerWork.player.properties.player.flags_11C & PlayerFlag_DamageReceived) &&
+    if (!(g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
         func_8005DC1C(Sfx_Unk1327, &playerChara->position, Q8(1.0f / 8.0f), 0);
 
         playerChara->properties.player.field_10C = 64;
-        g_SysWork.playerWork.player.properties.player.flags_11C |= PlayerFlag_DamageReceived;
+        g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_DamageReceived;
     }
 
     if (playerChara->damage.amount != Q12(0.0f))
     {
-        g_SysWork.playerWork.player.properties.player.flags_11C &= ~PlayerFlag_Unk2;
+        g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk2;
 
         playerChara->health -= playerChara->damage.amount;
         func_800893D0(playerChara->damage.amount);

@@ -119,8 +119,8 @@ typedef enum _PlayerState
     PlayerState_Unk53                     = 53, // Moving in cutscene?
     PlayerState_Unk54                     = 54, // Running in cutscene?
     PlayerState_Unk55                     = 55,
-    PlayerState_Unk56                     = 56,
-    PlayerState_Unk57                     = 57,
+    PlayerState_TurnRight                 = 56,
+    PlayerState_TurnLeft                  = 57,
     PlayerState_Unk58                     = 58,
     PlayerState_Unk59                     = 59, // Crouching in cutscenes/interactions?
     PlayerState_Unk60                     = 60, // Get up from crouching in cutscenes/interactions?

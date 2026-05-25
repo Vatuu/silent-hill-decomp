@@ -165,7 +165,7 @@ typedef struct _PropsPlayer
     /* 0x114 */ q19_12        gasWeaponPowerTimer; // Timer for the rock drill and chainsaw power.
     /* 0x118 */ s16           field_118; // q3_12?
     /* 0x11A */ s8            __pad_11A[2];
-    /* 0x11C */ s32           flags_11C; /** `e_PlayerFlags` */
+    /* 0x11C */ s32           flags; /** `e_PlayerFlags` */
     /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
     /* 0x122 */ q3_12         field_122; // Specially used when aiming an enemy. Y angle delta to target? 
     /* 0x124 */ q3_12         headingAngle;
