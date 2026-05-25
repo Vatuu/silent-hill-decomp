@@ -489,7 +489,7 @@ typedef struct _MapOverlayHeader
     /* 0xEC  */ bool                   (*playerMoveDistIsZero)(void);
     /* 0xF0  */ void                   (*playerMoveDistClear)(void);
     /* 0xF4  */ void                   (*playerFallBackward)(void);
-    /* 0xF8  */ void                   (*func_F8)();
+    /* 0xF8  */ void                   (*playerStub_F8)();
     /* 0xFC  */ void                   (*playerDamageFeetFront)(void);
     /* 0x100 */ void                   (*func_100)();
     /* 0x104 */ void                   (*func_104)();

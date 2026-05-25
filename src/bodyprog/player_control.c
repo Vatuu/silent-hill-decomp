@@ -6566,43 +6566,45 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     VECTOR3            offset;
     VECTOR3            sp30; // Q19.12
     VECTOR3            sp40; // Q19.12
-    q19_12             offsetX;
-    q19_12             offsetZ;
-    q3_12              offsetAlphaX;
-    q3_12              offsetAlphaZ;
-    q3_12              adjOffsetX;
-    q3_12              adjOffsetZ;
+    q19_12             moveOffsetX;
+    q19_12             moveOffsetZ;
+    q3_12              moveOffsetAlphaX;
+    q3_12              moveOffsetAlphaZ;
+    q3_12              adjMoveOffsetX;
+    q3_12              adjMoveOffsetZ;
     q19_12             adjMoveSpeed;
     s32                temp_s2_2;
     s32                temp_s3_2;
     q19_12             headingAngle;
-    s32                posY;
+    q19_12             posY;
     u32                temp;
 
     g_Player_PrevPosition = player->position;
 
+    // TODO: Similar block found in `sharedFunc_800D1C38_0_s00`. Maybe an inline?
+
     Collision_SurfaceGet(&surface, player->position.vx, player->position.vz);
 
     // Compute speed displacement.
-    offsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
-    offsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
+    moveOffsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
+    moveOffsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
 
     // Compute displacement alpha from ground slope.
-    offsetAlphaX = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
-    offsetAlphaZ = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
+    moveOffsetAlphaX = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
+    moveOffsetAlphaZ = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
 
     // Compute adjusted displacement.
-    adjOffsetX = Q12_MULT(Q12_MULT(offsetX, offsetAlphaX), offsetAlphaX);
-    adjOffsetZ = Q12_MULT(Q12_MULT(offsetZ, offsetAlphaZ), offsetAlphaZ);
+    adjMoveOffsetX = Q12_MULT(Q12_MULT(moveOffsetX, moveOffsetAlphaX), moveOffsetAlphaX);
+    adjMoveOffsetZ = Q12_MULT(Q12_MULT(moveOffsetZ, moveOffsetAlphaZ), moveOffsetAlphaZ);
 
     // Adjust speed according to displacement.
     if (player->moveSpeed >= Q12(0.0f))
     {
-        player->moveSpeed = Math_Vector2MagCalc(adjOffsetX, adjOffsetZ);
+        player->moveSpeed = Math_Vector2MagCalc(adjMoveOffsetX, adjMoveOffsetZ);
     }
     else
     {
-        player->moveSpeed = -Math_Vector2MagCalc(adjOffsetX, adjOffsetZ);
+        player->moveSpeed = -Math_Vector2MagCalc(adjMoveOffsetX, adjMoveOffsetZ);
     }
     adjMoveSpeed = Q12_MULT_PRECISE(player->moveSpeed, g_DeltaTime);
 
@@ -6633,7 +6635,9 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     // Special condition for school boss.
     if (g_SavegamePtr->mapIdx == MapIdx_MAP1_S05)
     {
-        if (D_800C45B0.vx != 0 && (DIFF_SIGN(sp30.vx, g_Player_CollisionResult.offset.vx) || abs(sp30.vx) >= ABS(g_Player_CollisionResult.offset.vx)))
+        if (D_800C45B0.vx != 0 &&
+            (DIFF_SIGN(sp30.vx, g_Player_CollisionResult.offset.vx) ||
+             abs(sp30.vx) >= ABS(g_Player_CollisionResult.offset.vx)))
         {
             sp40.vx = sp30.vx - g_Player_CollisionResult.offset.vx;
         }
@@ -6642,7 +6646,9 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
             sp40.vx = Q12(0.0f);
         }
 
-        if (D_800C45B0.vz != 0 && (DIFF_SIGN(sp30.vz, g_Player_CollisionResult.offset.vz) || abs(sp30.vz) >= ABS(g_Player_CollisionResult.offset.vz)))
+        if (D_800C45B0.vz != 0 &&
+            (DIFF_SIGN(sp30.vz, g_Player_CollisionResult.offset.vz) ||
+             abs(sp30.vz) >= ABS(g_Player_CollisionResult.offset.vz)))
         {
             sp40.vz = sp30.vz - g_Player_CollisionResult.offset.vz;
         }
@@ -6659,7 +6665,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     player->position.vz += g_Player_CollisionResult.offset.vz;
 
     if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunForward ||
-        g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight ||
+        g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight   ||
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunLeft)
     {
         player->properties.player.runTimer_108 += Math_Vector3MagCalc(g_Player_CollisionResult.offset.vx,
@@ -6688,18 +6694,20 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
         player->fallSpeed   = Q12(0.0f);
     }
 
-    adjOffsetZ = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx,
-                                         player->position.vz - g_Player_PrevPosition.vz) + Q12_ANGLE(360.0f));
+    adjMoveOffsetZ = Q12_ANGLE_NORM_U(ratan2(player->position.vx - g_Player_PrevPosition.vx,
+                                             player->position.vz - g_Player_PrevPosition.vz) +
+                                      Q12_ANGLE(360.0f));
 
-    if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward && g_SysWork.playerWork.extra.state < PlayerState_KickEnemy))
+    if (!(g_SysWork.playerWork.extra.state >= PlayerState_FallForward &&
+          g_SysWork.playerWork.extra.state <  PlayerState_KickEnemy))
     {
         if (!g_Player_IsInWalkToRunTransition)
         {
             posY = player->position.vy;
             if ((g_Player_CollisionResult.surface.groundHeight - posY) >= Q12(0.65f))
             {
-                if (ABS_DIFF(player->rotation.vy, adjOffsetZ) >= Q12_ANGLE(90.0f) &&
-                    ABS_DIFF(player->rotation.vy, adjOffsetZ) <  Q12_ANGLE(270.0f))
+                if (ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) >= Q12_ANGLE(90.0f) &&
+                    ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) <  Q12_ANGLE(270.0f))
                 {
                     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward)
                     {
@@ -8231,9 +8239,9 @@ void Game_PlayerMovementsReset(void) // 0x8007F1CC
     g_Player_IsInWalkToRunTransition = false;
 }
 
-void Player_DisableDamage(u8* playerIsDead, u8 disableDamage) // 0x8007F250
+void Player_DisableDamage(u8* isPlayerDead, u8 disableDamage) // 0x8007F250
 {
-    *playerIsDead          = g_Player_IsDead;
+    *isPlayerDead          = g_Player_IsDead;
     g_Player_DisableDamage = disableDamage;
 }
 

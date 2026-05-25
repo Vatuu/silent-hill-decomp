@@ -169,13 +169,13 @@ extern q19_12 sharedData_800E3A28_0_s00;
 extern q19_12 sharedData_800E3A2C_0_s00;
 
 // Used by `Stalker`/`LarvalStalker`.
-extern u8  sharedData_800DD5A6_0_s00;
-extern s32 sharedData_800E39E4_0_s00;
-extern s32 sharedData_800E39E8_0_s00;
-extern s32 sharedData_800E39EC_0_s00[];
-extern u16 sharedData_800E3A0C_0_s00[];  // Angles?
-extern q19_12 sharedData_800E3A18_0_s00; // Player X position?
-extern q19_12 sharedData_800E3A1C_0_s00; // Player Z position?
+extern u8     sharedData_800DD5A6_0_s00;
+extern s32    sharedData_800E39E4_0_s00;
+extern s32    sharedData_800E39E8_0_s00;
+extern s32    sharedData_800E39EC_0_s00[];
+extern u16    sharedData_800E3A0C_0_s00[]; // Angles?
+extern q19_12 sharedData_800E3A18_0_s00;   // Player X position?
+extern q19_12 sharedData_800E3A1C_0_s00;   // Player Z position?
 
 // Two variables used by `Creeper_Init`.
 extern s8 sharedData_800E57CC_1_s02;
@@ -195,9 +195,9 @@ extern s16 sharedData_800D5A8C_1_s05;
 extern u8 sharedData_800D5AAE_1_s05;
 extern u8 sharedData_800D5AAF_1_s05;
 
-extern u8      sharedData_800D5CF8_1_s05[9];
-extern u8      sharedData_800D5D08_1_s05[];
-extern VECTOR3 sharedData_800D8618_1_s05[];
+extern u8       sharedData_800D5CF8_1_s05[9];
+extern u8       sharedData_800D5D08_1_s05[];
+extern VECTOR3  sharedData_800D8618_1_s05[];
 extern SVECTOR3 sharedData_800D5A90_1_s05[]; // Q7.8
 
 extern s_sharedData_800D5AB0_1_s05 sharedData_800D5AB0_1_s05[];
@@ -348,7 +348,7 @@ extern s_800E330C sharedData_800E330C_0_s00[20];
 
 extern s_800E34FC sharedData_800E34FC_0_s00[60];
 
-extern const char* MAP_MESSAGES[]; // 0x800DF6B8
+extern const char* MAP_MESSAGES[];
 
 extern s_MapOverlayHeader_7C sharedData_800DEE50_1_s01;
 
@@ -536,6 +536,7 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
 /** Unsure which character this takes, stalker doesn't fit? */
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
 
+/** Returns something related to controller data. */
 s32 sharedFunc_800D929C_0_s00(void);
 
 /** @brief Gets the playback state of a character's active animation.

@@ -2547,7 +2547,7 @@ void func_8007F14C(u8 weaponAttack);
 /** Resets several global variables to 0. */
 void func_8007F1CC(void);
 
-void Player_DisableDamage(u8* ptr, u8 disableDamage);
+void Player_DisableDamage(u8* isPlayerDead, u8 disableDamage);
 
 /** Some kind of player anim state check. */
 bool Player_IsAttacking(void);

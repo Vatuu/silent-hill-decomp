@@ -15,22 +15,22 @@
 // NOTE: Huge PlayerState anim function, kept as separate file for now.
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CBAE4
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords)
 {
     s_CollisionSurface surface;
     VECTOR3            offset;
-    s32                headingAngle;
-    s16                temp_v0;
-    s32                temp_s0;
-    s32                moveDist;
-    s32                temp_s2;
-    s16                temp_s3;
+    q19_12             headingAngle;
+    q3_12              moveOffsetAlphaZ;
+    q19_12             moveOffsetZ;
+    q19_12             moveDist;
+    q19_12             moveOffsetX;
+    q3_12              moveOffsetAlphaX;
     s32                scaleRestoreShift;
     u32                scaleReduceShift;
-    s32                moveSpeed;
+    q19_12             moveSpeed;
     bool               cond;
-    s16                var_s0;
-    s16                var_v1;
+    q3_12              adjMoveOffsetX;
+    q3_12              adjMoveOffsetZ;
 
     cond = false;
     if (g_SysWork.playerWork.extra.state < PlayerState_Unk58)
@@ -56,43 +56,43 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         {
 #ifdef HAS_PlayerState_Unk128
             case PlayerState_Unk128:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk129
             case PlayerState_Unk129:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk109
             case PlayerState_Unk109:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk176
             case PlayerState_Unk176:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk59
             case PlayerState_Unk59:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk60
             case PlayerState_Unk60:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
 #ifdef HAS_PlayerState_Unk81
             case PlayerState_Unk81:
-                cond = 1;
+                cond = true;
                 break;
 #endif
 
@@ -103,7 +103,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #endif
 
             default:
-                cond = 0;
+                cond = false;
                 break;
         }
     }
@@ -118,44 +118,49 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     if (cond)
     {
-        Collision_SurfaceGet(&surface, chara->position.vx, chara->position.vz);
+        // TODO: Similar block found in `Player_PositionUpdate`. Maybe an inline?
 
-        temp_s2 = Math_Sin(chara->headingAngle);
-        temp_s2 = Q12_MULT(chara->moveSpeed, temp_s2);
-        temp_s0 = Math_Cos(chara->headingAngle);
-        temp_s0 = Q12_MULT(chara->moveSpeed, temp_s0);
+        Collision_SurfaceGet(&surface, player->position.vx, player->position.vz);
 
-        temp_s3 = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
-        temp_v0 = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
+        // Compute speed displacement.
+        moveOffsetX = Math_Sin(player->headingAngle);
+        moveOffsetX = Q12_MULT(player->moveSpeed, moveOffsetX);
+        moveOffsetZ = Math_Cos(player->headingAngle);
+        moveOffsetZ = Q12_MULT(player->moveSpeed, moveOffsetZ);
 
-        var_s0 = Q12_MULT(Q12_MULT(temp_s2, temp_s3), temp_s3);
-        var_v1 = Q12_MULT(Q12_MULT(temp_s0, temp_v0), temp_v0);
+        // Compute displacement alpha from ground slope.
+        moveOffsetAlphaX = Math_Cos(ABS(surface.tiltAngleX) >> 3); // `/ 8`.
+        moveOffsetAlphaZ = Math_Cos(ABS(surface.tiltAngleZ) >> 3); // `/ 8`.
+
+        // Compute adjusted displacement.
+        adjMoveOffsetX = Q12_MULT(Q12_MULT(moveOffsetX, moveOffsetAlphaX), moveOffsetAlphaX);
+        adjMoveOffsetZ = Q12_MULT(Q12_MULT(moveOffsetZ, moveOffsetAlphaZ), moveOffsetAlphaZ);
     }
     else
     {
-        var_s0 = Q12_MULT(chara->moveSpeed, Math_Sin(chara->headingAngle));
-        var_v1 = Q12_MULT(chara->moveSpeed, Math_Cos(chara->headingAngle));
+        adjMoveOffsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
+        adjMoveOffsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
     }
 
-    if (chara->moveSpeed >= 0)
+    if (player->moveSpeed >= Q12(0.0f))
     {
-        chara->moveSpeed = Math_Vector2MagCalc(var_s0, var_v1);
+        player->moveSpeed = Math_Vector2MagCalc(adjMoveOffsetX, adjMoveOffsetZ);
     }
     else
     {
-        chara->moveSpeed = -Math_Vector2MagCalc(var_s0, var_v1);
+        player->moveSpeed = -Math_Vector2MagCalc(adjMoveOffsetX, adjMoveOffsetZ);
     }
 
-    moveSpeed    = chara->moveSpeed;
-    headingAngle = chara->headingAngle;
-    moveDist      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
+    moveSpeed    = player->moveSpeed;
+    headingAngle = player->headingAngle;
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     offset.vx = Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
     offset.vz = Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
-    offset.vy = Q12_MULT_PRECISE(chara->fallSpeed, g_DeltaTime);
+    offset.vy = Q12_MULT_PRECISE(player->fallSpeed, g_DeltaTime);
 
     if (cond)
     {
@@ -167,48 +172,49 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #else
     #define UnkStruct g_Player_CollisionResult
 #endif
-        Collision_WallDetect(&UnkStruct, &offset, chara);
-        chara->position.vx += UnkStruct.offset.vx;
-        chara->position.vy += UnkStruct.offset.vy;
-        chara->position.vz += UnkStruct.offset.vz;
+        Collision_WallDetect(&UnkStruct, &offset, player);
+        player->position.vx += UnkStruct.offset.vx;
+        player->position.vy += UnkStruct.offset.vy;
+        player->position.vz += UnkStruct.offset.vz;
 
         if (UnkStruct.surface.groundType == GroundType_Default)
         {
-            UnkStruct.surface.groundHeight = chara->properties.player.groundHeight;
+            UnkStruct.surface.groundHeight = player->properties.player.groundHeight;
         }
 
-        if (chara->position.vy > UnkStruct.surface.groundHeight)
+        if (player->position.vy > UnkStruct.surface.groundHeight)
         {
-            chara->position.vy = UnkStruct.surface.groundHeight;
-            chara->fallSpeed   = Q12(0.0f);
+            player->position.vy = UnkStruct.surface.groundHeight;
+            player->fallSpeed   = Q12(0.0f);
         }
     }
     else
     {
-        chara->position.vx += offset.vx;
-        chara->position.vz += offset.vz;
+        player->position.vx += offset.vx;
+        player->position.vz += offset.vz;
 
         if (g_SysWork.playerWork.extra.state < PlayerState_Unk87 ||
-            (g_SysWork.playerWork.extra.state >= PlayerState_Unk89 && g_SysWork.playerWork.extra.state != PlayerState_Unk106))
+            (g_SysWork.playerWork.extra.state >= PlayerState_Unk89 &&
+             g_SysWork.playerWork.extra.state != PlayerState_Unk106))
         {
-            chara->position.vy = Q12(0.0f);
+            player->position.vy = Q12(0.0f);
         }
 
-        chara->fallSpeed = Q12(0.0f);
+        player->fallSpeed = Q12(0.0f);
     }
 
     if (g_DeltaTime == Q12(0.0f))
     {
-        chara->rotationSpeed.vy = Q12_ANGLE(0.0f);
+        player->rotationSpeed.vy = Q12_ANGLE(0.0f);
     }
     else
     {
-        chara->rotationSpeed.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime;
+        player->rotationSpeed.vy = FP_TO(sharedData_800E39D8_0_s00, Q8_SHIFT) / g_DeltaTime;
     }
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(chara->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(chara->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(chara->position.vz);
+    boneCoords[HarryBone_Root].coord.t[0] = Q12_TO_Q8(player->position.vx);
+    boneCoords[HarryBone_Root].coord.t[1] = Q12_TO_Q8(player->position.vy);
+    boneCoords[HarryBone_Root].coord.t[2] = Q12_TO_Q8(player->position.vz);
 }
 
 void sharedFunc_800D209C_0_s00(void)
@@ -688,23 +694,25 @@ void sharedFunc_800D2E6C_0_s00(void)
 void Player_FallBackward(void)
 {
 #if defined(MAP0_S01)
-    s_SubCharacter* playerChara;
+    s_SubCharacter* player;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.playerWork.player;
+    #define playerProps g_SysWork.playerWork.player.properties.player
+
+    player      = &g_SysWork.playerWork.player;
     playerExtra = &g_SysWork.playerWork.extra;
 
-    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(2.3f);
-    g_SysWork.playerWork.player.properties.player.headingAngle       = Q12_ANGLE(180.0f);
-    g_Player_HeadingAngle                                                   = Q12_ANGLE(180.0f);
+    playerProps.moveDistance_126 = Q12(2.3f);
+    playerProps.headingAngle     = Q12_ANGLE(180.0f);
+    g_Player_HeadingAngle        = Q12_ANGLE(180.0f);
 
-    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_FallBackward);
+    Player_ExtraStateSet(player, playerExtra, PlayerState_FallBackward);
+
+    #undef playerProps
 #endif
 }
 
-void sharedFunc_800D2E7C_0_s00(void)
-{
-}
+void Player_Stub_F8(void) {}
 
 void Player_DamageFeetFront(void)
 {

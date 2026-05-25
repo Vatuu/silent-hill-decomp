@@ -7,57 +7,57 @@
 #define incubusProps      incubus->properties.incubus
 #define localIncubusProps localIncubus->properties.incubus
 
-s32 func_800DD964(void) // 0x800DD964
+bool func_800DD964(void) // 0x800DD964
 {
-    u8 sp10;
+    u8 isPlayerDead;
 
-    Player_DisableDamage(&sp10, false);
-    return sp10;
+    Player_DisableDamage(&isPlayerDead, false);
+    return isPlayerDead;
 }
 
 void func_800DD98C(bool disableDamage) // 0x800DD98C
 {
-    u8 sp10;
+    u8 isPlayerDead;
 
-    Player_DisableDamage(&sp10, disableDamage);
+    Player_DisableDamage(&isPlayerDead, disableDamage);
 }
 
-void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
+void func_800DD9B0(s_SubCharacter* incubus) // 0x800DD9B0
 {
-    if (chara->model.controlState != 0)
+    if (incubus->model.controlState != IncubusControl_None)
     {
-        chara->model.controlState = 2;
-        chara->model.stateStep    = 0;
+        incubus->model.controlState = IncubusControl_2;
+        incubus->model.stateStep    = 0;
     }
     else
     {
-        chara->model.stateStep = 2;
+        incubus->model.stateStep = 2;
     }
 }
 
-void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
+void func_800DD9D4(s_SubCharacter* incubus) // 0x800DD9D4
 {
-    if (chara->model.controlState != 0)
+    if (incubus->model.controlState != IncubusControl_None)
     {
-        chara->model.controlState = 10;
-        chara->model.stateStep    = 0;
+        incubus->model.controlState = IncubusControl_10;
+        incubus->model.stateStep    = 0;
     }
     else
     {
-        chara->model.stateStep = 10;
+        incubus->model.stateStep = 10;
     }
 }
 
-void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
+void func_800DD9F8(s_SubCharacter* incubus) // 0x800DD9F8
 {
-    if (chara->model.controlState != 0)
+    if (incubus->model.controlState != IncubusControl_None)
     {
-        chara->model.controlState = 3;
-        chara->model.stateStep    = 0;
+        incubus->model.controlState = IncubusControl_3;
+        incubus->model.stateStep    = 0;
     }
     else
     {
-        chara->model.stateStep = 3;
+        incubus->model.stateStep = 3;
     }
 }
 
@@ -100,15 +100,15 @@ bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DD
     }
 
     activeStateStep = incubus->model.stateStep;
-    if (activeStateStep != IncubusStateStep_0)
+    if (activeStateStep != IncubusControl_None)
     {
-        incubus->model.stateStep = IncubusStateStep_0;
-        incubus->model.controlState     = activeStateStep;
+        incubus->model.stateStep    = 0;
+        incubus->model.controlState = activeStateStep;
     }
     else
     {
-        incubus->model.controlState     = IncubusControl_1;
-        incubus->model.stateStep = IncubusStateStep_0;
+        incubus->model.controlState = IncubusControl_1;
+        incubus->model.stateStep    = 0;
     }
 
     Chara_AnimSet(incubus, ANIM_STATUS(IncubusAnim_3, false), 338);
@@ -120,14 +120,14 @@ bool Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DD
     return true;
 }
 
-void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
+void func_800DDB3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords)
 {
-    func_800DD62C(&chara->position, chara, boneCoords);
+    func_800DD62C(&incubus->position, incubus, boneCoords);
 }
 
-void func_800DDB68(s_SubCharacter* chara, s32 soundIdx) // 0x800DDB68
+void func_800DDB68(s_SubCharacter* incubus, s32 soundIdx) // 0x800DDB68
 {
-    func_8005DC1C(D_800EC8C8[soundIdx].id_0, &chara->position, D_800EC8C8[soundIdx].volume_2.val16, 0);
+    func_8005DC1C(D_800EC8C8[soundIdx].id_0, &incubus->position, D_800EC8C8[soundIdx].volume_2.val16, 0);
 }
 
 s32 func_800DDBA4(s32 idx) // 0x800DDBA4
@@ -168,9 +168,9 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 
             if (newHealth < Q12(20.0f) && func_800DD964() == 0)
             {
-                incubus->health = Q12(0.0f);
+                incubus->health             = Q12(0.0f);
                 incubus->model.controlState = IncubusControl_12;
-                incubus->model.stateStep = IncubusStateStep_0;
+                incubus->model.stateStep    = 0;
                 incubusProps.someState_F0++;
             }
         }
@@ -186,9 +186,10 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
     s16 var_v0_2;
     s32 tmp;
 
-    temp_v0 = Math_AngleNormalizeSigned(ratan2(
-                                g_SysWork.playerWork.player.position.vx - incubus->position.vx,
-                                g_SysWork.playerWork.player.position.vz - incubus->position.vz) -
+    #define playerChara g_SysWork.playerWork.player
+
+    temp_v0 = Math_AngleNormalizeSigned(ratan2(playerChara.position.vx - incubus->position.vx,
+                                               playerChara.position.vz - incubus->position.vz) -
                             incubus->rotation.vy);
     var_v0  = ABS(temp_v0);
 
@@ -205,11 +206,13 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
             incubus->rotation.vy -= tmp;
         }
     }
+
+    #undef playerChara
 }
 
 void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         incubus->model.anim.status = ANIM_STATUS(IncubusAnim_1, false);
         incubus->model.stateStep++;
@@ -222,38 +225,38 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
 
     localIncubus = incubus;
 
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
-        incubus->model.anim.status        = ANIM_STATUS(IncubusAnim_2, false);
-        incubusProps.timer_E8 = Q12(0.0f);
+        incubus->model.anim.status = ANIM_STATUS(IncubusAnim_2, false);
+        incubusProps.timer_E8      = Q12(0.0f);
         incubus->model.stateStep++;
         return;
     }
 
     switch (incubus->model.stateStep)
     {
-        case IncubusStateStep_1:
+        case 1:
             if (incubusProps.timer_E8 >= Q12(1.5f))
             {
                 incubus->model.stateStep = 2;
             }
             break;
 
-        case IncubusStateStep_2:
+        case 2:
             if (incubusProps.timer_E8 >= Q12(2.5f))
             {
                 incubus->model.stateStep = 3;
             }
             break;
 
-        case IncubusStateStep_3:
+        case 3:
             if (incubusProps.timer_E8 >= Q12(3.5f))
             {
                 incubus->model.stateStep = 4;
             }
             break;
 
-        case IncubusStateStep_4:
+        case 4:
             if (incubusProps.timer_E8 >= Q12(4.5f))
             {
                 incubus->model.stateStep = 5;
@@ -272,7 +275,7 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
 
 void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         incubus->model.anim.status = ANIM_STATUS(IncubusAnim_4, false);
         incubus->model.stateStep++;
@@ -281,7 +284,7 @@ void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
 
 void func_800DDF14(s_SubCharacter* incubus) // 0x800DDF14
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         incubus->model.anim.status = ANIM_STATUS(IncubusAnim_4, false);
         incubus->model.stateStep++;
@@ -294,6 +297,8 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     VECTOR3         pos;
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
+
+    #define playerChara g_SysWork.playerWork.player
 
     localIncubus = incubus;
 
@@ -314,7 +319,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 1:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -337,7 +342,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 2:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -357,7 +362,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork.player.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -374,7 +379,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 3:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -403,7 +408,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 4:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -429,9 +434,11 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
         case 5:
             incubus->model.controlState = IncubusControl_11;
-            incubus->model.stateStep    = IncubusStateStep_0;
+            incubus->model.stateStep    = 0;
             break;
     }
+
+    #undef playerChara
 }
 
 void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DE2A4
@@ -441,12 +448,14 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
+    #define playerChara g_SysWork.playerWork.player
+
     localIncubus = incubus;
 
     if (incubus->model.stateStep == 0)
     {
         incubusProps.timer_E8 = Q12(1.5f);
-        incubus->flags                      &= ~CharaFlag_Hit;
+        incubus->flags       &= ~CharaFlag_Hit;
         incubus->model.stateStep++;
         return;
     }
@@ -461,7 +470,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 1:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -492,7 +501,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 2:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -513,7 +522,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork.player.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -530,7 +539,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 3:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -567,7 +576,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 4:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -593,10 +602,12 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
         case 5:
             incubus->model.controlState = IncubusControl_11;
-            incubus->model.stateStep    = IncubusStateStep_0;
-            incubus->flags              |= CharaFlag_Hit;
+            incubus->model.stateStep    = 0;
+            incubus->flags             |= CharaFlag_Hit;
             break;
     }
+
+    #undef playerChara
 }
 
 void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DE68C
@@ -607,9 +618,11 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
+    #define playerChara g_SysWork.playerWork.player
+
     localIncubus = incubus;
 
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         incubus->model.stateStep++;
         incubusProps.timer_E8 = Q12(1.5f);
@@ -626,7 +639,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 1:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -649,7 +662,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
         case 2:
             if (boneCoords)
             {
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
@@ -669,7 +682,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, g_SysWork.playerWork.player.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -686,15 +699,15 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
             if (boneCoords)
             {
                 s_D_800F48A8* ptr;
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = g_SysWork.playerWork.player.position.vx + ptr->velocityX_3C;
-                playerPos.vy = g_SysWork.playerWork.player.position.vy;
-                playerPos.vz = g_SysWork.playerWork.player.position.vz + ptr->velocityZ_40;
+                playerPos.vx = playerChara.position.vx + ptr->velocityX_3C;
+                playerPos.vy = playerChara.position.vy;
+                playerPos.vz = playerChara.position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x10))
                 {
@@ -721,15 +734,15 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
             if (boneCoords)
             {
                 s_D_800F48A8* ptr;
-                Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+                Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
                 pos.vx = Q8_TO_Q12(transformMat.t[0]);
                 pos.vy = Q8_TO_Q12(transformMat.t[1]);
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = g_SysWork.playerWork.player.position.vx + ptr->velocityX_3C;
-                playerPos.vy = g_SysWork.playerWork.player.position.vy;
-                playerPos.vz = g_SysWork.playerWork.player.position.vz + ptr->velocityZ_40;
+                playerPos.vx = playerChara.position.vx + ptr->velocityX_3C;
+                playerPos.vy = playerChara.position.vy;
+                playerPos.vz = playerChara.position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x51))
                 {
@@ -752,9 +765,11 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
         case 5:
             incubus->model.controlState = IncubusControl_11;
-            incubus->model.stateStep    = IncubusStateStep_0;
+            incubus->model.stateStep    = 0;
             break;
     }
+
+    #undef playerChara
 }
 
 void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DEA54
@@ -762,7 +777,7 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     func_800DDB3C(incubus, boneCoords);
 
     incubus->model.controlState           = IncubusControl_11;
-    incubus->model.stateStep              = IncubusStateStep_0;
+    incubus->model.stateStep              = 0;
     incubus->properties.incubus.field_EC |= 1 << 2;
 }
 
@@ -784,7 +799,7 @@ q19_12 func_800DEA90(void) // 0x800DEA90
 
 void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         incubusProps.timer_E8 = func_800DEA90();
         incubus->model.stateStep++;
@@ -796,16 +811,16 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
     // Handle state step.
     switch (incubus->model.stateStep)
     {
-        case IncubusStateStep_1:
+        case 1:
             if (incubusProps.timer_E8 <= Q12(0.0f))
             {
-                incubus->model.stateStep = IncubusStateStep_2;
+                incubus->model.stateStep = 2;
             }
             break;
 
-        case IncubusStateStep_2:
+        case 2:
             incubus->model.controlState = IncubusControl_7;
-            incubus->model.stateStep    = IncubusStateStep_0;
+            incubus->model.stateStep    = 0;
             break;
     }
 
@@ -816,7 +831,7 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
 {
     s_SubCharacter* localIncubus = incubus;
 
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
         {
@@ -832,7 +847,7 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
         {
             Savegame_EventFlagSet(EventFlag_578);
             incubus->model.controlState = IncubusControl_13;
-            incubus->model.stateStep    = IncubusStateStep_0;
+            incubus->model.stateStep    = 0;
         }
 
         localIncubusProps.timer_E8 -= g_DeltaTime;
@@ -841,7 +856,7 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
 
 void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
         {
@@ -928,7 +943,7 @@ void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
     if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_3, true))
     {
-        Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+        Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
         Vc_LookAtPositionYSet(Q12_MULT_FLOAT_PRECISE(Q8_TO_Q12(transformMat.t[1]), 0.65f));
     }
 }
@@ -938,9 +953,7 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
     s_CollisionResult collResult;
 
     incubus->fallSpeed += g_GravitySpeed;
-
     Chara_MovementUpdate(incubus, &collResult);
-
     incubus->rotation.vy = Math_AngleNormalizeSigned(incubus->rotation.vy);
 }
 
@@ -949,14 +962,14 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
     s32 prevSfxIdx;
     s32 sfxIdx;
 
-    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model.anim.status].playbackFunc
+    #define playbackFunc INCUBUS_ANIM_INFOS[incubus->model.anim.status].playbackFunc
 
     Math_MatrixTransform(&incubus->position, &incubus->rotation, boneCoords);
 
     prevSfxIdx = func_800DDBA4(FP_FROM(incubus->model.anim.time, Q12_SHIFT));
     if (incubus->model.anim.status != ANIM_STATUS(IncubusAnim_Still, false))
     {
-        animUpdateFunc(&incubus->model, anmHdr, boneCoords, &INCUBUS_ANIM_INFOS[incubus->model.anim.status]);
+        playbackFunc(&incubus->model, anmHdr, boneCoords, &playbackFunc);
     }
 
     sfxIdx = func_800DDBA4(FP_FROM(incubus->model.anim.time, Q12_SHIFT));
@@ -965,7 +978,7 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
         func_800DDB68(incubus, sfxIdx);
     }
 
-    #undef animUpdateFunc
+    #undef playbackFunc
 }
 
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DEF50
@@ -975,7 +988,7 @@ void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     q19_12 offsetX;
     q19_12 offsetZ;
 
-    Vw_CoordHierarchyMatrixCompute(&boneCoords[2], &transformMat);
+    Vw_CoordHierarchyMatrixCompute(&boneCoords[IncubusBone_2], &transformMat);
     offsetX = Q8_TO_Q12(transformMat.t[0]) - incubus->position.vx;
     offsetY = Q8_TO_Q12(transformMat.t[1]) - incubus->position.vy;
     offsetZ = Q8_TO_Q12(transformMat.t[2]) - incubus->position.vz;
@@ -1013,7 +1026,7 @@ void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DF044
 {
-    if (incubus->model.stateStep == IncubusStateStep_0)
+    if (incubus->model.stateStep == 0)
     {
         func_800DEC74(incubus, boneCoords);
     }
@@ -1037,7 +1050,8 @@ void func_800DF074(s_SubCharacter* incubus) // 0x800DF074
 
 void Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800DF0D8
 {
-    if ((incubus->model.controlState != IncubusControl_0 || Incubus_Init(incubus, boneCoords)) &&
+    if ((incubus->model.controlState != IncubusControl_None ||
+         Incubus_Init(incubus, boneCoords)) &&
         incubus->model.controlState != IncubusControl_1)
     {
         if (g_DeltaTime != Q12(0.0f))

@@ -5,7 +5,7 @@ extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
 void sharedFunc_800D209C_0_s00(void);
 
@@ -39,7 +39,7 @@ void sharedFunc_800D2E6C_0_s00(void);
 
 void Player_FallBackward(void);
 
-void sharedFunc_800D2E7C_0_s00(void);
+void Player_Stub_F8(void);
 
 void Player_DamageFeetFront(void);
 

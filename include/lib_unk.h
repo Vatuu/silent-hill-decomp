@@ -67,6 +67,7 @@ typedef struct
     u32 field_0_24  : 8;
 } s_SysWork_2514_0;
 
+// Related to controller data?
 typedef struct
 {
     s_SysWork_2514_0   field_0;
@@ -86,9 +87,9 @@ typedef struct _s_SysWork_2510
 {
     struct _s_SysWork_2510* next_0;
     u8                      key_4;
-    u8                      pad_5[3];
+    s8                      pad_5[3];
     s32                     field_8;
-    s32                     (*func_C)(s_SysWork_2514*, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
+    s32                     (*func_C)(s_SysWork_2514* ptr, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
