@@ -887,10 +887,10 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800E06
 
 void func_800E0728(s_SubCharacter* chara) // 0x800E0728
 {
-    s_CollisionResult sp10;
+    s_CollisionResult collResult;
 
     chara->fallSpeed += g_GravitySpeed;
-    func_8005C944(chara, &sp10);
+    Chara_MovementUpdate(chara, &collResult);
     chara->rotation.vy = Math_AngleNormalizeSigned(chara->rotation.vy);
 }
 

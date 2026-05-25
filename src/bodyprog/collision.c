@@ -2460,7 +2460,7 @@ bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to) /
     return trace->hasHit;
 }
 
-bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DA08
+bool Ray_CharaTraceQuery(s_RayTrace* trace, const VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DA08
 {
     s32              collCharaCount;
     s32              prevScratch;

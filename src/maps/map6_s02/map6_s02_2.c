@@ -1521,7 +1521,7 @@ void func_800D2364(void) // 0x800D2364
 
         ptr->field_8 = ptr->field_4;
 
-        setDrawTPage(ptr->field_8, 0, 0, getTPage(2, j >= 2 ? 2 : 1, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
+        setDrawTPage(ptr->field_8, 0, 0, getTPage(2, (j >= 2) ? 2 : 1, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
         AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_8);
 
         ptr->field_8++;

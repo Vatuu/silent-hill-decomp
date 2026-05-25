@@ -1453,7 +1453,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
 {
-    s_CollisionResult sp10;
+    s_CollisionResult collResult;
     VECTOR            damagePos; // Q19.12
     VECTOR            dir;       // Q19.12
     VECTOR            unkPos;
@@ -1489,7 +1489,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     nurse->headingAngle = ratan2(unkPosX, unkPosZ);
     nurse->fallSpeed   += g_GravitySpeed;
 
-    func_8005C944(nurse, &sp10);
+    Chara_MovementUpdate(nurse, &collResult);
 
     damagePosComp                 = nurseProps.damage.position.vx;
     nurse->moveSpeed              = nurseProps.moveSpeed;

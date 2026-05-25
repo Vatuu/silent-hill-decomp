@@ -935,11 +935,11 @@ void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
 
 void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
-    s_CollisionResult sp10;
+    s_CollisionResult collResult;
 
     incubus->fallSpeed += g_GravitySpeed;
 
-    func_8005C944(incubus, &sp10);
+    Chara_MovementUpdate(incubus, &collResult);
 
     incubus->rotation.vy = Math_AngleNormalizeSigned(incubus->rotation.vy);
 }

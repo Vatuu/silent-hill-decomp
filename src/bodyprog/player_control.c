@@ -2624,12 +2624,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x1))
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &g_SysWork.playerCombat, 0x238, Q12(10.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &g_SysWork.playerCombat, 0x238, Q12(3.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
             else

@@ -309,8 +309,8 @@ typedef struct _PropsGroaner
     /* 0xE8  */ u_Property flags; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
     /* 0xEC  */ q3_12      targetHeadingAngle;
     /* 0xEE  */ q3_12      flexAngle;
-    /* 0xF0  */ q3_12      field_F0;
-    /* 0xF2  */ q3_12      field_F2;
+    /* 0xF0  */ q3_12      field_F0; // } XZ offset?
+    /* 0xF2  */ q3_12      field_F2; // }
     /* 0xF4  */ q19_12     targetPositionX;
     /* 0xF8  */ q19_12     targetPositionZ;
     /* 0xFC  */ q3_12      angleToTarget;

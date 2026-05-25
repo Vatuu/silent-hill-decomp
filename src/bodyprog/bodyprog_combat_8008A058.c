@@ -12,27 +12,28 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
-s16 D_800AFD1C[] = // Used by `func_8008A3E0`.
+// Used by `func_8008A3E0`. TODO: Are they really angles?
+q3_12 D_800AFD1C[] =
 {
-    0x1000, 0x1000, 0x800, 0x555,
-    0x400,  0x333,  0x2AA, 0x249,
-    0x200,  0x1C7,  0x199, 0x174,
-    0x155,  0x13B,  0x124, 0x111
+    Q12_ANGLE(360.0f), Q12_ANGLE(360.0f), Q12_ANGLE(180.0f), Q12_ANGLE(120.0f),
+    Q12_ANGLE(90.0f),  Q12_ANGLE(72.0f),  Q12_ANGLE(60.0f),  Q12_ANGLE(51.5f),
+    Q12_ANGLE(45.0f),  Q12_ANGLE(40.0f),  Q12_ANGLE(36.0f),  0x174,
+    Q12_ANGLE(30.0f),  0x13B,             0x124,             Q12_ANGLE(24.0f)
 };
 
 // ========================================
 // COMBAT RELATED?
 // ========================================
-// Will: Possibly combat? I only found that breaking `func_8008A3E0` and `func_8008B714`
+// Will: Possibly combat? I only found that stubbing `func_8008A3E0` and `func_8008B714`
 // makes enemies unable to perform any attack. Also there are some sound related functions,
 // they seem to be specifically done for something related to weapons in the inventory.
 
 u32 func_8008A058(s32 arg0) // 0x8008A058
 {
     register s32  temp_t0 asm("t0");
-    register u32  var_t1 asm("t1");
-    register u32  var_t2 asm("t2");
-    register s16* ptr asm("t3");
+    register u32  var_t1  asm("t1");
+    register u32  var_t2  asm("t2");
+    register s16* ptr     asm("t3");
 
     var_t1 = 0;
 
@@ -51,7 +52,7 @@ u32 func_8008A058(s32 arg0) // 0x8008A058
         var_t1 = arg0;
 
         var_t2 &= 0x1E;
-        temp_t0 = var_t2 - 0x18;
+        temp_t0 = var_t2 - 24;
 
         var_t2 = -temp_t0;
 
@@ -124,7 +125,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
         mapAnimInfos  = g_MapOverlayHeader.harryMapAnimInfos;
 
         modelAnim->baseAnimInfos      = baseAnimInfos;
-        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);  // TODO: 38 is the first anim after base anims. Make a constant?
+        modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first Harry anim after base anims. Make a constant?
         modelAnim->mapAnimInfos       = mapAnimInfos;
 
         modelAnim                     = &g_SysWork.playerWork.extra.model.anim;
@@ -366,16 +367,16 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                var_a0;
     s_AnimInfo*        anim;
     s_SubCharacter*    ptr;
-    bool              hasHit;
+    bool               hasHit;
     s32                temp_t3_2;
     s32                temp2;
     s32                temp3;
     s32                temp4;
     s32                temp5;
     s32                temp6;
-    static s_RayTrace D_800C4728;
-    static DVECTOR D_800C4748[4];
-    static VECTOR3 D_800C4758[4];
+    static s_RayTrace  D_800C4728;
+    static DVECTOR     D_800C4748[4];
+    static VECTOR3     D_800C4758[4];
 
     sp30 = NO_VALUE;
     Chara_Flag8Set(chara);

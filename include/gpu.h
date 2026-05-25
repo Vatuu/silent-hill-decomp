@@ -28,24 +28,23 @@ typedef enum _BlendMode
     BlendMode_Subtractive = 2
 } e_BlendMode;
 
-/** @brief Primitive types. */
-enum PrimType
+/** @brief Primitive flags.
+ * TODO: Could split these into 3 enums and create a `PRIM_CODE` macro for convenient packing.
+ */
+typedef enum _PrimitiveFlags
 {
-    PRIM_POLY = 0x20, /** Polygon (`POLY`). */
-    PRIM_LINE = 0x40, /** Line (`LINE`). */
-    PRIM_RECT = 0x60  /** Rectangle (`TILE` or `SPRT`). */
-};
+    RECT_MODULATE = 1 << 0, /** Use primitive color to modulate texture. */
+    RECT_BLEND    = 1 << 1, /** Semi-transparency flag. */
+    RECT_TEXTURE  = 1 << 2, /** Rectangle is textured (`SPRT`). */
 
-/** @brief Primitive rectangle flags. */
-enum PrimRectFlags
-{
-    RECT_SIZE_16  = (1 << 3) | (1 << 4), /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
-    RECT_SIZE_8   = 1 << 4,              /** Rectangle is 8x8 (`TILE_8` or `SPRT_8`). */
-    RECT_SIZE_1   = 1 << 3,              /** Rectangle is 1x1 (`TILE_1`). */
-    RECT_TEXTURE  = 1 << 2,              /** Rectangle is textured (`SPRT`). */
-    RECT_BLEND    = 1 << 1,              /** Semi-transparency flag. */
-    RECT_MODULATE = 1 << 0               /** Use primitive color to modulate texture. */
-};
+    RECT_SIZE_1   = 1 << 3, /** Rectangle is 1x1 (`TILE_1`). */
+    RECT_SIZE_8   = 2 << 3, /** Rectangle is 8x8 (`TILE_8` or `SPRT_8`). */
+    RECT_SIZE_16  = 3 << 3, /** Rectangle is 16x16 (`TILE_16` or `SPRT_16`). */
+
+    PRIM_POLY     = 1 << 5, /** Polygon (`POLY`). */
+    PRIM_LINE     = 2 << 5, /** Line (`LINE`). */
+    PRIM_RECT     = 3 << 5  /** Rectangle (`TILE` or `SPRT`). */
+} e_PrimitiveFlags;
 
 /** @brief 2D screen-space line. */
 typedef struct _Line2d

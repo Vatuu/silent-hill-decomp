@@ -30,8 +30,8 @@ void func_80066D90(void) // 0x80066D90
         setlen(var2, 3);
 
         setRGBC0(var2, 8, 8, 8, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
-        setXY0Fast(var2, -160, -224);
-        setWHFast(var2, 320, 448);
+        setXY0Fast(var2, -(SCREEN_WIDTH / 2), -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+        setWHFast(var2, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2);
         DrawPrim(var2);
 
         Fs_QueueUpdate();

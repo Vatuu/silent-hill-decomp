@@ -1805,7 +1805,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
 void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara);
 
-s32 func_8005C944(s_SubCharacter* chara, s_CollisionResult* collResult);
+s32 Chara_MovementUpdate(s_SubCharacter* chara, s_CollisionResult* collResult);
 
 s32 func_8005D86C(s32 arg0);
 
@@ -2104,9 +2104,11 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
 
 u32 func_8008A058(s32 arg0);
 
-s32 func_8008A0CC(void); /** Returns 0. */
+/** @brief @unused Returns 0. */
+s32 func_8008A0CC(void);
 
-s64 func_8008A0D4(void); /** Returns 0. */
+/** @brief @unused Returns 0. */
+s64 func_8008A0D4(void);
 
 /** Anim infos setup for character. */
 s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused, q3_12 angle0, q3_12 angle1);
@@ -2227,7 +2229,8 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
-bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* from, u32 npcIdx, q19_12 angleConstraint);
+bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,
+                   u32 npcIdx, q19_12 angleConstraint);
 
 bool func_80060044(POLY_FT4** poly, s32 idx);
 

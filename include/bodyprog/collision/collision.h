@@ -549,7 +549,7 @@ void func_8006D7EC(s_CollisionCharaMovement* arg0, SVECTOR* arg1, SVECTOR* arg2)
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 
 /** Ray function. */
-bool Ray_CharaTraceQuery(s_RayTrace* trace, VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
+bool Ray_CharaTraceQuery(s_RayTrace* trace, const VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara);
 
 void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist);
 

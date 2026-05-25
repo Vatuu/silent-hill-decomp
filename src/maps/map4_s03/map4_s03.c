@@ -2942,7 +2942,7 @@ void func_800D55C8(s_SubCharacter* twinfeeler) // 0x800D55C8
 
     if (!(twinfeelerProps.flags & TwinfeelerFlag_Underground))
     {
-        func_8005C944(twinfeeler, &collResult);
+        Chara_MovementUpdate(twinfeeler, &collResult);
     }
 
     posComp                            = twinfeelerProps.damage.position.vx;
