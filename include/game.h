@@ -135,13 +135,6 @@ typedef enum _SyncMode
     SyncMode_Wait8     = 8
 } e_SyncMode;
 
-typedef enum _DmsIntervalState
-{
-    DmsIntervalState_Interpolating = 0,
-    DmsIntervalState_SingleFrame   = 1,
-    DmsIntervalState_Ending        = 2
-} e_DmsIntervalState;
-
 /** @brief Paper map indices. Used for the navigation map screen. */
 typedef enum _PaperMapIdx
 {

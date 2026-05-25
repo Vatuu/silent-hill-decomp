@@ -1415,7 +1415,7 @@ func_8008BF84                                = 0x8008D9A0; // type:func
 //------------------------------------------------------
 Dms_HeaderFixOffsets                         = 0x8008E3BC; // type:func
 Dms_EntryFixOffsets                          = 0x8008E460; // type:func
-Dms_IntervalGet                              = 0x8008E47C; // type:func
+Dms_SegmentGet                               = 0x8008E47C; // type:func
 Dms_CharacterTransformGet                    = 0x8008E490; // type:func
 Dms_CharacterFindIdxByName                   = 0x8008E52C; // type:func
 Dms_CharacterTransformGetByIdx               = 0x8008E5AC; // type:func
@@ -1424,9 +1424,9 @@ Dms_FovScaleGet                              = 0x8008E7D8; // type:func
 Dms_CameraTargetGet                          = 0x8008E838; // type:func
 Dms_RotationsCompare                         = 0x8008E970; // type:func
 Dms_CameraKeyframeInterpolate                = 0x8008EA08; // type:func
-Dms_CameraKeyframeInterpGet                  = 0x8008EBEC; // type:func
-Dms_IntervalStateGet                         = 0x8008ECE0; // type:func
-Dms_CameraRelKeyframeIdxGet                  = 0x8008ED4C; // type:func
+Dms_KeyframeInterpGet                        = 0x8008EBEC; // type:func
+Dms_SegmentStateGet                          = 0x8008ECE0; // type:func
+Dms_KeyframeIdxGet                           = 0x8008ED4C; // type:func
 Dms_AngleLerp                                = 0x8008EDF0; // type:func
 
 //--------------------------------------------------------
