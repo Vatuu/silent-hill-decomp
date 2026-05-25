@@ -11,7 +11,7 @@ doc: |
   The header contains a table of objects, each with a name, ID, and offset to
   its body. Each body contains vertex and primitive data.
 
-  Note that the vertices are stored untransformed; the anm format is necessary
+  Note that the vertices are stored untransformed and the ANM format is necessary
   to render the model correctly.
 
 seq:
@@ -27,13 +27,13 @@ seq:
     type: u4
     valid: 0x14
 
-  - id: num_objs
+  - id: obj_count
     type: u4
 
-  - id: objs_ofs
+  - id: objs_offset
     type: u4
 
-  - id: id_table_ofs
+  - id: id_table_offset
     type: u4
 
   - id: name
@@ -41,16 +41,16 @@ seq:
 
 instances:
   objs:
-    pos: objs_ofs
+    pos: objs_offset
     type: obj
     repeat: expr
-    repeat-expr: num_objs
+    repeat-expr: obj_count
 
   id_table:
-    pos: id_table_ofs
+    pos: id_table_offset
     type: u1
     repeat: expr
-    repeat-expr: num_objs
+    repeat-expr: obj_count
 
 types:
   obj:
@@ -87,45 +87,45 @@ types:
 
   obj_body:
     seq:
-      - id: num_prims
+      - id: prim_count
         type: u1
-      - id: num_vertices
+      - id: vertex_count
         type: u1
-      - id: num_normals
+      - id: normal_count
         type: u1
       - type: u1
-      - id: prims_ofs
+      - id: prims_offset
         type: u4
-      - id: vertex_xy_ofs
+      - id: vertex_xy_offset
         type: u4
-      - id: vertex_z_ofs
+      - id: vertex_z_offset
         type: u4
-      - id: normals_ofs
+      - id: normals_offset
         type: u4
-      - id: next_ofs
+      - id: next_offset
         type: u4
 
     instances:
       prims:
-        pos: prims_ofs
+        pos: prims_offset
         type: index_packet
         repeat: expr
-        repeat-expr: num_prims
+        repeat-expr: prim_count
       vertex_xy:
-        pos: vertex_xy_ofs
+        pos: vertex_xy_offset
         type: s2
         repeat: expr
-        repeat-expr: num_vertices * 2
+        repeat-expr: vertex_count * 2
       vertex_z:
-        pos: vertex_z_ofs
+        pos: vertex_z_offset
         type: s2
         repeat: expr
-        repeat-expr: num_vertices
+        repeat-expr: vertex_count
       normals:
-        pos: normals_ofs
+        pos: normals_offset
         type: svector
         repeat: expr
-        repeat-expr: num_normals
+        repeat-expr: normal_count
 
   index_packet:
     seq:
@@ -196,7 +196,7 @@ types:
       z:
         value: z_int.as<f4> / 128.0
       length_sq:
-        value: x*x + y*y + z*z
+        value: (x * x) + (y * y) + (z * z)
 
   clut_index:
     seq:
@@ -205,6 +205,6 @@ types:
 
     instances:
       x:
-        value: (value & 0x3f) * 0x10
+        value: (value & 0x3F) * 0x10
       y:
         value: (value >> 6) & 0x1FF

@@ -440,4 +440,3 @@ types:
 
       - id: count
         type: u1
-
