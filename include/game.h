@@ -643,15 +643,4 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateSteps[0] = 0;
 }
 
-/** @brief Checks a flag state is `true` in the array of 16-bit flags.
- *
- * @param flags Flag array.
- * @param flagIdx Flag index.
- */
-static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
-{
-    // @bug `>> 5` divides `flagId` by 32 to get array index, but array contains 16-bit values. Maybe copy-paste from `u32` version of func.
-    return (flags[flagIdx >> 5] >> (flagIdx & 0x1F)) & (1 << 0);
-}
-
 #endif

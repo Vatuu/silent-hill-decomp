@@ -24,7 +24,7 @@ void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
     dmsHdr->isLoaded = true;
 
     // Add memory address of DMS header to offsets in `dmsHdr`.
-    dmsHdr->segments   = (u8*)dmsHdr->segments  + (u32)dmsHdr;
+    dmsHdr->segments   = (u8*)dmsHdr->segments   + (u32)dmsHdr;
     dmsHdr->characters = (u8*)dmsHdr->characters + (u32)dmsHdr;
 
     Dms_EntryFixOffsets(&dmsHdr->camera, dmsHdr);

@@ -5,6 +5,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/events/events_main.h"
+#include "bodyprog/game_boot/game_load.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/screen/vsync.h"
@@ -13,22 +15,19 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
 #include "bodyprog/sound/sound_system.h"
-#include "screens/b_konami/b_konami.h"
-
-#include "bodyprog/memcard.h"
 #include "bodyprog/sys/game_main.h"
+#include "screens/b_konami/b_konami.h"
+#include "screens/credits/credits.h"
+#include "screens/options.h"
 #include "screens/saveload.h"
+#include "screens/stream/stream.h"
 
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
 
 s32 g_Demo_FrameCount = 0;
-s32 g_WarmBootTimer = 0;
-
-// ========================================
-// STATIC VARIABLES
-// ========================================
+s32 g_WarmBootTimer   = 0;
 
 static s32 g_PrevVBlanks = 0;
 
@@ -65,7 +64,7 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
 };
 
 // ========================================
-// MAINLOOP
+// MAIN LOOP
 // ========================================
 
 void GameState_Boot_Update(void) // 0x80032D1C
@@ -144,10 +143,9 @@ void GameState_Boot_Update(void) // 0x80032D1C
 
 void MainLoop(void) // 0x80032EE0
 {
-    #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
-    #define H_BLANKS_PER_SECOND  15780
-    #define H_BLANKS_PER_TICK    (H_BLANKS_PER_SECOND / TICKS_PER_SECOND) // 263
-
+    #define TICKS_PER_SECOND_MIN              (TICKS_PER_SECOND / 4)
+    #define H_BLANKS_PER_SECOND               15780
+    #define H_BLANKS_PER_TICK                 (H_BLANKS_PER_SECOND / TICKS_PER_SECOND)                    // 263
     #define H_BLANKS_TO_SEC_CONVERSION_FACTOR ((float)Q12(1.0f) / (float)H_BLANKS_PER_SECOND)             // 0.25956907477f
     #define H_BLANKS_PER_FRAME_MIN            (H_BLANKS_PER_SECOND / TICKS_PER_SECOND_MIN)                // 1052
     #define H_BLANKS_Q12_TO_SEC_SCALE         (s32)(H_BLANKS_TO_SEC_CONVERSION_FACTOR * (float)Q12(1.0f)) // 1063

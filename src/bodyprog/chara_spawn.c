@@ -15,7 +15,8 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,
+                s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
     Fs_CharaAnimDataAlloc(modelIdx + 1, charaId, NULL, boneCoords);
     WorldGfx_CharaLmBufferAssign(forceFree);

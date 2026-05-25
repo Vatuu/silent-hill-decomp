@@ -1,6 +1,7 @@
 #ifndef _BODYPROG_DMS_H
 #define _BODYPROG_DMS_H
 
+/** @brief DMS cutscene segment states. */
 typedef enum _DmsSegmentState
 {
     DmsSegmentState_Interpolating = 0,
@@ -14,7 +15,7 @@ typedef struct _DmsKeyframeCamera
     /* 0x0 */ SVECTOR3 positionTarget; /** Q7.8 */
     /* 0x6 */ SVECTOR3 lookAtTarget;   /** Q7.8 */
     /* 0xC */ q3_12    cameraUnkAngle; // @unused Unknown angle, lerped between keyframes.
-    /* 0xE */ q3_12    projectionDist; // Projection distance, passed to `vcChangeProjectionValue`, might be FOV related?
+    /* 0xE */ q3_12    projectionDist; // Projection distance. passed to `vcChangeProjectionValue`. Might be FOV related?
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
@@ -26,8 +27,9 @@ typedef struct _DmsKeyframeCharacter
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
-/** @brief Maps the inclusive frame range [startFrameIdx, endFrameIdx] to a single keyframe.
- * Likely used for frames where a character/camera has no movement, and can stay set to a single keyframe. */
+/** @brief Maps the inclusive frame range `[startFrameIdx, endFrameIdx]` to a single keyframe.
+ * Likely used for frames where a character or camera has no movement and can remain set to a single keyframe.
+ */
 typedef struct _DmsHoldRange
 {
     /* 0x0 */ s16 startFrameIdx;
@@ -41,9 +43,9 @@ typedef struct _DmsEntry
 {
     /* 0x0 */ s16             keyframeCount;
     /* 0x2 */ u8              holdRangeCount; /** `holdRanges` array size. */
-    /* 0x3 */ u8              field_3;         // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
-    /* 0x4 */ char            name[4];         // First 4 `char`s of name. E.g. If code checks for "DAHLIA", file is "DAHL".
-    /* 0x8 */ s_DmsHoldRange* holdRanges;      /** Ranges of frames that map to a single keyframe, compressing repeated data. */
+    /* 0x3 */ u8              field_3;        // Usually 0, but sometimes filled in. Possibly junk data left in padding byte.
+    /* 0x4 */ char            name[4];        // First 4 `char`s of the name. E.g. If code checks for "DAHLIA", file is "DAHL".
+    /* 0x8 */ s_DmsHoldRange* holdRanges;     /** Ranges of frames that map to a single keyframe, compressing repeated data. */
               union
               {
                   s_DmsKeyframeCharacter* character;

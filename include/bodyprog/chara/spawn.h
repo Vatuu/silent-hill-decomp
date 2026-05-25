@@ -14,7 +14,8 @@
  * @param lmHdr LM file header.
  * @param tex Model texture.
  */
-bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
+bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,
+                s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** @brief Processes character model loads. */
 bool Chara_ProcessLoads(void);
@@ -51,5 +52,14 @@ void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
  * @param spawnFlags Spawn flags to set (`e_SpawnFlags`).
  */
 void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags);
+
+/** @brief Sets a character's spawn position.
+ *
+ * @param charaId ID of the character spawn to update.
+ * @param spawnIdx Spawn index.
+ * @param posX X position. 
+ * @param posZ Z position. 
+ */
+void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
 
 #endif

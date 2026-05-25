@@ -1158,9 +1158,6 @@ void func_80032CE8(void);
 
 void func_80032D1C(void);
 
-/** Bodyprog entrypoint. Called by `main`. */
-void MainLoop(void);
-
 void func_8003943C(void);
 
 /** `SysState_Fmv` update function.
@@ -2640,29 +2637,15 @@ s32 Math_MagnitudeShiftGet(s32 mag);
 
 u32 func_8008A2E0(s32 arg0);
 
-void GameState_Boot_Update(void);
-void GameState_MovieIntroFadeIn_Update(void);
-void GameState_AutoLoadSavegame_Update(void);
-void GameState_MovieIntroAlternate_Update(void);
-void GameState_MovieIntro_Update(void);
-void GameState_MainMenu_Update(void);
-void GameState_MovieOpening_Update(void);
-void GameState_LoadScreen_Update(void);
-void GameState_InGame_Update(void);
-void GameState_MapEvent_Update(void);
-void GameState_ExitMovie_Update(void);
-void GameState_ItemScreens_Update(void);
-void GameState_PaperMapScreen_Update(void);
-void GameState_LoadSavegameScreen_Update(void);
-void GameState_DebugMoviePlayer_Update(void);
-void GameState_Options_Update(void);
-void GameState_LoadMapScreen_Update(void);
-void GameState_Unk15_Update(void);
-
-/** Handles character spawn? */
-void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
-
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);
+
+// TODO: Move these to new headers.
+
+void GameState_MainMenu_Update(void);
+void GameState_InGame_Update(void);
+void GameState_MapEvent_Update(void);
+void GameState_PaperMapScreen_Update(void);
+void GameState_LoadMapScreen_Update(void);
 
 #endif
