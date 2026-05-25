@@ -176,18 +176,18 @@ STATIC_ASSERT_SIZEOF(s_PropsPlayer, 64);
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
-    q19_12      health_0;
-    s32         field_4;
-    s32         field_8;
-    s32         field_C;
-    s8          unk_10[8];
-    s32         field_18;
-    s32         idx_1C;
-    s32         field_20;
-    s_AnimInfo* animInfo_24;
-    s8          unk_28[4];
-    q19_12      field_2C;
-    s8          unk_30[4];
+    /* 0x0  */ q19_12      health_0;
+    /* 0x4  */ s32         field_4;
+    /* 0x8  */ s32         field_8;
+    /* 0xC  */ s32         field_C;
+    /* 0x10 */ s8          unk_10[8];
+    /* 0x18 */ s32         field_18;
+    /* 0x1C */ s32         idx_1C;
+    /* 0x20 */ s32         field_20;
+    /* 0x24 */ s_AnimInfo* animInfo_24;
+    /* 0x28 */ s8          unk_28[4];
+    /* 0x2C */ q19_12      field_2C;
+    /* 0x30 */ s8          unk_30[4];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 52);
 
