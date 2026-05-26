@@ -5,6 +5,17 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
+/** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
+
+
 struct _IpdCollisionData;
 
 /** @brief Global collision flags.
@@ -113,7 +124,7 @@ typedef struct
     /* 0x0  */ DVECTOR_XZ field_0;
     /* 0x4  */ DVECTOR_XZ field_4;
     /* 0x8  */ u32        field_8;
-    /* 0xC  */ s32        field_C;
+    /* 0xC  */ s32        field_C; // Radius?
     /* 0x10 */ s16        field_10;
     /* 0x12 */ s8         __pad_12[2];
     /* 0x14 */ DVECTOR_XZ field_14;
@@ -121,19 +132,19 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0  */ struct _IpdCollisionData* ipdCollisionData_0;
-    /* 0x4  */ u8                        field_4; // Index.
-    /* 0x5  */ u8                        field_5;
-    /* 0x6  */ SVECTOR3                  field_6; // Q7.8 | Probe position?
-    /* 0xC  */ s_CollisionState_CC_C     field_C;
-    /* 0xE  */ u8                        field_E;
-    /* 0xF  */ u8                        field_F;
-    /* 0x10 */ u8                        field_10;
-    /* 0x11 */ u8                        field_11;
-    /* 0x12 */ SVECTOR3                  field_12;
-    /* 0x18 */ SVECTOR3                  field_18;
-    /* 0x1E */ s8                        unk_1E[2];
-    /* 0x20 */ s_CollisionState_CC_20    field_20;
+    /* 0x0  */ s_IpdCollisionData*    ipdCollisionData_0;
+    /* 0x4  */ u8                     field_4; // `s_IpdCollisionData::ptr_14` Index.
+    /* 0x5  */ u8                     field_5;
+    /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
+    /* 0xC  */ s_CollisionState_CC_C  field_C;
+    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
+    /* 0xF  */ u8                     field_F;  // }
+    /* 0x10 */ u8                     field_10; // } Index from `s_IpdCollisionData::field_6_5`.
+    /* 0x11 */ u8                     field_11; // }
+    /* 0x12 */ SVECTOR3               collPoint_12; // Data from `s_IpdCollisionData::collPoints`
+    /* 0x18 */ SVECTOR3               collPoint_18; // Data from `s_IpdCollisionData::collPoints`
+    /* 0x1E */ s8                     unk_1E[2];
+    /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionState_CC;
 STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
@@ -334,16 +345,6 @@ extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 extern u16 g_CollisionTriggerFlags;
 
-/** @brief Computes a trigger height from half-meter height steps.
- *
- * @note The trigger height has a default offset of `Q12(-1.5f)`.
- *
- * @param steps Half-meter height steps.
- * @return Trigger height (Q19.12).
- */
-#define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
-
 /** @brief Initializes the collision subsystem, resetting flags and clearing the trigger zone count. */
 void Collision_Init(void);
 
@@ -500,10 +501,10 @@ void func_8006B9C8(s_CollisionState* collState);
 
 void func_8006BB50(s_CollisionState* collState, s32 arg1);
 
-s32 func_8006BC34(s_CollisionState* collState);
+q23_8 func_8006BC34(s_CollisionState* collState);
 
 /** `arg3` and `arg4` might be XY or XZ position components. */
-void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q3_12 deltaZ, s16 arg5);
+void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7_8 distZ, q7_8 arg5);
 
 void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY);
 

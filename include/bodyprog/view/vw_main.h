@@ -52,7 +52,7 @@ void vwSetViewInfo(void);
  * @param angleConstrainMin Minimum angle constraint.
  * @param angleConstraintMax Maximum angle constraint.
  */
-void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintMin, q3_12 angleConstraintMax);
+void Vw_ClampAngleRange(q7_8* angleMin, q7_8* angleMax, q7_8 angleConstraintMin, q7_8 angleConstraintMax);
 
 /** @brief Computes the parametric intersection ratio of a line segment against a bounded interval.
  * Used in collision to compute how far a moving edge must be clipped.

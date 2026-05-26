@@ -23,15 +23,15 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_10, 12);
 
 typedef struct
 {
-    /* 0x0+0  */ q3_12 field_0_0  : 14;
-    /* 0x0+14 */ u16   field_0_14 : 2;
-    /* 0x2+0  */ s16   field_2_0  : 14;
-    /* 0x2+14 */ u16   field_2_14 : 2;
-    /* 0x4    */ s16   field_4;
-    /* 0x6    */ u8    field_6;
-    /* 0x7    */ u8    field_7;
-    /* 0x8    */ u8    field_8;
-    /* 0x9    */ u8    field_9;
+    /* 0x0+0  */ q7_8 field_0_0  : 14; // X.
+    /* 0x0+14 */ u16  field_0_14 : 2;
+    /* 0x2+0  */ q7_8 field_2_0  : 14; // Y.
+    /* 0x2+14 */ u16  field_2_14 : 2;
+    /* 0x4    */ q7_8 field_4;         // Z.
+    /* 0x6    */ u8   field_6; // Index of `collPoints`.
+    /* 0x7    */ u8   field_7; // Index of `collPoints`.
+    /* 0x8    */ u8   field_8;
+    /* 0x9    */ u8   field_9;
 } s_IpdCollisionData_14;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
 
@@ -54,15 +54,18 @@ typedef struct _IpdCollisionData_18
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
+/** @note Sparaga's investigation over this file format shows this information is actually embed
+ * in the IPD file.
+ */
 typedef struct _IpdCollisionData
 {
-    /* 0x0    */ s32                    positionX;
-    /* 0x4    */ s32                    positionZ;
-    /* 0x8+0  */ u32                    field_8_0  : 8;
-    /* 0x8+8  */ u32                    field_8_8  : 8;
-    /* 0x8+16 */ u32                    field_8_16 : 8;
-    /* 0x8+24 */ u32                    field_8_24 : 8;
-    /* 0xC    */ SVECTOR3*              ptr_C;
+    /* 0x0    */ s32                    positionX;      // q23_8
+    /* 0x4    */ s32                    positionZ;      // q23_8
+    /* 0x8+0  */ u32                    collPointsCount : 8; // Amount of structs in `collPoints`.
+    /* 0x8+8  */ u32                    field_8_8       : 8; // Amount of structs in `ptr_10`.
+    /* 0x8+16 */ u32                    field_8_16      : 8; // Amount of structs in `ptr_14`.
+    /* 0x8+24 */ u32                    field_8_24      : 8; // Amount of structs in `ptr_18`.
+    /* 0xC    */ SVECTOR3*              collPoints;
     /* 0x10   */ s_IpdCollisionData_10* ptr_10;
     /* 0x14   */ s_IpdCollisionData_14* ptr_14;
     /* 0x18   */ s_IpdCollisionData_18* ptr_18;
@@ -73,9 +76,11 @@ typedef struct _IpdCollisionData
     /* 0x1F   */ u8                     field_1F;
     /* 0x20   */ s_IpdCollisionData_20* ptr_20;
     /* 0x24   */ u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
+                                                  // Both `field_24/field_26` are related to a amount of 1 byte things that are being pointed by
+                                                  // `ptr_28`.
     /* 0x26   */ u16                    field_26;
     /* 0x28   */ u8*                    ptr_28; // Accessed as array of indices into `field_34` by `func_8006E53C`.
-    /* 0x2C   */ void*                  ptr_2C;
+    /* 0x2C   */ void*                  ptr_2C; // Pointer to LM part of IPD file?
     /* 0x30   */ u8                     unkLoadedCount; // Directly related to `field_34`.
     /* 0x31   */ s8                     __pad_31[3];
     /* 0x34   */ u8                     field_34[256]; // Indexes container.
