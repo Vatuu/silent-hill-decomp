@@ -139,9 +139,9 @@ if (g_Player_IsAlive)
 if (g_Player_IsAlive == true)
 ```
 
-### Organization Tools
+## Organization Tools
 
-#### Clang-format
+### Clang-format
 The repository includes a `clang-format` configuration to help enforce code consistency. Git also has a command to handle formatting modified files.
 
 Follow these steps prior to committing:
@@ -154,10 +154,13 @@ Follow these steps prior to committing:
 3. Review the changes with `git diff`, then re-stage and commit them:</br>
    `git add src/`
 
-#### configs_formatter.py
+### [configs_formatter.py](https://github.com/Vatuu/silent-hill-decomp/tree/master/tools/configs_formatter.py)
 A Python script is provided to rearrange registered symbol in `*.sym.txt` files based on addresses. Prior to committing, run it with `python3 tools/configs_formatter.py`.
 
 ## Naming Conventions
+
+Due the lack of debug symbols we had to invent naming conventions as are also looking for making a well covered and documented code.
+
 If the original name of a function, enum, or struct and most of its variables, entries, or fields are known, those names should be used.
 
 If the original names are unknown, follow a systematic naming pattern.
@@ -220,6 +223,24 @@ typedef struct _MyStruct
     u32      field_328_8 : 8; // Even though this starts at 8th bit, the offset is where the bitfield began.
 } s_MyStruct;
 STATIC_ASSERT_SIZEOF(s_MyStruct, 810);
+```
+
+If all the fields from the struct and most or all code using it have been recognized then remove the hexadecimal offset suffix and add a comment with the hexadecimal offset position previous the field definition. If the struct contain multiple pads or unrecognized fields then keep the hexadeciaml offset.
+
+Example:
+```C
+typedef struct _EventStruct
+{
+    /** 0x00 */ s32 time;
+    /** 0x04 */ s16 id;
+    /** 0x06 */ s16 targetId;
+    /** 0x08 */ s32 __pad_8;
+    /** 0x0C */ s32 unk_C;
+    /** 0x10 */ s_AnotherStruct unk_10;
+    /** 0x30 */ s32 __pad_30;
+    /** 0x34 */ s32 status;
+} s_EventStruct;
+STATIC_ASSERT_SIZEOF(s_EventStruct, 52);
 ```
 
 ### Enumerators
@@ -285,9 +306,9 @@ s32 Math_MyFunc(s32 dist) // 0xXXXXXXXX
     {
         return 0;
     }
-
-    do {} while (false) // Hack.
-
+    
+    do {} while(0) // Hack.
+    
     // Value might be enum entry from `e_MyEnum`, but it's unclear right now.
     return 0x10;
 }
@@ -298,7 +319,7 @@ Documentation comments are included above declarations in \*.h files to explain 
 Functions:
 ```C
 /** @brief Makes Harry fly.
- *
+ * 
  * Sets Harry's Y position to 100 world units.
  *
  * @param isFlying: Fly status.

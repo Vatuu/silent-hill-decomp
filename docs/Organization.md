@@ -17,13 +17,7 @@ The rest of the overlays are in `VIN` folder, which include:
 - `SAVELOAD.BIN` - used for displaying and handling the logic of the save and load menu (not responsible for handling memory card state or save data, those are in charge of the engine).
 - `STF_ROLL.BIN` - used to display credits.
 - `MAP#_S##.BIN` - maps scripts and AI logic, loaded in the game playthrough order (e.g. `MAP0_S00.BIN` - is the first file from the game start up to the cafe, `MAP0_S01.BIN` is loaded next).
-- - `_S##` can be a shortage of `STAGE`. While the second number is clearly intended to represent the stage index the first number is always 0 excepting in the European release where it uses different numbers from 0 to 5 (skipping 1 for unknown reasons) in order to represent the language.
-- - There are 5 map overlays that are probably unused, those being:
-- - - `MAP1_S04.BIN`
-- - - `MAP2_S03.BIN`
-- - - `MAP4_S04.BIN`
-- - - `MAP4_S06.BIN`
-- - - `MAP6_S05.BIN`
+- - `_S##` it is very likely a shortage of `STAGE`. While the second number is clearly intended to represent the stage index the first number is always 0 excepting in the European release where it uses different numbers from 0 to 5 (skipping 1 for unknown reasons) in order to represent the language.
 
 ## Main Folders Structures
 A simple breakdown of how this repository is structured specially intended for newbies.
