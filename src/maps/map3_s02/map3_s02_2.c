@@ -115,7 +115,7 @@ void func_800D03FC(void) // 0x800D03FC
     }
 }
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0570
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D0570
 
 void func_800D0608(void) // 0x800D0608
 {
@@ -278,12 +278,12 @@ void func_800D0608(void) // 0x800D0608
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementAfterTime(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(60.0f), false, true);
+            Event_CutsceneTimerAdvance(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(60.0f), false, true);
             break;
 
         case 3:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
-            SysWork_StateStepIncrementAfterTime(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(75.0f), true, false);
+            Event_CutsceneTimerAdvance(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(75.0f), true, false);
             break;
 
         case 4:

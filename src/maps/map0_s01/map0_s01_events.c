@@ -140,16 +140,16 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(5.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(5.0f), false, true);
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, false);
             Map_MessageWithAudio(15, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Was I dreaming?"
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(7.8f), Q12(0.0f), Q12(26.0f), true, true);
             break;
 
         case 9:
@@ -183,7 +183,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
                     break;
             }
 
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(4.0f), Q12(27.0f), Q12(48.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(4.0f), Q12(27.0f), Q12(48.0f), true, false);
 
             if (D_800DE251 == 0 && g_Cutscene_Timer > Q12(38.0f))
             {
@@ -202,7 +202,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(3.0f), Q12(49.0f), Q12(139.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(3.0f), Q12(49.0f), Q12(139.0f), true, false);
             Map_MessageWithAudio(25, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Have you seen a little girl?"
             break;
 
@@ -223,7 +223,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 19:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(141.0f), Q12(152.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(141.0f), Q12(152.0f), false, true);
             break;
 
         case 20:
@@ -231,7 +231,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 21:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio12);
             break;
 
@@ -241,7 +241,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 23:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(160.0f), Q12(173.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(160.0f), Q12(173.0f), true, false);
             MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false);
             Text_Debug_PositionSet(30, 30);
             break;
@@ -251,7 +251,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 25:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(174.0f), Q12(184.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(174.0f), Q12(184.0f), true, false);
             Map_MessageWithAudio(44, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -261,7 +261,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 27:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(185.0f), Q12(194.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(185.0f), Q12(194.0f), true, false);
             Map_MessageWithAudio(45, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -288,7 +288,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 33:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(20.0f), Q12(207.0f), Q12(222.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(20.0f), Q12(207.0f), Q12(222.0f), true, true);
             break;
 
         case 34:
@@ -296,17 +296,17 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 35:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             Map_MessageWithAudio(51, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 36:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 37:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
             Map_MessageWithAudio(55, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -316,12 +316,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 39:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, false);
             Map_MessageWithAudio(57, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 40:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(252.0f), Q12(280.0f), true, true);
             break;
 
         case 41:
@@ -329,7 +329,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 42:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(281.0f), Q12(296.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(281.0f), Q12(296.0f), true, true);
             break;
 
         case 43:
@@ -347,7 +347,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 46:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(298.0f), Q12(308.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(298.0f), Q12(308.0f), true, true);
             break;
 
         case 47:

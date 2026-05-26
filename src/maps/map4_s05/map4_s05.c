@@ -25,7 +25,7 @@
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D5FE4
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D5FE4
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D607C
 
@@ -356,7 +356,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
             break;
 

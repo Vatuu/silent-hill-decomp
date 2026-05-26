@@ -1565,7 +1565,7 @@ void func_800E10F8(void) // 0x800E10F8
 // TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800E1564
 
 void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x800E15FC
 {
@@ -1811,7 +1811,7 @@ void func_800E1D50(void) // 0x800E1D50
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(19.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(19.0f), false, true);
             break;
 
         case 3:
@@ -1961,7 +1961,7 @@ void func_800E219C(void) // 0x800E219C
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(21.0f), Q12(68.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(21.0f), Q12(68.0f), false, true);
             break;
 
         case 3:
@@ -1970,7 +1970,7 @@ void func_800E219C(void) // 0x800E219C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(69.0f), Q12(80.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(69.0f), Q12(80.0f), false, true);
             break;
 
         case 5:
@@ -1984,7 +1984,7 @@ void func_800E219C(void) // 0x800E219C
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(81.0f), Q12(95.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(81.0f), Q12(95.0f), true, true);
             break;
 
         case 8:
@@ -2264,7 +2264,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
 
             // Possible inline?
             player = &playerChara;
@@ -2290,7 +2290,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(131.0f), Q12(195.0f), false, false);
             MapMsg_DisplayAndHandleSelection(false, 41, 0, 0, 0, false);
 
             if (g_SysWork.sysStateSteps[0] != 7)
@@ -2415,7 +2415,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(24.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(24.0f), false, true);
             func_800E73B4(g_Cutscene_Timer);
             break;
 
@@ -2427,7 +2427,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(58.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(58.0f), false, true);
             break;
 
         case 6:
@@ -2443,7 +2443,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(59.0f), Q12(139.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(59.0f), Q12(139.0f), false, true);
             func_800E7944(2);
             break;
 
@@ -2455,7 +2455,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 9:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(140.0f), Q12(183.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(140.0f), Q12(183.0f), false, true);
             func_8005DE0C(Sfx_Unk1624, &g_SysWork.npcs[1].position, 32, Q12(16.0f), 0);
             func_800E7944(2);
             break;
@@ -2470,7 +2470,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 11:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(5.0f), Q12(186.0f), Q12(193.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(186.0f), Q12(193.0f), false, true);
             func_8005DE0C(Sfx_Unk1624, &g_SysWork.npcs[1].position, 32, Q12(16.0f), 0);
             break;
 
@@ -2491,7 +2491,7 @@ void func_800E3244(void) // 0x800E3244
                 Sd_SfxStop(Sfx_Unk1624);
             }
 
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(195.0f), Q12(213.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(195.0f), Q12(213.0f), false, true);
             break;
 
         case 14:
@@ -2502,7 +2502,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 15:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(216.0f), Q12(243.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(216.0f), Q12(243.0f), false, true);
 
             if (g_Cutscene_Timer >= Q12(219.0f))
             {
@@ -2733,12 +2733,12 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(24.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(24.0f), false, true);
             break;
 
         case 7:
             Map_MessageWithAudio(47, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(39.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(39.0f), false, true);
             break;
 
         case 8:
@@ -2751,7 +2751,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 9:
             Map_MessageWithAudio(47, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, false);
             break;
 
         case 10:
@@ -2760,7 +2760,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 11:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, true);
             break;
 
         case 12:
@@ -2768,11 +2768,11 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 13:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(79.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(1.0f), Q12(79.0f), true, true);
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(80.0f), Q12(104.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(80.0f), Q12(104.0f), true, true);
             g_SysWork.pointLightIntensity = Q12(2.0f);
             Savegame_EventFlagSet(EventFlag_452);
             break;
@@ -2786,16 +2786,16 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 16:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(114.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(114.0f), false, true);
             break;
 
         case 17:
             Map_MessageWithAudio(48, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, false);
             break;
 
         case 18:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, true);
             break;
 
         case 19:
@@ -2811,11 +2811,11 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 20:
             Map_MessageWithAudio(49, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, false);
             break;
 
         case 21:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, true);
             break;
 
         case 22:
@@ -2829,11 +2829,11 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 23:
             Map_MessageWithAudio(50, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, false);
             break;
 
         case 24:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, true);
             break;
 
         case 25:
@@ -2851,7 +2851,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 26:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(230.0f), Q12(299.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(230.0f), Q12(299.0f), true, true);
             break;
 
         case 27:
@@ -2859,7 +2859,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 28:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(300.0f), Q12(310.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(300.0f), Q12(310.0f), true, true);
             break;
 
         case 29:
@@ -2871,7 +2871,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 30:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(357.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(357.0f), false, true);
             break;
 
         case 31:
@@ -2881,7 +2881,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 32:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(365.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(365.0f), false, true);
             break;
 
         case 33:
@@ -2905,7 +2905,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 36:
             func_80085EB8(1, &g_SysWork.npcs[0], 0, false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(386.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(386.0f), true, false);
             break;
 
         case 37:
@@ -2913,7 +2913,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 38:
             func_80086C58(&g_SysWork.npcs[0], 5);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(387.0f), Q12(431.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(387.0f), Q12(431.0f), true, false);
             break;
 
         case 39:
@@ -2923,7 +2923,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 40:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(432.0f), Q12(454.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(432.0f), Q12(454.0f), true, true);
             break;
 
         case 41:
@@ -2933,7 +2933,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 42:
             Map_MessageWithAudio(52, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(455.0f), Q12(455.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(455.0f), Q12(455.0f), true, false);
 
             if (g_SysWork.sysStateSteps[0] != 42)
             {
@@ -2982,7 +2982,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 47:
             Map_MessageWithAudio(54, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(10.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(10.0f), false, true);
             break;
 
         case 48:
@@ -2991,7 +2991,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 49:
             Map_MessageWithAudio(54, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(30.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(30.0f), true, false);
             break;
 
         case 50:
@@ -3022,7 +3022,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 55:
             Map_MessageWithAudio(71, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(80.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(80.0f), false, true);
             break;
 
         case 56:
@@ -3031,11 +3031,11 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 57:
             Map_MessageWithAudio(71, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, false);
             break;
 
         case 58:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, true);
             break;
 
         case 59:
@@ -3045,7 +3045,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 60:
             Map_MessageWithAudio(74, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
             break;
 
         case 61:
@@ -3055,7 +3055,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 62:
             Map_MessageWithAudio(75, &D_800ED5AC, &D_800EBA64);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
             break;
 
         case 63:
@@ -3251,7 +3251,7 @@ void func_800E558C(void) // 0x800E558C
 
         case 2:
             g_DeltaTime = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.65f);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(22.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(22.0f), true, true);
             break;
 
         case 3:
@@ -3264,7 +3264,7 @@ void func_800E558C(void) // 0x800E558C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(3.5f), Q12(23.0f), Q12(33.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(3.5f), Q12(23.0f), Q12(33.0f), true, true);
             break;
 
         case 5:

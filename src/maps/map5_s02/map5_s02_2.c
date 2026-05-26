@@ -22,7 +22,7 @@
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D48F8
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D48F8
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D4990
 
@@ -491,7 +491,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(20.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(20.0f), true, true);
             break;
 
         case 4:
@@ -500,7 +500,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(21.0f), Q12(31.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(21.0f), Q12(31.0f), true, true);
             break;
 
         case 6:
@@ -517,7 +517,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 8:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(43.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(43.0f), true, true);
             break;
 
         case 9:
@@ -525,7 +525,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 10:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(44.0f), Q12(56.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(44.0f), Q12(56.0f), true, true);
             break;
 
         case 11:
@@ -540,12 +540,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 13:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(63.0f), Q12(93.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(63.0f), Q12(93.0f), true, true);
             break;
 
         case 14:
             func_80086C58(&g_SysWork.playerWork.player, 165);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), false, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), false, false);
             break;
 
         case 15:
@@ -553,7 +553,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 16:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), true, true);
             break;
 
         case 17:
@@ -561,7 +561,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 18:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(151.0f), Q12(175.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(151.0f), Q12(175.0f), true, true);
             break;
 
         case 19:
@@ -574,7 +574,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 20:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(176.0f), Q12(206.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(176.0f), Q12(206.0f), false, true);
             break;
 
         case 21:
@@ -597,7 +597,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 24:
             Map_MessageWithAudio(17, &D_800DA6E8, &D_800D947C);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
             break;
 
         case 25:
@@ -616,12 +616,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 28:
             SysWork_StateStepIncrementDelayed(Q12(1.8f), false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
         case 29:
             Map_MessageWithAudio(30, &D_800DA6E8, &D_800D947C);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
         case 30:
@@ -641,7 +641,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Map_MessageWithAudio(31, &D_800DA6E8, &D_800D947C);
 
         case 34:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);
             break;
 
         case 35:

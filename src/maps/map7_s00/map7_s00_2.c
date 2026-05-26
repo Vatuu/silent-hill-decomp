@@ -69,7 +69,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D0AC4(void) {}
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0ACC
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D0ACC
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
@@ -194,7 +194,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 7:
             Map_MessageWithAudio(30, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(44.0f), false, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(44.0f), false, true);
             break;
 
         case 8:
@@ -203,12 +203,12 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 9:
             Map_MessageWithAudio(30, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
             break;
 
         case 10:
             SysWork_StateStepIncrementDelayed(Q12(0.4f), false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
             break;
 
         case 11:
@@ -219,7 +219,7 @@ void func_800D0B64(void) // 0x800D0B64
         case 12:
             Map_MessageWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
             break;
 
         case 13:
@@ -228,7 +228,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 14:
             Map_MessageWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
             break;
 
         case 15:
@@ -240,7 +240,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 17:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(7.5f), Q12(65.0f), Q12(81.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(7.5f), Q12(65.0f), Q12(81.0f), true, true);
             Map_MessageWithAudio(37, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -260,7 +260,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 19:
             Map_MessageWithAudio(37, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, false);
             break;
 
         case 20:
@@ -272,11 +272,11 @@ void func_800D0B64(void) // 0x800D0B64
             break;
         case 22:
             MapMsg_DisplayAndHandleSelection(false, 38, 0, 0, 0, false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, false);
             break;
 
         case 23:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, true);
             break;
 
         case 24:
@@ -286,11 +286,11 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 25:
             MapMsg_DisplayAndHandleSelection(false, 40, 0, 0, 0, false);
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(6.0f), Q12(106.0f), Q12(150.0f), true, false);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.0f), Q12(106.0f), Q12(150.0f), true, false);
             break;
 
         case 26:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(6.0f), Q12(106.0f), Q12(150.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.0f), Q12(106.0f), Q12(150.0f), true, true);
             break;
 
         case EventState_Skip:

@@ -1263,7 +1263,7 @@ void func_800DCB54(void) // 0x800DCB54
     }
 }
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DCD44
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800DCD44
 
 void func_800DCDDC(void) // 0x800DCDDC
 {
@@ -1349,7 +1349,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             break;
             

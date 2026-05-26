@@ -96,4 +96,4 @@ void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4
     GameBoot_LoadScreen_BackgroundImg();
 }
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA8E8
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800DA8E8

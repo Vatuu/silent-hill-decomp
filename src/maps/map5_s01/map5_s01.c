@@ -405,7 +405,7 @@ void func_800EC2D8(void) // 0x800EC2D8
     Savegame_EventFlagSet(EventFlag_M5S01_KaufmannKeyUsed);
 }
 
-#include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800EC394
+#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800EC394
 
 void func_800EC42C(void) // 0x800EC42C
 {
@@ -497,7 +497,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterTime(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
     block_18:
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
