@@ -139,6 +139,25 @@ if (g_Player_IsAlive)
 if (g_Player_IsAlive == true)
 ```
 
+### Header files
+All header files must use include guards based on the file's path inside the include/ folder:
+```
+#ifndef _BODYPROG_VIEW_VCMAIN_H
+#define _BODYPROG_VIEW_VCMAIN_H
+// Header code here
+#endif
+```
+
+Contents within the header should be ordered as follows:
+
+1. Include directives
+2. Macros and defines (e.g. buffer sizes, maximum counts)
+3. Enums and other type definitions
+4. Structure definitions
+5. Function declarations
+
+This ordering ensures that each section's dependencies are already defined above it (for example, structures commonly depend on enums, and function prototype usually depend on structures).
+
 ## Organization Tools
 
 ### Clang-format
