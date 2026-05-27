@@ -777,6 +777,7 @@ Collision_TargetCharaCollidingSlowDown       = 0x8006A940;
 Collision_QueryInit                          = 0x8006AB50; // type:func
 Collision_MoveDirectionCalc                  = 0x8006ABC0; // type:func
 Collision_CharaCollisionHandling             = 0x8006AD44; // type:func
+func_8006AEAC                                = 0x8006AEAC;
 Collision_CharaSubCellIdxGet                 = 0x8006B004;
 Collision_OffsetAlphaGet                     = 0x8006CB90;
 Ipd_GroundHeightGet                          = 0x8006CC44; // type:func

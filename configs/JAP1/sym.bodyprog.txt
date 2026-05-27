@@ -1129,7 +1129,6 @@ func_80067914                                = 0x8006941C; // type:func
 func_80068CC0                                = 0x8006A7D0; // type:func
 func_80068E0C                                = 0x8006A91C; // type:func
 func_800692A4                                = 0x8006ADB4; // type:func
-func_8006AEAC                                = 0x8006AEAC;
 
 //------------------------------------------------------------
 //--- PA: 0x04679C   VA: 0x8006B2FC   subsegment: c, collision
