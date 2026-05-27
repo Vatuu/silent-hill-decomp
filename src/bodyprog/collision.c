@@ -3695,7 +3695,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     }
 
     dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                               g_SysWork.playerWork.player.position.vz - chara->position.vz);
+                                     g_SysWork.playerWork.player.position.vz - chara->position.vz);
     distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
     if (distMax < dist)
     {
@@ -3711,16 +3711,16 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         offset.vy = Q12(0.0f);
-        pos.vy = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.top;
+        pos.vy    = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.top;
     }
     else
     {
-        pos.vy = chara->position.vy + chara->collision.box.offsetY;
+        pos.vy    = chara->position.vy + chara->collision.box.offsetY;
         offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY) -
                     (chara->position.vy - chara->collision.box.offsetY);
     }
 
-    // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
+    // TODO: Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
     return !Ray_CharaTraceQuery(&sp10, &pos, &offset, chara) || sp20.vx != Q12(0.0f);
 }
 
@@ -3834,31 +3834,32 @@ bool func_80070320(void) // 0x80070320
 
 q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80070360
 {
-    q25_6  deltaX;
-    q25_6  deltaZ;
-    q19_12 dist;
+    q25_6  offsetToPlayerX;
+    q25_6  offsetToPlayerZ;
+    q19_12 distToPlayer;
     q19_12 result;
 
-    dist = someDist;
-    if (dist == Q12(0.0f))
+    #define playerChara g_SysWork.playerWork.player
+    #define playerProps playerChara.properties.player
+
+    distToPlayer = someDist;
+    if (distToPlayer == Q12(0.0f))
     {
-        deltaX = g_SysWork.playerWork.player.position.vx - chara->position.vx;
-        deltaX = Q12_TO_Q6(deltaX);
-
-        deltaZ = g_SysWork.playerWork.player.position.vz - chara->position.vz;
-        deltaZ = Q12_TO_Q6(deltaZ);
-
-        dist = Math_Vector2MagCalc(deltaX, deltaZ);
-        dist = Q6_TO_Q12(dist);
+        offsetToPlayerX = Q12_TO_Q6(playerChara.position.vx - chara->position.vx);
+        offsetToPlayerZ = Q12_TO_Q6(playerChara.position.vz - chara->position.vz);
+        distToPlayer    = Q6_TO_Q12(Math_Vector2MagCalc(offsetToPlayerX, offsetToPlayerZ));
     }
 
-    // TODO: Why `>> 8`?
-    result = Q12_MULT(arg2, g_SysWork.playerWork.player.properties.player.field_10C) - (dist >> 8);
+    // TODO: Why `>> 8`? Odd type conversion?
+    result = Q12_MULT(arg2, playerProps.field_10C) - (distToPlayer >> 8);
     if (result < Q12(0.0f))
     {
         result = Q12(0.0f);
     }
     return result;
+
+    #undef playerChara
+    #undef playerProps
 }
 
 void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
@@ -3890,30 +3891,38 @@ void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s
     chara->collision.cylinder.field_2         = FP_FROM((keyframe0->box.field_A * invAlpha) + (keyframe1->box.field_A * alpha), Q12_SHIFT);
 }
 
-void func_800705E4(GsCOORDINATE2* boneCoords, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
+void Chara_ModelBoneScaleSet(GsCOORDINATE2* boneCoords, s32 boneIdx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
 {
     q3_12 scale[3];
-    s32   j;
     s32   i;
+    s32   j;
 
+    #define boneCoord boneCoords[boneIdx]
+
+    // Set scale.
     scale[0] = scaleX;
     scale[1] = scaleY;
     scale[2] = scaleZ;
 
+    // Run through scale components.
     for (i = 0; i < ARRAY_SIZE(scale); i++)
     {
+        // Ignore scale component of 1.
         if (scale[i] == Q12(1.0f))
         {
             continue;
         }
 
-        for (j = 0; j < 3; j++)
+        // Apply scale to bone matrix.
+        for (j = 0; j < ARRAY_SIZE(scale); j++)
         {
-            boneCoords[idx].coord.m[j][i] = Q12_MULT_PRECISE(scale[i], boneCoords[idx].coord.m[j][i]);
+            boneCoord.coord.m[j][i] = Q12_MULT_PRECISE(scale[i], boneCoord.coord.m[j][i]);
         }
     }
 
     boneCoords->flg = false;
+
+    #undef boneCoord
 }
 
 // Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.

@@ -1863,7 +1863,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 /** Light function. */
 q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2);
 
-void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
+void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
 
 /** @brief Gets the water zone at a given position.
  *

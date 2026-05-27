@@ -5,6 +5,8 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
+// TODO: `collision.c` is too big and in dire need of splits. There are a few potentiaal groupings.
+
 /** @brief Computes a trigger height from half-meter height steps.
  *
  * @note The trigger height has a default offset of `Q12(-1.5f)`.
@@ -14,7 +16,6 @@
  */
 #define TRIGGER_HEIGHT_GET(steps) \
     ((-Q12(steps) >> 1) - Q12(1.5f))
-
 
 struct _IpdCollisionData;
 
@@ -697,6 +698,14 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  */
 void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
-void func_800705E4(GsCOORDINATE2* boneCoords, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+/** @brief Sets the scale of a character's model bone.
+ *
+ * @param boneCoords Character model bone coords.
+ * @param boneIdx Index of the model bone to scale.
+ * @param scaleX X scale.
+ * @param scaleY Y scale.
+ * @param scaleZ Z scale.
+ */
+void Chara_ModelBoneScaleSet(GsCOORDINATE2* boneCoords, s32 boneIdx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
 #endif

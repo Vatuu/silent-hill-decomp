@@ -1150,7 +1150,7 @@ Ray_CharaLosHitCheck                         = 0x80071CF0; // type:func
 func_80070320                                = 0x80071D74; // type:func
 func_80070360                                = 0x80071DB4; // type:func
 Collision_CharaCollisionSet                  = 0x80071E54; // type:func
-func_800705E4                                = 0x80072038; // type:func
+Chara_ModelBoneScaleSet                      = 0x80072038; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x04D5D8   VA: 0x80072138   subsegment: c, player_control

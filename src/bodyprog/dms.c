@@ -38,7 +38,7 @@ void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 void Dms_EntryFixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr) // 0x8008CA44
 {
     entry->keyframes.character = (u32)entry->keyframes.character + (u32)dmsHdr;
-    entry->holdRanges          = (u32)entry->holdRanges + (u32)dmsHdr;
+    entry->holdRanges          = (u32)entry->holdRanges          + (u32)dmsHdr;
 }
 
 s_DmsSegment* Dms_SegmentGet(volatile s32 unused, s32 segmentIdx, s_DmsHeader* dmsHdr) // 0x8008CA60

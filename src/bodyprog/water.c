@@ -267,13 +267,13 @@ q3_12 D_800AFD7C[] = {
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
-void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
+void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
 {
     s32       sp20;
     s32       sp24;
     s32       sp28;
     s32       sp2C;
-    q3_12     temp_v0_7;
+    q3_12     curAngle;
     s32       temp_a0;
     s32       temp_a0_4;
     s32       temp_a0_5;
@@ -283,9 +283,9 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     s32       temp_a2;
     s32       temp_a2_3;
     s32       temp_a3_2;
-    s16       temp_s0_3;
+    q3_12     cosCurAngle;
     s32       temp_s0_6;
-    s16       temp_s1;
+    q3_12     sinCurAngle;
     s32       temp_s2_2;
     s32       temp_t0;
     s32       temp_v0_11;
@@ -318,8 +318,8 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
         return;
     }
 
-    temp_s1   = Q12_MULT(Math_Sin(arg4), Math_Cos(arg3));
-    temp_s0_3 = Q12_MULT(Math_Sin(arg4), Math_Sin(arg3));
+    sinCurAngle   = Q12_MULT(Math_Sin(arg4), Math_Cos(arg3));
+    cosCurAngle = Q12_MULT(Math_Sin(arg4), Math_Sin(arg3));
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -331,16 +331,16 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     poly->tpage = 0x2C;
     poly->clut  = 0x18C;
 
-    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+    setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);
 
-    temp_a1 = (arg1 + 0x3000) >> 2;
+    temp_a1 = (arg1 + Q12(3.0f)) >> 2;
 
-    setRGB0(poly, Q12_MULT(temp_a1, 0x28), Q12_MULT(temp_a1, 0x28), Q12_MULT(temp_a1, 0x28));
+    setRGB0(poly, Q12_MULT(temp_a1, 40), Q12_MULT(temp_a1, 40), Q12_MULT(temp_a1, 40));
     setSemiTrans(poly, 1);
 
-    temp_a2   = arg2->vx + Q12_MULT(temp_s1, 5);
-    temp_a0   = Q12_MULT(temp_a1, 0x1E);
-    temp_a1_2 = arg2->vy + Q12_MULT(temp_s0_3, 5);
+    temp_a2   = arg2->vx + Q12_MULT(sinCurAngle, 5);
+    temp_a0   = Q12_MULT(temp_a1, 30);
+    temp_a1_2 = arg2->vy + Q12_MULT(cosCurAngle, 5);
 
     setXY4(poly,
            temp_a2 - temp_a0, temp_a1_2 - temp_a0,
@@ -368,10 +368,10 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     SetPolyFT4(poly);
 
-    poly->tpage = 0x2C;
+    poly->tpage = 44;
     poly->clut  = 0x18C;
 
-    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+    setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);
     setRGB0(poly, 0x10, 0x10, 0x10);
     setSemiTrans(poly, 1);
 
@@ -405,17 +405,17 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     SetPolyFT4(poly);
     setSemiTrans(poly, 1);
 
-    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, Q12(1.0f)), 0x30);
+    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, Q12(1.0f)), 48);
     setRGB0(poly, temp_v0_5, temp_v0_5, temp_v0_5);
 
-    poly->tpage = 0x2C;
+    poly->tpage = 44;
     poly->clut  = 0x18C;
 
-    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+    setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);
 
-    temp_t0   = arg2->vx + FP_MULTIPLY(temp_s1, 9, Q12_SHIFT - 1);
-    temp_a2_3 = Q12_MULT((arg1 + Q12(3.0f)) >> 2, 0x30);
-    temp_a3_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 9, Q12_SHIFT - 1);
+    temp_t0   = arg2->vx + FP_MULTIPLY(sinCurAngle, 9, Q12_SHIFT - 1);
+    temp_a2_3 = Q12_MULT((arg1 + Q12(3.0f)) >> 2, 48);
+    temp_a3_2 = arg2->vy + FP_MULTIPLY(cosCurAngle, 9, Q12_SHIFT - 1);
 
     setXY4(poly,
            temp_t0 - temp_a2_3, temp_a3_2 - temp_a2_3,
@@ -437,13 +437,13 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     for (i = 0; i < 16; i++)
     {
-        temp_v0_7 = D_800AFD7C[i] + sp20;
+        curAngle = D_800AFD7C[i] + sp20;
 
-        var_s3 = Q12_MULT((Math_Cos(temp_v0_7 - arg3) + Q12(1.7f)), (Math_Cos((temp_v0_7 * 12) + sp24) + Q12(1.0f)) >> 1);
+        var_s3 = Q12_MULT((Math_Cos(curAngle - arg3) + Q12(1.7f)), (Math_Cos((curAngle * 12) + sp24) + Q12(1.0f)) >> 1);
         var_s3 = MIN(var_s3, Q12(1.5f));
 
-        temp_s1   = Math_Sin(temp_v0_7);
-        temp_s0_3 = Math_Cos(temp_v0_7);
+        sinCurAngle = Math_Sin(curAngle);
+        cosCurAngle = Math_Cos(curAngle);
 
         SetPolyFT4(poly);
 
@@ -453,21 +453,21 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
         setUV4(poly, 0x20, 0x40, 0x3F, 0x40, 0x20, 0x5F, 0x3F, 0x5F);
         setSemiTrans(poly, 1);
 
-        temp_v0_9 = (arg1 * var_s3) >> 0x12;
+        temp_v0_9 = (arg1 * var_s3) >> 18;
         setRGB0(poly, temp_v0_9, temp_v0_9, temp_v0_9);
 
         temp_a0_4 = arg2->vy;
         temp_v1_6 = arg2->vx;
 
         setXY4(poly,
-               temp_v1_6 + FP_FROM(D_8002B2BC[0].vx * temp_s0_3 - D_8002B2BC[0].vy * temp_s1, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[0].vx * temp_s1 + D_8002B2BC[0].vy * temp_s0_3, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[1].vx * temp_s0_3 - D_8002B2BC[1].vy * temp_s1, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[1].vx * temp_s1 + D_8002B2BC[1].vy * temp_s0_3, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[2].vx * temp_s0_3 - D_8002B2BC[2].vy * temp_s1, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[2].vx * temp_s1 + D_8002B2BC[2].vy * temp_s0_3, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[3].vx * temp_s0_3 - D_8002B2BC[3].vy * temp_s1, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[3].vx * temp_s1 + D_8002B2BC[3].vy * temp_s0_3, Q12_SHIFT));
+               temp_v1_6 + FP_FROM(D_8002B2BC[0].vx * cosCurAngle - D_8002B2BC[0].vy * sinCurAngle, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[0].vx * sinCurAngle + D_8002B2BC[0].vy * cosCurAngle, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[1].vx * cosCurAngle - D_8002B2BC[1].vy * sinCurAngle, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[1].vx * sinCurAngle + D_8002B2BC[1].vy * cosCurAngle, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[2].vx * cosCurAngle - D_8002B2BC[2].vy * sinCurAngle, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[2].vx * sinCurAngle + D_8002B2BC[2].vy * cosCurAngle, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[3].vx * cosCurAngle - D_8002B2BC[3].vy * sinCurAngle, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[3].vx * sinCurAngle + D_8002B2BC[3].vy * cosCurAngle, Q12_SHIFT));
 
         addPrim(temp_s7, poly);
         poly++;
@@ -480,7 +480,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     setRGB0(poly, Q12_MULT(arg1, 32), Q12_MULT(arg1, 0x30), Q12_MULT(arg1, 32));
 
-    poly->tpage = 0x2C;
+    poly->tpage = 44;
     poly->clut  = 0x1CC;
 
     setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
@@ -506,7 +506,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     temp_s0_6 = Q12_MULT(arg1, 0x18);
     setRGB0(poly, ((u32)arg1 * 7) >> 9, ((u32)arg1 * 0x13) >> 0xB, temp_s0_6);
 
-    poly->tpage = 0x2C;
+    poly->tpage = 44;
     poly->clut  = 0x1CC;
 
     setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
@@ -528,7 +528,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     setRGB0(poly, (u32)arg1 >> 6, temp_s0_6, ((u32)arg1 * 0x2F) >> 11);
 
-    poly->tpage = 0x4C;
+    poly->tpage = 76;
     poly->clut  = 0x18C;
 
     setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
@@ -740,14 +740,14 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
         POLY_G3 g3[2];
     } s_func_8008EA68;
 
-    SVECTOR          sp28[5];
+    SVECTOR          sp28[5]; // Q7.8
     GsCOORDINATE2    sp50;
     MATRIX           spA0;
     SVECTOR          spC0; // Q3.8 | Rotation?
     s32              spC8;
     s32              spCC;
     s16              angle1;
-    q3_12            angle;
+    q3_12            curAngle;
     q19_12           angle0;
     s32              temp_s0_2;
     s16              temp_s1;
@@ -793,47 +793,47 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     packet     = GsOUT_PACKET_P;
     sp28[1].vy = 0;
     sp28[0].vy = 0;
-    sp28[3].vy = 0x33;
-    sp28[2].vy = 0x33;
+    sp28[3].vy = Q8(0.2f);
+    sp28[2].vy = Q8(0.2f);
 
-    for (i = 0, angle = 0; i < 8; i++, angle += Q12_ANGLE(45.0f))
+    for (i = 0, curAngle = 0; i < 8; i++, curAngle += Q12_ANGLE(45.0f))
     {
-        temp_s1   = Math_Sin(angle);
-        angle0    = angle + Q12_ANGLE(45.0f);
-        temp_s2   = Math_Cos(angle);
+        temp_s1   = Math_Sin(curAngle);
+        angle0    = curAngle + Q12_ANGLE(45.0f);
+        temp_s2   = Math_Cos(curAngle);
         temp_s0_2 = Math_Sin(angle0);
         temp_v0_2 = Math_Cos(angle0);
 
-        sp28[0].vx = FP_MULTIPLY((s16)temp_s1, 0x33, 10);
-        sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, 10) + 0x133;
-        sp28[1].vx = FP_MULTIPLY((s16)temp_s0_2, 0x33, 10);
-        sp28[1].vz = FP_MULTIPLY((s16)temp_v0_2, 0x33, 10) + 0x133;
-        sp28[2].vx = Q12_MULT((s16)temp_s1, 0x233);
-        sp28[2].vz = Q12_MULT((s16)temp_s2, 0x233) + 0x180;
-        sp28[3].vx = Q12_MULT((s16)temp_s0_2, 0x233);
-        sp28[3].vz = Q12_MULT((s16)temp_v0_2, 0x233) + 0x180;
+        sp28[0].vx = FP_MULTIPLY((q7_8)temp_s1, Q8(0.2f), 10);
+        sp28[0].vz = FP_MULTIPLY((q7_8)temp_s2, Q8(0.2f), 10) + Q8(1.2f);
+        sp28[1].vx = FP_MULTIPLY((q7_8)temp_s0_2, Q8(0.2f), 10);
+        sp28[1].vz = FP_MULTIPLY((q7_8)temp_v0_2, Q8(0.2f), 10) + Q8(1.2f);
+        sp28[2].vx = Q12_MULT((q7_8)temp_s1, Q8(2.2f));
+        sp28[2].vz = Q12_MULT((q7_8)temp_s2, Q8(2.2f)) + Q8(1.5);
+        sp28[3].vx = Q12_MULT((q7_8)temp_s0_2, Q8(2.2f));
+        sp28[3].vz = Q12_MULT((q7_8)temp_v0_2, Q8(2.2f)) + Q8(1.5);
 
         poly = packet;
 
         temp = 0;
 
-        *(s32*)&poly->g4[0].r0 = 0xC1214;
-        *(s32*)&poly->g4[0].r1 = 0xC1214;
-        *(s32*)&poly->g4[0].r3 = 0x40404;
-        *(s32*)&poly->g4[0].r2 = 0x40404;
+        *(s32*)&poly->g4[0].r0 = COLOR_RGBC(20, 18, 12, 0x0);
+        *(s32*)&poly->g4[0].r1 = COLOR_RGBC(20, 18, 12, 0x0);
+        *(s32*)&poly->g4[0].r3 = COLOR_RGBC(4, 4, 4, 0x0);
+        *(s32*)&poly->g4[0].r2 = COLOR_RGBC(4, 4, 4, 0x0);
 
-        *(s32*)&poly->g3[0].r0 = 0xC1618;
-        *(s32*)&poly->g3[0].r2 = 0xC1214;
-        *(s32*)&poly->g3[0].r1 = 0xC1214;
+        *(s32*)&poly->g3[0].r0 = COLOR_RGBC(24, 22, 12, 0x0);
+        *(s32*)&poly->g3[0].r2 = COLOR_RGBC(20, 18, 12, 0x0);
+        *(s32*)&poly->g3[0].r1 = COLOR_RGBC(20, 18, 12, 0x0);
 
-        *(s32*)&poly->g4[1].r0 = 0x40804;
-        *(s32*)&poly->g4[1].r1 = 0x40804;
+        *(s32*)&poly->g4[1].r0 = COLOR_RGBC(4, 8, 4, 0x0);
+        *(s32*)&poly->g4[1].r1 = COLOR_RGBC(4, 8, 4, 0x0);
         *(s32*)&poly->g4[1].r3 = COLOR_RGBC(0, 0, 0, 0x0);
         *(s32*)&poly->g4[1].r2 = COLOR_RGBC(0, 0, 0, 0x0);
 
-        *(s32*)&poly->g3[1].r0 = 0x40808;
-        *(s32*)&poly->g3[1].r2 = 0x40804;
-        *(s32*)&poly->g3[1].r1 = 0x40804;
+        *(s32*)&poly->g3[1].r0 = COLOR_RGBC(8, 8, 4, 0x0);
+        *(s32*)&poly->g3[1].r2 = COLOR_RGBC(4, 8, 4, 0x0);
+        *(s32*)&poly->g3[1].r1 = COLOR_RGBC(4, 8, 4, 0x0);
 
         setPolyG4(&poly->g4[0]);
         setPolyG3(&poly->g3[0]);

@@ -77,8 +77,10 @@ void Romper_Init(s_SubCharacter* romper)
     ModelAnim_AnimInfoSet(&romper->model.anim, ROMPER_ANIM_INFOS);
     Chara_DamageClear(romper);
 
-    romperProps.targetPositionX_FC = romperProps.positionZ_110 = romper->position.vx;
-    romperProps.targetPositionZ_100 = romperProps.positionX_108 = romper->position.vz;
+    romperProps.targetPositionX_FC  =
+    romperProps.positionZ_110       = romper->position.vx;
+    romperProps.targetPositionZ_100 =
+    romperProps.positionX_108       = romper->position.vz;
 
     #undef HEALTH_BASE
     #undef HEALTH_BONUS_MAX
@@ -563,7 +565,7 @@ void Romper_Control_3(s_SubCharacter* romper)
 
     if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
-        var_s0 |= func_80070360(romper, 0, Q12(0.2f));
+        var_s0 |= func_80070360(romper, Q12(0.0f), Q12(0.2f));
     }
 
     if (var_s0)
@@ -771,7 +773,7 @@ void Romper_Control_4(s_SubCharacter* romper)
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        var_s0 |= func_80070360(romper, 0, Q12(0.2f));
+        var_s0 |= func_80070360(romper, Q12(0.0f), Q12(0.2f));
     }
 
     if (var_s0 != 0)

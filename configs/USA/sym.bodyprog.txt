@@ -797,6 +797,7 @@ Ray_CharaToCharaDistLosCheck                 = 0x80070184; // type:func
 Ray_CharaToCharaFrontLosHitCheck             = 0x80070208; // type:func
 Ray_CharaLosHitCheck                         = 0x8007029C; // type:func
 Collision_CharaCollisionSet                  = 0x80070400; // type:func
+Chara_ModelBoneScaleSet                      = 0x800705E4; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, player_control

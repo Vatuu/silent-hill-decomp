@@ -35,6 +35,6 @@ void LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDI
     animInfo = &LITTLE_INCUBUS_ANIM_INFOS[incubus->model.anim.status];
     animInfo->playbackFunc(&incubus->model, anmHdr, boneCoords, animInfo);
 
-    func_800705E4(boneCoords, 1, scale, scale, scale);
-    func_800705E4(boneCoords, 7, scale, scale, scale);
+    Chara_ModelBoneScaleSet(boneCoords, 1, scale, scale, scale);
+    Chara_ModelBoneScaleSet(boneCoords, 7, scale, scale, scale);
 }

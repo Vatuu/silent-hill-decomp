@@ -1724,7 +1724,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     anim->playbackFunc(&twinfeeler->model, anmHdr, boneCoords, anim);
 
     scale = D_800DB1D8[twinfeeler->model.stateStep];
-    func_800705E4(boneCoords, 0, scale, scale, scale);
+    Chara_ModelBoneScaleSet(boneCoords, 0, scale, scale, scale);
 
     twinfeeler->collision.box.height               = Q12(0.0f);
     twinfeeler->collision.box.bottom               = Q12(0.0f);

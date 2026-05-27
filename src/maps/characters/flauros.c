@@ -40,6 +40,6 @@ void Flauros_Update(s_SubCharacter* flauros, s_AnmHeader* anmHdr, GsCOORDINATE2*
     // TODO: Are these the Flauros' light rays?
     for (i = 6; i < 11; i++)
     {
-        func_800705E4(boneCoords, i, scale, scale, scale);
+        Chara_ModelBoneScaleSet(boneCoords, i, scale, scale, scale);
     }
 }
