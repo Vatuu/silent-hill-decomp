@@ -5,19 +5,9 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
-// TODO: `collision.c` is too big and in dire need of splits. There are a few potentiaal groupings.
-
-/** @brief Computes a trigger height from half-meter height steps.
- *
- * @note The trigger height has a default offset of `Q12(-1.5f)`.
- *
- * @param steps Half-meter height steps.
- * @return Trigger height (Q19.12).
- */
-#define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
-
 struct _IpdCollisionData;
+
+// TODO: `collision.c` is too big and in dire need of splits. There are a few potentiaal groupings.
 
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
@@ -133,7 +123,7 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0  */ s_IpdCollisionData*    ipdCollisionData_0;
+    /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
     /* 0x4  */ u8                     field_4; // `s_IpdCollisionData::ptr_14` Index.
     /* 0x5  */ u8                     field_5;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
@@ -149,57 +139,58 @@ typedef struct
 } s_CollisionState_CC;
 STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
 
-typedef struct _CollisionCharaMovement
+/** @brief Character collision cstate. */
+typedef struct _CollisionCharaState
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
-    /* 0x4  */ bool       field_4; // Flag set when the character collisions being check is any of the ones being
-                                   // in the of `Collision_CharaCollisionSetup`.
-    /* 0x8  */ q19_12     moveDistance; // TODO: Just `distance`.
-    /* 0xC  */ SVECTOR    moveOffset; // Q23.8 | TODO: Just `offset`.
+    /* 0x4  */ bool       field_4;        // Flag set when the character collisions being check is any of the ones being
+                                          // in the of `Collision_CharaCollisionSetup`.
+    /* 0x8  */ q19_12     distance;
+    /* 0xC  */ SVECTOR    offset; /** Q23.8 */
     /* 0x14 */ DVECTOR_XZ direction;
-    /* 0x18 */ q23_8      positionX;
-    /* 0x1C */ q23_8      positionZ;
-    /* 0x20 */ q23_8      newPositionX;
-    /* 0x24 */ q23_8      newPositionZ;
+    /* 0x18 */ q23_8      positionFromX;
+    /* 0x1C */ q23_8      positionFromZ;
+    /* 0x20 */ q23_8      positionToX;
+    /* 0x24 */ q23_8      positionToZ;
     /* 0x28 */ q7_8       radius;
     /* 0x2A */ q7_8       topPos;
     /* 0x2C */ q7_8       bottomPos;
-} s_CollisionCharaMovement;
+} s_CollisionCharaState;
 
 typedef struct _CollisionState
 {
-    /* 0x0+0  */ u8                       field_0_0     : 8; // Boolean? Code only assigns 1.
-    /* 0x0+8  */ s8                       isCharaMoving : 1; /** `bool` */
-    /* 0x0+9  */ s8                       field_0_9     : 1; /** `bool` */
-    /* 0x0+10 */ s8                       field_0_10    : 1; /** `bool` */
-    /* 0x0+11 */ s8                       field_0_11    : 5;
-    /* 0x2    */ u16                      flags         : 16; /** `e_CollisionTriggerFlags` */
-    /* 0x4    */ s_CollisionCharaMovement charaMoveInfo;
-    /* 0x34   */ s32                      field_34;
-    /* 0x38   */ s16                      field_38;
-    /* 0x3A   */ s16                      field_3A;
-    /* 0x3C   */ s16                      field_3C; // X?
-    /* 0x3E   */ s16                      field_3E; // Z?
-    /* 0x40   */ s8*                      field_40;
-    /* 0x44   */ s_CollisionState_44      field_44;
-    /* 0x7C   */ q23_8                    field_7C; // Related to ground height?
-    /* 0x80   */ q23_8                    field_80; // X } Related to ground surface.
-    /* 0x84   */ q23_8                    field_84; // Z }
-    /* 0x88   */ q19_12                   tiltAngleX;
-    /* 0x8C   */ q19_12                   tiltAngleZ;
-    /* 0x90   */ s32                      field_90; // `bool`?
-    /* 0x94   */ s32                      groundType; /** `e_GroundType` */
+    /* 0x0+0  */ u8                    field_0_0     : 8; // Boolean? Code only assigns 1.
+    /* 0x0+8  */ s8                    isCharaMoving : 1; /** `bool` */
+    /* 0x0+9  */ s8                    field_0_9     : 1; /** `bool` */
+    /* 0x0+10 */ s8                    field_0_10    : 1; /** `bool` */
+    /* 0x0+11 */ s8                    field_0_11    : 5;
+    /* 0x2    */ u16                   flags         : 16; /** `e_CollisionTriggerFlags` */
+    /* 0x4    */ s_CollisionCharaState charaState;
+    /* 0x34   */ s32                   field_34;
+    /* 0x38   */ s16                   field_38;
+    /* 0x3A   */ s16                   field_3A;
+    /* 0x3C   */ s16                   field_3C; // X?
+    /* 0x3E   */ s16                   field_3E; // Z?
+    /* 0x40   */ s8*                   field_40;
+    /* 0x44   */ s_CollisionState_44   field_44;
+    /* 0x7C   */ q23_8                 field_7C; // Related to ground height?
+    /* 0x80   */ q23_8                 field_80; // X } Related to ground surface.
+    /* 0x84   */ q23_8                 field_84; // Z }
+    /* 0x88   */ q19_12                tiltAngleX;
+    /* 0x8C   */ q19_12                tiltAngleZ;
+    /* 0x90   */ s32                   field_90; // `bool`?
+    /* 0x94   */ s32                   groundType; /** `e_GroundType` */
 
                  union
                  {
                      DVECTOR_XZ offset;
                      s32        field_0;
-    /* 0x98   */ } charaPos;
+    /* 0x98   */ } charaPositionFrom;
                  union
                  {
                      DVECTOR_XZ offset;
                      s32        field_0;
-    /* 0x9C   */ } charaNewPos;
+    /* 0x9C   */ } charaPositionTo;
                  union
                  {
                      struct
@@ -217,8 +208,9 @@ typedef struct _CollisionState
                          /* 0x2 */ q7_8 field_2; // Set to absolute character top height.
                          /* 0x4 */ s16  field_4;
                          /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
+                         /* 0x7 */ s8   __pad_7;
                          /* 0x8 */ u8*  field_8;
-                         /* 0xC */ s8   unk_C[28];
+                         /* 0xC */ s8   __pad_C[28];
                      } s_1;
     /* 0xA0   */ } field_A0;
 
@@ -337,6 +329,16 @@ typedef struct
 extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 extern u16 g_CollisionTriggerFlags;
+
+/** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
 
 /** @brief Initializes the collision subsystem, resetting flags and clearing the trigger zone count. */
 void Collision_Init(void);
@@ -467,11 +469,11 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
- * @param result Output movement direction and position data.
+ * @param charaState Character collision state.
  * @param moveOffset Movement offset.
  * @param collCylinder Collision cylinder.
  */
-void Collision_MoveDirectionCalc(s_CollisionCharaMovement* result, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder);
+void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder);
 
 void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -538,7 +540,7 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, s32 arg
 void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
 
 /** `arg1` is likely Q23.8. */
-void func_8006D7EC(s_CollisionCharaMovement* arg0, SVECTOR* arg1, SVECTOR* arg2);
+void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* moveOffset, SVECTOR* arg2);
 
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 
