@@ -49,6 +49,15 @@ typedef enum _BoneHierarchy
     BoneHierarchy_End        = -2
 } e_BoneHierarchy;
 
+typedef enum _CharacterAnimCommand
+{
+    CharacterAnimCommand_SetState   = 0,
+    CharacterAnimCommand_1          = 1,
+    CharacterAnimCommand_AnimLock   = 2,
+    CharacterAnimCommand_AnimUnlock = 3,
+    CharacterAnimCommand_4          = 4, // Calls `playerAnimUnlock` + unknown `func_D8`.
+} e_CharacterAnimCommand;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -1874,7 +1883,7 @@ void func_80085DF0(void);
 void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
 
 /** @brief Updates character states during events/cutscenes. */
-void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
+void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 arg2, bool reset);
 
 /** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
  *

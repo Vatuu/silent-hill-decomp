@@ -605,7 +605,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 146, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 146, false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             // Warp player.
@@ -661,12 +661,12 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 11:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 147, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 147, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 12:
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -743,7 +743,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             Fs_QueueWaitForEmpty();
 
             func_8003D01C();
-            func_80085EB8(0, &g_SysWork.playerWork.player, 154, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 154, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-139.3f), Q12(-2.9f), Q12(65.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -753,7 +753,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 3:
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -761,7 +761,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 5:
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -776,7 +776,7 @@ void func_800D2CDC(void) // 0x800D2CDC
                 g_SysWork.npcs[i].model.controlState = state;
             }
 
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
 
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);

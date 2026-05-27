@@ -176,8 +176,8 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 3:
-            func_80085EB8(0, &playerChara, 135, false);
-            func_80085EB8(0, &lisaChara, 9, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 135, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &lisaChara, 9, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -189,7 +189,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 6:
-            func_80085EB8(0, &lisaChara, 14, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &lisaChara, 14, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -198,7 +198,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 8:
-            func_80085EB8(0, &playerChara, 136, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 136, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -212,7 +212,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 11:
-            func_80085EB8(0, &lisaChara, 15, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &lisaChara, 15, false);
             Savegame_EventFlagSet(EventFlag_474);
             SysWork_StateStepIncrement(0);
 
@@ -223,7 +223,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 13:
-            func_80085EB8(0, &playerChara, 137, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 137, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -235,8 +235,8 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 16:
-            func_80085EB8(0, &playerChara, 138, false);
-            func_80085EB8(0, &lisaChara, 16, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 138, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &lisaChara, 16, false);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -246,7 +246,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 18:
             Chara_ModelCharaIdClear(&lisaChara, 0, 0);
-            func_80085EB8(0, &playerChara, 139, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 139, false);
 
             Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
@@ -280,7 +280,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 24:
-            func_80085EB8(0, &playerChara, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 51, false);
             g_SysWork.pointLightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 

@@ -193,7 +193,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 83, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 83, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -695,7 +695,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 59, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -703,7 +703,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 4:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:
@@ -803,7 +803,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             g_Cutscene_Timer = Q12(0.0f);
 
-            func_80085EB8(0u, &g_SysWork.playerWork.player, 85, false);
+            Event_CharacterAnimCommand(0u, &g_SysWork.playerWork.player, 85, false);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
@@ -831,7 +831,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             Savegame_EventFlagSet(EventFlag_76);
 
-            func_80085EB8(0u, &g_SysWork.playerWork.player, 122, false);
+            Event_CharacterAnimCommand(0u, &g_SysWork.playerWork.player, 122, false);
             func_800892DC(18, 96);
             func_8005DC1C(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), 0);
             func_8005DC1C(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), 0);

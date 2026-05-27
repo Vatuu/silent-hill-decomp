@@ -1061,7 +1061,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 59, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 59, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_3:
@@ -1069,7 +1069,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_4:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case EventState_Prompt:

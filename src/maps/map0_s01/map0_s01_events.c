@@ -121,14 +121,14 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 77, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 77, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             sharedFunc_800D2E6C_0_s00();
             SysWork_StateStepIncrement(0);
             break;
 
         case 3:
-            func_80085EB8(2, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -136,7 +136,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 5:
-            func_80085EB8(3, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -153,7 +153,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 9:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 78, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 78, false);
             D_800DE250 = 1;
             SysWork_StateStepIncrement(0);
 
@@ -187,8 +187,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             if (D_800DE251 == 0 && g_Cutscene_Timer > Q12(38.0f))
             {
-                func_80085EB8(0, &cybilChara, 10, false);
-                func_80085EB8(0, &g_SysWork.playerWork.player, 110, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 10, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 110, false);
 
                 D_800DE251++;
             }
@@ -196,7 +196,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             temp_s0_5 = D_800DE251;
             if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&cybilChara) == temp_s0_5)
             {
-                func_80085EB8(0, &cybilChara, 11, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 11, false);
                 D_800DE251++;
             }
             break;
@@ -219,7 +219,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 18:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 93, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 93, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -227,7 +227,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 20:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 53, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 53, false);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -236,7 +236,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 22:
-            func_80085EB8(0, &cybilChara, 7, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 7, false);
             SD_Call(Sfx_XaAudio12);
             SysWork_StateStepIncrement(0);
 
@@ -247,7 +247,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 24:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 71, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 71, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -256,8 +256,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 26:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
-            func_80085EB8(0, &cybilChara, 8, 0);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 8, 0);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -268,7 +268,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 28:
             g_Cutscene_Timer = Q12(195.0f);
 
-            func_80085EB8(0, &cybilChara, 5, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -284,7 +284,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 32:
-            func_80085EB8(0, &cybilChara, 1, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -292,7 +292,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 34:
-            func_80085EB8(0, &cybilChara, 6, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 6, false);
             SysWork_StateStepIncrement(0);
 
         case 35:
@@ -311,8 +311,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 38:
-            func_80085EB8(0, &cybilChara, 9, false);
-            func_80085EB8(0, &g_SysWork.playerWork.player, 0x4C, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 9, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 0x4C, false);
             SysWork_StateStepIncrement(0);
 
         case 39:
@@ -325,7 +325,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 41:
-            func_80085EB8(0, g_SysWork.npcs, 5, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, g_SysWork.npcs, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 42:
@@ -333,7 +333,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 43:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             g_Cutscene_Timer = Q12(297.0f);
             SysWork_StateStepIncrement(0);
 
@@ -342,8 +342,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 45:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 90, false);
-            func_80085EB8(0, &cybilChara, 1, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 90, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 46:
@@ -550,7 +550,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 3:
-            func_80085EB8(0, &playerChara, 91, 0);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 91, 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -574,7 +574,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 8:
-            func_80085EB8(0, &playerChara, 92, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 92, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -594,7 +594,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 11:
-            func_80085EB8(0, &playerChara, 53, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 53, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -606,7 +606,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 13:
-            func_80085EB8(0, &playerChara, 89, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 89, false);
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSet(EventFlag_46);

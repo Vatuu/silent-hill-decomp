@@ -649,7 +649,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 7:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 97, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 97, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -683,7 +683,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 13:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio54);
             break;
 
@@ -711,7 +711,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 18:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 98, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 98, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -719,12 +719,12 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 20:
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false);
             break;
 
         case 21:
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -762,7 +762,7 @@ void func_800DB368(void) // 0x800DB368
 
         case 28:
             SD_Call(19);
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
 
             if (!D_800E1FD8)
             {
@@ -913,7 +913,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 59, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -921,7 +921,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 4:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:
@@ -1208,7 +1208,7 @@ void func_800DCF00(void) // 0x800DCF00
             break;
 
         case 3:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 106, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 106, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1264,7 +1264,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 59, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1272,7 +1272,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 4:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:

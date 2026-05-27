@@ -3449,11 +3449,11 @@ void func_800D6774(void) // 0x800D6774
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {
-                func_80085EB8(0, &g_SysWork.playerWork.player, 129, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 129, false);
             }
             else
             {
-                func_80085EB8(0, &g_SysWork.playerWork.player, 128, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 128, false);
             }
 
             Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
@@ -3469,7 +3469,7 @@ void func_800D6774(void) // 0x800D6774
 
         case 1:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 2:
@@ -3486,15 +3486,15 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 5:
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 7:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 123, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 123, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -3504,7 +3504,7 @@ void func_800D6774(void) // 0x800D6774
         case 9:
             Player_ControlUnfreeze(true);
             Player_ControlFreeze();
-            func_80085EB8(0, &g_SysWork.playerWork.player, 52, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 52, false);
 
             g_SysWork.playerWork.player.position.vx += Q12(0.5f);
             g_SysWork.playerWork.player.rotation.vy += Q12_ANGLE(45.0f);

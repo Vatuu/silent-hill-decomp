@@ -252,7 +252,7 @@ void func_800DA248(void) // 0x800DA248
 
             Game_TurnFlashlightOn();
             D_800E9ECC = 0;
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
             Bgm_TrackChange(BgmTrackIdx_4);
@@ -278,7 +278,7 @@ void func_800DA248(void) // 0x800DA248
             break;
 
         case 5:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 72, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 72, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -291,8 +291,8 @@ void func_800DA248(void) // 0x800DA248
             break;
 
         case 8:
-            func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             g_Cutscene_Timer = Q12(21.0f);
             SysWork_StateStepIncrement(0);
 
@@ -305,7 +305,7 @@ void func_800DA248(void) // 0x800DA248
             break;
 
         case 11:
-            func_80085EB8(0, &g_SysWork.npcs[0], 17, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 17, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -321,7 +321,7 @@ void func_800DA248(void) // 0x800DA248
             break;
 
         case 15:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 155, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 155, false);
             SD_Call(Sfx_XaAudio568);
             SysWork_StateStepIncrement(0);
 
@@ -330,7 +330,7 @@ void func_800DA248(void) // 0x800DA248
             break;
 
         case 17:
-            func_80085EB8(0, g_SysWork.npcs, 18, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, g_SysWork.npcs, 18, false);
             Savegame_EventFlagSet(EventFlag_570);
             SysWork_StateStepIncrement(0);
 
@@ -421,8 +421,8 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 1:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 156, false);
-            func_80085EB8(0, &g_SysWork.npcs[0], 6, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 156, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 6, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -435,7 +435,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 4:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 157, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 157, false);
 
             g_SysWork.lightBoneCoord0 = NULL;
             g_SysWork.lightBoneCoord1 = NULL;
@@ -470,7 +470,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 8:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 158, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 158, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -676,7 +676,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 146, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 146, false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             g_SysWork.playerWork.player.position.vx = Q12(97.61f);
@@ -726,12 +726,12 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 10:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 147, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 147, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 11:
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -813,7 +813,7 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 6:
-            func_80085EB8(0, &g_SysWork.npcs[0], 11, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
             SD_Call(Sfx_XaAudio603);
             SysWork_StateStepIncrement(0);
 
@@ -943,7 +943,7 @@ void func_800DC14C(void) // 0x800DC14C
         case 8:
             Savegame_EventFlagSet(EventFlag_556);
             g_SysWork.cutsceneBorderState = 20;
-            func_80085EB8(0, &g_SysWork.playerWork.player, 143, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 143, false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(61.9627f);
@@ -953,7 +953,7 @@ void func_800DC14C(void) // 0x800DC14C
             break;
 
         case 9:
-            func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(59.74f), Q12(-1.22f), Q12(-60.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -966,7 +966,7 @@ void func_800DC14C(void) // 0x800DC14C
             break;
 
         case 11:
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -1368,7 +1368,7 @@ void func_800DD2D4(void) // 0x800DD2D4
 
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_80085EB8(0, &g_SysWork.playerWork.player, 144, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 144, false);
 
             g_Cutscene_Timer = Q12(0.0f);
 
@@ -1515,7 +1515,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 144, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 144, false);
             Camera_PositionSet(NULL, Q12(20.98f), Q12(-4.08f), Q12(-59.9f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(18.56f), Q12(-1.07f), Q12(-60.94f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             g_SysWork.playerWork.player.position.vx = Q12(19.2f);
@@ -1528,7 +1528,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             break;
 
         case 4:
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
             Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1728,12 +1728,12 @@ void func_800DE1FC(void) // 0x800DE1FC
             break;
 
         case 1:
-            func_80085EB8(0, &g_SysWork.npcs[1], 5, false);
-            func_80085EB8(0, &g_SysWork.npcs[0], 5, false);
-            func_80085EB8(0, &g_SysWork.npcs[2], 0, false);
-            func_80085EB8(0, &g_SysWork.npcs[3], 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 5, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[2], 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[3], 0, false);
 
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
             ClearImage(&D_800E9D1C, 0, 0, 0);
             SysWork_StateStepIncrement(0);
@@ -1898,7 +1898,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             {
                 SysWork_StateStepIncrement(0);
                 Savegame_EventFlagSet(EventFlag_551);
-                func_80085EB8(2, &g_SysWork.playerWork.player, 0, false);
+                Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             }
             break;
 
@@ -1925,7 +1925,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             SysWork_StateStepIncrement(0);
 
         default:
-            func_80085EB8(3, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
@@ -2019,9 +2019,9 @@ void func_800DF21C(void) // 0x800DF21C
             break;
 
         case 1:
-            func_80085EB8(0, &g_SysWork.npcs[0], 6, false);
-            func_80085EB8(0, &g_SysWork.npcs[1], 25, false);
-            func_80085EB8(0, &g_SysWork.playerWork.player, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 6, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 25, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
@@ -2039,8 +2039,8 @@ void func_800DF21C(void) // 0x800DF21C
             break;
 
         case 4:
-            func_80085EB8(0, &g_SysWork.npcs[0], 8, false);
-            func_80085EB8(0, &g_SysWork.npcs[1], 27, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 8, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 27, false);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
@@ -2054,8 +2054,8 @@ void func_800DF21C(void) // 0x800DF21C
             break;
 
         case 7:
-            func_80085EB8(0, &g_SysWork.npcs[0], 10, false);
-            func_80085EB8(0, &g_SysWork.npcs[1], 12, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 10, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 12, false);
 
             g_Cutscene_Timer = Q12(60.0f);
 
@@ -2631,7 +2631,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
-            func_80085EB8(0, &g_SysWork.playerWork.player, 148, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 148, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             D_800EA494.field_2 = Q12(0.3f);

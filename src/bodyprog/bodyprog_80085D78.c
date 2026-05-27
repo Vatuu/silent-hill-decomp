@@ -77,13 +77,13 @@ void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset) // 0x80085E6C
     }
 }
 
-void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x80085EB8
+void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 arg2, bool reset) // 0x80085EB8
 {
     s32 keyframeState; // TODO: Not final name, only an indication.
 
-    switch (arg0)
+    switch (cmd)
     {
-        case 0:
+        case CharacterAnimCommand_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.func_D4(arg2);
@@ -94,7 +94,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             }
             break;
 
-        case 1:
+        case CharacterAnimCommand_1:
             if (chara == &g_SysWork.playerWork.player)
             {
                 keyframeState = g_MapOverlayHeader.func_E8();
@@ -113,7 +113,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             }
             break;
 
-        case 2:
+        case CharacterAnimCommand_AnimLock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimLock();
@@ -124,7 +124,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             }
             break;
 
-        case 3:
+        case CharacterAnimCommand_AnimUnlock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock();
@@ -135,7 +135,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             }
             break;
 
-        case 4:
+        case CharacterAnimCommand_4:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock();
@@ -671,12 +671,12 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            func_80085EB8(0, chara, arg1, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, chara, arg1, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            func_80085EB8(1, chara, 0, true);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, chara, 0, true);
             break;
 
         default:
@@ -690,12 +690,12 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            func_80085EB8(3, chara, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, chara, 0, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            func_80085EB8(1, chara, 0, true);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, chara, 0, true);
             break;
 
         default:

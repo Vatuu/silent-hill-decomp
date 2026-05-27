@@ -145,8 +145,8 @@ void func_800CED88(void) // 0x800CED88
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            func_80085EB8(0, playerChara, 51, false);
-            func_80085EB8(0, dahliaChara, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, dahliaChara, 0, false);
             func_8003D03C();
 
             Savegame_EventFlagSet(EventFlag_182);
@@ -172,7 +172,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 5:
-            func_80085EB8(0, playerChara, 113, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 113, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -208,7 +208,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 8:
-            func_80085EB8(4, playerChara, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_4, playerChara, 0, false);
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
@@ -217,7 +217,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 10:
-            func_80085EB8(0, dahliaChara, 9, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, dahliaChara, 9, false);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -225,7 +225,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 12:
-            func_80085EB8(1, dahliaChara, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, dahliaChara, 0, false);
             Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -235,11 +235,11 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 14:
-            func_80085EB8(0, dahliaChara, 10, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, dahliaChara, 10, false);
             SysWork_StateStepIncrement(0);
 
         case 15:
-            func_80085EB8(1, dahliaChara, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, dahliaChara, 0, false);
             Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 16:
@@ -249,7 +249,7 @@ void func_800CED88(void) // 0x800CED88
             Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 18:
-            func_80085EB8(0, dahliaChara, 8, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, dahliaChara, 8, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -286,7 +286,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 21:
-            func_80085EB8(0, dahliaChara, 1, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, dahliaChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -307,7 +307,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 23:
-            func_80085EB8(0, playerChara, 111, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 111, false);
             SysWork_StateStepIncrement(0);
 
         case 24:

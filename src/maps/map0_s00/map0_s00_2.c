@@ -213,7 +213,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_3:
-            func_80085EB8(0, &playerChara, 53, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 53, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_4:
@@ -225,7 +225,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_5:
-            func_80085EB8(0, &playerChara, 74, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 74, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_6:
@@ -1014,7 +1014,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_80085EB8(1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharacterAnimCommand(CharacterAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 9:
