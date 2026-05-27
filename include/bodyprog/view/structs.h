@@ -53,19 +53,19 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
  */
 typedef struct _VC_ROAD_DATA
 {
-    /* 0x0  */ VC_LIMIT_AREA     lim_sw;
-    /* 0x8  */ VC_LIMIT_AREA     lim_rd;
-    /* 0x10 */ VC_ROAD_FLAGS     flags          : 8; /** `VC_ROAD_FLAGS` | Camera path flags. */
-    /* 0x11 */ VC_AREA_SIZE_TYPE area_size_type : 2;
-    /* 0x11 */ VC_ROAD_TYPE      rd_type        : 3; /** Path type. */
-    /* 0x11 */ u32               mv_y_type      : 3; /** `VC_CAM_MV_TYPE` */
-    /* 0x12 */ q27_4             lim_rd_max_hy  : 8; /** In SH2, `max_hy` and `min_hy` are part of `VC_LIMIT_AREA`.In SH1, these are separate for some reason. */
-    /* 0x13 */ q27_4             lim_rd_min_hy  : 8;
-    /* 0x14 */ q27_4             ofs_watch_hy   : 8;
-    /* 0x14 */ u32               field_15       : 4; // TODO: Should be `_14`.
-    /* 0x14 */ s16               cam_mv_type    : 4; /** `VC_CAM_MV_TYPE` */
-    /* 0x16 */ q0_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
-    /* 0x17 */ q0_7              fix_ang_y;
+    /* 0x0     */ VC_LIMIT_AREA     lim_sw;
+    /* 0x8     */ VC_LIMIT_AREA     lim_rd;
+    /* 0x10+0  */ VC_ROAD_FLAGS     flags          : 8; /** `VC_ROAD_FLAGS` | Camera path flags. */
+    /* 0x11+0  */ VC_AREA_SIZE_TYPE area_size_type : 2;
+    /* 0x11+8  */ VC_ROAD_TYPE      rd_type        : 3; /** Path type. */
+    /* 0x11+10 */ u32               mv_y_type      : 3; /** `VC_CAM_MV_TYPE` */
+    /* 0x12+0  */ q27_4             lim_rd_max_hy  : 8; /** In SH2, `max_hy` and `min_hy` are part of `VC_LIMIT_AREA`.In SH1, these are separate for some reason. */
+    /* 0x13+0  */ q27_4             lim_rd_min_hy  : 8;
+    /* 0x14+0  */ q27_4             ofs_watch_hy   : 8;
+    /* 0x14+8  */ u32               lens_flare     : 4; /** `e_LensFlareType` | TODO: Unsure, rough name. */
+    /* 0x14+12 */ s16               cam_mv_type    : 4; /** `VC_CAM_MV_TYPE` */
+    /* 0x16    */ q0_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
+    /* 0x17    */ q0_7              fix_ang_y;
 } VC_ROAD_DATA;
 STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 

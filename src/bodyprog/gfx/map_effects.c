@@ -498,7 +498,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.pointLightIntensity);
 
     func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, lightBoneCoord, g_SysWork.lightBoneCoord0, &rot,
                   g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
@@ -511,71 +511,73 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     }
 }
 
-q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
+q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 lensFlare, s_SysWork* sysWork) // 0x8003F4DC
 {
     s32     temp;
     q19_12  alphaCpy;
     SVECTOR rot0;
 
+    // TODO: `arg4` is the value from `VC_ROAD_DATA::field_15`.
+
     if (arg3 != 2)
     {
-        arg4 = 1;
+        lensFlare = LensFlareType_Custom;
     }
 
     alphaCpy = alpha;
-    if (arg4 == 0)
+    if (lensFlare == LensFlareType_Default)
     {
         alphaCpy = Q12(0.0f);
     }
 
-    switch (arg4)
+    switch (lensFlare)
     {
         default:
-        case 1:
+        case LensFlareType_Custom:
             *lightBoneCoord = sysWork->lightBoneCoord1;
             break;
 
-        case 0:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
+        case LensFlareType_Default:
+        case LensFlareType_Preset1:
+        case LensFlareType_Preset2:
+        case LensFlareType_Preset3:
+        case LensFlareType_Preset4:
             *lightBoneCoord = NULL;
             break;
     }
 
-    switch (arg4)
+    switch (lensFlare)
     {
         default:
-        case 1:
+        case LensFlareType_Custom:
             rot0 = sysWork->pointLightRotation;
             break;
 
-        case 0:
+        case LensFlareType_Default:
             rot0.vx = Q12_ANGLE(0.0f);
             rot0.vy = Q12_ANGLE(-90.0f);
             rot0.vz = Q12_ANGLE(0.0f);
             break;
 
-        case 2:
+        case LensFlareType_Preset1:
             rot0.vx = Q12_ANGLE(-20.0f);
             rot0.vy = Q12_ANGLE(195.0f);
             rot0.vz = Q12_ANGLE(0.0f);
             break;
 
-        case 3:
+        case LensFlareType_Preset2:
             rot0.vx = Q12_ANGLE(-20.0f);
             rot0.vy = Q12_ANGLE(-75.0f);
             rot0.vz = Q12_ANGLE(0.0f);
             break;
 
-        case 4:
+        case LensFlareType_Preset3:
             rot0.vx = Q12_ANGLE(-20.0f);
             rot0.vy = Q12_ANGLE(15.0f);
             rot0.vz = Q12_ANGLE(0.0f);
             break;
 
-        case 5:
+        case LensFlareType_Preset4:
             rot0.vx = Q12_ANGLE(-20.0f);
             rot0.vy = Q12_ANGLE(105.0f);
             rot0.vz = Q12_ANGLE(0.0f);
@@ -583,7 +585,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha,
     }
 
     rot->vy = -Math_Sin(rot0.vx);
-    temp    = Math_Cos(rot0.vx);
+    temp    =  Math_Cos(rot0.vx);
     rot->vz = Q12_MULT(temp, Math_Cos(rot0.vy));
     rot->vx = Q12_MULT(temp, Math_Sin(rot0.vy));
     return alphaCpy;

@@ -7,7 +7,7 @@
 
 struct _IpdCollisionData;
 
-// TODO: `collision.c` is too big and in dire need of splits. There are a few potentiaal groupings.
+// TODO: `collision.c` is too big and in dire need of splits. There are a few potential groupings.
 
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
@@ -128,7 +128,7 @@ typedef struct
     /* 0x5  */ u8                     field_5;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
-    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
+    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::materialIdx`.
     /* 0xF  */ u8                     field_F;  // }
     /* 0x10 */ u8                     field_10; // } Index from `s_IpdCollisionData::field_6_5`.
     /* 0x11 */ u8                     field_11; // }
@@ -444,36 +444,36 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
  *
  * @param collResult Collision result.
  * @param offset Movement offset to test.
- * @param query Collision query parameters.
+ * @param cylinder Collision cylinder.
  * @return `true` if movement is possible, `false` otherwise.
  */
-s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* collCylinder);
+s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* cylinder);
 
-s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* collCylinder);
+s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* cylinder);
 
-bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3,
+bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
                    s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
                    s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Slows down colliding characters according to relational cylinder collision. */
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount);
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder, s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Initializes a collision state for a new pass.
  *
  * @param collState Collision state to initialize.
  * @param moveOffset Movement offset.
- * @param collCylinder Collision cylinder.
+ * @param cylinder Collision cylinder.
  * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3);
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
  * @param charaState Character collision state.
  * @param moveOffset Movement offset.
- * @param collCylinder Collision cylinder.
+ * @param cylinder Collision cylinder.
  */
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder);
+void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder);
 
 void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -594,13 +594,13 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger);
 /** @brief Gets the ceiling height, derived from active collision triggers.
  *
  * @param moveOffset Movement offset.
- * @param collCylinder Collision cylinder.
+ * @param cylinder Collision cylinder.
  * @param cylinderRadius Cylinder radius.
  * @param cylinderHeight Cylinder height.
  * @return Ceiling height. `DEFAULT_CEILING_HEIGHT` if no ceiling exists.
  */
 q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
-                                  const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight);
+                                  const s_CollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderHeight);
 
 /** @brief Gets the offset from a world position to the edge of a collision trigger.
  * If the position is inside the trigger, the offset is (0, 0).

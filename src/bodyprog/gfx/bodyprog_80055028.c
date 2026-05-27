@@ -957,10 +957,12 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
         {
             for (j = 0; j < lmHdr->modelCount; j++)
             {
-                if (lmHdr->magic == LM_HEADER_MAGIC)
+                if (lmHdr->magic != LM_HEADER_MAGIC)
                 {
-                    Model_MaterialFlagsApply(&lmHdr->modelHdrs[j], i, curMat, matFlags);
+                    continue;
                 }
+
+                Model_MaterialFlagsApply(&lmHdr->modelHdrs[j], i, curMat, matFlags);
             }
 
             curMat->field_F        = curMat->field_E;
@@ -971,7 +973,7 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
     }
 }
 
-void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 matFlags) // 0x80056A88
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Material* mat, s32 matFlags) // 0x80056A88
 {
     u16           field_14;
     u16           field_16;
@@ -984,14 +986,14 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
         // Run through primitives.
         for (curPrim = curMeshHdr->primitives; curPrim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; curPrim++)
         {
-            // No material(?).
-            if (curPrim->field_6.bits.field_6_8 == NO_VALUE)
+            // No material.
+            if (curPrim->field_6.bits.materialIdx == NO_VALUE)
             {
                 curPrim->field_6.bits.field_6_0 = 32;
             }
 
             // Apply material flags.
-            if (curPrim->field_6.bits.field_6_8 == arg1)
+            if (curPrim->field_6.bits.materialIdx == matIdx)
             {
                 if (matFlags & MaterialFlag_0)
                 {

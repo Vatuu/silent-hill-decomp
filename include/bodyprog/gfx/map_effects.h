@@ -53,7 +53,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* preset);
 
 void Gfx_FlashlightUpdate(void);
 
-q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
+q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 lensFlare, s_SysWork* sysWork);
 
 u32 func_8003F654(s_SysWork_2388* arg0);
 

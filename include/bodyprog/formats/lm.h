@@ -7,6 +7,7 @@
 #define LM_HEADER_MAGIC  '0'
 #define LM_VERSION       6
 
+/** @brief LM file material. */
 typedef struct _Material
 {
     /* 0x0  */ u_Filename name;
@@ -33,8 +34,8 @@ STATIC_ASSERT_SIZEOF(s_Material, 24);
 /** @brief LM file header. */
 typedef struct _LmHeader
 {
-    /* 0x0  */ u8             magic;    /** See `LM_HEADER_MAGIC`. */
-    /* 0x1  */ u8             version;  /** See `LM_VERSION`. */
+    /* 0x0  */ u8             magic;    /** Equal to `LM_HEADER_MAGIC` in valid file. */
+    /* 0x1  */ u8             version;  /** Equal to `LM_VERSION` in valid file. */
     /* 0x2  */ u8             isLoaded; /** `bool` */
     /* 0x3  */ u8             materialCount;
     /* 0x4  */ s_Material*    materials;

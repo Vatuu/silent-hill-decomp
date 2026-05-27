@@ -6,6 +6,24 @@
 
 #define IPD_HEADER_MAGIC 20
 
+/** @brief Ground material types. */
+typedef enum _GroundType
+{
+    GroundType_Default = 0,
+    GroundType_1       = 1,
+    GroundType_2       = 2,
+    GroundType_Grass   = 3,
+    GroundType_4       = 4,
+    GroundType_5       = 5,
+    GroundType_6       = 6,
+    GroundType_7       = 7,
+    GroundType_8       = 8,
+    GroundType_9       = 9,
+    GroundType_10      = 10,
+    GroundType_11      = 11,
+    GroundType_12      = 12
+} e_GroundType;
+
 typedef struct _IpdCollisionData_10
 {
     /* 0x0    */ s16   field_0;
@@ -59,8 +77,8 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
  */
 typedef struct _IpdCollisionData
 {
-    /* 0x0    */ s32                    positionX;      // q23_8
-    /* 0x4    */ s32                    positionZ;      // q23_8
+    /* 0x0    */ q23_8                  positionX;
+    /* 0x4    */ q23_8                  positionZ;
     /* 0x8+0  */ u32                    collPointsCount : 8; // Amount of structs in `collPoints`.
     /* 0x8+8  */ u32                    field_8_8       : 8; // Amount of structs in `ptr_10`.
     /* 0x8+16 */ u32                    field_8_16      : 8; // Amount of structs in `ptr_14`.
@@ -93,7 +111,7 @@ typedef struct _IpdModelBuffer_C
 } s_IpdModelBuffer_C;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
 
-/** @brief IPD model buffer. */
+/** @brief IPD file model buffer. */
 typedef struct _IpdModelBuffer
 {
     /* 0x0  */ u8                  field_0; // Count of `field_C` entries.
@@ -110,6 +128,7 @@ typedef struct _IpdModelBuffer
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
+/** @brief IPD file model info. */
 typedef struct _IpdModelInfo
 {
     /* 0x0 */ u8             isGlobalPlm; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
@@ -119,7 +138,7 @@ typedef struct _IpdModelInfo
 } s_IpdModelInfo;
 STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 
-/** @brief IPD model file header. */
+/** @brief IPD file model file header. */
 typedef struct _IpdHeader
 {
     /* 0x0  */ u8                 magic;

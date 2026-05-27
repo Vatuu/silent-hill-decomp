@@ -100,9 +100,9 @@ void vcEndCameraSystem(void) // 0x80080A04
     vcWork.view_cam_active_f = false;
 }
 
-s32 func_80080A10(void) // 0x80080A10
+s32 Vc_LensFlareTypeGet(void) // 0x80080A10
 {
-    return vcWork.cur_near_road.road_p->field_15;
+    return vcWork.cur_near_road.road_p->lens_flare;
 }
 
 void Vc_LookAtPositionYSet(q19_12 lookAtPosY) // 0x80080A30

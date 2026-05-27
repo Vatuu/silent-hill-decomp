@@ -108,24 +108,6 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
 
-/** @brief Ground material types. */
-typedef enum _GroundType
-{
-    GroundType_Default = 0,
-    GroundType_1       = 1,
-    GroundType_2       = 2,
-    GroundType_Grass   = 3,
-    GroundType_4       = 4,
-    GroundType_5       = 5,
-    GroundType_6       = 6,
-    GroundType_7       = 7,
-    GroundType_8       = 8,
-    GroundType_9       = 9,
-    GroundType_10      = 10,
-    GroundType_11      = 11,
-    GroundType_12      = 12
-} e_GroundType;
-
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -765,7 +747,7 @@ extern s_FsImageDesc D_800A908C;
 
 extern s_FsImageDesc D_800A9094;
 
-extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
+extern s_FsImageDesc g_Font24AtlasImg;
 
 extern s_MapEffectsInfo MAP_EFFECTS_INFOS[21];
 
@@ -1751,7 +1733,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
 void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
 
-void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 matFlags);
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Material* mat, s32 matFlags);
 
 void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 

@@ -36,6 +36,7 @@
  * P:     Pointer
  * PRIO:  Priority
  * PRM:   Parameter/parameters
+ * PRS:   ?
  * R:     Radius
  * RD:    Road
  * SCR:   Screen
@@ -62,7 +63,7 @@
  * Marge:        Merge.
  * Near road:    Nearby camera path collision containing info about a path's relation to the player in space (distance, priority, etc.).
  *               An array of these is kept to track which path should take effect.
- * Oresen hokan: Polyline interpolation, linear interpolation over an array of values.
+ * Oresen hokan: Polyline interpolation, i.e. linear interpolation over an array of values.
  * Renewal:      Reset.
  * Road:         Camera path. A region which dictates specific camera behaviors while the player is inside.
  * Self view:    First-person view.

@@ -9,13 +9,13 @@ typedef struct _Primitive
     /* 0x4  */ u16 field_4;
                union
                {
-                   struct
-                   {
-                       /* 0x6+0  */ u8 field_6_0     : 8;
-                       /* 0x6+8  */ s8 field_6_8     : 7;
-                       /* 0x6+17 */ u8 isTransparent : 1; /** `bool` */
-                   } bits;
-                   u16 flags; // @hack `func_8005AC50` accesses `isTransparent` above with some weird shifts, haven't found how to make it work with bitfield yet.
+                         struct
+                         {
+                             /* 0x6+0  */ u8 field_6_0     : 8; // Set to `s_Material::field_E`.
+                             /* 0x6+8  */ s8 materialIdx   : 7;
+                             /* 0x6+17 */ u8 isTransparent : 1; /** `bool` */
+                         } bits;
+               /* 0x0 */ u16 flags; // @hack `func_8005AC50` accesses `isTransparent` above with some weird shifts, haven't found how to make it work with bitfield yet.
     /* 0x6  */ } field_6;
     /* 0x8  */ u16 field_8;
     /* 0xA  */ u16 field_A;
@@ -54,6 +54,7 @@ typedef struct _ModelHeader
 } s_ModelHeader;
 STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
+/** @brief Model info. */
 typedef struct _ModelInfo
 {
     /* 0x0 */ s32            field_0; // Bone flags?

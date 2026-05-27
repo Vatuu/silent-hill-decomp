@@ -1,6 +1,17 @@
 #ifndef _BODYPROG_VIEW_ENUMS_H
 #define _BODYPROG_VIEW_ENUMS_H
 
+/** @brief Lens flare rotation types. TODO: Rough name. Also probably belongs in a different file. */
+typedef enum _LensFlareType
+{
+    LensFlareType_Default = 0,
+    LensFlareType_Custom  = 1,
+    LensFlareType_Preset1 = 2,
+    LensFlareType_Preset2 = 3,
+    LensFlareType_Preset3 = 4,
+    LensFlareType_Preset4 = 5
+} e_LensFlareType;
+
 /** @brief Camera path flags. */
 typedef enum _VC_ROAD_FLAGS
 {

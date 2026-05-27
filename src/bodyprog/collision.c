@@ -131,7 +131,7 @@ void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
 
 void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ) // 0x800699F8
 {
-    s_CollisionCylinder collCylinder;
+    s_CollisionCylinder cylinder;
     VECTOR3             pos;
     s_CollisionState    state;
     s_IpdCollisionData* ipdCollData;
@@ -150,13 +150,13 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
         return;
     }
 
-    collCylinder.position.vx = posX;
-    collCylinder.position.vy = Q12(0.0f);
-    collCylinder.position.vz = posZ;
-    collCylinder.bottom      = Q12(0.0f);
-    collCylinder.top         = Q12(0.0f);
-    collCylinder.radius      = Q12(0.0f);
-    Collision_QueryInit(&state, &pos, &collCylinder, false);
+    cylinder.position.vx = posX;
+    cylinder.position.vy = Q12(0.0f);
+    cylinder.position.vz = posZ;
+    cylinder.bottom      = Q12(0.0f);
+    cylinder.top         = Q12(0.0f);
+    cylinder.radius      = Q12(0.0f);
+    Collision_QueryInit(&state, &pos, &cylinder, false);
 
     state.isCharaMoving = false;
     state.field_0_9     = false;
@@ -381,16 +381,16 @@ void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* p
 
 bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara) // 0x80069FFC
 {
-    s_CollisionCylinder collCylinder;
+    s_CollisionCylinder cylinder;
     VECTOR3             offsetCpy;
     s32                 collDataIdx;
     s32                 charaCount;
     bool                cond;
 
     // Set collision cylinder position.
-    collCylinder.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
-    collCylinder.position.vy = chara->position.vy - Q12(0.02f);
-    collCylinder.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
+    cylinder.position.vx = chara->position.vx + chara->collision.shapeOffsets.cylinder.vx;
+    cylinder.position.vy = chara->position.vy - Q12(0.02f);
+    cylinder.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
 
     if (Ipd_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
     {
@@ -399,10 +399,10 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
     }
 
     // Set collision cylinder state.
-    collCylinder.top            = chara->collision.box.top;
-    collCylinder.bottom         = chara->collision.box.bottom;
-    collCylinder.radius         = chara->collision.cylinder.radius;
-    collCylinder.collisionState = chara->collision.state;
+    cylinder.top            = chara->collision.box.top;
+    cylinder.bottom         = chara->collision.box.bottom;
+    cylinder.radius         = chara->collision.cylinder.radius;
+    cylinder.collisionState = chara->collision.state;
 
     offsetCpy = *moveOffset;
 
@@ -420,7 +420,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
             break;
     }
 
-    return func_8006A4A8(collResult, &offsetCpy, &collCylinder, cond,
+    return func_8006A4A8(collResult, &offsetCpy, &cylinder, cond,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
@@ -497,13 +497,13 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
     return &collCharas;
 }
 
-s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* collCylinder) // 0x8006A3B4
+s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CollisionCylinder* cylinder) // 0x8006A3B4
 {
     s32 stackPtr;
     s32 var1;
 
     stackPtr = SetSp(0x1F8003D8);
-    var1 = func_8006A42C(collResult, offset, collCylinder);
+    var1 = func_8006A42C(collResult, offset, cylinder);
     SetSp(stackPtr);
 
     if (var1 == NO_VALUE)
@@ -514,18 +514,18 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s
     return var1;
 }
 
-s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* collCylinder) // 0x8006A42C
+s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CollisionCylinder* cylinder) // 0x8006A42C
 {
     VECTOR3 offsetCpy;
     s32     collDataIdx;
 
     offsetCpy = *offset;
 
-    return func_8006A4A8(collResult, &offsetCpy, collCylinder, false,
+    return func_8006A4A8(collResult, &offsetCpy, cylinder, false,
                          Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
-bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3,
+bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,
                    s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7,
                    s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
 {
@@ -544,18 +544,18 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
 
     cond = false;
 
-    if (collCylinder->collisionState == CharaCollisionState_5)
+    if (cylinder->collisionState == CharaCollisionState_5)
     {
-        Collision_DefaultResultSet(collResult, moveOffset->vx, moveOffset->vy, moveOffset->vz, collCylinder->position.vy);
+        Collision_DefaultResultSet(collResult, moveOffset->vx, moveOffset->vy, moveOffset->vz, cylinder->position.vy);
         return false;
     }
 
-    Collision_TargetCharaCollidingSlowDown(moveOffset, collCylinder, charas, charaCount);
+    Collision_TargetCharaCollidingSlowDown(moveOffset, cylinder, charas, charaCount);
 
     moveOffsetCpy = *moveOffset;
-    collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy, collCylinder, collCylinder->radius, collCylinder->top);
+    collResult->ceilingHeight = Collision_CeilingHeightGet(&moveOffsetCpy, cylinder, cylinder->radius, cylinder->top);
 
-    Collision_QueryInit(&collState, &moveOffsetCpy, collCylinder, arg3);
+    Collision_QueryInit(&collState, &moveOffsetCpy, cylinder, arg3);
 
     moveOffset1 = moveOffsetCpy;
 
@@ -680,7 +680,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
     return collState.field_0_0 != false;
 }
 
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* collCylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
     q19_12          headingAngle;
     q19_12          cylinderOffsetZ;
@@ -707,7 +707,7 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
         // Check if current character is collidable.
         if (curChara->collision.state == CharaCollisionState_Ignore ||
             curChara->collision.state == CharaCollisionState_Player ||
-            curChara->collision.state >= collCylinder->collisionState)
+            curChara->collision.state >= cylinder->collisionState)
         {
             continue;
         }
@@ -715,20 +715,20 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
         // Check if cylinders collide on vertical axis using box top and bottom.
         curCharaTop      = curChara->collision.box.top    + curChara->position.vy;
         curCharaBottom   = curChara->collision.box.bottom + curChara->position.vy;
-        otherCharaTop    = collCylinder->top              + collCylinder->position.vy;
-        otherCharaBottom = collCylinder->bottom           + collCylinder->position.vy;
+        otherCharaTop    = cylinder->top              + cylinder->position.vy;
+        otherCharaBottom = cylinder->bottom           + cylinder->position.vy;
         if (curCharaTop    > otherCharaBottom ||
             curCharaBottom < otherCharaTop)
         {
             continue;
         }
 
-        cylinderOffsetX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - collCylinder->position.vx;
-        cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - collCylinder->position.vz;
+        cylinderOffsetX = (curChara->position.vx + curChara->collision.shapeOffsets.cylinder.vx) - cylinder->position.vx;
+        cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - cylinder->position.vz;
         
         // Check if cylinders collide on XZ plane.
         dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
-        if (((curChara->collision.cylinder.radius + collCylinder->radius) + INTERSECTION_BUFFER) < dist)
+        if (((curChara->collision.cylinder.radius + cylinder->radius) + INTERSECTION_BUFFER) < dist)
         {
             continue;
         }
@@ -755,13 +755,13 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
     offset->vz  = Q12_MULT(offsetAlpha, offset->vz);
 }
 
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder, bool arg3) // 0x8006AB50
+void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3) // 0x8006AB50
 {
     collState->field_0_0             = false;
     collState->flags                 = g_ActiveCollisionTriggers.flags;
     collState->charaState.field_4 = arg3;
 
-    Collision_MoveDirectionCalc(&collState->charaState, moveOffset, collCylinder);
+    Collision_MoveDirectionCalc(&collState->charaState, moveOffset, cylinder);
 
     collState->field_7C = Q8(30.0f);
     collState->field_34 = 0;
@@ -778,7 +778,7 @@ void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const
     collState->groundType = GroundType_Default;
 }
 
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* collCylinder) // 0x8006ABC0
+void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder) // 0x8006ABC0
 {
     q3_12 headingAngle;
 
@@ -803,14 +803,14 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR
         charaState->direction.vz = Q12(0.0f);
     }
 
-    charaState->radius         = Q12_TO_Q8(collCylinder->radius);
-    charaState->positionFromX  = Q12_TO_Q8(collCylinder->position.vx);
-    charaState->positionFromZ  = Q12_TO_Q8(collCylinder->position.vz);
+    charaState->radius         = Q12_TO_Q8(cylinder->radius);
+    charaState->positionFromX  = Q12_TO_Q8(cylinder->position.vx);
+    charaState->positionFromZ  = Q12_TO_Q8(cylinder->position.vz);
     charaState->positionToX    = charaState->positionFromX + charaState->offset.vx;
     charaState->positionToZ    = charaState->positionFromZ + charaState->offset.vz;
-    charaState->topPos         = Q12_TO_Q8(collCylinder->top    + collCylinder->position.vy);
-    charaState->bottomPos      = Q12_TO_Q8(collCylinder->bottom + collCylinder->position.vy);
-    charaState->collisionState = collCylinder->collisionState;
+    charaState->topPos         = Q12_TO_Q8(cylinder->top    + cylinder->position.vy);
+    charaState->bottomPos      = Q12_TO_Q8(cylinder->bottom + cylinder->position.vy);
+    charaState->collisionState = cylinder->collisionState;
 }
 
 void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
@@ -3364,7 +3364,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
 }
 
 q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
-                                  const s_CollisionCylinder* collCylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
+                                  const s_CollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
 {
     q19_12              projOffsetToTriggerX;
     q19_12              projOffsetToTriggerZ;
@@ -3395,7 +3395,7 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
     // Compute start parameters.
     moveOffsetX     = moveOffset->vx;
     moveOffsetZ     = moveOffset->vz;
-    cylinderTop     = collCylinder->position.vy + cylinderHeight;
+    cylinderTop     = cylinder->position.vy + cylinderHeight;
     projCylinderTop = cylinderTop + moveOffset->vy;
 
     // Run through collision triggers.
@@ -3412,7 +3412,7 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
 
         // Check rough cylinder-trigger collision at projected position.
         Collision_TriggerOffsetGet(&projOffsetToTriggerX, &projOffsetToTriggerZ,
-                                   collCylinder->position.vx + moveOffsetX, collCylinder->position.vz + moveOffsetZ,
+                                   cylinder->position.vx + moveOffsetX, cylinder->position.vz + moveOffsetZ,
                                    curTrigger);
         if (MAX(ABS(projOffsetToTriggerX), ABS(projOffsetToTriggerZ)) >= cylinderRadius)
         {
@@ -3430,7 +3430,7 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
         if (projDistToTrigger > Q12(0.0f))
         {
             Collision_TriggerOffsetGet(&offsetToTriggerX, &offsetToTriggerZ,
-                                       collCylinder->position.vx, collCylinder->position.vz,
+                                       cylinder->position.vx, cylinder->position.vz,
                                        curTrigger);
 
             // Compute allowed intersection depth.

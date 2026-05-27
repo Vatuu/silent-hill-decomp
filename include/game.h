@@ -440,8 +440,8 @@ typedef struct _SysWork
                 // 1 byte of padding.
     /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord0;
     /* 0x2360   */ VECTOR3          pointLightPosition; // } Often set to DMS cutscene data.
-    /* 0x236C   */ GsCOORDINATE2*   lightBoneCoord1;    // }
-    /* 0x2370   */ SVECTOR          pointLightRotation; // }
+    /* 0x236C   */ GsCOORDINATE2*   lightBoneCoord1;    // } } Might be for the lens flare?
+    /* 0x2370   */ SVECTOR          pointLightRotation; // } }
     /* 0x2378   */ s16              pointLightIntensity;
     /* 0x237A   */ q3_12            cameraAngleY;
     /* 0x237C   */ q3_12            cameraAngleZ;
