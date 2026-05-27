@@ -36,11 +36,11 @@ void func_800D57E8(void) // 0x800D57E8
 
     if (g_MapEventData->pointOfInterestIdx == 25)
     {
-        Map_MessageWithSfx(11, Sfx_Unk1350, &sfxPos);
+        Event_DisplayMapMsgWithSfx(11, Sfx_Unk1350, &sfxPos);
     }
     else
     {
-        Map_MessageWithSfx(11, Sfx_DoorJammed, &sfxPos);
+        Event_DisplayMapMsgWithSfx(11, Sfx_DoorJammed, &sfxPos);
     }
 }
 
@@ -114,7 +114,7 @@ void func_800D59D4(void) // 0x800D59D4
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_BasementStoreroomKey, 1);
-    Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(27, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_MapMark_FogHospital3F_NearElevatorBroken);
     Savegame_EventFlagSet(EventFlag_256);
@@ -140,7 +140,7 @@ void func_800D5A98(void) // 0x800D5A98
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -148,7 +148,7 @@ void func_800D5A98(void) // 0x800D5A98
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             break;
 
@@ -158,16 +158,16 @@ void func_800D5A98(void) // 0x800D5A98
 
         case 7:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            MapMsg_DisplayAndHandleSelection(false, 22, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 22, 0, 0, 0, false);
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -190,7 +190,7 @@ void func_800D5C98(void) // 0x800D5C98
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -215,7 +215,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 5:
@@ -223,7 +223,7 @@ void func_800D5C98(void) // 0x800D5C98
             SysWork_StateStepIncrement(0);
 
         case 6:
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 7:
@@ -231,7 +231,7 @@ void func_800D5C98(void) // 0x800D5C98
             SysWork_StateStepIncrement(0);
 
         case 8:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 9:
@@ -239,11 +239,11 @@ void func_800D5C98(void) // 0x800D5C98
             SysWork_StateStepIncrement(0);
 
         case 10:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 11:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 24, 0, 0, 0, false);
             break;
 
         case 12:
@@ -262,7 +262,7 @@ void func_800D5C98(void) // 0x800D5C98
             func_80086470(3U, InvItemId_Lighter, 1, false);
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -274,7 +274,7 @@ void func_800D5FC4(void) // 0x800D5FC4
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             D_800DACE8 = Q12(-0.3f);
 
@@ -298,7 +298,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementDelayed(Q12(1.05f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.05f), false);
             break;
 
         case 4:
@@ -340,7 +340,7 @@ void func_800D5FC4(void) // 0x800D5FC4
 
         case 5:
             Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false); // "Poured Disinfecting alcohol on the vines."
+            Event_DisplayMapMsg(false, 25, 0, 0, 0, false); // "Poured Disinfecting alcohol on the vines."
             break;
 
         case 6:
@@ -357,7 +357,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVines);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -380,11 +380,11 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 26, 0, 0, 0, false);
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 5:
@@ -436,7 +436,7 @@ void func_800D64E0(void) // 0x800D64E0
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -468,7 +468,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 6:
@@ -476,7 +476,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 8:
@@ -484,7 +484,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 9:
-            SysWork_StateStepIncrementDelayed(Q12(0.65f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.65f), false);
             break;
 
         case 10:
@@ -524,18 +524,18 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         case 13:
-            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 14:
             sharedData_800D8568_1_s05.field_1 = 1;
             sharedData_800D8568_1_s05.field_2 = 4;
 
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 15:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 16:
@@ -543,7 +543,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 17:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 18:
@@ -551,7 +551,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 19:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         default:
@@ -567,7 +567,7 @@ void func_800D64E0(void) // 0x800D64E0
                 }
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, 0, false);
             Savegame_EventFlagSet(EventFlag_284);
 
             Gfx_MapInitMapEffectsUpdate(7, 4);
@@ -576,7 +576,7 @@ void func_800D64E0(void) // 0x800D64E0
 
             g_SysWork.playerWork.player.position.vx -= Q12(1.2f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
 
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Ignore;
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
@@ -611,7 +611,7 @@ void func_800D6BE0(void) // 0x800D6BE0
 
         case 2:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 16, 0, 0, 0, false);
             break;
 
         case 3:
@@ -657,7 +657,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Map_MessageWithAudio(18, &D_800DAC74, &D_800DAC70);
+            Event_DisplayMapMsgWithAudio(18, &D_800DAC74, &D_800DAC70);
             break;
 
         case 2:
@@ -665,7 +665,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 3:
-            Map_MessageWithAudio(19, &D_800DAC74, &D_800DAC70);
+            Event_DisplayMapMsgWithAudio(19, &D_800DAC74, &D_800DAC70);
             break;
 
         case 4:
@@ -676,7 +676,7 @@ void func_800D6D1C(void) // 0x800D6D1C
 
         case 5:
             func_800866D4(53, 3, false);
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 6:
@@ -690,7 +690,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 8:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
@@ -699,7 +699,7 @@ void func_800D6D1C(void) // 0x800D6D1C
 
         case 10:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 16, 0, 0, 0, false);
             break;
 
         case 11:
@@ -711,11 +711,11 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 13:
-            MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 17, 0, 0, 0, false);
             break;
 
         case 15:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 16:
@@ -726,7 +726,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             g_SysWork.playerWork.player.position.vz = Q12(-99.4f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
         default:
             // Return to gameplay.
@@ -736,7 +736,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_260);
             break;
@@ -756,7 +756,7 @@ void func_800D719C(void) // 0x800D719C
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 29, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 29, 0, 0, 0, false);
             break;
 
         default:
@@ -796,7 +796,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(true, 28, EventState_PushCabinet, EventState_DontPushCabinet, 0, false); // "Do you want to push the cabinet?"
+            Event_DisplayMapMsg(true, 28, EventState_PushCabinet, EventState_DontPushCabinet, 0, false); // "Do you want to push the cabinet?"
             break;
 
         case EventState_DontPushCabinet:
@@ -813,7 +813,7 @@ void func_800D72AC(void) // 0x800D72AC
             Camera_PositionSet(NULL, Q12(57.86f), Q12(-3.62f), Q12(-21.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(58.37f), Q12(-0.4f), Q12(-23.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 105, false);
 
             g_SysWork.playerWork.player.position.vx = Q12(57.15f);
@@ -864,7 +864,7 @@ void func_800D72AC(void) // 0x800D72AC
             }
 
             func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position, D_800DACF0 >> 5, Q12(16.0f), 0);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 7)
             {
@@ -877,9 +877,9 @@ void func_800D72AC(void) // 0x800D72AC
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Sd_SfxStop(Sfx_Unk1535);
             break;
     }

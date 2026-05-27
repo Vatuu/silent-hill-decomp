@@ -28,7 +28,7 @@ void func_800E9D54(void) // 0x800E9D54
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_AntiqueShopKey, 1);
-    Map_MessageWithSfx(15, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(15, Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_M2S02_AntiqueShopOpen);
 }
 
@@ -92,11 +92,11 @@ void func_800E9EAC(void) // 0x800E9EAC
             break;
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(0, false, 1, Q12(0.25f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 1, Q12(0.25f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
             break;
 
         default:
@@ -132,7 +132,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_189);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
 }

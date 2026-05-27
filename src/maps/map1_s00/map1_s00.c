@@ -124,13 +124,13 @@ void MapEvent_CommonItemTake(void) // 0x800D7A28
 void func_800D7AC4(void) // 0x800D7AC4
 {
     g_DeltaTime = Q12(0.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
     g_DeltaTime = Q12(0.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7B2C(void)
@@ -141,7 +141,7 @@ void func_800D7B2C(void)
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -149,12 +149,12 @@ void func_800D7B2C(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
             func_800862F8(3, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -164,12 +164,12 @@ void func_800D7B2C(void)
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 7:
@@ -192,22 +192,22 @@ void func_800D7B2C(void)
 
         case 10:
             func_800862F8(5, 0, false);
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 11:
             func_800862F8(5, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false); // "A golden sun."
+            Event_DisplayMapMsg(false, 19, 0, 0, 0, false); // "A golden sun."
             break;
 
         case 12:
             func_800862F8(5, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:
             func_800862F8(6, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_71);
             Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
@@ -221,13 +221,13 @@ void func_800D7B2C(void)
 void func_800D7E48(void) // 0x800D7E48
 {
     g_DeltaTime = Q12(0.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7E7C(void) // 0x800D7E7C
 {
     g_DeltaTime = Q12(0.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7EB0(void)
@@ -238,7 +238,7 @@ void func_800D7EB0(void)
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -246,12 +246,12 @@ void func_800D7EB0(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
             func_800862F8(3, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -261,12 +261,12 @@ void func_800D7EB0(void)
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 7:
@@ -289,22 +289,22 @@ void func_800D7EB0(void)
 
         case 10:
             func_800862F8(5, 0, false);
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 11:
             func_800862F8(5, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "A silver moon."
+            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "A silver moon."
             break;
 
         case 12:
             func_800862F8(5, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:
             func_800862F8(6, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_72);
             Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
@@ -326,11 +326,11 @@ void func_800D81CC(void) // 0x800D81CC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "The tower door is locked."
+            Event_DisplayMapMsg(false, 15, false, false, 0, false); // "The tower door is locked."
             break;
 
         case 3:
@@ -356,17 +356,17 @@ void func_800D81CC(void) // 0x800D81CC
 
             if (Savegame_EventFlagGet(EventFlag_72))
             {
-                 MapMsg_DisplayAndHandleSelection(false, 18, false, false, 0, false); // "Hands are stopped at 5:00."
+                 Event_DisplayMapMsg(false, 18, false, false, 0, false); // "Hands are stopped at 5:00."
             }
             else
             {
                 if (Savegame_EventFlagGet(EventFlag_71))
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // "Hands are stopped at 12:00."
+                    Event_DisplayMapMsg(false, 17, false, false, 0, false); // "Hands are stopped at 12:00."
                 }
                 else
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "Hands are stopped at 10:00."
+                    Event_DisplayMapMsg(false, 16, false, false, 0, false); // "Hands are stopped at 10:00."
                 }
             }
             break;
@@ -400,7 +400,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false); // "It's locked."
+            Event_DisplayMapMsg(false, 12, 0, 0, 0, false); // "It's locked."
             break;
 
         case 3:
@@ -430,17 +430,17 @@ void func_800D8354(void) // 0x800D8354
 
 void func_800D853C(void) // 0x800D853C
 {
-    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
+    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
 }
 
 void func_800D8570(void) // 0x800D8570
 {
-    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
+    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
 }
 
 void func_800D85A4(void) // 0x800D85A4
 {
-    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
+    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
 }
 
 void func_800D85D8(void) // 0x800D85D8
@@ -470,18 +470,18 @@ void func_800D85D8(void) // 0x800D85D8
             g_SysWork.playerWork.player.position.vy = Q12(-2.3f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             Event_CharacterAnimCommand(0u, &g_SysWork.playerWork.player, 88, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
         case 4:
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
         default:
@@ -506,7 +506,7 @@ void func_800D85D8(void) // 0x800D85D8
                 Savegame_EventFlagClear(EventFlag_81);
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
@@ -531,7 +531,7 @@ void func_800D8948(void) // 0x800D8948
             Savegame_EventFlagClear(EventFlag_79);
             Savegame_EventFlagClear(EventFlag_80);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -539,7 +539,7 @@ void func_800D8948(void) // 0x800D8948
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -551,7 +551,7 @@ void func_800D8948(void) // 0x800D8948
             g_SysWork.playerWork.player.position.vz = Q12(-55.1f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
             if (g_MapEventData->pointOfInterestIdx == 16)
@@ -566,7 +566,7 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
 
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
@@ -574,7 +574,7 @@ void func_800D8948(void) // 0x800D8948
 
         case 5:
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
         default:
             Player_ControlUnfreeze(true);
@@ -587,7 +587,7 @@ void func_800D8948(void) // 0x800D8948
 
 void func_800D8CC4(void) // 0x800D8CC4
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
 }
 
 void MapEvent_Boiler0(void) // 0x800D8CF0
@@ -604,7 +604,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
         case 2:
             g_SysWork.silentYesSelection = true;
-            MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
+            Event_DisplayMapMsg(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
         case 3:
@@ -613,7 +613,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 5:
@@ -635,7 +635,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
         case 7:
             Savegame_EventFlagSet(EventFlag_73);
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 8:
@@ -673,7 +673,7 @@ void MapEvent_Boiler1(void)
 
         case 2:
             g_SysWork.silentYesSelection = true;
-            MapMsg_DisplayAndHandleSelection(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
+            Event_DisplayMapMsg(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
         case 3:
@@ -681,11 +681,11 @@ void MapEvent_Boiler1(void)
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // "Nothing appears to happen."
+            Event_DisplayMapMsg(false, 30, 0, 0, 0, false); // "Nothing appears to happen."
             break;
 
         default:
@@ -708,7 +708,7 @@ void MapEvent_Boiler2(void) // 0x800D9148
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 31, 0, 0, 0, false); // The boiler is working.
+            Event_DisplayMapMsg(false, 31, 0, 0, 0, false); // The boiler is working.
             break;
 
         default:
@@ -728,7 +728,7 @@ void MapEvent_TownMapTake(void) // 0x800D922C
 void func_800D9254(void) // 0x800D9254
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 void func_800D928C(void) // 0x800D928C

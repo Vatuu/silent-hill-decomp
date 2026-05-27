@@ -194,7 +194,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -203,7 +203,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Map_MessageWithAudio(15, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(15, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(9.5f), Q12(0.0f), Q12(21.0f), true, false);
             break;
 
@@ -219,25 +219,25 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Map_MessageWithAudio(16, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(16, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 7:
-            Map_MessageWithAudio(22, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(22, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 8:
             g_Cutscene_Timer = Q12(23.0f);
-            Map_MessageWithAudio(26, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(26, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 9:
-            Map_MessageWithAudio(29, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 10:
             g_Cutscene_Timer = Q12(24.0f);
-            Map_MessageWithAudio(37, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(37, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 11:
@@ -257,7 +257,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 14:
-            Map_MessageWithAudio(46, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(46, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 15:
@@ -265,7 +265,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 16:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 17:
@@ -293,12 +293,12 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 20:
-            Map_MessageWithAudio(50, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(50, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 21:
             g_Cutscene_Timer = Q12(36.0f);
-            Map_MessageWithAudio(52, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(52, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 22:
@@ -306,9 +306,9 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 23:
-            Map_MessageWithAudio(63, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(63, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(37.0f), Q12(49.0f), true, false);
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 24:
@@ -316,7 +316,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 25:
-            Map_MessageWithAudio(63, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(63, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(37.0f), Q12(49.0f), true, false);
             break;
 
@@ -330,8 +330,8 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 27:
-            Map_MessageWithAudio(73, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_DisplayMapMsgWithAudio(73, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 28:
@@ -339,7 +339,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 29:
-            Map_MessageWithAudio(73, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(73, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             break;
 
         case 30:
@@ -359,7 +359,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 33:
-            Map_MessageWithAudio(78, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(78, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.0f), Q12(61.0f), Q12(97.0f), true, false);
             break;
 
@@ -374,7 +374,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 36:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
 
             if (g_SysWork.sysStateSteps[0] != 36)
             {
@@ -395,9 +395,9 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 39:
-            Map_MessageWithAudio(79, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(79, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(98.0f), Q12(121.0f), true, false);
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 40:
@@ -405,7 +405,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 41:
-            Map_MessageWithAudio(79, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(79, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(98.0f), Q12(121.0f), true, false);
             break;
 
@@ -415,7 +415,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 43:
-            Map_MessageWithAudio(80, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(80, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(122.0f), Q12(142.0f), true, false);
             break;
 
@@ -423,7 +423,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 45:
-            Map_MessageWithAudio(83, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
+            Event_DisplayMapMsgWithAudio(83, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(122.0f), Q12(157.0f), true, false);
             break;
 
@@ -433,7 +433,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 47:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 48:
@@ -441,7 +441,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 49:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 50:
@@ -452,7 +452,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 51:
             g_Cutscene_Timer = Q12(169.0f);
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 52:
@@ -460,7 +460,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 53:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 54:
@@ -484,8 +484,8 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.pointLightIntensity = Q12(1.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             g_Cutscene_Timer = NO_VALUE;
@@ -556,7 +556,7 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 2:
@@ -564,27 +564,27 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.5f), false);
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 5:
-            Map_MessageWithAudio(84, &g_Cutscene_MapMsgAudioIdx1, &g_Cutscene_MapMsgAudioCmds1);
+            Event_DisplayMapMsgWithAudio(84, &g_Cutscene_MapMsgAudioIdx1, &g_Cutscene_MapMsgAudioCmds1);
             break;
 
         case 6:
-            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
             break;
 
         case 7:
-            Map_MessageWithAudio(85, &g_Cutscene_MapMsgAudioIdx1, &g_Cutscene_MapMsgAudioCmds1);
+            Event_DisplayMapMsgWithAudio(85, &g_Cutscene_MapMsgAudioIdx1, &g_Cutscene_MapMsgAudioCmds1);
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -592,8 +592,8 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_426);
             Savegame_EventFlagSet(EventFlag_MapMark_ResortTown_ThemeParkArrow);
@@ -680,7 +680,7 @@ void func_800D2658(void) // 0x800D2658
         case 3:
             g_Cutscene_Timer = Q12(0.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -688,10 +688,10 @@ void func_800D2658(void) // 0x800D2658
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
 
         case 5:
-            Map_MessageWithAudio(89, &g_Cutscene_MapMsgAudioIdx0, &D_800D4108);
+            Event_DisplayMapMsgWithAudio(89, &g_Cutscene_MapMsgAudioIdx0, &D_800D4108);
             break;
 
         case 6:
@@ -704,7 +704,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 90, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 90, 0, 0, 0, false);
 
             for (i = 0; i < ARRAY_SIZE(D_800D4174); i++)
             {
@@ -720,7 +720,7 @@ void func_800D2658(void) // 0x800D2658
                 sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
             }
 
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 9:
@@ -756,13 +756,13 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 10:
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_459);

@@ -55,11 +55,11 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case EventState_1:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case EventState_2:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case EventState_3:
@@ -67,7 +67,7 @@ void func_800D02B4(void) // 0x800D02B4
             SysWork_StateStepIncrement(0);
 
         case EventState_4:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
 
         default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
@@ -95,12 +95,12 @@ void func_800D03FC(void) // 0x800D03FC
             D_800D3154 = 0;
 
             Game_TurnFlashlightOff();
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 2:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 3:
@@ -274,7 +274,7 @@ void func_800D0608(void) // 0x800D0608
 
         case 1:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 2, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -282,12 +282,12 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
             Event_CutsceneTimerAdvance(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(75.0f), true, false);
             break;
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:

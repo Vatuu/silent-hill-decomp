@@ -42,7 +42,7 @@ void sharedFunc_800D15F0_3_s01(void)
         case 0:
 
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(false, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(false, true, false, false, false);
 
             sharedData_800D4D14_3_s01 = 0;
             sharedData_800D4D10_3_s01 = 0;
@@ -82,12 +82,12 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(true, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(true, true, false, false, false);
             break;
 
         case 3:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
             break;
 
         case 4:
@@ -230,13 +230,13 @@ void sharedFunc_800D15F0_3_s01(void)
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
         case 7:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(false, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(false, false, false, false, false);
             break;
 
         case 8:
@@ -259,23 +259,23 @@ void sharedFunc_800D15F0_3_s01(void)
                 }
 
                 func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
-                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
+                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(2.0f), false);
+                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(2.0f), false);
             }
             break;
 
         case 10:
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                SysWork_StateStepIncrementAfterFade(2, false, false, Q12(1.0f), false);
+                Event_SysStateStepIncrementAfterFade(2, false, false, Q12(1.0f), false);
                 func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, false, false, Q12(2.0f), false);
+                Event_SysStateStepIncrementAfterFade(2, false, false, Q12(2.0f), false);
 
                 if (g_SysWork.sysStateSteps[0] != 10)
                 {
@@ -336,7 +336,7 @@ void sharedFunc_800D15F0_3_s01(void)
                 g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 15:
@@ -356,16 +356,16 @@ void sharedFunc_800D15F0_3_s01(void)
 
             if (g_SysWork.sysStateSteps[0] == 15)
             {
-                SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+                Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(1.5f), false);
+                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(1.5f), false);
             }
             break;
 
         case 17:
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
         default:

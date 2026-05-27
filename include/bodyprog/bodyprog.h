@@ -1872,27 +1872,27 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY);
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY);
 
 /** State step increment for some substate. */
-void func_80085D78(bool reset);
+void Event_SysStateStepIncrement(bool incSubStep);
 
 /** State step setter for some substate. */
-void func_80085DC0(bool arg0, s32 sysStateStep);
+void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep);
 
 /** Calls `SysWork_StateStepIncrement(0)` with some preliminary safety check. */
 void func_80085DF0(void);
 
-void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
+void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep);
 
 /** @brief Updates character states during events/cutscenes. */
-void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 arg2, bool reset);
+void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep);
 
 /** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
  *
  * @param eventFlagIdx Flag index.
  * @param stepTrue Step to use if flag is set.
  * @param stepFalse Step to use if flag is not set.
- * @param stepSecondary If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
+ * @param setSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
  */
-void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool stepSecondary);
+void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool setSubStep);
 
 /** @brief Displays a selection menu and sets `sysStateSteps` depending on the chosen value.
  *
@@ -1901,27 +1901,27 @@ void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool s
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.
  * @param step2 Step to use if selection #2 is chosen.
- * @param stepSecondary If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
+ * @param incSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
  */
-void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
+void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool incSubStep);
 
 /** Handles giving the player items. */
-void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool reset);
+void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool incSubStep);
 
 /** Handles a busy wait while loading assets? */
-void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset);
+void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool incSubStep);
 
 /** Stepped state handler for displaying picked up items? */
-void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool reset);
+void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
 /** State step increment. */
-void func_800866D4(s32 arg0, s32 arg1, bool reset);
+void func_800866D4(s32 arg0, s32 arg1, bool incSubStep);
 
 extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
+void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -1936,7 +1936,7 @@ void func_800868DC(s32 idx);
  * @param audioIdx Index of the dialog audio command to play.
  * @param audioCmds Dialog audio commands.
  */
-void Map_MessageWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds);
+void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds);
 
 /** @brief Sets the camera position target.
  *
@@ -1994,14 +1994,14 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  * @param sfxId ID of the SFX to play.
  * @param sfxPos SFX position.
  */
-void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
+void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
 void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
+void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
 /** @brief Displays a message with a background texture that is darken after reading the first sentence. */
-void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 

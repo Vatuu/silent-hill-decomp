@@ -47,21 +47,21 @@ void MapEvent_DoorJammed(void) // 0x800D7058
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void MapEvent_DoorLocked(void) // 0x800D70EC
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_DoorUnlocked(void) // 0x800D7180
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
 }
 
 const char* MAP_MESSAGES[] = {
@@ -142,7 +142,7 @@ void func_800D7214(void) // 0x800D7214
 
 void func_800D72B0(void) // 0x800D72B0
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
 }
 
 void func_800D72DC(void) // 0x800D72DC
@@ -172,7 +172,7 @@ void func_800D7308(void)
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -180,7 +180,7 @@ void func_800D7308(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
@@ -197,7 +197,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 6:
@@ -221,12 +221,12 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(6.0f), false);
             break;
 
         case 8:
             Sd_SfxStop(Sfx_Unk1433);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -244,11 +244,11 @@ void func_800D7308(void)
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             if (ScreenFade_IsFinished())
             {
-                SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+                Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             }
 
             Savegame_EventFlagSet(EventFlag_74);
@@ -278,7 +278,7 @@ void func_800D76F4(void) // 0x800D76F4
         case 3:
             if (Gfx_PickupItemAnimate(InvItemId_GoldMedallion))
             {
-                MapMsg_DisplayAndHandleSelection(true, 17,
+                Event_DisplayMapMsg(true, 17,
                     PICK_UP_MEDALLION_STATE, DONT_PICK_UP_MEDALLION_STATE, 0, false); // Gold medalion. Take it ?
             }
 
@@ -302,7 +302,7 @@ void func_800D76F4(void) // 0x800D76F4
 
 void func_800D7830(void) // 0x800D7830
 {
-    MapMsg_DisplayWithTexture1(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+    Event_DisplayMapMsgWithTexture1(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
 void func_800D7864(void) // 0x800D7864
@@ -340,22 +340,22 @@ void func_800D7864(void) // 0x800D7864
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 3:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 27, false, false, 0, false); // "There's some blood on some of the keys."
+            Event_DisplayMapMsg(false, 27, false, false, 0, false); // "There's some blood on some of the keys."
             break;
 
         case 4:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(true, 29, CHECK_PIANO_STATE, DONT_CHECK_PIANO_STATE, 0, false); // "Check the piano?"
+            Event_DisplayMapMsg(true, 29, CHECK_PIANO_STATE, DONT_CHECK_PIANO_STATE, 0, false); // "Check the piano?"
             break;
 
         case CHECK_PIANO_STATE:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
         case 6:
@@ -363,7 +363,7 @@ void func_800D7864(void) // 0x800D7864
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             MapEvent_PianoPuzzle(false);
             SysWork_StateStepIncrement(0);
 
@@ -374,11 +374,11 @@ void func_800D7864(void) // 0x800D7864
 
         case 9:
             func_800862F8(2, 0, false);
-            func_8008605C(EventFlag_M1S01_PianoPuzzleSolved, MEDALLION_CUTSCENE_START, MEDALLION_CUTSCENE_END, false);
+            Event_SysStateBranchOnFlag(EventFlag_M1S01_PianoPuzzleSolved, MEDALLION_CUTSCENE_START, MEDALLION_CUTSCENE_END, false);
             break;
 
         case MEDALLION_CUTSCENE_START:
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -386,13 +386,13 @@ void func_800D7864(void) // 0x800D7864
             g_SysWork.playerWork.player.position.vz = Q12(20.1f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-22.5f);
 
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             Camera_PositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
             break;
 
         case 12:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
 
             g_WorldObject0.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.0555f));
             g_WorldObject0.position.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
@@ -413,11 +413,11 @@ void func_800D7864(void) // 0x800D7864
             break;
 
         case 14:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 15:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
 
             g_WorldObject0.position.vx = Q12(-98.8f);
             g_WorldObject0.rotation.vx = Q12_ANGLE(-90.0f);
@@ -430,7 +430,7 @@ void func_800D7864(void) // 0x800D7864
             break;
 
         case SKIP_CUTSCENE_STATE:
-            SysWork_StateStepIncrementAfterFade(2, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 2, Q12(0.0f), false);
             break;
 
         case 18:
@@ -443,11 +443,11 @@ void func_800D7864(void) // 0x800D7864
             func_800862F8(2, 0, false);
 
         case 16:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
@@ -457,7 +457,7 @@ void func_800D7864(void) // 0x800D7864
 
 void func_800D7EEC(void) // 0x800D7EEC
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
 void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
@@ -481,15 +481,15 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
     {
         if (g_SysWork.sysStateSteps[1] == 1)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), true);
         }
         if (g_SysWork.sysStateSteps[1] == 3)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.2f), true);
+            Event_SysStateStepIncrementDelayed(Q12(0.2f), true);
         }
         if (g_SysWork.sysStateSteps[1] == 5)
         {
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), true);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), true);
         }
         return;
     }
@@ -709,7 +709,7 @@ void func_800D857C(void) // 0x800D857C
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_SilverMedallion))
             {
-                MapMsg_DisplayAndHandleSelection(true, 30, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, 30, 6, 7, 0, false);
             }
 
             Savegame_EventFlagSet(EventFlag_M1S01_PickupSilverMedallion);
@@ -737,7 +737,7 @@ void func_800D857C(void) // 0x800D857C
 
 void func_800D8794(void) // 0x800D8794
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
 extern q19_12 g_Cutscene_Timer; // Cutscene timer.
@@ -771,7 +771,7 @@ void func_800D87C0(void) // 0x800D87C0
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             Fs_QueueStartRead(FILE_ANIM_LOCKER_DMS, FS_BUFFER_16);
 
             D_800DD598 = 0;
@@ -795,7 +795,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
             break;
 
         case 4:
@@ -864,7 +864,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 12:
-            MapMsg_DisplayAndHandleSelection(false, 33, 0, 0, 0, false); // "Just a cat..."
+            Event_DisplayMapMsg(false, 33, 0, 0, 0, false); // "Just a cat..."
 
             g_Cutscene_Timer = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Cutscene_Timer), Q12(121.0f));
             g_Cutscene_Timer = MAX(g_Cutscene_Timer, Q12(49.0f));
@@ -886,7 +886,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 15:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 16:
@@ -894,7 +894,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 17:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 18:
@@ -903,11 +903,11 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 19:
-            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 20:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -916,8 +916,8 @@ void func_800D87C0(void) // 0x800D87C0
             g_SysWork.playerWork.player.position.vz += FP_FROM((Math_Cos(g_SysWork.playerWork.player.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_77);
             Player_ControlUnfreeze(false);

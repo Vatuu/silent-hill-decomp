@@ -59,7 +59,7 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 2:
@@ -75,7 +75,7 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             break;
 
@@ -164,7 +164,7 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             break;
 
@@ -184,18 +184,18 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 7:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            SysWork_StateStepIncrementDelayed(0x800, false);
+            Event_SysStateStepIncrementDelayed(0x800, false);
             break;
 
         case 8:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, 0, false);
 
             Savegame_EventFlagClear(EventFlag_493);
             Savegame_EventFlagClear(EventFlag_495);

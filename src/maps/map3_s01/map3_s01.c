@@ -84,7 +84,7 @@ void func_800D1524(void) // 0x800D1524
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_BasementKey, 1);
-    Map_MessageWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."
+    Event_DisplayMapMsgWithSfx(28, Sfx_UseKey, &sfxPos); // "Used basement key."
 
     Savegame_EventFlagSet(EventFlag_MapMark_585);
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
@@ -116,7 +116,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -124,26 +124,26 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // "A glass vial lies shattered."
+            Event_DisplayMapMsg(false, 16, 0, 0, 0, false); // "A glass vial lies shattered."
             break;
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 10:
@@ -189,7 +189,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             SysWork_StateStepIncrement(0);
 
         case EventState_Msg:
-            MapMsg_DisplayAndHandleSelection(false, 18, 0, 0, 0, false); // "The remaining liquid is emptied into the Plastic bottle."
+            Event_DisplayMapMsg(false, 18, 0, 0, 0, false); // "The remaining liquid is emptied into the Plastic bottle."
             break;
 
         case EventState_5:
@@ -248,7 +248,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
 
         case 2:
             g_SysWork.silentYesSelection = true;
-            MapMsg_DisplayAndHandleSelection(true, 25, EventState_PressSwitch, EventState_DontPressSwitch, 0, false); // "Do you want to press the switch?"
+            Event_DisplayMapMsg(true, 25, EventState_PressSwitch, EventState_DontPressSwitch, 0, false); // "Do you want to press the switch?"
             break;
 
         case EventState_PressSwitch:
@@ -261,7 +261,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 5:
@@ -293,7 +293,7 @@ void func_800D29A4(void) // 0x800D29A4
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 27, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 27, 0, 0, 0, false);
             break;
 
         default:
@@ -312,7 +312,7 @@ void func_800D2A88(void) // 0x800D2A88
         func_8005DC1C(Sfx_MenuMap, &QVECTOR3(61.72f, -0.8f, 100.5098f), Q8(0.5f), 0);
     }
 
-    MapMsg_DisplayWithTexture(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
+    Event_DisplayMapMsgWithTexture(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
     Savegame_EventFlagSet(EventFlag_203);
 }
 

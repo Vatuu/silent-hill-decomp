@@ -115,7 +115,7 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(true, 45, 3, NO_VALUE, 0, false); // "There is a drawer. Do you want to open it?"
+            Event_DisplayMapMsg(true, 45, 3, NO_VALUE, 0, false); // "There is a drawer. Do you want to open it?"
             break;
 
         case 3:
@@ -134,11 +134,11 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -146,13 +146,13 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 8:
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_375);
 
             // Warp player.
@@ -176,7 +176,7 @@ void func_800D4DF8(void) // 0x800D4DF8
 void func_800D4E24(void) // 0x800D4E24
 {
     Savegame_EventFlagSet(EventFlag_397);
-    MapMsg_DisplayWithTexture(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
 }
 
 void func_800D4E64(void) // 0x800D4E64
@@ -192,7 +192,7 @@ void func_800D4E64(void) // 0x800D4E64
             g_SysWork.playerWork.player.position.vz = Q12(59.75f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -208,11 +208,11 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false); // "Used the Safe Key."
+            Event_DisplayMapMsg(false, 46, 0, 0, 0, false); // "Used the Safe Key."
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -227,19 +227,19 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            MapMsg_DisplayAndHandleSelection(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
+            Event_DisplayMapMsg(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
             break;
 
         case 10:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 11:
@@ -248,11 +248,11 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 12:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 13:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -263,7 +263,7 @@ void func_800D4E64(void) // 0x800D4E64
             // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -275,7 +275,7 @@ void func_800D519C(void) // 0x800D519C
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -287,7 +287,7 @@ void func_800D519C(void) // 0x800D519C
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -304,19 +304,19 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
+            Event_DisplayMapMsg(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -325,11 +325,11 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 10:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 11:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -339,7 +339,7 @@ void func_800D519C(void) // 0x800D519C
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -347,12 +347,12 @@ void func_800D519C(void) // 0x800D519C
 
 void func_800D5478(void) // 0x800D5478
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), 44);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D54A4(void) // 0x800D54A4
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), 42);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), 42);
 }
 
 void func_800D54D0(void) // 0x800D54D0
@@ -376,7 +376,7 @@ void func_800D54D0(void) // 0x800D54D0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 32, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 32, 0, 0, 0, false);
             break;
 
         case 5:
@@ -388,7 +388,7 @@ void func_800D54D0(void) // 0x800D54D0
 
             if (Gfx_PickupItemAnimate(InvItemId_KaufmannKey))
             {
-                MapMsg_DisplayAndHandleSelection(false, 50, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, 50, 0, 0, 0, false);
 
                 if (g_SysWork.sysStateSteps[0] != 6)
                 {
@@ -408,7 +408,7 @@ void func_800D54D0(void) // 0x800D54D0
         case 9:
             if (Gfx_PickupItemAnimate(InvItemId_Receipt))
             {
-                MapMsg_DisplayAndHandleSelection(false, 49, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, 49, 0, 0, 0, false);
 
                 if (g_SysWork.sysStateSteps[0] != 9)
                 {
@@ -483,7 +483,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 1:
             Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -588,7 +588,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 22:
-            Map_MessageWithAudio(16, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(16, &D_800DA6E8, &D_800D947C);
             break;
 
         case 23:
@@ -596,7 +596,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 24:
-            Map_MessageWithAudio(17, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(17, &D_800DA6E8, &D_800D947C);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
             break;
 
@@ -606,7 +606,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 26:
-            Map_MessageWithAudio(19, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(19, &D_800DA6E8, &D_800D947C);
             break;
 
         case 27:
@@ -615,12 +615,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 28:
-            SysWork_StateStepIncrementDelayed(Q12(1.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
         case 29:
-            Map_MessageWithAudio(30, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(30, &D_800DA6E8, &D_800D947C);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
@@ -628,7 +628,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 31:
-            SysWork_StateStepIncrementDelayed(Q12(0.4f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.4f), false);
             break;
 
         case 32:
@@ -638,7 +638,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 33:
-            Map_MessageWithAudio(31, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(31, &D_800DA6E8, &D_800D947C);
 
         case 34:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);
@@ -656,7 +656,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 36:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 37:
@@ -664,7 +664,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 38:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 39:
@@ -672,7 +672,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 40:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 41:
@@ -687,7 +687,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 43:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 44:
@@ -727,7 +727,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
                 }
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -748,7 +748,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_8008D448();
             Game_FlashlightAttributesFix();
             g_SysWork.pointLightIntensity = Q12(1.0f);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
             SD_Call(19);
             break;

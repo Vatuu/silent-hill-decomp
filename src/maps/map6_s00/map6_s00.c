@@ -168,7 +168,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(12.5f), Q12(0.0f), Q12(22.0f), true, false);
             break;
 
@@ -182,7 +182,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Map_MessageWithAudio(15, &D_800F0684, &D_800F0038);
+            Event_DisplayMapMsgWithAudio(15, &D_800F0684, &D_800F0038);
             break;
 
         case 5:
@@ -191,7 +191,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Map_MessageWithAudio(16, &D_800F0684, &D_800F0038);
+            Event_DisplayMapMsgWithAudio(16, &D_800F0684, &D_800F0038);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(18.0f), Q12(23.0f), Q12(43.0f), true, false);
             break;
 
@@ -217,7 +217,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Map_MessageWithAudio(17, &D_800F0684, &D_800F0038);
+            Event_DisplayMapMsgWithAudio(17, &D_800F0684, &D_800F0038);
 
         case 12:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(4.0f), Q12(48.0f), Q12(57.0f), true, true);
@@ -229,7 +229,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 14:
-            Map_MessageWithAudio(18, &D_800F0684, &D_800F0038);
+            Event_DisplayMapMsgWithAudio(18, &D_800F0684, &D_800F0038);
 
         case 15:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(4.0f), Q12(58.0f), Q12(67.0f), true, true);
@@ -237,7 +237,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 16:
-            SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.7f);
             break;
 
@@ -247,7 +247,7 @@ void func_800EB11C(void) // 0x800EB11C
             SysWork_StateStepIncrement(0);
 
         case 18:
-            MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 19, 0, 0, 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(68.0f), Q12(143.0f), true, false);
 
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
@@ -258,14 +258,14 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case EventState_Skip:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             g_Cutscene_Timer = NO_VALUE;
 

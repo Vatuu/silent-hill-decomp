@@ -275,7 +275,7 @@ void func_800D1910(void) // 0x800D1910
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
             break;
 
         case 3:
@@ -284,12 +284,12 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(23.0f), true, false);
             break;
 
         case 5:
-            Map_MessageWithAudio(15, &D_800D6EF8, &D_800D3734); // "Where am I?"
+            Event_DisplayMapMsgWithAudio(15, &D_800D6EF8, &D_800D3734); // "Where am I?"
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(23.0f), true, false);
             break;
 
@@ -301,23 +301,23 @@ void func_800D1910(void) // 0x800D1910
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Map_MessageWithAudio(16, &D_800D6EF8, &D_800D3734); // "Harry. Lisa... Then I'm in the hospital."
+            Event_DisplayMapMsgWithAudio(16, &D_800D6EF8, &D_800D3734); // "Harry. Lisa... Then I'm in the hospital."
             break;
 
         case 8:
-            Map_MessageWithAudio(25, &D_800D6EF8, &D_800D3734);
+            Event_DisplayMapMsgWithAudio(25, &D_800D6EF8, &D_800D3734);
             break;
 
         case 9:
-            Map_MessageWithAudio(30, &D_800D6EF8, &D_800D3734);
+            Event_DisplayMapMsgWithAudio(30, &D_800D6EF8, &D_800D3734);
             break;
 
         case 10:
-            Map_MessageWithAudio(37, &D_800D6EF8, &D_800D3734);
+            Event_DisplayMapMsgWithAudio(37, &D_800D6EF8, &D_800D3734);
             break;
 
         case 11:
-            Map_MessageWithAudio(44, &D_800D6EF8, &D_800D3734);
+            Event_DisplayMapMsgWithAudio(44, &D_800D6EF8, &D_800D3734);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             g_WorldObject0.position.vz = Q12(140.95f);
             break;
@@ -328,12 +328,12 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 13:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.8f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.8f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -425,7 +425,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 2:
             Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.npcs[0], 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -433,7 +433,7 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Map_MessageWithAudio(48, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(48, &D_800D6EF8, &D_800D3778);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.5f), Q12(0.0f), Q12(20.0f), true, false);
             break;
 
@@ -447,7 +447,7 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Map_MessageWithAudio(49, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(49, &D_800D6EF8, &D_800D3778);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(21.0f), Q12(54.0f), true, false);
 
             if (g_Cutscene_Timer >= Q12(32.0f) && D_800D37C1 == 0)
@@ -477,7 +477,7 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Map_MessageWithAudio(50, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(50, &D_800D6EF8, &D_800D3778);
             break;
 
         case 11:
@@ -485,25 +485,25 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Map_MessageWithAudio(53, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(53, &D_800D6EF8, &D_800D3778);
             break;
 
         case 13:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 14:
-            Map_MessageWithAudio(59, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(59, &D_800D6EF8, &D_800D3778);
             break;
 
         case 15:
-            Map_MessageWithAudio(65, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(65, &D_800D6EF8, &D_800D3778);
             break;
 
         case 16:
             g_Cutscene_Timer               = Q12(57.0f);
             g_SysWork.pointLightIntensity = Q12(1.0f);
-            Map_MessageWithAudio(70, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(70, &D_800D6EF8, &D_800D3778);
             break;
 
         case 17:
@@ -512,7 +512,7 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrement(0);
 
         case 18:
-            Map_MessageWithAudio(79, &D_800D6EF8, &D_800D3778);
+            Event_DisplayMapMsgWithAudio(79, &D_800D6EF8, &D_800D3778);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(58.0f), Q12(126.0f), true, false);
             break;
 
@@ -548,7 +548,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 26:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -565,8 +565,8 @@ void func_800D23E4(void) // 0x800D23E4
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_RightEntranceBroken);
             Savegame_EventFlagSet(EventFlag_340);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             func_8008D448();
             Game_FlashlightAttributesFix();

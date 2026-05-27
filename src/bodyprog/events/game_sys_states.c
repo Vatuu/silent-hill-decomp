@@ -976,11 +976,11 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -999,7 +999,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
         case 4:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         case 5:
@@ -1016,7 +1016,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             }
 
         case 6:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(2.0f), false);
             g_SysWork.field_28 = Q12(0.0f);
             Screen_BackgroundImgDraw(&g_DeathTipImg);
             break;
@@ -1043,7 +1043,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 8:
             Screen_BackgroundImgDraw(&g_DeathTipImg);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:

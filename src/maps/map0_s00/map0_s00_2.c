@@ -132,7 +132,7 @@ void func_800D9610(void) // 0x800D9610
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.1f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.1f), false);
             break;
 
         default:
@@ -206,7 +206,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_16);
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcBoneCoordBuffer, 0, NULL, NULL);
 
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
+            Event_SysStateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
             g_Cutscene_Timer = Q12(0.0f);
 
             SysWork_StateStepIncrement(0);
@@ -238,17 +238,17 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
         case EventState_7:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "Cheryl. Where could you be?"
+            Event_DisplayMapMsg(false, 15, false, false, 0, false); // "Cheryl. Where could you be?"
             break;
 
         case EventState_8:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case EventState_9:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "It's strange..."
+            Event_DisplayMapMsg(false, 16, false, false, 0, false); // "It's strange..."
             break;
 
         case EventState_10:
@@ -260,15 +260,15 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_11:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case EventState_12:
-            MapMsg_DisplayAndHandleSelection(false, 19, false, false, 0, false); // "Cheryl."
+            Event_DisplayMapMsg(false, 19, false, false, 0, false); // "Cheryl."
             break;
 
         case EventState_13:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         default:
@@ -282,7 +282,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
                 if (ScreenFade_IsFinished())
                 {
-                    SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
+                    Event_SysStateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
                 }
             }
             else
@@ -292,7 +292,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
                 SysWork_StateSetNext(SysState_Gameplay);
             }
 
-            SysWork_StateStepIncrementAfterFade(false, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(false, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             // Load Cheryl character.
@@ -321,11 +321,11 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 2:
@@ -341,7 +341,7 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -371,11 +371,11 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 2:
@@ -391,7 +391,7 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -418,11 +418,11 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 2:
@@ -438,7 +438,7 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -587,14 +587,14 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Map_MessageWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Cheryl? Is that Cheryl!?"
+            Event_DisplayMapMsgWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Cheryl? Is that Cheryl!?"
             break;
 
         case 3:
             cherylProps.moveDistance_124 = Q12(1.8f);
 
             func_80086728(&cherylChara, 2, 1, 0);
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 4:
@@ -622,7 +622,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 8:
-            Map_MessageWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Where are you going?"
+            Event_DisplayMapMsgWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Where are you going?"
             break;
 
         case 9:
@@ -635,11 +635,11 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 11:
-            Map_MessageWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Hey wait...stop!"
+            Event_DisplayMapMsgWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Hey wait...stop!"
             break;
 
         default:
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_4);
 
             // Restore player control.
@@ -665,7 +665,7 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 2:
@@ -673,7 +673,7 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -697,7 +697,7 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 2:
@@ -705,7 +705,7 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -728,7 +728,7 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 2:
@@ -736,7 +736,7 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -759,7 +759,7 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 2:
@@ -767,7 +767,7 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -802,7 +802,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             cherylChara.rotation.vy = Q12_ANGLE(180.0f);
             cherylChara.position.vz = playerChara.position.vz - Q12(19.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -833,12 +833,12 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             func_800865FC(true, 0, 0,
                          Q12_ANGLE(180.0f),
                          Q12(-62.0f), playerChara.position.vz - Q12(10.0f));
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 5:
             func_800866D4(54, 1, false);
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 6:
@@ -875,7 +875,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_7);
             Savegame_EventFlagSet(EventFlag_8);
@@ -912,7 +912,7 @@ void func_800DB26C(void) // 0x800DB26C
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), playerChara.position.vz);
 
             // Warp Cheryl.
@@ -934,7 +934,7 @@ void func_800DB26C(void) // 0x800DB26C
             g_DeltaTime >>= 1; // `/ 2`.
 
             func_800865FC(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 4:
@@ -946,11 +946,11 @@ void func_800DB26C(void) // 0x800DB26C
 
         case 5:
             g_DeltaTime >>= 1;
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         default:
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
 
             func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
@@ -978,7 +978,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
             break;
 
         case 2:
@@ -989,11 +989,11 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 4:
-            MapMsg_DisplayAndHandleSelection(false, 25, 0, 0, 0, false); // "That's strange, it's getting darker."
+            Event_DisplayMapMsg(false, 25, 0, 0, 0, false); // "That's strange, it's getting darker."
             break;
 
         case 5:
-            func_8008605C(EventFlag_16, 6, 5, false);
+            Event_SysStateBranchOnFlag(EventFlag_16, 6, 5, false);
             break;
 
         case 6:
@@ -1032,11 +1032,11 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
 
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
-            MapMsg_DisplayAndHandleSelection(false, 30, 0, 0, 0, false); // "......better than nothing, I guess."
+            Event_DisplayMapMsg(false, 30, 0, 0, 0, false); // "......better than nothing, I guess."
             break;
 
         default:
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -1079,7 +1079,7 @@ void func_800DB870(void) // 0x800DB870
             break;
 
         case EventState_MsgDeadEnd:
-            MapMsg_DisplayAndHandleSelection(false, 26, 0, 0, 0, false); // "A dead end? What the hell!?"
+            Event_DisplayMapMsg(false, 26, 0, 0, 0, false); // "A dead end? What the hell!?"
             break;
 
         default: // `EventState_Unfreeze`
@@ -1224,7 +1224,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
-            SysWork_StateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
             break;
 
         case EventState_2:
@@ -1236,14 +1236,14 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             break;
 
         case EventState_LookAtDeadBody:
-            Map_MessageWithAudio(27, &D_800DFB61, &D_800DFAC8); // "What is this?"
+            Event_DisplayMapMsgWithAudio(27, &D_800DFB61, &D_800DFAC8); // "What is this?"
             break;
 
         default:
             // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             // Make all Grey Children aggressive.
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)

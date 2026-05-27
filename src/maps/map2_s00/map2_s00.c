@@ -288,7 +288,7 @@ void func_800E7D54(void) // 0x800E7D54
             SysWork_StateStepIncrement(0);
 
         case 1:
-            MapMsg_DisplayAndHandleSelection(false, 46, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 46, 0, 0, 0, false);
             break;
 
         case 2:
@@ -326,7 +326,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             switch (sysState0)
             {
                 case 2:
-                    SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+                    Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
 
                     if (g_SysWork.sysStateSteps[0] == sysState0 &&
                         (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
@@ -337,11 +337,11 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
                     break;
 
                 case 3:
-                    SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
+                    Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
                     break;
 
                 case 1:
-                    SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+                    Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
                     break;
             }
             break;
@@ -355,18 +355,18 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
             break;
 
         case 6:
-            MapMsg_DisplayAndHandleSelection(false, 78, 0, 0, 0, false); // "This must be the water works."
+            Event_DisplayMapMsg(false, 78, 0, 0, 0, false); // "This must be the water works."
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
 
             g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
@@ -421,7 +421,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
 
             if (Gfx_PickupItemAnimate(InvItemId_SteelPipe))
             {
-                MapMsg_DisplayAndHandleSelection(true, 15, EventState_TakeSteelPipe, EventState_DontTakeSteelPipe, 0, false);
+                Event_DisplayMapMsg(true, 15, EventState_TakeSteelPipe, EventState_DontTakeSteelPipe, 0, false);
             }
             break;
 
@@ -462,7 +462,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         {
             if (!D_800F228E && g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 11)
             {
-                SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F228E = 1;
             }
         }
@@ -498,7 +498,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false); // "Where could Cheryl have gone?"
+            Event_DisplayMapMsg(false, 16, 0, 0, 0, false); // "Where could Cheryl have gone?"
             break;
 
         case 3:
@@ -506,7 +506,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -516,7 +516,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 6:
             func_800692A4(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
@@ -559,7 +559,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 9:
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 10:
@@ -577,7 +577,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                     SysWork_StateStepIncrement(0);
                 }
 
-                SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+                Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
 
                 if (g_SysWork.sysStateSteps[0] > 11)
                 {
@@ -593,7 +593,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
             func_80068E0C(2, 1, 0x36A, 128, 0x48, 0x10, Q12(0.5f));
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 12:
@@ -602,11 +602,11 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 13:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -614,7 +614,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CherylArrowAndSign);
             vcReturnPreAutoCamWork(false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
 
@@ -633,12 +633,12 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         {
             if (g_SysWork.sysStateSteps[0] > 1 && g_SysWork.sysStateSteps[0] < 10)
             {
-                SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F2295 = 1;
             }
             else if (g_SysWork.sysStateSteps[0] > 10 && g_SysWork.sysStateSteps[0] < 16)
             {
-                SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
                 D_800F2295 = 2;
             }
         }
@@ -683,7 +683,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -692,19 +692,19 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 18, 0, 0, 0, false); // "To school."
+            Event_DisplayMapMsg(false, 18, 0, 0, 0, false); // "To school."
             break;
 
         case 7:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
-            Map_MessageWithAudio(19, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
+            Event_DisplayMapMsgWithAudio(19, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
             break;
 
         case 8:
@@ -715,7 +715,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 10:
@@ -726,7 +726,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 11:
             func_800692A4(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 12:
@@ -767,7 +767,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 14:
             func_800692A4(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
 
             break;
         case 15:
@@ -783,7 +783,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
                     SysWork_StateStepIncrement(0);
                 }
 
-                SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+                Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
 
                 if (g_SysWork.sysStateSteps[0] > 16)
                 {
@@ -798,7 +798,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             func_800692A4(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             func_80068E0C(2, 1, 0x3A2, 128, 0, 0x74, Q12(0.5f));
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 17:
@@ -810,7 +810,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 18:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 19:
@@ -823,7 +823,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 21:
             Savegame_EventFlagSet(EventFlag_147);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCircle);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -854,7 +854,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -863,16 +863,16 @@ void func_800E9470(void) // 0x800E9470
 
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            MapMsg_DisplayAndHandleSelection(false, 21, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 21, 0, 0, 0, false);
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 8:
@@ -904,7 +904,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -914,21 +914,21 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         case 5:
             func_800862F8(2, 0, false);
             Savegame_EventFlagSet(EventFlag_M2S00_DogHouseNoteFound);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 23, 0, 0, 0, false); // "Doghouse Levin St."
+            Event_DisplayMapMsg(false, 23, 0, 0, 0, false); // "Doghouse Levin St."
             break;
 
         case 7:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -973,7 +973,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -982,7 +982,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -990,7 +990,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case EventState_Prompt:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(true, 27, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "House Key in doghouse. Take it?"
+            Event_DisplayMapMsg(true, 27, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "House Key in doghouse. Take it?"
             break;
 
         case EventState_TakeKey:
@@ -1001,11 +1001,11 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case EventState_DontTakeKey:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 10:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 11:
@@ -1075,7 +1075,7 @@ void func_800E9A74(void) // 0x800E9A74
         case EventState_Prompt:
             if (Gfx_PickupItemAnimate(InvItemId_KeyOfWoodman))
             {
-                MapMsg_DisplayAndHandleSelection(true, 29, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "Key of Woodman. Take it?"
+                Event_DisplayMapMsg(true, 29, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "Key of Woodman. Take it?"
             }
 
             Savegame_EventFlagSet(EventFlag_M2S00_PickupKeyOfWoodman);
@@ -1125,7 +1125,7 @@ void MapEvent_HouseKeyUse(void) // 0x800E9D1C
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
     Player_ItemRemove(InvItemId_HouseKey, 1);
-    Map_MessageWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
+    Event_DisplayMapMsgWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
     Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DoghouseDotOnly);
 }
 
@@ -1162,7 +1162,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
         case 2:
@@ -1174,7 +1174,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
             Screen_BackgroundImgDrawAlt(D_800F22A0);
             break;
 
@@ -1248,7 +1248,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             Screen_BackgroundImgDrawAlt(D_800F22A0);
             Sd_PlaySfx(Sfx_Unk1390, 0, 0x80);
             SysWork_StateStepIncrement(0);
@@ -1264,7 +1264,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 7:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 8:
@@ -1289,7 +1289,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 10:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
@@ -1305,19 +1305,19 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 11:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 12:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
         default:
             func_800862F8(6, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(0, false, false, false, false);
             break;
         }
 }
@@ -1339,7 +1339,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1349,21 +1349,21 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
 
             if (g_SysWork.field_28 > Q12(1.5f) && g_SysWork.field_28 < Q12(4.5f))
             {
-                MapMsg_DisplayAndHandleSelection(false, 35, 0, 0, 0, false); // "What? It's getting dark again?"
+                Event_DisplayMapMsg(false, 35, 0, 0, 0, false); // "What? It's getting dark again?"
             }
 
-            SysWork_StateStepIncrementDelayed(Q12(6.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(6.0f), false);
             break;
 
         case 2:
             D_800F1A24 = Q12(100.0f);
 
             Game_TurnFlashlightOff();
-            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 36, 0, 0, 0, false);
             break;
 
         case 4:
@@ -1372,13 +1372,13 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_159);
 
             vcReturnPreAutoCamWork(false);
@@ -1410,7 +1410,7 @@ void func_800EA6E0(void) // 0x800EA6E0
             SysWork_StateStepIncrement(0);
 
         case EventState_FadeOutGame:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case EventState_Load:
@@ -1419,17 +1419,17 @@ void func_800EA6E0(void) // 0x800EA6E0
 
         case EventState_FadeInMap:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case EventState_Msg:
             if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow))
             {
-                MapMsg_DisplayAndHandleSelection(false, 54, 0, 0, 0, false); // "Something is written on the map on the wall.{E}"
+                Event_DisplayMapMsg(false, 54, 0, 0, 0, false); // "Something is written on the map on the wall.{E}"
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 52, 0, 0, 0, false); // "... Copied it to the map."
+                Event_DisplayMapMsg(false, 52, 0, 0, 0, false); // "... Copied it to the map."
             }
 
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
@@ -1437,13 +1437,13 @@ void func_800EA6E0(void) // 0x800EA6E0
 
         case EventState_FadeOutMap:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DogYardKeyLine);
@@ -1461,7 +1461,7 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     };
 
     Player_ItemRemove(InvItemId_KGordonKey, 1);
-    Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
+    Event_DisplayMapMsgWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
 
     Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);
     Savegame_EventFlagSet(EventFlag_MapMark_OldTown_KGordonArrowsOnly);
@@ -1483,7 +1483,7 @@ void func_800EA960(void) // 0x800EA960
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1500,14 +1500,14 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 4:
             g_SysWork.silentYesSelection = true;
 
             // "The machinery is running. Do you want to press the switch?"
-            MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
+            Event_DisplayMapMsg(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
             break;
 
         case EventState_PressSwitch:
@@ -1515,7 +1515,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         case 6:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
         case 7:
             SD_Call(Sfx_Unk1484);
@@ -1567,7 +1567,7 @@ void func_800EA960(void) // 0x800EA960
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
     }
 
@@ -1609,11 +1609,11 @@ void func_800EAD2C(void) // 0x800EAD2C
             g_SysWork.silentYesSelection = true;
 
             // "The machinery is running. Do you want to press the switch?"
-            MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
+            Event_DisplayMapMsg(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
             break;
 
         case EventState_PressSwitch:
-            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1621,7 +1621,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 6:
@@ -1668,7 +1668,7 @@ void func_800EAD2C(void) // 0x800EAD2C
                 Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeArrow);
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -1700,7 +1700,7 @@ void func_800EB090(void) // 0x800EB090
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(false, 61, 0, 0, 0, false); // "Nothing special."
+            Event_DisplayMapMsg(false, 61, 0, 0, 0, false); // "Nothing special."
             break;
 
         default:
@@ -1728,7 +1728,7 @@ void func_800EB174(void) // 0x800EB174
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
             break;
 
         case 2:
@@ -1736,7 +1736,7 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, MapMsgIdx_DoorLocked, false, false, 0, false);
+            Event_DisplayMapMsg(false, MapMsgIdx_DoorLocked, false, false, 0, false);
             break;
 
         case 4:
@@ -1752,19 +1752,19 @@ void func_800EB174(void) // 0x800EB174
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 2, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 2, false, false);
             break;
 
         case 6:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 50, false, false, 0, false); // "Hmm... the lock is worn out."
+            Event_DisplayMapMsg(false, 50, false, false, 0, false); // "Hmm... the lock is worn out."
             break;
 
         case 8:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         default:
@@ -1775,7 +1775,7 @@ void func_800EB174(void) // 0x800EB174
             sharedFunc_800D2EF4_0_s00();
 
             Savegame_EventFlagSet(EventFlag_167);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
     }
 }
@@ -1793,7 +1793,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -1813,11 +1813,11 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 6:
@@ -1825,7 +1825,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
 
             // TODO: Odd float values, maybe using different Q format for `s16`?
             D_800F22AE += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0277f));
@@ -1841,7 +1841,7 @@ void func_800EB3F4(void) // 0x800EB3F4
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
             if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))

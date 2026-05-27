@@ -919,16 +919,19 @@ vcGetXZSumDistFromLimArea                    = 0x80085C80; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
 //--------------------------------------------------------------------
-SysWork_StateStepIncrementDelayed            = 0x80085E6C; // type:func
+Event_SysStateStepIncrement                  = 0x80085D78; // type:func
+Event_SysStateStepSet                        = 0x80085DC0; // type:func
+Event_SysStateStepIncrementDelayed           = 0x80085E6C; // type:func
 Event_CharacterAnimCommand                   = 0x80085EB8; // type:func
-MapMsg_DisplayAndHandleSelection             = 0x800860B0; // type:func
-SysWork_StateStepIncrementAfterFade          = 0x8008616C; // type:func
-Map_MessageWithAudio                         = 0x800869E4; // type:func
+Event_SysStateBranchOnFlag                   = 0x8008605C; // type:func
+Event_DisplayMapMsg                          = 0x800860B0; // type:func
+Event_SysStateStepIncrementAfterFade         = 0x8008616C; // type:func
+Event_DisplayMapMsgWithAudio                 = 0x800869E4; // type:func
 Camera_PositionSet                           = 0x80086A94; // type:func
 Camera_LookAtSet                             = 0x80086B70; // type:func
-Map_MessageWithSfx                           = 0x80086FE8; // type:func
-MapMsg_DisplayWithTexture                    = 0x80087360; // type:func
-MapMsg_DisplayWithTexture1                   = 0x80087540;
+Event_DisplayMapMsgWithSfx                   = 0x80086FE8; // type:func
+Event_DisplayMapMsgWithTexture               = 0x80087360; // type:func
+Event_DisplayMapMsgWithTexture1              = 0x80087540;
 Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_MapTake                                = 0x80087AF4; // type:func

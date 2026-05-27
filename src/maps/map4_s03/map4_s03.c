@@ -3468,12 +3468,12 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 2:
-            SysWork_StateStepIncrementDelayed(Q12(4.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(4.5f), false);
             break;
 
         case 3:
@@ -3482,7 +3482,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(0.7f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
             break;
 
         case 5:
@@ -3498,7 +3498,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 8:
-            SysWork_StateStepIncrementDelayed(Q12(2.4f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.4f), false);
             break;
 
         case 9:
@@ -3512,7 +3512,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 10:
-            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
             break;
 
         case 11:
@@ -3521,7 +3521,7 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 12:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 12)
             {
@@ -3546,14 +3546,14 @@ void func_800D6774(void) // 0x800D6774
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
             // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             func_800D4000(&g_SysWork.npcs[0]);
             Savegame_EventFlagSet(EventFlag_324);
@@ -3581,7 +3581,7 @@ void func_800D6F24(void) // 0x800D6F24
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -3589,7 +3589,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
@@ -3600,7 +3600,7 @@ void func_800D6F24(void) // 0x800D6F24
             Camera_PositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 4:
@@ -3608,7 +3608,7 @@ void func_800D6F24(void) // 0x800D6F24
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 6:
@@ -3624,7 +3624,7 @@ void func_800D6F24(void) // 0x800D6F24
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case 8:
@@ -3634,7 +3634,7 @@ void func_800D6F24(void) // 0x800D6F24
             Camera_PositionSet(NULL, Q12(122.55f), Q12(-2.1f), Q12(138.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(126.39f), Q12(-1.73f), Q12(139.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
 
             if (g_SysWork.sysStateSteps[0] != 8)
             {
@@ -3643,7 +3643,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 10:
@@ -3656,7 +3656,7 @@ void func_800D6F24(void) // 0x800D6F24
             Savegame_EventFlagSet(EventFlag_327);
 
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -3665,7 +3665,7 @@ void func_800D6F24(void) // 0x800D6F24
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             func_8003A16C();
             break;
@@ -4710,7 +4710,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             func_800868DC(3);
             func_800868DC(4);
             func_800868DC(5);
-            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_333);
 
@@ -4723,7 +4723,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             break;
 
         case 2:
-            SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
 
             scratchData->activeBufferIdx_C = g_ActiveBufferIdx;
             scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
@@ -4795,7 +4795,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -4837,22 +4837,22 @@ void func_800D960C(void) // 0x800D960C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
-            Map_MessageWithAudio(16, &D_800DB9E2, &D_800DB92C);
+            Event_DisplayMapMsgWithAudio(16, &D_800DB9E2, &D_800DB92C);
             break;
 
         case 3:
-            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         default:
             Savegame_EventFlagSet(EventFlag_332);
 
             // Return to gameplay.
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -4883,7 +4883,7 @@ void func_800D9824(void) // 0x800D9824
             // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
 }

@@ -91,12 +91,12 @@ void func_800CCF9C(void) // 0x800CCF9C
 void func_800CD050(void) // 0x800CD050
 {
     g_Screen_BackgroundImgGamma = Q8(10.0f / 32.0f);
-    MapMsg_DisplayWithTexture(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_PLCSMEMO_TIM, Q12(0.0f), Q12(0.0f), 15);
 }
 
 void func_800CD088(void) // 0x800CD088
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
+    Event_DisplayMapMsgWithTexture(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
     Savegame_EventFlagSet(EventFlag_145);
 }
 

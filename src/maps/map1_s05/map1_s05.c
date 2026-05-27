@@ -73,7 +73,7 @@ void func_800D49AC(void) // 0x800D49AC
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             g_SysWork.cutsceneBorderState   = 20;
             g_SysWork.pointLightIntensity = 0;
@@ -85,7 +85,7 @@ void func_800D49AC(void) // 0x800D49AC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 2:
@@ -93,7 +93,7 @@ void func_800D49AC(void) // 0x800D49AC
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
             break;
 
         case 4:
@@ -121,7 +121,7 @@ void func_800D49AC(void) // 0x800D49AC
 
             g_SysWork.pointLightIntensity = Q12(1.3843f);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);
 
             Savegame_EventFlagSet(EventFlag_130);
@@ -188,7 +188,7 @@ void func_800D4D1C(void) // 0x800D4D1C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
 
             g_SysWork.pointLightIntensity += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.2f);
             if (g_SysWork.pointLightIntensity > Q12(3.0f))
@@ -225,7 +225,7 @@ void func_800D4D1C(void) // 0x800D4D1C
             break;
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.5f), false);
             break;
 
         default:

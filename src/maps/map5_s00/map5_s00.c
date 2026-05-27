@@ -399,14 +399,14 @@ void func_800D67F4(void) // 0x800D67F4
 {
     VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
+    Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
 }
 
 void func_800D6888(void) // 0x800D6888
 {
     VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
+    Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
 }
 
 const char* MAP_MESSAGES[] = {
@@ -481,16 +481,16 @@ void func_800D69DC(void) // 0x800D69DC
     {
         case 10:
             Player_ItemRemove(InvItemId_SewerKey, 1);
-            Map_MessageWithSfx(15, Sfx_UseKey, &pos);
+            Event_DisplayMapMsgWithSfx(15, Sfx_UseKey, &pos);
             break;
 
         case 14:
             Player_ItemRemove(InvItemId_SewerExitKey, 1);
-            Map_MessageWithSfx(16, Sfx_UseKey, &pos);
+            Event_DisplayMapMsgWithSfx(16, Sfx_UseKey, &pos);
             break;
 
         default:
-            Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &pos);
+            Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &pos);
             break;
     }
 }
@@ -521,11 +521,11 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -534,7 +534,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 6:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -542,13 +542,13 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
             func_800862F8(2, 0, false);
             g_SysWork.silentYesSelection = true;
-            MapMsg_DisplayAndHandleSelection(true, 18, 10, 11, 0, false);
+            Event_DisplayMapMsg(true, 18, 10, 11, 0, false);
             break;
 
         case 10:
@@ -581,7 +581,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 12:
-            func_8008605C(EventFlag_354, 13, 16, false);
+            Event_SysStateBranchOnFlag(EventFlag_354, 13, 16, false);
             break;
 
         case 13:
@@ -627,7 +627,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 15:
             vcReturnPreAutoCamWork(true);
             g_SysWork.pointLightIntensity = Q12(1.0f);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = 0;
             g_SysWork.npcs[D_800DAB7C[0]].model.stateStep = 17;
@@ -693,18 +693,18 @@ void func_800D732C(void) // 0x800D732C
 
             Event_CharacterAnimCommand(0u, &g_SysWork.playerWork.player, 88, false);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
             // Move player.
             g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
 
-            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
 
             // Move player.
             g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
@@ -722,7 +722,7 @@ void func_800D732C(void) // 0x800D732C
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_355);
             func_8003A16C();
             break;
@@ -743,7 +743,7 @@ void func_800D75FC(void) // 0x800D75FC
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -751,7 +751,7 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             if (g_SysWork.sysStateSteps[0] == 2)
             {
                 g_SysWork.field_28 += g_DeltaTimeRaw;
@@ -776,16 +776,16 @@ void func_800D75FC(void) // 0x800D75FC
 
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
-            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
@@ -814,7 +814,7 @@ void func_800D7940(void) // 0x800D7940
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -822,7 +822,7 @@ void func_800D7940(void) // 0x800D7940
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 2)
             {
@@ -848,16 +848,16 @@ void func_800D7940(void) // 0x800D7940
 
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
-            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 
@@ -886,7 +886,7 @@ void func_800D7C84(void) // 0x800D7C84
     {
         case 0:
             Player_ControlFreeze();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -894,7 +894,7 @@ void func_800D7C84(void) // 0x800D7C84
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -911,16 +911,16 @@ void func_800D7C84(void) // 0x800D7C84
 
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
-            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
@@ -957,7 +957,7 @@ void func_800D7F88(void) // 0x800D7F88
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -974,16 +974,16 @@ void func_800D7F88(void) // 0x800D7F88
 
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.37f, 12);
-            SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 

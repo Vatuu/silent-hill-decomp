@@ -97,7 +97,7 @@ void func_800DA7F4(void) // 0x800DA7F4
     };
 
     Player_ItemRemove(InvItemId_LibraryReserveKey, 1);
-    Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
+    Event_DisplayMapMsgWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
     Savegame_EventFlagSet(EventFlag_MapMark_AltSchool2F_LibraryReserveArrows);
 }
 
@@ -110,7 +110,7 @@ void func_800DA8B0(void) // 0x800DA8B0
     };
 
     Player_ItemRemove(InvItemId_ClassroomKey, 1);
-    Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
+    Event_DisplayMapMsgWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
 }
 
 const char* MAP_MESSAGES[] = {
@@ -236,23 +236,23 @@ void func_800DAA28(void) // 0x800DAA28
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
-                    MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false); // "Used rubber ball."
+                    Event_DisplayMapMsg(false, 36, false, false, 0, false); // "Used rubber ball."
                 }
                 else
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                    Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                 }
             }
             else if (g_MapEventData->pointOfInterestIdx == 17 || g_MapEventData->pointOfInterestIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                    Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                 }
                 else
                 {
 
-                    MapMsg_DisplayAndHandleSelection(false, 33, false, false, 0, false); // "There's a hanging key."
+                    Event_DisplayMapMsg(false, 33, false, false, 0, false); // "There's a hanging key."
                 }
             }
             break;
@@ -310,7 +310,7 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(false, true, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -318,12 +318,12 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, 0, false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 7:
@@ -333,17 +333,17 @@ void func_800DABC4(void) // 0x800DABC4
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
-                    MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false);
+                    Event_DisplayMapMsg(false, 36, false, false, 0, false);
                 }
                 else
                 {
                     if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                     {
-                        MapMsg_DisplayAndHandleSelection(false, 34, false, false, 0, false); // "The ball is stuffed inside the pipe."
+                        Event_DisplayMapMsg(false, 34, false, false, 0, false); // "The ball is stuffed inside the pipe."
                     }
                     else
                     {
-                        MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                        Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                     }
                 }
             }
@@ -351,17 +351,17 @@ void func_800DABC4(void) // 0x800DABC4
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
-                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                    Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                 }
                 else
                 {
                     if (!Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                     {
-                        MapMsg_DisplayAndHandleSelection(false, 32, false, false, 0, false); // "There's a hanging key."
+                        Event_DisplayMapMsg(false, 32, false, false, 0, false); // "There's a hanging key."
                     }
                     else
                     {
-                        MapMsg_DisplayAndHandleSelection(false, 33, false, false, 0, false); // "The key went down the drain."
+                        Event_DisplayMapMsg(false, 33, false, false, 0, false); // "The key went down the drain."
                     }
                 }
             }
@@ -369,11 +369,11 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 10:
@@ -439,7 +439,7 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 2:
-            MapMsg_DisplayAndHandleSelection(true, 40, 4, 3, 0, false);
+            Event_DisplayMapMsg(true, 40, 4, 3, 0, false);
             break;
 
         case 3:
@@ -448,7 +448,7 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, true, 2, 0, false);
 
             sharedData_800E30C8_1_s02.field_0[0]  = Q12(-10.2);
             sharedData_800E30C8_1_s02.field_10[0] = Q12(-0.35f);
@@ -561,7 +561,7 @@ void func_800DAF18(void) // 0x800DAF18
             g_SysWork.sysStateSteps[0]++;
 
         case 5:
-            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 6:
@@ -690,7 +690,7 @@ void func_800DAF18(void) // 0x800DAF18
             }
             else
             {
-                MapMsg_DisplayAndHandleSelection(false, 41, false, false, 0, false);
+                Event_DisplayMapMsg(false, 41, false, false, 0, false);
             }
             break;
 
@@ -733,7 +733,7 @@ void func_800DAF18(void) // 0x800DAF18
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
             sharedFunc_800D2EF4_0_s00();
             break;
@@ -866,24 +866,24 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case 2:
-            func_8008605C(EventFlag_M1S03_MonsterLurksBookRead, EventState_BookAgain, EventState_BookFirstTime, false);
+            Event_SysStateBranchOnFlag(EventFlag_M1S03_MonsterLurksBookRead, EventState_BookAgain, EventState_BookFirstTime, false);
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "What's this?"
+            Event_DisplayMapMsg(false, 15, false, false, 0, false); // "What's this?"
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 5:
-            MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "The Monster Lurks is the book's title."
+            Event_DisplayMapMsg(false, 16, false, false, 0, false); // "The Monster Lurks is the book's title."
             break;
 
         case EventState_BookAgain:
             func_800862F8(0, FILE_TIM_LMONSTER_TIM, false);
-            SysWork_StateStepIncrementAfterFade(false, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(false, true, false, false, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -891,29 +891,29 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case 8:
-            SysWork_StateStepIncrementAfterFade(1, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(1, true, false, false, false);
             break;
 
         case 9:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
             break;
 
         case 10:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // "Chapter3: ..."
+            Event_DisplayMapMsg(false, 17, false, false, 0, false); // "Chapter3: ..."
             break;
 
         case 11:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M1S03_MonsterLurksBookRead);
-            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            Event_SysStateStepIncrementAfterFade(0, false, false, false, false);
             break;
     }
 }
@@ -931,7 +931,7 @@ void func_800DC0F8(void) // 0x800DC0F8
         case 0:
             Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_LIBRBOOK_TIM, false);
-            SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(false, true, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -939,7 +939,7 @@ void func_800DC0F8(void) // 0x800DC0F8
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(1, true, 0, 0, false);
             break;
 
         case 3:
@@ -948,30 +948,30 @@ void func_800DC0F8(void) // 0x800DC0F8
 
         case 4:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 5:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 23, false, false, 0, false); // "Hearing this, the hunter armed with bow..."
+            Event_DisplayMapMsg(false, 23, false, false, 0, false); // "Hearing this, the hunter armed with bow..."
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 7:
-            SysWork_StateStepIncrementAfterFade(false, false, 0, 0, false);
-            func_8008605C(EventFlag_117, EventState_Flag117True, EventState_Flag117False, false);
+            Event_SysStateStepIncrementAfterFade(false, false, 0, 0, false);
+            Event_SysStateBranchOnFlag(EventFlag_117, EventState_Flag117True, EventState_Flag117False, false);
             break;
 
         case EventState_Flag117False:
-            SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(1, false, 0, 0, false);
             break;
 
         case 9:
-            MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false); // "This is from an old fairy tale."
+            Event_DisplayMapMsg(false, 30, false, false, 0, false); // "This is from an old fairy tale."
             break;
 
         default: // `EventState_Flag117True`
@@ -984,7 +984,7 @@ void func_800DC0F8(void) // 0x800DC0F8
 
 void func_800DC2E4(void) // 0x800DC2E4
 {
-    MapMsg_DisplayWithTexture(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
+    Event_DisplayMapMsgWithTexture(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
 }
 
 void func_800DC310(void) // 0x800DC310
@@ -1033,11 +1033,11 @@ void func_800DC310(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 2, 0, false);
             break;
 
         case 4:
-            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 5:
@@ -1054,11 +1054,11 @@ void func_800DC310(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 8:
-            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
         case EventState_LockerOpenWait:
-            func_8008605C(EventFlag_M1S03_LockerOpened, EventState_LockerOpen, EventState_LockerOpenWait, false);
+            Event_SysStateBranchOnFlag(EventFlag_M1S03_LockerOpened, EventState_LockerOpen, EventState_LockerOpenWait, false);
             break;
 
         case EventState_LockerOpen:
@@ -1067,7 +1067,7 @@ void func_800DC310(void) // 0x800DC310
 
         case 11:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false); // "Nothing inside."
+            Event_DisplayMapMsg(false, 43, 0, 0, 0, false); // "Nothing inside."
             break;
 
         case 12:
@@ -1082,7 +1082,7 @@ void func_800DC310(void) // 0x800DC310
             Camera_PositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-60.0f), Q12(0.0f), Q12(18.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
             SysWork_StateStepIncrement(0);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -1094,7 +1094,7 @@ void func_800DC310(void) // 0x800DC310
 
             if (ScreenFade_IsFinished())
             {
-                SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+                Event_SysStateStepIncrementAfterFade(0, false, 0, 0, false);
             }
             break;
     }
@@ -1130,7 +1130,7 @@ void func_800DC780(void) // 0x800DC780
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementDelayed(Q12(0.7f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
             break;
 
         case 3:
@@ -1138,11 +1138,11 @@ void func_800DC780(void) // 0x800DC780
             SysWork_StateStepIncrement(0);
 
         case EventState_Flag106False:
-            func_8008605C(EventFlag_106, EventState_Flag106True, EventState_Flag106False, false);
+            Event_SysStateBranchOnFlag(EventFlag_106, EventState_Flag106True, EventState_Flag106False, false);
             break;
 
         case EventState_Flag106True:
-            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         default:
@@ -1180,7 +1180,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             Savegame_EventFlagSet(EventFlag_M1S03_PickupLibraryReserveKey);
             if (Gfx_PickupItemAnimate(InvItemId_LibraryReserveKey))
             {
-                MapMsg_DisplayAndHandleSelection(true, 44, 5, 6, 0, false);
+                Event_DisplayMapMsg(true, 44, 5, 6, 0, false);
             }
             if (g_SysWork.sysStateSteps[0] == 6)
             {
@@ -1221,7 +1221,7 @@ void func_800DCB54(void) // 0x800DCB54
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 4:
@@ -1235,21 +1235,21 @@ void func_800DCB54(void) // 0x800DCB54
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false); // "Used the rubber ball."
+            Event_DisplayMapMsg(false, 36, 0, 0, 0, false); // "Used the rubber ball."
             func_800862F8(2, 0, false);
             break;
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 10:
@@ -1334,7 +1334,7 @@ void func_800DCDDC(void) // 0x800DCDDC
         case 3:
             g_Cutscene_Timer = Q12(0.0f);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, true, 3, 0, false);
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -1342,10 +1342,10 @@ void func_800DCDDC(void) // 0x800DCDDC
             SysWork_StateStepIncrement(0);
 
         case 4:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
 
         case 5:
-            Map_MessageWithAudio(46, &D_800E2102, D_800E2000); // "What?"
+            Event_DisplayMapMsgWithAudio(46, &D_800E2102, D_800E2000); // "What?"
             break;
 
         case 6:
@@ -1354,14 +1354,14 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
             
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 47, 0, 0, 0, false); // "That light!?"
+            Event_DisplayMapMsg(false, 47, 0, 0, 0, false); // "That light!?"
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             break;
 
         case 8:
             func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
-            SysWork_StateStepIncrementDelayed(0x2800, false);
+            Event_SysStateStepIncrementDelayed(0x2800, false);
             break;
 
         case 9:
@@ -1381,13 +1381,13 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 10:
-            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_456);
