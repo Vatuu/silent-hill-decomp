@@ -38,7 +38,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
 typedef struct
 {
     /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
-    /* 0x2 */ s8  __pad_2[2];
+    /* 0x2 */ s16 field_2;
 } s_IpdCollisionData_20;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_20, 4);
 
@@ -69,11 +69,9 @@ typedef struct _IpdCollisionData
     /* 0x10   */ s_IpdCollisionData_10* ptr_10;
     /* 0x14   */ s_IpdCollisionData_14* ptr_14;
     /* 0x18   */ s_IpdCollisionData_18* ptr_18;
-    /* 0x1C   */ q7_8                   field_1C;
-    /* 0x1E   */ u8                     field_1E; // Used as multipliers for `field_1C` in `func_8006B004`.
-                                                  // Modify this may cause severe slowdowns.
-                                                  // Probably some sort of index.
-    /* 0x1F   */ u8                     field_1F;
+    /* 0x1C   */ q7_8                   subCellSize;
+    /* 0x1E   */ u8                     subCellXCount;
+    /* 0x1F   */ u8                     subCellZCount;
     /* 0x20   */ s_IpdCollisionData_20* ptr_20;
     /* 0x24   */ u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
                                                   // Both `field_24/field_26` are related to a amount of 1 byte things that are being pointed by

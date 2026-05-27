@@ -1129,6 +1129,7 @@ func_80067914                                = 0x8006941C; // type:func
 func_80068CC0                                = 0x8006A7D0; // type:func
 func_80068E0C                                = 0x8006A91C; // type:func
 func_800692A4                                = 0x8006ADB4; // type:func
+func_8006AEAC                                = 0x8006AEAC;
 
 //------------------------------------------------------------
 //--- PA: 0x04679C   VA: 0x8006B2FC   subsegment: c, collision
@@ -1157,7 +1158,7 @@ Collision_QueryInit                          = 0x8006C660; // type:func
 Collision_MoveDirectionCalc                  = 0x8006C6D0; // type:func
 Collision_CharaCollisionHandling             = 0x8006C854; // type:func
 func_8006AEAC                                = 0x8006C9BC; // type:func
-func_8006B004                                = 0x8006CB14; // type:func
+Collision_CharaSubCellIdxGet                 = 0x8006CB14; // type:func
 func_8006B1C8                                = 0x8006CCD8; // type:func
 func_8006B318                                = 0x8006CE28; // type:func
 func_8006B6E8                                = 0x8006D1F8; // type:func

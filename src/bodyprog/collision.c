@@ -844,12 +844,12 @@ void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisio
         func_80069994(collData);
     }
 
-    startIdx = collState->field_A0.s_0.field_0;
-    endIdx   = (collState->field_A0.s_0.field_0 + collState->field_A0.s_0.field_2) - 1;
+    startIdx = collState->field_A0.s_0.closestXSubCellIdx;
+    endIdx   = (collState->field_A0.s_0.closestXSubCellIdx + collState->field_A0.s_0.closeFarXSubCellIdxDiff) - 1;
 
-    for (i = collState->field_A0.s_0.field_1; i < (collState->field_A0.s_0.field_1 + collState->field_A0.s_0.field_3); i++)
+    for (i = collState->field_A0.s_0.closestZSubCellIdx; i < (collState->field_A0.s_0.closestZSubCellIdx + collState->field_A0.s_0.closeFarZSubCellIdxDiff); i++)
     {
-        curUnk = &collData->ptr_20[(i * collData->field_1E) + startIdx];
+        curUnk = &collData->ptr_20[(i * collData->subCellXCount) + startIdx];
 
         for (j = startIdx; j <= endIdx; j++, curUnk++)
         {
@@ -877,7 +877,7 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
 {
     s_CollisionState_A8* curUnk;
 
-    if (!func_8006B004(collState, collData))
+    if (!Collision_CharaSubCellIdxGet(collState, collData))
     {
         return false;
     }
@@ -887,55 +887,41 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
     collState->charaNewPos.offset.vx = collState->charaMoveInfo.newPositionX - collData->positionX;
     collState->charaNewPos.offset.vz = collState->charaMoveInfo.newPositionZ - collData->positionZ;
     
-    if ((collState->charaPos.offset.vx / collData->field_1C) < 0 || (collState->charaPos.offset.vx / collData->field_1C) >= collData->field_1E ||
-        ((collState->charaPos.offset.vz / collData->field_1C) < 0) || (collState->charaPos.offset.vz / collData->field_1C) >= collData->field_1F)
+    if ((collState->charaPos.offset.vx / collData->subCellSize) < 0 || (collState->charaPos.offset.vx / collData->subCellSize) >= collData->subCellXCount ||
+        ((collState->charaPos.offset.vz / collData->subCellSize) < 0) || (collState->charaPos.offset.vz / collData->subCellSize) >= collData->subCellZCount)
     {
         collState->field_A0.s_0.field_4 = NULL;
-        return true;
     }
     else
     {
-        collState->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((collState->charaPos.offset.vz / collData->field_1C) * collData->field_1E) +
-                                                                              (collState->charaPos.offset.vx / collData->field_1C)];
-        collState->field_C8             = UCHAR_MAX;
-    }
+        collState->field_A0.s_0.field_4 = &collData->ptr_20[((collState->charaPos.offset.vz / collData->subCellSize) * collData->subCellXCount) +
+                                                            (collState->charaPos.offset.vx / collData->subCellSize)];
+        collState->field_C8             = NO_VALUE;
 
-    for (curUnk = collState->field_A0.s_0.field_8; curUnk < &collState->field_C8; curUnk++)
-    {
-        curUnk->field_0 = 0;
-        curUnk->field_1 = UCHAR_MAX;
-        curUnk->field_4 = INT_MAX;
+        for (curUnk = collState->field_A0.s_0.field_8; curUnk < &collState->field_C8; curUnk++)
+        {
+            curUnk->field_0 = 0;
+            curUnk->field_1 = NO_VALUE;
+            curUnk->field_4 = INT_MAX;
+        }
     }
-
     return true;
 }
 
-bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collData) // 0x8006B004
+bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData) // 0x8006B004
 {
-    s32 charaCollDiffZClosest; // q23_8?
-    s32 charaCollDiffXClosest; // q23_8?
-    s32 collCellXSize;
-    s32 collCellZSize;
-    s32 collCellXLimit;
-    s32 collCellZLimit;
-    s32 charaCollDiffZFarest; // q23_8?
-    s32 charaCollDiffXFarest; // q23_8?
-
-    /* Will - 1: This may be some sort of scaling of `field_1C`.
+    q23_8 charaCollDiffZClosest;
+    q23_8 charaCollDiffXClosest;
+    q23_8 collCellXSize;
+    q23_8 collCellZSize;
+    q23_8 collCellXLimit;
+    q23_8 collCellZLimit;
+    q23_8 charaCollDiffZFarest;
+    q23_8 charaCollDiffXFarest;
     
-       Will - 2: Claude (the AI not the GTA 3 protagonist) analysis indicates that
-       `field_1C` should be call `subCellSize` and describe it as `World-units per sub-cell (geometry units, Q23.8)`
-       while `field_1E` and `field_1F` should be `subCellsX` and `subCellsZ` as they are `Grid dimensions`, can be wrong
-       but it seems this should be  correct considering that in the intro and some parts of the hospital otherworld (only the few
-       I tested, not sure if there is any which differs) assign the value of `0x200` to `field_1C` while both `field_1E` and `field_1F`
-       also always assign the value of `0x14` which both multiplied gives `0x1400` which converted to 8 bit FP format gives as value
-       40.0f and also it get rested with 1 so it's actually a value around `39.9f` which casually is the max size a chunk can have
-       as determined by `CHUNK_CELL_SIZE` value which is `40.0f`.
-    
-    */
-    collCellXSize  = collData->field_1C * collData->field_1E;
+    collCellXSize  = collData->subCellSize * collData->subCellXCount;
     collCellXLimit = collCellXSize - 1;
-    collCellZSize  = collData->field_1C * collData->field_1F;
+    collCellZSize  = collData->subCellSize * collData->subCellZCount;
     collCellZLimit = collCellZSize - 1;
 
     // Getting X plane differences.
@@ -973,24 +959,10 @@ bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collDa
     charaCollDiffXFarest  = limitRange(charaCollDiffXFarest, 0, collCellXLimit);
     charaCollDiffZFarest  = limitRange(charaCollDiffZFarest, 0, collCellZLimit);
 
-
-    /* Will - 1: it is very likely that this values are meant to represent
-       index or amounts of something, likely the amount of grid cells which
-       player takes in the currently placed grid, that is how this value seems
-       to be used in `Collision_CharaCollisionHandling` and would fit since it's taking
-       the size difference between the distance of point X/Z of a grid (presumambly)
-       and the size of a chunk.
-       
-       IN OTHER WORDS: This could contain the amount or index of something related to the cell
-       being analysed.
-       
-       Will - 2: Claude Speed tells that this function should be named as `IpdColl_QueryBboxToCells`
-       and describe it as `Convert query AABB to subcell index range`
-    */
-    collState->field_A0.s_0.field_0 = charaCollDiffXClosest / collData->field_1C;
-    collState->field_A0.s_0.field_1 = charaCollDiffZClosest / collData->field_1C;
-    collState->field_A0.s_0.field_2 = ((charaCollDiffXFarest / collData->field_1C) - collState->field_A0.s_0.field_0) + 1;
-    collState->field_A0.s_0.field_3 = ((charaCollDiffZFarest / collData->field_1C) - collState->field_A0.s_0.field_1) + 1;
+    collState->field_A0.s_0.closestXSubCellIdx      = charaCollDiffXClosest / collData->subCellSize;
+    collState->field_A0.s_0.closestZSubCellIdx      = charaCollDiffZClosest / collData->subCellSize;
+    collState->field_A0.s_0.closeFarXSubCellIdxDiff = ((charaCollDiffXFarest / collData->subCellSize) - collState->field_A0.s_0.closestXSubCellIdx) + 1;
+    collState->field_A0.s_0.closeFarZSubCellIdxDiff = ((charaCollDiffZFarest / collData->subCellSize) - collState->field_A0.s_0.closestZSubCellIdx) + 1;
 
     return true;
 }
@@ -1887,7 +1859,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
     }
 }
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_func_8006CA18* arg2) // 0x8006CA18
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2) // 0x8006CA18
 {
     s32                    startIdx;
     s32                    endIdx;
@@ -1895,8 +1867,8 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     u8*                    curUnk;
     s_IpdCollisionData_10* ptr;
 
-    startIdx = arg2->field_2;
-    endIdx   = arg2->field_6;
+    startIdx = arg2[0].field_2;
+    endIdx   = arg2[1].field_2;
 
     if (startIdx == endIdx)
     {
@@ -2677,9 +2649,9 @@ void func_8006E0AC(s_RayState* state, s_IpdCollisionData* arg1) // 0x8006E0AC
     state->field_6C.field_A = state->from.vz - state->field_6C.field_4;
     state->field_6C.field_C = state->field_6C.groundHeight + state->offset.vx;
     state->field_6C.field_E = state->field_6C.field_A + state->offset.vz;
-    state->field_7C = arg1->field_1E;
-    state->field_80 = arg1->field_1F;
-    state->field_84 = arg1->field_1C;
+    state->field_7C = arg1->subCellXCount;
+    state->field_80 = arg1->subCellZCount;
+    state->field_84 = arg1->subCellSize;
 
     func_8006E150(&state->field_6C, ((DVECTOR*)&state->offset)[0], ((DVECTOR*)&state->offset)[1]);
 }

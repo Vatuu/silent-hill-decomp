@@ -165,14 +165,6 @@ typedef struct _CollisionCharaMovement
     /* 0x2C */ q7_8       bottomPos;
 } s_CollisionCharaMovement;
 
-typedef struct
-{
-    /* 0x0 */ u8  unk_0[2];
-    /* 0x2 */ s16 field_2;
-    /* 0x4 */ u8  unk_4[2];
-    /* 0x6 */ s16 field_6;
-} s_func_8006CA18;
-
 typedef struct _CollisionState
 {
     /* 0x0+0  */ u8                       field_0_0     : 8; // Boolean? Code only assigns 1.
@@ -211,12 +203,12 @@ typedef struct _CollisionState
                  {
                      struct
                      {
-                         /* 0x0 */ u8                  field_0; // Start index for something.
-                         /* 0x1 */ u8                  field_1;
-                         /* 0x2 */ u8                  field_2;
-                         /* 0x3 */ u8                  field_3;
-                         /* 0x4 */ s_func_8006CA18*    field_4;
-                         /* 0x8 */ s_CollisionState_A8 field_8[4];
+                         /* 0x0 */ u8                     closestXSubCellIdx;
+                         /* 0x1 */ u8                     closestZSubCellIdx;
+                         /* 0x2 */ u8                     closeFarXSubCellIdxDiff;
+                         /* 0x3 */ u8                     closeFarZSubCellIdxDiff;
+                         /* 0x4 */ s_IpdCollisionData_20* field_4;
+                         /* 0x8 */ s_CollisionState_A8    field_8[4];
                      } s_0;
                      struct
                      {
@@ -484,7 +476,7 @@ void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisio
 
 bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-bool func_8006B004(s_CollisionState* collState, const s_IpdCollisionData* collData);
+bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
 void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
@@ -526,7 +518,7 @@ void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist);
 
 void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_func_8006CA18* arg2);
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
 
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
