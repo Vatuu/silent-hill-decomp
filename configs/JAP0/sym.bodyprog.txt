@@ -3499,8 +3499,8 @@ D_800C42B8                                   = 0x800C67E8;
 //--------------------------------------------------------------
 //--- PA: 0x0A1C90   VA: 0x800C67F0   subsegment: .bss, 3d_audio
 //--------------------------------------------------------------
-g_Audio_CameraPosition                       = 0x800C67F0;
-g_Audio_PlayerPosition                       = 0x800C67FC;
+g_Sfx_CameraPosition                       = 0x800C67F0;
+g_Sfx_PlayerPosition                       = 0x800C67FC;
 
 //---------------------------------------------------
 //--- PA: 0x0A1CA0   VA: 0x800C6800   subsegment: bss

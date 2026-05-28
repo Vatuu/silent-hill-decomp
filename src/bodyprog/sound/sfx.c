@@ -11,8 +11,8 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
 
-static VECTOR3  g_Audio_CameraPosition; // Q19.12
-static VECTOR3* g_Audio_PlayerPosition; // Q19.12
+static VECTOR3  g_Sfx_CameraPosition; // Q19.12
+static VECTOR3* g_Sfx_PlayerPosition; // Q19.12
 
 s32 func_8005D86C(q19_12 arg0) // 0x8005D86C
 {
@@ -92,12 +92,12 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x800
     q19_12 playerToSrcFactor;
     q23_8  adjVol;
 
-    vwGetViewPosition(&g_Audio_CameraPosition);
-    g_Audio_PlayerPosition = &g_SysWork.playerWork.player.position;
+    vwGetViewPosition(&g_Sfx_CameraPosition);
+    g_Sfx_PlayerPosition = &g_SysWork.playerWork.player.position;
 
-    offsetX           = g_Audio_CameraPosition.vx - g_Audio_PlayerPosition->vx;
-    offsetY           = g_Audio_CameraPosition.vy - g_Audio_PlayerPosition->vy;
-    offsetZ           = g_Audio_CameraPosition.vz - g_Audio_PlayerPosition->vz;
+    offsetX           = g_Sfx_CameraPosition.vx - g_Sfx_PlayerPosition->vx;
+    offsetY           = g_Sfx_CameraPosition.vy - g_Sfx_PlayerPosition->vy;
+    offsetZ           = g_Sfx_CameraPosition.vz - g_Sfx_PlayerPosition->vz;
     camToPlayerFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
                                                     Q12_MULT_PRECISE(offsetY, offsetY) +
                                                     Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(2.5f)) / 10);
@@ -106,9 +106,9 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x800
         camToPlayerFactor = Q12(1.0f);
     }
 
-    offsetX           = g_Audio_PlayerPosition->vx - srcPos->vx;
-    offsetY           = g_Audio_PlayerPosition->vy - srcPos->vy;
-    offsetZ           = g_Audio_PlayerPosition->vz - srcPos->vz;
+    offsetX           = g_Sfx_PlayerPosition->vx - srcPos->vx;
+    offsetY           = g_Sfx_PlayerPosition->vy - srcPos->vy;
+    offsetZ           = g_Sfx_PlayerPosition->vz - srcPos->vz;
     playerToSrcFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
                                                     Q12_MULT_PRECISE(offsetY, offsetY) +
                                                     Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(6.0f)) / 4);

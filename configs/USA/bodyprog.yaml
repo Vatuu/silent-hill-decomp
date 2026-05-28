@@ -184,7 +184,7 @@ segments:
       - [0x304C8,   c, gfx/bodyprog_80055028]
       - [0x373D8,   c, bodyprog_math_8005BF38]
       - [0x37C70,   c, bodyprog_combat_8005BF38]
-      - [0x38D0C,   c, 3d_audio]
+      - [0x38D0C,   c, sound/sfx]
       - [0x3957C,   c, bodyprog_8005E0DC]
       - [0x40794,   c, bodyprog_800652F4]
       - [0x42230,   c, bodyprog_mapscreen_80066EB0]
@@ -480,7 +480,7 @@ segments:
       - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608,  bss, worldgfx]
       - [0x9F75C,  pad] # Garbage.
-      - [0x9F760, .bss, 3d_audio]
+      - [0x9F760, .bss, sound/sfx]
       - [0x9F770,  bss] # Player related? - Dead code.
                         # Variables only ever used in `Player_CombatUpdate`
                         # where it get assigned the position of player, but

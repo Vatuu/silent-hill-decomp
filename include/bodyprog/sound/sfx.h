@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_SOUND_SFX_H
 #define _BODYPROG_SOUND_SFX_H
 
-#include "bodyprog/sound/sound_effects.h"
+#include "bodyprog/sound/sfx_id_enum.h"
 
 s32 func_8005D86C(q19_12 arg0);
 

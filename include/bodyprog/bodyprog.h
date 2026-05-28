@@ -18,7 +18,7 @@
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/sound/sound.h"
-#include "bodyprog/sound/sound_effects.h"
+#include "bodyprog/sound/sfx_id_enum.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 
