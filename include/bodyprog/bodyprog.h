@@ -34,6 +34,15 @@
 // ENUMS
 // ======
 
+/** @brief SFX flags. */
+typedef enum _SfxFlags
+{
+    SfxFlag_None          = 0,
+    SfxFlag_Mono          = 1 << 0, /** Monophonic. */
+    SfxFlag_NoDistAtten   = 1 << 1, /** No distance attenuation. */
+    SfxFlag_UpdateAttribs = 1 << 2  /** @unused Update attributes. */
+} e_SfxFlags;
+
 // Used by `func_8006E490` and `func_8006E150`.
 typedef enum _OrientationFlags
 {
@@ -1050,11 +1059,6 @@ extern s8 D_800C39A0;
 
 extern GsCOORDINATE2* D_800C42B8; // Set to view coord.
 
-extern VECTOR3 D_800C42C0;
-
-// TODO: Belongs in `3d_audio.h`.
-extern VECTOR3* D_800C42CC;
-
 extern q4_12 g_Player_RotationDeltaToTargetY;
 extern q4_12 g_Player_RotationDeltaToTargetX;
 
@@ -1793,7 +1797,13 @@ s32 func_8005D86C(s32 arg0);
 s32 func_8005D974(s32 arg0);
 
 // Computes distance-adjusted volume?
-s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
+/** @brief Computes the distance-attenuated sound volume from a source position.
+ *
+ * @param srcPos Sound source position.
+ * @param vol Sound volume to attenuate.
+ * @return Distance-attenuated sound volume.
+ */
+q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol);
 
 /** Spatial SFX func? */
 void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.

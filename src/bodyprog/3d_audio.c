@@ -10,12 +10,8 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
 
-VECTOR3 D_800C42C0;
-VECTOR3* D_800C42CC;
-
-// ========================================
-// 3D SOUND
-// ========================================
+static VECTOR3  g_Audio_CameraPosition; // Q19.12
+static VECTOR3* g_Audio_PlayerPosition; // Q19.12
 
 s32 func_8005D86C(s32 arg0) // 0x8005D86C
 {
@@ -87,60 +83,60 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
     return val;
 }
 
-s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
+q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8005D9B8
 {
-    s32 temp_v0;
-    s32 deltaX;
-    s32 deltaY;
-    s32 deltaZ;
-    s32 var_s0;
-    s32 var_v0;
+    q19_12 offsetX;
+    q19_12 offsetY;
+    q19_12 offsetZ;
+    q19_12 camToPlayerFactor;
+    q19_12 playerToSrcFactor;
+    q23_8  adjVol;
 
-    vwGetViewPosition(&D_800C42C0);
-    D_800C42CC = &g_SysWork.playerWork.player.position;
+    vwGetViewPosition(&g_Audio_CameraPosition);
+    g_Audio_PlayerPosition = &g_SysWork.playerWork.player.position;
 
-    deltaX = D_800C42C0.vx - D_800C42CC->vx;
-    deltaY = D_800C42C0.vy - D_800C42CC->vy;
-    deltaZ = D_800C42C0.vz - D_800C42CC->vz;
-    var_s0 = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
-                                         Q12_MULT_PRECISE(deltaY, deltaY) +
-                                         Q12_MULT_PRECISE(deltaZ, deltaZ)) - Q12(2.5f)) / 10);
-    if (var_s0 > Q12(1.0f))
+    offsetX           = g_Audio_CameraPosition.vx - g_Audio_PlayerPosition->vx;
+    offsetY           = g_Audio_CameraPosition.vy - g_Audio_PlayerPosition->vy;
+    offsetZ           = g_Audio_CameraPosition.vz - g_Audio_PlayerPosition->vz;
+    camToPlayerFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
+                                                    Q12_MULT_PRECISE(offsetY, offsetY) +
+                                                    Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(2.5f)) / 10);
+    if (camToPlayerFactor > Q12(1.0f))
     {
-        var_s0 = Q12(1.0f);
+        camToPlayerFactor = Q12(1.0f);
     }
 
-    deltaX  = D_800C42CC->vx - pos->vx;
-    deltaY  = D_800C42CC->vy - pos->vy;
-    deltaZ  = D_800C42CC->vz - pos->vz;
-    temp_v0 = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
-                                          Q12_MULT_PRECISE(deltaY, deltaY) +
-                                          Q12_MULT_PRECISE(deltaZ, deltaZ)) - Q12(6.0f)) / 4);
+    offsetX           = g_Audio_PlayerPosition->vx - srcPos->vx;
+    offsetY           = g_Audio_PlayerPosition->vy - srcPos->vy;
+    offsetZ           = g_Audio_PlayerPosition->vz - srcPos->vz;
+    playerToSrcFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
+                                                    Q12_MULT_PRECISE(offsetY, offsetY) +
+                                                    Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(6.0f)) / 4);
 
-    var_v0 = Q12_MULT_PRECISE(var_s0, temp_v0);
-    if (var_v0 > Q12(2.0f))
+    adjVol = Q12_MULT_PRECISE(camToPlayerFactor, playerToSrcFactor);
+    if (adjVol > Q8(32.0f))
     {
-        var_v0 = Q12(2.0f);
+        adjVol = Q8(32.0f);
     }
-    else if (var_v0 < Q12(0.0f))
+    else if (adjVol < Q8(0.0f))
     {
-        var_v0 = Q12(0.0f);
-    }
-
-    var_v0 = Q12_MULT_PRECISE(vol, var_v0);
-    if (var_v0 > Q8_CLAMPED(1.0f))
-    {
-        var_v0 = Q8_CLAMPED(1.0f);
-    }
-    else if (var_v0 < Q12(0.0f))
-    {
-        var_v0 = Q12(0.0f);
+        adjVol = Q8(0.0f);
     }
 
-    return var_v0;
+    adjVol = Q12_MULT_PRECISE(vol, adjVol);
+    if (adjVol > Q8_CLAMPED(1.0f))
+    {
+        adjVol = Q8_CLAMPED(1.0f);
+    }
+    else if (adjVol < Q8(0.0f))
+    {
+        adjVol = Q8(0.0f);
+    }
+
+    return adjVol;
 }
 
-void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType)
+void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType) // 0x8005DC1C
 {
     func_8005DC3C(sfxId, pos, vol, soundType, 0);
 }
@@ -151,9 +147,9 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
     q23_8 balance;
 
     // Get stereo balance.
-    if (soundType & (1 << 0) || g_GameWork.config.soundType)
+    if (soundType & SfxFlag_Mono || g_GameWork.config.soundType)
     {
-        balance = 0;
+        balance = Q8(0.0f);
     }
     else
     {
@@ -170,13 +166,13 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
         vol = Q8_CLAMPED(0.0f);
     }
 
-    if (!(soundType & (1 << 1)))
+    if (soundType & SfxFlag_NoDistAtten)
     {
-        adjVol = func_8005D9B8(pos, vol);
+        adjVol = vol;
     }
     else
     {
-        adjVol = vol;
+        adjVol = Audio_DistanceAttenuatedVolumeGet(pos, vol);
     }
 
     if (adjVol > Q8_CLAMPED(1.0f))
@@ -184,7 +180,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
         adjVol = Q8_CLAMPED(1.0f);
     }
 
-    if (soundType & (1 << 2))
+    if (soundType & SfxFlag_UpdateAttribs)
     {
         Sd_SfxAttributesUpdate(sfxId, balance, ~adjVol, pitch);
     }
@@ -219,7 +215,7 @@ void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD
         vol = Q8_CLAMPED(0.0f);
     }
 
-    volCpy = func_8005D9B8(pos, vol);
+    volCpy = Audio_DistanceAttenuatedVolumeGet(pos, vol);
     if (volCpy > Q8_CLAMPED(1.0f))
     {
         volCpy = Q8_CLAMPED(1.0f);

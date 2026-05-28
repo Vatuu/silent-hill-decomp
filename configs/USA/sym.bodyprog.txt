@@ -743,6 +743,11 @@ Chara_NpcIdxGet                              = 0x8005C7D0;
 Chara_CollisionShapeOffsetsUpdate            = 0x8005C814; //type:func
 Chara_MovementUpdate                         = 0x8005C944; // type:func
 
+//-----------------------------------------------------------
+//--- PA: 0x038D0C   VA: 0x8005D86C   subsegment: c, 3d_audio
+//-----------------------------------------------------------
+Audio_DistanceAttenuatedVolumeGet            = 0x8005D9B8; // type:func
+
 //--------------------------------------------------------------------
 //--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, bodyprog_8005E0DC
 //--------------------------------------------------------------------
@@ -2988,6 +2993,12 @@ g_Items_Coords                               = 0x800C3E48;
 //--- PA: 0x09F608   VA: 0x800C4168   subsegment: bss, worldgfx
 //-------------------------------------------------------------
 g_WorldEnvWork                               = 0x800C4168; // type:u8 size:0x150 - size likely incomplete
+
+//--------------------------------------------------------------
+//--- PA: 0x09F760   VA: 0x800C42C0   subsegment: .bss, 3d_audio
+//--------------------------------------------------------------
+g_Audio_CameraPosition                       = 0x800C42C0;
+g_Audio_PlayerPosition                       = 0x800C42CC;
 
 //---------------------------------------------------
 //--- PA: 0x09F770   VA: 0x800C42D0   subsegment: bss

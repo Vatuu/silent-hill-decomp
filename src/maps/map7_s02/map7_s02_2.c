@@ -3549,18 +3549,18 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
 
             if (Savegame_EventFlagGet(EventFlag_486) && !Savegame_EventFlagGet(EventFlag_549))
             {
-                if (D_800EBB94)
+                if (D_800EBB94 != Q12(0.0f))
                 {
                     D_800EBB94 -= g_DeltaTime;
-                    if (D_800EBB94 < 0)
+                    if (D_800EBB94 < Q12(0.0f))
                     {
-                        D_800EBB94 = 0;
+                        D_800EBB94 = Q12(0.0f);
                     }
                 }
                 else
                 {
-                    func_8005DC1C(Sfx_Unk1653, &D_800CDC4C, 0x20, 0);
-                    D_800EBB94 = (Rng_Rand16() % 0x2000) + 0x333;
+                    func_8005DC1C(Sfx_Unk1653, &D_800CDC4C, Q8(0.125f), 0);
+                    D_800EBB94 = (Rng_Rand16() % Q12(2.0f)) + Q12(0.2f);
                 }
             }
             break;
@@ -3632,7 +3632,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             if (!Savegame_EventFlagGet(EventFlag_478) && g_SysWork.playerWork.player.position.vz < Q12(-19.0f))
             {
                 Savegame_EventFlagSet(EventFlag_478);
-                func_8005DC1C(Sfx_Unk1528, &D_800CDC58, 0xFF, 2);
+                func_8005DC1C(Sfx_Unk1528, &D_800CDC58, Q8_CLAMPED(1.0f), 2);
             }
             break;
     }

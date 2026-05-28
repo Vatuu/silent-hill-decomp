@@ -2171,7 +2171,7 @@ void func_800D9B90(s_800F3D48* arg0) // 0x800D9B90
 
 s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
 {
-    VECTOR3       sp10;
+    VECTOR3       sfxPos; // Q19.12
     s_800F3D48_0* ret;
     s_800F3D58*   ptr;
 
@@ -2187,10 +2187,10 @@ s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
 
             if (func_800D5D48() != false)
             {
-                sp10.vx = arg0->field_4.field_18.vx + ptr->field_0.vx;
-                sp10.vy = arg0->field_4.field_18.vy + ptr->field_0.vy;
-                sp10.vz = arg0->field_4.field_18.vz + ptr->field_0.vz;
-                func_8005DC1C(Sfx_Unk1692, &sp10, 0xFF, 0);
+                sfxPos.vx = arg0->field_4.field_18.vx + ptr->field_0.vx;
+                sfxPos.vy = arg0->field_4.field_18.vy + ptr->field_0.vy;
+                sfxPos.vz = arg0->field_4.field_18.vz + ptr->field_0.vz;
+                func_8005DC1C(Sfx_Unk1692, &sfxPos, Q8_CLAMPED(1.0f), 0);
             }
 
             arg0->field_4.field_C++;

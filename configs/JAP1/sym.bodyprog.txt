@@ -1078,7 +1078,7 @@ func_8005D50C                                = 0x8005F014; // type:func
 //-----------------------------------------------------------
 func_8005D86C                                = 0x8005F374; // type:func
 func_8005D974                                = 0x8005F47C; // type:func
-func_8005D9B8                                = 0x8005F4C0; // type:func
+Audio_DistanceAttenuatedVolumeGet            = 0x8005F4C0; // type:func
 func_8005DC1C                                = 0x8005F724; // type:func
 func_8005DC3C                                = 0x8005F744; // type:func
 func_8005DD44                                = 0x8005F84C; // type:func
@@ -3522,8 +3522,8 @@ D_800C42B8                                   = 0x800C6910;
 //--------------------------------------------------------------
 //--- PA: 0x0A1DB8   VA: 0x800C6918   subsegment: .bss, 3d_audio
 //--------------------------------------------------------------
-D_800C42C0                                   = 0x800C6918;
-D_800C42CC                                   = 0x800C6924;
+g_Audio_CameraPosition                       = 0x800C6918;
+g_Audio_PlayerPosition                       = 0x800C6924;
 
 //---------------------------------------------------
 //--- PA: 0x0A1DC8   VA: 0x800C6928   subsegment: bss

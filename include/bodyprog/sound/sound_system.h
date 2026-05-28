@@ -179,34 +179,34 @@ typedef struct
 /** Sound struct for currently used SFX.
  * @note It is recomended to read VAB file format documentation to fully understand this struct.
  */
-typedef struct
+typedef struct _VabPlayingInfo
 {
-    u8  audioVabIdx_0;
-    u8  pad_1;
-    s16 typeIdx_2; /** `e_AudioType` */
-    s16 progIdx_4;
-    s16 toneIdx_6;
-    s16 noteIdx_8;
-    s16 pitch_A;
-    s16 volumeLeft_C;
-    s16 volumeRight_E;
+    /* 0x0 */ u8  audioVabIdx;
+    /* 0x1 */ s8  __pad_1;
+    /* 0x2 */ s16 typeIdx; /** `e_AudioType` */
+    /* 0x4 */ s16 progIdx;
+    /* 0x6 */ s16 toneIdx;
+    /* 0x8 */ s16 noteIdx;
+    /* 0xA */ s16 pitch;
+    /* 0xC */ s16 volumeLeft;
+    /* 0xE */ s16 volumeRight;
 } s_VabPlayingInfo;
 
 /** @note It is recomended to read VAB file format documentation to fully understand this struct. */
 typedef struct
 {
-    u8  audioVabIdx_0; /** Index of audio inside VAB files. */
-    u8  pad_1;
-    u16 vab_progIdx_2; /** See `TYPE_AND_PROG_SFX`. */
-    u8  noteIdx_4;
-    s8  field_5;       // Volume??? (Tested In-game indeed changes the volume)
+    /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
+    /* 0x1 */ s8  __pad_1;
+    /* 0x2 */ u16 vab_progIdx_2; /** See `TYPE_AND_PROG_SFX`. */
+    /* 0x4 */ u8  noteIdx_4;
+    /* 0x5 */ s8  field_5;       // Volume??? (Tested In-game indeed changes the volume)
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
 typedef struct
 {
     u8  xaFileIdx_0;
-    u8  pad_1[3];
+    s8  __pad_1[3];
     u32 sector_4      : 24;
     u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
     u32 audioLength_8 : 24;
