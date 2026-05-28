@@ -338,7 +338,7 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
     Collision_SurfaceGet(&surface, dahlia->position.vx, dahlia->position.vz);
 
-    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.groundType, &sfxId, &pitch0, &pitch1);
 #if defined(MAP6_S01)
     sfxId = Sfx_Unk1606;
 #else

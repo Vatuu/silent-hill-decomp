@@ -3,7 +3,7 @@
 
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
-#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Reset
 #define HAS_PlayerState_Unk111
 #define HAS_PlayerState_Unk113
 #define KEYFRAME_PlayerState_Unk113 723

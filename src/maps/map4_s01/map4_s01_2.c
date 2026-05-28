@@ -170,7 +170,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SD_Call(Sfx_Unk1538);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 105, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 105, false);
 
             g_SysWork.playerWork.player.position.vx = Q12(178.3f);
             g_SysWork.playerWork.player.position.vz = Q12(61.9f);
@@ -269,7 +269,7 @@ void func_800D2408(void) // 0x800D2408
 
             g_Cutscene_Timer0 = Q12(0.0f);
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 51, false);
 
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
@@ -303,7 +303,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 6:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 118, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 118, false);
             func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -315,12 +315,12 @@ void func_800D2408(void) // 0x800D2408
             Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), 0, 3);
             g_Cutscene_UpdateSibyl = true;
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 5, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 5, false);
             func_8003D01C();
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_CharacterAnimCommand(CharacterAnimCommand_1, playerChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_1, playerChara, 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer0, Q12(10.0f), Q12(0.0f), Q12(28.0f), true, false);
             break;
 
@@ -334,8 +334,8 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 12:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 1, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 1, false);
             func_8003D03C();
             Savegame_EventFlagSet(EventFlag_311);
             SysWork_StateStepIncrement(0);
@@ -346,7 +346,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 14:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 5, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 5, false);
 
             g_Cutscene_Timer0        = Q12(57.0f);
             g_SysWork.lightIntensity = Q12(0.7f);
@@ -400,8 +400,8 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 25:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 72, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 1, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 72, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -414,9 +414,9 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 28:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, playerChara, 0, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 5, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, playerChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 5, false);
 
             g_Cutscene_Timer0        = Q12(87.0f);
             g_SysWork.lightIntensity = Q12(0.5f);
@@ -428,7 +428,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 30:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 140, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 140, false);
             g_SysWork.lightIntensity = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
@@ -455,7 +455,7 @@ void func_800D2408(void) // 0x800D2408
             D_800D8018 = 1;
             g_SysWork.lightIntensity = Q12(1.2f);
 
-            Event_CharacterAnimCommand(0U, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(0U, playerChara, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 36:
@@ -467,7 +467,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 38:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 130, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 130, false);
 
             D_800D8018 = 0;
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -591,7 +591,7 @@ void func_800D2F74(void) // 0x800D2F74
             g_Cutscene_Timer1 = Q12(0.0f);
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 121, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 121, false);
             Game_TurnFlashlightOn();
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
@@ -618,7 +618,7 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 5:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 53, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 53, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -630,7 +630,7 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 8:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 51, false);
 
             g_Cutscene_Timer1 = Q12(95.0f);
 
@@ -764,7 +764,7 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 142, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 142, false);
             D_800D5B06 = true;
             SysWork_StateStepIncrement(0);
 
@@ -799,7 +799,7 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -851,19 +851,19 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 11:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 18, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 18, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
             break;
 
         case 12:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, cybilChara, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 13:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, cybilChara, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -876,7 +876,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 16:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 19, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 19, false);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -889,7 +889,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 19:
-            Event_CharacterAnimCommand(CharacterAnimCommand_1, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_1, cybilChara, 0, false);
             break;
 
         case 20:
@@ -897,7 +897,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 21:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, cybilChara, 20, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, cybilChara, 20, false);
             Math_Vector3Set(&g_SysWork.lightPosition, Q12(175.9f), Q12(-1.0f), Q12(22.8f));
             Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(0.0f), Q12_ANGLE(60.0f), Q12_ANGLE(0.0f));
 
@@ -908,7 +908,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 22:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, cybilChara, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
@@ -918,7 +918,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 24:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, cybilChara, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -1062,8 +1062,8 @@ void func_800D4410(void) // 0x800D4410
             g_Cutscene_Timer2 = Q12(0.0f);
             g_Cutscene_MapMsgAudioIdx1 = 0;
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 124, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, playerChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 124, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, playerChara, 0, false);
             func_8008D438();
 
             g_SysWork.lightBoneCoord     = NULL;
@@ -1086,7 +1086,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 2:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, playerChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, playerChara, 0, false);
             Event_DisplayMapMsgWithAudio(102, &g_Cutscene_MapMsgAudioIdx1, g_Cutscene_MapMsgAudioCmds1);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
             break;
@@ -1106,7 +1106,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 6:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, playerChara, 153, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 153, false);
             SysWork_StateStepIncrement(0);
 
         case 7:

@@ -653,7 +653,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             break;
     }
 
-    func_8007FDE0(11, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(11, &sfxId, &pitch0, &pitch1);
 
     switch (monsterCybilProps.controlState)
     {

@@ -471,7 +471,7 @@ void func_800D85D8(void) // 0x800D85D8
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
-            Event_CharacterAnimCommand(0u, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCommandExecute(0u, &g_SysWork.playerWork.player, 88, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -552,7 +552,7 @@ void func_800D8948(void) // 0x800D8948
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
             if (g_MapEventData->pointOfInterestIdx == 16)
             {

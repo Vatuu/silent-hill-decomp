@@ -19,7 +19,8 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
 void sharedFunc_800D2C7C_0_s00(s32 playerExtraState);
 
-void sharedFunc_800D2D2C_0_s00(void);
+// Requests a player animation reset. TODO: Unsure about the name.
+void Player_AnimReset(void);
 
 void Player_AnimLock(void);
 
@@ -28,7 +29,7 @@ s32 Player_AnimIsLocked(void);
 void Player_AnimUnlock(void);
 
 /** Player anim func. Checks if the active keyframe is at the start or end of the anim's range. */
-s32 sharedFunc_800D2DAC_0_s00(void);
+s32 Player_AnimPlaybackStateGet(void);
 
 /** Triggers at specific points after the start of a cutscene or dialogue. */
 bool Player_MoveDistanceIsZero(void);

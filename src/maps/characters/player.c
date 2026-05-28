@@ -252,7 +252,7 @@ void Player_ControlFreeze(void)
     playerChara->properties.player.runTimer_F8     = Q12(0.0f);
     playerChara->properties.player.exhaustionTimer = Q12(0.0f);
 
-    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
+    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Reset);
 
     g_Player_IsShooting          = false;
     g_Player_IsAttacking         = false;
@@ -432,7 +432,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[0], playerChara->position));
             if (ABS((int)playerVecDist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Reset);
                 D_800C4588 = 8;
                 break;
             }
@@ -566,14 +566,14 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {
                 playerChara->rotation.vy = angle;
-                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
+                Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Reset);
                 D_800C457C = 0;
                 D_800C4588 = 8;
             }
             break;
 
         case 8:
-            D_800C4606                                                              = 1;
+            g_Player_AnimResetRequest                                                              = true;
             sharedData_800E39E0_0_s00                                               = 0;
             D_800C4588                                                              = 0;
             g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
@@ -593,7 +593,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
 
     g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
 
-    D_800C4606 = 0;
+    g_Player_AnimResetRequest = false;
 
     switch (playerExtraState)
     {
@@ -617,9 +617,9 @@ void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
     Player_ExtraStateSet(player, extra, playerExtraState);
 }
 
-void sharedFunc_800D2D2C_0_s00(void)
+void Player_AnimReset(void)
 {
-    D_800C4606++;
+    g_Player_AnimResetRequest++;
 }
 
 void Player_AnimLock(void)
@@ -637,7 +637,7 @@ void Player_AnimUnlock(void)
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 }
 
-s32 sharedFunc_800D2DAC_0_s00(void)
+s32 Player_AnimPlaybackStateGet(void)
 {
     s_Model*    model;
     s_AnimInfo* animInfo;
@@ -648,24 +648,26 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
     if (animInfo->playbackFunc == Anim_PlaybackOnce)
     {
-        // Check if anim has started or finished.
+        // Check if anim is in progress or finished.
         if (Anim_DurationGet(model, animInfo) > Q12(0.0f))
         {
-            return model->anim.keyframeIdx == animInfo->endKeyframeIdx;
+            return (model->anim.keyframeIdx == animInfo->endKeyframeIdx) ? AnimPlaybackState_End :
+                                                                           AnimPlaybackState_Active;
         }
         else
         {
-            return model->anim.keyframeIdx == animInfo->startKeyframeIdx;
+            return (model->anim.keyframeIdx == animInfo->startKeyframeIdx) ? AnimPlaybackState_End :
+                                                                             AnimPlaybackState_Active;
         }
     }
 
     if (animInfo->playbackFunc == Anim_BlendLinear)
     {
-        return -2;
+        return AnimPlaybackState_Blend;
     }
     else
     {
-        return -1;
+        return AnimPlaybackState_Invalid;
     }
 }
 

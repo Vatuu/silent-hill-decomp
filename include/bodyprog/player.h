@@ -115,7 +115,7 @@ typedef enum _PlayerState
     PlayerState_GetUpFront                = 49,
     PlayerState_GetUpBack                 = 50,
     PlayerState_Unk51                     = 51, // Cutscenes
-    PlayerState_Unk52                     = 52, // Standing during interacting with something/cutscenes?
+    PlayerState_Reset                     = 52, // Unsure, maybe a forced stop. Seems to reset the animation to a standing pose.
     PlayerState_Unk53                     = 53, // Moving in cutscene?
     PlayerState_Unk54                     = 54, // Running in cutscene?
     PlayerState_Unk55                     = 55,

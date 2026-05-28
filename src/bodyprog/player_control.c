@@ -914,7 +914,7 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
         case PlayerState_GetUpFront:
         case PlayerState_GetUpBack:
         case PlayerState_Unk51:
-        case PlayerState_Unk52:
+        case PlayerState_Reset:
         case PlayerState_Unk53:
         case PlayerState_Unk55:
         case PlayerState_TurnRight:
@@ -6293,7 +6293,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     s8      pitch0;
     s8      pitch1;
 
-    func_8007FDE0(g_Player_CollisionResult.surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(g_Player_CollisionResult.surface.groundType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
     if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
@@ -7363,7 +7363,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             break;
 
         default:
-            if (g_SysWork.playerWork.extra.state >= PlayerState_Unk52 &&
+            if (g_SysWork.playerWork.extra.state >= PlayerState_Reset &&
                 g_SysWork.playerWork.extra.state <  PlayerState_Unk59)
             {
                 func_80044F14(&boneCoords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
@@ -8634,7 +8634,7 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     }
 }
 
-void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
+void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
     s32 mapIdx;
 

@@ -125,13 +125,13 @@ void func_800D0C14(void) // 0x800D0C14
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 117, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 117, false);
 
             SysWork_StateStepIncrement(0);
 
         case 2:
             Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 3:
@@ -148,7 +148,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 5:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             D_800D2738 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -198,7 +198,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 11:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -215,8 +215,8 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 15:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 0, false);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -234,7 +234,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 19:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 9, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 9, false);
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -248,7 +248,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 21:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 10, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 10, false);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             SysWork_StateStepIncrement(0);
 
@@ -259,7 +259,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 23:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 0, false);
             SysWork_StateStepIncrement(0);
 
         case 24:
@@ -269,7 +269,7 @@ void func_800D0C14(void) // 0x800D0C14
 
         case 25:
             Savegame_EventFlagSet(EventFlag_297);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -277,7 +277,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 27:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 111, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 111, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             D_800D2738 = 0;
             SysWork_StateStepIncrement(0);
@@ -323,7 +323,7 @@ void func_800D0C14(void) // 0x800D0C14
             }
 
         default:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
 
             // Return to gameplay.
             Player_ControlUnfreeze(true);

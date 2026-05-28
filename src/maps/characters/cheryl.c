@@ -181,7 +181,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
     }
 
     Collision_SurfaceGet(&surface, cheryl->position.vx, cheryl->position.vz);
-    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.groundType, &sfx, &pitch0, &pitch1);
 
     distToPlayerSqr = SQUARE(Q12_TO_Q8(cheryl->position.vx - playerChara.position.vx)) +
                       SQUARE(Q12_TO_Q8(cheryl->position.vz - playerChara.position.vz));

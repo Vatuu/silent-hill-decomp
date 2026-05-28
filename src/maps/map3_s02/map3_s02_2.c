@@ -273,7 +273,7 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 1:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 2, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 

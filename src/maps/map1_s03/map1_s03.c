@@ -1050,7 +1050,7 @@ void func_800DC310(void) // 0x800DC310
 
         case 7:
             Savegame_EventFlagSet(EventFlag_102);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 86, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 86, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1075,7 +1075,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         case EventState_Skip:
-            Event_CharacterAnimCommand(CharacterAnimCommand_4, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimReset, &g_SysWork.playerWork.player, 0, false);
             Savegame_EventFlagSet(EventFlag_104);
 
             // Warp camera.

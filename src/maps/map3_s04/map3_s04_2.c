@@ -257,8 +257,8 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 1:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -270,7 +270,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 4:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, g_SysWork.npcs, 6, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, g_SysWork.npcs, 6, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -281,7 +281,7 @@ void func_800D2668(void) // 0x800D2668
         case 6:
             g_Cutscene_Timer = Q12(22.0f);
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 7, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 7, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -325,8 +325,8 @@ void func_800D2668(void) // 0x800D2668
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 0x7D, false);
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 8, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 0x7D, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 8, false);
             SD_Call(Sfx_Unk1522);
 
             D_800D5A4E++;

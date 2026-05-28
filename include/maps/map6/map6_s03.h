@@ -1,7 +1,7 @@
 #ifndef _MAPS_MAP6_S03_H
 #define _MAPS_MAP6_S03_H
 
-#define HAS_PlayerState_Unk52
+#define HAS_PlayerState_Reset
 #define HAS_PlayerState_Unk87
 #define HAS_PlayerState_Unk88
 

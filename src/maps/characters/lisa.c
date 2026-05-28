@@ -228,7 +228,7 @@ void Lisa_AnimStateUpdate(s_SubCharacter* lisa, GsCOORDINATE2* boneCoords)
 
     Collision_SurfaceGet(&surface, lisa->position.vx, lisa->position.vz);
 
-    func_8007FDE0(surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.groundType, &sfxId, &pitch0, &pitch1);
     sfxId = Sfx_Unk1529;
 
     switch (lisaProps.controlState)

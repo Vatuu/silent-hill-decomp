@@ -102,7 +102,7 @@ void BloodyLisa_AnimStateUpdate(s_SubCharacter* bloodyLisa, GsCOORDINATE2* boneC
     }
 
     Collision_SurfaceGet(&surface, bloodyLisa->position.vx, bloodyLisa->position.vz);
-    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.groundType, &sfx, &pitch0, &pitch1);
 
     switch (bloodyLisaProps.controlState)
     {

@@ -836,6 +836,7 @@ Player_AnimGetSomething                      = 0x8007F308; // type:func
 Player_Controller                            = 0x8007F32C; // type:func
 Math_ShortestAngleGet                        = 0x8007FB34; // type:func
 Game_GasWeaponPowerTimerValue                = 0x8007FD3C; // type:func
+Player_FootstepSfxGet                        = 0x8007FDE0; // type:func
 Math_DistanceGet                             = 0x800802CC; // type:func
 Math_Distance2dGet                           = 0x8008037C; // type:func
 Input_SelectClickSet                         = 0x80080458; // type:func
@@ -922,7 +923,7 @@ vcGetXZSumDistFromLimArea                    = 0x80085C80; // type:func
 Event_SysStateStepIncrement                  = 0x80085D78; // type:func
 Event_SysStateStepSet                        = 0x80085DC0; // type:func
 Event_SysStateStepIncrementDelayed           = 0x80085E6C; // type:func
-Event_CharacterAnimCommand                   = 0x80085EB8; // type:func
+Event_CharaAnimCommandExecute                = 0x80085EB8; // type:func
 Event_SysStateBranchOnFlag                   = 0x8008605C; // type:func
 Event_DisplayMapMsg                          = 0x800860B0; // type:func
 Event_SysStateStepIncrementAfterFade         = 0x8008616C; // type:func
@@ -3037,6 +3038,7 @@ g_Player_IsMovingForward                     = 0x800C45E8;
 g_Player_IsMovingBackward                    = 0x800C45F0; 
 g_Player_PrevPosition                        = 0x800C45F8; 
 g_Player_IsRunning                           = 0x800C4604; 
+g_Player_AnimResetRequest                    = 0x800C4606;
 g_Player_HeadingAngle                        = 0x800C4608; 
 
 //------------------------------------------------------------------

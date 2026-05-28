@@ -230,7 +230,7 @@ void func_800D822C(void) // 0x800D822C
             Camera_PositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
@@ -287,7 +287,7 @@ void func_800D84EC(void) // 0x800D84EC
             Game_TurnFlashlightOn();
             Camera_PositionSet(NULL, Q12(88.92f), Q12(-1.64f), Q12(20.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(90.98f), Q12(-4.45f), Q12(18.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CharacterAnimCommand(0U, &g_SysWork.playerWork.player, 87, false);
+            Event_CharaAnimCommandExecute(0U, &g_SysWork.playerWork.player, 87, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 

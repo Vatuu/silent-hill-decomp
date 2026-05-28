@@ -49,15 +49,6 @@ typedef enum _BoneHierarchy
     BoneHierarchy_End        = -2
 } e_BoneHierarchy;
 
-typedef enum _CharacterAnimCommand
-{
-    CharacterAnimCommand_SetState   = 0,
-    CharacterAnimCommand_1          = 1,
-    CharacterAnimCommand_AnimLock   = 2,
-    CharacterAnimCommand_AnimUnlock = 3,
-    CharacterAnimCommand_4          = 4, // Calls `playerAnimUnlock` + unknown `func_D8`.
-} e_CharacterAnimCommand;
-
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -1099,7 +1090,7 @@ extern q3_12 D_800AF070[];
 
 extern q3_12 D_800AF1FC[];
 
-extern u8 D_800C4606;
+extern u8 g_Player_AnimResetRequest; /** `bool` */
 
 extern s_CollisionSurface D_800C4620;
 
@@ -1883,7 +1874,7 @@ void func_80085DF0(void);
 void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep);
 
 /** @brief Updates character states during events/cutscenes. */
-void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep);
+void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep);
 
 /** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
  *
@@ -2581,8 +2572,15 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool resetColl);
 
-/** @brief Determines the step SFX and its pitch. */
-void func_8007FDE0(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
+/** @brief Gets a player footstep SFX ID according to the ground type and its pitch.
+ *
+ * @param groundType Ground type.
+ * @param sfxId Output footstep SFX ID.
+ * @param pitch0 Output TODO
+ * @param pitch1 Output TODO
+ * @return Footstep SFX ID.
+ */
+void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);

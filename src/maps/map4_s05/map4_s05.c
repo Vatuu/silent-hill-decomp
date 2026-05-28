@@ -190,7 +190,7 @@ void func_800D6800(void) // 0x800D6800
             // TODO: Likely wrong union field.
             MAP_POINTS[14].triggerParam0 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy) + Q12(1.0f)) >> 4;
 
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 52, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -204,7 +204,7 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
 
             // Warp player.
@@ -238,7 +238,7 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         default:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);

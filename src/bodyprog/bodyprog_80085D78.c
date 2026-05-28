@@ -77,13 +77,13 @@ void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep) // 0x8008
     }
 }
 
-void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep) // 0x80085EB8
+void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep) // 0x80085EB8
 {
-    s32 keyframeState; // TODO: Not final name, only an indication.
+    s32 playbackState; // TODO: Not final name, only an indication.
 
     switch (cmd)
     {
-        case CharacterAnimCommand_SetState:
+        case CharaAnimCommand_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.func_D4(cmdArg);
@@ -94,26 +94,26 @@ void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* char
             }
             break;
 
-        case CharacterAnimCommand_1:
+        case CharaAnimCommand_1:
             if (chara == &g_SysWork.playerWork.player)
             {
-                keyframeState = g_MapOverlayHeader.func_E8();
-                if (keyframeState == 1)
+                playbackState = g_MapOverlayHeader.playerAnimPlaybackStateGet();
+                if (playbackState == AnimPlaybackState_End)
                 {
                     Event_SysStateStepIncrement(incSubStep);
                 }
             }
             else
             {
-                keyframeState = g_MapOverlayHeader.charaAnimPlaybackStateGet(chara);
-                if (keyframeState == 1)
+                playbackState = g_MapOverlayHeader.charaAnimPlaybackStateGet(chara);
+                if (playbackState == AnimPlaybackState_End)
                 {
                     Event_SysStateStepIncrement(incSubStep);
                 }
             }
             break;
 
-        case CharacterAnimCommand_AnimLock:
+        case CharaAnimCommand_AnimLock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimLock();
@@ -124,7 +124,7 @@ void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* char
             }
             break;
 
-        case CharacterAnimCommand_AnimUnlock:
+        case CharaAnimCommand_AnimUnlock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock();
@@ -135,11 +135,11 @@ void Event_CharacterAnimCommand(e_CharacterAnimCommand cmd, s_SubCharacter* char
             }
             break;
 
-        case CharacterAnimCommand_4:
+        case CharaAnimCommand_AnimReset:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHeader.playerAnimUnlock();
-                g_MapOverlayHeader.func_D8();
+                g_MapOverlayHeader.playerAnimReset();
             }
             else
             {
@@ -671,12 +671,12 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_CharacterAnimCommand(CharacterAnimCommand_SetState, chara, arg1, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, chara, arg1, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            Event_CharacterAnimCommand(CharacterAnimCommand_1, chara, 0, true);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_1, chara, 0, true);
             break;
 
         default:
@@ -690,12 +690,12 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_CharacterAnimCommand(CharacterAnimCommand_AnimUnlock, chara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, chara, 0, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            Event_CharacterAnimCommand(CharacterAnimCommand_1, chara, 0, true);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_1, chara, 0, true);
             break;
 
         default:

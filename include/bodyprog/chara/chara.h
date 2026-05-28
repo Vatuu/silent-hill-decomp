@@ -36,6 +36,16 @@ typedef enum _CharaGroupFlags
     CharaGroupFlag_1    = 1 << 1
 } e_CharaGroupFlags;
 
+/** @brief Character animation commands. */
+typedef enum _CharaAnimCommand
+{
+    CharaAnimCommand_SetState   = 0,
+    CharaAnimCommand_1          = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
+    CharaAnimCommand_AnimLock   = 2,
+    CharaAnimCommand_AnimUnlock = 3,
+    CharaAnimCommand_AnimReset  = 4 // TODO: Unsure on name, could be a forced stop.
+} e_CharaAnimCommand;
+
 /** @brief Character collision states. */
 typedef enum _CharaCollisionState
 {

@@ -371,7 +371,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
     }
 
     Collision_SurfaceGet(&surface, cybil->position.vx, cybil->position.vz);
-    func_8007FDE0(surface.groundType, &sfx, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.groundType, &sfx, &pitch0, &pitch1);
 
 #if defined(MAP6_S01)
     sfx = Sfx_Unk1607;
