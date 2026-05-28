@@ -330,15 +330,9 @@ extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 extern u16 g_CollisionTriggerFlags;
 
-/** @brief Computes a trigger height from half-meter height steps.
- *
- * @note The trigger height has a default offset of `Q12(-1.5f)`.
- *
- * @param steps Half-meter height steps.
- * @return Trigger height (Q19.12).
- */
-#define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
+// ========================================
+// @split? Collision init, flags, getters.
+// ========================================
 
 /** @brief Initializes the collision subsystem, resetting flags and clearing the trigger zone count. */
 void Collision_Init(void);
@@ -368,11 +362,19 @@ void Collision_FlagBitsClear(s32 collFlags);
  */
 void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers);
 
+// ========================================
+// @split? IPD functions.
+// ========================================
+
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
 void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
+
+// ========================================
+// @split? IPD/ground collision detection.
+// ========================================
 
 /** @brief Gets the collision surface at a given 2D world position.
  *
@@ -467,6 +469,10 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
  */
 void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
 
+// ========================================
+// @split? Collision state fill.
+// ========================================
+
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
  * @param charaState Character collision state.
@@ -542,6 +548,10 @@ void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* moveOffset, SVECTOR* arg2);
 
+// ========================================
+// @split? Ray collision handling.
+// ========================================
+
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to);
 
 /** Ray function. */
@@ -584,13 +594,16 @@ void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* 
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
 
+// ========================================
+// @split? Collision trigger handling.
+// ========================================
+
 void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
 void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
 bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger);
 
-/** Translates something. Unsure on 3rd param's name. */
 /** @brief Gets the ceiling height, derived from active collision triggers.
  *
  * @param moveOffset Movement offset.
@@ -611,7 +624,12 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
  * @param posZ World reference position Z.
  * @param trigger Reference collision trigger.
  */
-void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger);
+void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ,
+                                const s_CollisionTrigger* trigger);
+
+// ========================================
+// @split? High-level character collision.
+// ========================================
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
@@ -700,6 +718,10 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  */
 void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
+// ========================================
+// @split? Model bone scale modifier.
+// ========================================
+
 /** @brief Sets the scale of a character's model bone.
  *
  * @param boneCoords Character model bone coords.
@@ -709,5 +731,9 @@ void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s
  * @param scaleZ Z scale.
  */
 void Chara_ModelBoneScaleSet(GsCOORDINATE2* boneCoords, s32 boneIdx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+
+// ========================================
+// @split? Harry weapon anim infos.
+// ========================================
 
 #endif

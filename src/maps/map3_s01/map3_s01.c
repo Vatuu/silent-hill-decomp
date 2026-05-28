@@ -413,15 +413,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
 
             Gfx_MapInitMapEffectsUpdate(4, 4);
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.pointLightPosition.vx = Q12(59.1f);
-            g_SysWork.pointLightPosition.vy = Q12(-3.0f);
-            g_SysWork.pointLightPosition.vz = Q12(19.1f);
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightRotation.vx = Q12_ANGLE(-90.0f);
-            g_SysWork.pointLightRotation.vy = Q12_ANGLE(0.0f);
-            g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lightPosition.vx   = Q12(59.1f);
+            g_SysWork.lightPosition.vy   = Q12(-3.0f);
+            g_SysWork.lightPosition.vz   = Q12(19.1f);
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightRotation.vx   = Q12_ANGLE(-90.0f);
+            g_SysWork.lightRotation.vy   = Q12_ANGLE(0.0f);
+            g_SysWork.lightRotation.vz   = Q12_ANGLE(0.0f);
+            g_SysWork.lightIntensity     = Q12(0.7f);
 
             func_8008D438();
 

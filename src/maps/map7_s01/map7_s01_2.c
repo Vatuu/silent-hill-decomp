@@ -182,9 +182,9 @@ void func_800D725C(void) // 0x800D725C
 
             ScreenFade_ResetTimestep();
 
-            g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.pointLightIntensity  = Q12(0.8f);
-            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
+            g_SysWork.cutsceneBorderState = 20;
+            g_SysWork.lightIntensity      = Q12(0.8f);
+            g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
 
             Game_TurnFlashlightOn();
             D_800E1670 = 0;
@@ -376,20 +376,20 @@ void func_800D7A60(void) // 0x800D7A60
         case 4:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 157, false);
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(1.0f);
 
             func_8008D438();
             SysWork_StateStepIncrement(0);
 
         case 5:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(60.0f), Q12(76.0f), true, true);
-            Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &rot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterTransformGet(&g_SysWork.lightPosition, &rot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterTransformGet(&pos, &rot, "L_INT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
-            g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
-            g_SysWork.pointLightRotation.vy = ratan2(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz);
-            g_SysWork.pointLightRotation.vz = 0;
+            g_SysWork.lightRotation.vx = -ratan2(pos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.lightPosition.vx, pos.vz - g_SysWork.lightPosition.vz));
+            g_SysWork.lightRotation.vy = ratan2(pos.vx - g_SysWork.lightPosition.vx, pos.vz - g_SysWork.lightPosition.vz);
+            g_SysWork.lightRotation.vz = 0;
             break;
 
         case 6:
@@ -398,7 +398,7 @@ void func_800D7A60(void) // 0x800D7A60
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
 
             func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -477,7 +477,7 @@ void func_800D7A60(void) // 0x800D7A60
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
 
             Game_TurnFlashlightOn();
             sharedFunc_800D2EF4_0_s00();

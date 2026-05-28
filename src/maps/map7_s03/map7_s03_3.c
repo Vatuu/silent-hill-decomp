@@ -916,18 +916,18 @@ void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &D_800F47E8, "LIGHT", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &D_800F47E8, "LIGHT", g_Cutscene_Timer, D_800ED230[D_800F4806]);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterTransformGet(&D_800F47D8, &D_800F47E8, "L_INT", g_Cutscene_Timer, D_800ED230[D_800F4806]);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(D_800F47D8.vy - g_SysWork.pointLightPosition.vy,
-                                                  Math_Vector2MagCalcSafeQ6(D_800F47D8.vx - g_SysWork.pointLightPosition.vx,
-                                                                      D_800F47D8.vz - g_SysWork.pointLightPosition.vz));
-        g_SysWork.pointLightRotation.vy = ratan2(D_800F47D8.vx - g_SysWork.pointLightPosition.vx,
-                                                 D_800F47D8.vz - g_SysWork.pointLightPosition.vz);
-        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+        g_SysWork.lightRotation.vx = -ratan2(D_800F47D8.vy - g_SysWork.lightPosition.vy,
+                                                  Math_Vector2MagCalcSafeQ6(D_800F47D8.vx - g_SysWork.lightPosition.vx,
+                                                                      D_800F47D8.vz - g_SysWork.lightPosition.vz));
+        g_SysWork.lightRotation.vy = ratan2(D_800F47D8.vx - g_SysWork.lightPosition.vx,
+                                                 D_800F47D8.vz - g_SysWork.lightPosition.vz);
+        g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 
@@ -1195,8 +1195,8 @@ void func_800E3390(void) // 0x800E3390
             SD_Call(19);
             func_800E14DC(&g_SysWork.playerWork.player, &g_SysWork.npcs[2], 1);
 
-            D_800F4805           = 0;
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            D_800F4805               = 0;
+            g_SysWork.lightIntensity = Q12(1.0f);
             break;
     }
 
@@ -1412,7 +1412,7 @@ void func_800E3F30(void) // 0x800E3F30
             g_Cutscene_UpdateDaria = true;
             g_Cutscene_UpdateSibyl = true;
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
 
@@ -1489,8 +1489,8 @@ void func_800E3F30(void) // 0x800E3F30
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 24, false);
             Event_DisplayMapMsgWithAudio(23, &D_800F4804, &D_800ED768);
 
-            g_SysWork.pointLightIntensity = Q12(0.6f);
-            D_800EDA04           = 1;
+            g_SysWork.lightIntensity = Q12(0.6f);
+            D_800EDA04               = 1;
 
             SysWork_StateStepIncrement(0);
 
@@ -1542,7 +1542,7 @@ void func_800E4714(void) // 0x800E4714
             D_800EDA08 = 0;
 
             Savegame_EventFlagSet(EventFlag_592);
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1808,7 +1808,7 @@ void func_800E514C(void) // 0x800E514C
 
             func_8005DC1C(Sfx_Unk1670, &g_SysWork.npcs[1].position, Q8_CLAMPED(0.785f), 0);
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
 
             Model_AnimFlagsSet(&g_SysWork.npcs[1].model, 2);
 
@@ -1895,7 +1895,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 16:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 23, false);
-            g_SysWork.pointLightIntensity = Q12(0.6f);
+            g_SysWork.lightIntensity = Q12(0.6f);
             Savegame_EventFlagClear(EventFlag_591);
             SysWork_StateStepIncrement(0);
 
@@ -1919,7 +1919,7 @@ void func_800E514C(void) // 0x800E514C
             func_800E9260(Chara_Incubator, 3);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[3], 20, false);
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
 
             SysWork_StateStepIncrement(0);
 
@@ -1972,7 +1972,7 @@ void func_800E514C(void) // 0x800E514C
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[4], 2, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
-            g_SysWork.pointLightIntensity = Q12(0.6f);
+            g_SysWork.lightIntensity = Q12(0.6f);
 
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio606);
             SysWork_StateStepIncrement(0);
@@ -2058,8 +2058,8 @@ void func_800E514C(void) // 0x800E514C
                 SysWork_StateStepIncrement(0);
             }
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
-            g_Cutscene_Timer           = Q12(392.0f);
+            g_SysWork.lightIntensity = Q12(0.7f);
+            g_Cutscene_Timer         = Q12(392.0f);
             break;
 
         case 39:
@@ -2077,8 +2077,8 @@ void func_800E514C(void) // 0x800E514C
             g_Cutscene_UpdateDaria = true;
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 22, false);
 
-            g_SysWork.pointLightIntensity = Q12(0.6f);
-            g_Cutscene_Timer           = Q12(393.0f);
+            g_SysWork.lightIntensity = Q12(0.6f);
+            g_Cutscene_Timer         = Q12(393.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2089,8 +2089,8 @@ void func_800E514C(void) // 0x800E514C
         case 43:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[3], 22, false);
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
-            g_Cutscene_UpdateDaria        = false;
+            g_SysWork.lightIntensity = Q12(0.7f);
+            g_Cutscene_UpdateDaria   = false;
 
             func_800E9490(&g_SysWork.npcs[1]);
             SysWork_StateStepIncrement(0);
@@ -2124,7 +2124,7 @@ void func_800E514C(void) // 0x800E514C
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
             Savegame_EventFlagSet(EventFlag_576);
 
-            g_SysWork.pointLightIntensity = Q12(0.5f);
+            g_SysWork.lightIntensity = Q12(0.5f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2162,7 +2162,7 @@ void func_800E514C(void) // 0x800E514C
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[3], 24, false);
             func_8005E70C();
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
             SysWork_StateStepIncrement(0);
 
         case 51:
@@ -2183,7 +2183,7 @@ void func_800E514C(void) // 0x800E514C
             func_800DD9B0(&g_SysWork.npcs[2]);
             func_800E9260(Chara_EndingDahlia, 3);
 
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2204,7 +2204,7 @@ void func_800E514C(void) // 0x800E514C
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[1], 28, false);
 
-            g_SysWork.pointLightIntensity = Q12(0.9f);
+            g_SysWork.lightIntensity = Q12(0.9f);
 
             Fs_QueueStartRead(FILE_ANIM_LAST4_DMS, FS_BUFFER_20);
 
@@ -2218,7 +2218,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 58:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(587.0f), Q12(615.0f), false, true);
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
             break;
 
         case 59:
@@ -2295,7 +2295,7 @@ void func_800E62CC(void) // 0x800E62CC
 
             Rng_SetSeed(0);
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -2683,7 +2683,7 @@ void func_800E70F0(void) // 0x800E70F0
             func_800E1788(4);
 
             Model_AnimFlagsSet(&g_SysWork.npcs[1].model, 2);
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -2762,7 +2762,7 @@ void func_800E7380(void) // 0x800E7380
 
             SD_Call(Sfx_XaAudio602);
 
-            g_SysWork.pointLightIntensity = Q12(0.8f);
+            g_SysWork.lightIntensity = Q12(0.8f);
             func_800E1788(7);
             SysWork_StateStepIncrement(0);
 
@@ -2812,7 +2812,7 @@ void func_800E7380(void) // 0x800E7380
 
         case 7:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 162, false);
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
             func_800E9490(&g_SysWork.npcs[4]);
             g_Cutscene_UpdateMar = false;
             SysWork_StateStepIncrement(0);
@@ -3498,7 +3498,7 @@ void func_800E8D20(void) // 0x800E8D20
             D_800F4824 = 0;
             D_800F4820 = 1;
 
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightIntensity = Q12(0.7f);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -3744,21 +3744,21 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     WorldObject_Init(&g_WorldObject_Nu, "NU_HIDE", 139.7f, 0.0f, -99.1f, 0.0f, -90.0f, 0.0f);
     WorldObject_Init(&g_WorldObject_Baby, "BABY_HID", 140.0f, 0.0f, -100.0f, 0.0f, 0.0f, 0.0f);
 
-    g_SysWork.lightBoneCoord0 = NULL;
+    g_SysWork.lightBoneCoord = NULL;
 
     // Set light position.
-    g_SysWork.pointLightPosition.vx = Q12(139.7f);
-    g_SysWork.pointLightPosition.vy = Q12(-4.5f);
-    g_SysWork.pointLightPosition.vz = Q12(-98.1f);
+    g_SysWork.lightPosition.vx = Q12(139.7f);
+    g_SysWork.lightPosition.vy = Q12(-4.5f);
+    g_SysWork.lightPosition.vz = Q12(-98.1f);
 
-    g_SysWork.lightBoneCoord1 = NULL;
+    g_SysWork.lensFlareBoneCoord = NULL;
 
     // Set light rotation.
-    g_SysWork.pointLightRotation.vx = Q12_ANGLE(-90.0f);
-    g_SysWork.pointLightRotation.vy = Q12_ANGLE(0.0f);
-    g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+    g_SysWork.lightRotation.vx = Q12_ANGLE(-90.0f);
+    g_SysWork.lightRotation.vy = Q12_ANGLE(0.0f);
+    g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
 
-    g_SysWork.pointLightIntensity = Q12(2.0f);
+    g_SysWork.lightIntensity = Q12(2.0f);
 
     D_800F4820 = 0;
 

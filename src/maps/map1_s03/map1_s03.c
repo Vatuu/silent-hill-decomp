@@ -665,17 +665,17 @@ void func_800DAF18(void) // 0x800DAF18
                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                  true);
 
-                g_SysWork.lightBoneCoord1               = NULL;
-                g_SysWork.pointLightRotation.vx = -ratan2(lookAtPos.vy - lightPos.vy,
+                g_SysWork.lensFlareBoneCoord               = NULL;
+                g_SysWork.lightRotation.vx = -ratan2(lookAtPos.vy - lightPos.vy,
                                                           Math_Vector2MagCalcSafeQ6(lookAtPos.vx - lightPos.vx,
                                                                                   lookAtPos.vz - lightPos.vz));
 
-                g_SysWork.pointLightRotation.vy = ratan2(lookAtPos.vx - lightPos.vx, lookAtPos.vz - lightPos.vz);
-                g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
-                g_SysWork.lightBoneCoord0               = NULL;
-                g_SysWork.pointLightPosition.vx = lightPos.vx;
-                g_SysWork.pointLightPosition.vy = MAX(Q12(-1.5f), lightPos.vy);
-                g_SysWork.pointLightPosition.vz = lightPos.vz;
+                g_SysWork.lightRotation.vy = ratan2(lookAtPos.vx - lightPos.vx, lookAtPos.vz - lightPos.vz);
+                g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
+                g_SysWork.lightBoneCoord               = NULL;
+                g_SysWork.lightPosition.vx = lightPos.vx;
+                g_SysWork.lightPosition.vy = MAX(Q12(-1.5f), lightPos.vy);
+                g_SysWork.lightPosition.vz = lightPos.vz;
             }
             break;
 

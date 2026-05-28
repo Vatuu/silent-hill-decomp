@@ -235,15 +235,15 @@ void func_800D2668(void) // 0x800D2668
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             Game_TurnFlashlightOn();
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(0.7f);
-            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(0.7f);
+            Math_Vector3Set(&g_SysWork.lightPosition, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
             // @hack TODO: Make the macro match.
-            // Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
-            *((s32*) (&(&g_SysWork.pointLightRotation)->vx)) = ((s32)(0xFF56 & 0xFFFF)) | ((s32)(0xF823 << 16));
-            tmpSvec = &g_SysWork.pointLightRotation;
+            // Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
+            *((s32*) (&(&g_SysWork.lightRotation)->vx)) = ((s32)(0xFF56 & 0xFFFF)) | ((s32)(0xF823 << 16));
+            tmpSvec = &g_SysWork.lightRotation;
             *((s16*)(&tmpSvec->vz)) = 0;
 
             func_8008D438();

@@ -177,17 +177,17 @@ void func_800D13D8(void) // 0x800D13D8
 
             Dms_HeaderFixOffsets(FS_BUFFER_15);
 
-            g_Cutscene_Timer        = Q12(0.0f);
-            g_Cutscene_MapMsgAudioIdx0             = 0;
-            g_Cutscene_UpdateSibyl = true;
-            g_Cutscene_UpdateDaria = false;
+            g_Cutscene_Timer           = Q12(0.0f);
+            g_Cutscene_MapMsgAudioIdx0 = 0;
+            g_Cutscene_UpdateSibyl     = true;
+            g_Cutscene_UpdateDaria     = false;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(0.6f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(0.6f);
 
             Gfx_MapInitMapEffectsUpdate(16, 16);
             func_8008D438();
@@ -482,7 +482,7 @@ void func_800D13D8(void) // 0x800D13D8
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
 
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -518,12 +518,12 @@ void func_800D13D8(void) // 0x800D13D8
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &rot, "LIGHT", g_Cutscene_Timer, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &rot, "LIGHT", g_Cutscene_Timer, FS_BUFFER_15);
         Dms_CharacterTransformGet(&pos, &rot, "L_INT", g_Cutscene_Timer, FS_BUFFER_15);
 
-        g_SysWork.pointLightRotation.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz));
-        g_SysWork.pointLightRotation.vy = ratan2(pos.vx - g_SysWork.pointLightPosition.vx, pos.vz - g_SysWork.pointLightPosition.vz);
-        g_SysWork.pointLightRotation.vz = 0;
+        g_SysWork.lightRotation.vx = -ratan2(pos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(pos.vx - g_SysWork.lightPosition.vx, pos.vz - g_SysWork.lightPosition.vz));
+        g_SysWork.lightRotation.vy = ratan2(pos.vx - g_SysWork.lightPosition.vx, pos.vz - g_SysWork.lightPosition.vz);
+        g_SysWork.lightRotation.vz = 0;
     }
 }
 

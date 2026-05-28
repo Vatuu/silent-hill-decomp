@@ -3442,7 +3442,7 @@ void func_800D6774(void) // 0x800D6774
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();
 
             Gfx_MapInitMapEffectsUpdate(6, 3);

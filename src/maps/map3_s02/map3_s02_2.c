@@ -259,9 +259,9 @@ void func_800D0608(void) // 0x800D0608
 
             Chara_Spawn(Chara_Alessa, 0, Q12(80.0f), Q12(100.0f), Q12_ANGLE(0.0f), 3);
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(0.7f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(0.7f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
 
@@ -300,8 +300,8 @@ void func_800D0608(void) // 0x800D0608
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
-            g_SysWork.cutsceneBorderState   = 0;
+            g_SysWork.lightIntensity      = Q12(1.0f);
+            g_SysWork.cutsceneBorderState = 0;
 
             Savegame_EventFlagSet(EventFlag_237);
 
@@ -318,12 +318,12 @@ void func_800D0608(void) // 0x800D0608
         vcChangeProjectionValue(Dms_CameraTargetGet(&camPosTarget, &camLookAtTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&camPosTarget, NULL, true);
         vcUserWatchTarget(&camLookAtTarget, NULL, true);
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
 
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
-        g_SysWork.pointLightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
-        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+        g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz));
+        g_SysWork.lightRotation.vy = ratan2(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz);
+        g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 

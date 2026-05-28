@@ -1053,8 +1053,8 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     D_800D4E6E = 0;
     D_800D4E70 = 0;
 
-    g_SysWork.lightBoneCoord0 = NULL;
-    g_SysWork.lightBoneCoord1 = NULL;
+    g_SysWork.lightBoneCoord = NULL;
+    g_SysWork.lensFlareBoneCoord = NULL;
 
     func_8008D438();
     Gfx_MapInitMapEffectsUpdate(4, 4);
@@ -1097,9 +1097,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
 
         if (!D_800D4E6D)
         {
-            g_SysWork.pointLightIntensity = Q12(2.8f);
-            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
-            Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+            g_SysWork.lightIntensity = Q12(2.8f);
+            Math_Vector3Set(&g_SysWork.lightPosition, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
+            Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
             func_800D2170(false);
             SD_Call(Sfx_Unk1611);
@@ -1156,12 +1156,12 @@ void func_800D1AE4(void) // 0x800D1AE4
             D_800D4E6E = 1;
         }
 
-        g_SysWork.pointLightIntensity = Q12(0.7f);
+        g_SysWork.lightIntensity = Q12(0.7f);
 
         if (g_SysWork.playerWork.player.position.vy > Q12(2.84f))
         {
             angle                             = Q12_ANGLE(0.0f);
-            g_SysWork.pointLightIntensity = (((g_SysWork.playerWork.player.position.vy - Q12(2.84f)) * Q12(0.4f)) / (Q12(1.16f) + 1)) + Q12(0.7f);
+            g_SysWork.lightIntensity = (((g_SysWork.playerWork.player.position.vy - Q12(2.84f)) * Q12(0.4f)) / (Q12(1.16f) + 1)) + Q12(0.7f);
         }
         else
         {
@@ -1173,13 +1173,13 @@ void func_800D1AE4(void) // 0x800D1AE4
 
         temp_s2 = angle + Q12_ANGLE(70.0f);
 
-        vec = &g_SysWork.pointLightPosition;
+        vec = &g_SysWork.lightPosition;
 
         vec->vx = Q12_MULT(Math_Sin(temp_s2), Q12(0.55f)) - Q12(20.0f);
         vec->vy = MIN(g_SysWork.playerWork.player.position.vy - Q12(1.6f), Q12(0.5f));
         vec->vz = Q12_MULT(Math_Cos(temp_s2), Q12(0.55f)) - Q12(20.0f);
 
-        svec = &g_SysWork.pointLightRotation;
+        svec = &g_SysWork.lightRotation;
 
         Math_SetSVectorFast(svec, Q12_ANGLE(-40.0f), angle - Q12_ANGLE(150.0f), 0);
     }

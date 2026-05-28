@@ -226,22 +226,22 @@ void func_8003E740(void) // 0x8003E740
 
 void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
-    g_SysWork.pointLightIntensity = Q12(1.0f);
-    g_SysWork.lightBoneCoord0     = &g_SysWork.playerBoneCoords[HarryBone_Root];
-    g_SysWork.lightBoneCoord1     = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lightIntensity     = Q12(1.0f);
+    g_SysWork.lightBoneCoord     = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lensFlareBoneCoord = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
-    Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.lightPosition, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
+    Math_SVectorSet(&g_SysWork.lightRotation, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 {
-    g_SysWork.pointLightIntensity = Q12(1.0f);
-    g_SysWork.lightBoneCoord0     = &g_SysWork.playerBoneCoords[HarryBone_Torso];
-    g_SysWork.lightBoneCoord1     = &g_SysWork.playerBoneCoords[HarryBone_Root];
+    g_SysWork.lightIntensity     = Q12(1.0f);
+    g_SysWork.lightBoneCoord     = &g_SysWork.playerBoneCoords[HarryBone_Torso];
+    g_SysWork.lensFlareBoneCoord = &g_SysWork.playerBoneCoords[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
-    Math_SVectorSet(&g_SysWork.pointLightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.lightPosition, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
+    Math_SVectorSet(&g_SysWork.lightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
 void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
@@ -453,8 +453,8 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
-        Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord0, &viewMat);
-        ApplyMatrixLV(&viewMat, (VECTOR*)&g_SysWork.pointLightPosition, &sp48); // Bug? `g_SysWork.pointLightPosition` is `VECTOR3`.
+        Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord, &viewMat);
+        ApplyMatrixLV(&viewMat, (VECTOR*)&g_SysWork.lightPosition, &sp48); // Bug? `g_SysWork.lightPosition` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != Q12(0.0f)].field_30 = sp48.vz + Q8_TO_Q12(viewMat.t[2]);
     }
 
@@ -498,10 +498,10 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.pointLightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
-    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, lightBoneCoord, g_SysWork.lightBoneCoord0, &rot,
-                  g_SysWork.pointLightPosition.vx, g_SysWork.pointLightPosition.vy, g_SysWork.pointLightPosition.vz,
+    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity_2C, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
+                  g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
                   g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(ptr2->field_30);
 
@@ -534,7 +534,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha,
     {
         default:
         case LensFlareType_Custom:
-            *lightBoneCoord = sysWork->lightBoneCoord1;
+            *lightBoneCoord = sysWork->lensFlareBoneCoord;
             break;
 
         case LensFlareType_Default:
@@ -550,7 +550,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** lightBoneCoord, SVECTOR* rot, q19_12 alpha,
     {
         default:
         case LensFlareType_Custom:
-            rot0 = sysWork->pointLightRotation;
+            rot0 = sysWork->lightRotation;
             break;
 
         case LensFlareType_Default:

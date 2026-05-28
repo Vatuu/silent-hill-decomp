@@ -243,14 +243,14 @@ void func_800D1910(void) // 0x800D1910
             D_800D6EF8 = 0;
 
             // TODO: Find correct order. Looking at other functions, seems to be random.
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(1.0f);
-            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(1.0f);
+            Math_Vector3Set(&g_SysWork.lightPosition, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
 
-            // TODO: `Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-90.0f), 0, 0);` doesn't match.
-            *(s32*)&g_SysWork.pointLightRotation.vx = 0xFC00; // `Q12_ANGLE(-90.0f)`
-            (&g_SysWork.pointLightRotation)->vz     = 0;
+            // TODO: `Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-90.0f), 0, 0);` doesn't match.
+            *(s32*)&g_SysWork.lightRotation.vx = 0xFC00; // `Q12_ANGLE(-90.0f)`
+            (&g_SysWork.lightRotation)->vz     = 0;
 
             func_8008D438();
 
@@ -402,9 +402,9 @@ void func_800D23E4(void) // 0x800D23E4
 
             D_800D6EF8 = 0;
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(1.2f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(1.2f);
 
             func_8008D438();
 
@@ -443,7 +443,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 6:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 12, false);
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -471,8 +471,8 @@ void func_800D23E4(void) // 0x800D23E4
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
 
-            g_SysWork.pointLightIntensity = Q12(1.2f);
-            g_Cutscene_Timer               = Q12(55.0f);
+            g_SysWork.lightIntensity = Q12(1.2f);
+            g_Cutscene_Timer         = Q12(55.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -501,14 +501,14 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 16:
-            g_Cutscene_Timer               = Q12(57.0f);
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_Cutscene_Timer         = Q12(57.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
             Event_DisplayMapMsgWithAudio(70, &D_800D6EF8, &D_800D3778);
             break;
 
         case 17:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &g_SysWork.npcs[0], 13, false);
-            g_SysWork.pointLightIntensity = Q12(1.2f);
+            g_SysWork.lightIntensity = Q12(1.2f);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -571,8 +571,8 @@ void func_800D23E4(void) // 0x800D23E4
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
-            g_Cutscene_Timer               = NO_VALUE;
+            g_SysWork.lightIntensity = Q12(1.0f);
+            g_Cutscene_Timer         = NO_VALUE;
 
             vcReturnPreAutoCamWork(false);
             func_8003D01C();
@@ -589,15 +589,15 @@ void func_800D23E4(void) // 0x800D23E4
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_15);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_15);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
-        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
-        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+        g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz));
+        g_SysWork.lightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz);
+        g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 

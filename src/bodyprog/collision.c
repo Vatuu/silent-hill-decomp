@@ -27,9 +27,15 @@
 
 s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
-// ========================================
-// COLLISION HANDLING
-// ========================================
+/** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
 
 void Collision_Init(void) // 0x800697EC
 {
@@ -2404,10 +2410,6 @@ void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* moveOffset, SVECT
     charaState->positionToZ   = charaState->positionFromZ + charaState->offset.vz;
 }
 
-// ========================================
-// COMBAT 2
-// ========================================
-
 bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to) // 0x8006D90C
 {
     s32         prevScratchAddr;
@@ -3473,7 +3475,7 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
         moveOffsetZ += pushOffsetZ;
     }
 
-    // Set movement offset.
+    // Update movement offset.
     moveOffset->vx = moveOffsetX;
     moveOffset->vz = moveOffsetZ;
 
@@ -3498,7 +3500,8 @@ q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
     return ceilHeight;
 }
 
-void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ, const s_CollisionTrigger* trigger) // 0x8006F8FC
+void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ,
+                                const s_CollisionTrigger* trigger) // 0x8006F8FC
 {
     q19_12 minX;
     q19_12 maxX;
@@ -3540,10 +3543,6 @@ void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q
         return;
     }
 }
-
-// ========================================
-// CHARACTER ANIMATION
-// ========================================
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
 {

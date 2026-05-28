@@ -438,11 +438,11 @@ typedef struct _SysWork
     /* 0x2359   */ s8               unused_2359;           /** @unused */
     /* 0x235A   */ u8               playerStopFlags;       /** `e_PlayerStopFlags` */
                 // 1 byte of padding.
-    /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord0;
-    /* 0x2360   */ VECTOR3          pointLightPosition; // } Often set to DMS cutscene data.
-    /* 0x236C   */ GsCOORDINATE2*   lightBoneCoord1;    // } } Might be for the lens flare?
-    /* 0x2370   */ SVECTOR          pointLightRotation; // } }
-    /* 0x2378   */ s16              pointLightIntensity;
+    /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord;
+    /* 0x2360   */ VECTOR3          lightPosition;      // } Often set to DMS cutscene data.
+    /* 0x236C   */ GsCOORDINATE2*   lensFlareBoneCoord; // }
+    /* 0x2370   */ SVECTOR          lightRotation;      // }
+    /* 0x2378   */ q3_12            lightIntensity;
     /* 0x237A   */ q3_12            cameraAngleY;
     /* 0x237C   */ q3_12            cameraAngleZ;
     /* 0x237E   */ s16              field_237E;

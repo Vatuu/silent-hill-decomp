@@ -141,13 +141,13 @@ void func_800D0B64(void) // 0x800D0B64
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_11);
 
-            g_Cutscene_Timer = Q12(0.0f);
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(0.5f);
+            g_Cutscene_Timer             = Q12(0.0f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(0.5f);
 
-            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));
-            Math_SetSVectorFast(&g_SysWork.pointLightRotation, Q12_ANGLE(-34.0f), Q12_ANGLE(-100.0f), 0);
+            Math_Vector3Set(&g_SysWork.lightPosition, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));
+            Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-34.0f), Q12_ANGLE(-100.0f), 0);
             func_8008D438();
 
             g_SysWork.cutsceneBorderState = 20;
@@ -248,12 +248,12 @@ void func_800D0B64(void) // 0x800D0B64
             Chara_ModelCharaIdClear(&lisaChara, 0, 0);
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 139, false);
 
-            Math_Vector3Set(&g_SysWork.pointLightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
+            Math_Vector3Set(&g_SysWork.lightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
             // @hack This macro should work but must access `vz` by pointer for a match.
-            //Math_SetSVectorFast(g_SysWork.pointLightRotation, 0xFF34, 0x2E3, 0);
-            *(s32*)&g_SysWork.pointLightRotation.vx = 0x02E3FF34;
-            (&g_SysWork.pointLightRotation)->vz = 0;
+            //Math_SetSVectorFast(g_SysWork.lightRotation, 0xFF34, 0x2E3, 0);
+            *(s32*)&g_SysWork.lightRotation.vx = 0x02E3FF34;
+            (&g_SysWork.lightRotation)->vz = 0;
 
             func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -281,7 +281,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 24:
             Event_CharacterAnimCommand(CharacterAnimCommand_SetState, &playerChara, 51, false);
-            g_SysWork.pointLightIntensity = Q12(0.6f);
+            g_SysWork.lightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -312,7 +312,7 @@ void func_800D0B64(void) // 0x800D0B64
             func_8008D448();
             Game_FlashlightAttributesFix();
 
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
 
             Savegame_EventFlagSet(EventFlag_471);
             Chara_ModelCharaIdClear(&lisaChara, 0, 0);

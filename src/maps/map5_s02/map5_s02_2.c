@@ -449,14 +449,14 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Player_ControlFreeze();
             D_800DA6E8 = 0;
             ScreenFade_ResetTimestep();
-            g_SysWork.cutsceneBorderState    = 20;
-            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
+            g_SysWork.cutsceneBorderState = 20;
+            g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
 
             func_8008D438();
 
-            g_SysWork.lightBoneCoord0 = NULL;
-            g_SysWork.lightBoneCoord1 = NULL;
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightBoneCoord     = NULL;
+            g_SysWork.lensFlareBoneCoord = NULL;
+            g_SysWork.lightIntensity     = Q12(1.0f);
 
             Fs_QueueStartRead(FILE_ANIM_POOL1_DMS, FS_BUFFER_17);
             Fs_QueueWaitForEmpty();
@@ -746,10 +746,13 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
             Savegame_EventFlagSet(EventFlag_379);
             func_8008D448();
+
             Game_FlashlightAttributesFix();
-            g_SysWork.pointLightIntensity = Q12(1.0f);
+            g_SysWork.lightIntensity = Q12(1.0f);
+
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
+
             SD_Call(19);
             break;
     }
@@ -770,15 +773,15 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.pointLightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_17);
 
         // Set light rotation.
-        g_SysWork.pointLightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz));
-        g_SysWork.pointLightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition.vx, lightIntPos.vz - g_SysWork.pointLightPosition.vz);
-        g_SysWork.pointLightRotation.vz = Q12_ANGLE(0.0f);
+        g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz));
+        g_SysWork.lightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz);
+        g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
 
