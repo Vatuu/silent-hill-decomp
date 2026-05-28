@@ -1076,7 +1076,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         {
             if (Savegame_EventFlagGet(EventFlag_354) && (g_SysWork.playerWork.player.position.vz < Q12(-66.0f)))
             {
-                func_8005DC1C(Sfx_Unk1585, &D_800CB0CC, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1585, &D_800CB0CC, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_368);
             }
         }

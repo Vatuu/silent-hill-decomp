@@ -74,7 +74,7 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
         sfxPos.vy = sharedData_800DFB7C_0_s00[idx].vy_8;
         sfxPos.vz = sharedData_800DFB7C_0_s00[idx].field_4.vz_4;
 
-        func_8005DC1C(Sfx_Unk1476, &sfxPos, Q8(0.5f), SfxFlag_None);
+        Sfx_WithFlagsPlay(Sfx_Unk1476, &sfxPos, Q8(0.5f), SfxFlag_None);
     }
 
     gte_SetRotMatrix(&ptr->field_0.field_C);

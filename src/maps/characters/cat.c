@@ -66,7 +66,7 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
 
     if (cond)
     {
-        func_8005DD44(Sfx_CatMeow, &cat->position, Q8(0.5f), Rng_GenerateUInt(-7, 8));
+        Sfx_WithPitchPlay(Sfx_CatMeow, &cat->position, Q8(0.5f), Rng_GenerateUInt(-7, 8));
         catProps.field_E8 ^= 1;
     }
 }

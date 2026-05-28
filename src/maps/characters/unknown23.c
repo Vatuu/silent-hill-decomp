@@ -375,7 +375,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
     ptr->field_4.vy = Q12_TO_Q8(arg0->vy) - Q8(1.3f);
     ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
 
-    func_8005DC1C(Sfx_Unk1673, &g_SysWork.playerWork.player.position, Q8(0.5f), SfxFlag_None);
+    Sfx_WithFlagsPlay(Sfx_Unk1673, &g_SysWork.playerWork.player.position, Q8(0.5f), SfxFlag_None);
 }
 
 s32 func_800DFB04(void) // 0x800DFB04

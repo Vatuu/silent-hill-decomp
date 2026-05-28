@@ -445,7 +445,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     {
         if (!(chara->properties.npc.flags & (1 << 4)))
         {
-            func_8005DD44(sfxId, &chara->position, Q8(0.5f), pitch);
+            Sfx_WithPitchPlay(sfxId, &chara->position, Q8(0.5f), pitch);
             chara->properties.npc.flags |= 1 << 4;
             return true;
         }
@@ -459,7 +459,7 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
     {
         if (!(chara->properties.npc.flags & (1 << 5)))
         {
-            func_8005DD44(sfxId, &chara->position, Q8(0.5f), pitch);
+            Sfx_WithPitchPlay(sfxId, &chara->position, Q8(0.5f), pitch);
             chara->properties.npc.flags |= 1 << 5;
             return true;
         }
@@ -484,77 +484,77 @@ bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
                 {
 #if defined(MAP6_S04)
                     case Sfx_Unk1620:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
                     case Sfx_Unk1621:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
                     case Sfx_Unk1622:
                     case Sfx_Unk1638:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.75f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.75f), SfxFlag_None);
                         break;
 
                     case Sfx_Unk1631:
                     case Sfx_Unk1632:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
 #elif defined(MAP3_S00) || defined(MAP5_S02) || defined(MAP5_S03)
                     case Sfx_Unk1492:
-                        func_8005DC1C(sfxId, &chara->position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                         break;
 
                     case Sfx_Unk1594:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.5f), SfxFlag_None);
                         break;
 
 #elif defined(MAP3_S04) || defined(MAP4_S04) || defined(MAP7_S00)
                     case Sfx_Unk1639:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
 #elif defined(MAP0_S01) || defined(MAP4_S01)
                     case Sfx_Unk1368:
                     case Sfx_Unk1369:
                     case Sfx_Unk1370:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
 #elif defined(MAP2_S01) || defined(MAP3_S06)
                     case Sfx_Unk1488:
                     case Sfx_Unk1496:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
 #elif defined(MAP6_S01)
                     // TODO: This is made of two blocks above, maybe can be merged somehow.
                     case Sfx_Unk1488:
                     case Sfx_Unk1496:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
                     case Sfx_Unk1368:
                     case Sfx_Unk1369:
                     case Sfx_Unk1370:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.25f), SfxFlag_None);
                         break;
 
 #elif defined(MAP7_S03)
                     case Sfx_Unk1539:
                     case Sfx_Unk1674:
                     case Sfx_Unk1675:
-                        func_8005DC1C(sfxId, &chara->position, Q8(1.0f / 8.0f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(1.0f / 8.0f), SfxFlag_None);
                         break;
 
                     case Sfx_Unk1622:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.75f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.75f), SfxFlag_None);
                         break;
 
 #endif
                     default:
-                        func_8005DC1C(sfxId, &chara->position, Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(sfxId, &chara->position, Q8(0.5f), SfxFlag_None);
                         break;
                 }
 

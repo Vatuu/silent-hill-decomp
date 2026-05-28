@@ -766,12 +766,12 @@ void func_800DAF18(void) // 0x800DAF18
             {
                 if (D_800E2101 == 0)
                 {
-                    func_8005DC1C(Sfx_Unk1463, &D_800CBAA4, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1463, &D_800CBAA4, Q8(0.5f), SfxFlag_None);
                     D_800E2101++;
                 }
                 else if (!(D_800E2101 & 0x1) && D_800E2101 < 8)
                 {
-                    func_8005DC1C(Sfx_Unk1462, &D_800CBAA4, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1462, &D_800CBAA4, Q8(0.5f), SfxFlag_None);
 
                     if (D_800E2101 == 2)
                     {
@@ -1134,7 +1134,7 @@ void func_800DC780(void) // 0x800DC780
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1466, &QVECTOR3(-60.3f, 0.0f, 20.2f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1466, &QVECTOR3(-60.3f, 0.0f, 20.2f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case EventState_Flag106False:
@@ -1225,7 +1225,7 @@ void func_800DCB54(void) // 0x800DCB54
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1461, &QVECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1461, &QVECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
             SysWork_StateStepIncrement(0);
 
@@ -1565,7 +1565,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
             (D_800E6388 == 4 && D_800E638C > Q12(8.6f)) ||
             (D_800E6388 == 5 && D_800E638C > Q12(9.3f)))
         {
-            func_8005DC1C(0x5BC, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(0x5BC, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
             D_800E6388++;
         }
     }
@@ -1755,7 +1755,7 @@ void func_800DE828(void) // 0x800DE828
             if (D_800E20EE == 6)
             {
                 func_800892A4(18);
-                func_8005DC1C(Sfx_Unk1460, &g_WorldObject2.position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1460, &g_WorldObject2.position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
 
                 D_800E20E8 = Q12_ANGLE(-11.3f);
                 D_800E20EE = 7;
@@ -1771,7 +1771,7 @@ void func_800DE828(void) // 0x800DE828
                     g_WorldObject2.rotation.vy = Q12_ANGLE(-168.8f);
                     D_800E20E8 = Q12_ANGLE(2.9f);
 
-                    func_8005DC1C(Sfx_Unk1434, &g_WorldObject2.position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                    Sfx_WithFlagsPlay(Sfx_Unk1434, &g_WorldObject2.position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 }
             }
             else if ((g_WorldObject2.rotation.vy < Q12_ANGLE(-168.8f) && D_800E20E8 < 0) ||
@@ -1820,7 +1820,7 @@ void func_800DE828(void) // 0x800DE828
                 {
                     if (g_WorldObject1.rotation.vy > 0)
                     {
-                        func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1435, &sfxPos, Q8(0.5f), SfxFlag_None);
                         g_WorldObject1.rotation.vy = 0;
 
                         if (D_800E20E8 >= 8 && !Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
@@ -1836,7 +1836,7 @@ void func_800DE828(void) // 0x800DE828
                 }
                 else if (g_WorldObject1.rotation.vy < Q12_ANGLE(-1.8f))
                 {
-                    func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1435, &sfxPos, Q8(0.5f), SfxFlag_None);
 
                     D_800E20E8 = ~Rng_GenerateUInt(0, 3) - D_800E20E8;
                     D_800E20E8 = MAX(D_800E20E8, 1);
@@ -1857,7 +1857,7 @@ void func_800DE828(void) // 0x800DE828
                     if (g_WorldObject1.rotation.vy <  Q12_ANGLE(-2.9f))
                     {
                         func_800892DC(18, 0x60);
-                        func_8005DC1C(Sfx_Unk1434, &sfxPos, Q8(0.7657f), SfxFlag_NoDistAtten);
+                        Sfx_WithFlagsPlay(Sfx_Unk1434, &sfxPos, Q8(0.7657f), SfxFlag_NoDistAtten);
 
                         g_WorldObject1.rotation.vy = Q12_ANGLE(-2.9f);
                         D_800E20E8 = Q12_ANGLE(1.45f);
@@ -1871,7 +1871,7 @@ void func_800DE828(void) // 0x800DE828
 
                     if (g_WorldObject1.rotation.vy > 0)
                     {
-                        func_8005DC1C(Sfx_Unk1434, &sfxPos, Q8(0.7657f), SfxFlag_NoDistAtten);
+                        Sfx_WithFlagsPlay(Sfx_Unk1434, &sfxPos, Q8(0.7657f), SfxFlag_NoDistAtten);
                         do
                         {
                             D_800E20E8 = Q12(-10.0f);
@@ -1911,7 +1911,7 @@ void func_800DE828(void) // 0x800DE828
                     {
                         if (g_WorldObject1.rotation.vy < Q12_ANGLE(-5.7f))
                         {
-                            func_8005DC1C(Sfx_Unk1436, &g_WorldObject1.position, 0x80, SfxFlag_None);
+                            Sfx_WithFlagsPlay(Sfx_Unk1436, &g_WorldObject1.position, 0x80, SfxFlag_None);
                             D_800E20EE = 5;
                         }
                     }

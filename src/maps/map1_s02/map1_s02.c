@@ -548,7 +548,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -556,7 +556,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -1017,11 +1017,11 @@ void func_800DC1E0(void) // 0x800DC1E0
         case 5:
             if (Savegame_EventFlagGet(EventFlag_118))
             {
-                func_8005DC1C(Sfx_Unk1452, &D_800CB934, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1452, &D_800CB934, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8005DC1C(Sfx_Unk1452, &D_800CB940, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1452, &D_800CB940, Q8(0.5f), SfxFlag_None);
             }
 
             g_SysWork.field_28 = 0;
@@ -1153,7 +1153,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             g_WorldObject6.rotation.vy += rotY0;
             g_WorldObject7.rotation.vy += rotY1;
 
-            func_8005DE0C(Sfx_Unk1453, &D_800CB94C, D_800E1FE0 >> 3, Q12(18.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1453, &D_800CB94C, D_800E1FE0 >> 3, Q12(18.0f), 0);
 
             if (D_800E1FDC.vx == Q12_ANGLE(180.0f) && D_800E1FDC.vy == Q12_ANGLE(90.0f))
             {
@@ -1239,7 +1239,7 @@ void func_800DCF00(void) // 0x800DCF00
             SD_Call(Sfx_Unk1451);
         }
 
-        func_8005DE0C(Sfx_Unk1451, &g_WorldObject0.position, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1451, &g_WorldObject0.position, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
 
         var_t0     = D_800E1FE4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
         var_t0     = MIN(var_t0, Q12(0.4f));
@@ -1455,7 +1455,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             D_800E5A98 = 1;
         }
 
-        func_8005DE0C(Sfx_Unk1455, &g_ObjPosC[0], Q8(0.766f), Q12(16.0f), Q8(-0.25f));
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1455, &g_ObjPosC[0], Q8(0.766f), Q12(16.0f), Q8(-0.25f));
     }
     else
     {

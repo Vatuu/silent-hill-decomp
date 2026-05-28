@@ -2,6 +2,7 @@
 #define _BODYPROG_BODYPROG_H
 
 #include "game.h"
+#include "bodyprog/sound/sfx.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
 #include "bodyprog/chara/spawn.h"
@@ -952,6 +953,7 @@ extern SVECTOR    D_800AE500[4];
 
 extern s16 D_800AE520[];
 
+// Related to audio. Maybe Q12?
 extern s16 D_800AE564[];
 
 extern s16 D_800AE5CC[];
@@ -1791,36 +1793,11 @@ void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharac
 
 s32 Chara_MovementUpdate(s_SubCharacter* chara, s_CollisionResult* collResult);
 
-s32 func_8005D86C(s32 arg0);
-
-/** Looks like a clamping function. */
-s32 func_8005D974(s32 arg0);
-
-/** @brief Computes the distance-attenuated sound volume from a source position.
- *
- * @param srcPos Sound source position.
- * @param vol Sound volume to attenuate.
- * @return Distance-attenuated sound volume.
- */
-q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol);
-
-/** Spatial SFX func? */
-void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags);
-
-/** Spatial SFX func? */
-void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch);
-
-/** Spatial SFX func? */
-void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch);
-
 /** Checks `groundType`. */
 bool func_8005F680(s_CollisionSurface* surface);
 
 /** Related to camera collision? */
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
-
-/** Spatial SFX func? */
-void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 

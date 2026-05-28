@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sound/sfx.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
@@ -13,14 +14,14 @@
 static VECTOR3  g_Audio_CameraPosition; // Q19.12
 static VECTOR3* g_Audio_PlayerPosition; // Q19.12
 
-s32 func_8005D86C(s32 arg0) // 0x8005D86C
+s32 func_8005D86C(q19_12 arg0) // 0x8005D86C
 {
-    s32 var_a0;
-    s32 var_v1;
-    s32 temp_a1;
-    s32 temp_a2;
-    s32 temp_a3;
-    s32 temp;
+    s32    var_a0;
+    s32    var_v1;
+    s32    temp_a1;
+    q19_12 temp_a2;
+    s32    idx;
+    q19_12 temp;
 
     temp    = Q12_FRACT(arg0);
     temp_a1 = FP_FROM(arg0, Q12_SHIFT);
@@ -35,9 +36,9 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
     }
 
     temp_a2 = (arg0 & 0x7F) << 5;
-    temp_a3 = temp >> 7;
+    idx = temp >> 7;
 
-    var_a0 = D_800AE564[temp_a3];
+    var_a0 = D_800AE564[idx];
     if (temp_a1 > 0)
     {
         var_a0 >>= temp_a1;
@@ -49,7 +50,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
 
     if (temp_a2 != 0)
     {
-        var_v1 = D_800AE564[temp_a3 + 1];
+        var_v1 = D_800AE564[idx + 1];
         if (temp_a1 > 0)
         {
             var_v1 >>= temp_a1;
@@ -70,7 +71,6 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
     s32 val;
 
     val = func_8005D86C(arg0);
-
     if (val > Q12(4.0f))
     {
         val = Q12(4.0f);
@@ -83,7 +83,7 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
     return val;
 }
 
-q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8005D9B8
+q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8005D9B8
 {
     q19_12 offsetX;
     q19_12 offsetY;
@@ -136,12 +136,12 @@ q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8
     return adjVol;
 }
 
-void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags) // 0x8005DC1C
+void Sfx_WithFlagsPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags) // 0x8005DC1C
 {
-    func_8005DC3C(sfxId, pos, vol, sfxFlags, SfxFlag_None);
+    Sfx_WithFlagsAndPitchPlay(sfxId, pos, vol, sfxFlags, SfxFlag_None);
 }
 
-void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch) // 0x8005DC3C
+void Sfx_WithFlagsAndPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch) // 0x8005DC3C
 {
     q23_8 adjVol;
     q23_8 balance;
@@ -172,7 +172,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s
     }
     else
     {
-        adjVol = Audio_DistanceAttenuatedVolumeGet(pos, vol);
+        adjVol = Sfx_DistanceAttenuatedVolumeGet(pos, vol);
     }
 
     if (adjVol > Q8_CLAMPED(1.0f))
@@ -190,7 +190,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s
     }
 }
 
-void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
+void Sfx_WithPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
     q23_8 volCpy;
     s32   balance;
@@ -215,7 +215,7 @@ void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) // 0x
         vol = Q8_CLAMPED(0.0f);
     }
 
-    volCpy = Audio_DistanceAttenuatedVolumeGet(pos, vol);
+    volCpy = Sfx_DistanceAttenuatedVolumeGet(pos, vol);
     if (volCpy > Q8_CLAMPED(1.0f))
     {
         volCpy = Q8_CLAMPED(1.0f);
@@ -224,17 +224,17 @@ void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) // 0x
     func_80046620(sfxId, balance, ~volCpy, pitch);
 }
 
-static inline s32 AttenuationCalc(s32 volume, VECTOR3* pos, q19_12 falloff)
+static inline s32 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)
 {
     q19_12 dist;
 
     dist = Math_Vector3MagCalcSafe(g_SysWork.playerWork.player.position.vx - pos->vx,
-                               g_SysWork.playerWork.player.position.vy - pos->vy,
-                               g_SysWork.playerWork.player.position.vz - pos->vz);
-    return (volume * dist) / falloff;
+                                   g_SysWork.playerWork.player.position.vy - pos->vy,
+                                   g_SysWork.playerWork.player.position.vz - pos->vz);
+    return (vol * dist) / falloff;
 }
 
-void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch)
+void Sfx_WithFalloffAndPitchPlay(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch)
 {
     s32 balance;
     u16 finalVol;

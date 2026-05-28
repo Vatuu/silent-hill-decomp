@@ -3977,7 +3977,7 @@ void Particle_SoundUpdate(void)
 
             if (g_SysWork.field_234B_0)
             {
-                func_8005DE0C(Sfx_Unk1360, &g_SysWork.playerWork.player.position, unkValDiv4, Q12(0.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1360, &g_SysWork.playerWork.player.position, unkValDiv4, Q12(0.0f), 0);
             }
             else if (sharedData_800E32CC_0_s00 != 0)
             {

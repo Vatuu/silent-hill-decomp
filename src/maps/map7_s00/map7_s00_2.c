@@ -255,7 +255,7 @@ void func_800D0B64(void) // 0x800D0B64
             *(s32*)&g_SysWork.lightRotation.vx = 0x02E3FF34;
             (&g_SysWork.lightRotation)->vz = 0;
 
-            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -264,7 +264,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 20:
-            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -361,7 +361,7 @@ void func_800D0B64(void) // 0x800D0B64
             }
         }
 
-        func_8005DE0C(Sfx_Unk1640, &QVECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), Rng_GenerateUInt(-8, 7));
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1640, &QVECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), Rng_GenerateUInt(-8, 7));
     }
 }
 

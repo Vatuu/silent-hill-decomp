@@ -481,19 +481,19 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                     case ANIM_STATUS(HarryAnim_SidestepLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnRight, true):
-                        func_8005DD44(sfx, &player->position, Q8_CLAMPED(0.095f), pitch);
+                        Sfx_WithPitchPlay(sfx, &player->position, Q8_CLAMPED(0.095f), pitch);
                         player->properties.player.field_10C = pitch;
                         break;
 
                     default:
-                        func_8005DD44(sfx, &player->position, Q8(0.25f), pitch);
+                        Sfx_WithPitchPlay(sfx, &player->position, Q8(0.25f), pitch);
                         player->properties.player.field_10C = pitch + 0x10;
                         break;
                 }
             }
             else
             {
-                func_8005DD44(sfx, &player->position, Q8(0.5f), pitch);
+                Sfx_WithPitchPlay(sfx, &player->position, Q8(0.5f), pitch);
                 player->properties.player.field_10C = pitch + 0x40;
             }
 
@@ -518,19 +518,19 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                     case ANIM_STATUS(HarryAnim_SidestepLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnLeft, true):
                     case ANIM_STATUS(HarryAnim_TurnRight, true):
-                        func_8005DD44(sfx, &player->position, Q8_CLAMPED(0.095f), pitch);
+                        Sfx_WithPitchPlay(sfx, &player->position, Q8_CLAMPED(0.095f), pitch);
                         player->properties.player.field_10C = pitch;
                         break;
 
                     default:
-                        func_8005DD44(sfx, &player->position, Q8(0.25f), pitch);
+                        Sfx_WithPitchPlay(sfx, &player->position, Q8(0.25f), pitch);
                         player->properties.player.field_10C = pitch + 16;
                         break;
                 }
             }
             else
             {
-                func_8005DD44(sfx, &player->position, Q8(0.5f), pitch);
+                Sfx_WithPitchPlay(sfx, &player->position, Q8(0.5f), pitch);
                 player->properties.player.field_10C = pitch + 64;
             }
 
@@ -567,31 +567,31 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
             case Sfx_Unk1318:
             case Sfx_Unk1319:
             case Sfx_Stumble1:
-                func_8005DC1C(sfxId, &player->position, 0x80, SfxFlag_None);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0x80, SfxFlag_None);
                 player->properties.player.field_10C = 0x40;
                 break;
 
             case Sfx_Unk1283:
-                func_8005DC1C(sfxId, &player->position, 0xC8, SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0xC8, SfxFlag_NoDistAtten);
                 player->properties.player.field_10C = 0;
                 break;
 
             case Sfx_Unk1628:
-                func_8005DC1C(sfxId, &player->position, 0x40, SfxFlag_Mono);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0x40, SfxFlag_Mono);
                 break;
 
             case Sfx_Unk1626:
-                func_8005DC1C(sfxId, &player->position, 0xFF, SfxFlag_Mono);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0xFF, SfxFlag_Mono);
                 break;
 
             case Sfx_Unk1638:
-                func_8005DC1C(sfxId, &player->position, 0xFF, SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0xFF, SfxFlag_NoDistAtten);
                 break;
 
             default:
             case Sfx_HarryHeavyBreath:
             case Sfx_DoorJammed:
-                func_8005DC1C(sfxId, &player->position, 0x40, SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(sfxId, &player->position, 0x40, SfxFlag_NoDistAtten);
                 player->properties.player.field_10C = 0;
                 break;
         }
@@ -1924,7 +1924,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.groundHeight)
                     {
                         extra->model.controlState++;
-                        func_8005DC1C(Sfx_Unk1317, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1317, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
                         player->properties.player.field_10C = 128;
                         func_80089470();
                     }
@@ -2770,7 +2770,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     {
                         player->field_44.field_0 = 1;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                         player->properties.player.field_10C                       = 0x40;
                         playerProps.flags |= PlayerFlag_Unk2;
@@ -2816,18 +2816,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         g_SysWork.playerCombat.currentWeaponAmmo--;
                         g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1--;
 
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
                     }
                     else
                     {
-                        func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8_CLAMPED(0.19f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8_CLAMPED(0.19f), SfxFlag_None);
                     }
 
                     player->properties.player.field_10C = 200;
                 }
                 else
                 {
-                    func_8005DC1C(g_Player_EquippedWeaponInfo.outOfAmmoSfx, &player->position, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.outOfAmmoSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                     player->properties.player.field_10C = 32;
                     extra->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
@@ -3871,7 +3871,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model.anim.keyframeIdx &&
                 !(playerProps.flags & PlayerFlag_Unk2))
             {
-                func_8005DC1C(g_Player_EquippedWeaponInfo.reloadSfx, &player->position, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.reloadSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                 player->properties.player.field_10C                       = 0x20;
                 playerProps.flags |= PlayerFlag_Unk2;
@@ -6363,7 +6363,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                   player->model.anim.status <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
                  player->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true)))
             {
-                func_8005DD44(sfxId, &player->position, Q8_CLAMPED(0.095f), pitch0);
+                Sfx_WithPitchPlay(sfxId, &player->position, Q8_CLAMPED(0.095f), pitch0);
 
                 player->properties.player.field_10C                        = pitch0 + 0x10;
                 playerProps.flags &= ~PlayerFlag_Moving;
@@ -6372,7 +6372,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
             if (player->model.anim.keyframeIdx == 246 &&
                 !(playerProps.flags & PlayerFlag_Unk5))
             {
-                func_8005DD44(sfxId, &player->position, Q8(0.5f), pitch1);
+                Sfx_WithPitchPlay(sfxId, &player->position, Q8(0.5f), pitch1);
 
                 player->properties.player.field_10C                       = pitch1 + 0x20;
                 playerProps.flags |= PlayerFlag_Unk5;
@@ -6801,7 +6801,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             if (player->damage.amount != Q12(0.0f) && !(playerProps.flags & PlayerFlag_DamageReceived))
             {
                 playerProps.flags |= PlayerFlag_DamageReceived;
-                func_8005DC1C(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
+                Sfx_WithFlagsPlay(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
                 player->properties.player.field_10C = 64;
             }
 
@@ -7078,7 +7078,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         playerProps.flags &= ~PlayerFlag_Unk2;
         if (!(playerProps.flags & PlayerFlag_DamageReceived))
         {
-            func_8005DC1C(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
+            Sfx_WithFlagsPlay(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
             playerProps.flags |= PlayerFlag_DamageReceived;
             player->properties.player.field_10C = 0x40;
         }

@@ -633,13 +633,13 @@ s16 D_800AE564[] = {
     0x8B9, 0x889, 0x85A, 0x82C,
     0x800, 
 #if VERSION_IS(JAP0)
-    0x5455,
+    0x5455
 #elif VERSION_IS(JAP1)
-    0x0,
+    0x0
 #elif VERSION_IS(JAP2)
-    0x8004,
+    0x8004
 #else
-    0x0,
+    0x0
 #endif
 };
 

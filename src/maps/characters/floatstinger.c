@@ -151,7 +151,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         floatstingerProps.field_F8 += FP_FROM(floatstinger->damage.amount, Q12_SHIFT);
         floatstingerProps.field_FA += FP_FROM(floatstinger->damage.amount, Q12_SHIFT);
 
-        func_8005DC1C(Sfx_Unk1570, &sp10, Q8(0.5f), SfxFlag_None);
+        Sfx_WithFlagsPlay(Sfx_Unk1570, &sp10, Q8(0.5f), SfxFlag_None);
 
         if (floatstinger->health == Q12(0.0f) ||
             ((floatstingerProps.field_F8 > 1000 || floatstingerProps.field_FA > 1200) &&
@@ -382,7 +382,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 sp68.vy = floatstinger->position.vy - Q12(1.0f);
                 sp68.vz = floatstinger->position.vz;
 
-                func_8005DC1C(Sfx_Unk1571, &sp68, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1571, &sp68, Q8(0.5f), SfxFlag_None);
                 floatstingerProps.field_104++;
             }
 
@@ -446,7 +446,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 sp68.vy = floatstinger->position.vy - Q12(3.5f);
                 sp68.vz = floatstinger->position.vz;
 
-                func_8005DC1C(Sfx_Unk1572, &sp68, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1572, &sp68, Q8(0.5f), SfxFlag_None);
                 sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[1]);
 
                 if (floatstingerProps.flags_E8 & FloatstingerFlag_0)
@@ -653,7 +653,7 @@ void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
         sp10.vy                         = floatstinger->position.vy - Q12(3.5f);
         sp10.vz                         = floatstinger->position.vz;
 
-        func_8005DC1C(Sfx_Unk1573, &sp10, Q8(0.5f), SfxFlag_None);
+        Sfx_WithFlagsPlay(Sfx_Unk1573, &sp10, Q8(0.5f), SfxFlag_None);
     }
 }
 
@@ -728,7 +728,7 @@ void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D3
                     vec.vy = floatstinger->position.vy - Q12(4.0f);
                     vec.vz = floatstinger->position.vz;
 
-                    func_8005DC1C(Sfx_Unk1569, &vec, 0x20, SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1569, &vec, 0x20, SfxFlag_None);
                     floatstingerProps.flags_E8 |= FloatstingerFlag_4;
                 }
             }
@@ -767,7 +767,7 @@ void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D3
                         vec.vy = floatstinger->position.vy - Q12(4.0f);
                         vec.vz = floatstinger->position.vz;
 
-                        func_8005DC1C(Sfx_Unk1568, &vec, floatstingerProps.field_106 >> 1, SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1568, &vec, floatstingerProps.field_106 >> 1, SfxFlag_None);
                         floatstingerProps.flags_E8 |= FloatstingerFlag_4;
                     }
                 }

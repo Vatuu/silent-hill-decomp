@@ -462,7 +462,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.lightIntensity = Q12(0.8f);
 
-            func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -472,7 +472,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 8:
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 158, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -692,7 +692,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &SFX_POS, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -740,7 +740,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 13:
-            func_8005DC1C(Sfx_Unk1526, &SFX_POS, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &SFX_POS, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -976,7 +976,7 @@ void func_800DC14C(void) // 0x800DC14C
         case 13:
             D_800E9ED4 = Q12(-1.294f);
             D_800E9ED0 = 0;
-            func_8005DC1C(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -1006,7 +1006,7 @@ void func_800DC14C(void) // 0x800DC14C
                 D_800E9ED4 += Q12_MULT_PRECISE(g_DeltaTime, D_800E9ED0);
                 if (D_800E9ED4 > 0)
                 {
-                    func_8005DC1C(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8(0.5f), SfxFlag_None);
                 }
             }
 
@@ -1342,7 +1342,7 @@ void func_800DD2D4(void) // 0x800DD2D4
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
             Fs_QueueStartRead(FILE_ANIM_KITCHEN1_DMS, FS_BUFFER_11);
             Savegame_EventFlagSet(EventFlag_557);
 
@@ -1484,7 +1484,7 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         if (D_800E9EDA == 0)
         {
-            func_8005DC1C(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
 
             if (g_SysWork.sysStateSteps[0] == 6)
             {
@@ -1600,7 +1600,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
             SD_Call(Sfx_Unk1495);
             Savegame_EventFlagClear(EventFlag_549);
 
@@ -1618,7 +1618,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_549);
 
             D_800EBAF4 = 0;
@@ -1626,8 +1626,8 @@ void func_800DDEC8(void) // 0x800DDEC8
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_8005DE0C(Sfx_Unk1495, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
-            func_8005DE0C(Sfx_Unk1503, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1495, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1503, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
 
             g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(3.0f))
@@ -1639,7 +1639,7 @@ void func_800DDEC8(void) // 0x800DDEC8
         case 10:
             Sd_SfxStop(Sfx_Unk1495);
             Sd_SfxStop(Sfx_Unk1503);
-            func_8005DC1C(Sfx_Unk1497, &D_800E9D00, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1497, &D_800E9D00, Q8(0.5f), SfxFlag_None);
 
         case 6:
             SysWork_StateStepReset();
@@ -2647,7 +2647,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), SfxFlag_None);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2668,7 +2668,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             var_s0 = &D_800EA494.field_2;
             if (*var_s0 == 0)
             {
-                func_8005DC1C(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1656, &SFX_POS_0, Q8(0.5f), SfxFlag_None);
                 *var_s0 = Q12(1.2f);
             }
             else
@@ -2682,7 +2682,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1655, &SFX_POS_1, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1655, &SFX_POS_1, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -2903,7 +2903,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             D_800EB6B0 = 0;
 
             func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
-            func_8005DC1C(Sfx_Unk1654, &SFX_POS, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1654, &SFX_POS, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -2970,7 +2970,7 @@ void func_800E1FF4(void) // 0x800E1FF4
 
     if (g_SysWork.sysStateSteps[1] == 0)
     {
-        func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
+        Sfx_WithFlagsPlay(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
     }
 
     Event_DisplayMapMsgWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
@@ -3048,7 +3048,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
 
             if (!Savegame_EventFlagGet(EventFlag_545))
             {
@@ -3067,13 +3067,13 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
         case 7:
-            func_8005DC1C(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -3559,7 +3559,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
                 }
                 else
                 {
-                    func_8005DC1C(Sfx_Unk1653, &D_800CDC4C, Q8(0.125f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1653, &D_800CDC4C, Q8(0.125f), SfxFlag_None);
                     D_800EBB94 = (Rng_Rand16() % Q12(2.0f)) + Q12(0.2f);
                 }
             }
@@ -3632,7 +3632,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             if (!Savegame_EventFlagGet(EventFlag_478) && g_SysWork.playerWork.player.position.vz < Q12(-19.0f))
             {
                 Savegame_EventFlagSet(EventFlag_478);
-                func_8005DC1C(Sfx_Unk1528, &D_800CDC58, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1528, &D_800CDC58, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
             }
             break;
     }
@@ -3648,8 +3648,8 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             else if (D_800EBAF4 == 1)
             {
-                func_8005DE0C(Sfx_Unk1495, &D_800E9D00, Q8(0.5f), Q12(16.0f), 0);
-                func_8005DE0C(Sfx_Unk1503, &D_800E9D00, Q8(0.5f), Q12(16.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1495, &D_800E9D00, Q8(0.5f), Q12(16.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1503, &D_800E9D00, Q8(0.5f), Q12(16.0f), 0);
             }
         }
     }

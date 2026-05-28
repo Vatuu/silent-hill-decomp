@@ -60,7 +60,7 @@ void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOOR
         bloodsucker->properties.bloodsucker.flags |= BloodsuckerFlag_0;
     }
 
-    func_8005DE0C(Sfx_Unk1525, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_EC >> 5, Q12(16.0f), 0);
+    Sfx_WithFalloffAndPitchPlay(Sfx_Unk1525, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_EC >> 5, Q12(16.0f), 0);
 
     if (bloodsucker->properties.bloodsucker.timer_EC < bloodsucker->properties.bloodsucker.timer_F0)
     {
@@ -97,7 +97,7 @@ void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOOR
             bloodsucker->properties.bloodsucker.timer_F4 = Q12(1.0f);
         }
 
-        func_8005DE0C(Sfx_Unk1527, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_F4 >> 5, Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1527, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_F4 >> 5, Q12(16.0f), 0);
     }
     else if (bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_1)
     {

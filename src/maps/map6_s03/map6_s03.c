@@ -368,7 +368,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
     {
         if (!Savegame_EventFlagGet(EventFlag_430) && Savegame_EventFlagGet(EventFlag_435))
         {
-            func_8005DC1C(Sfx_Unk1614, &g_WorldObjectPos0, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1614, &g_WorldObjectPos0, Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_430);
 
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
@@ -495,7 +495,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             Chara_SpawnFlagsSet(Chara_HangedScratcher, 9, SpawnFlag_1 | SpawnFlag_2);
             Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), Q12_ANGLE(90.0f), 6u);
             Chara_SpawnFlagsSet(Chara_HangedScratcher, 10, SpawnFlag_1 | SpawnFlag_2);
-            func_8005DC1C(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
         }
     }
 

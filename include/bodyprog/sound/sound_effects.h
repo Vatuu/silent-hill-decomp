@@ -1,3 +1,6 @@
+#ifndef _BODYPROG_SOUND_SOUNDEFFECTS_H
+#define _BODYPROG_SOUND_SOUNDEFFECTS_H
+
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _SfxId
 {
@@ -416,3 +419,5 @@ typedef enum _SfxId
 
     Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_SfxId;
+
+#endif

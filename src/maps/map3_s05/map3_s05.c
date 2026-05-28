@@ -219,7 +219,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 5:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -227,7 +227,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 7:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -235,7 +235,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 9:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -317,7 +317,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 < 0)
                     {
                         D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
-                        func_8005DC1C(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
                         break;
                     }
                 }
@@ -327,7 +327,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 >= 0)
                     {
                         D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
-                        func_8005DC1C(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
                         break;
                     }
                 }
@@ -464,7 +464,7 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -472,7 +472,7 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -480,7 +480,7 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -547,7 +547,7 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         case 18:
-            func_8005DC1C(Sfx_Unk1534, &D_800CB3E0, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1534, &D_800CB3E0, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -588,7 +588,7 @@ void func_800D64E0(void) // 0x800D64E0
 
     if (g_SysWork.sysStateSteps[0] > 10 && g_SysWork.sysStateSteps[0] < 16)
     {
-        func_8005DE0C(Sfx_Unk1533, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1533, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), Q12(16.0f), 0);
     }
 }
 
@@ -841,7 +841,7 @@ void func_800D72AC(void) // 0x800D72AC
                 D_800DACF0 = Q12(1.0f);
             }
 
-            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position, D_800DACF0 >> 5, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1535, &g_WorldObject0.position, D_800DACF0 >> 5, Q12(16.0f), 0);
             break;
 
         case 7:
@@ -863,7 +863,7 @@ void func_800D72AC(void) // 0x800D72AC
                 D_800DACF0 = 0;
             }
 
-            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position, D_800DACF0 >> 5, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1535, &g_WorldObject0.position, D_800DACF0 >> 5, Q12(16.0f), 0);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 7)
@@ -1008,7 +1008,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
             D_800DD528++;
         }
 
-        func_8005DE0C(Sfx_Unk1503, &D_800DACD4, Q8(0.5f), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1503, &D_800DACD4, Q8(0.5f), Q12(16.0f), 0);
     }
     else if (D_800DD528)
     {
@@ -1031,7 +1031,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
             soundPos.vx = Rng_GenerateInt(Q12(137.5f), Q12(142.5f) - 1);
             soundPos.vy = -Rng_GenerateInt(0, 8191);
             soundPos.vx = Q12(-56.8f) - Rng_GenerateInt(0, Q12(6.4f) - 1);
-            func_8005DC1C(Sfx_Unk1537, &soundPos, Rng_GenerateUInt(192, 255), SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1537, &soundPos, Rng_GenerateUInt(192, 255), SfxFlag_NoDistAtten);
         }
     }
 

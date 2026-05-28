@@ -96,7 +96,7 @@ void func_800D21C4(void) // 0x800D21C4
         {
             case 0:
                 Player_ControlFreeze();
-                func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
                 SysWork_StateStepIncrement(0);
 
             case 1:
@@ -112,7 +112,7 @@ void func_800D21C4(void) // 0x800D21C4
 
             case 4:
             case 6:
-                func_8005DC1C(Sfx_Unk1529, &D_800CB1E0, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1529, &D_800CB1E0, Q8(0.5f), SfxFlag_None);
                 SysWork_StateStepIncrement(0);
 
             case 5:
@@ -534,7 +534,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             if (g_SysWork.playerWork.player.position.vx > Q12(101.5f) &&
                 g_SysWork.playerWork.player.position.vz > Q12(59.0f))
             {
-                func_8005DC1C(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_300);
 
                 if (g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx] & (1 << 2))
@@ -553,7 +553,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             {
                 if (!Vw_AabbVisibleInScreenCheck(Q12(139.0f), Q12(142.0f), Q12(-3.0f), Q12(0.0f), Q12(98.8f), Q12(99.0f)))
                 {
-                    func_8005DC1C(Sfx_Unk1528, &D_800CB370, 0xFF, SfxFlag_NoDistAtten);
+                    Sfx_WithFlagsPlay(Sfx_Unk1528, &D_800CB370, 0xFF, SfxFlag_NoDistAtten);
                     Savegame_EventFlagSet(EventFlag_316);
                 }
             }

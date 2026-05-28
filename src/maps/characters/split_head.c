@@ -82,7 +82,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
             sfxPos.vy = splitHead->position.vy;
             sfxPos.vz = splitHead->position.vz + FP_FROM(Math_Cos(splitHead->rotation.vy + Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
 
-            func_8005DD44(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
+            Sfx_WithPitchPlay(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
             splitHeadProps.field_108[0]++;
         }
     }
@@ -120,7 +120,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
             sfxPos.vy = splitHead->position.vy;
             sfxPos.vz = splitHead->position.vz + FP_FROM(Math_Cos(splitHead->rotation.vy - Q12_ANGLE(45.0f)) * Q12(1.2f), Q12_SHIFT);
 
-            func_8005DD44(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
+            Sfx_WithPitchPlay(Sfx_Unk1472, &sfxPos, sfxVol, sfxPitch);
             splitHeadProps.field_108[2]++;
         }
     }
@@ -149,12 +149,12 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.flags & SplitHeadFlag_8)
         {
-            func_8005DC1C(Sfx_Unk1422, &splitHead->position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1422, &splitHead->position, Q8(0.5f), SfxFlag_None);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(3.0f), Q12(5.0f) - 1);
         }
         else if (splitHeadProps.flags & SplitHeadFlag_7)
         {
-            func_8005DC1C(Sfx_Unk1474, &splitHead->position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1474, &splitHead->position, Q8(0.5f), SfxFlag_None);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(1.5f), Q12(2.5f) - 1);
         }
     }
@@ -308,7 +308,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
                 if (sharedFunc_800D4530_1_s05(splitHead) != false)
                 {
                     splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_BiteAttack, false);
-                    func_8005DC1C(Sfx_Unk1475, &splitHead->position, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1475, &splitHead->position, Q8(0.5f), SfxFlag_None);
                 }
             }
         }
@@ -623,7 +623,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
                 if (sharedFunc_800D4530_1_s05(splitHead))
                 {
                     splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_3, false);
-                    func_8005DC1C(Sfx_Unk1471, &splitHead->position, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1471, &splitHead->position, Q8(0.5f), SfxFlag_None);
                 }
             }
         }
@@ -730,7 +730,7 @@ void SplitHead_Control_4(s_SubCharacter* splitHead)
                 vol = Q8(0.5f);
             }
 
-            func_8005DE0C(Sfx_Unk1477, &splitHead->position, vol, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1477, &splitHead->position, vol, Q12(16.0f), 0);
 
             if (splitHeadProps.timer_F4 > sharedData_800D5880_1_s05)
             {
@@ -960,7 +960,7 @@ void SplitHead_Control_6(s_SubCharacter* splitHead)
 
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
-                func_8005DC1C(Sfx_Unk1479, &splitHead->position, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1479, &splitHead->position, Q8(0.5f), SfxFlag_None);
             }
 
             Savegame_EventFlagSet(EventFlag_131);
@@ -1690,7 +1690,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
                 splitHeadProps.flags |= SplitHeadFlag_1 | SplitHeadFlag_9;
 
-                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork.player.position, Q8(0.999f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1473, &g_SysWork.playerWork.player.position, Q8(0.999f), SfxFlag_NoDistAtten);
             }
         }
     }

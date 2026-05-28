@@ -204,7 +204,7 @@ void func_800D1FF0(void) // 0x800D1FF0
                 SysWork_StateStepIncrement(0);
             }
 
-            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
             break;
 
         case 7:
@@ -215,7 +215,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             }
 
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(3.0f), false);
-            func_8005DE0C(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1538, &WorldObject_D_800D7FF0.position, D_800D5AE8 >> 5, Q12(12.0f), 0);
             break;
 
         default:
@@ -295,7 +295,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 4:
-            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &soundPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -304,7 +304,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 6:
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 118, false);
-            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &soundPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -971,7 +971,7 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AF9)
     {
-        func_8005DE0C(Sfx_Unk1540, &QVECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D7F30, 128), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1540, &QVECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D7F30, 128), Q12(16.0f), 0);
     }
 
     if (g_Cutscene_Timer3 >= Q12(0.0f))

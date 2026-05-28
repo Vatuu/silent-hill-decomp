@@ -784,7 +784,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            func_8005DC1C(sfxId, sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(sfxId, sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(1);
 
         case 1:

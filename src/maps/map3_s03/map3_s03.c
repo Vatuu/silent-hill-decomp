@@ -253,7 +253,7 @@ void func_800D1A58(void) // 0x800D1A58
             sfxPos.vy = Q12(-1.2f);
             sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
 
-            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -624,7 +624,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -675,7 +675,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 14:
-            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -1088,7 +1088,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                 Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
                 g_SysWork.playerWork.player.position.vz > Q12(-18.2f))
             {
-                func_8005DC1C(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_239);
             }
             break;

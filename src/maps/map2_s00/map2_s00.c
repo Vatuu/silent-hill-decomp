@@ -1491,7 +1491,7 @@ void func_800EA960(void) // 0x800EA960
             break;
 
         case 2:
-            func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_164);
             SD_Call(Sfx_Unk1482);
 
@@ -1511,7 +1511,7 @@ void func_800EA960(void) // 0x800EA960
             break;
 
         case EventState_PressSwitch:
-            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -1617,7 +1617,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1724,7 +1724,7 @@ void func_800EB174(void) // 0x800EB174
             sfxPos.vy = Q12(-1.2f);
             sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
 
-            func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1349, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1789,7 +1789,7 @@ void func_800EB3F4(void) // 0x800EB3F4
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1393, &D_800CD45C, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1393, &D_800CD45C, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1821,7 +1821,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1394, &D_800CD468, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1394, &D_800CD468, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -2234,7 +2234,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
                     }
                 }
 
-                func_8005DE0C(Sfx_Unk1482, &QVECTOR3(-43.0f, -1.0f, 346.0f), D_800F5350 >> 5, Q12(32.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1482, &QVECTOR3(-43.0f, -1.0f, 346.0f), D_800F5350 >> 5, Q12(32.0f), 0);
             }
             break;
 
@@ -2247,7 +2247,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
                     SD_Call(Sfx_Unk1482);
                 }
 
-                func_8005DE0C(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupRockDrill))

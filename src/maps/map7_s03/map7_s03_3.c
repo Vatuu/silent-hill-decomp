@@ -1806,7 +1806,7 @@ void func_800E514C(void) // 0x800E514C
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[1], 19, false);
 
-            func_8005DC1C(Sfx_Unk1670, &g_SysWork.npcs[1].position, Q8_CLAMPED(0.785f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1670, &g_SysWork.npcs[1].position, Q8_CLAMPED(0.785f), SfxFlag_None);
 
             g_SysWork.lightIntensity = Q12(0.7f);
 
@@ -2417,7 +2417,7 @@ void func_800E62CC(void) // 0x800E62CC
 
             g_Cutscene_UpdateBaby = true;
 
-            func_8005DC1C(Sfx_Unk1689, NULL, CHARA_FORCE_FREE_ALL, SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1689, NULL, CHARA_FORCE_FREE_ALL, SfxFlag_Mono | SfxFlag_NoDistAtten);
             func_800E1788(15);
             SysWork_StateStepIncrement(0);
 
@@ -2478,7 +2478,7 @@ void func_800E62CC(void) // 0x800E62CC
             }
 
             Sd_SfxStop(Sfx_Unk1689);
-            func_8005DC1C(Sfx_Unk1688, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1688, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             func_800D88C4();
             SysWork_StateStepIncrement(0);
 
@@ -2931,7 +2931,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4834 = 0;
             D_800F4838 = 1;
 
-            func_8005DC1C(Sfx_Unk1688, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1688, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
 
             SysWork_StateStepIncrement(0);
 
@@ -2945,8 +2945,8 @@ void func_800E787C(void) // 0x800E787C
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
-            func_8005DC1C(Sfx_Unk1695, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1695, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -2955,7 +2955,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 6:
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 177, false);
-            func_8005DC1C(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 27, false);
             SD_Call(Sfx_XaAudio612);
             D_800F4819 = 2;
@@ -2987,7 +2987,7 @@ void func_800E787C(void) // 0x800E787C
             func_800D7CF8();
             D_800F4834 = 1;
             Sd_SfxStop(Sfx_Unk1688);
-            func_8005DC1C(Sfx_Unk1689, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1689, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -3142,7 +3142,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4834 = 0;
 
             Sd_SfxStop(Sfx_Unk1689);
-            func_8005DC1C(Sfx_Unk1690, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1690, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             SysWork_StateStepIncrement(0);
 
         case 28:

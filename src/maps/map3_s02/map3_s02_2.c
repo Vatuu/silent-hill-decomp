@@ -63,7 +63,7 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case EventState_3:
-            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case EventState_4:
@@ -354,7 +354,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
         if (!Savegame_EventFlagGet(EventFlag_233) && g_SysWork.playerWork.player.position.vz < Q12(-129.0f))
         {
             Savegame_EventFlagSet(EventFlag_233);
-            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), SfxFlag_None);
         }
     }
 
@@ -364,7 +364,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
         if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork.player.position.vx < Q12(67.0f))
         {
             Savegame_EventFlagSet(EventFlag_234);
-            func_8005DC1C(Sfx_Unk1523, &QVECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1523, &QVECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), SfxFlag_None);
         }
     }
 }

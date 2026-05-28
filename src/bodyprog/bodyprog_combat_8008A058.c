@@ -1116,25 +1116,25 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
     }
     else if (cond)
     {
-        // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
+        // NOTE: Sfx_WithFlagsPlay calls Sfx_WithFlagsAndPitchPlay. `soundType` is `pitch` when calling `Sfx_WithFlagsAndPitchPlay` directly.
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            Sfx_WithFlagsPlay(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
-            func_8005DC1C(sfxId, &g_SysWork.playerWork.player.position, Q8_CLAMPED(0.0f), soundType);
+            Sfx_WithFlagsPlay(sfxId, &g_SysWork.playerWork.player.position, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else
     {
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
-            func_8005DC3C(sfxId, &g_SysWork.playerWork.player.position, 0, 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &g_SysWork.playerWork.player.position, 0, 4, soundType);
         }
     }
 
@@ -1210,7 +1210,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfxId != 0)
     {
-        func_8005DC1C(sfxId, pos, Q8(0.75f), SfxFlag_None);
+        Sfx_WithFlagsPlay(sfxId, pos, Q8(0.75f), SfxFlag_None);
     }
 }
 
@@ -1291,7 +1291,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
             if (target->model.charaId == Chara_Padlock)
             {
-                func_8005DC1C(Sfx_Unk1392, attackPos, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1392, attackPos, Q8(0.5f), SfxFlag_None);
             }
             else
             {

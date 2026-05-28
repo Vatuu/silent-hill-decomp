@@ -392,7 +392,7 @@ void func_800D8354(void) // 0x800D8354
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -608,7 +608,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_83);
             SysWork_StateStepIncrement(0);
 
@@ -630,7 +630,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -677,7 +677,7 @@ void MapEvent_Boiler1(void)
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -885,7 +885,7 @@ void Map_WorldObjectsUpdate(void)
                 D_800E1182 = Q12(1.0f);
             }
 
-            func_8005DE0C(Sfx_Unk1430, &QVECTOR3(18.8f, -1.0f, -17.5f), D_800E1182 >> 5, Q12(24.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &QVECTOR3(18.8f, -1.0f, -17.5f), D_800E1182 >> 5, Q12(24.0f), 0);
         }
     }
 
@@ -899,7 +899,7 @@ void Map_WorldObjectsUpdate(void)
             }
 
             D_800E1182 = Q12(0.2f);
-            func_8005DE0C(Sfx_Unk1430, &QVECTOR3(52.0f, -1.0f, -16.0f), 25, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &QVECTOR3(52.0f, -1.0f, -16.0f), 25, Q12(16.0f), 0);
         }
     }
     else

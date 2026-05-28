@@ -746,7 +746,11 @@ Chara_MovementUpdate                         = 0x8005C944; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x038D0C   VA: 0x8005D86C   subsegment: c, 3d_audio
 //-----------------------------------------------------------
-Audio_DistanceAttenuatedVolumeGet            = 0x8005D9B8; // type:func
+Sfx_DistanceAttenuatedVolumeGet            = 0x8005D9B8; // type:func
+Sfx_WithFlagsPlay                       = 0x8005DC1C; // type:func
+Sfx_WithFlagsAndPitchPlay               = 0x8005DC3C; // type:func
+Sfx_WithPitchPlay                       = 0x8005DD44; // type:func
+Sfx_WithFalloffAndPitchPlay             = 0x8005DE0C; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, bodyprog_8005E0DC

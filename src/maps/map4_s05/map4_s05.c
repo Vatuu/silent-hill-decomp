@@ -124,7 +124,7 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1574, &D_800CABE4, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1574, &D_800CABE4, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:

@@ -258,7 +258,7 @@ void sharedFunc_800D15F0_3_s01(void)
                     g_SysWork.field_28 = Q12(1.0f);
                 }
 
-                func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
                 Event_SysStateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
             }
             else
@@ -271,7 +271,7 @@ void sharedFunc_800D15F0_3_s01(void)
             if (sharedData_800D4D10_3_s01 != 0)
             {
                 Event_SysStateStepIncrementAfterFade(2, false, false, Q12(1.0f), false);
-                func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
             }
             else
             {
@@ -279,7 +279,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
                 if (g_SysWork.sysStateSteps[0] != 10)
                 {
-                    func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
                     SysWork_StateStepSet(0, 14);
                 }
             }
@@ -297,31 +297,31 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 12:
-            func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
             g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(0.5f))
             {
 #if defined(MAP7_S01) || defined(MAP7_S02)
-                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
 #else
-                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), SfxFlag_None);
 #endif
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 13:
-            func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
             g_SysWork.field_28 += g_DeltaTime;
             if (g_SysWork.field_28 > Q12(0.5f))
             {
                 SD_Call(Sfx_Unk1502);
 #if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP7_S01) || defined(MAP7_S02)
-                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
 #else
-                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), SfxFlag_None);
 #endif
                 Sd_SfxStop(Sfx_Unk1499);
                 SysWork_StateStepIncrement(0);

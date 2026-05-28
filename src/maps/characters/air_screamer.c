@@ -111,7 +111,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
         {
             if (flags & (1 << i))
             {
-                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, SfxFlag_None);
+                Sfx_WithFlagsPlay(data->sfxVolumes_CE8[i].id_0, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, SfxFlag_None);
             }
         }
     }
@@ -121,7 +121,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer)
 {
-    func_8005DC1C(Sfx_Unk1590, &airScreamer->position, Q8(0.5f), SfxFlag_None);
+    Sfx_WithFlagsPlay(Sfx_Unk1590, &airScreamer->position, Q8(0.5f), SfxFlag_None);
 }
 
 #define BIT_MASK(bit) \
@@ -10437,13 +10437,13 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     q19_12 rotY;
     q19_12 playerheadingAngle;
     q19_12 playerOffsetZ;
-    q19_12 temp_s3;
-    q19_12 temp_s4;
-    q19_12 temp_v0_2;
+    q19_12 newPlayerPosZ;
+    q19_12 newPlayerPosX;
+    q19_12 unkAngle;
     q19_12 playerOffsetX;
     q19_12 var_s2;
     q19_12 playerMoveSpeed;
-    q19_12 var_v1;
+    q19_12 groundHeight;
 
     playerheadingAngle = g_SysWork.playerWork.player.headingAngle;
     playerMoveSpeed    = g_SysWork.playerWork.player.moveSpeed;
@@ -10477,15 +10477,15 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
         playerheadingAngle = ratan2(playerOffsetX, playerOffsetZ);
     }
 
-    temp_v0_2 = Math_Cos(Q12_ANGLE_NORM_S(rotY - playerheadingAngle));
+    unkAngle = Math_Cos(Q12_ANGLE_NORM_S(rotY - playerheadingAngle));
 
     playerOffsetX = playerPosX - posX;
     playerOffsetZ = playerPosZ - posZ;
 
-    var_s2    = moveSpeed - Q12_MULT_PRECISE(playerMoveSpeed, temp_v0_2);
-    temp_v0_2 = Q12_ANGLE_NORM_S(ratan2(playerOffsetX, playerOffsetZ) - rotY);
+    var_s2   = moveSpeed - Q12_MULT_PRECISE(playerMoveSpeed, unkAngle);
+    unkAngle = Q12_ANGLE_NORM_S(ratan2(playerOffsetX, playerOffsetZ) - rotY);
 
-    if (temp_v0_2 > -0x2AB && temp_v0_2 < 0x2AA)
+    if (unkAngle >= Q12_ANGLE(-60.0f) && unkAngle < Q12_ANGLE(60.0f))
     {
         playerOffsetZ = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
                                      Q12_SQUARE_PRECISE(playerOffsetZ));
@@ -10503,20 +10503,19 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     else
     {
         var_s2        = Q12(10.0f);
-        playerOffsetX = 0;
-        playerOffsetZ = 0;
+        playerOffsetX = Q12(0.0f);
+        playerOffsetZ = Q12(0.0f);
     }
 
-    temp_s4       = playerPosX + playerOffsetX;
-    temp_s3       = playerPosZ + playerOffsetZ;
+    newPlayerPosX = playerPosX + playerOffsetX;
+    newPlayerPosZ = playerPosZ + playerOffsetZ;
     playerOffsetX = playerPosY + g_SysWork.playerWork.player.collision.box.top;
+    playerOffsetZ = Collision_GroundHeightGet(newPlayerPosX, newPlayerPosZ);
 
-    playerOffsetZ = Collision_GroundHeightGet(temp_s4, temp_s3);
-    var_v1        = airScreamerProps.groundHeight;
-
-    if (var_v1 < playerOffsetZ)
+    groundHeight = airScreamerProps.groundHeight;
+    if (groundHeight < playerOffsetZ)
     {
-        playerOffsetZ = var_v1;
+        playerOffsetZ = groundHeight;
     }
 
     if (playerOffsetZ < sharedFunc_800D5274_0_s01())
@@ -10524,15 +10523,15 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
         playerOffsetZ = sharedFunc_800D5274_0_s01();
     }
 
-    var_v1 = playerOffsetZ - Q12(2.0f);
-    if (playerOffsetX < var_v1)
+    groundHeight = playerOffsetZ - Q12(2.0f);
+    if (playerOffsetX < groundHeight)
     {
-        playerOffsetX = var_v1;
+        playerOffsetX = groundHeight;
     }
 
-    airScreamerProps.targetPosition.vx = temp_s4;
+    airScreamerProps.targetPosition.vx = newPlayerPosX;
     airScreamerProps.targetPosition.vy = playerOffsetX;
-    airScreamerProps.targetPosition.vz = temp_s3;
+    airScreamerProps.targetPosition.vz = newPlayerPosZ;
 
     sharedFunc_800D4E84_0_s01(airScreamer);
 

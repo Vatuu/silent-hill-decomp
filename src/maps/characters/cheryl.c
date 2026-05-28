@@ -253,7 +253,7 @@ bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
         {
             if (!(cherylProps.flags & CherylFlag_FootstepRight))
             {
-                func_8005DD44(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
+                Sfx_WithPitchPlay(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
                 cherylProps.flags |= CherylFlag_FootstepRight;
                 return true;
             }
@@ -268,7 +268,7 @@ bool Cheryl_FootstepSfxPlay(s32 animStatus, s_SubCharacter* cheryl,
         {
             if (!(cherylProps.flags & CherylFlag_FootstepLeft))
             {
-                func_8005DD44(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
+                Sfx_WithPitchPlay(Sfx_CherylFootstep, &cheryl->position, Q8_FRACT(vol), pitch);
                 cherylProps.flags |= CherylFlag_FootstepLeft;
                 return true;
             }

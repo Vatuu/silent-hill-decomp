@@ -353,7 +353,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 47:
             D_800DE250 = 0;
 
-            func_8005DC1C(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 48:
@@ -624,7 +624,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
         case 15:
             sharedFunc_800CCB8C_0_s01(&D_800CCA1C, &D_800CCA28, Q12(2.5f), Q12(0.05f), Q12(0.6f), Q12(0.4f), Q12(0.1f), 0);
-            func_8005DC1C(Sfx_Unk1373, &D_800CCA34, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1373, &D_800CCA34, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -637,8 +637,8 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
         case 17:
             sharedFunc_800CCB8C_0_s01(&D_800CCA40, &D_800CCA4C, Q12(3.0f), Q12(0.08f), Q12(0.4f), Q12(0.4f), Q12(0.058f), 0);
-            func_8005DC1C(Sfx_Unk1374, &D_800CCA58, Q8(0.5f), SfxFlag_None);
-            func_8005DC1C(Sfx_Unk1375, &D_800CCA58, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1374, &D_800CCA58, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1375, &D_800CCA58, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -1046,8 +1046,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
             SD_Call(Sfx_RadioStaticLoop);
         }
 
-        func_8005DE0C(Sfx_RadioInterferenceLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
-        func_8005DE0C(Sfx_RadioStaticLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_RadioInterferenceLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_RadioStaticLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
 
         Savegame_EventFlagSet(EventFlag_52);
     }

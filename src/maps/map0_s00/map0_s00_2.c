@@ -128,7 +128,7 @@ void func_800D9610(void) // 0x800D9610
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1355, &sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1355, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -481,7 +481,7 @@ void Cheryl_DistantFootstepSfxPlay(void) // 0x800DA454
             sfxPos.vy = Q12(0.0f);
             sfxPos.vx = playerChara.position.vx + (sinAngleToTarget * 16);
             sfxPos.vz = playerChara.position.vz + (Math_Cos((q19_12)angleToTarget) * 16);
-            func_8005DD44(Sfx_CherylFootstep, &sfxPos, Rng_GenerateUInt(75, 106), Rng_GenerateInt(-16, 15));
+            Sfx_WithPitchPlay(Sfx_CherylFootstep, &sfxPos, Rng_GenerateUInt(75, 106), Rng_GenerateInt(-16, 15));
 
             D_800DFAB8 = Q12(0.0f);
         }
@@ -1354,7 +1354,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
 
             if (!Savegame_EventFlagGet(EventFlag_24))
             {
-                func_8005DE0C(Sfx_Unk1358, &D_800E3A9C, Q8(0.25f), Q12(8.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1358, &D_800E3A9C, Q8(0.25f), Q12(8.0f), 0);
             }
         }
     }
@@ -1587,7 +1587,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs[0].model.charaId = Chara_None;
 
-            func_8005DC1C(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
         }
     }
 

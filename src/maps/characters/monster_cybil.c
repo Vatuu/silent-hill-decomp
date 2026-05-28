@@ -700,7 +700,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 2:
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status) && modelUpper->anim.keyframeIdx >= 29 && !sharedData_800D16E4_2_s01)
             {
-                func_8005DC1C(Sfx_Unk1620, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1620, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
                 sharedData_800D16E4_2_s01 = 1;
             }
             else if (modelUpper->anim.keyframeIdx < 29)
@@ -712,7 +712,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 3:
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status) && modelUpper->anim.keyframeIdx >= 38 && !sharedData_800D16E4_2_s01)
             {
-                func_8005DC1C(Sfx_Unk1622, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1622, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
                 sharedData_800D16E4_2_s01 = 1;
             }
 
@@ -1267,7 +1267,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
-                    func_8005DC1C(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
                 }
 
                 sharedData_800D16E4_2_s01   = 1;
@@ -1342,7 +1342,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->model.stateStep == 0)
             {
-                func_8005DC1C(Sfx_Unk1618, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1618, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
             }
 
             if (modelUpper->stateStep == 0)
@@ -1752,7 +1752,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
-                    func_8005DC1C(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1630, &monsterCybil->position, Q8(0.25f), SfxFlag_None);
                 }
 
                 sharedData_800D16E4_2_s01   = 1;
