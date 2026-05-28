@@ -725,7 +725,7 @@ void Player_DamageFeetFront(void)
     playerChara = &g_SysWork.playerWork.player;
     playerExtra = &g_SysWork.playerWork.extra;
 
-    func_8005DC1C(Sfx_Unk1317, &playerChara->position, Q8(1.0f / 8.0f), 0);
+    func_8005DC1C(Sfx_Unk1317, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
 #endif
@@ -797,7 +797,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 }
 
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
-                func_8005DC1C(Sfx_Unk1326, &playerChara->position, Q8(1.0f / 8.0f), 0);
+                func_8005DC1C(Sfx_Unk1326, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
             }
             else if ((g_SysWork.playerWork.extra.state < PlayerState_DamageTorsoBack || g_SysWork.playerWork.extra.state >= PlayerState_DamageFeetFront) &&
                      g_SysWork.playerWork.extra.state != PlayerState_DamagePushBack &&
@@ -848,7 +848,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     if (!(g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
-        func_8005DC1C(Sfx_Unk1327, &playerChara->position, Q8(1.0f / 8.0f), 0);
+        func_8005DC1C(Sfx_Unk1327, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
 
         playerChara->properties.player.field_10C = 64;
         g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_DamageReceived;

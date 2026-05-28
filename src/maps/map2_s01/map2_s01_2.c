@@ -347,7 +347,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 27:
-            func_8005DC1C(Sfx_Unk1323, &QVECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1323, &QVECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 28:
@@ -355,7 +355,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 29:
-            func_8005DC1C(Sfx_Unk1324, &QVECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1324, &QVECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
             Chara_ModelCharaIdClear(dahliaChara, 0, 0);
             SysWork_StateStepIncrement(0);
 

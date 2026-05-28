@@ -223,7 +223,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
                 if (Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx + Q12(96.0f),
                                         g_SysWork.playerWork.player.position.vz + Q12(89.0f)) < Q12(4.0f))
                 {
-                    func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
+                    func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), SfxFlag_NoDistAtten);
                     D_800F0B2C = Q12(0.3f);
                 }
             }
@@ -235,7 +235,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
             if (D_800F0B2C < Q12(0.0f))
             {
                 Savegame_EventFlagSet(EventFlag_192);
-                func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
+                func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), SfxFlag_NoDistAtten);
             }
         }
     }

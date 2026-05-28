@@ -75,7 +75,7 @@ void func_800D0B10(void) // 0x800D0B10
 
     if (g_SysWork.sysStateSteps[1] == 0)
     {
-        func_8005DC1C(Sfx_MenuMap, &D_800CB21C, Q8(0.5f), 0);
+        func_8005DC1C(Sfx_MenuMap, &D_800CB21C, Q8(0.5f), SfxFlag_None);
     }
 
     Event_DisplayMapMsgWithTexture(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
@@ -162,12 +162,12 @@ void func_800D0C14(void) // 0x800D0C14
 
                 if (D_800D2738 == 0 && !(g_SysWork.field_28 <= Q12(0.3f)))
                 {
-                    func_8005DC1C(Sfx_DoorOpen0, &D_800D26F8, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_DoorOpen0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
                 }
                 else if (D_800D2738 == 1 && !(g_SysWork.field_28 <= Q12(1.6f)))
                 {
-                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
                 }
             }
@@ -290,7 +290,7 @@ void func_800D0C14(void) // 0x800D0C14
                 g_SysWork.field_28 += g_DeltaTime;
                 if (D_800D2738 == 0 && g_SysWork.field_28 > Q12(0.6f))
                 {
-                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
                 }
             }

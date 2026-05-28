@@ -156,7 +156,7 @@ typedef enum _SfxId
     Sfx_CatMeow = 1447,
     Sfx_Unk1448 = 1448,
     Sfx_Unk1449 = 1449,
-
+    Sfx_Unk1450 = 1450,
     Sfx_Unk1451 = 1451,
     Sfx_Unk1452 = 1452,
     Sfx_Unk1453 = 1453,

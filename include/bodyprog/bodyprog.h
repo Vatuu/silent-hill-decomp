@@ -1796,7 +1796,6 @@ s32 func_8005D86C(s32 arg0);
 /** Looks like a clamping function. */
 s32 func_8005D974(s32 arg0);
 
-// Computes distance-adjusted volume?
 /** @brief Computes the distance-attenuated sound volume from a source position.
  *
  * @param srcPos Sound source position.
@@ -1806,13 +1805,13 @@ s32 func_8005D974(s32 arg0);
 q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol);
 
 /** Spatial SFX func? */
-void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
+void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags);
 
 /** Spatial SFX func? */
-void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
+void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
+void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch);
 
 /** Checks `groundType`. */
 bool func_8005F680(s_CollisionSurface* surface);

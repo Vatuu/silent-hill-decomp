@@ -111,7 +111,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
         {
             if (flags & (1 << i))
             {
-                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, 0);
+                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, SfxFlag_None);
             }
         }
     }
@@ -121,7 +121,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer)
 {
-    func_8005DC1C(Sfx_Unk1590, &airScreamer->position, Q8(0.5f), 0);
+    func_8005DC1C(Sfx_Unk1590, &airScreamer->position, Q8(0.5f), SfxFlag_None);
 }
 
 #define BIT_MASK(bit) \

@@ -491,7 +491,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
         case CybilControl_22:
             if (sharedData_800E237C_0_s01 == 1)
             {
-                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs[1].position, Q8(0.75f), 0);
+                func_8005DC1C(Sfx_Unk1673, &g_SysWork.npcs[1].position, Q8(0.75f), SfxFlag_None);
                 sharedData_800E237C_0_s01 = 2;
             }
 
@@ -500,7 +500,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
                 if (sharedData_800E237C_0_s01 == 0)
                 {
                     func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), cybil->rotation.vy, &g_SysWork.npcBoneCoordBuffer[0]);
-                    func_8005DC1C(Sfx_Unk1622, &cybil->position, Q8(0.75f), 0);
+                    func_8005DC1C(Sfx_Unk1622, &cybil->position, Q8(0.75f), SfxFlag_None);
                     sharedData_800E237C_0_s01 = 1;
                 }
             }

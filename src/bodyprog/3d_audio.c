@@ -136,18 +136,18 @@ q23_8 Audio_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8
     return adjVol;
 }
 
-void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType) // 0x8005DC1C
+void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags) // 0x8005DC1C
 {
-    func_8005DC3C(sfxId, pos, vol, soundType, 0);
+    func_8005DC3C(sfxId, pos, vol, sfxFlags, SfxFlag_None);
 }
 
-void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch) // 0x8005DC3C
 {
     q23_8 adjVol;
     q23_8 balance;
 
     // Get stereo balance.
-    if (soundType & SfxFlag_Mono || g_GameWork.config.soundType)
+    if (sfxFlags & SfxFlag_Mono || g_GameWork.config.soundType)
     {
         balance = Q8(0.0f);
     }
@@ -166,7 +166,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
         vol = Q8_CLAMPED(0.0f);
     }
 
-    if (soundType & SfxFlag_NoDistAtten)
+    if (sfxFlags & SfxFlag_NoDistAtten)
     {
         adjVol = vol;
     }
@@ -180,7 +180,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
         adjVol = Q8_CLAMPED(1.0f);
     }
 
-    if (soundType & SfxFlag_UpdateAttribs)
+    if (sfxFlags & SfxFlag_UpdateAttribs)
     {
         Sd_SfxAttributesUpdate(sfxId, balance, ~adjVol, pitch);
     }
@@ -190,7 +190,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
     }
 }
 
-void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
+void func_8005DD44(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
     q23_8 volCpy;
     s32   balance;
@@ -252,23 +252,23 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
         balance = Vc_StereoBalanceGet(pos);
     }
 
-    if (vol > 0xFF)
+    if (vol > Q8_CLAMPED(1.0f))
     {
-        vol = 0xFF;
+        vol = Q8_CLAMPED(1.0f);
     }
 
-    if (vol < 0)
+    if (vol < Q8(0.0f))
     {
         return;
     }
 
     att0 = AttenuationCalc(vol, pos, falloff);
-    s3 = vol - 0xFF;
-    if ((att0 - s3) >= 0xFF || (AttenuationCalc(vol, pos, falloff) - s3) >= 0)
+    s3 = vol - Q8_CLAMPED(1.0f);
+    if ((att0 - s3) >= Q8_CLAMPED(1.0f) || (AttenuationCalc(vol, pos, falloff) - s3) >= 0)
     {
         att2 = AttenuationCalc(vol, pos, falloff) - s3;
-        finalVol = 0xFF;
-        if (att2 < 0xFF)
+        finalVol = Q8_CLAMPED(1.0f);
+        if (att2 < Q8_CLAMPED(1.0f))
         {
             att1 = AttenuationCalc(vol, pos, falloff) - (vol + 1);
             finalVol = att1;
@@ -276,7 +276,7 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
     }
     else
     {
-        finalVol = 0;
+        finalVol = Q8(0.0f);
     }
 
     Sd_SfxAttributesUpdate(sfxId, balance, finalVol, pitch);

@@ -151,7 +151,7 @@ void func_800D1628(void) // 0x800D1628
 
         case 4:
             Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            func_8005DC1C(Sfx_Unk1598, &QVECTOR3(104.25f, 0.1f, 60.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1598, &QVECTOR3(104.25f, 0.1f, 60.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -283,7 +283,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             Fs_QueueStartRead(FILE_ANIM_GARAGE1_DMS, FS_BUFFER_17);
 
             Chara_Load(0, Chara_Kaufmann, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_8005DC1C(Sfx_Unk1597, &QVECTOR3(101.706f, -0.889f, 19.7684f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1597, &QVECTOR3(101.706f, -0.889f, 19.7684f), Q8(0.5f), SfxFlag_None);
 
             SysWork_StateStepIncrement(0);
 
@@ -296,7 +296,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 3:
-            func_8005DC1C(Sfx_Unk1596, &QVECTOR3(101.706f, -0.889f, 19.7684f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1596, &QVECTOR3(101.706f, -0.889f, 19.7684f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -367,7 +367,7 @@ void func_800D1AF8(void) // 0x800D1AF8
         case 13:
             Chara_Spawn(Chara_Kaufmann, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 3);
 
-            func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), SfxFlag_None);
 
             Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
 
@@ -443,7 +443,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 27:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1595, &QVECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), SfxFlag_None);
 
             Savegame_EventFlagClear(EventFlag_395);
 

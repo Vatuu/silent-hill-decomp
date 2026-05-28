@@ -189,7 +189,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
     else if (romperProps.flags & RomperFlag_7)
     {
         romperProps.field_116 = Q12(0.8f);
-        func_8005DC1C(Sfx_Unk1400, &romper->position, Q8(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1400, &romper->position, Q8(0.5f), SfxFlag_None);
     }
 
     romperProps.flags &= ~RomperFlag_7;
@@ -198,7 +198,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
     {
         if (romperProps.timer_118 == Q12(0.0f))
         {
-            func_8005DC1C(Sfx_Unk1401, &romper->position, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1401, &romper->position, Q8(0.5f), SfxFlag_None);
             romperProps.timer_118 = Q12(3.2f);
         }
         else
@@ -218,7 +218,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
     if (romperProps.field_11A != 0)
     {
-        func_8005DC1C(Sfx_Unk1402, &romper->position, Rng_GenerateUInt(120, 135), 0);
+        func_8005DC1C(Sfx_Unk1402, &romper->position, Rng_GenerateUInt(120, 135), SfxFlag_None);
         romperProps.field_11A = 0;
     }
 
@@ -246,7 +246,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
                 var_s1 = Q6(1.875f);
             }
 
-            func_8005DC1C(Sfx_Unk1404, &romper->position, Rng_AddGeneratedUInt(var_s1, 0, 15) >> 1, 0);
+            func_8005DC1C(Sfx_Unk1404, &romper->position, Rng_AddGeneratedUInt(var_s1, 0, 15) >> 1, SfxFlag_None);
             romperProps.timer_11C = Rng_GenerateInt(Q12(4.5f), Q12(6.5f) - 1);
         }
     }
@@ -978,7 +978,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
         {
             if (!(romperProps.flags & RomperFlag_9))
             {
-                func_8005DC1C(Sfx_Unk1403, &romper->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1403, &romper->position, Q8(0.5f), SfxFlag_None);
                 romperProps.flags |= RomperFlag_9;
             }
 

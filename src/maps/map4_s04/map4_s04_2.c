@@ -413,7 +413,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             D_800D37C1            = 0;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
-            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -531,7 +531,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 22:
-            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
@@ -540,7 +540,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 24:
-            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 25:

@@ -279,7 +279,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
                 if (g_SysWork.sysStateSteps[0] != 10)
                 {
-                    func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
                     SysWork_StateStepSet(0, 14);
                 }
             }
@@ -303,9 +303,9 @@ void sharedFunc_800D15F0_3_s01(void)
             if (g_SysWork.field_28 > Q12(0.5f))
             {
 #if defined(MAP7_S01) || defined(MAP7_S02)
-                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
 #else
-                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), SfxFlag_None);
 #endif
                 SysWork_StateStepIncrement(0);
             }
@@ -319,9 +319,9 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 SD_Call(Sfx_Unk1502);
 #if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP7_S01) || defined(MAP7_S02)
-                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
 #else
-                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), SfxFlag_None);
 #endif
                 Sd_SfxStop(Sfx_Unk1499);
                 SysWork_StateStepIncrement(0);

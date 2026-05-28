@@ -686,7 +686,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             if (Player_AnimPlaybackStateGet() == 1 && g_SysWork.enablePlayerMatchAnim == false)
             {
                 g_SysWork.enablePlayerMatchAnim = true;
-                func_8005DC1C(Sfx_Unk1356, &player->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1356, &player->position, Q8(0.5f), SfxFlag_None);
             }
 
             if (player->model.anim.keyframeIdx >= keyframeIdxMax)

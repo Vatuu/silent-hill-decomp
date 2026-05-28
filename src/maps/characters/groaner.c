@@ -1881,7 +1881,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
         groanerProps.timer_10C += g_DeltaTime;
         if (groanerProps.timer_10C >= Q12(0.0f))
         {
-            func_8005DC1C(Sfx_Unk1411, &groaner->position, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1411, &groaner->position, Q8(0.5f), SfxFlag_None);
             groanerProps.timer_10C = Q12(2.0f);
         }
     }
@@ -1898,11 +1898,11 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                 if (groaner->health > Q12(0.0f) &&
                     (groanerProps.flags.val32 & (GroanerFlag_3 | GroanerFlag_12)) == GroanerFlag_3)
                 {
-                    func_8005DC1C(Sfx_Unk1409, &groaner->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1409, &groaner->position, Q8(0.5f), SfxFlag_None);
                 }
                 else
                 {
-                    func_8005DC1C(Sfx_Unk1414, &groaner->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1414, &groaner->position, Q8(0.5f), SfxFlag_None);
                 }
 
                 groanerProps.flags.val16[0] &= ~GroanerFlag_12;
@@ -1921,7 +1921,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
             {
                 if (groaner->model.anim.status == 33)
                 {
-                    func_8005DC1C(Sfx_Unk1410, &groaner->position, Q8(0.25f), 0);
+                    func_8005DC1C(Sfx_Unk1410, &groaner->position, Q8(0.25f), SfxFlag_None);
                     groanerProps.timer_10C = Rng_GenerateInt(Q12(0.5f), Q12(0.6f) - 1);
                     groanerProps.field_10E = 3;
                 }
@@ -1929,7 +1929,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                          ANIM_STATUS_IDX_GET(groaner->model.anim.status) != GroanerAnim_StandToJumpAttack &&
                          !Rng_GenerateUInt(0, 15))
                 {
-                    func_8005DC1C(Sfx_Unk1406, &groaner->position, (Q12_DIV(groaner->health, Q12(280.0f)) >> 7) + 32, 0);
+                    func_8005DC1C(Sfx_Unk1406, &groaner->position, (Q12_DIV(groaner->health, Q12(280.0f)) >> 7) + 32, SfxFlag_None);
                     groanerProps.timer_10C = Rng_GenerateInt(Q12(4.8f), Q12(8.0f) - 2);
                     groanerProps.field_10E = 1;
                 }

@@ -960,11 +960,11 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
             Collision_SurfaceGet(&surface, scratcher->position.vx, scratcher->position.vz);
             if (surface.groundType == GroundType_11)
             {
-                func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.5f), SfxFlag_None);
             }
         }
 
@@ -979,11 +979,11 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
             Collision_SurfaceGet(&surface, sfxPos.vx, sfxPos.vz);
             if (surface.groundType == GroundType_11)
             {
-                func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8005DC1C(Sfx_Unk1581, &sfxPos, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1581, &sfxPos, Q8(0.5f), SfxFlag_None);
             }
         }
 
@@ -998,11 +998,11 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
             Collision_SurfaceGet(&surface, sfxPos.vx, sfxPos.vz);
             if (surface.groundType == GroundType_11)
             {
-                func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1582, &sfxPos, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8005DC1C(Sfx_Unk1581, &sfxPos, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1581, &sfxPos, Q8(0.5f), SfxFlag_None);
             }
         }
     }
@@ -1015,7 +1015,7 @@ void HangedScratcher_Control_14(s_SubCharacter* scratcher)
         sfxPos.vx = scratcher->position.vx;
         sfxPos.vy = scratcher->position.vy + Q12(0.5f);
         sfxPos.vz = scratcher->position.vz + Q12(1.5f);
-        func_8005DC1C(Sfx_Unk1577, &sfxPos, Q8(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1577, &sfxPos, Q8(0.5f), SfxFlag_None);
     }
 }
 
@@ -1140,11 +1140,11 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
                 if (surface.groundType == GroundType_11)
                 {
-                    func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.5f), SfxFlag_None);
                 }
                 else
                 {
-                    func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.5f), SfxFlag_None);
                 }
             }
             else if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_16, true))
@@ -1153,11 +1153,11 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
                 if (surface.groundType == GroundType_11)
                 {
-                    func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.25f), 0);
+                    func_8005DC1C(Sfx_Unk1582, &scratcher->position, Q8(0.25f), SfxFlag_None);
                 }
                 else
                 {
-                    func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.25f), 0);
+                    func_8005DC1C(Sfx_Unk1581, &scratcher->position, Q8(0.25f), SfxFlag_None);
                 }
             }
         }
@@ -1713,7 +1713,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             if (scratcherProps.timer_100 >= Q12(0.0f))
             {
                 scratcherProps.timer_100 = Q12(0.75f);
-                func_8005DC1C(Sfx_Unk1580, &scratcher->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1580, &scratcher->position, Q8(0.5f), SfxFlag_None);
             }
         }
     }
@@ -1723,11 +1723,11 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
         {
             if (scratcherProps.flags & HangedScratcherFlag_Airborne)
             {
-                func_8005DC1C(Sfx_Unk1584, &scratcher->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1584, &scratcher->position, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8005DC1C(Sfx_Unk1579, &scratcher->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1579, &scratcher->position, Q8(0.5f), SfxFlag_None);
             }
 
             scratcherProps.timer_100 = Q12(0.5f);
@@ -1752,7 +1752,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(6.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(8.0f) - 1);
-                            func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), 0);
+                            func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), SfxFlag_None);
                         }
                     }
                 }
@@ -1779,7 +1779,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
                                                 g_SysWork.playerWork.player.position.vz - scratcher->position.vz) > Q12(4.5f))
                         {
                             scratcherProps.timer_108 = Rng_GenerateInt(Q12(3.5f), Q12(7.5f) - 1);
-                            func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), 0);
+                            func_8005DC1C(Sfx_Unk1583, &scratcher->position, Q8(0.5f), SfxFlag_None);
                         }
                     }
                 }

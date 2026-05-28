@@ -1258,7 +1258,7 @@ void func_800D7D74(s32 arg0) // 0x800D7D74
             sp20.vy += ptr->field_4.vy * 0x10;
             sp20.vz += ptr->field_4.vz * 0x10;
 
-            func_8005DC1C(Sfx_Unk1694, &sp20, D_800F2430, 0);
+            func_8005DC1C(Sfx_Unk1694, &sp20, D_800F2430, SfxFlag_None);
         }
 
         func_800D71B0(&sp10, 0x1E);
@@ -2190,7 +2190,7 @@ s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
                 sfxPos.vx = arg0->field_4.field_18.vx + ptr->field_0.vx;
                 sfxPos.vy = arg0->field_4.field_18.vy + ptr->field_0.vy;
                 sfxPos.vz = arg0->field_4.field_18.vz + ptr->field_0.vz;
-                func_8005DC1C(Sfx_Unk1692, &sfxPos, Q8_CLAMPED(1.0f), 0);
+                func_8005DC1C(Sfx_Unk1692, &sfxPos, Q8_CLAMPED(1.0f), SfxFlag_None);
             }
 
             arg0->field_4.field_C++;
@@ -3122,7 +3122,7 @@ void func_800DBAE8(const VECTOR3* pos, s32 idx) // 0x800DBAE8
         D_800EC770[idx].field_6 = temp_s0 + (Rng_Rand16() / ((SHRT_MAX / (temp_s0 >> 3)) + 1));
         D_800F3D98[idx]         = 0;
 
-        func_8005DC1C(D_800EC770[idx].field_0, pos, D_800EC770[idx].field_2, 0);
+        func_8005DC1C(D_800EC770[idx].field_0, pos, D_800EC770[idx].field_2, SfxFlag_None);
     }
 }
 

@@ -454,9 +454,9 @@ typedef struct _SysWork
     /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `lib_unk`.*/
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT];
                    // 2 bytes of padding.
-    /* 0x275C   */ q19_12           field_275C;
-    /* 0x2760   */ s32              field_2760;
-    /* 0x2764   */ s32              field_2764;
+    /* 0x275C   */ q23_8            field_275C; // } SFX volumes?
+    /* 0x2760   */ q23_8            field_2760; // }
+    /* 0x2764   */ q23_8            field_2764; // }
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 

@@ -187,7 +187,7 @@ void PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx)
 
     sfxPair = g_NursePuppetSfxs;
     idx0    = (nurseProps.field_124->idx_1C * 9) + idx;
-    func_8005DC1C(sfxPair[idx0].sfxId, &nurse->position, sfxPair[idx0].vol, 0);
+    func_8005DC1C(sfxPair[idx0].sfxId, &nurse->position, sfxPair[idx0].vol, SfxFlag_None);
 }
 
 s32 PuppetNurse_AnimSfxGet(s32 animFrame)

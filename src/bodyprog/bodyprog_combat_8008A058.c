@@ -1210,7 +1210,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
     if (sfxId != 0)
     {
-        func_8005DC1C(sfxId, pos, Q8(0.75f), 0);
+        func_8005DC1C(sfxId, pos, Q8(0.75f), SfxFlag_None);
     }
 }
 
@@ -1291,7 +1291,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
             if (target->model.charaId == Chara_Padlock)
             {
-                func_8005DC1C(Sfx_Unk1392, attackPos, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1392, attackPos, Q8(0.5f), SfxFlag_None);
             }
             else
             {

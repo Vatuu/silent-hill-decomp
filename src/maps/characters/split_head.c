@@ -149,12 +149,12 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
     {
         if (splitHeadProps.flags & SplitHeadFlag_8)
         {
-            func_8005DC1C(Sfx_Unk1422, &splitHead->position, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1422, &splitHead->position, Q8(0.5f), SfxFlag_None);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(3.0f), Q12(5.0f) - 1);
         }
         else if (splitHeadProps.flags & SplitHeadFlag_7)
         {
-            func_8005DC1C(Sfx_Unk1474, &splitHead->position, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1474, &splitHead->position, Q8(0.5f), SfxFlag_None);
             splitHeadProps.field_10C = Rng_GenerateInt(Q12(1.5f), Q12(2.5f) - 1);
         }
     }
@@ -308,7 +308,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
                 if (sharedFunc_800D4530_1_s05(splitHead) != false)
                 {
                     splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_BiteAttack, false);
-                    func_8005DC1C(Sfx_Unk1475, &splitHead->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1475, &splitHead->position, Q8(0.5f), SfxFlag_None);
                 }
             }
         }
@@ -623,7 +623,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
                 if (sharedFunc_800D4530_1_s05(splitHead))
                 {
                     splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_3, false);
-                    func_8005DC1C(Sfx_Unk1471, &splitHead->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1471, &splitHead->position, Q8(0.5f), SfxFlag_None);
                 }
             }
         }
@@ -960,7 +960,7 @@ void SplitHead_Control_6(s_SubCharacter* splitHead)
 
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
-                func_8005DC1C(Sfx_Unk1479, &splitHead->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1479, &splitHead->position, Q8(0.5f), SfxFlag_None);
             }
 
             Savegame_EventFlagSet(EventFlag_131);
@@ -1690,7 +1690,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
                 splitHeadProps.flags |= SplitHeadFlag_1 | SplitHeadFlag_9;
 
-                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork.player.position, Q8(0.999f), 2);
+                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork.player.position, Q8(0.999f), SfxFlag_NoDistAtten);
             }
         }
     }

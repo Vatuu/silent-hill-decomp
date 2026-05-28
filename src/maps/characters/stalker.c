@@ -2697,7 +2697,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
                 if (stalkerProps.timer_108 > Q12(0.2f) &&
                     stalkerProps.timer_108 < Q12(1.2f))
                 {
-                    func_8005DC1C(Sfx_Unk1365, &stalker->position, Q8(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1365, &stalker->position, Q8(0.5f), SfxFlag_None);
                     stalkerProps.timer_108 += Q12(1.0f);
                 }
                 else if (stalkerProps.timer_108 < Q12(0.0f) ||
@@ -2722,7 +2722,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
                     break;
                 }
 
-                func_8005DC1C(stalkerProps.sfxId_102, &stalker->position, Q8(0.5f), 0);
+                func_8005DC1C(stalkerProps.sfxId_102, &stalker->position, Q8(0.5f), SfxFlag_None);
                 stalkerProps.timer_108 += Q12(1.0f);
                 break;
 
@@ -2733,7 +2733,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
                 {
                     if (Rng_GenerateInt(0, 7)) // 7 in 8 chance?
                     {
-                        func_8005DC1C(Sfx_Unk1363, &stalker->position, Q8(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1363, &stalker->position, Q8(0.5f), SfxFlag_None);
                     }
 
                     stalkerProps.field_10A = 0;
@@ -2745,7 +2745,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
                 if (stalkerProps.timer_108 > Q12(0.2f) &&
                     stalkerProps.timer_108 < Q12(1.2f))
                 {
-                    func_8005DC1C(stalkerProps.sfxId_102, &stalker->position, Q8(0.5f), 0);
+                    func_8005DC1C(stalkerProps.sfxId_102, &stalker->position, Q8(0.5f), SfxFlag_None);
                     stalkerProps.timer_108 += Q12(1.0f);
                 }
                 else if (stalkerProps.timer_108 < Q12(0.0f) ||

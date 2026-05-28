@@ -295,7 +295,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 4:
-            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &soundPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -304,7 +304,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 6:
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, playerChara, 118, false);
-            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &soundPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:

@@ -128,7 +128,7 @@ void func_800D9610(void) // 0x800D9610
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1355, &sfxPos, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1355, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1587,7 +1587,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs[0].model.charaId = Chara_None;
 
-            func_8005DC1C(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
         }
     }
 

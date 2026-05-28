@@ -1693,7 +1693,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
             sfxId = Sfx_Unk1552;
         }
 
-        func_8005DC1C(sfxId, &twinfeeler->position, Q8(0.5f), 0);
+        func_8005DC1C(sfxId, &twinfeeler->position, Q8(0.5f), SfxFlag_None);
         twinfeelerProps.field_E8.val32 = Rng_GenerateInt(Q12(1.0f), Q12(1.8f) - 1);
     }
     else
@@ -1755,7 +1755,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx)
 {
-    func_8005DC1C(D_800DB1F8[soundIdx].id_0, &chara->position, D_800DB1F8[soundIdx].volume_2.val16, 0);
+    func_8005DC1C(D_800DB1F8[soundIdx].id_0, &chara->position, D_800DB1F8[soundIdx].volume_2.val16, SfxFlag_None);
 }
 
 u32 func_800D3B1C(void) // 0x800D3B1C
@@ -3462,7 +3462,7 @@ void func_800D6774(void) // 0x800D6774
 
             g_SysWork.playerWork.player.position.vy = surface.groundHeight;
 
-            func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
             func_80089470();
             SysWork_StateStepIncrement(0);
             break;
@@ -3619,7 +3619,7 @@ void func_800D6F24(void) // 0x800D6F24
             Camera_PositionSet(NULL, Q12(128.82f), Q12(-0.26f), Q12(139.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(125.24f), Q12(-0.8f), Q12(140.79f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            func_8005DC1C(Sfx_Unk1554, &QVECTOR3(132.0f, -0.75f, 140.0f), Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1554, &QVECTOR3(132.0f, -0.75f, 140.0f), Q8(0.5f), SfxFlag_None);
 
             SysWork_StateStepIncrement(0);
 
@@ -4962,7 +4962,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         {
             if (D_800E05A8 == Q12(0.0f))
             {
-                func_8005DC1C(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), SfxFlag_None);
 
                 g_SysWork.playerWork.player.fallSpeed += Q12(1.0f);
                 D_800E05AE += Q12(1.0f);

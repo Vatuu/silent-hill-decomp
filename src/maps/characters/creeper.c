@@ -143,7 +143,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     // Creeper has been hit.
     if (creeper->damage.amount > Q12(0.0f) && creeper->health > Q12(0.0f))
     {
-        func_8005DC1C(Sfx_Unk1425, &creeper->position, Q8(0.5f), 0);
+        func_8005DC1C(Sfx_Unk1425, &creeper->position, Q8(0.5f), SfxFlag_None);
         creeperProps.chirpTimer = Q12(0.0f);
 
         // TODO: Weird position scaling?
@@ -318,7 +318,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
                 {
                     if (creeperProps.chirpTimer < Q12(2.5f))
                     {
-                        func_8005DC1C(Sfx_Unk1427, &creeper->position, Q8(0.5f), 0);
+                        func_8005DC1C(Sfx_Unk1427, &creeper->position, Q8(0.5f), SfxFlag_None);
 
                         creeperProps.chirpTimer = Q12(0.0f);
                         sharedData_800E57CC_1_s02--;
@@ -333,7 +333,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
             {
                 s32 i;
 
-                func_8005DC1C(Sfx_Unk1427, &creeper->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1427, &creeper->position, Q8(0.5f), SfxFlag_None);
                 creeperProps.chirpTimer = Q12(0.0f);
 
                 // Update other Creepers.
@@ -362,7 +362,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
             }
             else if (!Rng_GenerateUInt(0, 63) && creeperProps.chirpTimer > Q12(2.0f)) // 1 in 64 chance.
             {
-                func_8005DC1C(Sfx_Unk1426, &creeper->position, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1426, &creeper->position, Q8(0.5f), SfxFlag_None);
                 creeperProps.chirpTimer = Rng_GenerateInt(Q12(0.8f), Q12(1.8f) - 1);
             }
         }
@@ -586,7 +586,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
 
         if (!(creeperProps.flags & CreeperFlag_HasAttacked))
         {
-            func_8005DC1C(Sfx_Unk1424, &creeper->position, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1424, &creeper->position, Q8(0.5f), SfxFlag_None);
         }
 
         creeperProps.flags |= CreeperFlag_HasAttacked;
