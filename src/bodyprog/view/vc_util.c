@@ -9,7 +9,7 @@
 
 extern s32 g_VBlanks;
 
-void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
+void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {
     g_WorldGfxWork.vcCameraInternalInfo.mv_smooth   = VC_MV_CHASE;
     g_WorldGfxWork.vcCameraInternalInfo.ev_cam_rate = Q12(0.0f);

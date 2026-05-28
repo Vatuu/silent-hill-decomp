@@ -576,7 +576,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             g_Player_AnimResetRequest                                                              = true;
             sharedData_800E39E0_0_s00                                               = 0;
             D_800C4588                                                              = 0;
-            g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
+            g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
             return true;
     }
 #endif
@@ -591,7 +591,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerExtraState)
     extra  = &g_SysWork.playerWork.extra;
     player = &g_SysWork.playerWork.player;
 
-    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
 
     g_Player_AnimResetRequest = false;
 
@@ -644,7 +644,7 @@ s32 Player_AnimPlaybackStateGet(void)
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
     model    = &g_SysWork.playerWork.player.model;
-    animInfo = &g_MapOverlayHeader.harryMapAnimInfos[model->anim.status - ANIM_STATUS(38, false)];
+    animInfo = &g_MapOverlayHdr.harryMapAnimInfos[model->anim.status - ANIM_STATUS(38, false)];
 
     if (animInfo->playbackFunc == Anim_PlaybackOnce)
     {
@@ -673,12 +673,12 @@ s32 Player_AnimPlaybackStateGet(void)
 
 bool Player_MoveDistanceIsZero(void)
 {
-    return g_SysWork.playerWork.player.properties.player.moveDistance_126 == Q12(0.0f);
+    return g_SysWork.playerWork.player.properties.player.moveSpeed == Q12(0.0f);
 }
 
 void Player_MoveDistanceClear(void)
 {
-    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
 }
 
 void sharedFunc_800D2E6C_0_s00(void)
@@ -704,7 +704,7 @@ void Player_FallBackward(void)
     player      = &g_SysWork.playerWork.player;
     playerExtra = &g_SysWork.playerWork.extra;
 
-    playerProps.moveDistance_126 = Q12(2.3f);
+    playerProps.moveSpeed = Q12(2.3f);
     playerProps.headingAngle     = Q12_ANGLE(180.0f);
     g_Player_HeadingAngle        = Q12_ANGLE(180.0f);
 
@@ -989,7 +989,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     q3_12   angle0;
     bool    isInFront;
 
-    g_SysWork.playerWork.player.properties.player.moveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
     g_SysWork.playerWork.player.headingAngle                       = Q12_ANGLE(0.0f);
     isInFront                                                              = Math_AngleFrontCheck(*angle, g_SysWork.playerWork.player.rotation.vy);
 

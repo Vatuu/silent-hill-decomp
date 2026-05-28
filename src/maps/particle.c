@@ -68,8 +68,8 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
         case -1:
             if (arg3 == NO_VALUE)
             {
-                g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
-                g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+                g_SysWork.field_2349 = g_MapOverlayHdr.field_17;
+                g_SysWork.field_2348 = g_MapOverlayHdr.field_17;
             }
 
             sharedData_800DD598_0_s00 = 0;
@@ -347,8 +347,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 
             if (arg3 == NO_VALUE)
             {
-                g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
-                g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+                g_SysWork.field_2349 = g_MapOverlayHdr.field_17;
+                g_SysWork.field_2348 = g_MapOverlayHdr.field_17;
             }
 
             sharedData_800DD598_0_s00 = 0;
@@ -4278,7 +4278,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
 
     setPolyFT4TPage(prim, 0x2C);
 
-    switch (g_MapOverlayHeader.field_16)
+    switch (g_MapOverlayHdr.field_16)
     {
         case 0:
             break;

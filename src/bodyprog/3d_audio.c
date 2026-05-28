@@ -147,7 +147,7 @@ void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType)
 
 void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
-    q23_8 volCpy;
+    q23_8 adjVol;
     q23_8 balance;
 
     // Get stereo balance.
@@ -172,25 +172,25 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
 
     if (!(soundType & (1 << 1)))
     {
-        volCpy = func_8005D9B8(pos, vol);
+        adjVol = func_8005D9B8(pos, vol);
     }
     else
     {
-        volCpy = vol;
+        adjVol = vol;
     }
 
-    if (volCpy > Q8_CLAMPED(1.0f))
+    if (adjVol > Q8_CLAMPED(1.0f))
     {
-        volCpy = Q8_CLAMPED(1.0f);
+        adjVol = Q8_CLAMPED(1.0f);
     }
 
     if (soundType & (1 << 2))
     {
-        Sd_SfxAttributesUpdate(sfxId, balance, ~volCpy, pitch);
+        Sd_SfxAttributesUpdate(sfxId, balance, ~adjVol, pitch);
     }
     else
     {
-        Sd_PlaySfx(sfxId, balance, ~volCpy);
+        Sd_PlaySfx(sfxId, balance, ~adjVol);
     }
 }
 

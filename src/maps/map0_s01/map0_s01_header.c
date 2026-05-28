@@ -35,7 +35,7 @@ void (*g_MapEventFuncs[])() = {
     MapEvent_AirScreamerDeath
 };
 
-const s_MapOverlayHeader g_MapOverlayHeader = {
+const s_MapOverlayHdr g_MapOverlayHdr = {
     .mapInfo                        = &MAP_INFOS[MapType_THR],
     .mapRoomIdxGet              = Map_RoomIdxGet,
     .field_8                          = 34,

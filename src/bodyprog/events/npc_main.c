@@ -68,21 +68,21 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     VECTOR3*           pos;
 
     npcIdx             = 0;
-    curCharaSpawn      = g_MapOverlayHeader.charaSpawnInfos[0];
+    curCharaSpawn      = g_MapOverlayHdr.charaSpawnInfos[0];
     ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx];
 
     if (cond == false)
     {
         func_80037154();
 
-        if (g_MapOverlayHeader.npcSpawnEvent != NULL)
+        if (g_MapOverlayHdr.npcSpawnEvent != NULL)
         {
-            g_MapOverlayHeader.npcSpawnEvent();
+            g_MapOverlayHdr.npcSpawnEvent();
         }
     }
 
-    groupCharaId0 = g_MapOverlayHeader.charaGroupIds[0];
-    groupCharaId1 = g_MapOverlayHeader.charaGroupIds[1];
+    groupCharaId0 = g_MapOverlayHdr.charaGroupIds[0];
+    groupCharaId1 = g_MapOverlayHdr.charaGroupIds[1];
 
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
@@ -247,9 +247,9 @@ void Game_NpcUpdate(void) // 0x80038354
 
             // Check if map is low-visibility interior.
             isLowVisInterior = false;
-            if (g_MapOverlayHeader.mapInfo->flags & MapFlag_Interior)
+            if (g_MapOverlayHdr.mapInfo->flags & MapFlag_Interior)
             {
-                isLowVisInterior = (g_MapOverlayHeader.mapInfo->flags & (MapFlag_OneActiveChunk |
+                isLowVisInterior = (g_MapOverlayHdr.mapInfo->flags & (MapFlag_OneActiveChunk |
                                                                          MapFlag_TwoActiveChunks)) > 0;
             }
 
@@ -340,7 +340,7 @@ void Game_NpcUpdate(void) // 0x80038354
         Chara_DamagedFlagUpdate(curNpc);
         func_8003BD48(curNpc);
 
-        g_MapOverlayHeader.charaUpdateFuncs[curNpc->model.charaId](curNpc, g_CharaModelAnimsData[animDataIdx].activeAnmHdr, boneCoords);
+        g_MapOverlayHdr.charaUpdateFuncs[curNpc->model.charaId](curNpc, g_CharaModelAnimsData[animDataIdx].activeAnmHdr, boneCoords);
 
         func_8003BE28();
         func_80037E78(curNpc);
@@ -424,8 +424,8 @@ void Game_NpcUpdate(void) // 0x80038354
         else
         {
             var_s3 = 0;
-            if (!(g_MapOverlayHeader.mapInfo->flags & MapFlag_Interior) ||
-                !(g_MapOverlayHeader.mapInfo->flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
+            if (!(g_MapOverlayHdr.mapInfo->flags & MapFlag_Interior) ||
+                !(g_MapOverlayHdr.mapInfo->flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
             {
                 var_s3 = 1;
             }

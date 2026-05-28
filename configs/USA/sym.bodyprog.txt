@@ -3272,8 +3272,8 @@ sd_timer_event                               = 0x800C8AF8;
 //--- PA: 0x0A3FA0   VA: 0x800C8B00   subsegment: .bss, libsd/smf_mid
 //-------------------------------------------------------------------
 smf_song                                     = 0x800C8B00;
-// TODO: `g_MapOverlayHeader` is part of the overlay bin file, maybe should be moved to `sym.maps_shared.txt` or similar.
+// TODO: `g_MapOverlayHdr` is part of the overlay bin file, maybe should be moved to `sym.maps_shared.txt` or similar.
 // Including here for now since all map configs include this sym file, and bodyprog also reads from this header.
-g_MapOverlayHeader                           = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
+g_MapOverlayHdr                              = 0x800C957C; // type:MapOverlayHeader size:0x84C - size incomplete
 D_800FE5F8                                   = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
 hack_D_800FE5FC_fix                          = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.

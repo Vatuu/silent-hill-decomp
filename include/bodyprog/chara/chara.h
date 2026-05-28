@@ -179,7 +179,7 @@ typedef struct _PropsPlayer
     /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
     /* 0x122 */ q3_12         field_122; // Specially used when aiming an enemy. Y angle delta to target? 
     /* 0x124 */ q3_12         headingAngle;
-    /* 0x126 */ q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
+    /* 0x126 */ q3_12         moveSpeed; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_PropsPlayer;
 STATIC_ASSERT_SIZEOF(s_PropsPlayer, 64);
 
@@ -394,7 +394,7 @@ typedef struct _PropsLarvalStalker
     /* 0x11C */ s32        flags_11C;
     /* 0x120 */ u_Property field_120;
     /* 0x124 */ s16        field_124;
-    /* 0x126 */ q3_12      moveDistance_126;
+    /* 0x126 */ q3_12      moveSpeed;
 } s_PropsLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropsLarvalStalker, 64);
 
@@ -472,7 +472,7 @@ typedef struct _PropsSplitHead
     /* 0x11C */ s32     flags_11C; /** `e_SplitHeadFlags` */
     /* 0x120 */ s8      unk_120[4];
     /* 0x124 */ s16     field_124;
-    /* 0x126 */ q3_12   moveDistance_126;
+    /* 0x126 */ q3_12   moveSpeed;
 } s_PropsSplitHead;
 STATIC_ASSERT_SIZEOF(s_PropsSplitHead, 64);
 

@@ -55,9 +55,9 @@ void Bgm_TrackUpdate(bool arg0) // 0x80035DB4
 {
     D_800BCD5C = false;
 
-    if (g_MapOverlayHeader.bgmEvent != NULL) // Checks if function exists.
+    if (g_MapOverlayHdr.bgmEvent != NULL) // Checks if function exists.
     {
-        g_MapOverlayHeader.bgmEvent(arg0);
+        g_MapOverlayHdr.bgmEvent(arg0);
         if (arg0 == false && D_800BCD5C == false)
         {
             Bgm_Update(BgmFlag_Layer0, Q12(240.0f), 0);
@@ -362,7 +362,7 @@ void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
 {
     if (bgmIdx != BgmTrackIdx_None)
     {
-        g_MapOverlayHeader.bgmIdx = bgmIdx;
+        g_MapOverlayHdr.bgmIdx = bgmIdx;
     }
 }
 
@@ -380,25 +380,25 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
     z = g_SysWork.playerWork.player.position.vz;
 
     // Set map room index based on current player position.
-    if (g_MapOverlayHeader.mapRoomIdxGet == NULL)
+    if (g_MapOverlayHdr.mapRoomIdxGet == NULL)
     {
         newMapRoomIdx = 0;
     }
     else
     {
-        newMapRoomIdx = g_MapOverlayHeader.mapRoomIdxGet(x, z);
+        newMapRoomIdx = g_MapOverlayHdr.mapRoomIdxGet(x, z);
     }
     g_SavegamePtr->mapRoomIdx = newMapRoomIdx;
 }
 
 s32 func_8003647C(void) // 0x8003647C
 {
-    return g_SavegamePtr->mapRoomIdx > g_MapOverlayHeader.field_8;
+    return g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8;
 }
 
 s32 func_80036498(void) // 80036498
 {
-    return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHeader.field_8);
+    return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8);
 }
 
 // ========================================

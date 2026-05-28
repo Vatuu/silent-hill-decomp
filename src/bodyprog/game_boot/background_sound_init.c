@@ -64,7 +64,7 @@ bool Bgm_Init(void) // 0x80035780
             g_GameWork.gameStateSteps[1]++;
 
         case 1:
-            if (!Bgm_ActiveBgmTrackCheck(g_MapOverlayHeader.bgmIdx))
+            if (!Bgm_ActiveBgmTrackCheck(g_MapOverlayHdr.bgmIdx))
             {
                 g_GameWork.gameStateSteps[1] += 2;
             }
@@ -80,7 +80,7 @@ bool Bgm_Init(void) // 0x80035780
         case 2:
             if (func_80045BC8() == 0)
             {
-                Bgm_TrackSet(g_MapOverlayHeader.bgmIdx);
+                Bgm_TrackSet(g_MapOverlayHdr.bgmIdx);
                 g_GameWork.gameStateSteps[1]++;
             }
             break;
@@ -140,7 +140,7 @@ void Bgm_ChannelSet(void) // 0x80035924
 
 void func_8003596C(void) // 0x8003596C
 {
-    if (g_MapOverlayHeader.bgmIdx == 1)
+    if (g_MapOverlayHdr.bgmIdx == 1)
     {
         Bgm_TrackUpdate(true);
     }
@@ -164,15 +164,15 @@ bool Sd_AmbientSfxInit(void) // 0x8003599C
             {
                 if (Savegame_EventFlagGet(EventFlag_133) || Savegame_EventFlagGet(EventFlag_181))
                 {
-                    g_MapOverlayHeader.ambientAudioIdx = 11;
+                    g_MapOverlayHdr.ambientAudioIdx = 11;
                 }
                 else
                 {
-                    g_MapOverlayHeader.ambientAudioIdx = 4;
+                    g_MapOverlayHdr.ambientAudioIdx = 4;
                 }
             }
 
-            if (Sd_IsCurrentAmbientTargetCheck((s8)g_MapOverlayHeader.ambientAudioIdx) != false)
+            if (Sd_IsCurrentAmbientTargetCheck((s8)g_MapOverlayHdr.ambientAudioIdx) != false)
             {
                 SD_Call(17);
                 g_GameWork.gameStateSteps[1]++;
@@ -181,7 +181,7 @@ bool Sd_AmbientSfxInit(void) // 0x8003599C
             break;
 
         case 1:
-            Sd_AmbientSfxSet((s8)g_MapOverlayHeader.ambientAudioIdx);
+            Sd_AmbientSfxSet((s8)g_MapOverlayHdr.ambientAudioIdx);
             g_GameWork.gameStateSteps[1]++;
             return true;
 

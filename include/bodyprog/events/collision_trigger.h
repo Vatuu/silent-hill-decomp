@@ -3,7 +3,7 @@
 
 #include "bodyprog/map/map.h"
 
-void World_CollisionTriggersSet(s_MapOverlayHeader* overlayHdr);
+void World_CollisionTriggersSet(s_MapOverlayHdr* overlayHdr);
 
 void World_NearbyPlayerCollisionTriggersGet(void);
 

@@ -14,7 +14,7 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-void World_CollisionTriggersSet(s_MapOverlayHeader* overlayHeader) // 0x80040004
+void World_CollisionTriggersSet(s_MapOverlayHdr* overlayHeader) // 0x80040004
 {
     g_WorldGfxWork.collisionTriggers = &overlayHeader->collisionTriggers;
 }

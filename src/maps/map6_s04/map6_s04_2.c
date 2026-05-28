@@ -1735,12 +1735,12 @@ void func_800E1CA0(void) // 0x800E1CA0
 
     for (i = 0; i < 8; i++)
     {
-        g_MapOverlayHeader.harryMapAnimInfos[i + 16] = D_800CC424[i];
+        g_MapOverlayHdr.harryMapAnimInfos[i + 16] = D_800CC424[i];
     }
 
     for (i = 0; i < 4; i++)
     {
-        g_MapOverlayHeader.field_38[i + 8] = D_800CC4A4[i];
+        g_MapOverlayHdr.field_38[i + 8] = D_800CC4A4[i];
     }
 }
 
@@ -3541,7 +3541,7 @@ void func_800E636C(void) // 0x800E636C
 
                 if (temp_t1 == 0 && D_800EBA30 < 0)
                 {
-                    if (playerChara.properties.player.moveDistance_126 > Q12(3.0f))
+                    if (playerChara.properties.player.moveSpeed > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
@@ -3556,7 +3556,7 @@ void func_800E636C(void) // 0x800E636C
 
                 if (temp_t1 < 0 && D_800EBA30 >= 0)
                 {
-                    if (playerChara.properties.player.moveDistance_126 > Q12(3.0f))
+                    if (playerChara.properties.player.moveSpeed > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }

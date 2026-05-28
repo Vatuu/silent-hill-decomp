@@ -110,7 +110,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     playerExtra.model.stateStep    = 0;
                 }
 
-                playerProps.moveDistance_126 = Q12(0.0f);
+                playerProps.moveSpeed = Q12(0.0f);
                 playerProps.afkTimer         = Q12(0.0f);
         }
     }

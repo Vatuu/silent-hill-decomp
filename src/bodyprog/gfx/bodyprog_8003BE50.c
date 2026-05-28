@@ -170,7 +170,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
-void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
+void Ipd_PlayerChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
     u8         flags;
@@ -848,7 +848,7 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
     g_WorldGfxWork.harryModel.texture = image;
 }
 
-s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
+s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHdr* mapHdr) // 0x8003D21C
 {
     s_FsImageDesc image;
     bool          cond;

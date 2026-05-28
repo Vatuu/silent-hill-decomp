@@ -31,8 +31,8 @@ static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2
 
 void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 {
-    Gfx_MapEffectsAssign(&g_MapOverlayHeader);
-    g_MapOverlayHeader.enviromentSet(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
+    Gfx_MapEffectsAssign(&g_MapOverlayHdr);
+    g_MapOverlayHdr.enviromentSet(g_MapOverlayHdr.field_17, g_MapOverlayHdr.field_16);
 }
 
 void func_80035B98(void) // 0x80035B98
@@ -62,8 +62,8 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
             AreaLoad_UpdatePlayerPosition();
         }
 
-        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork.player.position);
-        World_CollisionTriggersSet(&g_MapOverlayHeader);
+        vcInitCamera(&g_MapOverlayHdr, &g_SysWork.playerWork.player.position);
+        World_CollisionTriggersSet(&g_MapOverlayHdr);
 
         camLookAt.vy = Q12(-0.6f);
         camLookAt.vx = g_SysWork.playerWork.player.position.vx;

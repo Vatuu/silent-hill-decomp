@@ -29,10 +29,10 @@
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker)
 {
     // TODO: Not stalker? Properties don't fit.
-    stalker->properties.player.field_F4         = Q12_ANGLE(0.0f);
-    stalker->properties.player.field_F0         = Q12(0.0f);
-    stalker->properties.player.groundHeight     = Q12(0.0f);
-    stalker->properties.player.moveDistance_126 = Q12(0.0f);
+    stalker->properties.player.field_F4     = Q12_ANGLE(0.0f);
+    stalker->properties.player.field_F0     = Q12(0.0f);
+    stalker->properties.player.groundHeight = Q12(0.0f);
+    stalker->properties.player.moveSpeed    = Q12(0.0f);
 }
 
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
@@ -49,7 +49,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
     else
     {
         player->properties.player.afkTimer = Q12(0.0f);
-        player->model.stateStep              = 0;
+        player->model.stateStep            = 0;
     }
 
     player->model.anim.flags |= AnimFlag_Unlocked;
@@ -57,11 +57,11 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
 
 void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
 {
-    player->properties.player.moveDistance_126 = Q12(0.0f);
-    player->properties.player.runTimer_F8      = Q12(0.0f);
-    player->properties.player.field_F0         = Q12(0.0f);
-    player->properties.player.afkTimer      = afkTime;
-    player->model.stateStep                   = 0;
+    player->properties.player.moveSpeed   = Q12(0.0f);
+    player->properties.player.runTimer_F8 = Q12(0.0f);
+    player->properties.player.field_F0    = Q12(0.0f);
+    player->properties.player.afkTimer    = afkTime;
+    player->model.stateStep               = 0;
 }
 
 void Player_RunTimerReset(s_SubCharacter* player)

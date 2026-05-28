@@ -3917,9 +3917,9 @@ void Gfx_Items_DrawInit(void) // 0x80054558
     g_Inventory_DescriptionRollTimer           = 0;
     g_Inventory_ScrollTransitionTimer          = 0;
 
-    for (i = 0; g_MapOverlayHeader.loadableItems[i] != 0; i++)
+    for (i = 0; g_MapOverlayHdr.loadableItems[i] != 0; i++)
     {
-        g_Item_MapLoadableItems[i] = g_MapOverlayHeader.loadableItems[i];
+        g_Item_MapLoadableItems[i] = g_MapOverlayHdr.loadableItems[i];
     }
 
     g_Item_MapLoadableItems[i] = 0;
@@ -3997,7 +3997,7 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx)
     }
     else
     {
-        itemId = g_MapOverlayHeader.loadableItems[loadableItemIdx];
+        itemId = g_MapOverlayHdr.loadableItems[loadableItemIdx];
     }
 
     switch (itemId)

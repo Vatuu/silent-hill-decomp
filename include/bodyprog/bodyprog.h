@@ -1052,6 +1052,7 @@ extern GsCOORDINATE2* D_800C42B8; // Set to view coord.
 
 extern VECTOR3 D_800C42C0;
 
+// TODO: Belongs in `3d_audio.h`.
 extern VECTOR3* D_800C42CC;
 
 extern q4_12 g_Player_RotationDeltaToTargetY;
@@ -1122,7 +1123,7 @@ extern u8 D_800AD480[24];
 /** Weapon attacks. */
 extern s_800AD4C8 D_800AD4C8[70];
 
-extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
+extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
 
 extern s16 SQRT[100];
 
@@ -1153,7 +1154,7 @@ void func_8003BD48(const s_SubCharacter* chara);
 
 void CharaModel_Free(s_CharaModel* model);
 
-void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
+void Ipd_PlayerChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** @brief Loads map chunks in view and checks if they are loaded.
  *
@@ -1208,7 +1209,7 @@ void WorldGfx_HarryCharaLoad(void);
  * @param mapHdr Map header.
  * @return Character model queue index.
  */
-s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr);
+s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHdr* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
@@ -1791,6 +1792,7 @@ s32 func_8005D86C(s32 arg0);
 /** Looks like a clamping function. */
 s32 func_8005D974(s32 arg0);
 
+// Computes distance-adjusted volume?
 s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
 
 /** Spatial SFX func? */

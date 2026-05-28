@@ -286,7 +286,7 @@ typedef struct
     u8    unk_18[8];
     s32   field_20;
     s32   field_24;
-} s_MapOverlayHeader_5C;
+} s_MapOverlayHdr_5C;
 
 typedef struct
 {
@@ -305,8 +305,8 @@ typedef struct
     s32   field_14;
     s32   field_18;
     s32   field_1C;
-} s_MapOverlayHeader_7C;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader_7C, 32);
+} s_MapOverlayHdr_7C;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHdr_7C, 32);
 
 // Related to water particles.
 typedef struct
@@ -327,7 +327,7 @@ typedef struct
     s16    field_74; // Particle count?
     s8     __pad_76[2];
     u8     field_78; // Active index for above arrays.
-} s_MapOverlayHeader_94;
+} s_MapOverlayHdr_94;
 
 /** @brief Contains X/Z coordinates and optional 4 bytes of data.
  * Map headers include an array of these, into which `s_EventData` includes an index. */
@@ -351,7 +351,7 @@ typedef struct _EventData
     /* 0x2    */ s16 disabledEventFlag;
     /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
     /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
-    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHeader.mapPoints`. */
+    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHdr.mapPoints`. */
     /* 0x6    */ u8  requiredItemId;     /** `e_InvItemId` that player must use from item screen. */
     /* 0x7    */ u8  __pad_7;
     /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */
@@ -407,11 +407,11 @@ typedef struct _CollisionTrigger
 } s_CollisionTrigger;
 STATIC_ASSERT_SIZEOF(s_CollisionTrigger, 4);
 
-/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
+/** TODO: `g_MapOverlayHdr` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
  * If field has a comment that lists only certain maps, it means all others set this field to 0.
  * func(?) means the signature is unknown and a default void() was selected for now.
  */
-typedef struct _MapOverlayHeader
+typedef struct _MapOverlayHdr
 {
     /* 0x0   */ s_MapInfo*             mapInfo;
     /* 0x4   */ u8                     (*mapRoomIdxGet)(q19_12 posX, q19_12 posY); // Called by `Savegame_MapRoomIdxUpdate`.
@@ -449,7 +449,7 @@ typedef struct _MapOverlayHeader
     /* 0x54  */ s_BloodSplat*          bloodSplats;
     /* 0x58  */ s16                    bloodSplatCount;
                 // 2 bytes of padding.
-    /* 0x5C  */ s_MapOverlayHeader_5C* field_5C;
+    /* 0x5C  */ s_MapOverlayHdr_5C* field_5C;
 
     /* 0x60  */ void                   (*func_60)(s32 idx, bool arg1);
     /* 0x64  */ s32                    (*func_64)(POLY_FT4** poly, s32);
@@ -458,13 +458,13 @@ typedef struct _MapOverlayHeader
     /* 0x70  */ s32                    (*func_70)(POLY_FT4** poly, s32);
     /* 0x74  */ void                   (*func_74)();
     /* 0x78  */ s32                    (*func_78)(POLY_FT4** poly, s32);
-    /* 0x7C  */ s_MapOverlayHeader_7C* field_7C; // Only map1_s01, map6_s04.
+    /* 0x7C  */ s_MapOverlayHdr_7C* field_7C; // Only map1_s01, map6_s04.
     /* 0x80  */ void                   (*func_80)();
     /* 0x84  */ s32                    (*func_84)(POLY_FT4** poly, s32);
     /* 0x88  */ s32*                   func_88;                          // Only map0_s01, map7_s01.
     /* 0x8C  */ s32                    (*func_8C)(POLY_FT4** poly, s32); // Only map0_s01, map7_s01.
     /* 0x90  */ s32                    (*func_90)(POLY_FT4** poly, s32); // Only map5_s00.
-    /* 0x94  */ s_MapOverlayHeader_94* field_94;                         // Only map1_s02, map1_s03.
+    /* 0x94  */ s_MapOverlayHdr_94* field_94;                         // Only map1_s02, map1_s03.
     /* 0x98  */ s32                    (*func_98)(POLY_FT4** poly, s32); // Only map1_s02, map1_s03.
     /* 0x9C  */ void                   (*func_9C)();                     // Only map1_s02, map1_s03.
     /* 0xA0  */ void*                  ptr_A0;                           // M1S03 only, pointer to `s_800E3A40` array.
@@ -534,8 +534,8 @@ typedef struct _MapOverlayHeader
     /* 0x24C */ s_SpawnInfo            charaSpawnInfos[2][16];           /** Array of character type/position/flags. `flags == SpawnFlags_None` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     /* 0x3CC */ VC_ROAD_DATA           cameraPaths[CAMERA_PATH_COUNT_MAX];
     /* 0xD2C */ s_CollisionTrigger     collisionTriggers[COLLISION_TRIGGER_COUNT_MAX];
-} s_MapOverlayHeader;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172);
+} s_MapOverlayHdr;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHdr, 4172);
 
 extern const s_MapInfo MAP_INFOS[MapType_Count];
 

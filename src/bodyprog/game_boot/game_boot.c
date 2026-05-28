@@ -164,10 +164,10 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 5:
-            Fs_CharaAnimDataAlloc(1, g_MapOverlayHeader.charaGroupIds[0], NULL, 0);
-            Fs_CharaAnimDataAlloc(2, g_MapOverlayHeader.charaGroupIds[1], NULL, 0);
-            Fs_CharaAnimDataAlloc(3, g_MapOverlayHeader.charaGroupIds[2], NULL, 0);
-            WorldGfx_MapInitCharaLoad(&g_MapOverlayHeader);
+            Fs_CharaAnimDataAlloc(1, g_MapOverlayHdr.charaGroupIds[0], NULL, 0);
+            Fs_CharaAnimDataAlloc(2, g_MapOverlayHdr.charaGroupIds[1], NULL, 0);
+            Fs_CharaAnimDataAlloc(3, g_MapOverlayHdr.charaGroupIds[2], NULL, 0);
+            WorldGfx_MapInitCharaLoad(&g_MapOverlayHdr);
 
             g_GameWork.gameStateSteps[0]++;
 
@@ -184,7 +184,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                 Map_WorldClear();
             }
 
-            Ipd_PlayerChunkInit(&g_MapOverlayHeader, playerChara.position.vx, playerChara.position.vz);
+            Ipd_PlayerChunkInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
             if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
@@ -269,7 +269,7 @@ static void GameBoot_LoadingScreen(void) // 0x80034E58
     {
         ScreenFade_Start(false, true, false);
         g_ScreenFadeTimestep = Q12(0.8f);
-        g_MapOverlayHeader.loadingScreenFuncs[g_SysWork.loadingScreenIdx]();
+        g_MapOverlayHdr.loadingScreenFuncs[g_SysWork.loadingScreenIdx]();
     }
 
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
@@ -303,8 +303,8 @@ static void GameBoot_NpcInit(void) // 0x80034F18
 
     if (g_SysWork.field_234A)
     {
-        g_MapOverlayHeader.enviromentSet(g_SysWork.field_2349, 127);
-        g_MapOverlayHeader.particlesUpdate(0, g_SavegamePtr->mapIdx, 0);
+        g_MapOverlayHdr.enviromentSet(g_SysWork.field_2349, 127);
+        g_MapOverlayHdr.particlesUpdate(0, g_SavegamePtr->mapIdx, 0);
     }
 
     GameBoot_NpcClear();
@@ -326,15 +326,15 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     mapOvlId = g_SavegamePtr->mapIdx;
 
-    vcInitCamera(&g_MapOverlayHeader, &playerChara.position);
+    vcInitCamera(&g_MapOverlayHdr, &playerChara.position);
 
     vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
-    World_CollisionTriggersSet(&g_MapOverlayHeader);
+    World_CollisionTriggersSet(&g_MapOverlayHdr);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
 
-    g_MapOverlayHeader.particlesUpdate(0, mapOvlId, NO_VALUE);
+    g_MapOverlayHdr.particlesUpdate(0, mapOvlId, NO_VALUE);
 
     GameBoot_NpcClear();
 

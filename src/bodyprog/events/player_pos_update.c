@@ -50,9 +50,9 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
 {
     s_CollisionSurface surface;
 
-    if (g_MapOverlayHeader.updateWorldObjects != NULL)
+    if (g_MapOverlayHdr.updateWorldObjects != NULL)
     {
-        g_MapOverlayHeader.updateWorldObjects();
+        g_MapOverlayHdr.updateWorldObjects();
     }
 
     Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);

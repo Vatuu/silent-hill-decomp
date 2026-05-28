@@ -49,7 +49,7 @@ STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
 /** @brief Camera path data.
  *
- * @note In SH2, the `.cam` files contain this struct, while in SH1 this is part of `s_MapOverlayHeader`.
+ * @note In SH2, the `.cam` files contain this struct, while in SH1 this is part of `s_MapOverlayHdr`.
  */
 typedef struct _VC_ROAD_DATA
 {

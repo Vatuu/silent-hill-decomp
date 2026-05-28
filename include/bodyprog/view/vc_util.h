@@ -3,14 +3,14 @@
 
 #include "gpu.h"
 
-struct _MapOverlayHeader;
+struct _MapOverlayHdr;
 
 /** @brief Initializes the camera subsystem.
  *
  * @param map_overlay_ptr Active map overlay header.
  * @param chr_pos Character position.
  */
-void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos);
+void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos);
 
 /** @brief Warps the camera in relation to a character position.
  *

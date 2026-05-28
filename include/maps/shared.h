@@ -115,7 +115,7 @@ typedef struct
     s16      idx;
 } s_sharedData_800D5AB0_1_s05;
 
-extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
+extern s_MapOverlayHdr_94 sharedData_800E30C8_1_s02;
 
 #if defined(MAP_FIELD_4C_COUNT)
     extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[MAP_FIELD_4C_COUNT];
@@ -350,7 +350,7 @@ extern s_800E34FC sharedData_800E34FC_0_s00[60];
 
 extern const char* MAP_MESSAGES[];
 
-extern s_MapOverlayHeader_7C sharedData_800DEE50_1_s01;
+extern s_MapOverlayHdr_7C sharedData_800DEE50_1_s01;
 
 extern u8 sharedData_800EEAC4_2_s00[][4][4];
 

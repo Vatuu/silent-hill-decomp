@@ -244,7 +244,7 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
     Math_SVectorSet(&g_SysWork.lightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
-void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
+void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 {
     bool                    hasActiveChunk;
     u8                      flags;

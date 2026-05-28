@@ -194,11 +194,11 @@ void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* ani
             localBoneCoords += boneCount + 1;
 
             // Check for end of `g_SysWork.npcBoneCoordBuffer`.
-            // @note Since `g_MapOverlayHeader.npcBoneCoordBuffer` is always assigned to
+            // @note Since `g_MapOverlayHdr.npcBoneCoordBuffer` is always assigned to
             // `g_SysWork.npcBoneCoordBuffer[0]`, this effectively forms a ring buffer.
             if ((&localBoneCoords[animFile->boneCount] + 1) >= &g_SysWork.npcBoneCoordBuffer[NPC_BONE_COUNT_MAX])
             {
-                localBoneCoords = g_MapOverlayHeader.npcBoneCoordBuffer;
+                localBoneCoords = g_MapOverlayHdr.npcBoneCoordBuffer;
             }
         }
     }
@@ -223,7 +223,7 @@ void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
     for (i = 1; i < (CHARA_GROUP_COUNT - 1); i++)
     {
         // Skip if no valid character model.
-        if (g_MapOverlayHeader.charaGroupIds[i] == Chara_None)
+        if (g_MapOverlayHdr.charaGroupIds[i] == Chara_None)
         {
             continue;
         }
@@ -233,11 +233,11 @@ void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
         boneCoords += g_CharaModelAnimsData[i].activeAnmHdr->boneCount + 1;
 
         // Check for end of `g_SysWork.npcBoneCoordBuffer`.
-        // @note Since `g_MapOverlayHeader.npcBoneCoordBuffer` is always assigned to `g_SysWork.npcBoneCoordBuffer[0]`,
+        // @note Since `g_MapOverlayHdr.npcBoneCoordBuffer` is always assigned to `g_SysWork.npcBoneCoordBuffer[0]`,
         // this effectively forms a ring buffer.
         if ((&boneCoords[anmHdr->boneCount] + 1) >= &g_SysWork.npcBoneCoordBuffer[NPC_BONE_COUNT_MAX])
         {
-            boneCoords = g_MapOverlayHeader.npcBoneCoordBuffer;
+            boneCoords = g_MapOverlayHdr.npcBoneCoordBuffer;
         }
 
         g_CharaModelAnimsData[i + 1].boneCoords = boneCoords;

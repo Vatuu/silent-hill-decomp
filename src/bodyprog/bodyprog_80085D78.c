@@ -62,7 +62,7 @@ void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep) // 0x80085DC0
 void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (g_MapOverlayHeader.playerMoveDistIsZero() != NULL || g_SysWork.timer_2C > Q12(1.0f))
+    if (g_MapOverlayHdr.playerMoveDistIsZero() != NULL || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
     }
@@ -86,18 +86,18 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
         case CharaAnimCommand_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.func_D4(cmdArg);
+                g_MapOverlayHdr.func_D4(cmdArg);
             }
             else
             {
-                g_MapOverlayHeader.func_124(chara, cmdArg);
+                g_MapOverlayHdr.func_124(chara, cmdArg);
             }
             break;
 
         case CharaAnimCommand_1:
             if (chara == &g_SysWork.playerWork.player)
             {
-                playbackState = g_MapOverlayHeader.playerAnimPlaybackStateGet();
+                playbackState = g_MapOverlayHdr.playerAnimPlaybackStateGet();
                 if (playbackState == AnimPlaybackState_End)
                 {
                     Event_SysStateStepIncrement(incSubStep);
@@ -105,7 +105,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             else
             {
-                playbackState = g_MapOverlayHeader.charaAnimPlaybackStateGet(chara);
+                playbackState = g_MapOverlayHdr.charaAnimPlaybackStateGet(chara);
                 if (playbackState == AnimPlaybackState_End)
                 {
                     Event_SysStateStepIncrement(incSubStep);
@@ -116,34 +116,34 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
         case CharaAnimCommand_AnimLock:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.playerAnimLock();
+                g_MapOverlayHdr.playerAnimLock();
             }
             else
             {
-                g_MapOverlayHeader.charaLock(chara);
+                g_MapOverlayHdr.charaLock(chara);
             }
             break;
 
         case CharaAnimCommand_AnimUnlock:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.playerAnimUnlock();
+                g_MapOverlayHdr.playerAnimUnlock();
             }
             else
             {
-                g_MapOverlayHeader.charaUnlock(chara);
+                g_MapOverlayHdr.charaUnlock(chara);
             }
             break;
 
         case CharaAnimCommand_AnimReset:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHeader.playerAnimUnlock();
-                g_MapOverlayHeader.playerAnimReset();
+                g_MapOverlayHdr.playerAnimUnlock();
+                g_MapOverlayHdr.playerAnimReset();
             }
             else
             {
-                g_MapOverlayHeader.playerRunTimerReset(chara);
+                g_MapOverlayHdr.playerRunTimerReset(chara);
             }
             break;
     }
@@ -451,7 +451,7 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 
 void func_800866D4(s32 arg0, s32 arg1, bool incSubStep) // 0x800866D4
 {
-    if (g_MapOverlayHeader.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
+    if (g_MapOverlayHdr.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -459,7 +459,7 @@ void func_800866D4(s32 arg0, s32 arg1, bool incSubStep) // 0x800866D4
 
 void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep) // 0x80086728
 {
-    if (g_MapOverlayHeader.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2) == 1)
+    if (g_MapOverlayHdr.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2) == 1)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -467,7 +467,7 @@ void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep) /
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
 {
-    g_MapOverlayHeader.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2);
+    g_MapOverlayHdr.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2);
 }
 
 void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
@@ -783,7 +783,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             func_8005DC1C(sfxId, sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(1);
 
@@ -796,7 +796,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
             break;
 
         default:
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -807,7 +807,7 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
@@ -841,7 +841,7 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
 
         default:
             Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -852,7 +852,7 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
@@ -881,7 +881,7 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
 
         default:
             Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -892,7 +892,7 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
@@ -940,7 +940,7 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
 
         default:
             Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -972,7 +972,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0: // Freeze player and start loading item model.
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             func_80086470(0, itemId, 0, false);
 
             SysWork_StateStepIncrement(1);
@@ -1003,7 +1003,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
                 Savegame_EventFlagClear(eventFlagIdx);
             }
 
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -1068,7 +1068,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFlagIdx]);
             SysWork_StateStepIncrement(1);
 
@@ -1145,7 +1145,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             Screen_Init(SCREEN_WIDTH, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

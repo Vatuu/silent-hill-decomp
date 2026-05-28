@@ -1,7 +1,7 @@
 #ifndef _MAPS_CHARACTERS_PLAYER_H
 #define _MAPS_CHARACTERS_PLAYER_H
 
-extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
+extern q19_12 g_Player_MoveSpeed; // `sharedFunc_800CDAA8_0_s02`
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 

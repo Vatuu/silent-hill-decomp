@@ -100,7 +100,7 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2
             if (ghostAlessa->model.anim.keyframeIdx == 63)
             {
                 ghostAlessaProps.controlState = GhostChildAlessaControl_7;
-                ghostAlessa->model.stateStep = 0;
+                ghostAlessa->model.stateStep  = 0;
             }
             break;
 
@@ -130,13 +130,13 @@ void GhostChildAlessa_AnimStateUpdate(s_SubCharacter* ghostAlessa, GsCOORDINATE2
             break;
     }
 
-    ghostAlessa->rotation.vy  = Q12_ANGLE_ABS(ghostAlessa->rotation.vy + Q8_TO_Q4(sharedData_800E39D8_0_s00));
+    ghostAlessa->rotation.vy  = Q12_ANGLE_ABS(ghostAlessa->rotation.vy + (sharedData_800E39D8_0_s00 >> 4));
     ghostAlessa->headingAngle = ghostAlessa->rotation.vy;
     ghostAlessa->moveSpeed    = ghostAlessaProps.moveSpeed;
     ghostAlessa->fallSpeed   += g_GravitySpeed;
 
     boneCoords->flg = false;
-    Math_RotMatrixZxyNegGte(&ghostAlessa->rotation, &boneCoords->coord);
+    Math_RotMatrixZxyNegGte(&ghostAlessa->rotation, &boneCoords[GhostChildAlessaBone_Root].coord);
 }
 
 /** Addresses

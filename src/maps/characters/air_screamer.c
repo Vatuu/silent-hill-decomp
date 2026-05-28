@@ -1294,7 +1294,7 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
 
     if (airScreamer->field_40 < 32)
     {
-        spawnFlags = g_MapOverlayHeader.charaSpawnInfos[0][airScreamer->field_40].flags;
+        spawnFlags = g_MapOverlayHdr.charaSpawnInfos[0][airScreamer->field_40].flags;
         switch (spawnFlags)
         {
             case SpawnFlag_0:

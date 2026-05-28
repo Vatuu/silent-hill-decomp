@@ -133,9 +133,9 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
-    if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) && g_MapOverlayHeader.updateWorldObjects != NULL)
+    if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) && g_MapOverlayHdr.updateWorldObjects != NULL)
     {
-        g_MapOverlayHeader.updateWorldObjects();
+        g_MapOverlayHdr.updateWorldObjects();
     }
 
     Screen_CutsceneCameraStateUpdate();
@@ -148,9 +148,9 @@ void GameState_InGame_Update(void) // 0x80038BD4
         World_NearbyPlayerCollisionTriggersGet();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
 
-        if (g_MapOverlayHeader.func_44 != NULL)
+        if (g_MapOverlayHdr.func_44 != NULL)
         {
-            g_MapOverlayHeader.func_44();
+            g_MapOverlayHdr.func_44();
         }
 
         Demo_DemoRandSeedRestore();
@@ -163,7 +163,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SavegamePtr->mapIdx != MapIdx_MAP7_S03)
         {
-            g_MapOverlayHeader.particlesUpdate(0, g_SavegamePtr->mapIdx, 1);
+            g_MapOverlayHdr.particlesUpdate(0, g_SavegamePtr->mapIdx, 1);
         }
 
         Demo_DemoRandSeedRestore();
@@ -640,10 +640,10 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.sysFlags |= SysFlag_LoadActive;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapPoints[g_MapEventData->eventParam];
+    D_800BCDB0 = g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam];
     if (D_800BCDB0.triggerParam1 == 1)
     {
-        mapPoint              = &g_MapOverlayHeader.mapPoints[g_MapEventData->pointOfInterestIdx];
+        mapPoint              = &g_MapOverlayHdr.mapPoints[g_MapEventData->pointOfInterestIdx];
         offsetZ               = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
         D_800BCDB0.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
         D_800BCDB0.positionZ += offsetZ;
@@ -660,9 +660,9 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.processFlags = ProcessFlag_RoomTransition;
         Bgm_TrackChange(g_MapEventData->mapIdx);
 
-        if (g_MapOverlayHeader.mapPoints[g_MapEventData->eventParam].field_4_5 != 0)
+        if (g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam].field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapPoints[g_MapEventData->eventParam].field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHdr.mapPoints[g_MapEventData->eventParam].field_4_5 - 1;
         }
     }
 
@@ -735,7 +735,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
 
     if (g_SysWork.isMgsStringSet == false)
     {
-        g_MapOverlayHeader.playerControlFreeze();
+        g_MapOverlayHdr.playerControlFreeze();
     }
 
     switch (Gfx_MapMsg_Draw(g_MapEventParam))
@@ -749,7 +749,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
         case MapMsgState_SelectEntry0:
             Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag);
 
-            unfreezePlayerFunc = &g_MapOverlayHeader.playerControlUnfreeze;
+            unfreezePlayerFunc = &g_MapOverlayHdr.playerControlUnfreeze;
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -855,7 +855,7 @@ void SysState_EventCallback_Update(void) // 0x8003A3C8
     }
 
     g_DeltaTime = g_DeltaTimeCpy;
-    g_MapOverlayHeader.mapEventFuncs[g_MapEventParam]();
+    g_MapOverlayHdr.mapEventFuncs[g_MapEventParam]();
 }
 
 void SysState_EventSetFlag_Update(void) // 0x8003A460
@@ -900,7 +900,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            g_MapOverlayHeader.playerControlFreeze();
+            g_MapOverlayHdr.playerControlFreeze();
             g_SysWork.field_28 = Q12(0.0f);
 
             if (g_GameWork.autosave.continueCount < 99)
@@ -1047,7 +1047,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         default:
-            g_MapOverlayHeader.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;
@@ -1074,7 +1074,7 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
 
     Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag);
 
-    g_MapOverlayHeader.mapEventFuncs[g_MapEventParam]();
+    g_MapOverlayHdr.mapEventFuncs[g_MapEventParam]();
 
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }

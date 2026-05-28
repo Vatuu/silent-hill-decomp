@@ -181,6 +181,6 @@ sharedData_800E0CB6_0_s00       = 0x800D313E; // type:u16
 sharedData_800E0CB8_0_s00       = 0x800D3140; // type:u16
 sharedData_800E0CBA_0_s00       = 0x800D3142; // type:s8
 sharedData_800E39D8_0_s00       = 0x800D3144; // type:s32
-sharedData_800D32A0_0_s02       = 0x800D3148; // type:s32
+g_Player_MoveSpeed              = 0x800D3148; // type:s32
 sharedData_800E57CC_1_s02       = 0x800D314C; // type:s8
 sharedData_800D3150_3_s02       = 0x800D3150; // type:s32
