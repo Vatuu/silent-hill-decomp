@@ -1047,7 +1047,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     collState->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
 
-    if ((collState->field_CC.field_C.s_field_0.field_0) != 0xFF)
+    if (collState->field_CC.field_C.s_field_0.field_0 != 0xFF)
     {
         temp_a0                      = &collData->ptr_10[collState->field_CC.field_C.s_field_0.field_0];
         collState->field_CC.field_E  = temp_a0->field_6_8;
@@ -1062,7 +1062,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     collState->field_CC.field_C.s_field_0.field_1 = temp_a3->field_9;
 
-    if ((collState->field_CC.field_C.s_field_0.field_1) != 0xFF)
+    if (collState->field_CC.field_C.s_field_0.field_1 != 0xFF)
     {
         temp_a0                      = &collData->ptr_10[collState->field_CC.field_C.s_field_0.field_1];
         collState->field_CC.field_F  = temp_a0->field_6_8;

@@ -367,7 +367,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoor
                 gte_SetRotMatrix(&viewMat);
                 gte_SetTransMatrix(&viewMat);
                 gte_ldvxy0_Zero();
-                gte_gte_ldvz0();
+                gte_ldvz0();
                 gte_rtps();
                 gte_stsxy(&sp60);
                 temp_a1 = gte_stSZ3();
