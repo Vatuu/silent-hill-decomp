@@ -145,7 +145,7 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
     SPRT*     sprt;
     DR_TPAGE* tpage;
 
-    func_800862F8(2, 0, false);
+    Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
     sprt = GsOUT_PACKET_P;
 
@@ -594,7 +594,7 @@ void func_800D27F4(void) // 0x800D27F4
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_LISAVTR2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LISAVTR2_TIM, false);
 
             D_800D6BDA = 0;
 
@@ -632,12 +632,12 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 6:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 7:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 8:
@@ -645,7 +645,7 @@ void func_800D27F4(void) // 0x800D27F4
 
         case 9:
             Event_DisplayMapMsgWithAudio(27, &D_800D6BDA, &D_800D6B54);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 9 &&
                 (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.skip | g_GameWorkPtr->config.controllerConfig.cancel)))
@@ -657,7 +657,7 @@ void func_800D27F4(void) // 0x800D27F4
 
         case 10:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 11:

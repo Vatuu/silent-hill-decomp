@@ -530,7 +530,7 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 5:
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
-            func_800862F8(7, FILE_TIM_DRAINKEY_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_DRAINKEY_TIM, false);
             break;
 
         case 6:
@@ -541,12 +541,12 @@ void func_800D6B00(void) // 0x800D6B00
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             g_SysWork.silentYesSelection = true;
             Event_DisplayMapMsg(true, 18, 10, 11, 0, false);
             break;

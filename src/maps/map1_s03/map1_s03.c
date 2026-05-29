@@ -279,11 +279,11 @@ void func_800DABC4(void) // 0x800DABC4
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                 {
-                    func_800862F8(false, FILE_TIM_HOLEKEY1_TIM, false);
+                    Event_BgTextureCommand(false, FILE_TIM_HOLEKEY1_TIM, false);
                 }
                 else
                 {
-                    func_800862F8(false, FILE_TIM_HOLEKEY0_TIM, false);
+                    Event_BgTextureCommand(false, FILE_TIM_HOLEKEY0_TIM, false);
                     Savegame_EventFlagSet(EventFlag_112);
                 }
             }
@@ -291,11 +291,11 @@ void func_800DABC4(void) // 0x800DABC4
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
-                    func_800862F8(false, FILE_TIM_BALLHOLE_TIM, false);
+                    Event_BgTextureCommand(false, FILE_TIM_BALLHOLE_TIM, false);
                 }
                 else
                 {
-                    func_800862F8(false, FILE_TIM_BALLHOL1_TIM, false);
+                    Event_BgTextureCommand(false, FILE_TIM_BALLHOL1_TIM, false);
                 }
             }
 
@@ -314,7 +314,7 @@ void func_800DABC4(void) // 0x800DABC4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(true, 0, false);
+            Event_BgTextureCommand(true, 0, false);
             break;
 
         case 5:
@@ -322,12 +322,12 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 7:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
@@ -368,7 +368,7 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
@@ -882,12 +882,12 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case EventState_BookAgain:
-            func_800862F8(0, FILE_TIM_LMONSTER_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LMONSTER_TIM, false);
             Event_SysStateStepIncrementAfterFade(false, true, false, false, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 8:
@@ -895,17 +895,17 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case 9:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
             break;
 
         case 10:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 17, false, false, 0, false); // "Chapter3: ..."
             break;
 
         case 11:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
@@ -930,7 +930,7 @@ void func_800DC0F8(void) // 0x800DC0F8
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_LIBRBOOK_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LIBRBOOK_TIM, false);
             Event_SysStateStepIncrementAfterFade(false, true, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -943,21 +943,21 @@ void func_800DC0F8(void) // 0x800DC0F8
             break;
 
         case 3:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 23, false, false, 0, false); // "Hearing this, the hunter armed with bow..."
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 
@@ -1066,7 +1066,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         case 11:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 43, 0, 0, 0, false); // "Nothing inside."
             break;
 
@@ -1209,7 +1209,7 @@ void func_800DCB54(void) // 0x800DCB54
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_BALLHOLE_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_BALLHOLE_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1230,21 +1230,21 @@ void func_800DCB54(void) // 0x800DCB54
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 7:
             Event_DisplayMapMsg(false, 36, 0, 0, 0, false); // "Used the rubber ball."
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 

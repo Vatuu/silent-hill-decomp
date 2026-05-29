@@ -374,11 +374,6 @@ typedef enum _SfxId
 
     Sfx_Unk1699 = 1699,
 
-    Sfx_Unk1840 = 1840,
-    Sfx_Unk1841 = 1841,
-    Sfx_Unk1842 = 1842,
-    Sfx_Unk1843 = 1843,
-
     Sfx_Unk1916 = 1916,
 
     /** Values starting from `4096` are XA files defined in `g_XaItemData` struct.

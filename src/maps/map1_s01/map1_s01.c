@@ -344,22 +344,22 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 27, false, false, 0, false); // "There's some blood on some of the keys."
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(true, 29, CHECK_PIANO_STATE, DONT_CHECK_PIANO_STATE, 0, false); // "Check the piano?"
             break;
 
         case CHECK_PIANO_STATE:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
         case 6:
-            func_800862F8(7, FILE_TIM_PIANO2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_PIANO2_TIM, false);
             break;
 
         case 7:
@@ -368,12 +368,12 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             MapEvent_PianoPuzzle(true);
             break;
 
         case 9:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateBranchOnFlag(EventFlag_M1S01_PianoPuzzleSolved, MEDALLION_CUTSCENE_START, MEDALLION_CUTSCENE_END, false);
             break;
 
@@ -440,7 +440,7 @@ void func_800D7864(void) // 0x800D7864
 
         case MEDALLION_CUTSCENE_END:
         case DONT_CHECK_PIANO_STATE:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
         case 16:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);

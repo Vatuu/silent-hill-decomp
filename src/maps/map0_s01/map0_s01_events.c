@@ -430,7 +430,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 1:
             Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
-            func_800862F8(0, FILE_TIM_CONTINUE_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CONTINUE_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -438,7 +438,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             return;
 
         case 3:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             return;
 
         case 4:
@@ -446,7 +446,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -462,7 +462,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             break;
 
         case 7:
-            func_800862F8(7, FILE_TIM_COMESOON_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_COMESOON_TIM, false);
             break;
 
         case 8:
@@ -472,7 +472,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -490,7 +490,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 6:
         case 10:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 

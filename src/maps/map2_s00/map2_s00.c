@@ -666,7 +666,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_MapMark_11);
-            func_800862F8(0, FILE_TIM_TOSCHOOL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_TOSCHOOL_TIM, false);
 
             g_Cutscene_MapMsgAudioIdx = 0;
             D_800F2298 = 0;
@@ -687,23 +687,23 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 4:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 18, 0, 0, 0, false); // "To school."
             break;
 
         case 7:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsgWithAudio(19, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
             break;
 
@@ -714,7 +714,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 9:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -842,7 +842,7 @@ void func_800E9470(void) // 0x800E9470
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_SKETCHBK_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_SKETCHBK_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -858,16 +858,16 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 4:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 21, 0, 0, 0, false);
             break;
 
@@ -892,7 +892,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_STKENNEL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_STKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -908,22 +908,22 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 4:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Savegame_EventFlagSet(EventFlag_M2S00_DogHouseNoteFound);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 23, 0, 0, 0, false); // "Doghouse Levin St."
             break;
 
         case 7:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -961,7 +961,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
     {
         case EventState_Initialize:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_INKENNEL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_INKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -977,11 +977,11 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 4:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
@@ -989,7 +989,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             SysWork_StateStepIncrement(0);
 
         case EventState_Prompt:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(true, 27, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "House Key in doghouse. Take it?"
             break;
 
@@ -1000,7 +1000,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             SysWork_StateStepIncrement(0);
 
         case EventState_DontTakeKey:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -1166,7 +1166,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 2:
-            func_800862F8(3, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_StoreVram, 0, false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
 
@@ -1269,7 +1269,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 8:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 9:
@@ -1314,7 +1314,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         default:
-            func_800862F8(6, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Event_SysStateStepIncrementAfterFade(0, false, false, false, false);
@@ -1406,7 +1406,7 @@ void func_800EA6E0(void) // 0x800EA6E0
     {
         case EventState_Initialize:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_KEYMAP_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_KEYMAP_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_FadeOutGame:
@@ -1414,11 +1414,11 @@ void func_800EA6E0(void) // 0x800EA6E0
             break;
 
         case EventState_Load:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case EventState_FadeInMap:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
@@ -1432,11 +1432,11 @@ void func_800EA6E0(void) // 0x800EA6E0
                 Event_DisplayMapMsg(false, 52, 0, 0, 0, false); // "... Copied it to the map."
             }
 
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case EventState_FadeOutMap:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

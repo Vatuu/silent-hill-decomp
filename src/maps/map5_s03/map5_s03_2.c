@@ -195,7 +195,7 @@ void func_800D1904(void) // 0x800D1904
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_MOTELKEY_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_MOTELKEY_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -211,22 +211,22 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 4:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 6:
             Event_DisplayMapMsg(false, 17, 0, 0, 0, false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 7:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 8:
@@ -308,12 +308,12 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "A small glass vial, wrapped in a plastic bag."
 
             if (g_SysWork.sysStateSteps[0] != 6 && !Savegame_EventFlagGet(EventFlag_204))
@@ -324,13 +324,13 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 7:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 26, 0, 0, 0, false); // "It's like the busted vial I found in the director's office at the hospital."
             break;
 
         case 8:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 9:

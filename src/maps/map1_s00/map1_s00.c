@@ -145,7 +145,7 @@ void func_800D7B2C(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800862F8(7, FILE_TIM_GOLD1_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_GOLD1_TIM, false);
             break;
 
         case 2:
@@ -153,22 +153,22 @@ void func_800D7B2C(void)
             break;
 
         case 3:
-            func_800862F8(3, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_StoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(2, 0, false);
-            func_800862F8(8, FILE_TIM_GOLD2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_8, FILE_TIM_GOLD2_TIM, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
@@ -191,22 +191,22 @@ void func_800D7B2C(void)
             SysWork_StateStepIncrement(0);
 
         case 10:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 11:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_DisplayMapMsg(false, 19, 0, 0, 0, false); // "A golden sun."
             break;
 
         case 12:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:
-            func_800862F8(6, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_71);
@@ -242,7 +242,7 @@ void func_800D7EB0(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800862F8(7, FILE_TIM_SILVER1_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_SILVER1_TIM, false);
             break;
 
         case 2:
@@ -250,22 +250,22 @@ void func_800D7EB0(void)
             break;
 
         case 3:
-            func_800862F8(3, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_StoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(2, 0, false);
-            func_800862F8(8, FILE_TIM_SILVER2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_8, FILE_TIM_SILVER2_TIM, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
@@ -288,22 +288,22 @@ void func_800D7EB0(void)
             SysWork_StateStepIncrement(0);
 
         case 10:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 11:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "A silver moon."
             break;
 
         case 12:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.0f), false);
             break;
 
         default:
-            func_800862F8(6, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_72);
@@ -352,7 +352,7 @@ void func_800D81CC(void) // 0x800D81CC
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (Savegame_EventFlagGet(EventFlag_72))
             {
@@ -408,7 +408,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
             {

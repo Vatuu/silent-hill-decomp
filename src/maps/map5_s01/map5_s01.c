@@ -181,7 +181,7 @@ void func_800EBA40(void) // 0x800EBA40
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800862F8(7, FILE_TIM_DORPANEL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_DORPANEL_TIM, false);
             break;
 
         case 2:

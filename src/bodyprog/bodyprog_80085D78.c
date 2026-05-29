@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/events_util.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/screen/background_draw.h"
@@ -289,33 +290,33 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool incSubStep) // 0x800862F8
+void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSubStep) // 0x800862F8
 {
-    s32 activeStateStep;
+    e_BgTextureCommand activeCmd;
 
-    if (stateStep == 7)
+    if (cmd == BgTextureCommand_Auto)
     {
-        activeStateStep = g_SysWork.sysStateSteps[2];
+        activeCmd = g_SysWork.sysStateSteps[2];
     }
     else
     {
-        activeStateStep = stateStep;
-        if (activeStateStep == 8)
+        activeCmd = cmd;
+        if (activeCmd == BgTextureCommand_8)
         {
-            activeStateStep = 1;
+            activeCmd = BgTextureCommand_AwaitLoad;
             if (g_SysWork.sysStateSteps[2] == 0)
             {
-                activeStateStep = 4;
+                activeCmd = BgTextureCommand_QueueReadSecondary;
             }
         }
     }
 
-    switch (activeStateStep)
+    switch (activeCmd)
     {
-        case 0:
+        case BgTextureCommand_QueueRead:
             Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &g_ItemInspectionImg);
 
-            if (stateStep != 0)
+            if (cmd != BgTextureCommand_QueueRead)
             {
                 SysWork_StateStepIncrement(2);
 
@@ -326,37 +327,37 @@ void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool incSubStep) // 0x800862
             }
             break;
 
-        case 1:
+        case BgTextureCommand_AwaitLoad:
             if (Fs_QueueChunksLoad())
             {
                 Event_SysStateStepIncrement(incSubStep);
             }
             break;
 
-        case 2:
+        case BgTextureCommand_Draw:
             Screen_BackgroundImgDrawAlt(&g_ItemInspectionImg);
             break;
 
-        case 3:
+        case BgTextureCommand_StoreVram:
             DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             break;
 
-        case 4:
+        case BgTextureCommand_QueueReadSecondary:
             Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &D_800A9A04);
 
-            if (stateStep == 8)
+            if (cmd == BgTextureCommand_8)
             {
-                SysWork_StateStepSet(2, 1);
+                SysWork_StateStepSet(2, BgTextureCommand_AwaitLoad);
             }
             break;
 
-        case 5:
+        case BgTextureCommand_DrawSecondary:
             Screen_BackgroundImgDrawAlt(&D_800A9A04);
             break;
 
-        case 6:
+        case BgTextureCommand_RestoreVram:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             break;
@@ -713,7 +714,7 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, fileIdx, true);
+            Event_BgTextureCommand(BgTextureCommand_Auto, fileIdx, true);
             break;
 
         default:
@@ -731,7 +732,7 @@ void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1)
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, fileIdx, true);
+            Event_BgTextureCommand(BgTextureCommand_Auto, fileIdx, true);
             break;
 
         case 2:
@@ -739,7 +740,7 @@ void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1)
             break;
 
         default:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, false);
     }
 }
@@ -748,7 +749,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
 {
     if (g_SysWork.sysStateSteps[1] == 0)
     {
-        func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+        Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
         Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
         return;
     }
@@ -812,7 +813,7 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, textureFileIdx, true);
+            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
             break;
 
         case 2:
@@ -820,12 +821,12 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
             break;
 
         case 3:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
@@ -835,7 +836,7 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
             break;
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
             break;
 
@@ -857,7 +858,7 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, textureFileIdx, true);
+            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
             break;
 
         case 2:
@@ -865,17 +866,17 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
             break;
 
         case 3:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx, 0, 0, 0, true);
             break;
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
             break;
 
@@ -897,7 +898,7 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, textureFileIdx, true);
+            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
             break;
 
         case 2:
@@ -905,12 +906,12 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
             break;
 
         case 3:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (mapMsgIdx0 != MapMsgCode_None)
             {
@@ -927,14 +928,14 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
 
         case 5:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
             break;
 

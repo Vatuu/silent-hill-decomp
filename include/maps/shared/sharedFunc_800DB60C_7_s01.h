@@ -76,11 +76,11 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 3:
             Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 4:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX << 13) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-115.0f), Q12(115.0f));
@@ -165,7 +165,7 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 5:
             Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 6:
@@ -183,12 +183,12 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(0x800, false);
             break;
 
         case 8:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
 

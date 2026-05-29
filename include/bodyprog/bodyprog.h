@@ -6,6 +6,7 @@
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
 #include "bodyprog/chara/spawn.h"
+#include "bodyprog/events/events_util.h"
 #include "bodyprog/events/map_msg.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
@@ -123,89 +124,10 @@ typedef enum _StaticModelLoadState
 // ================
 // TODO: Deobfuscate these and move where they belong afterwardd.
 
-// Exception, as one of the unidentified structs uses this.
-typedef struct _s_8002AC04
-{
-    struct _s_8002AC04* field_0;
-
-    union
-    {
-        u8 funcIdx_4; // `funcIdx_4` in structs below, needs to be part of those structs for match.
-
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_8008973C_data;
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_80089D0C_data;
-
-        struct
-        {
-            u8                  funcIdx_4;
-            u8                  field_5   : 7;
-            u32                 field_5_7 : 1;
-            u16                 field_6;
-            struct _s_8002AC04* field_8;
-            u32                 field_C;
-        } func_80089BB8_data;
-
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            u8* field_8;
-            u32 field_C_0  : 16;
-            u32 field_C_16 : 12;
-            u32 field_C_28 : 3;
-            u32 field_C_31 : 1;
-        } func_80089DF0_data;
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5_0 : 5;
-            u32 field_5_5 : 1;
-            u32 field_5_6 : 1;
-            u32 field_5_7 : 1;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_80089A30_data;
-    } field_4;
-} s_8002AC04;
-STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
-
 typedef struct
 {
     char pad[12];
 } s_func_8005B424;
-
-// Function from lib_unk
-typedef struct _func_8009ECCC
-{
-    struct _func_8009ECCC* field_0; // TODO: Not sure if these point to other struct type or same type.
-    struct _func_8009ECCC* field_4;
-    s32                    field_8;
-    s32                    field_C;
-    s_8002AC04*            field_10;
-    u32                    field_14_0  : 16;
-    u32                    field_14_16 : 8;
-    u32                    field_14_24 : 7;
-    u32                    field_14_31 : 1;
-    u32                    field_18;
-    u16                    field_1C;
-    u16                    field_1E;
-} s_func_8009ECCC;
 
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
@@ -1223,8 +1145,6 @@ s32 func_8003DD74(e_CharaId charaId, s32 arg1);
 
 void WorldGfx_HeldItemAttach(e_CharaId charaId, s32 modelBone); // Called by some chara init funcs.
 
-s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
-
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
 /** Related to the screen. Called by `WorldEnv_Init`. */
@@ -1849,144 +1769,6 @@ void func_8008E5B4(void);
 void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY);
 
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY);
-
-/** State step increment for some substate. */
-void Event_SysStateStepIncrement(bool incSubStep);
-
-/** State step setter for some substate. */
-void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep);
-
-/** Calls `SysWork_StateStepIncrement(0)` with some preliminary safety check. */
-void func_80085DF0(void);
-
-void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep);
-
-/** @brief Updates character states during events/cutscenes. */
-void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep);
-
-/** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
- *
- * @param eventFlagIdx Flag index.
- * @param stepTrue Step to use if flag is set.
- * @param stepFalse Step to use if flag is not set.
- * @param setSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
- */
-void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool setSubStep);
-
-/** @brief Displays a selection menu and sets `sysStateSteps` depending on the chosen value.
- *
- * @param hasSelection `true` if it waits for a selection, `false` if `sysStateSteps` increments after displaying.
- * @param mapMsgIdx Map message index of the message to display.
- * @param step0 Step to use if selection #0 is chosen.
- * @param step1 Step to use if selection #1 is chosen.
- * @param step2 Step to use if selection #2 is chosen.
- * @param incSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
- */
-void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool incSubStep);
-
-/** Handles giving the player items. */
-void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool incSubStep);
-
-/** Handles a busy wait while loading assets? */
-void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool incSubStep);
-
-/** Stepped state handler for displaying picked up items? */
-void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
-
-void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
-
-/** State step increment. */
-void func_800866D4(s32 arg0, s32 arg1, bool incSubStep);
-
-extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
-
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep);
-
-void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
-
-/** Paper map state handler. Rough name could be `Map_PaperMapBackgroundStateUpdate`. */
-void func_800867B4(s32 state, s32 paperMapFileIdx);
-
-void func_800868DC(s32 idx);
-
-/** @brief Displays a map message with dialog audio and increments the audio index.
- *
- * @param mapMsgIdx Index of the message to display.
- * @param audioIdx Index of the dialog audio command to play.
- * @param audioCmds Dialog audio commands.
- */
-void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds);
-
-/** @brief Sets the camera position target.
- *
- * @param pos Target position (Q19.12).
- * @param offsetOrPosX If `pos` is valid, X offset for `pos`. If `pos` is `NULL`, X target position.
- * @param offsetOrPosY If `pos` is valid, Y offset for `pos`. If `pos` is `NULL`, Y target position.
- * @param offsetOrPosZ If `pos` is valid, Z offset for `pos`. If `pos` is `NULL`, Z target position.
- * @param accelX X acceleration.
- * @param accelY X acceleration.
- * @param speedXMax Max X speed.
- * @param speedYMax Max Y speed.
- * @param warp If `true`, warp to the position target, otherwise transition over time.
- */
-void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp);
-
-/** @brief Sets the camera rotation and look-at position targets.
- *
- * @param lookAt Target look-at position (Q19.12).
- * @param lookAtOffsetOrPosX If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, X target look-at position.
- * @param lookAtOffsetOrPosY If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, Y target look-at position.
- * @param lookAtOffsetOrPosZ If `lookAt` is valid, Z offset for `lookAt`. If `lookAt` is `NULL`, Z target look-at position.
- * @param angularAccelX TODO
- * @param angularAccelY TODO
- * @param angularSpeedXMax TODO
- * @param angularSpeedYMax TODO
- * @param warp If `true`, warp to the look-at target, otherwise transition over time.
- */
-void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
-
-/** Maybe `Chara_PlayAnim`. State handler. */
-void func_80086C58(s_SubCharacter* chara, s32 arg1);
-
-/** State handler. */
-void func_80086D04(s_SubCharacter* chara);
-
-/** State handler. */
-void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
-
-/** State handler. */
-void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
-
-/** Odd code?
- * This function appears to circumvent an issue with fading.
- * When the player is about to leave the clock tower screen marking certain
- * times, breaking it causes the clock tower image to dissapear. It then fades in
- * and out to the black screen before returning to gameplay.
- */
-void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
-
-/** @brief Displays a map message with SFX.
- *
- * @param mapMsgIdx Index of the message to display.
- * @param sfxId ID of the SFX to play.
- * @param sfxPos SFX position.
- */
-void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
-
-void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
-
-void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
-
-/** @brief Displays a message with a background texture that is darken after reading the first sentence. */
-void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
-
-void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
-
-void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
-
-void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
 // =========================
 // `bodyprog_bgm_80087EA8.c`

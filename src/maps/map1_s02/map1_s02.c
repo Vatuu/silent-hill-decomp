@@ -336,7 +336,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 1:
             Event_SysStateStepIncrementAfterFade(0, true, 1, Q12(1.0f), false);
-            func_800862F8(0, FILE_TIM_CONTINUE_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CONTINUE_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -344,7 +344,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             break;
 
         case 3:
-            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 4:
@@ -352,7 +352,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
@@ -367,12 +367,12 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             break;
 
         case 6:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
         case 7:
-            func_800862F8(7, FILE_TIM_COMING2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_COMING2_TIM, false);
             break;
 
         case 8:
@@ -380,7 +380,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -397,7 +397,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             break;
 
         case 10:
-            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
@@ -420,14 +420,14 @@ void func_800DAD2C(void) // 0x800DAD2C
         case 0:
             Player_ControlFreeze();
             Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
-            func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_RECEPDR1_TIM, false);
 
             D_800E1FD0 = 0;
 
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 2:
@@ -435,17 +435,17 @@ void func_800DAD2C(void) // 0x800DAD2C
             break;
 
         case 3:
-            func_800862F8(3, 0, false);
-            func_800862F8(4, FILE_TIM_RECEPDR2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_StoreVram, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueReadSecondary, FILE_TIM_RECEPDR2_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (Savegame_EventFlagGet(EventFlag_M1S02_SeenDoorWithHorizontalSlot))
             {
@@ -458,8 +458,8 @@ void func_800DAD2C(void) // 0x800DAD2C
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 7:
@@ -490,17 +490,17 @@ void func_800DAD2C(void) // 0x800DAD2C
             break;
 
         case 9:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_DisplayMapMsg(false, 27, false, false, 0, false); // "In the center of the door is a horizontal slot.
             break;
 
         case 10:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementAfterFade(2, 1, 0, Q12(0.0f), false);
             break;
 
         default:
-            func_800862F8(6, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_M1S02_SeenDoorWithHorizontalSlot);

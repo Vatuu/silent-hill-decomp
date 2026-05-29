@@ -104,7 +104,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_SHATVIAL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_SHATVIAL_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -120,7 +120,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
@@ -128,17 +128,17 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 16, 0, 0, 0, false); // "A glass vial lies shattered."
             break;
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

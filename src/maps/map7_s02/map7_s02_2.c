@@ -665,7 +665,7 @@ void func_800DB738(void) // 0x800DB738
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_LISAVTR_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LISAVTR_TIM, false);
 
             D_800EB6B0 = 0;
 
@@ -700,17 +700,17 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 6:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 7:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 8:
             Event_DisplayMapMsgWithAudio(32, &D_800EB6B0, &D_800E9CFC);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 8 &&
                 g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.skip | g_GameWorkPtr->config.controllerConfig.cancel))
@@ -722,7 +722,7 @@ void func_800DB738(void) // 0x800DB738
 
         case 9:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 10:
@@ -903,7 +903,7 @@ void func_800DC14C(void) // 0x800DC14C
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_JELYBEAN_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_JELYBEAN_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -911,21 +911,21 @@ void func_800DC14C(void) // 0x800DC14C
             break;
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(true, 90, 7, 5, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -936,7 +936,7 @@ void func_800DC14C(void) // 0x800DC14C
             break;
 
         case 7:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -1088,7 +1088,7 @@ void func_800DC954(void) // 0x800DC954
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_CHAINRF1_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CHAINRF1_TIM, false);
             D_800E9ED6 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -1097,26 +1097,26 @@ void func_800DC954(void) // 0x800DC954
             break;
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
-            func_800862F8(3, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_StoreVram, 0, false);
             Event_SysStateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800862F8(8, FILE_TIM_CHAINRF2_TIM, false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_8, FILE_TIM_CHAINRF2_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(true, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
@@ -1136,16 +1136,16 @@ void func_800DC954(void) // 0x800DC954
 
         case 9:
             Event_DisplayMapMsg(false, 134, 0, 0, 0, false);
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             break;
 
         case 10:
-            func_800862F8(5, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
-            func_800862F8(6, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_552);
@@ -1179,11 +1179,11 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (Savegame_EventFlagGet(EventFlag_552))
             {
-                func_800862F8(0, FILE_TIM_CHAINRF2_TIM, false);
+                Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CHAINRF2_TIM, false);
             }
             else
             {
-                func_800862F8(0, FILE_TIM_CHAINRF1_TIM, false);
+                Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CHAINRF1_TIM, false);
             }
 
             D_800E9ED8 = 0;
@@ -1194,11 +1194,11 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
@@ -1226,7 +1226,7 @@ void func_800DCD00(void) // 0x800DCD00
                 Event_DisplayMapMsg(false, 91, 0, 0, 0, false);
             }
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
@@ -1240,7 +1240,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateBranchOnFlag(EventFlag_M7S02_PickupDaggerOfMelchior, 14, 7, false);
             break;
 
@@ -1249,7 +1249,7 @@ void func_800DCD00(void) // 0x800DCD00
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
@@ -1298,7 +1298,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 14:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
@@ -2173,7 +2173,7 @@ void func_800DFB48(void) // 0x800DFB48
     {
         case 0:
             Player_ControlFreeze();
-            func_800862F8(0, FILE_TIM_LISDIARY_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LISDIARY_TIM, false);
 
             D_800EA490 = 0;
 
@@ -2192,7 +2192,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 4:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 5:
@@ -2201,7 +2201,7 @@ void func_800DFB48(void) // 0x800DFB48
 
         case 6:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 7:
@@ -2210,16 +2210,16 @@ void func_800DFB48(void) // 0x800DFB48
 
         case 8:
             Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 9:
             Event_DisplayMapMsg(false, D_800E9D6C[D_800EA490], 0, 0, 0, false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 10:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             D_800EA490++;
             if (D_800EA490 >= 8)
@@ -2233,7 +2233,7 @@ void func_800DFB48(void) // 0x800DFB48
 
         case 11:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 12:
@@ -2309,19 +2309,19 @@ void func_800DFDDC(void) // 0x800DFDDC
                 D_800EA494.field_0++;
             }
 
-            func_800862F8(0, D_800E9D80[D_800EA494.field_0], false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, D_800E9D80[D_800EA494.field_0], false);
             SysWork_StateStepIncrement(0);
 
         case 1:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 4:
@@ -2342,11 +2342,11 @@ void func_800DFDDC(void) // 0x800DFDDC
                 SysWork_StateStepSet(0, 15);
             }
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 6:
-            func_800862F8(7, FILE_TIM_HS_PANEL_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_HS_PANEL_TIM, false);
             break;
 
         case 7:
@@ -2376,12 +2376,12 @@ void func_800DFDDC(void) // 0x800DFDDC
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-80.0f), Q12(80.0f));
@@ -2586,7 +2586,7 @@ void func_800DFDDC(void) // 0x800DFDDC
         case 5:
         case 10:
         case 15:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -2735,12 +2735,12 @@ void func_800E0FF0(void) // 0x800E0FF0
                 SysWork_StateStepIncrement(0);
 
             case 4:
-                func_800862F8(2, 0, false);
+                Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
                 Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
                 break;
 
             case 5:
-                func_800862F8(2, 0, false);
+                Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
                 Event_DisplayMapMsg(true, 80, 6, 7, 0, false);
                 break;
 
@@ -2828,12 +2828,12 @@ void func_800E1398(void) // 0x800E1398
 
             if (Savegame_EventFlagGet(EventFlag_496))
             {
-                func_800862F8(0, FILE_TIM_3X3HINT2_TIM, false);
+                Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_3X3HINT2_TIM, false);
                 Savegame_EventFlagSet(EventFlag_498);
             }
             else
             {
-                func_800862F8(0, FILE_TIM_3X3HINT1_TIM, false);
+                Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_3X3HINT1_TIM, false);
                 Savegame_EventFlagSet(EventFlag_499);
             }
 
@@ -2850,12 +2850,12 @@ void func_800E1398(void) // 0x800E1398
             break;
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
             Event_SysStateStepIncrementAfterFade(2, false, 1, Q12(0.4f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 4:
@@ -2868,12 +2868,12 @@ void func_800E1398(void) // 0x800E1398
                 Event_DisplayMapMsg(false, 107, 0, 0, 0, false);
             }
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 5:
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         default:
@@ -2902,7 +2902,7 @@ void func_800E1DAC(void) // 0x800E1DAC
 
             D_800EB6B0 = 0;
 
-            func_800862F8(0, FILE_TIM_NEWSP3_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_NEWSP3_TIM, false);
             Sfx_WithFlagsPlay(Sfx_Unk1654, &SFX_POS, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
@@ -2911,23 +2911,23 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 2:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 3:
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 15, 0, 0, 0, false);
             break;
 
         case 5:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 16, 0, 0, 0, false);
             break;
 
@@ -2938,21 +2938,21 @@ void func_800E1DAC(void) // 0x800E1DAC
         case 7:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 17, 0, 0, 0, false);
             break;
 
         case 8:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_DisplayMapMsg(false, 20, 0, 0, 0, false);
             break;
 
         case 9:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -3101,7 +3101,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 10:
-            func_800862F8(0, FILE_TIM_LASTDOOR_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_LASTDOOR_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -3109,21 +3109,21 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 12:
-            func_800862F8(1, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
             break;
 
         case 13:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 14:
             Event_DisplayMapMsg(false, 130, 0, 0, 0, false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 15:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -3160,7 +3160,7 @@ void func_800E32E0(void) // 0x800E32E0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800862F8(7, FILE_TIM_ALERTDOR_TIM, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ALERTDOR_TIM, false);
             break;
 
         case 2:
@@ -3169,11 +3169,11 @@ void func_800E32E0(void) // 0x800E32E0
 
         case 3:
             Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-120.0f), Q12(120.0f));
@@ -3242,7 +3242,7 @@ void func_800E32E0(void) // 0x800E32E0
 
         case 5:
             Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 6:
@@ -3250,12 +3250,12 @@ void func_800E32E0(void) // 0x800E32E0
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
         case 8:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

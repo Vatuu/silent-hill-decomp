@@ -68,16 +68,16 @@ void sharedFunc_800D15F0_3_s01(void)
             if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
                 Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
             {
-                func_800862F8(7, Sfx_Unk1841, false);
+                Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_2_TIM, false);
             }
             else
             {
-                func_800862F8(7, Sfx_Unk1840, false);
+                Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVATOR_TIM, false);
             }
 #elif defined(MAP7_S01) || defined(MAP7_S02)
-            func_800862F8(7, Sfx_Unk1842, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_3_TIM, false);
 #else
-            func_800862F8(7, Sfx_Unk1843, false);
+            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_4_TIM, false);
 #endif
             break;
 
@@ -86,12 +86,12 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 3:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
             break;
 
         case 4:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             sharedData_800D4D10_3_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             sharedData_800D4D10_3_s01  = CLAMP_RANGE(sharedData_800D4D10_3_s01, Q12(-70.0f), Q12(68.0f));
 
@@ -202,7 +202,7 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 5:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             for (i = 0; i < 4; i++)
             {
@@ -229,7 +229,7 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 6:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
             break;
 
@@ -248,7 +248,7 @@ void sharedFunc_800D15F0_3_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_800862F8(2, 0, false);
+            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
 
             if (sharedData_800D4D10_3_s01 != 0)
             {
