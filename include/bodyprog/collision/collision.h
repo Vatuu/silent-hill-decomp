@@ -115,9 +115,9 @@ typedef struct
     /* 0x0  */ DVECTOR_XZ field_0;
     /* 0x4  */ DVECTOR_XZ field_4;
     /* 0x8  */ u32        field_8;
-    /* 0xC  */ s32        field_C; // Radius?
-    /* 0x10 */ s16        field_10;
-    /* 0x12 */ s8         __pad_12[2];
+    /* 0xC  */ q23_8      field_C; // Radius?
+    /* 0x10 */ q7_8       field_10;
+    /* 0x12 */ s8         __pad[2];
     /* 0x14 */ DVECTOR_XZ field_14;
 } s_CollisionState_CC_20;
 
@@ -128,12 +128,12 @@ typedef struct
     /* 0x5  */ u8                     field_5;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
-    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::materialIdx`.
+    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
     /* 0xF  */ u8                     field_F;  // }
     /* 0x10 */ u8                     field_10; // } Index from `s_IpdCollisionData::field_6_5`.
     /* 0x11 */ u8                     field_11; // }
-    /* 0x12 */ SVECTOR3               collPoint_12; // Data from `s_IpdCollisionData::collPoints`
-    /* 0x18 */ SVECTOR3               collPoint_18; // Data from `s_IpdCollisionData::collPoints`
+    /* 0x12 */ SVECTOR3               vertCollPoint0; // Data from `s_IpdCollisionData::vertCollPoints`
+    /* 0x18 */ SVECTOR3               vertCollPoint1; // Data from `s_IpdCollisionData::vertCollPoints`
     /* 0x1E */ s8                     unk_1E[2];
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionState_CC;
@@ -195,12 +195,12 @@ typedef struct _CollisionState
                  {
                      struct
                      {
-                         /* 0x0 */ u8                     closestXSubCellIdx;
-                         /* 0x1 */ u8                     closestZSubCellIdx;
-                         /* 0x2 */ u8                     closeFarXSubCellIdxDiff;
-                         /* 0x3 */ u8                     closeFarZSubCellIdxDiff;
-                         /* 0x4 */ s_IpdCollisionData_20* field_4;
-                         /* 0x8 */ s_CollisionState_A8    field_8[4];
+                         /* 0x0 */ u8                   closestXSubCellIdx;
+                         /* 0x1 */ u8                   closestZSubCellIdx;
+                         /* 0x2 */ u8                   closeFarXSubCellIdxDiff;
+                         /* 0x3 */ u8                   closeFarZSubCellIdxDiff;
+                         /* 0x4 */ s_IpdCellRangeInfo*  field_4;
+                         /* 0x8 */ s_CollisionState_A8  field_8[4];
                      } s_0;
                      struct
                      {
@@ -487,12 +487,12 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
 bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
+void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* cellRangeInfoPtr);
 
 bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 idx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_CollisionState* collState, s_IpdCollisionData_20* arg1);
+void func_8006B6E8(s_CollisionState* collState, s_IpdCellRangeInfo* arg1);
 
 bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1);
 
@@ -527,7 +527,7 @@ void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist);
 
 void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2);
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* arg2);
 
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
@@ -577,13 +577,13 @@ bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 
 // Fills `state` with info.
-void func_8006E0AC(s_RayState* state, s_IpdCollisionData* ipdColl);
+void func_8006E0AC(s_RayState* state, s_IpdCollisionData* collData);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisionData* ipdColl);
+void func_8006E53C(s_RayState* state, s_IpdCellRangeInfo* arg1, s_IpdCollisionData* collData);
 
 void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 

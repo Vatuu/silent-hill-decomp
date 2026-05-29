@@ -395,7 +395,7 @@ void SetPriority(PACKET*, s32, s32);
     : "memory")
 
 /** @brief Sets the GTE's `vz0` register to 0. */
-#define gte_gte_ldvz0() __asm__ volatile( \
+#define gte_ldvz0() __asm__ volatile( \
     "mtc2  $zero, $1;")
 
 /** @brief Retrieves the value from the GTE's `SZ3` register. */
