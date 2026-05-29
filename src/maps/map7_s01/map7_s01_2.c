@@ -747,7 +747,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 7:
@@ -789,7 +789,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 4:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:
@@ -1549,7 +1549,7 @@ void func_800DAB64(void) // 0x800DAB64
             break;
 
         case 4:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:

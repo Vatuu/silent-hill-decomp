@@ -348,7 +348,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         default:

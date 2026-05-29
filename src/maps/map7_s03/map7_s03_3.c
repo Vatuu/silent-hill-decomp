@@ -2768,7 +2768,7 @@ void func_800E7380(void) // 0x800E7380
 
         case 1:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.8f), Q12(69.0f), Q12(143.0f), true, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.npcs[4], 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.npcs[4], 0, false);
             break;
 
         case 2:

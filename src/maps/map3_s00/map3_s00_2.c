@@ -149,7 +149,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 5:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, g_SysWork.npcs, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, g_SysWork.npcs, 0, false);
 
             if (g_Cutscene_Timer < Q12(11.0f))
             {

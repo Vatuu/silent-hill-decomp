@@ -384,7 +384,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 37:
             if (g_SysWork.sysStateSteps[0] == 37)
             {
-                Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+                Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             }
 
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(98.0f), Q12(121.0f), true, false);

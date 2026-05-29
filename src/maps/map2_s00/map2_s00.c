@@ -1069,7 +1069,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_4:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case EventState_Prompt:

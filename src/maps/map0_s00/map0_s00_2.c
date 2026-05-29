@@ -1014,7 +1014,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 9:

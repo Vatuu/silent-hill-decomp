@@ -87,15 +87,15 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
         case CharaAnimCommand_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHdr.func_D4(cmdArg);
+                g_MapOverlayHdr.playerControlStateSet(cmdArg);
             }
             else
             {
-                g_MapOverlayHdr.func_124(chara, cmdArg);
+                g_MapOverlayHdr.charaControlStateSet(chara, cmdArg);
             }
             break;
 
-        case CharaAnimCommand_1:
+        case CharaAnimCommand_AwaitAnimEnd:
             if (chara == &g_SysWork.playerWork.player)
             {
                 playbackState = g_MapOverlayHdr.playerAnimPlaybackStateGet();
@@ -121,7 +121,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             else
             {
-                g_MapOverlayHdr.charaLock(chara);
+                g_MapOverlayHdr.charaAnimLock(chara);
             }
             break;
 
@@ -132,7 +132,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             else
             {
-                g_MapOverlayHdr.charaUnlock(chara);
+                g_MapOverlayHdr.charaAnimUnlock(chara);
             }
             break;
 
@@ -144,7 +144,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             else
             {
-                g_MapOverlayHdr.playerRunTimerReset(chara);
+                g_MapOverlayHdr.charaControlStateReset(chara);
             }
             break;
     }
@@ -372,9 +372,9 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
     {
         InvItemCommandInternal_QueueLoad = 0,
         InvItemCommandInternal_AwaitLoad = 1,
-        InvItemCommandInternal_AddItem = 2, // Remapped from `InvItemCommand_AddItem` (3)
-        InvItemCommandInternal_Nop = 3,     // Remapped from `InvItemCommand_Nop` (2)
-        InvItemCommandInternal_Hack = -1
+        InvItemCommandInternal_AddItem   = 2, // Remapped from `InvItemCommand_AddItem` (3)
+        InvItemCommandInternal_Nop       = 3, // Remapped from `InvItemCommand_Nop` (2)
+        InvItemCommandInternal_Hack      = -1
     } e_InvItemCommandInternal;
 
     e_InvItemCommandInternal activeCmd;
@@ -688,7 +688,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, chara, 0, true);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, chara, 0, true);
             break;
 
         default:
@@ -707,7 +707,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, chara, 0, true);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, chara, 0, true);
             break;
 
         default:

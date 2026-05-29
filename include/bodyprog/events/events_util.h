@@ -4,11 +4,11 @@
 /** @brief Character animation commands. */
 typedef enum _CharaAnimCommand
 {
-    CharaAnimCommand_SetState   = 0,
-    CharaAnimCommand_1          = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
-    CharaAnimCommand_AnimLock   = 2,
-    CharaAnimCommand_AnimUnlock = 3,
-    CharaAnimCommand_AnimReset  = 4 // TODO: Unsure on name, could be a forced stop.
+    CharaAnimCommand_SetState     = 0,
+    CharaAnimCommand_AwaitAnimEnd = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
+    CharaAnimCommand_AnimLock     = 2,
+    CharaAnimCommand_AnimUnlock   = 3,
+    CharaAnimCommand_AnimReset    = 4 // TODO: Unsure on name, could be a forced stop.
 } e_CharaAnimCommand;
 
 typedef enum _BgTextureCommand

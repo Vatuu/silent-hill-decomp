@@ -3490,7 +3490,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 7:

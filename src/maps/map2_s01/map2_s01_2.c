@@ -225,7 +225,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 12:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, dahliaChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, dahliaChara, 0, false);
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -239,7 +239,7 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, dahliaChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, dahliaChara, 0, false);
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 16:

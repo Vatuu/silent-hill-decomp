@@ -2188,7 +2188,7 @@ void func_800E2950(void) // 0x800E2950
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.npcs[0], 0, false);
             break;
 
         default:
@@ -2904,7 +2904,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 36:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.npcs[0], 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(311.0f), Q12(386.0f), true, false);
             break;
 

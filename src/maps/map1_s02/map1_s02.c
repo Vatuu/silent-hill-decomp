@@ -683,7 +683,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 13:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio54);
             break;
 
@@ -921,7 +921,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 4:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:
@@ -1272,7 +1272,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 4:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
             break;
 
         case 5:

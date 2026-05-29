@@ -320,7 +320,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, playerChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, playerChara, 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer0, Q12(10.0f), Q12(0.0f), Q12(28.0f), true, false);
             break;
 
@@ -889,7 +889,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 19:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_1, cybilChara, 0, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, cybilChara, 0, false);
             break;
 
         case 20:

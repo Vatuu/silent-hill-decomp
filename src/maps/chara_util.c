@@ -26,60 +26,59 @@
     #define CHARA_CASE(id) default
 #endif
 
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker)
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc)
 {
-    // TODO: Not stalker? Properties don't fit.
-    stalker->properties.player.field_F4     = Q12_ANGLE(0.0f);
-    stalker->properties.player.field_F0     = Q12(0.0f);
-    stalker->properties.player.groundHeight = Q12(0.0f);
-    stalker->properties.player.moveSpeed    = Q12(0.0f);
+    npc->properties.npc.field_F4         = 0;
+    npc->properties.npc.freeze           = false;
+    *(s32*)&npc->properties.npc.field_EC = Q12(0.0f);
+    npc->properties.npc.moveSpeed        = Q12(0.0f);
 }
 
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond)
 {
-    player->properties.player.field_F4 = 1;
+    npc->properties.npc.field_F4 = 1;
 
     if (cond)
     {
-        player->model.anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-        player->model.anim.keyframeIdx = 0;
-        player->model.anim.time        = Q12(0.0f);
-        player->model.anim.alpha       = Q12(1.0f);
+        npc->model.anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+        npc->model.anim.keyframeIdx = 0;
+        npc->model.anim.time        = Q12(0.0f);
+        npc->model.anim.alpha       = Q12(1.0f);
     }
     else
     {
-        player->properties.player.afkTimer = Q12(0.0f);
-        player->model.stateStep            = 0;
+        npc->properties.npc.controlState = 0;
+        npc->model.stateStep             = 0;
     }
 
-    player->model.anim.flags |= AnimFlag_Unlocked;
+    npc->model.anim.flags |= AnimFlag_Unlocked;
 }
 
-void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime)
+void Chara_ControlStateSet(s_SubCharacter* npc, s32 controlState)
 {
-    player->properties.player.moveSpeed   = Q12(0.0f);
-    player->properties.player.runTimer_F8 = Q12(0.0f);
-    player->properties.player.field_F0    = Q12(0.0f);
-    player->properties.player.afkTimer    = afkTime;
-    player->model.stateStep               = 0;
+    npc->properties.npc.moveSpeed         = Q12(0.0f);
+    npc->properties.npc.resetControlState = false;
+    npc->properties.npc.freeze            = false;
+    npc->properties.npc.controlState      = controlState;
+    npc->model.stateStep                  = 0;
 }
 
-void Player_RunTimerReset(s_SubCharacter* player)
+void Chara_ControlStateReset(s_SubCharacter* npc)
 {
-    player->properties.player.runTimer_F8 = 1;
+    npc->properties.npc.resetControlState = true;
 }
 
-void Chara_Lock(s_SubCharacter* chara)
+void Chara_AnimLock(s_SubCharacter* chara)
 {
     chara->model.anim.flags &= ~AnimFlag_Unlocked;
 }
 
-s32 Chara_IsLockedCheck(s_SubCharacter* chara)
+s32 Chara_AnimIsLocked(s_SubCharacter* chara)
 {
     return ~(chara->model.anim.flags & AnimFlag_Unlocked);
 }
 
-void Chara_Unlock(s_SubCharacter* chara)
+void Chara_AnimUnlock(s_SubCharacter* chara)
 {
     chara->model.anim.flags |= AnimFlag_Unlocked;
 }

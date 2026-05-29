@@ -480,24 +480,23 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
 
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
-/** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data).
- * Maybe not player but another character?
- */
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
+/** NPC-only, Among other things, sets the NPC's anim to anim 3 (which might actually be flags if the field packs more data). */
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond);
 
-/** Resets some player properties. */
-void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime);
+/** NPC-only, sets `controlState` in properties. */
+void Chara_ControlStateSet(s_SubCharacter* npc, s32 controlState);
 
-void Player_RunTimerReset(s_SubCharacter* player);
+/** NPC-only, sets `resetControlState` in properties. */
+void Chara_ControlStateReset(s_SubCharacter* npc);
 
 /** Locks a character's animation. */
-void Chara_Lock(s_SubCharacter* chara);
+void Chara_AnimLock(s_SubCharacter* chara);
 
 /** Unlocked flag getter. */
-s32 Chara_IsLockedCheck(s_SubCharacter* chara);
+s32 Chara_AnimIsLocked(s_SubCharacter* chara);
 
 /** Unlocks a character's animation. */
-void Chara_Unlock(s_SubCharacter* chara);
+void Chara_AnimUnlock(s_SubCharacter* chara);
 
 // Seems like this function is intended to be called repeatedly, swapping between states.
 // Might be called many times in a single logic update or over multiple updates.
@@ -534,8 +533,7 @@ bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
 
-/** Unsure which character this takes, stalker doesn't fit? */
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc);
 
 /** Returns something related to controller data. */
 s32 sharedFunc_800D929C_0_s00(void);
