@@ -54,7 +54,7 @@ void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond)
     npc->model.anim.flags |= AnimFlag_Unlocked;
 }
 
-void Chara_ControlStateSet(s_SubCharacter* npc, s32 controlState)
+void Chara_AnimStateSet(s_SubCharacter* npc, s32 controlState)
 {
     npc->properties.npc.moveSpeed         = Q12(0.0f);
     npc->properties.npc.resetControlState = false;
@@ -63,7 +63,7 @@ void Chara_ControlStateSet(s_SubCharacter* npc, s32 controlState)
     npc->model.stateStep                  = 0;
 }
 
-void Chara_ControlStateReset(s_SubCharacter* npc)
+void Chara_AnimReset(s_SubCharacter* npc)
 {
     npc->properties.npc.resetControlState = true;
 }

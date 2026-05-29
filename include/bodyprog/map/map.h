@@ -480,8 +480,8 @@ typedef struct _MapOverlayHdr
     /* 0xC8  */ void                   (*playerControlFreeze)();
     /* 0xCC  */ void                   (*playerControlUnfreeze)(bool setIdle);
     /* 0xD0  */ bool                   (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
-    /* 0xD4  */ s32                    (*playerControlStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaControlStateSet` when player chara is passed.
-                                                                                       // @hack Points to `Player_ControlStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCommandExecute`
+    /* 0xD4  */ s32                    (*playerAnimStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaAnimStateSet` when player chara is passed.
+                                                                                       // @hack Points to `Player_AnimStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCommandExecute`
     /* 0xD8  */ void                   (*playerAnimReset)();
     /* 0xDC  */ void                   (*playerAnimLock)(void);
     /* 0xE0  */ void                   (*playerAnimIsLocked)(void);
@@ -501,8 +501,8 @@ typedef struct _MapOverlayHdr
     /* 0x118 */ void                   (*func_118)();
     /* 0x11C */ void                   (*func_11C)();
     /* 0x120 */ void                   (*func_120)();
-    /* 0x124 */ void                   (*charaControlStateSet)(s_SubCharacter* npc, q19_12 afkTime);
-    /* 0x128 */ s32                    (*charaControlStateReset)(s_SubCharacter* player); // TODO: Not only used by the player.
+    /* 0x124 */ void                   (*charaAnimStateSet)(s_SubCharacter* npc, q19_12 afkTime);
+    /* 0x128 */ s32                    (*charaAnimReset)(s_SubCharacter* player); // TODO: Not only used by the player.
     /* 0x12C */ s32                    (*charaAnimLock)(s_SubCharacter* npc);
     /* 0x130 */ void                   (*charaAnimIsLocked)(s_SubCharacter* chara);
     /* 0x134 */ s32                    (*charaAnimUnlock)(s_SubCharacter* chara);

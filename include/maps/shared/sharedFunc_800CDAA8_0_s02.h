@@ -248,11 +248,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
             }
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             headingAngle = playerProps.headingAngle = Q12_ANGLE(0.0f);
             break;
@@ -289,11 +285,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
             }
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             headingAngle = playerProps.headingAngle = Q12_ANGLE(0.0f);
             break;
@@ -332,11 +324,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     break;
             }
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             headingAngle = playerProps.headingAngle = Q12_ANGLE(0.0f);
             break;
@@ -388,12 +376,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             headingAngle = playerProps.headingAngle = Q12_ANGLE(0.0f);
             break;
@@ -440,12 +424,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             headingAngle =
             playerProps.headingAngle = Q12_ANGLE(0.0f);
@@ -463,12 +443,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             {
                 extra->model.controlState++;
             }
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             headingAngle = playerProps.headingAngle = Q12_ANGLE(180.0f);
             break;
@@ -510,12 +486,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     Player_ExtraStateSet(player, extra, PlayerState_TurnLeft);
                     break;
             }
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             headingAngle             = 
             playerProps.headingAngle = Q12_ANGLE(0.0f);
@@ -559,12 +531,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                     Player_ExtraStateSet(player, extra, PlayerState_TurnRight);
                     break;
             }
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             headingAngle             = 
             playerProps.headingAngle = Q12_ANGLE(0.0f);
@@ -576,12 +544,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk59:
             func_8007FB94(player, extra, ANIM_STATUS(150, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk59;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -589,24 +553,16 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk60:
             func_8007FB94(player, extra, ANIM_STATUS(150, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk60;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk66
         case PlayerState_Unk66:
             func_8007FB94(player, extra, ANIM_STATUS(156, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -615,12 +571,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk70
         case PlayerState_Unk70:
             func_8007FB94(player, extra, ANIM_STATUS(171, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 #ifdef MAP0_S01
             func_8003D03C();
 #endif
@@ -630,48 +582,32 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk71
         case PlayerState_Unk71:
             func_8007FC48(player, extra, ANIM_STATUS(171, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk73
         case PlayerState_Unk73:
             func_8007FB94(player, extra, ANIM_STATUS(170, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk74
         case PlayerState_Unk74:
             func_8007FB94(player, extra, ANIM_STATUS(175, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk83
         case PlayerState_Unk83:
             func_8007FB94(player, extra, ANIM_STATUS(177, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -706,23 +642,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);
 #endif
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk86
         case PlayerState_Unk86:
             func_8007FB94(player, extra, ANIM_STATUS(181, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -732,12 +660,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk87:
             func_8007FC48(player, extra, ANIM_STATUS(179, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk87;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -747,12 +671,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk88:
             func_8007FC48(player, extra, ANIM_STATUS(179, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk88;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -761,12 +681,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk94
         case PlayerState_Unk94:
             func_8007FB94(player, extra, ANIM_STATUS(178, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -775,12 +691,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk95
         case PlayerState_Unk95:
             func_8007FB94(player, extra, ANIM_STATUS(184, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -804,11 +716,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FB94(player, extra, ANIM_STATUS(185, false));
             keyframeIdx = 1062;
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -816,12 +725,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk98:
             func_8007FB94(player, extra, ANIM_STATUS(185, true));
             keyframeIdx = 1062;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             if (player->model.anim.keyframeIdx >= 1147)
             {
@@ -833,12 +738,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk99
         case PlayerState_Unk99:
             func_8007FB94(player, extra, ANIM_STATUS(186, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -847,12 +748,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk100
         case PlayerState_Unk100:
             func_8007FB94(player, extra, ANIM_STATUS(186, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -863,11 +760,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, 0x14B);
 
             keyframeIdx = KEYFRAME_PlayerState_Unk69;
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -876,12 +770,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk72
         case PlayerState_Unk72:
             func_8007FB94(player, extra, ANIM_STATUS(170, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -924,36 +814,24 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             g_Player_MoveSpeed = (q19_12)playerProps.moveSpeed;
             func_8007FC48(player, extra, ANIM_STATUS(180, false));
             headingAngle = Q12_ANGLE(180.0f);
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk106
         case PlayerState_Unk106:
             func_8007FB94(player, extra, ANIM_STATUS(191, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk107
         case PlayerState_Unk107:
             func_8007FB94(player, extra, ANIM_STATUS(192, false));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -962,12 +840,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk108
         case PlayerState_Unk108:
             func_8007FB94(player, extra, ANIM_STATUS(191, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -976,12 +850,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk109
         case PlayerState_Unk109:
             func_8007FB94(player, extra, ANIM_STATUS(192, true));
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -989,12 +859,8 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk114:
             func_8007FB94(player, extra, ANIM_STATUS(195, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk114;
-
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1003,11 +869,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(195, true));
             keyframeIdx = 699;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1015,11 +877,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk116:
             func_8007FC48(player, extra, ANIM_STATUS(196, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1028,11 +886,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(197, false));
             keyframeIdx = 750;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1040,11 +894,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk119:
             func_8007FB94(player, extra, ANIM_STATUS(197, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1053,11 +903,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(198, false));
             keyframeIdx = 779;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1066,11 +912,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(198, true));
             keyframeIdx = 807;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1083,11 +925,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #endif
             keyframeIdx = KEYFRAME_PlayerState_Unk122;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1096,11 +934,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(200, true));
             keyframeIdx = 846;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1108,11 +942,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk125:
             func_8007FC48(player, extra, ANIM_STATUS(201, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1121,11 +951,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(201, true));
             keyframeIdx = 980;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1134,11 +960,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(202, false));
             keyframeIdx = 1002;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1147,11 +969,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(203, true));
             keyframeIdx = 967;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1159,11 +977,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk132:
             func_8007FB94(player, extra, 343);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1172,11 +986,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, 351);
             keyframeIdx = 827;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             if (player->model.anim.keyframeIdx > (keyframeIdx + 33) &&
                 player->model.anim.keyframeIdx < (keyframeIdx + 46))
@@ -1194,11 +1004,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk77:
             func_8007FC48(player, extra, 352);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1206,11 +1012,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk78:
             func_8007FC48(player, extra, 353);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1219,11 +1021,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, 363);
             keyframeIdx = 948;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1231,11 +1029,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk90:
             func_8007FC48(player, extra, 344);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             func_8003D03C();
             break;
@@ -1246,11 +1040,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, 365);
             keyframeIdx = 1027;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1258,11 +1048,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk92:
             func_8007FB94(player, extra, 366);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1271,11 +1057,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, 367);
             keyframeIdx = 1055;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1283,11 +1065,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk110:
             func_8007FB94(player, extra, 386);
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1296,11 +1074,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(193, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk111;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1309,11 +1083,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(194, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk113;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1322,11 +1092,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(196, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk117;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1335,11 +1101,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(199, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk123;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1347,11 +1109,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk128:
             func_8007FC48(player, extra, ANIM_STATUS(202, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1359,11 +1117,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk129:
             func_8007FC48(player, extra, ANIM_STATUS(203, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1372,11 +1126,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(204, false));
             keyframeIdx = 1039;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1384,11 +1134,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk134:
             func_8007FB94(player, extra, ANIM_STATUS(204, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
 
@@ -1398,11 +1144,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 extra->model.anim.time       = Q12(g_MapOverlayHdr.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + (new_var = g_SysWork.npcs)[0].model.anim.time - Q12(261.0f);
                 player->model.anim.time = Q12(g_MapOverlayHdr.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + new_var[0].model.anim.time - Q12(261.0f);
 
-                if (g_Player_AnimResetRequest)
-                {
-                    Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                    g_Player_AnimResetRequest = false;
-                }
+                Player_AnimStateReset(player, extra);
 
                 player->model.anim.keyframeIdx = FP_FROM(player->model.anim.time, Q12_SHIFT);
                 extra->model.anim.keyframeIdx       = FP_FROM(extra->model.anim.time, Q12_SHIFT);
@@ -1414,11 +1156,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk135:
             func_8007FC48(player, extra, ANIM_STATUS(205, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1428,11 +1166,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk136:
             func_8007FB94(player, extra, ANIM_STATUS(205, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1442,11 +1176,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk137:
             func_8007FB94(player, extra, ANIM_STATUS(206, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1457,11 +1187,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(206, true));
             keyframeIdx = 728;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1471,11 +1197,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk139:
             func_8007FC48(player, extra, ANIM_STATUS(207, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1486,11 +1208,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(207, true));
             keyframeIdx = 982;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1499,11 +1217,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(208, false));
             keyframeIdx = 1066;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1514,11 +1228,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(208, true));
             keyframeIdx = 1016;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1528,11 +1238,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk143:
             func_8007FB94(player, extra, ANIM_STATUS(209, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
 
             sharedFunc_800CDAA8_0_s02_Switch();
@@ -1542,11 +1248,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef HAS_PlayerState_Unk144
         case PlayerState_Unk144:
             func_8007FC48(player, extra, ANIM_STATUS(209, true));
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1556,11 +1258,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk145:
             func_8007FC48(player, extra, ANIM_STATUS(210, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1571,11 +1269,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(210, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk146;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1586,11 +1280,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(211, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk147;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1598,11 +1288,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk148:
             func_8007FB94(player, extra, ANIM_STATUS(211, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1613,11 +1299,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(212, false));
             keyframeIdx = 728;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1626,11 +1308,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(212, true));
             keyframeIdx = 793;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1658,11 +1336,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FB94(player, extra, ANIM_STATUS(213, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1670,11 +1344,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk152:
             func_8007FC48(player, extra, ANIM_STATUS(213, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1685,11 +1355,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(214, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk153;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1708,11 +1374,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FB94(player, extra, ANIM_STATUS(214, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1721,11 +1383,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(215, false));
             keyframeIdx = 678;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1736,11 +1394,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(215, true));
             keyframeIdx = 733;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1751,11 +1405,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(216, false));
             keyframeIdx = 793;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1766,11 +1416,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(216, true));
             keyframeIdx = 834;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1781,11 +1427,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(217, false));
             keyframeIdx = 170;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1794,11 +1436,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(217, true));
             keyframeIdx = 1126;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1807,11 +1445,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(218, false));
             keyframeIdx = 1207;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             if (player->model.anim.keyframeIdx == 1236)
             {
@@ -1835,11 +1469,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FB94(player, extra, ANIM_STATUS(222, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1847,11 +1477,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk175:
             func_8007FB94(player, extra, ANIM_STATUS(225, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1861,11 +1487,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #ifdef MAP5_S02
             keyframeIdx = 889;
 #endif
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1873,11 +1495,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk164:
             func_8007FC48(player, extra, ANIM_STATUS(219, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1903,11 +1521,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FC48(player, extra, ANIM_STATUS(220, false)); // TODO: Demagic
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1915,11 +1529,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk166:
             func_8007FB94(player, extra, ANIM_STATUS(220, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1927,11 +1537,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk187:
             func_8007FB94(player, extra, ANIM_STATUS(231, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1941,11 +1547,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk189:
             func_8007FC48(player, extra, ANIM_STATUS(232, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1954,11 +1556,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(218, true));
             keyframeIdx = KEYFRAME_PlayerState_Unk162;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;
@@ -1968,11 +1566,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk163:
             func_8007FC48(player, extra, ANIM_STATUS(219, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1981,11 +1575,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(221, false));
             keyframeIdx = KEYFRAME_PlayerState_Unk167;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -1994,11 +1584,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(221, true));
             keyframeIdx = 1363;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2007,11 +1593,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FB94(player, extra, ANIM_STATUS(223, false));
             keyframeIdx = 937;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2020,11 +1602,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(223, true));
             keyframeIdx = 961;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2032,11 +1610,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk173:
             func_8007FC48(player, extra, ANIM_STATUS(224, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2044,11 +1618,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk174:
             func_8007FC48(player, extra, ANIM_STATUS(224, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2058,11 +1628,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FB94(player, extra, ANIM_STATUS(225, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2071,11 +1637,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FB94(player, extra, ANIM_STATUS(226, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2084,11 +1646,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FB94(player, extra, ANIM_STATUS(229, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2097,11 +1655,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FB94(player, extra, ANIM_STATUS(226, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2120,11 +1674,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
             func_8007FB94(player, extra, ANIM_STATUS(227, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2133,11 +1683,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FB94(player, extra, ANIM_STATUS(227, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2146,11 +1692,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8003D01C();
             func_8007FC48(player, extra, ANIM_STATUS(228, false));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2158,11 +1700,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk182:
             func_8007FC48(player, extra, ANIM_STATUS(228, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2171,11 +1709,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(229, false));
             keyframeIdx = 1358;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2184,11 +1718,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             func_8007FC48(player, extra, ANIM_STATUS(230, false));
             keyframeIdx = 1363;
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
             break;
 #endif
 
@@ -2196,11 +1726,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk170:
             func_8007FB94(player, extra, ANIM_STATUS(222, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             keyframeIdx = 1411;
 
@@ -2219,11 +1745,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk188:
             func_8007FB94(player, extra, ANIM_STATUS(231, true));
 
-            if (g_Player_AnimResetRequest)
-            {
-                Player_ExtraStateSet(player, extra, PlayerState_Reset);
-                g_Player_AnimResetRequest = false;
-            }
+            Player_AnimStateReset(player, extra);
 
             sharedFunc_800CDAA8_0_s02_Switch();
             break;

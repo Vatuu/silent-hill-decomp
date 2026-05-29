@@ -484,10 +484,10 @@ void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q2
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond);
 
 /** NPC-only, sets `controlState` in properties. */
-void Chara_ControlStateSet(s_SubCharacter* npc, s32 controlState);
+void Chara_AnimStateSet(s_SubCharacter* npc, s32 controlState);
 
 /** NPC-only, sets `resetControlState` in properties. */
-void Chara_ControlStateReset(s_SubCharacter* npc);
+void Chara_AnimReset(s_SubCharacter* npc);
 
 /** Locks a character's animation. */
 void Chara_AnimLock(s_SubCharacter* chara);

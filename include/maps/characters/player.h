@@ -17,7 +17,7 @@ void Player_ControlUnfreeze(bool setIdle);
 
 bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
-void Player_ControlStateSet(s32 playerExtraState);
+void Player_AnimStateSet(s32 playerExtraState);
 
 // Requests a player animation reset. TODO: Unsure about the name.
 void Player_AnimReset(void);

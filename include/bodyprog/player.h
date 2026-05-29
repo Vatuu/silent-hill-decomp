@@ -702,4 +702,20 @@ static inline void Player_CollisionReset()
     playerChara->model.anim.flags &= ~(clearFlags);            \
 }
 
+/** @brief Resets player extra data state if `g_Player_AnimResetRequest` is set.
+ *
+ * @note This works similar to `Chara_AnimStateReset`.
+ *
+ * @param player Player character to update.
+ * @param extra Player extra data to update.
+ */
+static inline void Player_AnimStateReset(s_SubCharacter* player, s_PlayerExtra* extra)
+{
+    if (g_Player_AnimResetRequest)
+    {
+        Player_ExtraStateSet(player, extra, PlayerState_Reset);
+        g_Player_AnimResetRequest = false;
+    }
+}
+
 #endif

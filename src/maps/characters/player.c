@@ -223,7 +223,7 @@ void sharedFunc_800D209C_0_s00(void)
     g_SavegamePtr->equippedWeapon         = InvItemId_Unequipped;
 
     Player_ControlFreeze();
-    Player_ControlStateSet(PlayerState_Unk84);
+    Player_AnimStateSet(PlayerState_Unk84);
 }
 
 void Player_MatchArmAnimDisable(void)
@@ -583,7 +583,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
     return false;
 }
 
-void Player_ControlStateSet(s32 playerExtraState)
+void Player_AnimStateSet(s32 playerExtraState)
 {
     s_SubCharacter* player;
     s_PlayerExtra*  extra;

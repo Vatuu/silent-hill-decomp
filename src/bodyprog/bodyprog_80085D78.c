@@ -87,11 +87,11 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
         case CharaAnimCommand_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHdr.playerControlStateSet(cmdArg);
+                g_MapOverlayHdr.playerAnimStateSet(cmdArg);
             }
             else
             {
-                g_MapOverlayHdr.charaControlStateSet(chara, cmdArg);
+                g_MapOverlayHdr.charaAnimStateSet(chara, cmdArg);
             }
             break;
 
@@ -144,7 +144,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             else
             {
-                g_MapOverlayHdr.charaControlStateReset(chara);
+                g_MapOverlayHdr.charaAnimReset(chara);
             }
             break;
     }
