@@ -265,14 +265,14 @@ void func_800D76F4(void) // 0x800D76F4
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_GoldMedallion, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_GoldMedallion, 0, false);
 
         case 1:
             func_80085DF0();
             break;
 
         case 2:
-            func_80086470(1, InvItemId_GoldMedallion, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_GoldMedallion, 0, false);
             break;
 
         case 3:
@@ -286,7 +286,7 @@ void func_800D76F4(void) // 0x800D76F4
             break;
 
         case PICK_UP_MEDALLION_STATE:
-            func_80086470(3, InvItemId_GoldMedallion, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_GoldMedallion, 1, false);
 
         default:
             Player_ControlUnfreeze(false);
@@ -687,7 +687,7 @@ void func_800D857C(void) // 0x800D857C
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_SilverMedallion, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_SilverMedallion, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -699,7 +699,7 @@ void func_800D857C(void) // 0x800D857C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InvItemId_SilverMedallion, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_SilverMedallion, 0, false);
             break;
 
         case 4:
@@ -716,7 +716,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 6:
-            func_80086470(3, InvItemId_SilverMedallion, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_SilverMedallion, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 

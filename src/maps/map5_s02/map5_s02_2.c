@@ -372,7 +372,7 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 3:
-            func_80086470(0, InvItemId_KaufmannKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_KaufmannKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -380,7 +380,7 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 5:
-            func_80086470(1, InvItemId_KaufmannKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_KaufmannKey, 0, false);
             break;
 
         case 6:
@@ -398,11 +398,11 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 7:
-            func_80086470(0, InvItemId_Receipt, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_Receipt, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_80086470(1, InvItemId_Receipt, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_Receipt, 0, false);
             break;
 
         case 9:
@@ -425,8 +425,8 @@ void func_800D54D0(void) // 0x800D54D0
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_380);
-            func_80086470(3, InvItemId_KaufmannKey, 1, false);
-            func_80086470(3, InvItemId_Receipt, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KaufmannKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Receipt, 1, false);
             break;
     }
 }

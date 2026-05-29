@@ -203,7 +203,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
 
             // Replace Plastic Bottle with Unknown Liquid in inventory.
             Player_ItemRemove(InvItemId_PlasticBottle, 1);
-            func_80086470(3, InvItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
             break;
     }
 }

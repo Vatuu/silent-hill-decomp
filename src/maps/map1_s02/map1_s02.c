@@ -905,7 +905,7 @@ void func_800DBFC8(void) // 0x800DBFC8
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_Shotgun, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_Shotgun, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -917,7 +917,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InvItemId_Shotgun, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_Shotgun, 0, false);
             break;
 
         case 4:
@@ -934,7 +934,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 6:
-            func_80086470(3, InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -1256,7 +1256,7 @@ void func_800DD208(void) // 0x800DD208
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_ClassroomKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_ClassroomKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1268,7 +1268,7 @@ void func_800DD208(void) // 0x800DD208
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InvItemId_ClassroomKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_ClassroomKey, 0, false);
             break;
 
         case 4:
@@ -1285,7 +1285,7 @@ void func_800DD208(void) // 0x800DD208
             break;
 
         case 6:
-            func_80086470(3, InvItemId_ClassroomKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_ClassroomKey, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 

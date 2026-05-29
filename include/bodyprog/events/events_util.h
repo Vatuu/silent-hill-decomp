@@ -27,6 +27,17 @@ typedef enum _BgTextureCommand
     BgTextureCommand_Hack = -1 // Force enum as `s32`.
 } e_BgTextureCommand;
 
+typedef enum _InvItemCommand
+{
+    InvItemCommand_QueueLoad = 0,
+    InvItemCommand_AwaitLoad = 1,
+    InvItemCommand_Nop       = 2, // Does nothing? `activeCmd` is changed to 3, but then switch has no entry for `3`.
+    InvItemCommand_AddItem   = 3, // Finalize + add to inventory (`activeCmd` changes to 2, which adds to inventory)
+    InvItemCommand_4         = 4, // Auto, no inventory add? | @unused No caller passes this?
+    InvItemCommand_5         = 5, // @unused No caller passes this?
+    InvItemCommand_6         = 6, // Auto + add to inventory | @unused No caller passes this but code checks it
+} e_InvItemCommand;
+
 extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
 
 /** State step increment for some substate. */
@@ -69,7 +80,7 @@ void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType
 void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSubStep);
 
 /** Stepped state handler for displaying picked up items? */
-void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
+void Event_InvItemCommand(e_InvItemCommand stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 

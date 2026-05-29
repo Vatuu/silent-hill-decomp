@@ -123,7 +123,7 @@ void func_800D1628(void) // 0x800D1628
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_MotorcycleKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_MotorcycleKey, 0, false);
             Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             // Warp player.
@@ -155,7 +155,7 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_80086470(1, InvItemId_MotorcycleKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_MotorcycleKey, 0, false);
             break;
 
         case 6:
@@ -181,7 +181,7 @@ void func_800D1628(void) // 0x800D1628
             vcReturnPreAutoCamWork(true);
 
             Player_ItemRemove(InvItemId_Magnet, 1);
-            func_80086470(3, InvItemId_MotorcycleKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_MotorcycleKey, 1, false);
             Savegame_EventFlagSet(EventFlag_390);
 
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);

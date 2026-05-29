@@ -554,7 +554,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 10:
             Savegame_EventFlagSet(EventFlag_354);
 
-            func_80086470(3u, InvItemId_SewerExitKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_SewerExitKey, 1, false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-92.0f);

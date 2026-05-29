@@ -401,7 +401,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0u, InvItemId_SteelPipe, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_SteelPipe, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -413,7 +413,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case 3:
-            func_80086470(1, InvItemId_SteelPipe, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_SteelPipe, 0, false);
             break;
 
         case 4:
@@ -426,7 +426,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case EventState_TakeSteelPipe:
-            func_80086470(3, InvItemId_SteelPipe, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_SteelPipe, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 
@@ -830,7 +830,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80086470(3, InvItemId_NoteToSchool, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_NoteToSchool, 1, false);
             func_8003A16C();
             break;
     }
@@ -938,7 +938,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_80086470(3, InvItemId_NoteDoghouse, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_NoteDoghouse, 1, false);
             break;
     }
 }
@@ -994,7 +994,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case EventState_TakeKey:
-            func_80086470(3, InvItemId_HouseKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_HouseKey, 1, false);
             Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
             Player_ItemRemove(InvItemId_NoteDoghouse, 1);
             SysWork_StateStepIncrement(0);
@@ -1053,7 +1053,7 @@ void func_800E9A74(void) // 0x800E9A74
     {
         case EventState_Initialize:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_KeyOfWoodman, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_KeyOfWoodman, 0, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
@@ -1065,7 +1065,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case EventState_3:
-            func_80086470(1, InvItemId_KeyOfWoodman, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_KeyOfWoodman, 0, false);
             break;
 
         case EventState_4:
@@ -1082,7 +1082,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_TakeKey:
-            func_80086470(3, InvItemId_KeyOfWoodman, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KeyOfWoodman, 1, false);
 
             if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_DogYardKeyLine))
             {

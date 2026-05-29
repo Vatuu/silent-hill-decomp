@@ -773,7 +773,7 @@ void func_800D8DB4(void) // 0x800D8DB4
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_KeyOfOphiel, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_KeyOfOphiel, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -785,7 +785,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InvItemId_KeyOfOphiel, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_KeyOfOphiel, 0, false);
             break;
 
         case 4:
@@ -802,7 +802,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             break;
 
         case 6:
-            func_80086470(3, InvItemId_KeyOfOphiel, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KeyOfOphiel, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -1533,7 +1533,7 @@ void func_800DAB64(void) // 0x800DAB64
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_StoneOfTime, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_StoneOfTime, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1545,7 +1545,7 @@ void func_800DAB64(void) // 0x800DAB64
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086470(1, InvItemId_StoneOfTime, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_StoneOfTime, 0, false);
             break;
 
         case 4:
@@ -1562,7 +1562,7 @@ void func_800DAB64(void) // 0x800DAB64
             break;
 
         case 6:
-            func_80086470(3, InvItemId_StoneOfTime, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_StoneOfTime, 1, false);
             SysWork_StateStepSet(0, 8);
             break;
 
@@ -1834,7 +1834,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             Savegame_EventFlagClear(EventFlag_497);
 
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_80086470(3, InvItemId_Camera, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Camera, 1, false);
             break;
     }
 }

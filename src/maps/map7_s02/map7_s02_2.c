@@ -752,7 +752,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            func_80086470(3, InvItemId_VideoTape, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_VideoTape, 1, false);
             break;
     }
 }
@@ -1036,7 +1036,7 @@ void func_800DC778(void) // 0x800DC778
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_KeyOfBethor, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_KeyOfBethor, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1048,7 +1048,7 @@ void func_800DC778(void) // 0x800DC778
             break;
 
         case 3:
-            func_80086470(1, InvItemId_KeyOfBethor, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_KeyOfBethor, 0, false);
             break;
 
         case 4:
@@ -1061,7 +1061,7 @@ void func_800DC778(void) // 0x800DC778
             break;
 
         case 5:
-            func_80086470(3, InvItemId_KeyOfBethor, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KeyOfBethor, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 
@@ -1245,7 +1245,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 7:
-            func_80086470(0, InvItemId_DaggerOfMelchior, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_DaggerOfMelchior, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1273,7 +1273,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 10:
-            func_80086470(1, InvItemId_DaggerOfMelchior, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_DaggerOfMelchior, 0, false);
             break;
 
         case 11:
@@ -1286,7 +1286,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 12:
-            func_80086470(3, InvItemId_DaggerOfMelchior, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_DaggerOfMelchior, 1, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -2745,7 +2745,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 break;
 
             case 6:
-                func_80086470(3, InvItemId_KeyOfAratron, 1, false);
+                Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KeyOfAratron, 1, false);
                 Savegame_EventFlagSet(EventFlag_M7S02_PickupKeyOfAratron);
                 SysWork_StateStepIncrement(0);
 
@@ -2884,7 +2884,7 @@ void func_800E1398(void) // 0x800E1398
             Savegame_EventFlagClear(EventFlag_497);
 
             Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_80086470(3, InvItemId_Camera, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Camera, 1, false);
             break;
     }
 }

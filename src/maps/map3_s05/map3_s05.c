@@ -259,7 +259,7 @@ void func_800D5C98(void) // 0x800D5C98
             g_SysWork.playerWork.player.position.vz = Q12(-20.0f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
-            func_80086470(3U, InvItemId_Lighter, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Lighter, 1, false);
             g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
 
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);

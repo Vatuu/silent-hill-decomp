@@ -937,6 +937,7 @@ Event_SysStateBranchOnFlag                   = 0x8008605C; // type:func
 Event_DisplayMapMsg                          = 0x800860B0; // type:func
 Event_SysStateStepIncrementAfterFade         = 0x8008616C; // type:func
 Event_BgTextureCommand                       = 0x800862F8; // type:func
+Event_InvItemCommand                         = 0x80086470; // type:func
 Event_DisplayMapMsgWithAudio                 = 0x800869E4; // type:func
 Camera_PositionSet                           = 0x80086A94; // type:func
 Camera_LookAtSet                             = 0x80086B70; // type:func

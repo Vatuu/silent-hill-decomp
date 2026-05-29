@@ -398,7 +398,7 @@ void func_800D1A58(void) // 0x800D1A58
             }
             else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
             {
-                func_80086470(3, D_800D8144 + InvItemId_PlateOfTurtle, 1, false);
+                Event_InvItemCommand(InvItemCommand_AddItem, D_800D8144 + InvItemId_PlateOfTurtle, 1, false);
                 SysWork_StateStepSet(0, 16);
             }
             break;
@@ -482,19 +482,19 @@ void func_800D1A58(void) // 0x800D1A58
 
                         if (D_800D8140[i] == 0)
                         {
-                            func_80086470(3, InvItemId_PlateOfTurtle, 1, false);
+                            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_PlateOfTurtle, 1, false);
                         }
                         else if (D_800D8140[i] == 1)
                         {
-                            func_80086470(3, InvItemId_PlateOfHatter, 1, false);
+                            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_PlateOfHatter, 1, false);
                         }
                         else if (D_800D8140[i] == 2)
                         {
-                            func_80086470(3, InvItemId_PlateOfCat, 1, false);
+                            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_PlateOfCat, 1, false);
                         }
                         else if (D_800D8140[i] == 3)
                         {
-                            func_80086470(3, InvItemId_PlateOfQueen, 1, false);
+                            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_PlateOfQueen, 1, false);
                         }
 
                         temp_v1_8 = EventFlag_265;
@@ -691,7 +691,7 @@ void func_800D27F4(void) // 0x800D27F4
             vcReturnPreAutoCamWork(false);
             Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            func_80086470(3, InvItemId_VideoTape, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_VideoTape, 1, false);
             break;
     }
 }

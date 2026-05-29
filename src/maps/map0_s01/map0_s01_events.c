@@ -360,7 +360,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Chara_ModelCharaIdClear(&cybilChara, 0, 0);
             SD_Call(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, 0, 0);
-            func_80086470(3, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
 
         case 49:

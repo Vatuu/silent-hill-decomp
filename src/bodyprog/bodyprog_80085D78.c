@@ -364,38 +364,49 @@ void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSu
     }
 }
 
-void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep) // 0x80086470
+void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCount, bool incSubStep) // 0x80086470
 {
-    s32 activeStateStep;
-
-    if (stateStep == 6 && g_SysWork.sysStateSteps[2] == 0)
+    // This func does weird remapping of the input `cmd` to `activeCmd`
+    // `cmd` is also `u32` while `activeCmd` is `s32`, added internal enum here to help func make more sense.
+    typedef enum _InvItemCommandInternal
     {
-        SysWork_StateStepSet(2, 2);
+        InvItemCommandInternal_QueueLoad = 0,
+        InvItemCommandInternal_AwaitLoad = 1,
+        InvItemCommandInternal_AddItem = 2, // Remapped from `InvItemCommand_AddItem` (3)
+        InvItemCommandInternal_Nop = 3,     // Remapped from `InvItemCommand_Nop` (2)
+        InvItemCommandInternal_Hack = -1
+    } e_InvItemCommandInternal;
+
+    e_InvItemCommandInternal activeCmd;
+
+    if (cmd == InvItemCommand_6 && g_SysWork.sysStateSteps[2] == 0)
+    {
+        SysWork_StateStepSet(2, InvItemCommandInternal_AddItem);
     }
 
-    activeStateStep = stateStep;
-    if (stateStep >= 2)
+    activeCmd = cmd;
+    if (cmd >= InvItemCommand_Nop)
     {
-        if (stateStep == 2)
+        if (cmd == InvItemCommand_Nop)
         {
-            activeStateStep = 3;
+            activeCmd = InvItemCommandInternal_Nop;
         }
-        else if (stateStep == 3)
+        else if (cmd == InvItemCommand_AddItem)
         {
-            activeStateStep = 2;
+            activeCmd = InvItemCommandInternal_AddItem;
         }
         else
         {
-            activeStateStep = g_SysWork.sysStateSteps[2];
+            activeCmd = g_SysWork.sysStateSteps[2];
         }
     }
 
-    switch (activeStateStep)
+    switch (activeCmd)
     {
-        case 0:
+        case InvItemCommandInternal_QueueLoad:
             GameFs_UniqueItemModelLoad(itemId);
 
-            if (stateStep == 0)
+            if (cmd == InvItemCommand_QueueLoad)
             {
                 SysWork_StateStepIncrement(1);
                 g_SysWork.sysStateSteps[1]--;
@@ -403,7 +414,7 @@ void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSub
 
             SysWork_StateStepIncrement(2);
 
-        case 1:
+        case InvItemCommandInternal_AwaitLoad:
             if (!Fs_QueueChunksLoad())
             {
                 break;
@@ -411,7 +422,7 @@ void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSub
 
             func_80054A04(itemId);
 
-            if (stateStep == 1 || stateStep == 4)
+            if (cmd == InvItemCommand_AwaitLoad || cmd == InvItemCommand_4)
             {
                 Event_SysStateStepIncrement(incSubStep);
                 break;
@@ -419,10 +430,10 @@ void func_80086470(u32 stateStep, e_InvItemId itemId, s32 itemCount, bool incSub
 
             SysWork_StateStepIncrement(2);
 
-        case 2:
+        case InvItemCommandInternal_AddItem:
             SysWork_StateStepSet(2, 0);
 
-            if (stateStep == 3 || stateStep == 6)
+            if (cmd == InvItemCommand_AddItem || cmd == InvItemCommand_6)
             {
                 Inventory_AddSpecialItem(itemId, itemCount);
             }
@@ -974,12 +985,12 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
     {
         case 0: // Freeze player and start loading item model.
             g_MapOverlayHdr.playerControlFreeze();
-            func_80086470(0, itemId, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, itemId, 0, false);
 
             SysWork_StateStepIncrement(1);
 
         case 1: // Load model.
-            func_80086470(1, itemId, 0, true);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, itemId, 0, true);
             break;
 
         case 2:
@@ -994,7 +1005,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
             break;
 
         case 3: // "Yes" selected.
-            func_80086470(3, itemId, itemCount, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, itemId, itemCount, false);
             SysWork_StateStepIncrement(1);
 
         default:

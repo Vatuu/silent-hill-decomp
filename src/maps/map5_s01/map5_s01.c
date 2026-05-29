@@ -649,7 +649,7 @@ void func_800EC42C(void) // 0x800EC42C
 
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_458);
-            func_80086470(3, InvItemId_ChannelingStone, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 

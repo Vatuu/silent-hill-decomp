@@ -1161,7 +1161,7 @@ void func_800DC9A0(void) // 0x800DC9A0
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_LibraryReserveKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_LibraryReserveKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1173,7 +1173,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         case 3:
-            func_80086470(1, InvItemId_LibraryReserveKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_LibraryReserveKey, 0, false);
             break;
 
         case 4:
@@ -1189,7 +1189,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         case 5:
-            func_80086470(3, InvItemId_LibraryReserveKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_LibraryReserveKey, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -1391,7 +1391,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_456);
-            func_80086470(3, InvItemId_ChannelingStone, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 

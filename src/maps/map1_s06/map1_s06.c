@@ -204,7 +204,7 @@ void func_800D5B98(void) // 0x800D5B98
     {
         case 0:
             Player_ControlFreeze();
-            func_80086470(0, InvItemId_KGordonKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_KGordonKey, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -216,7 +216,7 @@ void func_800D5B98(void) // 0x800D5B98
             break;
 
         case 3:
-            func_80086470(1, InvItemId_KGordonKey, 0, false);
+            Event_InvItemCommand(InvItemCommand_AwaitLoad, InvItemId_KGordonKey, 0, false);
             break;
 
         case 4:
@@ -229,7 +229,7 @@ void func_800D5B98(void) // 0x800D5B98
             break;
 
         case 5:
-            func_80086470(3, InvItemId_KGordonKey, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_KGordonKey, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 

@@ -521,7 +521,7 @@ void func_800CFC34(void) // 0x800CFC34
         default:
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_460);
-            func_80086470(3, InvItemId_ChannelingStone, 1, false);
+            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             g_Cutscene_Timer = NO_VALUE;
