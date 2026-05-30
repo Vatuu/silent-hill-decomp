@@ -476,9 +476,16 @@ void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32
 
 void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
 {
+    typedef enum _EventState
+    {
+        EventState_Initialize   = 0,
+        EventState_DrawPaperMap = 1,
+        EventState_2            = 2 // TODO: Name this.
+    } e_EventState;
+
     switch (state)
     {
-        case 0:
+        case EventState_Initialize:
             DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
@@ -491,11 +498,11 @@ void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
             Fs_QueueWaitForEmpty();
             break;
 
-        case 1:
+        case EventState_DrawPaperMap:
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             break;
 
-        case 2:
+        case EventState_2:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
@@ -503,24 +510,35 @@ void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
     }
 }
 
-void Event_TweenReset(s32 idx) // 0x800868DC
+void Event_TweenReset(s32 timerIdx) // 0x800868DC
 {
-    g_Event_TweenTimers[idx] = Q12(0.0f);
+    #define tweenTimer g_Event_TweenTimers[timerIdx]
+
+    tweenTimer = Q12(0.0f);
+
+    #undef tweenTimer
 }
 
-q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 idx) // 0x800868F4
+q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 timerIdx) // 0x800868F4
 {
-    g_Event_TweenTimers[idx] += g_DeltaTime;
-    g_Event_TweenTimers[idx]  = (duration < g_Event_TweenTimers[idx]) ? duration : g_Event_TweenTimers[idx];
+    #define tweenTimer g_Event_TweenTimers[timerIdx]
 
-    return (target * g_Event_TweenTimers[idx]) / duration;
+    tweenTimer += g_DeltaTime;
+    tweenTimer  = (duration < tweenTimer) ? duration : tweenTimer;
+    return (target * tweenTimer) / duration;
+
+    #undef tweenTimer
 }
 
-q19_12 Event_TweenSine(q19_12 amp, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx) // 0x8008694C
+q19_12 Event_TweenSine(q19_12 amp, q3_12 startAngle, q3_12 sweepAngle, q19_12 duration, s32 timerIdx) // 0x8008694C
 {
-    g_Event_TweenTimers[idx] += g_DeltaTime;
-    g_Event_TweenTimers[idx]  = (duration < g_Event_TweenTimers[idx]) ? duration : g_Event_TweenTimers[idx];
-    return Q12_MULT(amp, Math_Sin(startAngle + ((sweepAngle * g_Event_TweenTimers[idx]) / duration)));
+    #define tweenTimer g_Event_TweenTimers[timerIdx]
+
+    tweenTimer += g_DeltaTime;
+    tweenTimer  = (duration < tweenTimer) ? duration : tweenTimer;
+    return Q12_MULT(amp, Math_Sin(startAngle + ((sweepAngle * tweenTimer) / duration)));
+
+    #undef tweenTimer
 }
 
 void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds) // 0x800869E4
@@ -541,8 +559,9 @@ void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioC
     }
 }
 
-void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp) // 0x80086A94
+void Event_CameraPositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                             q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax,
+                             bool warp) // 0x80086A94
 {
     VECTOR3         posTarget;
     VC_CAM_MV_PARAM camMoveParams;
@@ -605,8 +624,9 @@ void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, 
     vcUserCamTarget(&posTarget, &camMoveParams, warp);
 }
 
-void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp) // 0x80086B70
+void Event_CameraLookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                           q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax,
+                           bool warp) // 0x80086B70
 {
     VECTOR3           lookAtTarget;
     VC_WATCH_MV_PARAM camLookAtMoveParams;
@@ -1118,7 +1138,9 @@ void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMs
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
+            // Freeze player control.
             g_MapOverlayHdr.playerControlFreeze();
+
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFlagIdx]);
             SysWork_StateStepIncrement(1);
 
@@ -1197,6 +1219,7 @@ void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMs
             Screen_Init(SCREEN_WIDTH, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
+            // Restore player control.
             g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;

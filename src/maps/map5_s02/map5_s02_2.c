@@ -123,8 +123,8 @@ void func_800D4B58(void) // 0x800D4B58
             g_SysWork.cutsceneBorderState = 20;
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(135.17f), Q12(-3.3f), Q12(61.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(134.29f), Q12(-0.21f), Q12(63.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(135.17f), Q12(-3.3f), Q12(61.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(134.29f), Q12(-0.21f), Q12(63.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(134.9f);
@@ -220,8 +220,8 @@ void func_800D4E64(void) // 0x800D4E64
             Sfx_WithFlagsPlay(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_WorldObject_BDoor1.rotation.vy = Q12_ANGLE(-142.21f);
             SysWork_StateStepIncrement(0);
@@ -293,8 +293,8 @@ void func_800D519C(void) // 0x800D519C
         case 4:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
             Sfx_WithFlagsPlay(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
-            Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_WorldObject_BDoor1.rotation.vy = Q12_ANGLE(-142.21f);
 

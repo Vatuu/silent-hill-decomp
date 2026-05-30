@@ -188,8 +188,8 @@ void func_800D7308(void)
             g_SysWork.playerWork.player.position.vz = Q12(98.9f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
-            Camera_PositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -387,8 +387,8 @@ void func_800D7864(void) // 0x800D7864
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-22.5f);
 
             Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
-            Camera_PositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
             break;
 
         case 12:
@@ -425,8 +425,8 @@ void func_800D7864(void) // 0x800D7864
             g_WorldObject0.position.vz = Q12(22.8f);
             g_WorldObject0.rotation.vy = Q12_ANGLE(28.5f);
 
-            Camera_PositionSet(NULL, Q12(-101.39f), Q12(-2.6099f), Q12(22.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-98.4f), Q12(-0.14f), Q12(23.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-101.39f), Q12(-2.6099f), Q12(22.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-98.4f), Q12(-0.14f), Q12(23.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case SKIP_CUTSCENE_STATE:

@@ -614,8 +614,8 @@ void func_800D27F4(void) // 0x800D27F4
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(320.9f);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-62.93f), Q12(-0.95f), Q12(-58.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-62.93f), Q12(-0.95f), Q12(-58.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
 
@@ -746,8 +746,8 @@ void func_800D2CDC(void) // 0x800D2CDC
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 154, false);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-139.3f), Q12(-2.9f), Q12(65.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-140.67f), Q12(-1.26f), Q12(61.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-139.3f), Q12(-2.9f), Q12(65.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-140.67f), Q12(-1.26f), Q12(61.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
             break;
@@ -784,8 +784,8 @@ void func_800D2CDC(void) // 0x800D2CDC
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-143.07f), Q12(-1.65f), Q12(61.97f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-143.07f), Q12(-1.65f), Q12(61.97f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
 
@@ -797,8 +797,8 @@ void func_800D2CDC(void) // 0x800D2CDC
             Savegame_EventFlagSet(EventFlag_250);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-140.05f), Q12(-3.09f), Q12(63.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-142.08f), Q12(-0.92f), Q12(60.79f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-140.05f), Q12(-3.09f), Q12(63.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-142.08f), Q12(-0.92f), Q12(60.79f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
 

@@ -2085,8 +2085,8 @@ void func_800E2724(void) // 0x800E2724
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12_ANGLE(11.3f), 3);
 
             // Warp camera to start position.
-            Camera_PositionSet(NULL, Q12(25.27f), Q12(-2.4f), Q12(98.43f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(23.78f), Q12(-1.04f), Q12(101.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(25.27f), Q12(-2.4f), Q12(98.43f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(23.78f), Q12(-1.04f), Q12(101.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player to start position.
             playerChara.position.vx = Q12(25.0f);
@@ -2157,8 +2157,8 @@ void func_800E2950(void) // 0x800E2950
             // Warp camera.
             Math_Vector3Set(&camPos, Q12(18.0f), Q12(-1.5f), Q12(94.5f));
             Math_Vector3Set(&camLookAt, Q12(18.0f), Q12(-1.3f), Q12(96.0f));
-            Camera_PositionSet(&camPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(&camLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(&camPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(&camLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_8008D438();
 
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -2611,10 +2611,10 @@ void func_800E3244(void) // 0x800E3244
     if (g_SysWork.sysStateSteps[0] >= 22 && g_SysWork.sysStateSteps[0] <= 27)
     {
         posX = FP_FROM(Math_Sin(D_800ED5B6) * Q12(5.2f), Q12_SHIFT) + Q12(20.0f);
-        Camera_PositionSet(NULL, posX, Q12(-2.0f), FP_FROM(Math_Cos(D_800ED5B6) * Q12(5.2f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Event_CameraPositionSet(NULL, posX, Q12(-2.0f), FP_FROM(Math_Cos(D_800ED5B6) * Q12(5.2f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
         lookAtX = FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.172f)) * Q12(3.7f), Q12_SHIFT) + Q12(20.0f);
-        Camera_LookAtSet(NULL, lookAtX, Q12(-1.0f), FP_FROM(Math_Cos(D_800ED5B6 - 704) * Q12(3.7f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+        Event_CameraLookAtSet(NULL, lookAtX, Q12(-1.0f), FP_FROM(Math_Cos(D_800ED5B6 - 704) * Q12(3.7f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
         Math_Vector3Set(&g_SysWork.lightPosition, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
                         Q12(-1.0f),

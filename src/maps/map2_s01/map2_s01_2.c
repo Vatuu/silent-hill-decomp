@@ -497,8 +497,8 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
         {
             if (PLAYER_NEAR_POS(vx, 20.0f, 0.7f) && PLAYER_NEAR_POS(vz, 23.9f, 0.5f))
             {
-                Camera_PositionSet(NULL, Q12(19.57f), Q12(-2.91f), Q12(23.91f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-                Camera_LookAtSet(NULL, Q12(20.69f), Q12(0.92f), Q12(24.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                Event_CameraPositionSet(NULL, Q12(19.57f), Q12(-2.91f), Q12(23.91f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                Event_CameraLookAtSet(NULL, Q12(20.69f), Q12(0.92f), Q12(24.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
                 D_800D177C = 1;
             }
         }

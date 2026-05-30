@@ -350,8 +350,8 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             g_SysWork.cutsceneBorderState = 20;
 
             func_800867B4(2, 0);
-            Camera_PositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -493,8 +493,8 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Camera_PositionSet(NULL, Q12(15.54f), Q12(-1.5f), Q12(55.64f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(19.42f), Q12(-1.75f), Q12(56.6f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(15.54f), Q12(-1.5f), Q12(55.64f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(NULL, Q12(19.42f), Q12(-1.75f), Q12(56.6f), 0, 0, 0, 0, true);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -1740,8 +1740,8 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         case 4:
-            Camera_PositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_SysWork.playerWork.player.position.vx = Q12(-262.39f);
             g_SysWork.playerWork.player.position.vz = Q12(-104.33f);
@@ -1801,8 +1801,8 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         case 3:
-            Camera_PositionSet(NULL, Q12(-263.03f), Q12(-3.43f), Q12(-105.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-261.58f), Q12(-0.08f), Q12(-103.73f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-263.03f), Q12(-3.43f), Q12(-105.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-261.58f), Q12(-0.08f), Q12(-103.73f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             D_800F22AE = 0;
 

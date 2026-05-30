@@ -132,8 +132,8 @@ void func_800D1628(void) // 0x800D1628
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(51.0f);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(104.65f), Q12(0.72f), Q12(60.44f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(103.54f), Q12(-2.91f), Q12(59.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(104.65f), Q12(0.72f), Q12(60.44f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             SysWork_StateStepIncrement(0);
 
@@ -592,8 +592,8 @@ void func_800D2674(void) // 0x800D2674
             g_SysWork.playerWork.player.position.vz = Q12(59.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
-            Camera_PositionSet(NULL, Q12(102.07f), Q12(-1.42f), Q12(58.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(102.07f), Q12(-1.42f), Q12(58.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             Event_CharaAnimCmdExecute(0U, &g_SysWork.playerWork.player, 105, false);
             SD_Call(Sfx_Unk1520);

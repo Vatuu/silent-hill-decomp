@@ -227,8 +227,8 @@ void func_800D822C(void) // 0x800D822C
             Game_TurnFlashlightOn();
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-19.66f), Q12(0.17f), Q12(26.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-20.49f), Q12(-3.23f), Q12(24.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
@@ -285,8 +285,8 @@ void func_800D84EC(void) // 0x800D84EC
             g_SysWork.playerWork.player.position.vz = Q12(18.8875f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
             Game_TurnFlashlightOn();
-            Camera_PositionSet(NULL, Q12(88.92f), Q12(-1.64f), Q12(20.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(90.98f), Q12(-4.45f), Q12(18.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(88.92f), Q12(-1.64f), Q12(20.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(90.98f), Q12(-4.45f), Q12(18.2f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CharaAnimCmdExecute(0U, &g_SysWork.playerWork.player, 87, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);

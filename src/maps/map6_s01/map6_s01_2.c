@@ -547,8 +547,8 @@ void func_800D236C(void) // 0x800D236C
             g_SysWork.playerWork.player.position.vz = Q12(58.67f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
-            Camera_PositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             Sfx_WithFlagsPlay(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
 

@@ -43,7 +43,7 @@ typedef enum _ScreenFadeCmd
 {
     ScreenFadeCmd_Start = 0,
     ScreenFadeCmd_Wait  = 1,
-    ScreenFadeCmd_Auto  = 2,   // Uses `sysStateSteps[2]` as command.
+    ScreenFadeCmd_Auto  = 2 /** Uses `sysStateSteps[2]` as the command. */
 } e_ScreenFadeCmd;
 
 /** State step increment for some substate. */
@@ -139,31 +139,31 @@ void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32
 /** Paper map state handler. Rough name could be `Map_PaperMapBgStateUpdate`. */
 void func_800867B4(s32 state, s32 paperMapFileIdx);
 
-/** @brief Resets a tween timer slot to 0.
+/** @brief Resets a tween timer slot to `Q12(0.0f)`.
  *
- * @param idx Timer slot index.
+ * @param timerIdx Timer slot index.
  */
-void Event_TweenReset(s32 idx);
+void Event_TweenReset(s32 timerIdx);
 
-/** @brief Linear tween from 0 to `target` over `duration`.
+/** @brief Computes a linear tween from `Q12(0.0f)` to `target` over `duration`.
  *
  * @param target Target value at the end of the tween.
- * @param duration Total tween duration.
- * @param idx Timer slot index.
+ * @param duration Tween duration.
+ * @param timerIdx Timer slot index.
  * @return Interpolated value based on the elapsed time.
  */
-q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 idx);
+q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 timerIdx);
 
-/** @brief @unused Sine-based tween over a given angle range.
+/** @brief @unused Computes a sine-based tween over a given angle range.
  *
- * @param amp Amplitude multiplier applied to the sine result.
+ * @param amp Amplitude multiplier applied to the sine-based result.
  * @param startAngle Starting angle for the sine function.
  * @param sweepAngle Angular span swept over the duration.
  * @param duration Total tween duration in delta time.
- * @param idx Timer slot index.
- * @return `amplitude * sin(startAngle + ((sweepAngle * elapsed) / duration))`.
+ * @param timerIdx Timer slot index.
+ * @return `amp * sin(startAngle + ((sweepAngle * elapsed) / duration))`.
  */
-q19_12 Event_TweenSine(q19_12 amp, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx);
+q19_12 Event_TweenSine(q19_12 amp, q3_12 startAngle, q3_12 sweepAngle, q19_12 duration, s32 timerIdx);
 
 /** @brief Displays a map message with dialog audio and increments the audio index.
  *
@@ -185,8 +185,9 @@ void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioC
  * @param speedYMax Max Y speed.
  * @param warp If `true`, warp to the position target, otherwise transition over time.
  */
-void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
-                        q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax, bool warp);
+void Event_CameraPositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, q19_12 offsetOrPosZ,
+                             q19_12 accelXz, q19_12 accelY, q19_12 speedXzMax, q19_12 speedYMax,
+                             bool warp);
 
 /** @brief Sets the camera rotation and look-at position targets.
  *
@@ -200,8 +201,9 @@ void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, 
  * @param angularSpeedYMax TODO
  * @param warp If `true`, warp to the look-at target, otherwise transition over time.
  */
-void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
-                      q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
+void Event_CameraLookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
+                           q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax,
+                           bool warp);
 
 /** @brief Starts a character animation.
  * Increments `sysStateSteps[0]` when the animation has finished.

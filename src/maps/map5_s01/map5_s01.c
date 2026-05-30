@@ -330,8 +330,8 @@ void func_800EBF70(void) // 0x800EBF70
             canLookAt.vy = Q12(-1.3f);
             canLookAt.vz = Q12(-57.9f);
 
-            Camera_PositionSet(&camPos, 0, 0, 0, 0, 0, 0, 0, true);
-            Camera_LookAtSet(&canLookAt, 0, 0, 0, 0, 0, 0, 0, true);
+            Event_CameraPositionSet(&camPos, 0, 0, 0, 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(&canLookAt, 0, 0, 0, 0, 0, 0, 0, true);
             SysWork_StateStepIncrement(0);
 
         case 1:

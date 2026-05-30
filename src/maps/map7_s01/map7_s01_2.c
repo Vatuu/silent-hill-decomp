@@ -707,8 +707,8 @@ void func_800D8A5C(void) // 0x800D8A5C
 
         case 3:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 145, false);
-            Camera_PositionSet(NULL, Q12(-139.38f), Q12(-0.92f), Q12(-19.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-141.0f), Q12(-1.64f), Q12(-23.58f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-139.38f), Q12(-0.92f), Q12(-19.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-141.0f), Q12(-1.64f), Q12(-23.58f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_SysWork.playerWork.player.position.vx = Q12(-140.0f);
             g_SysWork.playerWork.player.position.vz = Q12(-21.7f);
@@ -847,8 +847,8 @@ void func_800D8FF8(void) // 0x800D8FF8
             D_800E1680 = 0;
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-15.39f), Q12(-3.6f), Q12(-61.47f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-17.38f), Q12(-0.18f), Q12(-60.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-15.39f), Q12(-3.6f), Q12(-61.47f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-17.38f), Q12(-0.18f), Q12(-60.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-16.7f);
@@ -1411,8 +1411,8 @@ void func_800D9C9C(void) // 0x800D9C9C
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D438();
-            Camera_PositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             WorldObject_ModelNameSet(&g_WorldObject_Stone0.object, "STONE2_H");
             SysWork_StateStepIncrement(0);
 
@@ -1957,8 +1957,8 @@ void func_800DCE20(void) // 0x800DCE20
 
         case 1:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.6f), false);
-            Camera_PositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
             SysWork_StateStepIncrement(0);
 

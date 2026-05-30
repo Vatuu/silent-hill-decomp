@@ -82,8 +82,8 @@ void func_800D61AC(void) // 0x800D61AC
             Event_PathWaypointSet(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-115.9f), Q12(110.6f));
             Event_PathWaypointSet(true, 0, 4, Q12_ANGLE(-90.0f), Q12(-116.08f), Q12(110.7f));
 
-            Camera_PositionSet(NULL, Q12(-103.27f), Q12(2.02f), Q12(104.6f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-107.06f), Q12(2.18f), Q12(105.87f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(-103.27f), Q12(2.02f), Q12(104.6f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(NULL, Q12(-107.06f), Q12(2.18f), Q12(105.87f), 0, 0, 0, 0, true);
 
             SysWork_StateStepIncrement(0);
 
@@ -98,13 +98,13 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 3:
-            Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, true);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
+            Event_CameraPositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
             Event_PathWaypointExecutePlayer(53, 5, false);
             break;
 
@@ -114,8 +114,8 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 6:
-            Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
+            Event_CameraPositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
             Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
@@ -144,8 +144,8 @@ void func_800D61AC(void) // 0x800D61AC
             Savegame_EventFlagSet(EventFlag_348);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-122.73f), Q12(-0.2f), Q12(112.85f), 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, Q12(-119.67f), Q12(0.23f), Q12(110.31f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(-122.73f), Q12(-0.2f), Q12(112.85f), 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(NULL, Q12(-119.67f), Q12(0.23f), Q12(110.31f), 0, 0, 0, 0, true);
 
             Player_ControlUnfreeze(true);
             Player_ControlFreeze();
@@ -193,8 +193,8 @@ void func_800D6800(void) // 0x800D6800
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
 
             // Warp camera.
-            Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-119.97f), Q12(-1.4f), Q12(107.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-119.97f), Q12(-1.4f), Q12(107.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             func_8005E70C();
 

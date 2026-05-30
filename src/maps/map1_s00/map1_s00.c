@@ -464,8 +464,8 @@ void func_800D85D8(void) // 0x800D85D8
             break;
 
         case 2:
-            Camera_PositionSet(NULL, Q12(-56.41f), Q12(-5.67f), Q12(-55.39f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-56.4f), Q12(-1.8699f), Q12(-54.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL, Q12(-56.41f), Q12(-5.67f), Q12(-55.39f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-56.4f), Q12(-1.8699f), Q12(-54.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             g_SysWork.playerWork.player.position.vy = Q12(-2.3f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
@@ -543,8 +543,8 @@ void func_800D8948(void) // 0x800D8948
             break;
 
         case 3:
-            Camera_PositionSet(NULL, Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, Q12(-55.43f), Q12(-5.5f), Q12(-54.56f),Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),  true);
+            Event_CameraPositionSet(NULL, Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-55.43f), Q12(-5.5f), Q12(-54.56f),Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),  true);
 
             g_SysWork.playerWork.player.position.vx = Q12(-56.34f);
             g_SysWork.playerWork.player.position.vy = Q12(-2.276f);

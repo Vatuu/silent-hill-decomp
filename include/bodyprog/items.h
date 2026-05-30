@@ -232,9 +232,9 @@ typedef enum _ItemToggleFlags
 /** @brief Inventory item entry. */
 typedef struct _InventoryItem
 {
-    /* 0x0 */ u8 id_0;      /** `InvItemId` */
+    /* 0x0 */ u8 id_0;      /** `e_InvItemId` */
     /* 0x1 */ u8 count_1;
-    /* 0x2 */ u8 command_2; /** `InvCmdId` */
+    /* 0x2 */ u8 command_2; /** `e_InvCmdId` */
     /* 0x3 */ u8 field_3;   // Some sort of index?
 } s_InventoryItem;
 STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
