@@ -337,11 +337,11 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
                     break;
 
                 case 3:
-                    Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
+                    Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.0f), false);
                     break;
 
                 case 1:
-                    Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+                    Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(1.0f), false);
                     break;
             }
             break;
@@ -355,7 +355,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(1.0f), false);
             break;
 
         case 6:
@@ -366,7 +366,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
 
             g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
@@ -462,7 +462,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         {
             if (!D_800F228E && g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 11)
             {
-                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
                 D_800F228E = 1;
             }
         }
@@ -506,7 +506,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -516,7 +516,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 6:
             func_800692A4(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
@@ -593,7 +593,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
             func_80068E0C(2, 1, 0x36A, 128, 0x48, 0x10, Q12(0.5f));
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 12:
@@ -602,11 +602,11 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 13:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 14:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -614,7 +614,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_CherylArrowAndSign);
             vcReturnPreAutoCamWork(false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             g_SysWork.sysFlags &= ~SysFlag_NoEnemySpawn;
 
@@ -633,12 +633,12 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         {
             if (g_SysWork.sysStateSteps[0] > 1 && g_SysWork.sysStateSteps[0] < 10)
             {
-                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
                 D_800F2295 = 1;
             }
             else if (g_SysWork.sysStateSteps[0] > 10 && g_SysWork.sysStateSteps[0] < 16)
             {
-                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
                 D_800F2295 = 2;
             }
         }
@@ -683,7 +683,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -692,7 +692,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -715,7 +715,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 10:
@@ -726,7 +726,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 11:
             func_800692A4(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 12:
@@ -798,7 +798,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             func_800692A4(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             func_80068E0C(2, 1, 0x3A2, 128, 0, 0x74, Q12(0.5f));
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 17:
@@ -810,7 +810,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 18:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 19:
@@ -823,7 +823,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 21:
             Savegame_EventFlagSet(EventFlag_147);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCircle);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -854,7 +854,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -863,7 +863,7 @@ void func_800E9470(void) // 0x800E9470
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -872,7 +872,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 7:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 8:
@@ -904,7 +904,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -914,7 +914,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             Savegame_EventFlagSet(EventFlag_M2S00_DogHouseNoteFound);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -924,11 +924,11 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
 
         case 7:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -973,7 +973,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -982,7 +982,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -1001,11 +1001,11 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case EventState_DontTakeKey:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 10:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 11:
@@ -1162,7 +1162,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
             break;
 
         case 2:
@@ -1174,7 +1174,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, false, false);
             Screen_BackgroundImgDrawAlt(D_800F22A0);
             break;
 
@@ -1310,14 +1310,14 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 12:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
             break;
 
         default:
             Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, false, false, false);
             break;
         }
 }
@@ -1339,7 +1339,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1378,7 +1378,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_159);
 
             vcReturnPreAutoCamWork(false);
@@ -1410,7 +1410,7 @@ void func_800EA6E0(void) // 0x800EA6E0
             SysWork_StateStepIncrement(0);
 
         case EventState_FadeOutGame:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case EventState_Load:
@@ -1419,7 +1419,7 @@ void func_800EA6E0(void) // 0x800EA6E0
 
         case EventState_FadeInMap:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case EventState_Msg:
@@ -1437,13 +1437,13 @@ void func_800EA6E0(void) // 0x800EA6E0
 
         case EventState_FadeOutMap:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_FineyStRightKeyArrow);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_DogYardKeyLine);
@@ -1483,7 +1483,7 @@ void func_800EA960(void) // 0x800EA960
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1567,7 +1567,7 @@ void func_800EA960(void) // 0x800EA960
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             break;
     }
 
@@ -1613,7 +1613,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             break;
 
         case EventState_PressSwitch:
-            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1668,7 +1668,7 @@ void func_800EAD2C(void) // 0x800EAD2C
                 Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BotBridgeArrow);
             }
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -1752,7 +1752,7 @@ void func_800EB174(void) // 0x800EB174
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 2, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 2, false, false);
             break;
 
         case 6:
@@ -1775,7 +1775,7 @@ void func_800EB174(void) // 0x800EB174
             sharedFunc_800D2EF4_0_s00();
 
             Savegame_EventFlagSet(EventFlag_167);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             break;
     }
 }
@@ -1793,7 +1793,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -1813,7 +1813,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -1841,7 +1841,7 @@ void func_800EB3F4(void) // 0x800EB3F4
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
             if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))

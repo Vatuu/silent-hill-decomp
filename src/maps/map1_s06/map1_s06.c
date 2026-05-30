@@ -84,7 +84,7 @@ void func_800D5614(void) // 0x800D5614
 
             Game_TurnFlashlightOff();
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -98,7 +98,7 @@ void func_800D5614(void) // 0x800D5614
             }
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -156,12 +156,12 @@ void func_800D5614(void) // 0x800D5614
             break;
 
         case 14:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 15:
             SD_Call(19);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(21.45f);
@@ -187,7 +187,7 @@ void func_800D5614(void) // 0x800D5614
             Gfx_MapInitMapEffectsUpdate(7, 4);
 
             vcReturnPreAutoCamWork(false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             Player_ControlUnfreeze(false);
 
@@ -273,7 +273,7 @@ void func_800D5DD8(void) // 0x800D5DD8
         if (D_800D7790 == 0 && g_SysWork.sysStateSteps[0] > 6 && g_SysWork.sysStateSteps[0] < 12)
         {
             D_800D7790 = 1;
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
         }
     }
 
@@ -306,7 +306,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(1.0f), false);
             break;
 
         case 2:
@@ -322,7 +322,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -335,7 +335,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
         case 7:
             func_800D5D6C(0);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 8:
@@ -384,7 +384,7 @@ void func_800D5DD8(void) // 0x800D5DD8
         case 12:
             func_800D5D6C(122);
             func_80068E0C(2, 1, 926, 128, 122, 120, Q12(0.5f));
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 13:
@@ -392,13 +392,13 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateStepIncrement(0);
 
         case EventState_Skip:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             g_SavegamePtr->paperMapIdx = D_800D778E;
 

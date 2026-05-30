@@ -1,16 +1,6 @@
 #ifndef _BODYPROG_EVENTS_EVENTSUTIL_H
 #define _BODYPROG_EVENTS_EVENTSUTIL_H
 
-/** @brief Character animation commands. */
-typedef enum _CharaAnimCommand
-{
-    CharaAnimCommand_SetState     = 0,
-    CharaAnimCommand_AwaitAnimEnd = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
-    CharaAnimCommand_AnimLock     = 2,
-    CharaAnimCommand_AnimUnlock   = 3,
-    CharaAnimCommand_AnimReset    = 4 // TODO: Unsure on name, could be a forced stop.
-} e_CharaAnimCommand;
-
 typedef enum _BgTextureCommand
 {
     BgTextureCommand_QueueRead          = 0,
@@ -23,9 +13,17 @@ typedef enum _BgTextureCommand
     BgTextureCommand_Auto               = 7, // Command is kept inside `sysStateSteps[2]` which is then incremented as texture is loaded/drawn?
     BgTextureCommand_8                  = 8, // TODO: Queues load as either primary or secondary, depending on whether primary is in use? (`g_SysWork.sysStateSteps[2] != 0`)
                                              // `Event_BgTextureCommand` has weird code that treats this as a different cmd by changing `activeCmd`, but seems that would skip `BgTextureCommand_QueueRead` for primary texture load?
-
-    BgTextureCommand_Hack = -1 // Force enum as `s32`.
 } e_BgTextureCommand;
+
+/** @brief Character animation commands. */
+typedef enum _CharaAnimCommand
+{
+    CharaAnimCommand_SetState     = 0,
+    CharaAnimCommand_AwaitAnimEnd = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
+    CharaAnimCommand_AnimLock     = 2,
+    CharaAnimCommand_AnimUnlock   = 3,
+    CharaAnimCommand_AnimReset    = 4 // TODO: Unsure on name, could be a forced stop.
+} e_CharaAnimCommand;
 
 typedef enum _InvItemCommand
 {
@@ -37,6 +35,13 @@ typedef enum _InvItemCommand
     InvItemCommand_5         = 5, // @unused No caller passes this?
     InvItemCommand_6         = 6, // Auto + add to inventory | @unused No caller passes this but code checks it
 } e_InvItemCommand;
+
+typedef enum _ScreenFadeCommand
+{
+    ScreenFadeCommand_Start = 0,
+    ScreenFadeCommand_Await = 1,
+    ScreenFadeCommand_Auto  = 2, // Uses `sysStateSteps[2]` as command.
+} e_ScreenFadeCommand;
 
 extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
 
@@ -74,7 +79,7 @@ void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 step
  */
 void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool incSubStep);
 
-void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool incSubStep);
+void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep);
 
 /** Handles background texture load/draw. Optionally allows layering two textures. */
 void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSubStep);

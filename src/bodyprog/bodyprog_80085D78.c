@@ -192,7 +192,7 @@ void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1,
     }
 }
 
-void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
+void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -202,27 +202,27 @@ void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType
         FadeType_Unk3  = 3  // TODO: Investigate.
     } e_FadeType;
 
-    s32 activeStateStep;
+    e_ScreenFadeCommand activeCmd;
 
-    // If `stateStep != 2`, `field_14` dictates what happens. This field is manipulated often in map event functions.
-    if (stateStep != 2)
+    // If `cmd == ScreenFadeCommand_Auto`, `sysStateSteps[2]` dictates the command. This field is manipulated often in map event functions.
+    if (cmd != ScreenFadeCommand_Auto)
     {
-        activeStateStep = stateStep;
+        activeCmd = cmd;
     }
     else
     {
-        activeStateStep = g_SysWork.sysStateSteps[2];
+        activeCmd = g_SysWork.sysStateSteps[2];
     }
 
-    switch (activeStateStep)
+    switch (activeCmd)
     {
-        case 0:
+        case ScreenFadeCommand_Start:
             if (fadeType != FadeType_Unk2)
             {
                 g_ScreenFadeTimestep = fadeTimestep;
             }
 
-            if (cond)
+            if (fadeOut)
             {
                 if (fadeType == FadeType_Black)
                 {
@@ -242,44 +242,43 @@ void Event_SysStateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType
                     }
                 }
             }
-            else if (fadeType == FadeType_Black)
-            {
-                ScreenFade_Start(false, true, false);
-            }
-            else if (fadeType == FadeType_White)
-            {
-                ScreenFade_Start(false, true, true);
-            }
             else
             {
-                g_SysWork.cutsceneBorderState = 22;
+                if (fadeType == FadeType_Black)
+                {
+                    ScreenFade_Start(false, true, false);
+                }
+                else if (fadeType == FadeType_White)
+                {
+                    ScreenFade_Start(false, true, true);
+                }
+                else
+                {
+                    g_SysWork.cutsceneBorderState = 22;
+                }
             }
 
-            if (stateStep != 0)
+            if (cmd != ScreenFadeCommand_Start) // `cmd` will only be different if `ScreenFadeCommand_Auto` was passed.
             {
                 SysWork_StateStepIncrement(2);
             }
             break;
 
-        case 1:
+        case ScreenFadeCommand_Await:
             if (fadeType < FadeType_Unk2)
             {
-                if (cond || g_Screen_FadeStatus != activeStateStep)
+                if ((fadeOut == false && ScreenFade_IsNone()) ||
+                    (fadeOut == true  && ScreenFade_IsFinished()))
                 {
-                    if (cond == activeStateStep && ScreenFade_IsFinished())
-                    {
-                        Event_SysStateStepIncrement(incSubStep);
-                    }
-                    break;
+                    Event_SysStateStepIncrement(incSubStep);
                 }
             }
-            else if ( (cond || g_SysWork.cutsceneBorderState != activeStateStep) &&
-                     !(cond == activeStateStep && g_SysWork.cutsceneBorderState == 21))
+            else if ((fadeOut == false && g_SysWork.cutsceneBorderState == 1) ||
+                     (fadeOut == true  && g_SysWork.cutsceneBorderState == 21))
             {
-                break;
+                Event_SysStateStepIncrement(incSubStep);
             }
 
-            Event_SysStateStepIncrement(incSubStep);
             break;
     }
 }
@@ -721,7 +720,7 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -729,7 +728,7 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
     }
 }
@@ -739,7 +738,7 @@ void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1)
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -747,12 +746,12 @@ void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1)
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
             break;
 
         default:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, false);
     }
 }
 
@@ -761,11 +760,11 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     if (g_SysWork.sysStateSteps[1] == 0)
     {
         Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-        Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
+        Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
         return;
     }
 
-    Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
+    Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
     SysWork_StateStepIncrement(0);
 }
 
@@ -820,7 +819,7 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -828,12 +827,12 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -848,11 +847,11 @@ void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -865,7 +864,7 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -873,12 +872,12 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -888,11 +887,11 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -905,7 +904,7 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -913,12 +912,12 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
@@ -947,11 +946,11 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1085,7 +1084,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), true);
             break;
 
         case 2:
@@ -1098,7 +1097,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             Fs_QueueWaitForEmpty();
 
             SysWork_StateStepIncrement(1);
@@ -1148,14 +1147,14 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             g_Screen_BackgroundImgGamma = Q8(11.0f / 32.0f);
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), true);
             break;
 
         default:
             LoadImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);

@@ -116,7 +116,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -124,12 +124,12 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
@@ -139,11 +139,11 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 
         case 8:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 10:

@@ -224,7 +224,7 @@ void func_800DA384(void) // 0x800DA384
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 2, Q12(0.0f), false);
             break;
 
         case 2:
@@ -283,7 +283,7 @@ void func_800DA384(void) // 0x800DA384
                 vcReturnPreAutoCamWork(false);
             }
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             // Sets `EventFlag_225` temporarily for function call and clears afterward?
             Savegame_EventFlagSet(EventFlag_225);
@@ -335,12 +335,12 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(0, true, 1, Q12(1.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 1, Q12(1.0f), false);
             Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CONTINUE_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -348,7 +348,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             break;
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(0, false, 1, Q12(1.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 1, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -368,7 +368,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 6:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             break;
 
         case 7:
@@ -376,7 +376,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -398,7 +398,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 10:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             break;
 
         default:
@@ -419,7 +419,7 @@ void func_800DAD2C(void) // 0x800DAD2C
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_RECEPDR1_TIM, false);
 
             D_800E1FD0 = 0;
@@ -431,7 +431,7 @@ void func_800DAD2C(void) // 0x800DAD2C
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -441,7 +441,7 @@ void func_800DAD2C(void) // 0x800DAD2C
 
         case 4:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -496,12 +496,12 @@ void func_800DAD2C(void) // 0x800DAD2C
 
         case 10:
             Event_BgTextureCommand(BgTextureCommand_DrawSecondary, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, 1, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, 1, 0, Q12(0.0f), false);
             break;
 
         default:
             Event_BgTextureCommand(BgTextureCommand_RestoreVram, 0, false);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_M1S02_SeenDoorWithHorizontalSlot);
 
@@ -536,7 +536,7 @@ void func_800DB058(void) // 0x800DB058
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -564,14 +564,14 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_MapMark_AltSchool1F_SecretDoorArrows);
@@ -628,7 +628,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 2, Q12(0.0f), false);
             break;
 
         case 4:
@@ -732,7 +732,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 23:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 24:
@@ -740,7 +740,7 @@ void func_800DB368(void) // 0x800DB368
             SD_Call(19);
 
             D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             SD_Call(Sfx_Unk1457);
             SysWork_StateStepIncrement(0);
@@ -757,7 +757,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 27:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 28:
@@ -787,7 +787,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -827,7 +827,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             Camera_PositionSet(NULL, Q12(21.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(17.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -885,7 +885,7 @@ void func_800DBB7C(void) // 0x800DBB7C
 
             func_8008D448();
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_96);
@@ -1193,7 +1193,7 @@ void func_800DCF00(void) // 0x800DCF00
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
 
             D_800E1FE4 = 0;
 
@@ -1212,11 +1212,11 @@ void func_800DCF00(void) // 0x800DCF00
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.03f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.03f), false);
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
 
             g_ScreenFadeTimestep += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.1f);
             g_ScreenFadeTimestep  = MIN(g_ScreenFadeTimestep, Q12(3.0f));

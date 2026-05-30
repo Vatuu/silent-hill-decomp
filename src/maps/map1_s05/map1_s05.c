@@ -73,7 +73,7 @@ void func_800D49AC(void) // 0x800D49AC
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             g_SysWork.cutsceneBorderState = 20;
             g_SysWork.lightIntensity      = Q12(0.0f);
@@ -121,7 +121,7 @@ void func_800D49AC(void) // 0x800D49AC
 
             g_SysWork.lightIntensity = Q12(1.3843f);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);
 
             Savegame_EventFlagSet(EventFlag_130);
@@ -225,7 +225,7 @@ void func_800D4D1C(void) // 0x800D4D1C
             break;
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(2.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(2.5f), false);
             break;
 
         default:

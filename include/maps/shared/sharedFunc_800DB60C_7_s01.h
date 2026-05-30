@@ -59,7 +59,7 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
             break;
 
         case 2:
@@ -75,7 +75,7 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
@@ -189,13 +189,13 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 8:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, 0, false);
 
             Savegame_EventFlagClear(EventFlag_493);
             Savegame_EventFlagClear(EventFlag_495);

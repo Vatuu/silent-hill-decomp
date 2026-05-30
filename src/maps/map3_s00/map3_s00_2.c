@@ -132,7 +132,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 2:
             Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, g_SysWork.npcs, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -232,7 +232,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 14:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 15:
@@ -243,7 +243,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 16:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 17:
@@ -382,7 +382,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case EventState_CutsceneSkip:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 37:
@@ -395,8 +395,8 @@ void func_800D0CF8(void) // 0x800D0CF8
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             SD_Call(0x13);
 

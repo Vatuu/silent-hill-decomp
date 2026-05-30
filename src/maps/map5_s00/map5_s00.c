@@ -521,11 +521,11 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -534,7 +534,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 6:
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -542,7 +542,7 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 8:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -627,7 +627,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 15:
             vcReturnPreAutoCamWork(true);
             g_SysWork.lightIntensity = Q12(1.0f);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = 0;
             g_SysWork.npcs[D_800DAB7C[0]].model.stateStep = 17;
@@ -693,7 +693,7 @@ void func_800D732C(void) // 0x800D732C
 
             Event_CharaAnimCommandExecute(0u, &g_SysWork.playerWork.player, 88, false);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -704,7 +704,7 @@ void func_800D732C(void) // 0x800D732C
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
 
             // Move player.
             g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
@@ -722,7 +722,7 @@ void func_800D732C(void) // 0x800D732C
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
             vcReturnPreAutoCamWork(true);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_355);
             func_8003A16C();
             break;
@@ -743,7 +743,7 @@ void func_800D75FC(void) // 0x800D75FC
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -751,7 +751,7 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             if (g_SysWork.sysStateSteps[0] == 2)
             {
                 g_SysWork.field_28 += g_DeltaTimeRaw;
@@ -776,7 +776,7 @@ void func_800D75FC(void) // 0x800D75FC
 
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -785,7 +785,7 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
@@ -814,7 +814,7 @@ void func_800D7940(void) // 0x800D7940
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -822,7 +822,7 @@ void func_800D7940(void) // 0x800D7940
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 2)
             {
@@ -848,7 +848,7 @@ void func_800D7940(void) // 0x800D7940
 
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -857,7 +857,7 @@ void func_800D7940(void) // 0x800D7940
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 
@@ -886,7 +886,7 @@ void func_800D7C84(void) // 0x800D7C84
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -894,7 +894,7 @@ void func_800D7C84(void) // 0x800D7C84
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -911,7 +911,7 @@ void func_800D7C84(void) // 0x800D7C84
 
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 87, false);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -920,7 +920,7 @@ void func_800D7C84(void) // 0x800D7C84
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
             break;
 
@@ -957,7 +957,7 @@ void func_800D7F88(void) // 0x800D7F88
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -974,7 +974,7 @@ void func_800D7F88(void) // 0x800D7F88
 
             Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 88, false);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -983,7 +983,7 @@ void func_800D7F88(void) // 0x800D7F88
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
             break;
 

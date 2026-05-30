@@ -124,7 +124,7 @@ void func_800D1628(void) // 0x800D1628
         case 0:
             Player_ControlFreeze();
             Event_InvItemCommand(InvItemCommand_QueueLoad, InvItemId_MotorcycleKey, 0, false);
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(103.64f);
@@ -184,7 +184,7 @@ void func_800D1628(void) // 0x800D1628
             Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_MotorcycleKey, 1, false);
             Savegame_EventFlagSet(EventFlag_390);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             break;
     }
 }
@@ -207,7 +207,7 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 4:
@@ -215,7 +215,7 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 5:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
@@ -225,12 +225,12 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 7:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -292,7 +292,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -309,7 +309,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 5:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -329,7 +329,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
             break;
 
@@ -360,7 +360,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 12:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
             break;
 
@@ -487,7 +487,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 32:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 33:
@@ -499,7 +499,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             Fs_QueueWaitForEmpty();
 
             vcReturnPreAutoCamWork(true);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
 
             g_Cutscene_Timer = Q12(122.0f);
 
@@ -515,7 +515,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             Savegame_EventFlagSet(EventFlag_391);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             g_Cutscene_Timer = NO_VALUE;
 
@@ -586,7 +586,7 @@ void func_800D2674(void) // 0x800D2674
             break;
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
 
             g_SysWork.playerWork.player.position.vx = Q12(104.17f);
             g_SysWork.playerWork.player.position.vz = Q12(59.5f);
@@ -627,7 +627,7 @@ void func_800D2674(void) // 0x800D2674
                 // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime * 2), Q12(0.0f));`?
                 D_800D3C44 = ((D_800D3C44 - (g_DeltaTime * 2)) >= Q12(0.0f)) ? (D_800D3C44 - ((u16)g_DeltaTime * 2)) : Q12(0.0f);
 
-                Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             }
 
             Sfx_WithFalloffAndPitchPlay(Sfx_Unk1538, &g_WorldObject_Movaches.position, D_800D3C44 >> 5, Q12(12.0f), 0);
@@ -636,8 +636,8 @@ void func_800D2674(void) // 0x800D2674
         default:
             Savegame_EventFlagSet(EventFlag_389);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 

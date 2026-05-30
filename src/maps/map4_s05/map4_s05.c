@@ -89,7 +89,7 @@ void func_800D61AC(void) // 0x800D61AC
 
         case 1:
             func_800866D4(53, 5, false);
-            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
             break;
 
         case 2:
@@ -160,7 +160,7 @@ void func_800D61AC(void) // 0x800D61AC
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
 
             Savegame_EventFlagSet(EventFlag_349);
             g_SysWork.npcs[0].model.stateStep = 2;
@@ -222,7 +222,7 @@ void func_800D6800(void) // 0x800D6800
 
         case 4:
             Savegame_EventFlagSet(EventFlag_351);
-            Event_SysStateStepIncrementAfterFade(0, true, 1, Q12(0.2f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 1, Q12(0.2f), false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -230,11 +230,11 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         case 6:
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -334,7 +334,7 @@ void func_800D6BC0(void) // 0x800D6BC0
         case 3:
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_SysStateStepIncrementAfterFade(0, true, 3, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, 0, false);
             Dms_HeaderFixOffsets(FS_BUFFER_19);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -348,7 +348,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
             break;
 
         case 5:
@@ -413,7 +413,7 @@ void func_800D6BC0(void) // 0x800D6BC0
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_457);

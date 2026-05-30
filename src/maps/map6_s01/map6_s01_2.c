@@ -194,7 +194,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -460,7 +460,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 53:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 54:
@@ -484,8 +484,8 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.lightIntensity = Q12(1.0f);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             g_Cutscene_Timer = NO_VALUE;
@@ -564,7 +564,7 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.5f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.5f), false);
             break;
 
         case 4:
@@ -584,7 +584,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 8:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -592,8 +592,8 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_426);
             Savegame_EventFlagSet(EventFlag_MapMark_ResortTown_ThemeParkArrow);
@@ -680,7 +680,7 @@ void func_800D2658(void) // 0x800D2658
         case 3:
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_SysStateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, Q12(0.0f), false);
             Dms_HeaderFixOffsets(FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -688,7 +688,7 @@ void func_800D2658(void) // 0x800D2658
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
 
         case 5:
             Event_DisplayMapMsgWithAudio(89, &g_Cutscene_MapMsgAudioIdx0, &D_800D4108);
@@ -762,7 +762,7 @@ void func_800D2658(void) // 0x800D2658
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_459);

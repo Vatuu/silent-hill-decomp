@@ -262,7 +262,7 @@ void func_800D2668(void) // 0x800D2668
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
             break;
 
         case 3:
@@ -355,7 +355,7 @@ void func_800D2668(void) // 0x800D2668
 
             if (g_SysWork.sysStateSteps[0] != 21)
             {
-                Event_SysStateStepIncrementAfterFade(0, true, 0, Q12(1.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(1.0f), false);
             }
             break;
 
@@ -365,7 +365,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 23:
-            Event_SysStateStepIncrementAfterFade(1, true, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
@@ -375,7 +375,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case EventState_Skip:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
             break;
 
         default:

@@ -181,7 +181,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementAfterFade(2, false, 0, Q12(0.8f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.8f), false);
             break;
 
         case 5:
@@ -294,7 +294,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case EventState_Skip:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 28:
@@ -307,8 +307,8 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Event_SysStateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
             func_8008D448();
             Game_FlashlightAttributesFix();
 
@@ -470,7 +470,7 @@ void func_800D1604(void) // 0x800D1604
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(false, true, 2, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, 0, false);
 
             g_Cutscene_MapMsgAudioIdx = 0;
             D_800D31DC[1]    = 0;
@@ -501,7 +501,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(true, true, 2, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 2, 0, false);
             break;
 
         case 6:
@@ -636,7 +636,7 @@ void func_800D1604(void) // 0x800D1604
 
         case 11:
             func_800866D4(53, 1, false);
-            Event_SysStateStepIncrementAfterFade(2, true, 0, Q12(0.6f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.6f), false);
             Event_DisplayMapMsgWithAudio(46, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
 
             g_DeltaTime >>= 2;
@@ -656,7 +656,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 12:
-            Event_SysStateStepIncrementAfterFade(2, true, 0, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
             break;
 
         default:
@@ -664,7 +664,7 @@ void func_800D1604(void) // 0x800D1604
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_472);
-            Event_SysStateStepIncrementAfterFade(false, false, 2, 0, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
 
             D_800D4362 = 0;
             break;

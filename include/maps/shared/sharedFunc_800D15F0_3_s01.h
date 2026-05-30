@@ -42,7 +42,7 @@ void sharedFunc_800D15F0_3_s01(void)
         case 0:
 
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(false, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, false, false, false);
 
             sharedData_800D4D14_3_s01 = 0;
             sharedData_800D4D10_3_s01 = 0;
@@ -82,12 +82,12 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 2:
-            Event_SysStateStepIncrementAfterFade(true, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, false, false, false);
             break;
 
         case 3:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, false, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, false, false);
             break;
 
         case 4:
@@ -230,13 +230,13 @@ void sharedFunc_800D15F0_3_s01(void)
 
         case 6:
             Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
             break;
 
         case 7:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(false, false, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, false, false, false);
             break;
 
         case 8:
@@ -259,23 +259,23 @@ void sharedFunc_800D15F0_3_s01(void)
                 }
 
                 Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
-                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(1.0f), false);
             }
             else
             {
-                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(2.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(2.0f), false);
             }
             break;
 
         case 10:
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                Event_SysStateStepIncrementAfterFade(2, false, false, Q12(1.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, Q12(1.0f), false);
                 Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
             }
             else
             {
-                Event_SysStateStepIncrementAfterFade(2, false, false, Q12(2.0f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, Q12(2.0f), false);
 
                 if (g_SysWork.sysStateSteps[0] != 10)
                 {
@@ -360,12 +360,12 @@ void sharedFunc_800D15F0_3_s01(void)
             }
             else
             {
-                Event_SysStateStepIncrementAfterFade(2, true, false, Q12(1.5f), false);
+                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(1.5f), false);
             }
             break;
 
         case 17:
-            Event_SysStateStepIncrementAfterFade(2, true, false, false, false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
             break;
 
         default:

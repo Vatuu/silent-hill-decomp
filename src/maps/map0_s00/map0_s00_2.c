@@ -206,7 +206,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_16);
             Chara_Load(0, Chara_Cheryl, g_SysWork.npcBoneCoordBuffer, 0, NULL, NULL);
 
-            Event_SysStateStepIncrementAfterFade(false, false, 0, Q12(3.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(3.0f), false);
             g_Cutscene_Timer = Q12(0.0f);
 
             SysWork_StateStepIncrement(0);
@@ -282,7 +282,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
                 if (ScreenFade_IsFinished())
                 {
-                    Event_SysStateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
+                    Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
                 }
             }
             else
@@ -292,7 +292,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
                 SysWork_StateSetNext(SysState_Gameplay);
             }
 
-            Event_SysStateStepIncrementAfterFade(false, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
 
             // Load Cheryl character.
@@ -321,7 +321,7 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -371,7 +371,7 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -418,7 +418,7 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -639,7 +639,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_4);
 
             // Restore player control.
@@ -802,7 +802,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             cherylChara.rotation.vy = Q12_ANGLE(180.0f);
             cherylChara.position.vz = playerChara.position.vz - Q12(19.0f);
 
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -875,7 +875,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_7);
             Savegame_EventFlagSet(EventFlag_8);
@@ -912,7 +912,7 @@ void func_800DB26C(void) // 0x800DB26C
     {
         case 0:
             Player_ControlFreeze();
-            Event_SysStateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
             func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), playerChara.position.vz);
 
             // Warp Cheryl.
@@ -950,7 +950,7 @@ void func_800DB26C(void) // 0x800DB26C
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
 
             func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
@@ -978,7 +978,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 2, Q12(0.0f), false);
             break;
 
         case 2:
@@ -1036,7 +1036,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             break;
 
         default:
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -1224,7 +1224,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
-            Event_SysStateStepIncrementAfterFade(2, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 2, Q12(0.0f), false);
             break;
 
         case EventState_2:
@@ -1243,7 +1243,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_SysStateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
 
             // Make all Grey Children aggressive.
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
