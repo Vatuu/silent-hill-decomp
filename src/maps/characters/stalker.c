@@ -88,25 +88,25 @@ void Stalker_Init(s_SubCharacter* stalker)
     // Handle state step.
     switch (stalker->model.stateStep)
     {
-        case StalkerStateStep_11:
+        case 11:
             stalkerProps.flags |= StalkerFlag_2;
 
-        case StalkerStateStep_3:
+        case 3:
             stalkerProps.timer_F8 = Q12(2.5f);
             stalkerProps.flags   |= StalkerFlag_0;
 
-        case StalkerStateStep_8:
+        case 8:
             stalker->model.controlState = StalkerControl_4;
             stalker->collision.state    = CharaCollisionState_Npc;
             break;
 
-        case StalkerStateStep_7:
+        case 7:
             stalker->model.controlState = StalkerControl_4;
             stalkerProps.flags         |= StalkerFlag_11;
             stalker->collision.state    = CharaCollisionState_Npc;
             break;
 
-        case StalkerStateStep_6:
+        case 6:
             stalker->model.controlState = StalkerControl_2;
             stalker->flags             |= CharaFlag_Hit;
             stalkerProps.timer_F8       = Q12(1.0f);
@@ -115,13 +115,13 @@ void Stalker_Init(s_SubCharacter* stalker)
             stalker->flags             &= ~CharaFlag_Unk5;
             break;
 
-        case StalkerStateStep_5:
+        case 5:
             stalker->model.controlState = StalkerControl_1;
             stalker->collision.state    = CharaCollisionState_Ignore;
             stalker->flags             |= CharaFlag_Unk5;
             break;
 
-        case StalkerStateStep_9:
+        case 9:
             stalker->model.controlState = StalkerControl_12;
             //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_27, true);
@@ -131,7 +131,7 @@ void Stalker_Init(s_SubCharacter* stalker)
             stalker->collision.state        = CharaCollisionState_Npc;
             break;
 
-        case StalkerStateStep_10:
+        case 10:
             stalker->model.controlState = StalkerControl_11;
             //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_28, true), 442); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_28, true);
@@ -140,7 +140,7 @@ void Stalker_Init(s_SubCharacter* stalker)
             stalker->collision.state        = 3;
             break;
 
-        case StalkerStateStep_17:
+        case 17:
             stalker->model.controlState = StalkerControl_13;
             //Chara_AnimSet(stalker, ANIM_STATUS(StalkerAnim_14, true), 176); // TODO: Doesn't match?
             stalker->model.anim.status      = ANIM_STATUS(StalkerAnim_14, true);

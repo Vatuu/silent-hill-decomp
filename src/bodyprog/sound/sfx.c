@@ -83,13 +83,13 @@ s32 func_8005D974(s32 arg0) // 0x8005D974
     return val;
 }
 
-q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x8005D9B8
+q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* pos, q23_8 vol) // 0x8005D9B8
 {
     q19_12 offsetX;
     q19_12 offsetY;
     q19_12 offsetZ;
     q19_12 camToPlayerFactor;
-    q19_12 playerToSrcFactor;
+    q19_12 playerToPos;
     q23_8  adjVol;
 
     vwGetViewPosition(&g_Sfx_CameraPosition);
@@ -106,14 +106,14 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* srcPos, q23_8 vol) // 0x800
         camToPlayerFactor = Q12(1.0f);
     }
 
-    offsetX           = g_Sfx_PlayerPosition->vx - srcPos->vx;
-    offsetY           = g_Sfx_PlayerPosition->vy - srcPos->vy;
-    offsetZ           = g_Sfx_PlayerPosition->vz - srcPos->vz;
-    playerToSrcFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
-                                                    Q12_MULT_PRECISE(offsetY, offsetY) +
-                                                    Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(6.0f)) / 4);
+    offsetX     = g_Sfx_PlayerPosition->vx - pos->vx;
+    offsetY     = g_Sfx_PlayerPosition->vy - pos->vy;
+    offsetZ     = g_Sfx_PlayerPosition->vz - pos->vz;
+    playerToPos = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
+                                              Q12_MULT_PRECISE(offsetY, offsetY) +
+                                              Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(6.0f)) / 4);
 
-    adjVol = Q12_MULT_PRECISE(camToPlayerFactor, playerToSrcFactor);
+    adjVol = Q12_MULT_PRECISE(camToPlayerFactor, playerToPos);
     if (adjVol > Q8(32.0f))
     {
         adjVol = Q8(32.0f);

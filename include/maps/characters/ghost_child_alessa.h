@@ -1,20 +1,6 @@
 #ifndef _MAPS_CHARACTERS_GHOSTCHILDALESSA_H
 #define _MAPS_CHARACTERS_GHOSTCHILDALESSA_H
 
-/** @brief Ghost Child Alessa character animation indices. */
-typedef enum _GhostChildAlessaAnim
-{
-    GhostChildAlessaAnim_Still = 0,
-    GhostChildAlessaAnim_1     = 1,
-    GhostChildAlessaAnim_2     = 2,
-    GhostChildAlessaAnim_3     = 3,
-    GhostChildAlessaAnim_4     = 4,
-    GhostChildAlessaAnim_5     = 5,
-    GhostChildAlessaAnim_6     = 6,
-    GhostChildAlessaAnim_7     = 7,
-    GhostChildAlessaAnim_8     = 8
-} e_GhostChildAlessaAnim;
-
 /** @brief Ghost Child Alessa character control states. */
 typedef enum _GhostChildAlessaControl
 {
@@ -31,6 +17,20 @@ typedef enum _GhostChildAlessaControl
     GhostChildAlessaControl_10   = 10,
     GhostChildAlessaControl_11   = 11
 } e_GhostChildAlessaControl;
+
+/** @brief Ghost Child Alessa character animation indices. */
+typedef enum _GhostChildAlessaAnim
+{
+    GhostChildAlessaAnim_Still = 0,
+    GhostChildAlessaAnim_1     = 1,
+    GhostChildAlessaAnim_2     = 2,
+    GhostChildAlessaAnim_3     = 3,
+    GhostChildAlessaAnim_4     = 4,
+    GhostChildAlessaAnim_5     = 5,
+    GhostChildAlessaAnim_6     = 6,
+    GhostChildAlessaAnim_7     = 7,
+    GhostChildAlessaAnim_8     = 8
+} e_GhostChildAlessaAnim;
 
 /** @brief Ghost Child Alessa model bone indices. */
 typedef enum _GhostChildAlessaBone

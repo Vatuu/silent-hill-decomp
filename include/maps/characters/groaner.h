@@ -20,6 +20,21 @@ typedef enum _GroanerFlags
     GroanerFlag_12       = 1 << 12
 } e_GroanerFlags;
 
+/** @brief Groaner character control states. */
+typedef enum _GroanerControl
+{
+    GroanerControl_None               = 0,
+    GroanerControl_WalkForward        = 1,
+    GroanerControl_RunForward         = 2,
+    GroanerControl_JumpAttack         = 3,
+    GroanerControl_4                  = 4, // TODO: Unsure. Related to run forward?
+    GroanerControl_StandRecoil        = 5,
+    GroanerControl_StunFromJump       = 6,
+    GroanerControl_StunFromStandRight = 7,
+    GroanerControl_StunFromStandLeft  = 8,
+    GroanerControl_Death              = 9
+} e_GroanerControl;
+
 /** @brief Groaner character animation indices. */
 typedef enum _GroanerAnim
 {
@@ -48,21 +63,6 @@ typedef enum _GroanerAnim
     GroanerAnim_StunFromStandRightRecoil     = 22,
     GroanerAnim_StunFromStandLeftRecoil      = 23
 } e_GroanerAnim;
-
-/** @brief Groaner character control states. */
-typedef enum _GroanerControl
-{
-    GroanerControl_None               = 0,
-    GroanerControl_WalkForward        = 1,
-    GroanerControl_RunForward         = 2,
-    GroanerControl_JumpAttack         = 3,
-    GroanerControl_4                  = 4, // TODO: Unsure. Related to run forward?
-    GroanerControl_StandRecoil        = 5,
-    GroanerControl_StunFromJump       = 6,
-    GroanerControl_StunFromStandRight = 7,
-    GroanerControl_StunFromStandLeft  = 8,
-    GroanerControl_Death              = 9
-} e_GroanerControl;
 
 /** @brief Groaner character model bone indices. */
 typedef enum _GroanerBone

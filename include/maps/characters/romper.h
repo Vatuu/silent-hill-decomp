@@ -19,6 +19,23 @@ typedef enum _RomperFlags
     RomperFlag_11      = 1 << 11 // Jumping?
 } e_RomperFlags;
 
+/** @brief Romper character control states. */
+typedef enum _RomperControl
+{
+    RomperControl_None        = 0, // Assigned function is `NULL`, different from other charas. Check.
+    RomperControl_1           = 1,
+    RomperControl_WalkForward = 2,
+    RomperControl_3           = 3,
+    RomperControl_4           = 4,
+    RomperControl_Jump        = 5, // Unsure.
+    RomperControl_6           = 6,
+    RomperControl_7           = 7, // Jump/attack?
+    RomperControl_8           = 8,
+    RomperControl_9           = 9,
+    RomperControl_10          = 10,
+    RomperControl_GrabAttack  = 11
+} e_RomperControl;
+
 /** @brief Romper character animation indices. */
 typedef enum _RomperAnim
 {
@@ -44,23 +61,6 @@ typedef enum _RomperAnim
     RomperAnim_RunForwardStart            = 19,
     RomperAnim_20                         = 20  // TODO: This animation is referenced but doesn't actually exist.
 } e_RomperAnim;
-
-/** @brief Romper character control states. */
-typedef enum _RomperControl
-{
-    RomperControl_None        = 0, // Assigned function is `NULL`, different from other charas. Check.
-    RomperControl_1           = 1,
-    RomperControl_WalkForward = 2,
-    RomperControl_3           = 3,
-    RomperControl_4           = 4,
-    RomperControl_Jump        = 5, // Unsure.
-    RomperControl_6           = 6,
-    RomperControl_7           = 7, // Jump/attack?
-    RomperControl_8           = 8,
-    RomperControl_9           = 9,
-    RomperControl_10          = 10,
-    RomperControl_GrabAttack  = 11
-} e_RomperControl;
 
 extern s_AnimInfo ROMPER_ANIM_INFOS[];
 

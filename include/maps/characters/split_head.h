@@ -17,6 +17,20 @@ typedef enum _SplitHeadFlags
     SplitHeadFlag_9    = 1 << 9
 } e_SplitHeadFlags;
 
+/** @brief Split Head character control states. */
+typedef enum _SplitHeadControl
+{
+    SplitHeadControl_None = 0,
+    SplitHeadControl_1    = 1,
+    SplitHeadControl_2    = 2,
+    SplitHeadControl_3    = 3,
+    SplitHeadControl_4    = 4,
+    SplitHeadControl_5    = 5,
+    SplitHeadControl_6    = 6,
+    SplitHeadControl_7    = 7,
+    SplitHeadControl_8    = 8
+} e_SplitHeadControl;
+
 /** @brief Split Head character animation indices. */
 typedef enum _SplitHeadAnim
 {
@@ -36,20 +50,6 @@ typedef enum _SplitHeadAnim
     SplitHeadAnim_13          = 13, // splayed to idle?
     SplitHeadAnim_14          = 14  // something idle?
 } e_SplitHeadAnim;
-
-/** @brief Split Head character control states. */
-typedef enum _SplitHeadControl
-{
-    SplitHeadControl_None = 0,
-    SplitHeadControl_1    = 1,
-    SplitHeadControl_2    = 2,
-    SplitHeadControl_3    = 3,
-    SplitHeadControl_4    = 4,
-    SplitHeadControl_5    = 5,
-    SplitHeadControl_6    = 6,
-    SplitHeadControl_7    = 7,
-    SplitHeadControl_8    = 8
-} e_SplitHeadControl;
 
 typedef struct
 {

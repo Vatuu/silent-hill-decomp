@@ -90,7 +90,7 @@ typedef struct _IpdCollisionData
     /* 0x1C   */ q7_8                   subCellSize;
     /* 0x1E   */ u8                     subCellXCount;
     /* 0x1F   */ u8                     subCellZCount;
-    /* 0x20   */ s_IpdCellRange*    cellRangeInfo;
+    /* 0x20   */ s_IpdCellRange*        cellRanges;
     /* 0x24   */ u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
                                                   // Both `field_24/field_26` are related to a amount of 1 byte things that are being pointed by
                                                   // `ptr_28`.
@@ -99,10 +99,10 @@ typedef struct _IpdCollisionData
     /* 0x2C   */ void*                  ptr_2C;         // Pointer to LM part of IPD file?
     /* 0x30   */ u8                     unkLoadedCount; // Directly related to `field_34`.
     /* 0x31   */ s8                     __pad[3];
-    /* 0x34   */ u8                     field_34[256]; // Indexes container.
+    /* 0x34   */ u8                     field_34[256]; // Index container.
                                                        // This should be the same size as of the value assigned to
                                                        // `s_IpdCollisionData::field_8_16`, but instead is assigned the
-                                                       // the max number that variable handle which is 256 (same as a char).
+                                                       // the max number that variable handles, which is 256 (same as a `char`).
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 

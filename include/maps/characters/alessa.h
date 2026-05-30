@@ -1,22 +1,6 @@
 #ifndef _MAPS_CHARACTERS_ALESSA_H
 #define _MAPS_CHARACTERS_ALESSA_H
 
-/** @brief Alessa character animation indices. */
-typedef enum _AlessaAnim
-{
-    AlessaAnim_Still                  = 0,
-    AlessaAnim_StandIdle              = 1,
-    AlessaAnim_WalkForward            = 2,
-    AlessaAnim_WalkForwardTurnStumble = 3,
-    AlessaAnim_ForcePush              = 4,
-    AlessaAnim_StumbleForwardCrumple  = 5,
-    AlessaAnim_CrumpleLookUp          = 6,
-    AlessaAnim_CrumpleShakeHead       = 7,
-    AlessaAnim_StandLookRight         = 8,
-    AlessaAnim_CrumpleIdle            = 9,
-    AlessaAnim_Kneel                  = 10
-} e_AlessaAnim;
-
 /** @brief Alessa character control states. */
 typedef enum _AlessaControl
 {
@@ -32,6 +16,22 @@ typedef enum _AlessaControl
     AlessaControl_9    = 9,
     AlessaControl_10   = 10
 } e_AlessaControl;
+
+/** @brief Alessa character animation indices. */
+typedef enum _AlessaAnim
+{
+    AlessaAnim_Still                  = 0,
+    AlessaAnim_StandIdle              = 1,
+    AlessaAnim_WalkForward            = 2,
+    AlessaAnim_WalkForwardTurnStumble = 3,
+    AlessaAnim_ForcePush              = 4,
+    AlessaAnim_StumbleForwardCrumple  = 5,
+    AlessaAnim_CrumpleLookUp          = 6,
+    AlessaAnim_CrumpleShakeHead       = 7,
+    AlessaAnim_StandLookRight         = 8,
+    AlessaAnim_CrumpleIdle            = 9,
+    AlessaAnim_Kneel                  = 10
+} e_AlessaAnim;
 
 /** @brief Alessa character bone indices. */
 typedef enum _AlessaBone

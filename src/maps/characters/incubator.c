@@ -47,9 +47,9 @@ void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords)
     incubator->position.vy  = Q12(0.0f);
     incubator->position.vz += offset.vz;
 
-    boneCoords[0].coord.t[0] = Q12_TO_Q8(incubator->position.vx);
-    boneCoords[0].coord.t[1] = Q12_TO_Q8(incubator->position.vy);
-    boneCoords[0].coord.t[2] = Q12_TO_Q8(incubator->position.vz);
+    boneCoords[IncubatorBone_Root].coord.t[0] = Q12_TO_Q8(incubator->position.vx);
+    boneCoords[IncubatorBone_Root].coord.t[1] = Q12_TO_Q8(incubator->position.vy);
+    boneCoords[IncubatorBone_Root].coord.t[2] = Q12_TO_Q8(incubator->position.vz);
 }
 
 void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x800D3E18
@@ -57,21 +57,21 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* boneCoords) // 0x80
     // Handle control state.
     switch (incubatorProps.controlState)
     {
-        case 0:
+        case IncubatorControl_None:
             break;
 
-        case 1:
-            Model_AnimStatusSet(&incubator->model, 2, false);
+        case IncubatorControl_1:
+            Model_AnimStatusSet(&incubator->model, IncubatorAnim_2, false);
             Chara_AnimStateReset(incubator);
             break;
 
-        case 2:
-            Model_AnimStatusKeyframeSet(incubator->model, 3, true, INCUBATOR_ANIM_INFOS, 0);
+        case IncubatorControl_2:
+            Model_AnimStatusKeyframeSet(incubator->model, IncubatorAnim_3, true, INCUBATOR_ANIM_INFOS, 0);
             Chara_AnimStateReset(incubator);
             break;
 
-        case 3:
-            Model_AnimStatusSet(&incubator->model, 1, false);
+        case IncubatorControl_3:
+            Model_AnimStatusSet(&incubator->model, IncubatorAnim_1, false);
             Chara_AnimStateReset(incubator);
             break;
     }

@@ -195,12 +195,12 @@ typedef struct _CollisionState
                  {
                      struct
                      {
-                         /* 0x0 */ u8                   closestXSubCellIdx;
-                         /* 0x1 */ u8                   closestZSubCellIdx;
-                         /* 0x2 */ u8                   closeFarXSubCellIdxDiff;
-                         /* 0x3 */ u8                   closeFarZSubCellIdxDiff;
-                         /* 0x4 */ s_IpdCellRange*  field_4;
-                         /* 0x8 */ s_CollisionState_A8  field_8[4];
+                         /* 0x0 */ u8                  closestXSubCellIdx;
+                         /* 0x1 */ u8                  closestZSubCellIdx;
+                         /* 0x2 */ u8                  closeFarXSubCellIdxDiff;
+                         /* 0x3 */ u8                  closeFarZSubCellIdxDiff;
+                         /* 0x4 */ s_IpdCellRange*     cellRanges;
+                         /* 0x8 */ s_CollisionState_A8 field_8[4];
                      } s_0;
                      struct
                      {

@@ -9,6 +9,24 @@ typedef enum _PuppetNurseFlags
     PuppetNurseFlag_1    = 1 << 1
 } e_PuppetNurseFlags;
 
+/** @brief Puppet Nurse or Puppet Doctor character control states. */
+typedef enum _PuppetNurseControl
+{
+    PuppetNurseControl_1  = 1,
+    PuppetNurseControl_2  = 2,
+    PuppetNurseControl_3  = 3, // Doctor-specific.
+    PuppetNurseControl_4  = 4, // Nurse-specific.
+    PuppetNurseControl_5  = 5,
+    PuppetNurseControl_6  = 6, // Nurse-specific.
+    PuppetNurseControl_7  = 7, // Doctor-specific.
+    PuppetNurseControl_8  = 8,
+    PuppetNurseControl_9  = 9,
+    PuppetNurseControl_10 = 10,
+    PuppetNurseControl_11 = 11,
+    PuppetNurseControl_12 = 12,
+    PuppetNurseControl_13 = 13
+} e_PuppetNurseControl;
+
 /** @brief Puppet Nurse or Puppet Doctor character animation indices. */
 typedef enum _PuppetNurseAnim
 {
@@ -32,24 +50,6 @@ typedef enum _PuppetNurseAnim
     PuppetNurseAnim_20    = 20,
     PuppetNurseAnim_21    = 21
 } e_PuppetNurseAnim;
-
-/** @brief Puppet Nurse or Puppet Doctor character control states. */
-typedef enum _PuppetNurseControl
-{
-    PuppetNurseControl_1  = 1,
-    PuppetNurseControl_2  = 2,
-    PuppetNurseControl_3  = 3, // Doctor-specific.
-    PuppetNurseControl_4  = 4, // Nurse-specific.
-    PuppetNurseControl_5  = 5,
-    PuppetNurseControl_6  = 6, // Nurse-specific.
-    PuppetNurseControl_7  = 7, // Doctor-specific.
-    PuppetNurseControl_8  = 8,
-    PuppetNurseControl_9  = 9,
-    PuppetNurseControl_10 = 10,
-    PuppetNurseControl_11 = 11,
-    PuppetNurseControl_12 = 12,
-    PuppetNurseControl_13 = 13
-} e_PuppetNurseControl;
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 

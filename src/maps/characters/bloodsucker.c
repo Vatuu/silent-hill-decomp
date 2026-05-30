@@ -9,6 +9,8 @@
 #include "maps/shared.h"
 #include "maps/characters/bloodsucker.h"
 
+#define bloodsuckerProps bloodsucker->properties.bloodsucker
+
 void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 {
     u32 animStatusDiv2;
@@ -45,8 +47,8 @@ void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOOR
     // Reset flags if ???
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
     {
-        bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_0;
-        bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_1;
+        bloodsuckerProps.flags &= ~BloodsuckerFlag_0;
+        bloodsuckerProps.flags &= ~BloodsuckerFlag_1;
     }
 
     if (bloodsucker->model.stateStep != 0)
@@ -54,28 +56,28 @@ void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOOR
         return;
     }
 
-    if (!(bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_0))
+    if (!(bloodsuckerProps.flags & BloodsuckerFlag_0))
     {
         SD_Call(Sfx_Unk1525);
-        bloodsucker->properties.bloodsucker.flags |= BloodsuckerFlag_0;
+        bloodsuckerProps.flags |= BloodsuckerFlag_0;
     }
 
-    Sfx_WithFalloffAndPitchPlay(Sfx_Unk1525, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_EC >> 5, Q12(16.0f), 0);
+    Sfx_WithFalloffAndPitchPlay(Sfx_Unk1525, &bloodsucker->position, bloodsuckerProps.timer_EC >> 5, Q12(16.0f), 0);
 
-    if (bloodsucker->properties.bloodsucker.timer_EC < bloodsucker->properties.bloodsucker.timer_F0)
+    if (bloodsuckerProps.timer_EC < bloodsuckerProps.timer_F0)
     {
-        bloodsucker->properties.bloodsucker.timer_EC += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
-        if (bloodsucker->properties.bloodsucker.timer_EC > bloodsucker->properties.bloodsucker.timer_F0)
+        bloodsuckerProps.timer_EC += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
+        if (bloodsuckerProps.timer_EC > bloodsuckerProps.timer_F0)
         {
-            bloodsucker->properties.bloodsucker.timer_EC = bloodsucker->properties.bloodsucker.timer_F0;
+            bloodsuckerProps.timer_EC = bloodsuckerProps.timer_F0;
         }
     }
-    else if (bloodsucker->properties.bloodsucker.timer_EC > bloodsucker->properties.bloodsucker.timer_F0)
+    else if (bloodsuckerProps.timer_EC > bloodsuckerProps.timer_F0)
     {
-        bloodsucker->properties.bloodsucker.timer_EC -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
-        if (bloodsucker->properties.bloodsucker.timer_EC < bloodsucker->properties.bloodsucker.timer_F0)
+        bloodsuckerProps.timer_EC -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.5f);
+        if (bloodsuckerProps.timer_EC < bloodsuckerProps.timer_F0)
         {
-            bloodsucker->properties.bloodsucker.timer_EC = bloodsucker->properties.bloodsucker.timer_F0;
+            bloodsuckerProps.timer_EC = bloodsuckerProps.timer_F0;
         }
     }
 
@@ -85,27 +87,27 @@ void Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOOR
     // SFX timer state handling. TODO: Inspect behavior in-game.
     if (animStatusDiv2 == ((stateStepMul2 + 23) / 2) || animStatusDiv2 == ((stateStepMul2 + 17) / 2))
     {
-        if (!(bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_1))
+        if (!(bloodsuckerProps.flags & BloodsuckerFlag_1))
         {
-            bloodsucker->properties.bloodsucker.flags |= BloodsuckerFlag_1;
+            bloodsuckerProps.flags |= BloodsuckerFlag_1;
             SD_Call(Sfx_Unk1527);
         }
 
-        bloodsucker->properties.bloodsucker.timer_F4 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
-        if (bloodsucker->properties.bloodsucker.timer_F4 > Q12(1.0f))
+        bloodsuckerProps.timer_F4 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
+        if (bloodsuckerProps.timer_F4 > Q12(1.0f))
         {
-            bloodsucker->properties.bloodsucker.timer_F4 = Q12(1.0f);
+            bloodsuckerProps.timer_F4 = Q12(1.0f);
         }
 
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1527, &bloodsucker->position, bloodsucker->properties.bloodsucker.timer_F4 >> 5, Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1527, &bloodsucker->position, bloodsuckerProps.timer_F4 >> 5, Q12(16.0f), 0);
     }
-    else if (bloodsucker->properties.bloodsucker.flags & BloodsuckerFlag_1)
+    else if (bloodsuckerProps.flags & BloodsuckerFlag_1)
     {
-        bloodsucker->properties.bloodsucker.timer_F4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
-        if (bloodsucker->properties.bloodsucker.timer_F4 < Q12(0.0f))
+        bloodsuckerProps.timer_F4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 2.0f);
+        if (bloodsuckerProps.timer_F4 < Q12(0.0f))
         {
-            bloodsucker->properties.bloodsucker.timer_F4 = Q12(0.0f);
-            bloodsucker->properties.bloodsucker.flags &= ~BloodsuckerFlag_1;
+            bloodsuckerProps.timer_F4 = Q12(0.0f);
+            bloodsuckerProps.flags &= ~BloodsuckerFlag_1;
             Sd_SfxStop(Sfx_Unk1527);
         }
     }
@@ -177,11 +179,7 @@ void Bloodsucker_Init(s_SubCharacter* bloodsucker)
 
 void Bloodsucker_Control_1(s_SubCharacter* bloodsucker)
 {
-    #define bloodsuckerProps bloodsucker->properties.bloodsucker
-
     bloodsucker->model.anim.time = Q12(81.0f) + bloodsuckerProps.timer_E8;
-
-    #undef bloodsuckerProps
 }
 
 void Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
@@ -197,7 +195,7 @@ void Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
         bloodsucker->model.controlState = BloodsuckerControl_3;
     }
 
-    bloodsucker->properties.bloodsucker.timer_F0 = Q12(0.3f);
+    bloodsuckerProps.timer_F0 = Q12(0.3f);
 #endif
 }
 
@@ -213,7 +211,7 @@ void Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
         bloodsucker->model.controlState = BloodsuckerControl_2;
     }
 
-    bloodsucker->properties.bloodsucker.timer_F0 = Q12(1.0f);
+    bloodsuckerProps.timer_F0 = Q12(1.0f);
 }
 
 void Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
@@ -229,11 +227,11 @@ void Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
 
     if (ANIM_STATUS_IS_ACTIVE(bloodsucker->model.anim.status))
     {
-        bloodsucker->properties.bloodsucker.timer_F0 = Q12(0.3f);
+        bloodsuckerProps.timer_F0 = Q12(0.3f);
     }
     else
     {
-        bloodsucker->properties.bloodsucker.timer_F0 = Q12(0.75f);
+        bloodsuckerProps.timer_F0 = Q12(0.75f);
     }
 #endif
 }

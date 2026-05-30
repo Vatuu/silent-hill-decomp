@@ -9,6 +9,16 @@ typedef enum _BloodsuckerFlags
     BloodsuckerFlag_1    = 1 << 1
 } e_BloodsuckerFlags;
 
+/** @brief Bloodsucker character control states. */
+typedef enum _BloodsuckerControl
+{
+    BloodsuckerControl_None = 0,
+    BloodsuckerControl_1    = 1,
+    BloodsuckerControl_2    = 2,
+    BloodsuckerControl_3    = 3,
+    BloodsuckerControl_4    = 4
+} e_BloodsuckerControl;
+
 /** @brief Bloodsucker character animation indices. */
 typedef enum _BloodsuckerAnim
 {
@@ -21,16 +31,6 @@ typedef enum _BloodsuckerAnim
     BloodsuckerAnim_6     = 6,
     BloodsuckerAnim_7     = 7
 } e_BloodsuckerAnim;
-
-/** @brief Bloodsucker character control states. */
-typedef enum _BloodsuckerControl
-{
-    BloodsuckerControl_None = 0,
-    BloodsuckerControl_1    = 1,
-    BloodsuckerControl_2    = 2,
-    BloodsuckerControl_3    = 3,
-    BloodsuckerControl_4    = 4
-} e_BloodsuckerControl;
 
 extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 

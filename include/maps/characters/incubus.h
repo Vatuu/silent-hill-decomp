@@ -20,12 +20,6 @@ typedef enum _IncubusControl
     IncubusControl_13   = 13
 } e_IncubusControl;
 
-/** @brief Incubus character model bone indices. */
-typedef enum _IncubusBone
-{
-    IncubusBone_2 = 2
-} e_IncubusBone;
-
 /** @brief Incubus character animation indices. */
 typedef enum _IncubusAnim
 {
@@ -36,6 +30,12 @@ typedef enum _IncubusAnim
     IncubusAnim_4     = 4,
     IncubusAnim_5     = 5
 } e_IncubusAnim;
+
+/** @brief Incubus character model bone indices. */
+typedef enum _IncubusBone
+{
+    IncubusBone_2 = 2
+} e_IncubusBone;
 
 extern s_AnimInfo INCUBUS_ANIM_INFOS[];
 

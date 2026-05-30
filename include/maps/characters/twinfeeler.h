@@ -9,6 +9,25 @@ typedef enum _TwinfeelerFlags
     TwinfeelerFlag_Underground = 1 << 2,
 } e_TwinfeelerFlags;
 
+/** @brief Twinfeeler character control states. */
+typedef enum _TwinfeelerControl
+{
+    TwinfeelerControl_None        = 0,
+    TwinfeelerControl_WalkForward = 1,
+    TwinfeelerControl_2           = 2,
+    TwinfeelerControl_3           = 3,
+    TwinfeelerControl_4           = 4,
+    TwinfeelerControl_5           = 5,
+    TwinfeelerControl_6           = 6,
+    TwinfeelerControl_Stand       = 7,
+    TwinfeelerControl_Attack      = 8,
+    TwinfeelerControl_9           = 9,
+    TwinfeelerControl_10          = 10,
+    TwinfeelerControl_Idle        = 11,
+    TwinfeelerControl_12          = 12,
+    TwinfeelerControl_13          = 13
+} e_TwinfeelerControl;
+
 // TODO: Unsure if anims marked as unused are actually unused. Code doesn't seem to reference them. Stuns also unclear.
 /** @brief Twinfeeler character animation indices. */
 typedef enum _TwinfeelerAnim
@@ -38,25 +57,6 @@ typedef enum _TwinfeelerAnim
     TwinfeelerAnim_StunEnd         = 22,
     TwinfeelerAnim_23              = 23
 } e_TwinfeelerAnim;
-
-/** @brief Twinfeeler character control states. */
-typedef enum _TwinfeelerControl
-{
-    TwinfeelerControl_None        = 0,
-    TwinfeelerControl_WalkForward = 1,
-    TwinfeelerControl_2           = 2,
-    TwinfeelerControl_3           = 3,
-    TwinfeelerControl_4           = 4,
-    TwinfeelerControl_5           = 5,
-    TwinfeelerControl_6           = 6,
-    TwinfeelerControl_Stand       = 7,
-    TwinfeelerControl_Attack      = 8,
-    TwinfeelerControl_9           = 9,
-    TwinfeelerControl_10          = 10,
-    TwinfeelerControl_Idle        = 11,
-    TwinfeelerControl_12          = 12,
-    TwinfeelerControl_13          = 13
-} e_TwinfeelerControl;
 
 /** @brief Twinfeeler character model bone indices. */
 typedef enum _TwinfeelerBone

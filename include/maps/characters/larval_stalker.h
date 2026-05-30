@@ -14,6 +14,25 @@ typedef enum _LarvalStalkerFlags
     LarvalStalkerFlag_7    = 1 << 7
 } e_LarvalStalkerFlags;
 
+/** @brief Larval Stalker character control states. */
+typedef enum _LarvalStalkerControl
+{
+    LarvalStalkerControl_None        = 0,
+    LarvalStalkerControl_1           = 1,
+    LarvalStalkerControl_2           = 2,
+    LarvalStalkerControl_3           = 3,
+    LarvalStalkerControl_WalkForward = 4,
+    LarvalStalkerControl_Unused5     = 5, /** @unused */
+    LarvalStalkerControl_6           = 6,
+    LarvalStalkerControl_Idle        = 7,
+    LarvalStalkerControl_8           = 8, // Alt walk forward?
+    LarvalStalkerControl_TripOver    = 9,
+    LarvalStalkerControl_Stun        = 10, // Stun, get back up.
+    LarvalStalkerControl_11          = 11,
+    LarvalStalkerControl_12          = 12, // Recoil?
+    LarvalStalkerControl_Death       = 13
+} e_LarvalStalkerControl;
+
 /** @brief Larval Stalker character animation indices. */
 typedef enum _LarvalStalkerAnim
 {
@@ -37,25 +56,6 @@ typedef enum _LarvalStalkerAnim
     LarvalStalkerAnim_StunFrontCont      = 17,
     LarvalStalkerAnim_StunBackRecoil     = 18
 } e_LarvalStalkerAnim;
-
-/** @brief Larval Stalker character control states. */
-typedef enum _LarvalStalkerControl
-{
-    LarvalStalkerControl_None        = 0,
-    LarvalStalkerControl_1           = 1,
-    LarvalStalkerControl_2           = 2,
-    LarvalStalkerControl_3           = 3,
-    LarvalStalkerControl_WalkForward = 4,
-    LarvalStalkerControl_Unused5     = 5, /** @unused */
-    LarvalStalkerControl_6           = 6,
-    LarvalStalkerControl_Idle        = 7,
-    LarvalStalkerControl_8           = 8, // Alt walk forward?
-    LarvalStalkerControl_TripOver    = 9,
-    LarvalStalkerControl_Stun        = 10, // Stun, get back up.
-    LarvalStalkerControl_11          = 11,
-    LarvalStalkerControl_12          = 12, // Recoil?
-    LarvalStalkerControl_Death       = 13
-} e_LarvalStalkerControl;
 
 extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[];
 

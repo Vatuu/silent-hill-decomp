@@ -22,6 +22,25 @@ typedef enum _StalkerFlags
     StalkerFlag_14           = 1 << 14
 } s_StalkerFlags;
 
+/** @brief Stalker character control states. */
+typedef enum _StalkerControl
+{
+    StalkerControl_None = 0,
+    StalkerControl_1    = 1,
+    StalkerControl_2    = 2,
+    StalkerControl_3    = 3,
+    StalkerControl_4    = 4,
+    StalkerControl_5    = 5,
+    StalkerControl_6    = 6,
+    StalkerControl_7    = 7,
+    StalkerControl_8    = 8,
+    StalkerControl_9    = 9,
+    StalkerControl_10   = 10,
+    StalkerControl_11   = 11,
+    StalkerControl_12   = 12,
+    StalkerControl_13   = 13
+} e_StalkerControl;
+
 /** @brief Stalker character animation indices. */
 typedef enum _StalkerAnim
 {
@@ -74,47 +93,6 @@ typedef enum _StalkerAnim
     StalkerAnim_46    = 46,
     StalkerAnim_47    = 47
 } e_StalkerAnim;
-
-/** @brief Stalker character control states. */
-typedef enum _StalkerControl
-{
-    StalkerControl_None = 0,
-    StalkerControl_1    = 1,
-    StalkerControl_2    = 2,
-    StalkerControl_3    = 3,
-    StalkerControl_4    = 4,
-    StalkerControl_5    = 5,
-    StalkerControl_6    = 6,
-    StalkerControl_7    = 7,
-    StalkerControl_8    = 8,
-    StalkerControl_9    = 9,
-    StalkerControl_10   = 10,
-    StalkerControl_11   = 11,
-    StalkerControl_12   = 12,
-    StalkerControl_13   = 13
-} e_StalkerControl;
-
-typedef enum _StalkerStateStep
-{
-    StalkerStateStep_0  = 0,
-    StalkerStateStep_1  = 1,
-    StalkerStateStep_2  = 2,
-    StalkerStateStep_3  = 3,
-    StalkerStateStep_4  = 4,
-    StalkerStateStep_5  = 5,
-    StalkerStateStep_6  = 6,
-    StalkerStateStep_7  = 7,
-    StalkerStateStep_8  = 8,
-    StalkerStateStep_9  = 9,
-    StalkerStateStep_10 = 10,
-    StalkerStateStep_11 = 11,
-    StalkerStateStep_12 = 12,
-    StalkerStateStep_13 = 13,
-    StalkerStateStep_14 = 14,
-    StalkerStateStep_15 = 15,
-    StalkerStateStep_16 = 16,
-    StalkerStateStep_17 = 17
-} e_StalkerStateStep;
 
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {
     { Anim_BlendLinear, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },

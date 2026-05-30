@@ -1,37 +1,6 @@
 #ifndef _MAPS_CHARACTERS_DAHLIA_H
 #define _MAPS_CHARACTERS_DAHLIA_H
 
-/** @brief Dahlia character animation indices. */
-typedef enum _DahliaAnim
-{
-    DahliaAnim_Still = 0,
-    DahliaAnim_1     = 1,
-    DahliaAnim_2     = 2,
-    DahliaAnim_3     = 3,
-    DahliaAnim_4     = 4,
-    DahliaAnim_5     = 5,
-    DahliaAnim_6     = 6,
-    DahliaAnim_7     = 7,
-    DahliaAnim_8     = 8,
-    DahliaAnim_9     = 9,
-    DahliaAnim_10    = 10,
-    DahliaAnim_11    = 11,
-    DahliaAnim_12    = 12,
-    DahliaAnim_13    = 13,
-    DahliaAnim_14    = 14,
-    DahliaAnim_15    = 15,
-    DahliaAnim_16    = 16,
-    DahliaAnim_17    = 17,
-    DahliaAnim_18    = 18,
-    DahliaAnim_19    = 19,
-    DahliaAnim_20    = 20,
-    DahliaAnim_21    = 21,
-    DahliaAnim_22    = 22,
-    DahliaAnim_23    = 23,
-    DahliaAnim_24    = 24,
-    DahliaAnim_25    = 25
-} e_DahliaAnim;
-
 /** @brief Dahlia character control states. */
 typedef enum _DahliaControl
 {
@@ -65,6 +34,37 @@ typedef enum _DahliaControl
     DahliaControl_27   = 27,
     DahliaControl_28   = 28
 } e_DahliaControl;
+
+/** @brief Dahlia character animation indices. */
+typedef enum _DahliaAnim
+{
+    DahliaAnim_Still = 0,
+    DahliaAnim_1     = 1,
+    DahliaAnim_2     = 2,
+    DahliaAnim_3     = 3,
+    DahliaAnim_4     = 4,
+    DahliaAnim_5     = 5,
+    DahliaAnim_6     = 6,
+    DahliaAnim_7     = 7,
+    DahliaAnim_8     = 8,
+    DahliaAnim_9     = 9,
+    DahliaAnim_10    = 10,
+    DahliaAnim_11    = 11,
+    DahliaAnim_12    = 12,
+    DahliaAnim_13    = 13,
+    DahliaAnim_14    = 14,
+    DahliaAnim_15    = 15,
+    DahliaAnim_16    = 16,
+    DahliaAnim_17    = 17,
+    DahliaAnim_18    = 18,
+    DahliaAnim_19    = 19,
+    DahliaAnim_20    = 20,
+    DahliaAnim_21    = 21,
+    DahliaAnim_22    = 22,
+    DahliaAnim_23    = 23,
+    DahliaAnim_24    = 24,
+    DahliaAnim_25    = 25
+} e_DahliaAnim;
 
 /** @brief Dahlia character anim infos. */
 extern s_AnimInfo DAHLIA_ANIM_INFOS[];

@@ -1,23 +1,6 @@
 #ifndef _MAPS_CHARACTERS_BLOODYINCUBATOR_H
 #define _MAPS_CHARACTERS_BLOODYINCUBATOR_H
 
-/** @brief Bloody Incubator character animation indices. */
-typedef enum _BloodyIncubatorAnim
-{
-    BloodyIncubatorAnim_Still = 0,
-    BloodyIncubatorAnim_1     = 1,
-    BloodyIncubatorAnim_2     = 2,
-    BloodyIncubatorAnim_3     = 3,
-    BloodyIncubatorAnim_4     = 4,
-    BloodyIncubatorAnim_5     = 5,
-    BloodyIncubatorAnim_6     = 6,
-    BloodyIncubatorAnim_7     = 7,
-    BloodyIncubatorAnim_8     = 8,
-    BloodyIncubatorAnim_9     = 9,
-    BloodyIncubatorAnim_10    = 10,
-    BloodyIncubatorAnim_11    = 11
-} e_BloodyIncubatorAnim;
-
 /** @brief Bloody Incubator character control states. */
 typedef enum _BloodyIncubatorControl
 {
@@ -34,6 +17,23 @@ typedef enum _BloodyIncubatorControl
     BloodyIncubatorControl_10   = 10,
     BloodyIncubatorControl_11   = 11
 } e_BloodyIncubatorControl;
+
+/** @brief Bloody Incubator character animation indices. */
+typedef enum _BloodyIncubatorAnim
+{
+    BloodyIncubatorAnim_Still = 0,
+    BloodyIncubatorAnim_1     = 1,
+    BloodyIncubatorAnim_2     = 2,
+    BloodyIncubatorAnim_3     = 3,
+    BloodyIncubatorAnim_4     = 4,
+    BloodyIncubatorAnim_5     = 5,
+    BloodyIncubatorAnim_6     = 6,
+    BloodyIncubatorAnim_7     = 7,
+    BloodyIncubatorAnim_8     = 8,
+    BloodyIncubatorAnim_9     = 9,
+    BloodyIncubatorAnim_10    = 10,
+    BloodyIncubatorAnim_11    = 11
+} e_BloodyIncubatorAnim;
 
 /** @brief Bloody Incubator character model bone indices. */
 typedef enum _BloodyIncubatorBone

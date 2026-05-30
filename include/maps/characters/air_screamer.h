@@ -40,39 +40,15 @@ typedef enum _AirScreamerFlags
     AirScreamerFlag_31   = 1 << 31
 } e_AirScreamerFlags;
 
-/** @brief Air Screamer character animation indices. */
-typedef enum _AirScreamerAnim
+/** @brief Air Screamer or Night Flutter character hit types. */
+typedef enum _AirScreamerHit
 {
-    AirScreamerAnim_Still                  = 0,
-    AirScreamerAnim_StandBiteAttack        = 1,
-    AirScreamerAnim_HoverBiteAttack        = 2,
-    AirScreamerAnim_GlideScratchAttack     = 3,
-    AirScreamerAnim_StandToStun            = 4,
-    AirScreamerAnim_Death                  = 5,
-    AirScreamerAnim_StandRecoil            = 6,
-    AirScreamerAnim_HoverRecoil            = 7,
-    AirScreamerAnim_GlideRecoil            = 8,
-    AirScreamerAnim_HoverInjuredBiteAttack = 9,
-    AirScreamerAnim_HoverToStun            = 10,
-    AirScreamerAnim_GlideToStun            = 11,
-    AirScreamerAnim_DeathThroes            = 12,
-    AirScreamerAnim_StandBiteAttackStart   = 13,
-    AirScreamerAnim_StandBiteAttackEnd     = 14,
-    AirScreamerAnim_GlideToHover           = 15,
-    AirScreamerAnim_GlideToWalkForward     = 16,
-    AirScreamerAnim_Glide                  = 17,
-    AirScreamerAnim_HoverToGlide           = 18,
-    AirScreamerAnim_HoverVariable          = 19,
-    AirScreamerAnim_HoverInjuredToStun     = 20,
-    AirScreamerAnim_HoverInjured           = 21,
-    AirScreamerAnim_StandIdleToHover       = 22,
-    AirScreamerAnim_StandIdle              = 23,
-    AirScreamerAnim_StandIdleToGlide       = 24,
-    AirScreamerAnim_WalkForward            = 25,
-    AirScreamerAnim_Stun                   = 26,
-    AirScreamerAnim_HoverConstant          = 27,
-    AirScreamerAnim_28                     = 28
-} e_AirScreamerAnim;
+    AirScreamerHit_None   = 0,
+    AirScreamerHit_Recoil = 1,
+    AirScreamerHit_Rear   = 2,
+    AirScreamerHit_Stun   = 3,
+    AirScreamerHit_Kill   = 4
+} e_AirScreamerHit;
 
 /** @brief Air Screamer or Night Flutter character control states. */
 typedef enum _AirScreamerControl
@@ -133,15 +109,39 @@ typedef enum _AirScreamerControl
     AirScreamerControl_Count = 52
 } e_AirScreamerControl;
 
-/** @brief Air Screamer or Night Flutter character hit types. */
-typedef enum _AirScreamerHit
+/** @brief Air Screamer character animation indices. */
+typedef enum _AirScreamerAnim
 {
-    AirScreamerHit_None   = 0,
-    AirScreamerHit_Recoil = 1,
-    AirScreamerHit_Rear   = 2,
-    AirScreamerHit_Stun   = 3,
-    AirScreamerHit_Kill   = 4
-} e_AirScreamerHit;
+    AirScreamerAnim_Still                  = 0,
+    AirScreamerAnim_StandBiteAttack        = 1,
+    AirScreamerAnim_HoverBiteAttack        = 2,
+    AirScreamerAnim_GlideScratchAttack     = 3,
+    AirScreamerAnim_StandToStun            = 4,
+    AirScreamerAnim_Death                  = 5,
+    AirScreamerAnim_StandRecoil            = 6,
+    AirScreamerAnim_HoverRecoil            = 7,
+    AirScreamerAnim_GlideRecoil            = 8,
+    AirScreamerAnim_HoverInjuredBiteAttack = 9,
+    AirScreamerAnim_HoverToStun            = 10,
+    AirScreamerAnim_GlideToStun            = 11,
+    AirScreamerAnim_DeathThroes            = 12,
+    AirScreamerAnim_StandBiteAttackStart   = 13,
+    AirScreamerAnim_StandBiteAttackEnd     = 14,
+    AirScreamerAnim_GlideToHover           = 15,
+    AirScreamerAnim_GlideToWalkForward     = 16,
+    AirScreamerAnim_Glide                  = 17,
+    AirScreamerAnim_HoverToGlide           = 18,
+    AirScreamerAnim_HoverVariable          = 19,
+    AirScreamerAnim_HoverInjuredToStun     = 20,
+    AirScreamerAnim_HoverInjured           = 21,
+    AirScreamerAnim_StandIdleToHover       = 22,
+    AirScreamerAnim_StandIdle              = 23,
+    AirScreamerAnim_StandIdleToGlide       = 24,
+    AirScreamerAnim_WalkForward            = 25,
+    AirScreamerAnim_Stun                   = 26,
+    AirScreamerAnim_HoverConstant          = 27,
+    AirScreamerAnim_28                     = 28
+} e_AirScreamerAnim;
 
 /** @brief Updates an active Air Screamer or Night Flutter character.
  *

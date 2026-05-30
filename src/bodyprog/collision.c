@@ -105,12 +105,12 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->vertCollPoints = (u8*)collData->vertCollPoints + (u32)collData;
-    collData->ptr_10           = (u8*)collData->ptr_10 + (u32)collData;
-    collData->ptr_14           = (u8*)collData->ptr_14 + (u32)collData;
-    collData->ptr_18           = (u8*)collData->ptr_18 + (u32)collData;
-    collData->cellRangeInfo    = (u8*)collData->cellRangeInfo    + (u32)collData;
-    collData->ptr_28           = (u8*)collData->ptr_28 + (u32)collData;
-    collData->ptr_2C           = (u8*)collData->ptr_2C + (u32)collData;
+    collData->ptr_10         = (u8*)collData->ptr_10 + (u32)collData;
+    collData->ptr_14         = (u8*)collData->ptr_14 + (u32)collData;
+    collData->ptr_18         = (u8*)collData->ptr_18 + (u32)collData;
+    collData->cellRanges     = (u8*)collData->cellRanges + (u32)collData;
+    collData->ptr_28         = (u8*)collData->ptr_28 + (u32)collData;
+    collData->ptr_2C         = (u8*)collData->ptr_2C + (u32)collData;
 }
 
 void func_80069994(s_IpdCollisionData* collData) // 0x80069994
@@ -855,7 +855,7 @@ void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisio
 
     for (i = collState->field_A0.s_0.closestZSubCellIdx; i < (collState->field_A0.s_0.closestZSubCellIdx + collState->field_A0.s_0.closeFarZSubCellIdxDiff); i++)
     {
-        curCellRange = &collData->cellRangeInfo[(i * collData->subCellXCount) + startIdx];
+        curCellRange = &collData->cellRanges[(i * collData->subCellXCount) + startIdx];
 
         for (j = startIdx; j <= endIdx; j++, curCellRange++)
         {
@@ -872,9 +872,9 @@ void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisio
     if (collState->field_0_10)
     {
         func_8006C838(collState, collData);
-        if (collState->field_A0.s_0.field_4 != NULL)
+        if (collState->field_A0.s_0.cellRanges != NULL)
         {
-            func_8006CA18(collState, collData, collState->field_A0.s_0.field_4);
+            func_8006CA18(collState, collData, collState->field_A0.s_0.cellRanges);
         }
     }
 }
@@ -896,11 +896,11 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
     if ((collState->charaPositionFrom.offset.vx / collData->subCellSize) < 0 || (collState->charaPositionFrom.offset.vx / collData->subCellSize) >= collData->subCellXCount ||
         ((collState->charaPositionFrom.offset.vz / collData->subCellSize) < 0) || (collState->charaPositionFrom.offset.vz / collData->subCellSize) >= collData->subCellZCount)
     {
-        collState->field_A0.s_0.field_4 = NULL;
+        collState->field_A0.s_0.cellRanges = NULL;
     }
     else
     {
-        collState->field_A0.s_0.field_4 = &collData->cellRangeInfo[((collState->charaPositionFrom.offset.vz / collData->subCellSize) * collData->subCellXCount) +
+        collState->field_A0.s_0.cellRanges = &collData->cellRanges[((collState->charaPositionFrom.offset.vz / collData->subCellSize) * collData->subCellXCount) +
                                                             (collState->charaPositionFrom.offset.vx / collData->subCellSize)];
         collState->field_C8             = NO_VALUE;
 
@@ -1814,7 +1814,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
     s_IpdCollisionData_10* temp_a1;
     s_IpdCollisionData_18* temp_a0;
 
-    if (collState->field_A0.s_0.field_4 == NULL)
+    if (collState->field_A0.s_0.cellRanges == NULL)
     {
         return;
     }
@@ -2613,7 +2613,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
             for (curUnk = &state->field_8C; curUnk < &state->field_8C[state->field_88]; curUnk++)
             {
                 temp_lo = curUnk->field_2 * state->field_7C;
-                func_8006E53C(state, &collData->cellRangeInfo[temp_lo + curUnk->field_0], collData);
+                func_8006E53C(state, &collData->cellRanges[temp_lo + curUnk->field_0], collData);
             }
         }
     }

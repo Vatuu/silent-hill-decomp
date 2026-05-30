@@ -9,15 +9,6 @@ typedef enum _CherylFlags
     CherylFlag_FootstepLeft  = 1 << 5
 } e_CherylFlags;
 
-/** @brief Cheryl character animation indices. */
-typedef enum _CherylAnim
-{
-    CherylAnim_Still       = 0,
-    CherylAnim_Idle        = 1,
-    CherylAnim_WalkForward = 2,
-    CherylAnim_RunForward  = 3
-} e_CherylAnim;
-
 /** @brief Cheryl control states. */
 typedef enum _CherylControl
 {
@@ -27,6 +18,15 @@ typedef enum _CherylControl
     CherylControl_3           = 3, // Special walk forward.
     CherylControl_4           = 4  // Special walk forward.
 } e_CherylControl;
+
+/** @brief Cheryl character animation indices. */
+typedef enum _CherylAnim
+{
+    CherylAnim_Still       = 0,
+    CherylAnim_Idle        = 1,
+    CherylAnim_WalkForward = 2,
+    CherylAnim_RunForward  = 3
+} e_CherylAnim;
 
 /** @brief Cheryl character anim infos. */
 extern s_AnimInfo CHERYL_ANIM_INFOS[];

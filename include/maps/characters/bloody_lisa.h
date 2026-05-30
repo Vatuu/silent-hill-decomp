@@ -1,13 +1,6 @@
 #ifndef _MAPS_CHARACTERS_BLOODYLISA_H
 #define _MAPS_CHARACTERS_BLOODYLISA_H
 
-/** @brief Bloody Lisa character animation indices. */
-typedef enum _BloodyLisaAnim
-{
-    BloodyLisaAnim_Still = 0,
-    BloodyLisaAnim_Walk  = 1
-} e_BloodyLisaAnim;
-
 /** @brief Bloody Lisa character control states. */
 typedef enum _BloodyLisaControl
 {
@@ -19,6 +12,13 @@ typedef enum _BloodyLisaControl
     BloodyLisaControl_5    = 5,
     BloodyLisaControl_6    = 6
 } e_BloodyLisaControl;
+
+/** @brief Bloody Lisa character animation indices. */
+typedef enum _BloodyLisaAnim
+{
+    BloodyLisaAnim_Still = 0,
+    BloodyLisaAnim_Walk  = 1
+} e_BloodyLisaAnim;
 
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q12(0.0f)  }, NO_VALUE, 0   },

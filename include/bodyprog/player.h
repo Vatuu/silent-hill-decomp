@@ -16,7 +16,7 @@
 
 #define DEFAULT_PLAYER_BOX_TOP          Q12(-1.6f)
 #define DEFAULT_PLAYER_BOX_OFFSET_Y     Q12(-1.1f)
-#define DEFAULT_PLAYER_CYLINDER_FIELD_2 Q12(0.23f)
+#define DEFAULT_PLAYER_CYLINDER_FIELD_2 Q12(0.23f) // TODO: Figure out what `field_2` is supposed to be.
 
 #define HARRY_UPPER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand)
 #define HARRY_LOWER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot)

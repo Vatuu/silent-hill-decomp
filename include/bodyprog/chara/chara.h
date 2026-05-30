@@ -249,7 +249,7 @@ typedef struct _PropsBloodsucker
     /* 0xEC  */ q19_12 timer_EC;
     /* 0xF0  */ q19_12 timer_F0;
     /* 0xF4  */ q19_12 timer_F4;
-    /* 0xF8  */ s8     unused_F8[36]; /** @unused */
+    /* 0xF8  */ s8     unused_F8[36]; /** @unused Probably explicit filler fields originally. */
     /* 0x11C */ s32    flags;         /** `e_BloodsuckerFlags` */
 } s_PropsBloodsucker;
 

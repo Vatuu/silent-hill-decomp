@@ -1,29 +1,6 @@
 #ifndef _MAPS_CHARACTERS_LISA_H
 #define _MAPS_CHARACTERS_LISA_H
 
-/** @brief Lisa character animation indices. */
-typedef enum _LisaAnim
-{
-    LisaAnim_Still = 0,
-    LisaAnim_1     = 1,
-    LisaAnim_2     = 2,
-    LisaAnim_3     = 3,
-    LisaAnim_4     = 4,
-    LisaAnim_5     = 5,
-    LisaAnim_6     = 6,
-    LisaAnim_7     = 7,
-    LisaAnim_8     = 8,
-    LisaAnim_9     = 9,
-    LisaAnim_10    = 10,
-    LisaAnim_11    = 11,
-    LisaAnim_12    = 12,
-    LisaAnim_13    = 13,
-    LisaAnim_14    = 14,
-    LisaAnim_15    = 15,
-    LisaAnim_16    = 16,
-    LisaAnim_17    = 17
-} e_LisaAnim;
-
 /** @brief Lisa character control states. */
 typedef enum _LisaControl
 {
@@ -50,6 +27,29 @@ typedef enum _LisaControl
     LisaControl_20   = 20,
     LisaControl_21   = 21
 } e_LisaControl;
+
+/** @brief Lisa character animation indices. */
+typedef enum _LisaAnim
+{
+    LisaAnim_Still = 0,
+    LisaAnim_1     = 1,
+    LisaAnim_2     = 2,
+    LisaAnim_3     = 3,
+    LisaAnim_4     = 4,
+    LisaAnim_5     = 5,
+    LisaAnim_6     = 6,
+    LisaAnim_7     = 7,
+    LisaAnim_8     = 8,
+    LisaAnim_9     = 9,
+    LisaAnim_10    = 10,
+    LisaAnim_11    = 11,
+    LisaAnim_12    = 12,
+    LisaAnim_13    = 13,
+    LisaAnim_14    = 14,
+    LisaAnim_15    = 15,
+    LisaAnim_16    = 16,
+    LisaAnim_17    = 17
+} e_LisaAnim;
 
 /** @brief Lisa character model bone indices. */
 typedef enum _LisaBone

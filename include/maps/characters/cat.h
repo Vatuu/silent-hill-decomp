@@ -1,6 +1,15 @@
 #ifndef _MAPS_CHARACTERS_CAT_H
 #define _MAPS_CHARACTERS_CAT_H
 
+/** @brief Cat character control states. */
+typedef enum _CatControl
+{
+    CatControl_None = 0,
+    CatControl_1    = 1,
+    CatControl_2    = 2,
+    CatControl_3    = 3
+} e_CatControl;
+
 /** @brief Cat character animation indices. */
 typedef enum _CatAnim
 {
@@ -10,15 +19,6 @@ typedef enum _CatAnim
     CatAnim_IdleToJump = 3,
     CatAnim_JumpToRun  = 4
 } e_CatAnim;
-
-/** @brief Cat character control states. */
-typedef enum _CatControl
-{
-    CatControl_None = 0,
-    CatControl_1    = 1,
-    CatControl_2    = 2,
-    CatControl_3    = 3
-} e_CatControl;
 
 /** @brief Cat character anim infos.
  * @unused Frames `[1, 6]`.

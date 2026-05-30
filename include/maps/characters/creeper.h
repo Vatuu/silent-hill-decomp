@@ -16,6 +16,17 @@ typedef enum _CreeperFlags
     CreeperFlag_Alerted      = 1 << 8
 } e_CreeperFlags;
 
+/** @brief Creeper character control states. */
+typedef enum _CreeperControl
+{
+    CreeperControl_None        = 0,
+    CreeperControl_Idle        = 1,
+    CreeperControl_WalkForward = 2,
+    CreeperControl_Attack      = 3,
+    CreeperControl_Stun        = 4,
+    CreeperControl_Damage      = 5
+} e_CreeperControl;
+
 /** @brief Creeper character animation indices. */
 typedef enum _CreeperAnim
 {
@@ -38,17 +49,6 @@ typedef enum _CreeperAnim
     CreeperAnim_StunOnce            = 16,
     CreeperAnim_RunForwardStunStart = 17  // Unsure.
 } e_CreeperAnim;
-
-/** @brief Creeper character control states. */
-typedef enum _CreeperControl
-{
-    CreeperControl_None        = 0,
-    CreeperControl_Idle        = 1,
-    CreeperControl_WalkForward = 2,
-    CreeperControl_Attack      = 3,
-    CreeperControl_Stun        = 4,
-    CreeperControl_Damage      = 5
-} e_CreeperControl;
 
 extern s_AnimInfo CREEPER_ANIM_INFOS[];
 

@@ -12,6 +12,18 @@ typedef enum _FloatstingerFlags
     FloatstingerFlag_4    = 1 << 4
 } e_FloatstingerFlags;
 
+/** @brief Floatstinger character control states. */
+typedef enum _FloatstingerControl
+{
+    FloatstingerControl_None = 0,
+
+    FloatstingerControl_2    = 2,
+    FloatstingerControl_3    = 3,
+
+    FloatstingerControl_5    = 5,
+    FloatstingerControl_6    = 6
+} e_FloatstingerControl;
+
 /** @brief Floatstinger character animation indices. */
 typedef enum _FloatstingerAnim
 {
@@ -29,18 +41,6 @@ typedef enum _FloatstingerAnim
     FloatstingerAnim_11    = 11,
     FloatstingerAnim_12    = 12
 } e_FloatstingerAnim;
-
-/** @brief Floatstinger character control states. */
-typedef enum _FloatstingerControl
-{
-    FloatstingerControl_None = 0,
-
-    FloatstingerControl_2    = 2,
-    FloatstingerControl_3    = 3,
-
-    FloatstingerControl_5    = 5,
-    FloatstingerControl_6    = 6
-} e_FloatstingerControl;
 
 typedef struct
 {

@@ -1,33 +1,6 @@
 #ifndef _MAPS_CHARACTERS_CHARA_KAUFMANN_H
 #define _MAPS_CHARACTERS_CHARA_KAUFMANN_H
 
-/** @brief Kaufmann character animation indices. */
-typedef enum _KaufmannAnim
-{
-    KaufmannAnim_Still = 0,
-    KaufmannAnim_1     = 1,
-    KaufmannAnim_2     = 2,
-    KaufmannAnim_3     = 3,
-    KaufmannAnim_4     = 4,
-    KaufmannAnim_5     = 5,
-    KaufmannAnim_6     = 6,
-    KaufmannAnim_7     = 7,
-    KaufmannAnim_8     = 8,
-    KaufmannAnim_9     = 9,
-    KaufmannAnim_10    = 10,
-    KaufmannAnim_11    = 11,
-    KaufmannAnim_12    = 12,
-    KaufmannAnim_13    = 13,
-    KaufmannAnim_14    = 14,
-    KaufmannAnim_15    = 15,
-    KaufmannAnim_16    = 16,
-    KaufmannAnim_17    = 17,
-    KaufmannAnim_18    = 18,
-    KaufmannAnim_19    = 19,
-    KaufmannAnim_20    = 20,
-    KaufmannAnim_21    = 21
-} e_KaufmannAnim;
-
 /** @brief Kaufmann character control states. */
 typedef enum _KaufmannControl
 {
@@ -58,6 +31,33 @@ typedef enum _KaufmannControl
     KaufmannControl_24 = 24,
     KaufmannControl_25 = 25
 } e_KaufmannControl;
+
+/** @brief Kaufmann character animation indices. */
+typedef enum _KaufmannAnim
+{
+    KaufmannAnim_Still = 0,
+    KaufmannAnim_1     = 1,
+    KaufmannAnim_2     = 2,
+    KaufmannAnim_3     = 3,
+    KaufmannAnim_4     = 4,
+    KaufmannAnim_5     = 5,
+    KaufmannAnim_6     = 6,
+    KaufmannAnim_7     = 7,
+    KaufmannAnim_8     = 8,
+    KaufmannAnim_9     = 9,
+    KaufmannAnim_10    = 10,
+    KaufmannAnim_11    = 11,
+    KaufmannAnim_12    = 12,
+    KaufmannAnim_13    = 13,
+    KaufmannAnim_14    = 14,
+    KaufmannAnim_15    = 15,
+    KaufmannAnim_16    = 16,
+    KaufmannAnim_17    = 17,
+    KaufmannAnim_18    = 18,
+    KaufmannAnim_19    = 19,
+    KaufmannAnim_20    = 20,
+    KaufmannAnim_21    = 21
+} e_KaufmannAnim;
 
 /** @brief Kaufmann character anim infos. */
 extern s_AnimInfo KAUFMANN_ANIM_INFOS[];
