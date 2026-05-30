@@ -76,7 +76,7 @@ s_EventData MAP_EVENTS[50] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 36,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 5, // `MapEvent_MapTake`
+        .eventParam       = 5, // `MapEvent_PaperMapTake`
     },
     {
         .requiredEventFlag  = EventFlag_317,

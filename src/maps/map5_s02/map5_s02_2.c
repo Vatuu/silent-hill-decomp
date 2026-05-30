@@ -176,7 +176,7 @@ void func_800D4DF8(void) // 0x800D4DF8
 void func_800D4E24(void) // 0x800D4E24
 {
     Savegame_EventFlagSet(EventFlag_397);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
+    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
 }
 
 void func_800D4E64(void) // 0x800D4E64
@@ -347,12 +347,12 @@ void func_800D519C(void) // 0x800D519C
 
 void func_800D5478(void) // 0x800D5478
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), 44);
+    Event_DisplayMapMsgWithBg(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), 44);
 }
 
 void func_800D54A4(void) // 0x800D54A4
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), 42);
+    Event_DisplayMapMsgWithBg(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), 42);
 }
 
 void func_800D54D0(void) // 0x800D54D0

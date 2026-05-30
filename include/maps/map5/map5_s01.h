@@ -69,7 +69,7 @@ void MapEvent_CommonItemTake(void);
 void func_800EBA40(void);
 
 /** @brief Handles the ? map pickup event. */
-void MapEvent_MapTake(void);
+void MapEvent_PaperMapTake(void);
 
 void func_800EBF70(void);
 

@@ -82,7 +82,7 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, false, false, false);
             break;
 
         case 3:

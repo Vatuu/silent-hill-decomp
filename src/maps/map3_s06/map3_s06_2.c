@@ -78,7 +78,7 @@ void func_800D0B10(void) // 0x800D0B10
         Sfx_WithFlagsPlay(Sfx_MenuMap, &D_800CB21C, Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithTexture(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
+    Event_DisplayMapMsgWithBg(FILE_TIM_NEWSP1_TIM, Q12(0.0f), Q12(0.0f), 41);
     Savegame_EventFlagSet(EventFlag_203);
 }
 
@@ -130,7 +130,7 @@ void func_800D0C14(void) // 0x800D0C14
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
             break;
 
@@ -359,9 +359,9 @@ void func_800D0C14(void) // 0x800D0C14
     }
 }
 
-void MapEvent_MapTake(void) // 0x800D17B0
+void MapEvent_PaperMapTake(void) // 0x800D17B0
 {
-    Event_MapTake(17, EventFlag_M3S00_PickupMap, 35);
+    Event_PaperMapTake(17, EventFlag_M3S00_PickupMap, 35);
 }
 
 void func_800D17D8(void) // 0x800D17D8

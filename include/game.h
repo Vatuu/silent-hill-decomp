@@ -490,7 +490,7 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
 
 /** @brief Increments `sysStateStep` in `g_SysWork` for the next tick.
  *
- * @param stepIdx The `sysStateStep` index to change.
+ * @param stepIdx Index of the `sysStateStep` to increment.
  */
 static inline void SysWork_StateStepIncrement(s32 stepIdx)
 {

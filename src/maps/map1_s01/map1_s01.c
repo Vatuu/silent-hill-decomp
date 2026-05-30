@@ -142,7 +142,7 @@ void func_800D7214(void) // 0x800D7214
 
 void func_800D72B0(void) // 0x800D72B0
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
+    Event_DisplayMapMsgWithBg(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
 }
 
 void func_800D72DC(void) // 0x800D72DC
@@ -180,7 +180,7 @@ void func_800D7308(void)
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
@@ -302,7 +302,7 @@ void func_800D76F4(void) // 0x800D76F4
 
 void func_800D7830(void) // 0x800D7830
 {
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
 void func_800D7864(void) // 0x800D7864
@@ -457,7 +457,7 @@ void func_800D7864(void) // 0x800D7864
 
 void func_800D7EEC(void) // 0x800D7EEC
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
+    Event_DisplayMapMsgWithBg(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
 void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
@@ -737,7 +737,7 @@ void func_800D857C(void) // 0x800D857C
 
 void func_800D8794(void) // 0x800D8794
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
 extern q19_12 g_Cutscene_Timer; // Cutscene timer.
@@ -795,7 +795,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 3:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 2, Q12(0.0f), false);
             break;
 
         case 4:

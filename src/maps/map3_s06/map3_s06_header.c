@@ -24,7 +24,7 @@ void (*g_MapEventFuncs[])() = {
     func_800D0AE4,
     MapEvent_CommonItemTake,
     func_800D0C14,
-    MapEvent_MapTake,
+    MapEvent_PaperMapTake,
     func_800D17D8,
     func_800D0B10
 };

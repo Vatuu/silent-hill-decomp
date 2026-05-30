@@ -318,7 +318,7 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 5:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, 0, false);
             break;
 
         case 6:
@@ -891,7 +891,7 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case 8:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, false, false, false);
             break;
 
         case 9:
@@ -939,7 +939,7 @@ void func_800DC0F8(void) // 0x800DC0F8
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, 0, false);
             break;
 
         case 3:
@@ -967,7 +967,7 @@ void func_800DC0F8(void) // 0x800DC0F8
             break;
 
         case EventState_Flag117False:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, 0, false);
             break;
 
         case 9:
@@ -984,7 +984,7 @@ void func_800DC0F8(void) // 0x800DC0F8
 
 void func_800DC2E4(void) // 0x800DC2E4
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
+    Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
 }
 
 void func_800DC310(void) // 0x800DC310

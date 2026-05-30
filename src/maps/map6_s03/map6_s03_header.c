@@ -25,7 +25,7 @@ void (*g_MapEventFuncs[])() = {
     MapEvent_CommonItemTake,
     func_800D822C,
     func_800D84EC,
-    MapEvent_MapTake
+    MapEvent_PaperMapTake
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {

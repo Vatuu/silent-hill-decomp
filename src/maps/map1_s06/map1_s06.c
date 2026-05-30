@@ -98,7 +98,7 @@ void func_800D5614(void) // 0x800D5614
             }
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -417,18 +417,18 @@ void func_800D6338(void) // 0x800D6338
 
     if (Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
     {
-        Event_DisplayMapMsgWithTexture(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
+        Event_DisplayMapMsgWithBg(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 25);
         Savegame_EventFlagSet(EventFlag_MapMark_OldTown_KGordonDotAndSignOnly);
     }
     else
     {
-        Event_DisplayMapMsgWithTexture(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 24);
+        Event_DisplayMapMsgWithBg(FILE_TIM_RSCBOOK_TIM, Q12(0.0f), Q12(0.0f), 24);
     }
 }
 
-void MapEvent_MapTake(void) // 0x800D63B0
+void MapEvent_PaperMapTake(void) // 0x800D63B0
 {
-    Event_MapTake(6, EventFlag_M1S00_PickupMap, 27);
+    Event_PaperMapTake(6, EventFlag_M1S00_PickupMap, 27);
 }
 
 void Map_WorldObjectsInit(void) // 0x800D63D8

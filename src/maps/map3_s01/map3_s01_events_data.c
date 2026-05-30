@@ -145,7 +145,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 63,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 10, // `MapEvent_MapTake1`
+        .eventParam       = 10, // `MapEvent_PaperMapTake1`
     },
     {
         .disabledEventFlag  = EventFlag_M3S01_PickupMap,
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 64,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 10, // `MapEvent_MapTake1`
+        .eventParam       = 10, // `MapEvent_PaperMapTake1`
     },
     {
         .disabledEventFlag  = EventFlag_M3S01_PickupBasementKey,
@@ -403,7 +403,7 @@ s_EventData MAP_EVENTS[111] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 68,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 9, // `MapEvent_MapTake0`
+        .eventParam       = 9, // `MapEvent_PaperMapTake0`
     },
     {
         .disabledEventFlag  = EventFlag_1435,

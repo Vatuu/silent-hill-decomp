@@ -384,9 +384,9 @@ void func_800E8198(void) // 0x800E8198
     Event_ItemTake(InvItemId_Chainsaw, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S00_PickupChainsaw, 76);
 }
 
-void MapEvent_MapTake(void) // 0x800E81C4
+void MapEvent_PaperMapTake(void) // 0x800E81C4
 {
-    Event_MapTake(2, EventFlag_M2S00_PickupMap, 60);
+    Event_PaperMapTake(2, EventFlag_M2S00_PickupMap, 60);
 }
 
 void MapEvent_SteelPipeTake(void) // 0x800E81EC

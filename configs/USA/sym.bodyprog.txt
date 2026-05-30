@@ -954,11 +954,11 @@ Event_BgTextureLoadFadeIn                    = 0x80086DA8; // type:func
 Event_BgTextureFadeIn                        = 0x80086E50; // type:func
 Event_DisplayMapMsgWithSfx                   = 0x80086FE8; // type:func
 Event_DisplayBgTexture                       = 0x8008716C; // type:func
-Event_DisplayMapMsgWithTexture               = 0x80087360; // type:func
-Event_DisplayMapMsgWithTexture1              = 0x80087540;
+Event_DisplayMapMsgWithBg                    = 0x80087360; // type:func
+Event_DisplayMapMsgWithDimmedBg              = 0x80087540;
 Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
-Event_MapTake                                = 0x80087AF4; // type:func
+Event_PaperMapTake                           = 0x80087AF4; // type:func
 
 //------------------------------------------------------------------------
 //--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, bodyprog_bgm_80087EA8

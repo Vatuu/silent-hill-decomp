@@ -648,7 +648,7 @@ void func_800D889C(void) // 0x800D889C
 
 void func_800D8958(void) // 0x800D8958
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
+    Event_DisplayMapMsgWithBg(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
 }
 
 void MapEvent_BirdCageKeyUse(void) // 0x800D8984
@@ -667,12 +667,12 @@ void func_800D89D8(void) // 0x800D89D8
 
 void func_800D8A04(void) // 0x800D8A04
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 80);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 80);
 }
 
 void func_800D8A30(void) // 0x800D8A30
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), 68);
+    Event_DisplayMapMsgWithBg(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), 68);
 }
 
 void func_800D8A5C(void) // 0x800D8A5C
@@ -702,7 +702,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
@@ -823,7 +823,7 @@ void func_800D8DB4(void) // 0x800D8DB4
 
 void func_800D8FCC(void) // 0x800D8FCC
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), 65);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), 65);
 }
 
 void func_800D8FF8(void) // 0x800D8FF8
@@ -936,7 +936,7 @@ void func_800D93BC(void) // 0x800D93BC
 
 void func_800D93E8(void) // 0x800D93E8
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 62);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 62);
 }
 
 void func_800D9414(void) // 0x800D9414
@@ -952,13 +952,13 @@ void func_800D9440(void) // 0x800D9440
 void func_800D946C(void) // 0x800D946C
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
 }
 
 void func_800D94A4(void) // 0x800D94A4
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
 }
 
 void func_800D94DC(void) // 0x800D94DC
@@ -986,7 +986,7 @@ void func_800D94DC(void) // 0x800D94DC
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -1695,7 +1695,7 @@ void func_800DAE00(void) // 0x800DAE00
 
 void func_800DB13C(void) // 0x800DB13C
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), 74);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), 74);
 
     if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
     {
@@ -1746,22 +1746,22 @@ void func_800DB31C(void) // 0x800DB31C
     {
         if (Savegame_EventFlagGet(EventFlag_498))
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3HINT2_TIM, 0, 0, 77);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, 77);
         }
         else
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3PICT2_TIM, 0, 0, 77);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, 77);
         }
     }
     else
     {
         if (Savegame_EventFlagGet(EventFlag_499))
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3HINT1_TIM, 0, 0, 76);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, 76);
         }
         else
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3PICT1_TIM, 0, 0, 76);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, 76);
         }
     }
 
@@ -1923,7 +1923,7 @@ void func_800DC028(void) // 0x800DC028
         Sfx_WithFlagsPlay(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
 }
 
 void func_800DC080(void) // 0x800DC080

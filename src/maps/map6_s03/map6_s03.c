@@ -276,7 +276,7 @@ void func_800D84EC(void) // 0x800D84EC
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -309,9 +309,9 @@ void func_800D84EC(void) // 0x800D84EC
     }
 }
 
-void MapEvent_MapTake(void) // 0x800D87F0
+void MapEvent_PaperMapTake(void) // 0x800D87F0
 {
-    Event_MapTake(15, EventFlag_M6S03_PickupMap, 15);
+    Event_PaperMapTake(15, EventFlag_M6S03_PickupMap, 15);
 }
 
 void Map_WorldObjectsInit(void) // 0x800D8818

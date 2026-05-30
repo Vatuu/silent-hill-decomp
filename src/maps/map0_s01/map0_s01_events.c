@@ -132,7 +132,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -434,7 +434,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             return;
 
         case 3:
@@ -808,7 +808,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         default:

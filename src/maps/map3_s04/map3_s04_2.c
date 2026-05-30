@@ -365,7 +365,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 23:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, 0, false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 

@@ -246,7 +246,7 @@ void func_800D1904(void) // 0x800D1904
 
 void func_800D1A84(void) // 0x800D1A84
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), 49);
+    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), 49);
     Savegame_EventFlagSet(EventFlag_398);
 }
 
@@ -553,7 +553,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
 void func_800D2640(void) // 0x800D2640
 {
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
 
     // @bug NTSC-U release is missing code to set `EventFlag_M5S03_SeenSecondNewspaper` here,
     // causing later newspaper in `M7S01` & `M7S02` not to appear.

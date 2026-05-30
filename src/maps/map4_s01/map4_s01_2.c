@@ -1184,7 +1184,7 @@ void func_800D496C(void) // 0x800D496C
 
 void func_800D4998(void) // 0x800D4998
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CLOCKATQ_TIM, Q12(0.0f), Q12(0.0f), 114);
 }
 
 void Map_WorldObjectsInit(void) // 0x800D49C4

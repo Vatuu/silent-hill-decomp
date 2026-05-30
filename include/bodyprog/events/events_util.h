@@ -42,8 +42,8 @@ typedef enum _InvItemCmd
 typedef enum _ScreenFadeCmd
 {
     ScreenFadeCmd_Start = 0,
-    ScreenFadeCmd_Await = 1,
-    ScreenFadeCmd_Auto  = 2, // Uses `sysStateSteps[2]` as command.
+    ScreenFadeCmd_Wait  = 1,
+    ScreenFadeCmd_Auto  = 2,   // Uses `sysStateSteps[2]` as command.
 } e_ScreenFadeCmd;
 
 /** State step increment for some substate. */
@@ -57,12 +57,16 @@ void func_80085DF0(void);
 
 void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep);
 
-/** @brief Updates character states during events and cutscenes. */
+/** @brief Updates character states during events and cutscenes.
+ *
+ * @param cmd Character animation command.
+ * @param chara
+ */
 void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 animState, bool incSubStep);
 
 /** @brief Sets `sysStateSteps` depending on whether `eventFlagIdx` flag is set.
  *
- * @param eventFlagIdx Flag index.
+ * @param eventFlagIdx Index of the event flag to check.
  * @param stepTrue Step to use if flag is set.
  * @param stepFalse Step to use if flag is not set.
  * @param setSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
@@ -256,15 +260,47 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
  */
 void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
+/** @brief Displays a message with a background texture.
+ *
+ * @param texFileIdx Texture file index of the background to display.
+ * @param fadeTimestep0 TODO
+ * @param fadeTimestep1 TODO
+ * @param mapMsgIdx Index of the map message to display.
+ */
+void Event_DisplayMapMsgWithBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
-/** @brief Displays a message with a background texture that is darken after reading the first sentence. */
-void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+/** @brief Displays a message with a background texture that is dimmed after reading the first message.
+ *
+ * @param texFileIdx Texture file index of the background to display.
+ * @param fadeTimestep0 TODO
+ * @param fadeTimestep1 TODO
+ * @param mapMsgIdx0 Index of the first map message to display.
+ * @param mapMsgIdx1 Index of the second map message to display.
+ */
+void Event_DisplayMapMsgWithDimmedBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
+/** @brief Handles the state steps of an item pickup event.
+ *
+ * @param itemId ID of the inventory item to be picked up.
+ * @param itemCount Number of items.
+ * @param eventFlagIdx Index of the event flag to set.
+ * @param mapMsgIdx Index of the map message to display.
+ */
 void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
+/** @brief Handles a common item pickup event.
+ *
+ * @param pickupType Common pickup item ID of the item to be picked up (`e_CommonPickupItemId`).
+ * @param eventFlagIdx Index of the event flag to set.
+ */
 void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 
-void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
+/** @brief Handles a paper map pickup event.
+ *
+ * @param paperMapFlagIdx Flag index of the paper map to be picked up.
+ * @param eventFlagIdx Index of the event flag to set.
+ * @param mapMsgIdx Index of the map message to display.
+ */
+void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
 #endif

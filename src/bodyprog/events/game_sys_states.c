@@ -1047,7 +1047,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         default:
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;

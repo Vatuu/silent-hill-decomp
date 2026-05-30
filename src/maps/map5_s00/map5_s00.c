@@ -525,7 +525,7 @@ void func_800D6B00(void) // 0x800D6B00
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 5:
@@ -542,7 +542,7 @@ void func_800D6B00(void) // 0x800D6B00
 
         case 8:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 9:
@@ -751,7 +751,7 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             if (g_SysWork.sysStateSteps[0] == 2)
             {
                 g_SysWork.field_28 += g_DeltaTimeRaw;
@@ -822,7 +822,7 @@ void func_800D7940(void) // 0x800D7940
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 2)
             {
@@ -894,7 +894,7 @@ void func_800D7C84(void) // 0x800D7C84
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -957,7 +957,7 @@ void func_800D7F88(void) // 0x800D7F88
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -999,9 +999,9 @@ void func_800D7F88(void) // 0x800D7F88
     }
 }
 
-void MapEvent_MapTake(void) // 0x800D8280
+void MapEvent_PaperMapTake(void) // 0x800D8280
 {
-    Event_MapTake(13, EventFlag_M5S00_PickupMap, 20);
+    Event_PaperMapTake(13, EventFlag_M5S00_PickupMap, 20);
 }
 
 void Map_WorldObjectsInit(void) // 0x800D82A8

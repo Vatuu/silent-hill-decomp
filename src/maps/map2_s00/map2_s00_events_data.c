@@ -305,7 +305,7 @@ s_EventData MAP_EVENTS[201] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 115,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 25, // `MapEvent_MapTake`
+        .eventParam       = 25, // `MapEvent_PaperMapTake`
     },
     {
         .disabledEventFlag  = EventFlag_M2S00_PickupMap,
@@ -313,7 +313,7 @@ s_EventData MAP_EVENTS[201] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 116,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 25, // `MapEvent_MapTake`
+        .eventParam       = 25, // `MapEvent_PaperMapTake`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,

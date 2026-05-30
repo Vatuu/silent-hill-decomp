@@ -35,7 +35,7 @@ void func_800D822C(void);
 void func_800D84EC(void);
 
 /** @brief Handles the ? map pickup event. */
-void MapEvent_MapTake(void);
+void MapEvent_PaperMapTake(void);
 
 void Map_WorldObjectsInit(void);
 

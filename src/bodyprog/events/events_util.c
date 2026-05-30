@@ -251,7 +251,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
             }
             break;
 
-        case ScreenFadeCmd_Await:
+        case ScreenFadeCmd_Wait:
             if (fadeType < FadeType_Unk2)
             {
                 if ((fadeOut == false && ScreenFade_IsNone()) ||
@@ -721,7 +721,7 @@ void Event_BgTextureLoadFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep) // 0x80
             break;
 
         default:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
     }
 }
@@ -739,7 +739,7 @@ void Event_BgTextureFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fad
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), true);
             break;
 
         default:
@@ -800,7 +800,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
             break;
 
         default:
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -820,7 +820,7 @@ void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fa
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
@@ -845,75 +845,106 @@ void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fa
 
         default:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
+void Event_DisplayMapMsgWithBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx) // 0x80087360
 {
+    // TODO: Name these.
+    typedef enum _EventStates
+    {
+        EventStates_Initialize = 0,
+        EventStates_1          = 1,
+        EventStates_2          = 2,
+        EventStates_3          = 3,
+        EventStates_4          = 4,
+        EventStates_5          = 5,
+        EventStates_6          = 6
+    } e_EventStates;
+
     switch (g_SysWork.sysStateSteps[1])
     {
-        case 0:
+        case EventStates_Initialize:
+            // Freeze player control.
             g_MapOverlayHdr.playerControlFreeze();
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
-        case 1:
-            Event_BgTextureCmd(BgTextureCmd_Auto, textureFileIdx, true);
+        case EventStates_1:
+            Event_BgTextureCmd(BgTextureCmd_Auto, texFileIdx, true);
             break;
 
-        case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
+        case EventStates_2:
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), true);
             break;
 
-        case 3:
+        case EventStates_3:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, true);
             break;
 
-        case 4:
+        case EventStates_4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx, 0, 0, 0, true);
             break;
 
-        case 5:
+        case EventStates_5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
             break;
 
-        default:
+        default: // `EventStates_6`
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+
+            // Restore player control.
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void Event_DisplayMapMsgWithDimmedBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
+    // TODO: Name these.
+    typedef enum _EventStates
+    {
+        EventStates_Initialize = 0,
+        EventStates_1          = 1,
+        EventStates_2          = 2,
+        EventStates_3          = 3,
+        EventStates_4          = 4,
+        EventStates_5          = 5,
+        EventStates_6          = 6,
+        EventStates_7          = 7
+    } e_EventStates;
+
     switch (g_SysWork.sysStateSteps[1])
     {
-        case 0:
+        case EventStates_Initialize:
+            // Freeze player control.
             g_MapOverlayHdr.playerControlFreeze();
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
-        case 1:
-            Event_BgTextureCmd(BgTextureCmd_Auto, textureFileIdx, true);
+        case EventStates_1:
+            Event_BgTextureCmd(BgTextureCmd_Auto, texFileIdx, true);
             break;
 
-        case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
+        case EventStates_2:
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), true);
             break;
 
-        case 3:
+        case EventStates_3:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, true);
             break;
 
-        case 4:
+        case EventStates_4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (mapMsgIdx0 != MapMsgCode_None)
@@ -922,29 +953,31 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
                 break;
             }
 
+            // Check for "continue" input.
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(1);
             }
             break;
 
-        case 5:
+        case EventStates_5:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
+
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
-        case 6:
+        case EventStates_6:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
             break;
 
-        default:
+        default: // `EventStates_7`
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -952,6 +985,15 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
 
 void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x800877B8
 {
+    typedef enum _EventState
+    {
+        EventState_Initialize      = 0,
+        EventState_LoadItemModel   = 1,
+        EventState_SelectionDialog = 2,
+        EventState_TakeItem        = 3,
+        EventState_DontTakeItem    = 4
+    } e_EventState;
+
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
 
@@ -960,7 +1002,8 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry && g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry        &&
+                g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil &&
                 g_SysWork.npcs[i].health > Q12(0.0f))
             {
                 break;
@@ -975,17 +1018,18 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
 
     switch (g_SysWork.sysStateSteps[1])
     {
-        case 0: // Freeze player and start loading item model.
+        case EventState_Initialize:
+            // Freeze player and start loading item model.
             g_MapOverlayHdr.playerControlFreeze();
             Event_InvItemCmd(InvItemCmd_QueueLoad, itemId, 0, false);
 
             SysWork_StateStepIncrement(1);
 
-        case 1: // Load model.
+        case EventState_LoadItemModel:
             Event_InvItemCmd(InvItemCmd_AwaitLoad, itemId, 0, true);
             break;
 
-        case 2:
+        case EventState_SelectionDialog:
             // `Gfx_PickupItemAnimate` increases model scale and returns `false`, then starts rotating it and returns `true`.
             if (Gfx_PickupItemAnimate(itemId))
             {
@@ -996,18 +1040,20 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
             Savegame_EventFlagSet(eventFlagIdx);
             break;
 
-        case 3: // "Yes" selected.
+        case EventState_TakeItem:
+            // "Yes" selected.
             Event_InvItemCmd(InvItemCmd_AddItem, itemId, itemCount, false);
             SysWork_StateStepIncrement(1);
 
-        default:
+        default: // `EventState_DontTakeItem`
             // Flag pickup item as uncollected. Selecting 'No' sets `field_10` to `NO_VALUE`.
             if (g_SysWork.sysStateSteps[1] == NO_VALUE)
             {
                 Savegame_EventFlagClear(eventFlagIdx);
             }
 
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            // Restore player control.
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -1057,7 +1103,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
     #undef EASY_DIFFICULTY_AMMO_COUNT_MULT_MIN
 }
 
-void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
+void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
     static const RECT RECT = {
         SCREEN_POSITION_X(100.0f), 256,
@@ -1106,10 +1152,12 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             paperMapFlagIdxCpy                                         = paperMapFlagIdx >> 5;
             ((s32*)&g_SavegamePtr->paperMapFlags)[paperMapFlagIdxCpy] |= 1 << (paperMapFlagIdx & 0x1F); // TODO: Maybe union?
 
+            // TODO: Demagic paper map flags with an enum.
             switch (paperMapFlagIdx)
             {
                 case 6:
-                    g_SavegamePtr->paperMapFlags |= 0x1FA0;
+                    g_SavegamePtr->paperMapFlags |= (1 << 5) | (1 << 7) | (1 << 8) | (1 << 9) |
+                                                    (1 << 10) | (1 << 11) | (1 << 12);
                     break;
 
                 case 17:
@@ -1149,7 +1197,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             Screen_Init(SCREEN_WIDTH, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
-            g_MapOverlayHdr.playerControlUnfreeze(0);
+            g_MapOverlayHdr.playerControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

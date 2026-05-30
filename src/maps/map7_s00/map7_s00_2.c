@@ -501,7 +501,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 2, 0, false);
             break;
 
         case 6:

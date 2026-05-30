@@ -318,12 +318,12 @@ void func_800DA8F8(void) // 0x800DA8F8
 
 void func_800DA9D4(void) // 0x800DA9D4
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_GOLD2_TIM, Q12(3.0f), Q12(2.5f), 21);
+    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD2_TIM, Q12(3.0f), Q12(2.5f), 21);
 }
 
 void func_800DAA00(void) // 0x800DAA00
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_SILVER2_TIM, Q12(3.0f), Q12(2.5f), 22);
+    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER2_TIM, Q12(3.0f), Q12(2.5f), 22);
 }
 
 void MapEvent_GameTrialOver(void) // 0x800DAA2C
@@ -340,7 +340,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -431,7 +431,7 @@ void func_800DAD2C(void) // 0x800DAD2C
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -536,7 +536,7 @@ void func_800DB058(void) // 0x800DB058
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -896,7 +896,7 @@ void func_800DBB7C(void) // 0x800DBB7C
 void func_800DBF88(void) // 0x800DBF88
 {
     Savegame_EventFlagSet(EventFlag_97);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LVTRYMSG_TIM, Q12(0.0f), Q12(0.0f), 38);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LVTRYMSG_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 void func_800DBFC8(void) // 0x800DBFC8
@@ -1216,7 +1216,7 @@ void func_800DCF00(void) // 0x800DCF00
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
 
             g_ScreenFadeTimestep += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.1f);
             g_ScreenFadeTimestep  = MIN(g_ScreenFadeTimestep, Q12(3.0f));

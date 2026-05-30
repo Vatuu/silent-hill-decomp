@@ -1112,7 +1112,7 @@ void func_800DC954(void) // 0x800DC954
 
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -2140,7 +2140,7 @@ void func_800DF21C(void) // 0x800DF21C
 
 void func_800DFA54(void) // 0x800DFA54
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
 }
 
 void MapEvent_ScrewdriverTake(void) // 0x800DFA80
@@ -2151,13 +2151,13 @@ void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 void func_800DFAAC(void) // 0x800DFAAC
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
 }
 
 void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
@@ -2736,7 +2736,7 @@ void func_800E0FF0(void) // 0x800E0FF0
 
             case 4:
                 Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-                Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
                 break;
 
             case 5:
@@ -2763,7 +2763,7 @@ void func_800E0FF0(void) // 0x800E0FF0
     {
         if (Savegame_EventFlagGet(EventFlag_486))
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
+            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
             if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
             {
                 // Plays SFX after random time between 0.2f - 2.2f?
@@ -2785,7 +2785,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         else
         {
             g_Screen_BackgroundImgGamma = Q8(7.0f / 16.0f);
-            Event_DisplayMapMsgWithTexture(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
+            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
         }
     }
 }
@@ -2796,22 +2796,22 @@ void func_800E12E4(void) // 0x800E12E4
     {
         if (Savegame_EventFlagGet(EventFlag_498))
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
         }
         else
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
         }
     }
     else
     {
         if (Savegame_EventFlagGet(EventFlag_499))
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
         }
         else
         {
-            Event_DisplayMapMsgWithTexture(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
         }
     }
 
@@ -2973,7 +2973,7 @@ void func_800E1FF4(void) // 0x800E1FF4
         Sfx_WithFlagsPlay(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
@@ -2982,7 +2982,7 @@ const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A }
 
 void func_800E2DC0(void) // 0x800E2DC0
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
 }
 
 void func_800E2DEC(void) // 0x800E2DEC
@@ -3164,7 +3164,7 @@ void func_800E32E0(void) // 0x800E32E0
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:

@@ -323,7 +323,7 @@ s_EventData MAP_EVENTS[52] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 32,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 11, // `MapEvent_MapTake`
+        .eventParam       = 11, // `MapEvent_PaperMapTake`
     },
     {
         .disabledEventFlag  = EventFlag_MapMark_FogSewer1F_RightTopArrows,

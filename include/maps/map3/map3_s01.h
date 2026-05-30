@@ -49,10 +49,10 @@ void MapEvent_UnknownLiquidInteract(void);
 void MapEvent_PlasticBottleTake(void);
 
 /** @brief Handles the ? map pickup event. */
-void MapEvent_MapTake0(void);
+void MapEvent_PaperMapTake0(void);
 
 /** @brief Handles the ? map pickup event. */
-void MapEvent_MapTake1(void);
+void MapEvent_PaperMapTake1(void);
 
 void func_800D279C(void);
 

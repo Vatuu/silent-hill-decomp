@@ -91,7 +91,7 @@ s_EventData MAP_EVENTS[17] = {
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 14,
         .sysState         = SysState_EventCallback,
-        .eventParam       = 5, // `MapEvent_MapTake`
+        .eventParam       = 5, // `MapEvent_PaperMapTake`
     },
     {
         .triggerType      = TriggerType_TouchObbFacing,

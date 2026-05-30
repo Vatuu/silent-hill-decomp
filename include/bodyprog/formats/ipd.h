@@ -33,7 +33,7 @@ typedef struct _IpdCollisionData_10
     /* 0x6+5  */ u16   field_6_5  : 3; // `bool`?
     /* 0x6+8  */ u16   field_6_8  : 3;
     /* 0x6+11 */ u16   field_6_11 : 4;
-    /* 0x6+15 */ u16   field_6_15 : 1;
+    /* 0x6+15 */ u16   __pad_6_15 : 1;
     /* 0x8    */ q3_12 tiltAngleX;
     /* 0xA    */ q3_12 tiltAngleZ;
 } s_IpdCollisionData_10;

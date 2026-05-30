@@ -23,7 +23,7 @@ void (*g_MapEventFuncs[])() = {
     func_800CCF9C,
     func_800CD050,
     func_800CD088,
-    MapEvent_MapTake,
+    MapEvent_PaperMapTake,
     MapEvent_ShotgunTake
 };
 

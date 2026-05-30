@@ -94,7 +94,7 @@ MapEvent_DoorJammed             = 0x800D09BC; // type:func
 MapEvent_DoorLocked             = 0x800D0A50; // type:func
 MapEvent_CommonItemTake         = 0x800D0AEC; // type:func
 Event_CutsceneTimerAdvance      = 0x800D0B7C; // type:func
-MapEvent_MapTake                = 0x800D17B0; // type:func
+MapEvent_PaperMapTake           = 0x800D17B0; // type:func
 Map_WorldObjectsInit            = 0x800D1804; // type:func
 Map_WorldObjectsUpdate          = 0x800D197C; // type:func
 

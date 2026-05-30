@@ -32,9 +32,9 @@ void MapEvent_FirstAidKitTake(void) // 0x800D0CAC
     Event_CommonItemTake(CommonPickupItemId_FirstAidKit, EventFlag_M3S00_FirstAidKit);
 }
 
-void MapEvent_MapTake(void) // 0x800D0CD0
+void MapEvent_PaperMapTake(void) // 0x800D0CD0
 {
-    Event_MapTake(17, EventFlag_M3S00_PickupMap, 48);
+    Event_PaperMapTake(17, EventFlag_M3S00_PickupMap, 48);
 }
 
 const char* MAP_MESSAGES[] = {

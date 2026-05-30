@@ -124,13 +124,13 @@ void MapEvent_CommonItemTake(void) // 0x800D7A28
 void func_800D7AC4(void) // 0x800D7AC4
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7AF8(void) // 0x800D7AF8
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
 }
 
 void func_800D7B2C(void)
@@ -149,7 +149,7 @@ void func_800D7B2C(void)
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -164,7 +164,7 @@ void func_800D7B2C(void)
 
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -221,13 +221,13 @@ void func_800D7B2C(void)
 void func_800D7E48(void) // 0x800D7E48
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7E7C(void) // 0x800D7E7C
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
 }
 
 void func_800D7EB0(void)
@@ -246,7 +246,7 @@ void func_800D7EB0(void)
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -261,7 +261,7 @@ void func_800D7EB0(void)
 
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -430,17 +430,17 @@ void func_800D8354(void) // 0x800D8354
 
 void func_800D853C(void) // 0x800D853C
 {
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
 }
 
 void func_800D8570(void) // 0x800D8570
 {
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
 }
 
 void func_800D85A4(void) // 0x800D85A4
 {
-    Event_DisplayMapMsgWithTexture1(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
 }
 
 void func_800D85D8(void) // 0x800D85D8
@@ -539,7 +539,7 @@ void func_800D8948(void) // 0x800D8948
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -587,7 +587,7 @@ void func_800D8948(void) // 0x800D8948
 
 void func_800D8CC4(void) // 0x800D8CC4
 {
-    Event_DisplayMapMsgWithTexture(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
+    Event_DisplayMapMsgWithBg(FILE_TIM_RECEPPIC_TIM, Q12(0.0f), Q12(0.0f), 27);
 }
 
 void MapEvent_Boiler0(void) // 0x800D8CF0
@@ -722,13 +722,13 @@ void MapEvent_Boiler2(void) // 0x800D9148
 
 void MapEvent_TownMapTake(void) // 0x800D922C
 {
-    Event_MapTake(6, EventFlag_M1S00_PickupMap, 37);
+    Event_PaperMapTake(6, EventFlag_M1S00_PickupMap, 37);
 }
 
 void func_800D9254(void) // 0x800D9254
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithTexture(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
+    Event_DisplayMapMsgWithBg(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
 }
 
 void func_800D928C(void) // 0x800D928C

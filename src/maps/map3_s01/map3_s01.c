@@ -124,7 +124,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 5:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -213,14 +213,14 @@ void MapEvent_PlasticBottleTake(void) // 0x800D2720
     Event_ItemTake(InvItemId_PlasticBottle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S01_PickupPlasticBottle, 21);
 }
 
-void MapEvent_MapTake0(void) // 0x800D274C
+void MapEvent_PaperMapTake0(void) // 0x800D274C
 {
-    Event_MapTake(17, EventFlag_M3S00_PickupMap, 22);
+    Event_PaperMapTake(17, EventFlag_M3S00_PickupMap, 22);
 }
 
-void MapEvent_MapTake1(void) // 0x800D2774
+void MapEvent_PaperMapTake1(void) // 0x800D2774
 {
-    Event_MapTake(16, EventFlag_M3S01_PickupMap, 23);
+    Event_PaperMapTake(16, EventFlag_M3S01_PickupMap, 23);
 }
 
 void func_800D279C(void) // 0x800D279C
@@ -312,7 +312,7 @@ void func_800D2A88(void) // 0x800D2A88
         Sfx_WithFlagsPlay(Sfx_MenuMap, &QVECTOR3(61.72f, -0.8f, 100.5098f), Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithTexture(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
+    Event_DisplayMapMsgWithBg(Sfx_Unk1916, Q12(0.0f), Q12(0.0f), 36);
     Savegame_EventFlagSet(EventFlag_203);
 }
 

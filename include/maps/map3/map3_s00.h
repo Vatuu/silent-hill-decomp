@@ -55,7 +55,7 @@ void func_800D0CA4();
 void MapEvent_FirstAidKitTake(void);
 
 /** @brief Handles the ? map pickup event. */
-void MapEvent_MapTake(void);
+void MapEvent_PaperMapTake(void);
 
 void func_800D0CF8(void);
 

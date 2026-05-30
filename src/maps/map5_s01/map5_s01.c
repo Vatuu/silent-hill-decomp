@@ -185,7 +185,7 @@ void func_800EBA40(void) // 0x800EBA40
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -289,9 +289,9 @@ void func_800EBA40(void) // 0x800EBA40
     }
 }
 
-void MapEvent_MapTake(void) // 0x800EBF48
+void MapEvent_PaperMapTake(void) // 0x800EBF48
 {
-    Event_MapTake(4, EventFlag_M5S01_PickupMap, 15);
+    Event_PaperMapTake(4, EventFlag_M5S01_PickupMap, 15);
 }
 
 void func_800EBF70(void) // 0x800EBF70

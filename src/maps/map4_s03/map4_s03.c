@@ -3589,7 +3589,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 2:
-            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 2, Q12(0.0f), false);
             break;
 
         case 3:
