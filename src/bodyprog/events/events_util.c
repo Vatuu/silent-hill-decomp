@@ -213,16 +213,8 @@ void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1,
     }
 }
 
-void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
+void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
 {
-    typedef enum _FadeType
-    {
-        FadeType_Black = 0,
-        FadeType_White = 1,
-        FadeType_Unk2  = 2, // TODO: Investigate. Some state machine flow logic when this is used.
-        FadeType_Unk3  = 3  // TODO: Investigate.
-    } e_FadeType;
-
     e_ScreenFadeCmd activeCmd;
 
     // If `cmd == ScreenFadeCmd_Auto`, `sysStateSteps[2]` dictates the command. This field is manipulated often in map event functions.
@@ -238,18 +230,18 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
     switch (activeCmd)
     {
         case ScreenFadeCmd_Start:
-            if (fadeType != FadeType_Unk2)
+            if (fadeType != ScreenFadeType_ScreenBorders)
             {
                 g_ScreenFadeTimestep = fadeTimestep;
             }
 
             if (fadeOut)
             {
-                if (fadeType == FadeType_Black)
+                if (fadeType == ScreenFadeType_Black)
                 {
                     ScreenFade_Start(false, false, false);
                 }
-                else if (fadeType == FadeType_White)
+                else if (fadeType == ScreenFadeType_White)
                 {
                     ScreenFade_Start(false, false, true);
                 }
@@ -257,7 +249,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
                 {
                     g_SysWork.cutsceneBorderState = 18;
 
-                    if (fadeType == FadeType_Unk3)
+                    if (fadeType == ScreenFadeType_CutsceneBorders)
                     {
                         g_SysWork.sysFlags |= SysFlag_CutsceneActive;
                     }
@@ -265,11 +257,11 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
             }
             else
             {
-                if (fadeType == FadeType_Black)
+                if (fadeType == ScreenFadeType_Black)
                 {
                     ScreenFade_Start(false, true, false);
                 }
-                else if (fadeType == FadeType_White)
+                else if (fadeType == ScreenFadeType_White)
                 {
                     ScreenFade_Start(false, true, true);
                 }
@@ -286,7 +278,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
             break;
 
         case ScreenFadeCmd_Wait:
-            if (fadeType < FadeType_Unk2)
+            if (fadeType < ScreenFadeType_ScreenBorders) // `fadeType == ScreenFadeType_Black || fadeType == ScreenFadeType_White`
             {
                 if ((fadeOut == false && ScreenFade_IsNone()) ||
                     (fadeOut == true  && ScreenFade_IsFinished()))

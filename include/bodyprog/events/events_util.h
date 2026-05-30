@@ -55,6 +55,16 @@ typedef enum _ScreenFadeCmd
     ScreenFadeCmd_Auto  = 2 /** Uses `sysStateSteps[2]` as the command. */
 } e_ScreenFadeCmd;
 
+/** @brief Screen fade types. */
+typedef enum _ScreenFadeType
+{
+    ScreenFadeType_Black            = 0,
+    ScreenFadeType_White            = 1,
+    ScreenFadeType_ScreenBorders    = 2, // TODO: Investigate. Seems to enable borders around screen?
+    ScreenFadeType_CutsceneBorders  = 3, // TODO: Investigate. Same as `ScreenBorders` but also sets cutscene flag?
+    ScreenFadeType_Hack             = -1 // Force enum as `s32`.
+} e_ScreenFadeType;
+
 /** @brief Increments the event state step to use in next tick.
  *
  * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
@@ -110,7 +120,21 @@ void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 step
  */
 void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool incSubStep);
 
-void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep);
+/** @brief Executes a screen fade or cutscene border transition command.
+ *
+ * Two phases: start the transition, then poll until complete.
+ *
+ * Fade types 0-1 perform actual screen fades (to/from black or white) using `ScreenFade_Start`.
+ * Fade types 2-3 use cutscene letterbox borders instead of a screen fade? Type 3 additionally
+ * sets `SysFlag_CutsceneActive`.
+ *
+ * @param cmd The screen fade command to execute.
+ * @param fadeOut If `true`, fades to black/white or shows borders. If `false`, fades from black/white or hides borders.
+ * @param fadeType The type of transition.
+ * @param fadeTimestep Speed of the fade.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ */
+void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fadeType, q19_12 fadeTimestep, bool incSubStep);
 
 /** @brief Handles background texture loading and drawing. Optionally allows layering two textures.
  *
