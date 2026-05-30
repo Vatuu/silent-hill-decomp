@@ -786,9 +786,9 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 2:
-            func_800868DC(3);
-            func_800868DC(4);
-            func_800868DC(5);
+            Event_TweenReset(3);
+            Event_TweenReset(4);
+            Event_TweenReset(5);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -797,16 +797,16 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 4:
             Camera_LookAtSet(NULL,
-                             func_800868F4(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
-                             func_800868F4(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
-                             func_800868F4(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                             Event_TweenLinear(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
+                             Event_TweenLinear(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
+                             Event_TweenLinear(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 5:
-            func_800868DC(3);
-            func_800868DC(4);
-            func_800868DC(5);
+            Event_TweenReset(3);
+            Event_TweenReset(4);
+            Event_TweenReset(5);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(21.2f), Q12(-100.5f), Q12_ANGLE(180.0f), 3);
             SysWork_StateStepIncrement(0);
@@ -823,16 +823,16 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 8:
             Camera_LookAtSet(NULL,
-                             func_800868F4(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
-                             func_800868F4(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
-                             func_800868F4(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                             Event_TweenLinear(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
+                             Event_TweenLinear(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
+                             Event_TweenLinear(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             Event_SysStateStepIncrementDelayed(Q12(3.4f), false);
             break;
 
         case 9:
-            func_800868DC(3);
-            func_800868DC(4);
-            func_800868DC(5);
+            Event_TweenReset(3);
+            Event_TweenReset(4);
+            Event_TweenReset(5);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -842,9 +842,9 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 11:
             Camera_LookAtSet(NULL,
-                             func_800868F4(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
-                             func_800868F4(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
-                             func_800868F4(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                             Event_TweenLinear(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
+                             Event_TweenLinear(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
+                             Event_TweenLinear(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
             break;
 
@@ -1532,25 +1532,25 @@ void func_800DD9E8(void) // 0x800DD9E8
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
             Camera_PositionSet(NULL, Q12(16.37f), Q12(-2.56f), Q12(-60.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(20.18f), Q12(-1.4f), Q12(-60.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            func_800868DC(0);
-            func_800868DC(2);
-            func_800868DC(3);
-            func_800868DC(5);
+            Event_TweenReset(0);
+            Event_TweenReset(2);
+            Event_TweenReset(3);
+            Event_TweenReset(5);
             Savegame_EventFlagSet(EventFlag_573);
             SysWork_StateStepIncrement(0);
             break;
 
         case 5:
             Camera_PositionSet(NULL,
-                               func_800868F4(Q12(1.7701f), Q12(2.0f), 0) + Q12(16.37f),
+                               Event_TweenLinear(Q12(1.7701f), Q12(2.0f), 0) + Q12(16.37f),
                                Q12(-2.56f),
-                               func_800868F4(Q12(-0.16f), Q12(2.0f), 2) - Q12(60.41f),
+                               Event_TweenLinear(Q12(-0.16f), Q12(2.0f), 2) - Q12(60.41f),
                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             Camera_LookAtSet(NULL,
-                             func_800868F4(Q12(1.7801f), Q12(2.0f), 0) + Q12(20.18f),
+                             Event_TweenLinear(Q12(1.7801f), Q12(2.0f), 0) + Q12(20.18f),
                              Q12(-1.4f),
-                             func_800868F4(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
+                             Event_TweenLinear(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
             Event_SysStateStepIncrementDelayed(Q12(2.0f), false);

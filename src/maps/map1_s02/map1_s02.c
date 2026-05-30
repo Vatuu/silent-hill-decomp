@@ -613,8 +613,8 @@ void func_800DB368(void) // 0x800DB368
             SD_Call(Sfx_XaAudio53);
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
 
-            func_800868DC(0);
-            func_800868DC(3);
+            Event_TweenReset(0);
+            Event_TweenReset(3);
 
             D_800E1FD8 = false;
             SysWork_StateStepIncrement(0);
@@ -695,8 +695,8 @@ void func_800DB368(void) // 0x800DB368
             Event_DisplayMapMsg(false, 31, 0, 0, 0, false);
 
             // Warp camera.
-            Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f) + func_800868F4(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-            Camera_LookAtSet(NULL, g_SysWork.playerWork.player.position.vx + func_800868F4(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f) + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Camera_LookAtSet(NULL, g_SysWork.playerWork.player.position.vx + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 16:
@@ -820,8 +820,8 @@ void func_800DBB7C(void) // 0x800DBB7C
 
             func_8008D438();
 
-            func_800868DC(0);
-            func_800868DC(1);
+            Event_TweenReset(0);
+            Event_TweenReset(1);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(21.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -835,8 +835,8 @@ void func_800DBB7C(void) // 0x800DBB7C
             // Warp camera.
             if (D_800E1EE8 > Q12(1.0f))
             {
-                Camera_PositionSet(NULL, func_800868F4(Q12(-1.5f), Q12(5.0f), 0) + Q12(21.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-                Camera_LookAtSet(NULL, func_800868F4(Q12(-1.5f), Q12(5.0f), 0) + Q12(17.0f), func_800868F4(Q12(-1.5f), Q12(5.0f), 1) - Q12(0.5f), Q12(60.0f), Q12(3.0f), Q12(0.0f), Q12(0.3f), Q12(0.0f), false);
+                Camera_PositionSet(NULL, Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(21.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                Camera_LookAtSet(NULL, Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(17.0f), Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 1) - Q12(0.5f), Q12(60.0f), Q12(3.0f), Q12(0.0f), Q12(0.3f), Q12(0.0f), false);
             }
 
             D_800E1EE8 += g_DeltaTime;

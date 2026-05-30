@@ -942,6 +942,9 @@ Event_PathWaypointSet                        = 0x800865FC; // type:func
 Event_PathWaypointExecutePlayer              = 0x800866D4; // type:func
 Event_PathWaypointExecuteChara               = 0x80086728; // type:func
 Event_PathWaypointExecuteCharaNoWait         = 0x8008677C; // type:func
+Event_TweenReset                             = 0x800868DC; // type:func
+Event_TweenLinear                            = 0x800868F4; // type:func
+Event_TweenSine                              = 0x8008694C; // type:func
 Event_DisplayMapMsgWithAudio                 = 0x800869E4; // type:func
 Camera_PositionSet                           = 0x80086A94; // type:func
 Camera_LookAtSet                             = 0x80086B70; // type:func
@@ -3078,6 +3081,7 @@ vcSelfViewTimer                              = 0x800C463C; // type:s32
 //------------------------------------------------------------------------
 g_Event_PathWaypoints                        = 0x800C4640; // size:0xC0
 g_Event_PathWaypointAngles                   = 0x800C4700;
+g_Event_TweenTimers                          = 0x800C4710;
 
 //-----------------------------------------------------------
 //--- PA: 0x09FCB8   VA: 0x800C4818   subsegment: .bss, water

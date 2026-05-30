@@ -17,7 +17,7 @@
 
 VECTOR3 g_Event_PathWaypoints[2][8];
 q3_12   g_Event_PathWaypointAngles[8]; // TODO: should only have 2 entries, 1 for each character slot?
-q19_12  D_800C4710[6];
+q19_12  g_Event_TweenTimers[6];
 
 // ========================================
 // EVENT AND INTERACTIONS RELATED
@@ -429,12 +429,18 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
 
 void Event_PathWaypointSet(bool isAbsolute, s32 charaSlot, s32 waypointIdx, q3_12 angleY, q19_12 posX, q19_12 posZ) // 0x800865FC
 {
-    if (!isAbsolute)
+    if (isAbsolute == false)
     {
         g_Event_PathWaypoints[charaSlot][waypointIdx].vx = g_SysWork.playerWork.player.position.vx + posX;
         g_Event_PathWaypoints[charaSlot][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
         g_Event_PathWaypoints[charaSlot][waypointIdx].vz = g_SysWork.playerWork.player.position.vz + posZ;
 
+        // @bug `angleY` is stored per `charaSlot`, not per waypoint.
+        // Event code often calls `Event_PathWaypointSet` multiple times in a single tick
+        // with different `angleY` values, but the same `charaSlot`.
+        // Only the last written `angleY` is retained, other values are silently discarded.
+        // Unlikely this was intentional, but doesn't seem to break things visually at least.
+        // Maybe pathfinding code doesn't rely on this angle value that much?
         g_Event_PathWaypointAngles[charaSlot] = angleY;
     }
     else if (isAbsolute == true)
@@ -449,7 +455,7 @@ void Event_PathWaypointSet(bool isAbsolute, s32 charaSlot, s32 waypointIdx, q3_1
 
 void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep) // 0x800866D4
 {
-    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointAngles[0], waypointCount) == 1)
+    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointAngles[0], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -457,7 +463,7 @@ void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubS
 
 void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep) // 0x80086728
 {
-    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount) == 1)
+    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -497,24 +503,24 @@ void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
     }
 }
 
-void func_800868DC(s32 idx)
+void Event_TweenReset(s32 idx) // 0x800868DC
 {
-    D_800C4710[idx] = 0;
+    g_Event_TweenTimers[idx] = Q12(0.0f);
 }
 
-s32 func_800868F4(s32 arg0, s32 arg1, s32 idx)
+q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 idx) // 0x800868F4
 {
-    D_800C4710[idx] += g_DeltaTime;
-    D_800C4710[idx]  = (arg1 < D_800C4710[idx]) ? arg1 : D_800C4710[idx];
+    g_Event_TweenTimers[idx] += g_DeltaTime;
+    g_Event_TweenTimers[idx]  = (duration < g_Event_TweenTimers[idx]) ? duration : g_Event_TweenTimers[idx];
 
-    return (arg0 * D_800C4710[idx]) / arg1;
+    return (target * g_Event_TweenTimers[idx]) / duration;
 }
 
-s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
+q19_12 Event_TweenSine(q19_12 amplitude, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx) // 0x8008694C
 {
-    D_800C4710[idx] += g_DeltaTime;
-    D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return Q12_MULT(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)));
+    g_Event_TweenTimers[idx] += g_DeltaTime;
+    g_Event_TweenTimers[idx]  = (duration < g_Event_TweenTimers[idx]) ? duration : g_Event_TweenTimers[idx];
+    return Q12_MULT(amplitude, Math_Sin(startAngle + ((sweepAngle * g_Event_TweenTimers[idx]) / duration)));
 }
 
 void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds) // 0x800869E4

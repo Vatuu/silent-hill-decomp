@@ -127,11 +127,31 @@ void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32
 /** Paper map state handler. Rough name could be `Map_PaperMapBackgroundStateUpdate`. */
 void func_800867B4(s32 state, s32 paperMapFileIdx);
 
-void func_800868DC(s32 idx);
+/** @brief Resets a tween timer slot to zero.
+ *
+ * @param idx Timer slot index.
+ */
+void Event_TweenReset(s32 idx);
 
-s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
+/** @brief Linear tween from 0 to `target` over `duration`.
+ *
+ * @param target Target value at the end of the tween.
+ * @param duration Total tween duration.
+ * @param idx Timer slot index.
+ * @return Interpolated value based on elapsed time.
+ */
+q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 idx);
 
-s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx);
+/** @brief @unused Sinusoidal tween over a given angle range.
+ *
+ * @param amplitude Multiplier applied to the sine result.
+ * @param startAngle Starting angle for the sine function.
+ * @param sweepAngle Total angle swept over the duration.
+ * @param duration Total tween duration in delta time units.
+ * @param idx Timer slot index.
+ * @return `amplitude * sin(startAngle + (sweepAngle * elapsed / duration))`.
+ */
+q19_12 Event_TweenSine(q19_12 amplitude, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx);
 
 /** @brief Displays a map message with dialog audio and increments the audio index.
  *

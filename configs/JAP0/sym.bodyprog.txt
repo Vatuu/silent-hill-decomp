@@ -1311,9 +1311,9 @@ Event_PathWaypointExecutePlayer              = 0x80088110; // type:func
 Event_PathWaypointExecuteChara               = 0x80088164; // type:func
 Event_PathWaypointExecuteCharaNoWait         = 0x800881B8; // type:func
 func_800867B4                                = 0x800881F0; // type:func
-func_800868DC                                = 0x80088318; // type:func
-func_800868F4                                = 0x80088330; // type:func
-func_8008694C                                = 0x80088388; // type:func
+Event_TweenReset                             = 0x80088318; // type:func
+Event_TweenLinear                            = 0x80088330; // type:func
+Event_TweenSine                              = 0x80088388; // type:func
 Event_DisplayMapMsgWithAudio                 = 0x80088420; // type:func
 Camera_PositionSet                           = 0x800884D0; // type:func
 Camera_LookAtSet                             = 0x800885AC; // type:func
@@ -3604,7 +3604,7 @@ vcSelfViewTimer                              = 0x800C6B6C;
 g_Event_PathWaypoints                        = 0x800C6B70;
 g_Event_PathWaypointAngles                   = 0x800C6C30;
 D_800C4702                                   = 0x800C6C32;
-D_800C4710                                   = 0x800C6C40;
+g_Event_TweenTimers                          = 0x800C6C40;
 
 //------------------------------------------------------------------------------
 //--- PA: 0x0A20F8   VA: 0x800C6C58   subsegment: .bss, bodyprog_combat_8008A058

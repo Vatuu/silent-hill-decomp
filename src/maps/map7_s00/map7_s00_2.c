@@ -476,12 +476,12 @@ void func_800D1604(void) // 0x800D1604
             D_800D31DC[1]    = 0;
             D_800D31DC[0]    = 0;
 
-            func_800868DC(0);
-            func_800868DC(1);
-            func_800868DC(2);
-            func_800868DC(3);
-            func_800868DC(4);
-            func_800868DC(5);
+            Event_TweenReset(0);
+            Event_TweenReset(1);
+            Event_TweenReset(2);
+            Event_TweenReset(3);
+            Event_TweenReset(4);
+            Event_TweenReset(5);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(58.21f), Q12(-7.23f), Q12(-144.62f), 0, 0, 0, 0, true);
@@ -553,15 +553,15 @@ void func_800D1604(void) // 0x800D1604
                 Event_SysStateStepIncrementDelayed(0x1333, false);
             }
 
-            temp_s1   = func_800868F4(Q12(-0.37f) - 1, Q12(6.0f), 0) + Q12(58.21f);
-            temp_s0_2 = func_800868F4(Q12(4.34f) + 1, Q12(6.0f), 1) - Q12(7.23f);
+            temp_s1   = Event_TweenLinear(Q12(-0.37f) - 1, Q12(6.0f), 0) + Q12(58.21f);
+            temp_s0_2 = Event_TweenLinear(Q12(4.34f) + 1, Q12(6.0f), 1) - Q12(7.23f);
 
-            Camera_PositionSet(NULL, temp_s1, temp_s0_2, func_800868F4(Q12(3.08f) + 1, Q12(6.0f), 2) - Q12(144.62f), 0, 0, 0, 0, false);
+            Camera_PositionSet(NULL, temp_s1, temp_s0_2, Event_TweenLinear(Q12(3.08f) + 1, Q12(6.0f), 2) - Q12(144.62f), 0, 0, 0, 0, false);
 
-            temp_s1_2 = func_800868F4(Q12(-2.25f), Q12(6.0f), 3) + Q12(56.92f);
-            temp_s0_3 = func_800868F4(Q12(2.96f) + 1, Q12(6.0f), 4) - Q12(4.5f);
+            temp_s1_2 = Event_TweenLinear(Q12(-2.25f), Q12(6.0f), 3) + Q12(56.92f);
+            temp_s0_3 = Event_TweenLinear(Q12(2.96f) + 1, Q12(6.0f), 4) - Q12(4.5f);
 
-            Camera_LookAtSet(NULL, temp_s1_2, temp_s0_3, func_800868F4(Q12(2.5f), Q12(6.0f), 5) - Q12(141.99f), 0, 0, 0, 0, false);
+            Camera_LookAtSet(NULL, temp_s1_2, temp_s0_3, Event_TweenLinear(Q12(2.5f), Q12(6.0f), 5) - Q12(141.99f), 0, 0, 0, 0, false);
             break;
 
         case 7:

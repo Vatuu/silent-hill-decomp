@@ -517,9 +517,9 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
 
         case 1:
         case 2:
-            func_800868DC(0);
-            func_800868DC(1);
-            func_800868DC(2);
+            Event_TweenReset(0);
+            Event_TweenReset(1);
+            Event_TweenReset(2);
             break;
 
         case 4:
@@ -527,9 +527,9 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
         case 6:
             // Move camera.
             Camera_PositionSet(NULL,
-                               Q12(-22.0f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 0),
-                               Q12(-2.4f)  - func_800868F4(Q12(-1.5f), Q12(5.0f), 1),
-                               Q12(130.1f) - func_800868F4(Q12(4.0f),  Q12(5.0f), 2),
+                               Q12(-22.0f) - Event_TweenLinear(Q12(4.0f),  Q12(5.0f), 0),
+                               Q12(-2.4f)  - Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 1),
+                               Q12(130.1f) - Event_TweenLinear(Q12(4.0f),  Q12(5.0f), 2),
                                Q12(0.0f), Q12(0.0f),
                                Q12(0.0f), Q12(0.0f),
                                false);
@@ -905,7 +905,7 @@ void func_800DB26C(void) // 0x800DB26C
                          Q12(0.0f), Q12(0.0f),
                          Q12(0.0f), Q12(0.0f),
                          true);
-        func_800868DC(2);
+        Event_TweenReset(2);
     }
 
     switch (g_SysWork.sysStateSteps[0])
