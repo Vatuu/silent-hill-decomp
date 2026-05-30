@@ -211,7 +211,7 @@ void func_800D725C(void) // 0x800D725C
         case 4:
             Event_DisplayMapMsgWithAudio(17, &D_800E2C64, &D_800E14E8);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 5:
@@ -415,7 +415,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 9:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(101.0f), Q12(152.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 10:
@@ -443,7 +443,7 @@ void func_800D7A60(void) // 0x800D7A60
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 16:
@@ -698,7 +698,7 @@ void func_800D8A5C(void) // 0x800D8A5C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -777,7 +777,7 @@ void func_800D8DB4(void) // 0x800D8DB4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -893,7 +893,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 6:
@@ -903,7 +903,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 8:
@@ -912,7 +912,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
         case 2:
         case 9:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         default:
@@ -1068,7 +1068,7 @@ void func_800D94DC(void) // 0x800D94DC
 
         case 5:
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
@@ -1105,7 +1105,7 @@ void func_800D9A08(void) // 0x800D9A08
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1134,7 +1134,7 @@ void func_800D9A08(void) // 0x800D9A08
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
@@ -1537,7 +1537,7 @@ void func_800DAB64(void) // 0x800DAB64
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1668,7 +1668,7 @@ void func_800DAE00(void) // 0x800DAE00
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         default:
@@ -1970,7 +1970,7 @@ void func_800DCE20(void) // 0x800DCE20
                 g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? D_800E16A8[0] : -D_800E16A8[0]);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 5:
@@ -1990,12 +1990,12 @@ void func_800DCE20(void) // 0x800DCE20
 
             if (g_SysWork.sysStateSteps[0] == 3)
             {
-                Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+                Event_WaitTimer(Q12(4.0f), false);
             }
 
             if (g_SysWork.sysStateSteps[0] == 4)
             {
-                Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+                Event_WaitTimer(Q12(2.0f), false);
             }
 
             g_DeltaTime = g_DeltaTime >> 1;

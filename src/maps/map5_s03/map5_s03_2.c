@@ -138,7 +138,7 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -146,7 +146,7 @@ void func_800D1628(void) // 0x800D1628
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 4:
@@ -199,7 +199,7 @@ void func_800D1904(void) // 0x800D1904
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -573,7 +573,7 @@ void func_800D2674(void) // 0x800D2674
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:

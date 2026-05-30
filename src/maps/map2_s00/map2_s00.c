@@ -326,7 +326,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             switch (sysState0)
             {
                 case 2:
-                    Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+                    Event_WaitTimer(Q12(3.5f), false);
 
                     if (g_SysWork.sysStateSteps[0] == sysState0 &&
                         (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
@@ -405,7 +405,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -559,7 +559,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 9:
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 10:
@@ -577,7 +577,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                     SysWork_StateStepIncrement(0);
                 }
 
-                Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+                Event_WaitTimer(Q12(1.5f), false);
 
                 if (g_SysWork.sysStateSteps[0] > 11)
                 {
@@ -675,7 +675,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -767,7 +767,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 14:
             func_800692A4(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
 
             break;
         case 15:
@@ -783,7 +783,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
                     SysWork_StateStepIncrement(0);
                 }
 
-                Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+                Event_WaitTimer(Q12(1.5f), false);
 
                 if (g_SysWork.sysStateSteps[0] > 16)
                 {
@@ -846,7 +846,7 @@ void func_800E9470(void) // 0x800E9470
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -896,7 +896,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -965,7 +965,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1057,7 +1057,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case EventState_2:
@@ -1289,7 +1289,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 10:
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
@@ -1352,14 +1352,14 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
                 Event_DisplayMapMsg(false, 35, 0, 0, 0, false); // "What? It's getting dark again?"
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(6.0f), false);
+            Event_WaitTimer(Q12(6.0f), false);
             break;
 
         case 2:
             D_800F1A24 = Q12(100.0f);
 
             Game_TurnFlashlightOff();
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 3:
@@ -1372,7 +1372,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         default:
@@ -1487,7 +1487,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1500,7 +1500,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 4:
@@ -1515,7 +1515,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
         case 7:
             SD_Call(Sfx_Unk1484);
@@ -1602,7 +1602,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1621,7 +1621,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 6:
@@ -1696,7 +1696,7 @@ void func_800EB090(void) // 0x800EB090
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1728,11 +1728,11 @@ void func_800EB174(void) // 0x800EB174
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -1756,7 +1756,7 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 7:
@@ -1764,7 +1764,7 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         default:
@@ -1797,7 +1797,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -1817,7 +1817,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 6:
@@ -1825,7 +1825,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
 
             // TODO: Odd float values, maybe using different Q format for `s16`?
             D_800F22AE += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.0277f));

@@ -172,7 +172,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 3:
@@ -207,7 +207,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(0.4f), false);
+            Event_WaitTimer(Q12(0.4f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
             break;
 
@@ -218,7 +218,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 12:
             Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
             break;
 
@@ -268,7 +268,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 21:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
         case 22:
             Event_DisplayMapMsg(false, 38, 0, 0, 0, false);
@@ -497,7 +497,7 @@ void func_800D1604(void) // 0x800D1604
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -510,7 +510,7 @@ void func_800D1604(void) // 0x800D1604
         case 5:
             if (g_SysWork.sysStateSteps[0] == 5)
             {
-                Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+                Event_WaitTimer(Q12(2.5f), false);
             }
 
             D_800D31DC[1] = MIN(D_800D31DC[1] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.32f)), Q12(0.14f));
@@ -518,7 +518,7 @@ void func_800D1604(void) // 0x800D1604
         case 4:
             if (g_SysWork.sysStateSteps[0] == 4)
             {
-                Event_SysStateStepIncrementDelayed(Q12(0.9f), false);
+                Event_WaitTimer(Q12(0.9f), false);
                 var_t5 = 2;
             }
             else
@@ -550,7 +550,7 @@ void func_800D1604(void) // 0x800D1604
         case 3:
             if (g_SysWork.sysStateSteps[0] == 3)
             {
-                Event_SysStateStepIncrementDelayed(0x1333, false);
+                Event_WaitTimer(0x1333, false);
             }
 
             temp_s1   = Event_TweenLinear(Q12(-0.37f) - 1, Q12(6.0f), 0) + Q12(58.21f);
@@ -588,7 +588,7 @@ void func_800D1604(void) // 0x800D1604
 
             g_DeltaTime >>= 2;
 
-            Event_SysStateStepIncrementDelayed(Q12(6.0f), false);
+            Event_WaitTimer(Q12(6.0f), false);
             break;
 
         case 9:
@@ -631,7 +631,7 @@ void func_800D1604(void) // 0x800D1604
                 }
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 11:

@@ -257,7 +257,7 @@ void func_800D1A58(void) // 0x800D1A58
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 3:
@@ -601,7 +601,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -620,7 +620,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 4:
@@ -671,7 +671,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 13:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 14:
@@ -729,7 +729,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             ScreenFade_ResetTimestep();
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -765,7 +765,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 7:
@@ -790,7 +790,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 9:
@@ -803,7 +803,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         default:

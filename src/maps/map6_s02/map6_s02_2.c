@@ -199,7 +199,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 7:
@@ -226,7 +226,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 10:
@@ -245,12 +245,12 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 12:
             g_SysWork.npcs[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             Event_DisplayMapMsgWithAudio(16, &D_800D4E08, &D_800D3B40);
             break;
 
@@ -414,7 +414,7 @@ void func_800CFC34(void) // 0x800CFC34
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -474,7 +474,7 @@ void func_800CFC34(void) // 0x800CFC34
                 sharedFunc_800CE5D4_1_s03(&D_800D3B78[i], Q12(0.5f), Q12(0.15f), 0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
 
             if (g_SysWork.sysStateSteps[0] != 9)
             {
@@ -497,7 +497,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 11:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
 
             if (g_SysWork.sysStateSteps[0] != 11)
             {
@@ -506,7 +506,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 12)
             {
@@ -614,7 +614,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(5.0f), false);
+            Event_WaitTimer(Q12(5.0f), false);
             D_800D3C98 += g_DeltaTime;
 
             // TODO: Some kind of `Q12_ANGLE_ABS`?
@@ -657,7 +657,7 @@ void func_800D0500(void) // 0x800D0500
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio565);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 6:
@@ -672,7 +672,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 9:
@@ -684,7 +684,7 @@ void func_800D0500(void) // 0x800D0500
         case 11:
             if (g_SysWork.sysStateSteps[0] == 10)
             {
-                Event_SysStateStepIncrementDelayed(Q12(6.5f), false);
+                Event_WaitTimer(Q12(6.5f), false);
             }
             else
             {
@@ -696,7 +696,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
+            Event_WaitTimer(Q12(1.8f), false);
             break;
 
         case 13:
@@ -708,7 +708,7 @@ void func_800D0500(void) // 0x800D0500
         case 15:
             if (g_SysWork.sysStateSteps[0] == 14)
             {
-                Event_SysStateStepIncrementDelayed(Q12(4.2f), false);
+                Event_WaitTimer(Q12(4.2f), false);
             }
             else
             {
@@ -762,7 +762,7 @@ void func_800D0500(void) // 0x800D0500
         case 21:
             if (g_SysWork.sysStateSteps[0] == 20)
             {
-                Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+                Event_WaitTimer(Q12(4.0f), false);
             }
             else
             {
@@ -772,7 +772,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         case 22:
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 23:

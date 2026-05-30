@@ -111,7 +111,7 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -134,7 +134,7 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 5:
@@ -146,7 +146,7 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 8:
@@ -196,7 +196,7 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -227,7 +227,7 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 8:
@@ -248,7 +248,7 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 13:
@@ -279,7 +279,7 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -304,7 +304,7 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 6:
@@ -325,7 +325,7 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 11:
@@ -364,7 +364,7 @@ void func_800D54D0(void) // 0x800D54D0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -615,7 +615,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 28:
-            Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
+            Event_WaitTimer(Q12(1.8f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
@@ -628,7 +628,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 31:
-            Event_SysStateStepIncrementDelayed(Q12(0.4f), false);
+            Event_WaitTimer(Q12(0.4f), false);
             break;
 
         case 32:
@@ -656,7 +656,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 36:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 37:
@@ -664,7 +664,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 38:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 39:
@@ -672,7 +672,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 40:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 41:

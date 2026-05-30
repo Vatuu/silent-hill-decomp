@@ -237,7 +237,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 16:
-            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
+            Event_WaitTimer(Q12(2.2f), false);
             D_800F0044 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.7f);
             break;
 

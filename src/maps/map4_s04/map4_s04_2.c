@@ -284,7 +284,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(0.0f), Q12(23.0f), true, false);
             break;
 
@@ -489,7 +489,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 13:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 14:

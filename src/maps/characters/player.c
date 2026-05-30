@@ -358,8 +358,8 @@ void Player_ControlUnfreeze(bool setIdle)
 #endif
 }
 
-// Very similar to `sharedFunc_800D8A00_0_s00`, but that func is for NPCs.
-bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount)
+// Very similar to `Chara_PathWaypointExecute`.
+bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount)
 {
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP3_S05) || defined(MAP4_S05) || \
     defined(MAP7_S00) || defined(MAP7_S01)
@@ -671,12 +671,12 @@ s32 Player_AnimPlaybackStateGet(void)
     }
 }
 
-bool Player_MoveDistanceIsZero(void)
+bool Player_MoveSpeedIsZero(void)
 {
     return g_SysWork.playerWork.player.properties.player.moveSpeed == Q12(0.0f);
 }
 
-void Player_MoveDistanceClear(void)
+void Player_MoveSpeedClear(void)
 {
     g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
 }

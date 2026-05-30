@@ -266,7 +266,7 @@ void func_800EBA40(void) // 0x800EBA40
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             Screen_BackgroundImgDraw(&g_ItemInspectionImg);
             break;
 
@@ -335,7 +335,7 @@ void func_800EBF70(void) // 0x800EBF70
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 2:
@@ -465,7 +465,7 @@ void func_800EC42C(void) // 0x800EC42C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -510,7 +510,7 @@ void func_800EC42C(void) // 0x800EC42C
         case 8:
             func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-196.53f, -14.25f, -9.73f));
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 9:
@@ -638,7 +638,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         default:

@@ -100,7 +100,7 @@ void func_800D21C4(void) // 0x800D21C4
                 SysWork_StateStepIncrement(0);
 
             case 1:
-                Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+                Event_WaitTimer(Q12(0.2f), false);
                 break;
 
             case 2:
@@ -116,11 +116,11 @@ void func_800D21C4(void) // 0x800D21C4
                 SysWork_StateStepIncrement(0);
 
             case 5:
-                Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+                Event_WaitTimer(Q12(0.2f), false);
                 break;
 
             case 7:
-                Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+                Event_WaitTimer(Q12(0.8f), false);
                 break;
 
             case 8:
@@ -286,7 +286,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 8:
@@ -297,7 +297,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
+            Event_WaitTimer(Q12(0.7f), false);
             break;
 
         case 11:
@@ -305,7 +305,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 13:
@@ -339,7 +339,7 @@ void func_800D2668(void) // 0x800D2668
             break;
 
         case 19:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
 
@@ -350,7 +350,7 @@ void func_800D2668(void) // 0x800D2668
 
         case 21:
             Event_DisplayMapMsgWithAudio(45, &D_800D5A3C, &D_800D599C);
-            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
+            Event_WaitTimer(Q12(2.2f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
 
             if (g_SysWork.sysStateSteps[0] != 21)

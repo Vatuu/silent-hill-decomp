@@ -85,7 +85,7 @@ void func_800D49AC(void) // 0x800D49AC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 2:
@@ -93,7 +93,7 @@ void func_800D49AC(void) // 0x800D49AC
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 4:
@@ -188,7 +188,7 @@ void func_800D4D1C(void) // 0x800D4D1C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
 
             g_SysWork.lightIntensity += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.2f);
             if (g_SysWork.lightIntensity > Q12(3.0f))

@@ -164,7 +164,7 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
@@ -184,7 +184,7 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateStepIncrementDelayed(0x800, false);
+            Event_WaitTimer(0x800, false);
             break;
 
         case 8:

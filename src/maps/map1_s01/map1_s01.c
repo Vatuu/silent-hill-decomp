@@ -176,7 +176,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -197,7 +197,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 6:
@@ -221,7 +221,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(6.0f), false);
+            Event_WaitTimer(Q12(6.0f), false);
             break;
 
         case 8:
@@ -268,7 +268,7 @@ void func_800D76F4(void) // 0x800D76F4
             Event_InvItemCmd(InvItemCmd_QueueLoad, InvItemId_GoldMedallion, 0, false);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -386,13 +386,13 @@ void func_800D7864(void) // 0x800D7864
             g_SysWork.playerWork.player.position.vz = Q12(20.1f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-22.5f);
 
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             Event_CameraPositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
             Event_CameraLookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
             break;
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
 
             g_WorldObject0.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.0555f));
             g_WorldObject0.position.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
@@ -413,11 +413,11 @@ void func_800D7864(void) // 0x800D7864
             break;
 
         case 14:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 15:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
 
             g_WorldObject0.position.vx = Q12(-98.8f);
             g_WorldObject0.rotation.vx = Q12_ANGLE(-90.0f);
@@ -481,15 +481,15 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
     {
         if (g_SysWork.sysStateSteps[1] == 1)
         {
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), true);
+            Event_WaitTimer(Q12(0.3f), true);
         }
         if (g_SysWork.sysStateSteps[1] == 3)
         {
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), true);
+            Event_WaitTimer(Q12(0.2f), true);
         }
         if (g_SysWork.sysStateSteps[1] == 5)
         {
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), true);
+            Event_WaitTimer(Q12(0.3f), true);
         }
         return;
     }
@@ -691,7 +691,7 @@ void func_800D857C(void) // 0x800D857C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -779,7 +779,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -886,7 +886,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 16:
@@ -894,7 +894,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 18:
@@ -903,7 +903,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 19:
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 20:

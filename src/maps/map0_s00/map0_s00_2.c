@@ -132,7 +132,7 @@ void func_800D9610(void) // 0x800D9610
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.1f), false);
+            Event_WaitTimer(Q12(0.1f), false);
             break;
 
         default:
@@ -243,7 +243,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
         case EventState_8:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case EventState_9:
@@ -260,7 +260,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_11:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case EventState_12:
@@ -268,7 +268,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_13:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         default:
@@ -325,11 +325,11 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -375,11 +375,11 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -422,11 +422,11 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -594,7 +594,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             cherylProps.moveDistance_124 = Q12(1.8f);
 
             Event_PathWaypointExecuteChara(&cherylChara, 2, 1, 0);
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 4:
@@ -665,11 +665,11 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -697,11 +697,11 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -728,11 +728,11 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -759,11 +759,11 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -806,7 +806,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -833,12 +833,12 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             Event_PathWaypointSet(true, 0, 0,
                          Q12_ANGLE(180.0f),
                          Q12(-62.0f), playerChara.position.vz - Q12(10.0f));
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 5:
             Event_PathWaypointExecutePlayer(54, 1, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 6:
@@ -923,7 +923,7 @@ void func_800DB26C(void) // 0x800DB26C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -934,7 +934,7 @@ void func_800DB26C(void) // 0x800DB26C
             g_DeltaTime >>= 1; // `/ 2`.
 
             Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 4:
@@ -946,7 +946,7 @@ void func_800DB26C(void) // 0x800DB26C
 
         case 5:
             g_DeltaTime >>= 1;
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         default:
@@ -982,7 +982,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -1075,7 +1075,7 @@ void func_800DB870(void) // 0x800DB870
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case EventState_MsgDeadEnd:
@@ -1228,7 +1228,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             break;
 
         case EventState_2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case EventState_3:

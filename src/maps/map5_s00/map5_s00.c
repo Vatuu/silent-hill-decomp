@@ -513,7 +513,7 @@ void func_800D6B00(void) // 0x800D6B00
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -700,7 +700,7 @@ void func_800D732C(void) // 0x800D732C
             // Move player.
             g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
 
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 2:
@@ -747,7 +747,7 @@ void func_800D75FC(void) // 0x800D75FC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -781,7 +781,7 @@ void func_800D75FC(void) // 0x800D75FC
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
@@ -818,7 +818,7 @@ void func_800D7940(void) // 0x800D7940
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -853,7 +853,7 @@ void func_800D7940(void) // 0x800D7940
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
@@ -890,7 +890,7 @@ void func_800D7C84(void) // 0x800D7C84
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -916,7 +916,7 @@ void func_800D7C84(void) // 0x800D7C84
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
@@ -953,7 +953,7 @@ void func_800D7F88(void) // 0x800D7F88
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -979,7 +979,7 @@ void func_800D7F88(void) // 0x800D7F88
 
         case 4:
             g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.37f, 12);
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:

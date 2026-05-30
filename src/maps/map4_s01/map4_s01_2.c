@@ -151,7 +151,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -163,7 +163,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 5:
@@ -299,7 +299,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 6:
@@ -308,7 +308,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 8:
@@ -377,7 +377,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 20:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 21:
@@ -396,7 +396,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 24:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 25:
@@ -438,7 +438,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 32:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 33:
@@ -859,7 +859,7 @@ void func_800D3420(void) // 0x800D3420
 
         case 12:
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, cybilChara, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 13:
@@ -914,7 +914,7 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 23:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 24:
@@ -931,7 +931,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 27:
-            Event_SysStateStepIncrementDelayed(Q12(1.4f), false);
+            Event_WaitTimer(Q12(1.4f), false);
             break;
 
         case 28:
@@ -1092,7 +1092,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer2, Q12(10.0f), Q12(0.0f), Q12(106.0f), true, false);
             break;
 
@@ -1119,7 +1119,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 9:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
             break;
 
@@ -1129,7 +1129,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case 11:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer2, Q12(3.8f), Q12(129.0f), Q12(228.0f), true, false);
             break;
 

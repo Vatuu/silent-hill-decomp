@@ -215,7 +215,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 17:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         case 18:
@@ -276,7 +276,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 30:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 31:
@@ -302,7 +302,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 36:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(223.0f), Q12(251.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 37:
@@ -369,7 +369,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 50:
             g_Cutscene_Timer = Q12(308.0f);
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 51:
@@ -453,7 +453,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
                 SysWork_StateStepIncrement(0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 7)
             {
@@ -479,7 +479,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
                 SysWork_StateStepIncrement(0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 11)
             {
@@ -546,7 +546,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 2:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 3:
@@ -566,7 +566,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 7:
@@ -590,7 +590,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             D_800E23A1 = 0x80;
             Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerIntroCutsceneStarted);
 
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 11:

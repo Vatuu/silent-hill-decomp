@@ -108,7 +108,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -177,7 +177,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case EventState_2:
@@ -243,7 +243,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -261,7 +261,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 5:
@@ -289,7 +289,7 @@ void func_800D29A4(void) // 0x800D29A4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:

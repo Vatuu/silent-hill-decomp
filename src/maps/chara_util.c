@@ -213,7 +213,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
     return AnimPlaybackState_Invalid;
 }
 
-bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
+bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
 {
     // TODO: Figure out which characters get passed to this function.
     // Looks like Cheryl might be, but the charaState defines below don't fit with `s_PropsNpc`...

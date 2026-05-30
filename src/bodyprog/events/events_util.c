@@ -47,16 +47,16 @@ void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep) // 0x80085DC0
     }
 }
 
-void func_80085DF0(void) // 0x80085DF0
+void Event_WaitPlayerStop(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (g_MapOverlayHdr.playerMoveDistIsZero() || g_SysWork.timer_2C > Q12(1.0f))
+    if (g_MapOverlayHdr.playerMoveSpeedIsZero() || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
     }
 }
 
-void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep) // 0x80085E6C
+void Event_WaitTimer(q19_12 delay, bool incSubStep) // 0x80085E6C
 {
     g_SysWork.timer_2C += g_DeltaTimeRaw;
     if (delay < g_SysWork.timer_2C)
@@ -68,7 +68,6 @@ void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep) // 0x8008
 void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 animState, bool incSubStep) // 0x80085EB8
 {
     s32  playbackState;
-    bool isPlayer;
 
     #define isPlayer (chara == &g_SysWork.playerWork.player)
 
@@ -460,7 +459,7 @@ void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 
 
 void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep) // 0x800866D4
 {
-    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointHeadingAngles[0], waypointCount) == true)
+    if (g_MapOverlayHdr.playerPathWaypointExecute(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointHeadingAngles[0], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -468,7 +467,7 @@ void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubS
 
 void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep) // 0x80086728
 {
-    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount) == true)
+    if (g_MapOverlayHdr.charaPathWaypointExecute(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -476,7 +475,7 @@ void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypo
 
 void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount) // 0x8008677C
 {
-    g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount);
+    g_MapOverlayHdr.charaPathWaypointExecute(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount);
 }
 
 void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
@@ -817,7 +816,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), true);
+            Event_WaitTimer(Q12(0.2f), true);
             break;
 
         case 2:

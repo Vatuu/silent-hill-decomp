@@ -265,7 +265,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 16:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 17:
@@ -308,7 +308,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 23:
             Event_DisplayMapMsgWithAudio(63, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(37.0f), Q12(49.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 24:
@@ -331,7 +331,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 27:
             Event_DisplayMapMsgWithAudio(73, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 28:
@@ -374,7 +374,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 36:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
 
             if (g_SysWork.sysStateSteps[0] != 36)
             {
@@ -397,7 +397,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 39:
             Event_DisplayMapMsgWithAudio(79, &g_Cutscene_MapMsgAudioIdx0, &g_Cutscene_MapMsgAudioCmds0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(98.0f), Q12(121.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 40:
@@ -433,7 +433,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 47:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 48:
@@ -441,7 +441,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateStepIncrement(0);
 
         case 49:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 50:
@@ -452,7 +452,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 51:
             g_Cutscene_Timer = Q12(169.0f);
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 52:
@@ -556,7 +556,7 @@ void func_800D236C(void) // 0x800D236C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 2:
@@ -568,7 +568,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 5:
@@ -576,7 +576,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
             break;
 
         case 7:
@@ -667,7 +667,7 @@ void func_800D2658(void) // 0x800D2658
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -720,7 +720,7 @@ void func_800D2658(void) // 0x800D2658
                 sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 9:
@@ -756,7 +756,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         default:

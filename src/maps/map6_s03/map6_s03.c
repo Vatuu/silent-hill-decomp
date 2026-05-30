@@ -213,7 +213,7 @@ void func_800D822C(void) // 0x800D822C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -236,7 +236,7 @@ void func_800D822C(void) // 0x800D822C
 
         case 3:
             g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
-            Event_SysStateStepIncrementDelayed(Q12(3.8f), false);
+            Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 4:
@@ -272,7 +272,7 @@ void func_800D84EC(void) // 0x800D84EC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -293,7 +293,7 @@ void func_800D84EC(void) // 0x800D84EC
 
         case 4:
             g_SysWork.playerWork.player.position.vy -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.415f, 12);
-            Event_SysStateStepIncrementDelayed(Q12(5.0f), false);
+            Event_WaitTimer(Q12(5.0f), false);
             break;
 
         case 5:

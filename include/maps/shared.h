@@ -500,8 +500,8 @@ void Chara_AnimUnlock(s_SubCharacter* chara);
 
 // Seems like this function is intended to be called repeatedly, swapping between states.
 // Might be called many times in a single logic update or over multiple updates.
-// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for the player.
-bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4);
+// Very similar to `Player_PathWaypointExecute`.
+bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4);
 
 void Chara_VisibleSet(s_SubCharacter* chara);
 

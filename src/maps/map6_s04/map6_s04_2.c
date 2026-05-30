@@ -1974,7 +1974,7 @@ void func_800E219C(void) // 0x800E219C
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 6:
@@ -2179,7 +2179,7 @@ void func_800E2950(void) // 0x800E2950
 
         case 1:
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.npcs[0], 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 2:
@@ -2896,7 +2896,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 34:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 35:

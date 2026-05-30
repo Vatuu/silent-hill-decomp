@@ -931,7 +931,8 @@ vcGetXZSumDistFromLimArea                    = 0x80085C80; // type:func
 //---------------------------------------------------------------------
 Event_SysStateStepIncrement                  = 0x80085D78; // type:func
 Event_SysStateStepSet                        = 0x80085DC0; // type:func
-Event_SysStateStepIncrementDelayed           = 0x80085E6C; // type:func
+Event_WaitPlayerStop                         = 0x80085DF0; // type:func
+Event_WaitTimer                              = 0x80085E6C; // type:func
 Event_CharaAnimCmdExecute                    = 0x80085EB8; // type:func
 Event_SysStateBranchOnFlag                   = 0x8008605C; // type:func
 Event_DisplayMapMsg                          = 0x800860B0; // type:func

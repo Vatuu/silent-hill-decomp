@@ -52,10 +52,20 @@ void Event_SysStateStepIncrement(bool incSubStep);
 /** State step setter for some substate. */
 void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep);
 
-/** Calls `SysWork_StateStepIncrement(0)` with some preliminary safety check. */
-void func_80085DF0(void);
+/** @brief Waits for the player to stop moving or a 1 second timeout, then increments `sysStateSteps[0]`.
+ *
+ * Used after `Player_ControlFreeze()` to ensure the player has come to a halt before continuing the event sequence.
+ */
+void Event_WaitPlayerStop(void);
 
-void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep);
+/** @brief Waits for a specified delay before incrementing `sysStateSteps[0]`.
+ *
+ * @note `g_SysWork.timer_2C` must be cleared before the first call to this.
+ *
+ * @param delay Duration to wait before advancing.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ */
+void Event_WaitTimer(q19_12 delay, bool incSubStep);
 
 /** @brief Updates character states during events and cutscenes.
  *

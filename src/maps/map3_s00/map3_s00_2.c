@@ -208,7 +208,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 11:
             Event_DisplayMapMsgWithAudio(17, &D_800D256C, &D_800D24F0);
-            Event_SysStateStepIncrementDelayed(0x7000, false);
+            Event_WaitTimer(0x7000, false);
 
             g_Cutscene_Timer += Q12_MULT_PRECISE(g_DeltaTime, Q12(10.0f));
             if (g_Cutscene_Timer > Q12(109.0f))
@@ -256,7 +256,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 19:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 20:
@@ -281,7 +281,7 @@ void func_800D0CF8(void) // 0x800D0CF8
                 }
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 23:
@@ -362,7 +362,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 31:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case EventState_CutsceneEnd:
@@ -370,7 +370,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 33:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         case 34:
@@ -378,7 +378,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrement(0);
 
         case 35:
-            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
+            Event_WaitTimer(Q12(0.7f), false);
             break;
 
         case EventState_CutsceneSkip:

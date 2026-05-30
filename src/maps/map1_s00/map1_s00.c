@@ -169,7 +169,7 @@ void func_800D7B2C(void)
 
         case 6:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 7:
@@ -192,7 +192,7 @@ void func_800D7B2C(void)
 
         case 10:
             Event_BgTextureCmd(BgTextureCmd_DrawSecondary, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 11:
@@ -266,7 +266,7 @@ void func_800D7EB0(void)
 
         case 6:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 7:
@@ -289,7 +289,7 @@ void func_800D7EB0(void)
 
         case 10:
             Event_BgTextureCmd(BgTextureCmd_DrawSecondary, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 11:
@@ -326,7 +326,7 @@ void func_800D81CC(void) // 0x800D81CC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 2:
@@ -396,7 +396,7 @@ void func_800D8354(void) // 0x800D8354
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -460,7 +460,7 @@ void func_800D85D8(void) // 0x800D85D8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -475,7 +475,7 @@ void func_800D85D8(void) // 0x800D85D8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
@@ -535,7 +535,7 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -566,7 +566,7 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
 
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
             g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
@@ -599,7 +599,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -613,7 +613,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 5:
@@ -635,7 +635,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
         case 7:
             Savegame_EventFlagSet(EventFlag_73);
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 8:
@@ -668,7 +668,7 @@ void MapEvent_Boiler1(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -681,7 +681,7 @@ void MapEvent_Boiler1(void)
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 5:
@@ -704,7 +704,7 @@ void MapEvent_Boiler2(void) // 0x800D9148
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:

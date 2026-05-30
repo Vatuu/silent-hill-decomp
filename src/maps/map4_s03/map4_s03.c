@@ -3473,7 +3473,7 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(4.5f), false);
+            Event_WaitTimer(Q12(4.5f), false);
             break;
 
         case 3:
@@ -3482,7 +3482,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
+            Event_WaitTimer(Q12(0.7f), false);
             break;
 
         case 5:
@@ -3498,7 +3498,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(2.4f), false);
+            Event_WaitTimer(Q12(2.4f), false);
             break;
 
         case 9:
@@ -3512,7 +3512,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
             break;
 
         case 11:
@@ -3585,7 +3585,7 @@ void func_800D6F24(void) // 0x800D6F24
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -3600,7 +3600,7 @@ void func_800D6F24(void) // 0x800D6F24
             Event_CameraPositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 4:
@@ -3608,7 +3608,7 @@ void func_800D6F24(void) // 0x800D6F24
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 6:
@@ -3624,7 +3624,7 @@ void func_800D6F24(void) // 0x800D6F24
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 8:
@@ -3634,7 +3634,7 @@ void func_800D6F24(void) // 0x800D6F24
             Event_CameraPositionSet(NULL, Q12(122.55f), Q12(-2.1f), Q12(138.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(126.39f), Q12(-1.73f), Q12(139.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
 
             if (g_SysWork.sysStateSteps[0] != 8)
             {
@@ -4719,11 +4719,11 @@ void func_800D8FC0(void) // 0x800D8FC0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
+            Event_WaitTimer(Q12(2.2f), false);
 
             scratchData->activeBufferIdx_C = g_ActiveBufferIdx;
             scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
@@ -4845,7 +4845,7 @@ void func_800D960C(void) // 0x800D960C
             break;
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         default:

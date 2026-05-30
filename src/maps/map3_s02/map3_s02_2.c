@@ -59,7 +59,7 @@ void func_800D02B4(void) // 0x800D02B4
             SysWork_StateStepIncrement(0);
 
         case EventState_2:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case EventState_3:
@@ -67,7 +67,7 @@ void func_800D02B4(void) // 0x800D02B4
             SysWork_StateStepIncrement(0);
 
         case EventState_4:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
 
         default: // `EventState_Finish`
             Player_ControlUnfreeze(false);
@@ -100,7 +100,7 @@ void func_800D03FC(void) // 0x800D03FC
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 3:

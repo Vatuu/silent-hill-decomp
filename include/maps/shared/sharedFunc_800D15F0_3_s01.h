@@ -336,7 +336,7 @@ void sharedFunc_800D15F0_3_s01(void)
                 g_WorldObject_Dr[i].position.vz += Q12_MULT_PRECISE(g_DeltaTime, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 15:
@@ -356,7 +356,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
             if (g_SysWork.sysStateSteps[0] == 15)
             {
-                Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+                Event_WaitTimer(Q12(0.3f), false);
             }
             else
             {

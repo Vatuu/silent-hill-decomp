@@ -479,7 +479,7 @@ typedef struct _MapOverlayHdr
     /* 0xC4  */ void                   (*playerMatchArmAnimDisable)();
     /* 0xC8  */ void                   (*playerControlFreeze)();
     /* 0xCC  */ void                   (*playerControlUnfreeze)(bool setIdle);
-    /* 0xD0  */ bool                   (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
+    /* 0xD0  */ bool                   (*playerPathWaypointExecute)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     /* 0xD4  */ s32                    (*playerAnimStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaAnimStateSet` when player chara is passed.
                                                                                     // @hack Points to `Player_AnimStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCmdExecute`.
     /* 0xD8  */ void                   (*playerAnimReset)();
@@ -487,8 +487,8 @@ typedef struct _MapOverlayHdr
     /* 0xE0  */ void                   (*playerAnimIsLocked)(void);
     /* 0xE4  */ void                   (*playerAnimUnlock)(void);
     /* 0xE8  */ s32                    (*playerAnimPlaybackStateGet)(void);
-    /* 0xEC  */ bool                   (*playerMoveDistIsZero)(void);
-    /* 0xF0  */ void                   (*playerMoveDistClear)(void);
+    /* 0xEC  */ bool                   (*playerMoveSpeedIsZero)(void);
+    /* 0xF0  */ void                   (*playerMoveSpeedClear)(void);
     /* 0xF4  */ void                   (*playerFallBackward)(void);
     /* 0xF8  */ void                   (*playerStub_F8)();
     /* 0xFC  */ void                   (*playerDamageFeetFront)(void);
@@ -507,7 +507,7 @@ typedef struct _MapOverlayHdr
     /* 0x130 */ void                   (*charaAnimIsLocked)(s_SubCharacter* chara);
     /* 0x134 */ s32                    (*charaAnimUnlock)(s_SubCharacter* chara);
     /* 0x138 */ s32                    (*charaAnimPlaybackStateGet)(s_SubCharacter* chara);
-    /* 0x13C */ bool                   (*func_13C)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
+    /* 0x13C */ bool                   (*charaPathWaypointExecute)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
     /* 0x140 */ void                   (*charaVisibleSet)(s_SubCharacter* chara);
     /* 0x144 */ void                   (*charaInvisibleSet)(s_SubCharacter* chara);
     /* 0x148 */ bool                   (*func_148)(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);

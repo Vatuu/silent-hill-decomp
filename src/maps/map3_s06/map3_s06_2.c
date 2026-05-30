@@ -194,7 +194,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 11:
@@ -225,7 +225,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 17:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 18:
@@ -255,7 +255,7 @@ void func_800D0C14(void) // 0x800D0C14
         case 22:
             Event_DisplayMapMsgWithAudio(28, &D_800D2736, &D_800D26D0);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(127.0f), Q12(177.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(9.8f), false);
+            Event_WaitTimer(Q12(9.8f), false);
             break;
 
         case 23:

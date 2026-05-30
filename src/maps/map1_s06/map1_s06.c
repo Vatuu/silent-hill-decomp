@@ -110,7 +110,7 @@ void func_800D5614(void) // 0x800D5614
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             D_800DAF78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.1f, 12);
             break;
 
@@ -132,7 +132,7 @@ void func_800D5614(void) // 0x800D5614
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 9:
@@ -140,7 +140,7 @@ void func_800D5614(void) // 0x800D5614
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 11:
@@ -148,7 +148,7 @@ void func_800D5614(void) // 0x800D5614
             break;
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 13:
@@ -208,7 +208,7 @@ void func_800D5B98(void) // 0x800D5B98
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -310,7 +310,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 3:
@@ -340,7 +340,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
         case 8:
             func_800D5D6C(0);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 9:
@@ -356,7 +356,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
         case 10:
             func_800D5D6C(122);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 11:
@@ -376,7 +376,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
                 if (g_SysWork.sysStateSteps[0] == 11)
                 {
-                    Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+                    Event_WaitTimer(Q12(1.5f), false);
                 }
             }
             break;

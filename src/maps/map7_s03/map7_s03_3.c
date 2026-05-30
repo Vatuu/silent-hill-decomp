@@ -1482,7 +1482,7 @@ void func_800E3F30(void) // 0x800E3F30
         case 14:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(32.0f), Q12(59.0f), true, false);
             func_800D6788();
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 15:
@@ -1770,7 +1770,7 @@ void func_800E4714(void) // 0x800E4714
             SysWork_StateStepIncrement(0);
 
         case 30:
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
             break;
 
         default:
@@ -2015,7 +2015,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 34:
             g_Cutscene_Timer = Q12(321.0f);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
 
             g_Cutscene_UpdateBin = false;
             func_800D70EC();
@@ -2310,7 +2310,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 2:
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio596);
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 3:
@@ -3531,7 +3531,7 @@ void func_800E8D20(void) // 0x800E8D20
         case 7:
             g_Cutscene_Timer = Q12(123.0f);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 8:

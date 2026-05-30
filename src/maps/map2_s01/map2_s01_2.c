@@ -168,7 +168,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 4:
             Event_DisplayMapMsgWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         case 5:
@@ -209,7 +209,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimReset, playerChara, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 9:
@@ -221,7 +221,7 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 12:
@@ -230,7 +230,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 13:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -270,7 +270,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 20:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
 
             if (g_Cutscene_Timer < Q12(142.0f))
             {
@@ -290,7 +290,7 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 22:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
 
             if (g_Cutscene_Timer >= Q12(166.0f))
             {
@@ -343,7 +343,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 26:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 27:
@@ -351,7 +351,7 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 28:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         case 29:
@@ -360,7 +360,7 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrement(0);
 
         case 30:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case EventState_Skip:

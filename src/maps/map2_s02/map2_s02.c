@@ -96,7 +96,7 @@ void func_800E9EAC(void) // 0x800E9EAC
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(1.2f), false);
+            Event_WaitTimer(Q12(1.2f), false);
             break;
 
         default:

@@ -223,7 +223,7 @@ void func_800DAA28(void) // 0x800DAA28
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -302,7 +302,7 @@ void func_800DABC4(void) // 0x800DABC4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -435,7 +435,7 @@ void func_800DAF18(void) // 0x800DAF18
             g_SysWork.sysStateSteps[0]++;
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -561,7 +561,7 @@ void func_800DAF18(void) // 0x800DAF18
             g_SysWork.sysStateSteps[0]++;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 6:
@@ -862,7 +862,7 @@ void func_800DBEC8(void) // 0x800DBEC8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -874,7 +874,7 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 5:
@@ -935,7 +935,7 @@ void func_800DC0F8(void) // 0x800DC0F8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1014,7 +1014,7 @@ void func_800DC310(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1037,7 +1037,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 5:
@@ -1054,7 +1054,7 @@ void func_800DC310(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case EventState_LockerOpenWait:
@@ -1130,7 +1130,7 @@ void func_800DC780(void) // 0x800DC780
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
+            Event_WaitTimer(Q12(0.7f), false);
             break;
 
         case 3:
@@ -1142,7 +1142,7 @@ void func_800DC780(void) // 0x800DC780
             break;
 
         case EventState_Flag106True:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         default:
@@ -1165,7 +1165,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1213,7 +1213,7 @@ void func_800DCB54(void) // 0x800DCB54
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1321,7 +1321,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1361,7 +1361,7 @@ void func_800DCDDC(void) // 0x800DCDDC
         case 8:
             func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
-            Event_SysStateStepIncrementDelayed(0x2800, false);
+            Event_WaitTimer(0x2800, false);
             break;
 
         case 9:
@@ -1381,7 +1381,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         default:

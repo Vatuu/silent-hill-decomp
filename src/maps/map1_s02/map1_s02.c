@@ -228,11 +228,11 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 3:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 4:
@@ -253,7 +253,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(2.2f), false);
+            Event_WaitTimer(Q12(2.2f), false);
             break;
 
         case 9:
@@ -261,7 +261,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         default:
@@ -302,7 +302,7 @@ void func_800DA8F8(void) // 0x800DA8F8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -358,7 +358,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
                 SysWork_StateStepIncrement(0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 7)
             {
@@ -387,7 +387,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
                 SysWork_StateStepIncrement(0);
             }
 
-            Event_SysStateStepIncrementDelayed(Q12(4.0f), false);
+            Event_WaitTimer(Q12(4.0f), false);
 
             if (g_SysWork.sysStateSteps[0] == 11)
             {
@@ -518,7 +518,7 @@ void func_800DB058(void) // 0x800DB058
         case 0:
             // Freeze player.
             Player_ControlFreeze();
-            Player_MoveDistanceClear();
+            Player_MoveSpeedClear();
 
             g_SysWork.cutsceneBorderState = 20;
 
@@ -540,7 +540,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 3:
@@ -620,11 +620,11 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 3:
@@ -633,7 +633,7 @@ void func_800DB368(void) // 0x800DB368
 
         case 4:
             Event_PathWaypointExecutePlayer(53, 1, false);
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 5:
@@ -653,7 +653,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 9:
@@ -663,7 +663,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
             break;
 
         case 11:
@@ -707,7 +707,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
+            Event_WaitTimer(Q12(1.8f), false);
             break;
 
         case 18:
@@ -715,7 +715,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 19:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 20:
@@ -728,7 +728,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 22:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 23:
@@ -746,7 +746,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 25:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 26:
@@ -812,7 +812,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -909,7 +909,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -992,7 +992,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             if (D_800E1FE2 == 0)
             {
                 Event_CameraPositionSet(NULL, Q12(61.0f), Q12(-1.2f), Q12(-60.0f), Q12(2.5f), Q12(0.75f), Q12(1.5f), Q12(0.5f), false);
-                Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+                Event_WaitTimer(Q12(2.0f), false);
 
                 if (g_SysWork.sysStateSteps[0] != 2 && g_SysWork.sysStateSteps[0] != 4)
                 {
@@ -1031,7 +1031,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             g_SysWork.sysStateSteps[0]++;
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 7:
@@ -1200,11 +1200,11 @@ void func_800DCF00(void) // 0x800DCF00
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 3:
@@ -1260,7 +1260,7 @@ void func_800DD208(void) // 0x800DD208
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:

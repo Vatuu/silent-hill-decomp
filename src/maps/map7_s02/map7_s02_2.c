@@ -274,7 +274,7 @@ void func_800DA248(void) // 0x800DA248
         case 4:
             Event_DisplayMapMsgWithAudio(111, &D_800EB6B0, &D_800E9CE4);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 5:
@@ -477,7 +477,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
         case 9:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(101.0f), Q12(152.0f), true, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             break;
 
         case 10:
@@ -505,7 +505,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 16:
@@ -672,7 +672,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -688,7 +688,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 4:
@@ -736,7 +736,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 13:
@@ -792,7 +792,7 @@ void func_800DBB34(void) // 0x800DBB34
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             break;
 
         case 4:
@@ -800,7 +800,7 @@ void func_800DBB34(void) // 0x800DBB34
                              Event_TweenLinear(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
                              Event_TweenLinear(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
                              Event_TweenLinear(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-            Event_SysStateStepIncrementDelayed(Q12(3.0f), false);
+            Event_WaitTimer(Q12(3.0f), false);
             break;
 
         case 5:
@@ -818,7 +818,7 @@ void func_800DBB34(void) // 0x800DBB34
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 8:
@@ -826,7 +826,7 @@ void func_800DBB34(void) // 0x800DBB34
                              Event_TweenLinear(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
                              Event_TweenLinear(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
                              Event_TweenLinear(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-            Event_SysStateStepIncrementDelayed(Q12(3.4f), false);
+            Event_WaitTimer(Q12(3.4f), false);
             break;
 
         case 9:
@@ -837,7 +837,7 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 11:
@@ -845,7 +845,7 @@ void func_800DBB34(void) // 0x800DBB34
                              Event_TweenLinear(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
                              Event_TweenLinear(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
                              Event_TweenLinear(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 12:
@@ -858,7 +858,7 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 13:
-            Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
+            Event_WaitTimer(Q12(1.0f), false);
 
             if (g_SysWork.sysStateSteps[0] != 13)
             {
@@ -970,7 +970,7 @@ void func_800DC14C(void) // 0x800DC14C
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Event_SysStateStepIncrementDelayed(Q12(4.5f), false);
+            Event_WaitTimer(Q12(4.5f), false);
             break;
 
         case 13:
@@ -1040,7 +1040,7 @@ void func_800DC778(void) // 0x800DC778
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1117,7 +1117,7 @@ void func_800DC954(void) // 0x800DC954
 
         case 6:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         case 7:
@@ -1351,7 +1351,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1453,7 +1453,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             break;
 
         case 9:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         default:
@@ -1511,7 +1511,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1524,7 +1524,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 4:
@@ -1553,15 +1553,15 @@ void func_800DD9E8(void) // 0x800DD9E8
                              Event_TweenLinear(Q12(-0.0301f), Q12(2.0f), 2) - Q12(60.76f),
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
 
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 6:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(2.4f), false);
+            Event_WaitTimer(Q12(2.4f), false);
             break;
 
         default:
@@ -1587,7 +1587,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -1609,7 +1609,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 7:
@@ -1904,7 +1904,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             break;
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 8:
@@ -2180,7 +2180,7 @@ void func_800DFB48(void) // 0x800DFB48
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -2209,7 +2209,7 @@ void func_800DFB48(void) // 0x800DFB48
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_SysStateStepIncrementDelayed(Q12(0.3f), false);
+            Event_WaitTimer(Q12(0.3f), false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
@@ -2686,7 +2686,7 @@ void func_800E0CB4(void) // 0x800E0CB4
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_SysStateStepIncrementDelayed(Q12(0.5f), false);
+            Event_WaitTimer(Q12(0.5f), false);
             break;
 
         default:
@@ -2999,7 +2999,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -3063,7 +3063,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.7f), false);
+            Event_WaitTimer(Q12(0.7f), false);
             break;
 
         case 6:
@@ -3241,7 +3241,7 @@ void func_800E32E0(void) // 0x800E32E0
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
@@ -3251,7 +3251,7 @@ void func_800E32E0(void) // 0x800E32E0
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
+            Event_WaitTimer(Q12(0.6f), false);
             break;
 
         case 8:

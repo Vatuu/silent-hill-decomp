@@ -94,7 +94,7 @@ void func_800D61AC(void) // 0x800D61AC
 
         case 2:
             Event_PathWaypointExecutePlayer(53, 5, false);
-            Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
+            Event_WaitTimer(Q12(1.8f), false);
             break;
 
         case 3:
@@ -109,7 +109,7 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
+            Event_WaitTimer(Q12(0.8f), false);
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-112.5f), Q12(-120.0f), Q12(109.0f));
             break;
 
@@ -120,7 +120,7 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 7:
-            Event_SysStateStepIncrementDelayed(Q12(0.2f), false);
+            Event_WaitTimer(Q12(0.2f), false);
             break;
 
         case 8:
@@ -152,7 +152,7 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
+            Event_WaitTimer(Q12(1.5f), false);
             break;
 
         default:
@@ -179,7 +179,7 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -205,7 +205,7 @@ void func_800D6800(void) // 0x800D6800
 
         case 3:
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
+            Event_WaitTimer(Q12(3.5f), false);
 
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-120.0f);
@@ -226,7 +226,7 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
+            Event_WaitTimer(Q12(2.0f), false);
             break;
 
         case 6:
@@ -321,7 +321,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085DF0();
+            Event_WaitPlayerStop();
             break;
 
         case 2:
@@ -368,7 +368,7 @@ void func_800D6BC0(void) // 0x800D6BC0
         case 8:
             func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(154.31f, -15.5f, 24.07f));
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 9:
@@ -407,7 +407,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 10:
-            Event_SysStateStepIncrementDelayed(Q12(2.5f), false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         default:

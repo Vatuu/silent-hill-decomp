@@ -15,7 +15,7 @@ void Player_ControlFreeze(void);
 
 void Player_ControlUnfreeze(bool setIdle);
 
-bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
+bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
 void Player_AnimStateSet(s32 playerExtraState);
 
@@ -32,9 +32,9 @@ void Player_AnimUnlock(void);
 s32 Player_AnimPlaybackStateGet(void);
 
 /** Triggers at specific points after the start of a cutscene or dialogue. */
-bool Player_MoveDistanceIsZero(void);
+bool Player_MoveSpeedIsZero(void);
 
-void Player_MoveDistanceClear(void);
+void Player_MoveSpeedClear(void);
 
 void sharedFunc_800D2E6C_0_s00(void);
 
