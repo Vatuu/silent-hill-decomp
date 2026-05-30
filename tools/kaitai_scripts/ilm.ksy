@@ -21,7 +21,7 @@ seq:
   - id: is_initialized
     type: u1
 
-  - type: u1
+  - size: 1
 
   - id: name_ofs
     type: u4
@@ -63,7 +63,7 @@ types:
         type: strz
         size: 6
 
-      - type: u1
+      - size: 1
 
       - id: base_index
         type: u1
@@ -72,7 +72,7 @@ types:
       - id: normal_base_index
         type: u1
 
-      - type: u1
+      - size: 1
 
       - id: ofs
         type: u4
@@ -93,7 +93,7 @@ types:
         type: u1
       - id: normal_count
         type: u1
-      - type: u1
+      - size: 1
       - id: prims_offset
         type: u4
       - id: vertex_xy_offset

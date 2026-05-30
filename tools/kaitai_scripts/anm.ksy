@@ -45,7 +45,7 @@ seq:
     type: u1
     doc: Translations are scaled by `1 << scale_log2`.
 
-  - type: u1
+  - size: 1
 
   - id: bones
     type: bone

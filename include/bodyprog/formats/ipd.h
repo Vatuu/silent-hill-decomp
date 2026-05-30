@@ -72,9 +72,7 @@ typedef struct _IpdCollisionData_18
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
-/** @note Sparaga's investigation over this file format shows this information is actually embed
- * in the IPD file.
- */
+/** @note Sparagas' investigation of this file format suggest this data is embedded in the IPD file. */
 typedef struct _IpdCollisionData
 {
     /* 0x0    */ q23_8                  positionX;

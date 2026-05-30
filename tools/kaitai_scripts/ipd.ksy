@@ -97,10 +97,19 @@ types:
       - id: position_z
         type: s4
 
-      - id: bitfield_8
-        type: u4
+      - id: coll_point_count
+        type: b8
 
-      - id: ptr_c
+      - id: ptr_10_count
+        type: b8
+
+      - id: ptr_14_count
+        type: b8
+
+      - id: ptr_18_count
+        type: b8
+
+      - id: collision_vertices_ptr
         type: u4
 
       - id: ptr_10
@@ -112,16 +121,16 @@ types:
       - id: ptr_18
         type: u4
 
-      - id: field_1c
+      - id: subcell_size
         type: s2
 
-      - id: field_1e
+      - id: subcell_x_count
         type: u1
 
-      - id: field_1f
+      - id: subcell_z_count
         type: u1
 
-      - id: ptr_20
+      - id: cell_ranges_ptr
         type: u4
 
       - id: field_24
@@ -136,11 +145,14 @@ types:
       - id: ptr_2c
         type: u4
 
-      - id: field_30
+      - id: unk_loaded_count
         type: u1
 
       - id: unk_31
         size: 3
+
+      - id: field_34
+        size: 256
 
   ipd_model_info:
     seq:
@@ -165,22 +177,21 @@ types:
       - id: field_1
         type: u1
 
-      - id: field_2
+      - id: subcell_count
         type: u1
 
-      - id: unk_3
-        size: 1
+      - size: 1
 
-      - id: field_4
+      - id: min_x
         type: s2
 
-      - id: field_6
+      - id: max_x
         type: s2
 
-      - id: field_8
+      - id: min_z
         type: s2
 
-      - id: field_a
+      - id: max_z
         type: s2
 
       - id: field_ptr_c_offset
@@ -189,7 +200,7 @@ types:
       - id: field_ptr_10_offset
         type: u4
 
-      - id: field_ptr_14_offset
+      - id: subcell_positions_ptr_offset
         type: u4
 
   # ========
