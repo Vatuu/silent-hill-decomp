@@ -323,7 +323,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 12:
-            func_80086C58(&g_SysWork.npcs[0], 10);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[0], 10);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             break;
 

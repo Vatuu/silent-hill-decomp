@@ -336,7 +336,7 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80086DA8(FILE_TIM_PIANO1_TIM, Q12(2.5f));
+            Event_BgTextureLoadFadeIn(FILE_TIM_PIANO1_TIM, Q12(2.5f));
             break;
 
         case 2:
@@ -725,7 +725,7 @@ void func_800D857C(void) // 0x800D857C
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:

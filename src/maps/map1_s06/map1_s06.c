@@ -212,7 +212,7 @@ void func_800D5B98(void) // 0x800D5B98
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -238,7 +238,7 @@ void func_800D5B98(void) // 0x800D5B98
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:

@@ -336,17 +336,17 @@ void func_800D81CC(void) // 0x800D81CC
         case 3:
             if (Savegame_EventFlagGet(EventFlag_72))
             {
-                 func_80086E50(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
+                 Event_BgTextureFadeIn(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
             }
             else
             {
                 if (Savegame_EventFlagGet(EventFlag_71))
                 {
-                    func_80086E50(FILE_TIM_CLOCK12_TIM, Q12(3.0f), Q12(2.0f));
+                    Event_BgTextureFadeIn(FILE_TIM_CLOCK12_TIM, Q12(3.0f), Q12(2.0f));
                 }
                 else
                 {
-                    func_80086E50(FILE_TIM_CLOCK_TIM, Q12(3.0f), Q12(2.0f));
+                    Event_BgTextureFadeIn(FILE_TIM_CLOCK_TIM, Q12(3.0f), Q12(2.0f));
                 }
             }
             break;
@@ -404,7 +404,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         case 3:
-            func_80086E50(FILE_TIM_PAPER1_TIM, Q12(3.0f), Q12(2.0f));
+            Event_BgTextureFadeIn(FILE_TIM_PAPER1_TIM, Q12(3.0f), Q12(2.0f));
             break;
 
         case 4:

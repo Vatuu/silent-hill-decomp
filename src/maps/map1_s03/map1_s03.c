@@ -227,7 +227,7 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -258,7 +258,7 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 4:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -306,7 +306,7 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -377,7 +377,7 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         case 10:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -574,7 +574,7 @@ void func_800DAF18(void) // 0x800DAF18
 
         case 7:
             D_800E20FE++;
-            func_80086C58(&g_SysWork.playerWork.player, 107);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 107);
             break;
 
         case 8:
@@ -727,7 +727,7 @@ void func_800DAF18(void) // 0x800DAF18
 
         case 12:
             D_800E20FE++;
-            func_80086C58(&g_SysWork.playerWork.player, 108);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 108);
             break;
 
         default:
@@ -1045,7 +1045,7 @@ void func_800DC310(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_80086C58(&g_SysWork.playerWork.player, 85);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 85);
             break;
 
         case 7:
@@ -1062,7 +1062,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         case EventState_LockerOpen:
-            func_80086E50(FILE_TIM_LOCKER1_TIM, Q12(3.0f), Q12(1.5f));
+            Event_BgTextureFadeIn(FILE_TIM_LOCKER1_TIM, Q12(3.0f), Q12(1.5f));
             break;
 
         case 11:
@@ -1169,7 +1169,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -1193,7 +1193,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -1217,7 +1217,7 @@ void func_800DCB54(void) // 0x800DCB54
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -1253,7 +1253,7 @@ void func_800DCB54(void) // 0x800DCB54
             break;
 
         case 10:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:

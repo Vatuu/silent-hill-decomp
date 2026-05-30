@@ -679,7 +679,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 15:
-            func_80086D04(&g_SysWork.playerWork.player);
+            Event_CharaAnimUnlockPlayUntilEnd(&g_SysWork.playerWork.player);
             break;
 
         default:

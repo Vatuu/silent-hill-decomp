@@ -128,7 +128,7 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_80086C58(&g_SysWork.playerWork.player, 109);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 109);
             break;
 
         case 10:

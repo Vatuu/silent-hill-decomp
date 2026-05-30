@@ -200,7 +200,7 @@ void func_800D4E64(void) // 0x800D4E64
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -256,7 +256,7 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 14:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -283,7 +283,7 @@ void func_800D519C(void) // 0x800D519C
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -333,7 +333,7 @@ void func_800D519C(void) // 0x800D519C
             SysWork_StateStepIncrement(0);
 
         case 12:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -368,7 +368,7 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -418,7 +418,7 @@ void func_800D54D0(void) // 0x800D54D0
             break;
 
         case 10:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -544,7 +544,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 14:
-            func_80086C58(&g_SysWork.playerWork.player, 165);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 165);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(94.0f), Q12(150.0f), false, false);
             break;
 

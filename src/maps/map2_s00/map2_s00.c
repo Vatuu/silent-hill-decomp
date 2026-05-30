@@ -409,7 +409,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -435,7 +435,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -679,7 +679,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -814,7 +814,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 19:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         case 22:
@@ -850,7 +850,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -876,7 +876,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 8:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -900,7 +900,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -932,7 +932,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 9:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -969,7 +969,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -1009,7 +1009,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 11:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default: // `EventState_Finish`
@@ -1097,7 +1097,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case EventState_8:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default: // `EventState_Finish`

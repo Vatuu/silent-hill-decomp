@@ -171,7 +171,7 @@ void func_800D1628(void) // 0x800D1628
             break;
 
         case 7:
-            func_80086D04(&g_SysWork.playerWork.player);
+            Event_CharaAnimUnlockPlayUntilEnd(&g_SysWork.playerWork.player);
             break;
 
         default:
@@ -203,7 +203,7 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -234,7 +234,7 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         case 9:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -380,7 +380,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 15:
-            func_80086C58(&g_SysWork.npcs[0], 16);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[0], 16);
             Model_AnimFlagsSet(&g_SysWork.npcs[0].model, 2);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;

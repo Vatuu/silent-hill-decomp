@@ -141,17 +141,17 @@ void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, 
 void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
                       q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
 
-/** Maybe `Chara_PlayAnim`. State handler. */
-void func_80086C58(s_SubCharacter* chara, s32 arg1);
+/** Starts an animation on a character. Increments `sysStateSteps[0]` once animation has ended. */
+void Event_CharaAnimPlayUntilEnd(s_SubCharacter* chara, s32 animState);
 
-/** State handler. */
-void func_80086D04(s_SubCharacter* chara);
+/** Unlocks/resumes an already playing animation on a character. Increments `sysStateSteps[0]` once animation has ended. */
+void Event_CharaAnimUnlockPlayUntilEnd(s_SubCharacter* chara);
 
-/** State handler. */
-void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
+/** Starts a screen fade and begins loading a background texture. Increments `sysStateSteps[0]` once fade has completed. */
+void Event_BgTextureLoadFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep);
 
-/** State handler. */
-void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+/** Fades screen while loading a background texture. Once texture is loaded, draws it to screen and increments `sysStateSteps[0]`. */
+void Event_BgTextureFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 /** Odd code?
  * This function appears to circumvent an issue with fading.
@@ -169,7 +169,8 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  */
 void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
-void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+/** @unused Freezes game and fades in a background texture, remaining on screen until button is pressed. */
+void Event_DisplayBgTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 

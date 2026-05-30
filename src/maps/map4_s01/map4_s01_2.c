@@ -330,7 +330,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 11:
-            func_80086C58(playerChara, 119);
+            Event_CharaAnimPlayUntilEnd(playerChara, 119);
             break;
 
         case 12:
@@ -480,7 +480,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 40:
-            func_80086C58(playerChara, 0x78);
+            Event_CharaAnimPlayUntilEnd(playerChara, 0x78);
 
             g_SysWork.lightIntensity = Q12(1.4f);
 
@@ -613,7 +613,7 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 4:
-            func_80086C58(playerChara, 116);
+            Event_CharaAnimPlayUntilEnd(playerChara, 116);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer1, Q12(10.0f), Q12(35.0f), Q12(71.0f), true, false);
             break;
 

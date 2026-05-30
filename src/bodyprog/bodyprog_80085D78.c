@@ -50,7 +50,7 @@ void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep) // 0x80085DC0
 void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (g_MapOverlayHdr.playerMoveDistIsZero() != NULL || g_SysWork.timer_2C > Q12(1.0f))
+    if (g_MapOverlayHdr.playerMoveDistIsZero() || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
     }
@@ -664,12 +664,12 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     vcUserWatchTarget(&lookAtTarget, &camLookAtMoveParams, warp);
 }
 
-void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
+void Event_CharaAnimPlayUntilEnd(s_SubCharacter* chara, s32 animState) // 0x80086C58
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, chara, arg1, false);
+            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, chara, animState, false);
             SysWork_StateStepIncrement(1);
             break;
 
@@ -683,7 +683,7 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
     }
 }
 
-void func_80086D04(s_SubCharacter* chara) // 0x80086D04
+void Event_CharaAnimUnlockPlayUntilEnd(s_SubCharacter* chara) // 0x80086D04
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -702,7 +702,7 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
+void Event_BgTextureLoadFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -720,7 +720,7 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
     }
 }
 
-void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
+void Event_BgTextureFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -800,7 +800,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
     }
 }
 
-void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
+void Event_DisplayBgTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateSteps[1])
     {

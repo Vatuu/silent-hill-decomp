@@ -2912,7 +2912,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             SysWork_StateStepIncrement(0);
 
         case 38:
-            func_80086C58(&g_SysWork.npcs[0], 5);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[0], 5);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(387.0f), Q12(431.0f), true, false);
             break;
 

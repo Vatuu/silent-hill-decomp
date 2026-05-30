@@ -445,7 +445,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 50:
-            func_80086C58(&g_SysWork.playerWork.player, 71);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 71);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(158.0f), Q12(168.0f), true, false);
             break;

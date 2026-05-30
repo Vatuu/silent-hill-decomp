@@ -1866,7 +1866,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 10:
-            func_80086C58(&g_SysWork.npcs[1], 21);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[1], 21);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(60.0f), Q12(78.0f), true, false);
             break;
 
@@ -1880,7 +1880,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 13:
-            func_80086C58(&g_SysWork.npcs[3], 18);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[3], 18);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(79.0f), Q12(100.0f), true, true);
             break;
 

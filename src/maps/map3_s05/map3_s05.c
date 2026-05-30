@@ -136,7 +136,7 @@ void func_800D5A98(void) // 0x800D5A98
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -171,7 +171,7 @@ void func_800D5A98(void) // 0x800D5A98
             SysWork_StateStepIncrement(0);
 
         case 10:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -211,7 +211,7 @@ void func_800D5C98(void) // 0x800D5C98
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 4:
@@ -247,7 +247,7 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 12:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -376,7 +376,7 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -388,7 +388,7 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         case 5:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -460,7 +460,7 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 4:
@@ -512,11 +512,11 @@ void func_800D64E0(void) // 0x800D64E0
             SysWork_StateStepIncrement(0);
 
         case 11:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         case 12:
-            func_80086C58(&g_SysWork.playerWork.player, 81);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 81);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(23.61f), Q12(-2.78f), Q12(-18.69f), 0, 0, 0, 0, true);
@@ -606,7 +606,7 @@ void func_800D6BE0(void) // 0x800D6BE0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
+            Event_BgTextureFadeIn(FILE_TIM_ALESSA_TIM, 0, 0);
             break;
 
         case 2:
@@ -661,7 +661,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 116);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 116);
             break;
 
         case 3:
@@ -694,7 +694,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 9:
-            func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
+            Event_BgTextureFadeIn(FILE_TIM_ALESSA_TIM, 0, 0);
             break;
 
         case 10:

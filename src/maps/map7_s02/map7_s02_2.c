@@ -744,7 +744,7 @@ void func_800DB738(void) // 0x800DB738
             SysWork_StateStepIncrement(0);
 
         case 14:
-            func_80086D04(&g_SysWork.playerWork.player);
+            Event_CharaAnimUnlockPlayUntilEnd(&g_SysWork.playerWork.player);
             break;
 
         default:
@@ -1044,7 +1044,7 @@ void func_800DC778(void) // 0x800DC778
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -1070,7 +1070,7 @@ void func_800DC778(void) // 0x800DC778
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -2184,7 +2184,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
@@ -2241,7 +2241,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 13:
-            func_80086C58(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -2724,7 +2724,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 SysWork_StateStepIncrement(0);
 
             case 1:
-                func_80086DA8(FILE_TIM_ELCWIRE2_TIM, 0);
+                Event_BgTextureLoadFadeIn(FILE_TIM_ELCWIRE2_TIM, 0);
                 break;
 
             case 2:
