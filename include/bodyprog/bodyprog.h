@@ -920,6 +920,8 @@ extern s_CollisionPoint g_CollisionPointCache;
 
 extern u8 D_800AFD04;
 
+extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
+
 extern u8 D_800AFD05;
 
 extern s32 D_800AFD3C;

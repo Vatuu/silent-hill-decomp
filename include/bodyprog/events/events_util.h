@@ -43,8 +43,6 @@ typedef enum _ScreenFadeCommand
     ScreenFadeCommand_Auto  = 2, // Uses `sysStateSteps[2]` as command.
 } e_ScreenFadeCommand;
 
-extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
-
 /** State step increment for some substate. */
 void Event_SysStateStepIncrement(bool incSubStep);
 

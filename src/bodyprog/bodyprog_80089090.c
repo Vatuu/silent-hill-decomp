@@ -16,6 +16,19 @@
 // VIBRATION HANDLING RELATED
 // ========================================
 
+u8 D_800AFD04 = 0;
+u8 D_800AFD05 = 0;
+// 2 bytes of padding.
+
+bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) =
+{
+    func_80089A30,
+    func_80089BB8,
+    func_80089DF0,
+    func_8008973C,
+    func_80089D0C
+};
+
 void func_80089090(s32 arg0) // 0x80089090
 {
     func_80089524(&g_SysWork.field_2514, arg0);

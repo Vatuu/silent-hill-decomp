@@ -372,7 +372,7 @@ segments:
       - [0x8AE00, data]
       - [0x8AE24, .data, items/item_screens_3]
       - [0x8D618, .data, view/vc_main]
-      - [0x8D688, .data, bodyprog_80085D78]
+      - [0x8D688, .data, bodyprog_80089090]
       # 0x8D6A0 should hold D_800AFD1C here, but that gets included by the bodyprog_combat_8008A058 .bss below somehow?
       - [0x8D6C0, .data, water]
       - [0x8D73C, .data, demo]
