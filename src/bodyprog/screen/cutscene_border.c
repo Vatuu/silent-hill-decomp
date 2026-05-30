@@ -123,10 +123,10 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     switch (g_SysWork.cutsceneBorderState)
     {
-        case 18:
+        case CutsceneBorderState_FadeInStart:
             g_SysWork.cutsceneBorderState++;
 
-        case 19:
+        case CutsceneBorderState_FadingIn:
             g_BlackBorderShade += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
             if (g_BlackBorderShade >= Q12_CLAMPED(1.0f))
             {
@@ -137,34 +137,34 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
-        case 20:
-        case 22:
+        case CutsceneBorderState_ForceShow:
+        case CutsceneBorderState_FadeOutStart:
             g_BlackBorderShade = Q12_CLAMPED(1.0f);
             g_SysWork.cutsceneBorderState++;
 
-        case 21:
+        case CutsceneBorderState_Shown:
             Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
-        case 23:
+        case CutsceneBorderState_FadingOut:
             g_BlackBorderShade -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
             if (g_BlackBorderShade <= Q12(0.0f))
             {
                 g_BlackBorderShade = Q12(0.0f);
-                g_SysWork.cutsceneBorderState = 0;
+                CutsceneBorder_Reset();
                 return;
             }
 
             Screen_BlackBorderDraw(poly, g_BlackBorderShade);
             break;
 
-        case 0:
-            g_BlackBorderShade    = Q12(0.0f);
-            g_SysWork.cutsceneBorderState    = 1;
-            g_SysWork.sysFlags &= ~SysFlag_CutsceneActive;
+        case CutsceneBorderState_Reset:
+            g_BlackBorderShade            = Q12(0.0f);
+            g_SysWork.cutsceneBorderState = CutsceneBorderState_None;
+            g_SysWork.sysFlags           &= ~SysFlag_CutsceneActive;
             return;
 
-        case 1:
+        case CutsceneBorderState_None:
             return;
     }
 

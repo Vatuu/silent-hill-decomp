@@ -150,7 +150,7 @@ void func_800D0B64(void) // 0x800D0B64
             Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-34.0f), Q12_ANGLE(-100.0f), 0);
             func_8008D438();
 
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
 
             ScreenFade_ResetTimestep();
 

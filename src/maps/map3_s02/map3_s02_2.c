@@ -250,7 +250,7 @@ void func_800D0608(void) // 0x800D0608
             func_8003A16C();
             ScreenFade_ResetTimestep();
 
-            g_SysWork.cutsceneBorderState    = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_DWSTWY_DMS, FS_BUFFER_24);
@@ -301,7 +301,7 @@ void func_800D0608(void) // 0x800D0608
             Game_FlashlightAttributesFix();
 
             g_SysWork.lightIntensity      = Q12(1.0f);
-            g_SysWork.cutsceneBorderState = 0;
+            CutsceneBorder_Reset();
 
             Savegame_EventFlagSet(EventFlag_237);
 

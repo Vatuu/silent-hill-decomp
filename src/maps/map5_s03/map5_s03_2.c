@@ -343,7 +343,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 11:
-            g_SysWork.cutsceneBorderState    = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();

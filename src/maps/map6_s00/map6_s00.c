@@ -141,7 +141,7 @@ void func_800EB11C(void) // 0x800EB11C
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.cutsceneBorderState    = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_RSU_DMS, FS_BUFFER_15);

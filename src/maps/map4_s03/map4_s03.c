@@ -3457,7 +3457,7 @@ void func_800D6774(void) // 0x800D6774
             }
 
             Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             ScreenFade_ResetTimestep();
 
             g_SysWork.playerWork.player.position.vy = surface.groundHeight;

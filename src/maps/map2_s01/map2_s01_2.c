@@ -142,7 +142,7 @@ void func_800CED88(void) // 0x800CED88
             sharedFunc_800D88AC_0_s00(dahliaChara);
 
             g_Cutscene_Timer = Q12(0.0f);
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, playerChara, 51, false);

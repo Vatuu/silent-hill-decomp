@@ -314,7 +314,7 @@ void func_800EBF70(void) // 0x800EBF70
             Player_ControlFreeze();
             func_800CD818();
 
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, 0, false);
 

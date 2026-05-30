@@ -643,7 +643,7 @@ void func_800D6D1C(void) // 0x800D6D1C
     {
         case 0:
             Player_ControlFreeze();
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(18.1f), Q12(-1.71f), Q12(-97.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

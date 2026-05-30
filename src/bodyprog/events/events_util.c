@@ -247,7 +247,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
                 }
                 else
                 {
-                    g_SysWork.cutsceneBorderState = 18;
+                    CutsceneBorder_FadeInStart();
 
                     if (fadeType == ScreenFadeType_CutsceneBorders)
                     {
@@ -267,7 +267,7 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
                 }
                 else
                 {
-                    g_SysWork.cutsceneBorderState = 22;
+                    CutsceneBorder_FadeOutStart();
                 }
             }
 
@@ -286,8 +286,8 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
                     Event_SysStateStepIncrement(incSubStep);
                 }
             }
-            else if ((fadeOut == false && g_SysWork.cutsceneBorderState == 1) ||
-                     (fadeOut == true  && g_SysWork.cutsceneBorderState == 21))
+            else if ((fadeOut == false && g_SysWork.cutsceneBorderState == CutsceneBorderState_None) ||
+                     (fadeOut == true  && g_SysWork.cutsceneBorderState == CutsceneBorderState_Shown))
             {
                 Event_SysStateStepIncrement(incSubStep);
             }

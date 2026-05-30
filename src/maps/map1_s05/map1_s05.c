@@ -75,7 +75,7 @@ void func_800D49AC(void) // 0x800D49AC
             Player_ControlFreeze();
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.lightIntensity      = Q12(0.0f);
 
             // Warp camera.

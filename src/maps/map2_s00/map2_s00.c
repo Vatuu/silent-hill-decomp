@@ -347,7 +347,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             break;
 
         case 4:
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
 
             Event_PaperMapCmd(PaperMapCmd_Unload, 0);
             Event_CameraPositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -481,7 +481,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     {
         case 0:
             Player_ControlFreeze();
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             D_800F228C = 0;
             g_Gfx_PaperMapMarkingAlpha = 0;
 
@@ -1336,7 +1336,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.playerWork.player.position.vx = Q12(147.7f);
             g_SysWork.playerWork.player.position.vz = Q12(376.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
@@ -1808,7 +1808,7 @@ void func_800EB3F4(void) // 0x800EB3F4
 
             Savegame_EventFlagSet(EventFlag_169);
 
-            g_SysWork.cutsceneBorderState = 20;
+            CutsceneBorder_ForceShow();
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
