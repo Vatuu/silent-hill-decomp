@@ -96,7 +96,7 @@ segments:
       - [0x3FE4, .rodata, collision]
       - [0x4BF0, .rodata, player_control]
       - [0x5CF0, .rodata, view/vc_main]
-      - [0x5F9C, .rodata, bodyprog_80085D78]
+      - [0x5F9C, .rodata, events/events_util]
       - [0x60A4, .rodata, bodyprog_80089090]
       - [0x6444, .rodata, bodyprog_combat_8008A058]
       - [0x6754, .rodata, water]
@@ -192,7 +192,7 @@ segments:
       - [0x44C8C,   c, collision]
       - [0x4BB84,   c, player_control]
       - [0x5BDE0,   c, view/vc_main]
-      - [0x61218,   c, bodyprog_80085D78]
+      - [0x61218,   c, events/events_util]
       - [0x63348,   c, bodyprog_bgm_80087EA8]
       - [0x63658,   c, bodyprog_800881B8]
       - [0x6411C,   c, chara_spawn]
@@ -506,7 +506,7 @@ segments:
                                              # to make proper guesses where to do the split is.
       - [0x9FACC,  pad] # Garbage.
       - [0x9FAD0, .bss, view/vc_main]
-      - [0x9FAE0, .bss, bodyprog_80085D78]
+      - [0x9FAE0, .bss, events/events_util]
       - [0x9FBC8, .bss, bodyprog_combat_8008A058]
       - [0x9FCB8, .bss, water]
       - [0x9FCE0, .bss, demo]

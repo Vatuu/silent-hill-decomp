@@ -926,9 +926,9 @@ vcCamMatNoise                                = 0x80085A7C; // type:func
 Vc_VectorMagnitudeCalc                       = 0x80085B1C; // type:func - Originally could've be something like `vcGetXZSumDist`.
 vcGetXZSumDistFromLimArea                    = 0x80085C80; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x061218   VA: 0x80085D78   subsegment: c, bodyprog_80085D78
-//--------------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x061218   VA: 0x80085D78   subsegment: c, events/events_util
+//---------------------------------------------------------------------
 Event_SysStateStepIncrement                  = 0x80085D78; // type:func
 Event_SysStateStepSet                        = 0x80085DC0; // type:func
 Event_SysStateStepIncrementDelayed           = 0x80085E6C; // type:func
@@ -3069,9 +3069,9 @@ g_Player_HeadingAngle                        = 0x800C4608;
 vcWatchMvPrmSt                               = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer                              = 0x800C463C; // type:s32
 
-//-----------------------------------------------------------------------
-//--- PA: 0x09FAE0   VA: 0x800C4640   subsegment: .bss, bodyprog_80085D78
-//-----------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x09FAE0   VA: 0x800C4640   subsegment: .bss, events/events_util
+//------------------------------------------------------------------------
 D_800C4640                                   = 0x800C4640; // size:0xC0
 
 //-----------------------------------------------------------
