@@ -104,13 +104,13 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
-    collData->vertCollPoints = (u8*)collData->vertCollPoints + (u32)collData;
-    collData->ptr_10         = (u8*)collData->ptr_10 + (u32)collData;
-    collData->ptr_14         = (u8*)collData->ptr_14 + (u32)collData;
-    collData->ptr_18         = (u8*)collData->ptr_18 + (u32)collData;
-    collData->cellRanges     = (u8*)collData->cellRanges + (u32)collData;
-    collData->ptr_28         = (u8*)collData->ptr_28 + (u32)collData;
-    collData->ptr_2C         = (u8*)collData->ptr_2C + (u32)collData;
+    collData->collisionVertices = (u8*)collData->collisionVertices + (u32)collData;
+    collData->ptr_10            = (u8*)collData->ptr_10 + (u32)collData;
+    collData->ptr_14            = (u8*)collData->ptr_14 + (u32)collData;
+    collData->ptr_18            = (u8*)collData->ptr_18 + (u32)collData;
+    collData->cellRanges        = (u8*)collData->cellRanges + (u32)collData;
+    collData->ptr_28            = (u8*)collData->ptr_28 + (u32)collData;
+    collData->ptr_2C            = (u8*)collData->ptr_2C + (u32)collData;
 }
 
 void func_80069994(s_IpdCollisionData* collData) // 0x80069994
@@ -1042,8 +1042,8 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     collState->field_CC.field_6.vy = temp_a3->field_2_0;
     collState->field_CC.field_6.vz = temp_a3->field_4;
 
-    collState->field_CC.vertCollPoint0 = collData->vertCollPoints[temp_a3->vertCollPointIdx1];
-    collState->field_CC.vertCollPoint1 = collData->vertCollPoints[temp_a3->vertCollPointIdx0];
+    collState->field_CC.collisionVertex0 = collData->collisionVertices[temp_a3->collisionVertexIdx1];
+    collState->field_CC.collisionVertex1 = collData->collisionVertices[temp_a3->collisionVertexIdx0];
 
     collState->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
 
@@ -1055,8 +1055,8 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
         if (collState->charaState.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->groundType == GroundType_12))
         {
-            collState->field_CC.vertCollPoint0.vy -= Q8(16.0f);
-            collState->field_CC.vertCollPoint1.vy -= Q8(16.0f);
+            collState->field_CC.collisionVertex0.vy -= Q8(16.0f);
+            collState->field_CC.collisionVertex1.vy -= Q8(16.0f);
         }
     }
 
@@ -1070,8 +1070,8 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
         if (collState->charaState.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->groundType == GroundType_12))
         {
-            collState->field_CC.vertCollPoint0.vy = Q8(-16.0f);
-            collState->field_CC.vertCollPoint1.vy = Q8(-16.0f);
+            collState->field_CC.collisionVertex0.vy = Q8(-16.0f);
+            collState->field_CC.collisionVertex1.vy = Q8(-16.0f);
         }
     }
 
@@ -1085,8 +1085,8 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     gte_rtv0();
     gte_stMAC12(&collState->field_CC.field_20.field_14);
     
-    temp_v0 = PACKED_XZ16(collState->charaPositionFrom.offset.vx - collState->field_CC.vertCollPoint0.vx,
-                          collState->charaPositionFrom.offset.vz - collState->field_CC.vertCollPoint0.vz);
+    temp_v0 = PACKED_XZ16(collState->charaPositionFrom.offset.vx - collState->field_CC.collisionVertex0.vx,
+                          collState->charaPositionFrom.offset.vz - collState->field_CC.collisionVertex0.vz);
     gte_ldvxy0(temp_v0);
     gte_ldvz0();
     gte_rtv0();
@@ -1253,22 +1253,22 @@ void func_8006B8F8(s_CollisionState_CC* arg0) // 0x8006B8F8
     s32                    temp_a2;
     s32                    temp_a3;
 
-    temp_a3                    = (u16)arg0->vertCollPoint0.vx;
-    temp_a1                    = (u16)arg0->vertCollPoint1.vx;
-    temp_a2                    = (u16)arg0->vertCollPoint1.vz;
-    arg0->vertCollPoint1.vx      = temp_a3;
-    temp_a3                    = (u16)arg0->vertCollPoint0.vy;
-    arg0->vertCollPoint0.vy      = arg0->vertCollPoint1.vy;
-    arg0->vertCollPoint0.vx      = temp_a1;
+    temp_a3                    = (u16)arg0->collisionVertex0.vx;
+    temp_a1                    = (u16)arg0->collisionVertex1.vx;
+    temp_a2                    = (u16)arg0->collisionVertex1.vz;
+    arg0->collisionVertex1.vx      = temp_a3;
+    temp_a3                    = (u16)arg0->collisionVertex0.vy;
+    arg0->collisionVertex0.vy      = arg0->collisionVertex1.vy;
+    arg0->collisionVertex0.vx      = temp_a1;
     arg0->field_6.vx           = -arg0->field_6.vx;
-    arg0->vertCollPoint1.vy      = temp_a3;
+    arg0->collisionVertex1.vy      = temp_a3;
     arg0->field_6.vy           = -arg0->field_6.vy;
-    temp_a3                    = (u16)arg0->vertCollPoint0.vz;
-    arg0->vertCollPoint1.vz      = temp_a3;
+    temp_a3                    = (u16)arg0->collisionVertex0.vz;
+    arg0->collisionVertex1.vz      = temp_a3;
     temp_a3                    = arg0->field_C.s_field_0.field_0;
     arg0->field_20.field_14.vx = -arg0->field_20.field_14.vx;
 
-    arg0->vertCollPoint0.vz           = temp_a2;
+    arg0->collisionVertex0.vz           = temp_a2;
     arg0->field_C.s_field_0.field_0 = arg0->field_C.s_field_0.field_1;
 
     ptr = &arg0->field_20;
@@ -1290,8 +1290,8 @@ void func_8006B9C8(s_CollisionState* collState) // 0x8006B9C8
     s32 field_28;
 
     if (collState->field_CC.field_C.s_field_0.field_1 == 0xFF && collState->field_CC.field_20.field_0.vz < 0 &&
-        (collState->charaState.bottomPos >= collState->field_CC.vertCollPoint0.vy ||
-         collState->charaState.bottomPos >= collState->field_CC.vertCollPoint1.vy))
+        (collState->charaState.bottomPos >= collState->field_CC.collisionVertex0.vy ||
+         collState->charaState.bottomPos >= collState->field_CC.collisionVertex1.vy))
     {
         if (collState->field_0_9 && collState->field_CC.field_20.field_C < collState->charaState.radius)
         {
@@ -1331,13 +1331,13 @@ void func_8006BB50(s_CollisionState* collState, s32 arg1) // 0x8006BB50
 
     if (collState->field_CC.field_20.field_0.vx < Q8(0.0f))
     {
-        charaCollDistX = collState->charaPositionFrom.offset.vx - collState->field_CC.vertCollPoint0.vx;
-        charaCollDistZ = collState->charaPositionFrom.offset.vz - collState->field_CC.vertCollPoint0.vz;
+        charaCollDistX = collState->charaPositionFrom.offset.vx - collState->field_CC.collisionVertex0.vx;
+        charaCollDistZ = collState->charaPositionFrom.offset.vz - collState->field_CC.collisionVertex0.vz;
     }
     else if (collState->field_CC.field_6.vz < collState->field_CC.field_20.field_0.vx)
     {
-        charaCollDistX = collState->charaPositionFrom.offset.vx - collState->field_CC.vertCollPoint1.vx;
-        charaCollDistZ = collState->charaPositionFrom.offset.vz - collState->field_CC.vertCollPoint1.vz;
+        charaCollDistX = collState->charaPositionFrom.offset.vx - collState->field_CC.collisionVertex1.vx;
+        charaCollDistZ = collState->charaPositionFrom.offset.vz - collState->field_CC.collisionVertex1.vz;
     }
     else
     {
@@ -1361,20 +1361,20 @@ q23_8 func_8006BC34(s_CollisionState* collState)
     temp_v1 = collState->field_CC.field_20.field_0.vx;
     if (temp_v1 < Q8(0.0f))
     {
-        var_v0 = collState->field_CC.vertCollPoint0.vy;
+        var_v0 = collState->field_CC.collisionVertex0.vy;
     }
     else
     {
         temp_a2 = collState->field_CC.field_6.vz;
         if (temp_a2 < temp_v1)
         {
-            var_v0 = collState->field_CC.vertCollPoint1.vy;
+            var_v0 = collState->field_CC.collisionVertex1.vy;
         }
         else
         {
-            temp_a3 = collState->field_CC.vertCollPoint0.vy;
-            temp_v0 = collState->field_CC.vertCollPoint1.vy;
-            temp_a1 = collState->field_CC.vertCollPoint0.vy;
+            temp_a3 = collState->field_CC.collisionVertex0.vy;
+            temp_v0 = collState->field_CC.collisionVertex1.vy;
+            temp_a1 = collState->field_CC.collisionVertex0.vy;
 
             if (temp_a3 == temp_v0)
             {
@@ -1516,11 +1516,11 @@ void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
     switch (var_v1)
     {
         case 0:
-            func_8006BF88(collState, &collState->field_CC.vertCollPoint0);
+            func_8006BF88(collState, &collState->field_CC.collisionVertex0);
             break;
 
         case 1:
-            func_8006BF88(collState, &collState->field_CC.vertCollPoint1);
+            func_8006BF88(collState, &collState->field_CC.collisionVertex1);
             break;
 
         case 2:
@@ -1562,9 +1562,9 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, s16 arg2) // 0x8006C0C
         return;
     }
 
-    temp = ((collState->field_CC.vertCollPoint1.vy - collState->field_CC.vertCollPoint0.vy) * arg2) / collState->field_CC.field_6.vz;
+    temp = ((collState->field_CC.collisionVertex1.vy - collState->field_CC.collisionVertex0.vy) * arg2) / collState->field_CC.field_6.vz;
 
-    if (temp + collState->field_CC.vertCollPoint0.vy < collState->charaState.bottomPos)
+    if (temp + collState->field_CC.collisionVertex0.vy < collState->charaState.bottomPos)
     {
         collState->field_40 = (u8*)collState->field_CC.ipdCollisionData + (collState->field_CC.field_4 + 52);
         collState->field_34 = 1;
@@ -2882,7 +2882,7 @@ void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollision
                         }
                     }
 
-                    func_8006E78C(state, temp_a1, collData->vertCollPoints, collData->ptr_10, cond0);
+                    func_8006E78C(state, temp_a1, collData->collisionVertices, collData->ptr_10, cond0);
                 }
             }
             else
@@ -2919,8 +2919,8 @@ void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg
     s32       var_v1;
 
     groundType = GroundType_Default;
-    temp_t1 = &arg2[arg1->vertCollPointIdx1];
-    temp_t2 = &arg2[arg1->vertCollPointIdx0];
+    temp_t1 = &arg2[arg1->collisionVertexIdx1];
+    temp_t2 = &arg2[arg1->collisionVertexIdx0];
 
     if (state->field_5E >= temp_t1->vy || state->field_5E >= temp_t2->vy)
     {

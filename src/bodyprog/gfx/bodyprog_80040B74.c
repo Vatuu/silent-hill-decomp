@@ -1493,7 +1493,7 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     }
     ipdHdr->isLoaded = true;
 
-    IpdHeader_FixHeaderOffsets(ipdHdr);
+    Ipd_HeaderPtrsInit(ipdHdr);
     IpdCollData_FixOffsets(&ipdHdr->collisionData);
     LmHeader_FixOffsets(ipdHdr->lmHdr);
     func_8008E4EC(ipdHdr->lmHdr);
@@ -1556,7 +1556,7 @@ bool LmFilter_IsHalfPage(s_Material* mat) // 0x80043D64
     return false;
 }
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
+void Ipd_HeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
     s_IpdModelBuffer* curModelBuf;
 
@@ -1569,8 +1569,8 @@ void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr) // 0x80043DA4
          curModelBuf < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuf++)
     {
-        curModelBuf->field_C  = (u8*)curModelBuf->field_C  + (u32)ipdHdr;
-        curModelBuf->field_10 = (u8*)curModelBuf->field_10 + (u32)ipdHdr;
+        curModelBuf->modelInstances   = (u8*)curModelBuf->modelInstances   + (u32)ipdHdr;
+        curModelBuf->field_10         = (u8*)curModelBuf->field_10         + (u32)ipdHdr;
         curModelBuf->subcellPositions = (u8*)curModelBuf->subcellPositions + (u32)ipdHdr;
     }
 }
@@ -1587,13 +1587,13 @@ void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
 
         if (!curModelInfo->isGlobalPlm)
         {
-            curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, ipdHdr->lmHdr);
+            curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->name, ipdHdr->lmHdr);
         }
         else
         {
             for (j = 0; j < lmHdrCount; j++)
             {
-                curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->modelName, lmHdrs[j]);
+                curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->name, lmHdrs[j]);
                 if (curModelInfo->modelHdr != NULL)
                 {
                     break;
@@ -1624,19 +1624,19 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
 {
     s_IpdModelBuffer*   curModelBuffer;
-    s_IpdModelBuffer_C* unkData;
+    s_IpdModelInstance* curModelInst;
 
     for (curModelBuffer = ipdHdr->modelBuffers;
          curModelBuffer < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuffer++)
     {
-        for (unkData = &curModelBuffer->field_C[0];
-             unkData < &curModelBuffer->field_C[curModelBuffer->field_0];
-             unkData++)
+        for (curModelInst = &curModelBuffer->modelInstances[0];
+             curModelInst < &curModelBuffer->modelInstances[curModelBuffer->modelInstanceCount];
+             curModelInst++)
         {
-            // TODO: `unkData` originally stores model idx, replace that with pointer to the model's `modelHdr`.
-            s32 modelIdx      = (s32)unkData->modelHdr;
-            unkData->modelHdr = ipdModels[modelIdx].modelHdr;
+            // TODO: `curModelInst` originally stores model idx. Replace that with pointer to the model's `modelHdr`.
+            s32 modelIdx           = (s32)curModelInst->modelHdr;
+            curModelInst->modelHdr = ipdModels[modelIdx].modelHdr;
         }
     }
 }
@@ -1670,8 +1670,8 @@ void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
     s32                 subcellZ;
     s32                 subcellX;
     s32                 i;
-    s_IpdModelBuffer*   ipdModelBuf;
-    s_IpdModelBuffer_C* curBufC;
+    s_IpdModelBuffer*   modelBuffer;
+    s_IpdModelInstance* curModelInst;
     u8*                 temp_fp;
     SVECTOR*            curUnk;
 
@@ -1699,39 +1699,43 @@ void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
     temp_fp = &ipdHdr->textureCount + (subcellZ * 10) + (subcellX * 2);
     for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)
     {
-        ipdModelBuf = &ipdHdr->modelBuffers[ipdHdr->modelOrderList[i]];
+        modelBuffer = &ipdHdr->modelBuffers[ipdHdr->modelOrderList[i]];
 
-        if (Gfx_ChunkSubcellVisibleCheck(ipdModelBuf, geomX - cellBoundX, geomZ - cellBoundZ, cellBoundX, cellBoundZ))
+        if (!Gfx_ChunkSubcellVisibleCheck(modelBuffer, geomX - cellBoundX, geomZ - cellBoundZ, cellBoundX, cellBoundZ))
         {
-            for (curBufC = ipdModelBuf->field_C; curBufC < &ipdModelBuf->field_C[ipdModelBuf->field_0]; curBufC++)
+            continue;
+        }
+
+        for (curModelInst = modelBuffer->modelInstances;
+             curModelInst < &modelBuffer->modelInstances[modelBuffer->modelInstanceCount];
+             curModelInst++)
+        {
+            modelInfo.modelHdr = curModelInst->modelHdr;
+            if (modelInfo.modelHdr != NULL)
             {
-                modelInfo.modelHdr = curBufC->modelHdr;
-                if (modelInfo.modelHdr != NULL)
-                {
-                    // Set model matrix.
-                    modelCoord.workm = curBufC->mat;
+                // Set model matrix.
+                modelCoord.workm = curModelInst->mat;
 
-                    // Offset model on XZ plane.
-                    modelCoord.workm.t[0] += cellBoundX;
-                    modelCoord.workm.t[2] += cellBoundZ;
+                // Offset model on XZ plane.
+                modelCoord.workm.t[0] += cellBoundX;
+                modelCoord.workm.t[2] += cellBoundZ;
 
-                    Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
-                    func_80057090(&modelInfo, ot, arg4, &viewMat, &worldMat, 0);
-                }
+                Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
+                func_80057090(&modelInfo, ot, arg4, &viewMat, &worldMat, 0);
             }
+        }
 
-            for (curUnk = ipdModelBuf->field_10; curUnk < &ipdModelBuf->field_10[ipdModelBuf->field_1]; curUnk++)
+        for (curUnk = modelBuffer->field_10; curUnk < &modelBuffer->field_10[modelBuffer->field_1]; curUnk++)
+        {
+            switch ((s8)curUnk->pad) // TODO: Must be another field.
             {
-                switch ((s8)curUnk->pad) // TODO: Must be another field.
-                {
-                    case 0:
-                        Gfx_BillboardDraw(1, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
-                        break;
+                case 0:
+                    Gfx_BillboardDraw(1, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
+                    break;
 
-                    case 1:
-                        Gfx_BillboardDraw(2, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
-                        break;
-                }
+                case 1:
+                    Gfx_BillboardDraw(2, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
+                    break;
             }
         }
     }
@@ -1743,7 +1747,7 @@ bool Gfx_ChunkSubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_
 {
     GsCOORDINATE2 viewCoord;
     MATRIX        viewMat;
-    SVECTOR*      curSubcellPos; // TODO: Subcell? Cell?
+    SVECTOR*      curSubcellPos; // TODO: Wrong struct.
 
     // Run through subcell positions.
     for (curSubcellPos = modelBuf->subcellPositions;

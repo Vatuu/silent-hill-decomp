@@ -1358,7 +1358,7 @@ bool LmFilter_IsFullPage(s_Material* mat);
 
 bool LmFilter_IsHalfPage(s_Material* mat);
 
-void IpdHeader_FixHeaderOffsets(s_IpdHeader* ipdHdr);
+void Ipd_HeaderPtrsInit(s_IpdHeader* ipdHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
 void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);

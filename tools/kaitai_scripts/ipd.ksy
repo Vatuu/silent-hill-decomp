@@ -13,9 +13,6 @@ seq:
   - id: header
     type: ipd_header
 
-  - id: collision
-    type: ipd_collision_info
-
 instances:
   lm_body:
     pos: header.lm_header_offset
@@ -52,11 +49,7 @@ types:
       - id: model_order_count
         type: u1
 
-      - id: unk_b
-        size: 1
-
-      - id: unk_c
-        size: 8
+      - size: 9
 
       - id: model_info_offset
         type: u4
@@ -67,14 +60,14 @@ types:
       - id: textures_offset
         type: u1
 
-      - id: unk_1d
-        size: 3
-
       - id: unk_20
-        size: 48
+        size: 51
 
-      - id: model_order_ptr_offset
+      - id: model_order_list_offset
         type: u4
+
+      - id: collision
+        type: ipd_collision_info
 
     instances:
       model_infos:
@@ -93,11 +86,13 @@ types:
     seq:
       - id: position_x
         type: s4
+        doc: Q23.8
 
       - id: position_z
         type: s4
+        doc: Q23.8
 
-      - id: coll_point_count
+      - id: collision_vertex_count
         type: b8
 
       - id: ptr_10_count
@@ -109,7 +104,7 @@ types:
       - id: ptr_18_count
         type: b8
 
-      - id: collision_vertices_ptr
+      - id: collision_vertices_offset
         type: u4
 
       - id: ptr_10
@@ -130,7 +125,7 @@ types:
       - id: subcell_z_count
         type: u1
 
-      - id: cell_ranges_ptr
+      - id: cell_ranges_offset
         type: u4
 
       - id: field_24
@@ -148,8 +143,7 @@ types:
       - id: unk_loaded_count
         type: u1
 
-      - id: unk_31
-        size: 3
+      - size: 3
 
       - id: field_34
         size: 256
@@ -159,8 +153,7 @@ types:
       - id: is_global_plm
         type: u1
 
-      - id: unk_1
-        size: 3
+      - size: 3
 
       - id: name
         type: strz
@@ -171,7 +164,7 @@ types:
 
   ipd_model_buffer:
     seq:
-      - id: field_0
+      - id: model_instance_count
         type: u1
 
       - id: field_1
@@ -194,14 +187,16 @@ types:
       - id: max_z
         type: s2
 
-      - id: field_ptr_c_offset
+      - id: model_instances_offset
         type: u4
 
-      - id: field_ptr_10_offset
+      - id: field_10_offset
         type: u4
+        doc: Q7.8.
 
-      - id: subcell_positions_ptr_offset
+      - id: subcell_positions_offset
         type: u4
+        doc: Q7.8.
 
   # ========
   # PLM (LM)

@@ -132,8 +132,8 @@ typedef struct
     /* 0xF  */ u8                     field_F;  // }
     /* 0x10 */ u8                     field_10; // } Index from `s_IpdCollisionData::field_6_5`.
     /* 0x11 */ u8                     field_11; // }
-    /* 0x12 */ SVECTOR3               vertCollPoint0; // Data from `s_IpdCollisionData::vertCollPoints`
-    /* 0x18 */ SVECTOR3               vertCollPoint1; // Data from `s_IpdCollisionData::vertCollPoints`
+    /* 0x12 */ SVECTOR3               collisionVertex0; // Data from `s_IpdCollisionData::collisionVertices`
+    /* 0x18 */ SVECTOR3               collisionVertex1; // Data from `s_IpdCollisionData::collisionVertices`
     /* 0x1E */ s8                     unk_1E[2];
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionState_CC;

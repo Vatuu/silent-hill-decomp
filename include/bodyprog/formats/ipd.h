@@ -46,8 +46,8 @@ typedef struct
     /* 0x2+0  */ q7_8 field_2_0  : 14; // Y.
     /* 0x2+14 */ u16  field_2_14 : 2;
     /* 0x4    */ q7_8 field_4;         // Z.
-    /* 0x6    */ u8   vertCollPointIdx0; // Index of `vertCollPoints`.
-    /* 0x7    */ u8   vertCollPointIdx1; // Index of `vertCollPoints`.
+    /* 0x6    */ u8   collisionVertexIdx0; // Index for `collisionVertices`.
+    /* 0x7    */ u8   collisionVertexIdx1; // Index for `collisionVertices`.
     /* 0x8    */ u8   field_8;
     /* 0x9    */ u8   field_9;
 } s_IpdCollisionData_14;
@@ -72,16 +72,16 @@ typedef struct _IpdCollisionData_18
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
-/** @note Sparagas' investigation of this file format suggest this data is embedded in the IPD file. */
+/** @brief IPD file collision data. */
 typedef struct _IpdCollisionData
 {
     /* 0x0    */ q23_8                  positionX;
     /* 0x4    */ q23_8                  positionZ;
-    /* 0x8+0  */ u32                    collPointsCount : 8; // Amount of structs in `vertCollPoints`.
-    /* 0x8+8  */ u32                    field_8_8       : 8; // Amount of structs in `ptr_10`.
-    /* 0x8+16 */ u32                    field_8_16      : 8; // Amount of structs in `ptr_14`.
-    /* 0x8+24 */ u32                    field_8_24      : 8; // Amount of structs in `ptr_18`.
-    /* 0xC    */ SVECTOR3*              vertCollPoints;
+    /* 0x8+0  */ u32                    collisionVertexCount : 8; // `collisionVertices` size.
+    /* 0x8+8  */ u32                    field_8_8            : 8; // `ptr_10` size.
+    /* 0x8+16 */ u32                    field_8_16           : 8; // `ptr_14` size.
+    /* 0x8+24 */ u32                    field_8_24           : 8; // `ptr_18` size.
+    /* 0xC    */ SVECTOR3*              collisionVertices;
     /* 0x10   */ s_IpdCollisionData_10* ptr_10;
     /* 0x14   */ s_IpdCollisionData_14* ptr_14;
     /* 0x18   */ s_IpdCollisionData_18* ptr_18;
@@ -96,7 +96,7 @@ typedef struct _IpdCollisionData
     /* 0x28   */ u8*                    ptr_28;         // Accessed as array of indices into `field_34` by `func_8006E53C`.
     /* 0x2C   */ void*                  ptr_2C;         // Pointer to LM part of IPD file?
     /* 0x30   */ u8                     unkLoadedCount; // Directly related to `field_34`.
-    /* 0x31   */ s8                     __pad[3];
+    /* 0x31   */ s8                     __pad_31[3];
     /* 0x34   */ u8                     field_34[256]; // Index container.
                                                        // This should be the same size as of the value assigned to
                                                        // `s_IpdCollisionData::field_8_16`, but instead is assigned the
@@ -104,18 +104,28 @@ typedef struct _IpdCollisionData
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 
-// Node of some kind?
-typedef struct _IpdModelBuffer_C
+/** @brief IPD file model info. */
+typedef struct _IpdModelInfo
+{
+    /* 0x0 */ u8             isGlobalPlm; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
+    /* 0x1 */ s8             __pad_1[3];
+    /* 0x4 */ u_Filename     name;
+    /* 0xC */ s_ModelHeader* modelHdr;
+} s_IpdModelInfo;
+STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
+
+/** @brief IPD file transformed model instance. TODO: Unsure. */
+typedef struct _IpdModelInstance
 {
     /* 0x0 */ s_ModelHeader* modelHdr;
-    /* 0x4 */ MATRIX         mat;
-} s_IpdModelBuffer_C;
-STATIC_ASSERT_SIZEOF(s_IpdModelBuffer_C, 36);
+    /* 0x4 */ MATRIX         mat; // TODO: Base transform matrix?
+} s_IpdModelInstance;
+STATIC_ASSERT_SIZEOF(s_IpdModelInstance, 36);
 
 /** @brief IPD file model buffer. */
 typedef struct _IpdModelBuffer
 {
-    /* 0x0  */ u8                  field_0; // Count of `field_C` entries.
+    /* 0x0  */ u8                  modelInstanceCount; /** `modelInstances` size. */
     /* 0x1  */ u8                  field_1;
     /* 0x2  */ u8                  subcellCount;
     /* 0x3  */ s8                  __pad_3;
@@ -123,23 +133,13 @@ typedef struct _IpdModelBuffer
     /* 0x6  */ q7_8                maxX; // }
     /* 0x8  */ q7_8                minZ; // }
     /* 0xA  */ q7_8                maxZ; // }
-    /* 0xC  */ s_IpdModelBuffer_C* field_C;
-    /* 0x10 */ SVECTOR*            field_10;         // Pointer to unknown collision data.
-    /* 0x14 */ SVECTOR*            subcellPositions; /** XZ positions. TODO: Use different struct. */
+    /* 0xC  */ s_IpdModelInstance* modelInstances;
+    /* 0x10 */ SVECTOR*            field_10;         // Q7.8 | Pointer to unknown collision data. TODO Wrong struct? See `Ipd_ChunkDraw`.
+    /* 0x14 */ SVECTOR*            subcellPositions; /** Q7.8 | XZ positions. TODO: Wrong struct? See `Gfx_ChunkSubcellVisibleCheck`. */
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 
-/** @brief IPD file model info. */
-typedef struct _IpdModelInfo
-{
-    /* 0x0 */ u8             isGlobalPlm; // `false` if loaded from inside `IPD`, `true` if loaded from `*_GLB.PLM`.
-    /* 0x1 */ s8             __pad_1[3];
-    /* 0x4 */ u_Filename     modelName;
-    /* 0xC */ s_ModelHeader* modelHdr;
-} s_IpdModelInfo;
-STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
-
-/** @brief IPD file model file header. */
+/** @brief IPD file header. */
 typedef struct _IpdHeader
 {
     /* 0x0  */ u8                 magic;
@@ -150,7 +150,7 @@ typedef struct _IpdHeader
     /* 0x8  */ u8                 modelCount;
     /* 0x9  */ u8                 modelBufferCount;
     /* 0xA  */ u8                 modelOrderCount;
-    /* 0xB  */ s8                 unk_B[9];
+    /* 0xB  */ s8                 __pad_B[9];
     /* 0x14 */ s_IpdModelInfo*    modelInfo;
     /* 0x18 */ s_IpdModelBuffer*  modelBuffers;
     /* 0x1C */ u8                 textureCount; // Should it be `u32`?
