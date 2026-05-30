@@ -337,7 +337,7 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_SysWork.playerCombat.isAiming = false;
 
-    player->collision.cylinder.field_2 = Q12(0.23f);
+    player->collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
     Player_CollisionReset();
     g_SysWork.playerWork.player.properties.player.flags &= ~(PlayerFlag_Unk2 |
                                                                  PlayerFlag_SfxActive |
@@ -896,7 +896,7 @@ bool sharedFunc_800D2E94_0_s00(void)
             npc->collision.shapeOffsets.box.vz      = Q12(0.0f);
             npc->collision.shapeOffsets.box.vx      = Q12(0.0f);
             npc->position.vx                        = Q12(-262.0f);
-            npc->position.vy                        = Q12(-1.1f);
+            npc->position.vy                        = DEFAULT_PLAYER_BOX_OFFSET_Y;
             npc->position.vz                        = Q12(-104.0f);
             npc->collision.state                    = CharaCollisionState_Npc;
             npc->model.stateStep++;

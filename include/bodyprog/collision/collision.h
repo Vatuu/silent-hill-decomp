@@ -117,7 +117,7 @@ typedef struct
     /* 0x8  */ u32        field_8;
     /* 0xC  */ q23_8      field_C; // Radius?
     /* 0x10 */ q7_8       field_10;
-    /* 0x12 */ s8         __pad[2];
+    /* 0x12 */ s8         __pad_12[2];
     /* 0x14 */ DVECTOR_XZ field_14;
 } s_CollisionState_CC_20;
 
@@ -199,7 +199,7 @@ typedef struct _CollisionState
                          /* 0x1 */ u8                   closestZSubCellIdx;
                          /* 0x2 */ u8                   closeFarXSubCellIdxDiff;
                          /* 0x3 */ u8                   closeFarZSubCellIdxDiff;
-                         /* 0x4 */ s_IpdCellRangeInfo*  field_4;
+                         /* 0x4 */ s_IpdCellRange*  field_4;
                          /* 0x8 */ s_CollisionState_A8  field_8[4];
                      } s_0;
                      struct
@@ -487,12 +487,12 @@ bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
 bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* cellRangeInfoPtr);
+void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
 bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 idx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_CollisionState* collState, s_IpdCellRangeInfo* arg1);
+void func_8006B6E8(s_CollisionState* collState, s_IpdCellRange* cellRanges);
 
 bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1);
 
@@ -527,7 +527,7 @@ void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist);
 
 void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* arg2);
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
@@ -583,7 +583,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* state, s_IpdCellRangeInfo* arg1, s_IpdCollisionData* collData);
+void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollisionData* collData);
 
 void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 

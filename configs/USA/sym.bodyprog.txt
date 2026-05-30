@@ -932,12 +932,12 @@ vcGetXZSumDistFromLimArea                    = 0x80085C80; // type:func
 Event_SysStateStepIncrement                  = 0x80085D78; // type:func
 Event_SysStateStepSet                        = 0x80085DC0; // type:func
 Event_SysStateStepIncrementDelayed           = 0x80085E6C; // type:func
-Event_CharaAnimCommandExecute                = 0x80085EB8; // type:func
+Event_CharaAnimCmdExecute                    = 0x80085EB8; // type:func
 Event_SysStateBranchOnFlag                   = 0x8008605C; // type:func
 Event_DisplayMapMsg                          = 0x800860B0; // type:func
-Event_ScreenFadeCommand                      = 0x8008616C; // type:func
-Event_BgTextureCommand                       = 0x800862F8; // type:func
-Event_InvItemCommand                         = 0x80086470; // type:func
+Event_ScreenFadeCmd                          = 0x8008616C; // type:func
+Event_BgTextureCmd                           = 0x800862F8; // type:func
+Event_InvItemCmd                             = 0x80086470; // type:func
 Event_PathWaypointSet                        = 0x800865FC; // type:func
 Event_PathWaypointExecutePlayer              = 0x800866D4; // type:func
 Event_PathWaypointExecuteChara               = 0x80086728; // type:func
@@ -948,8 +948,8 @@ Event_TweenSine                              = 0x8008694C; // type:func
 Event_DisplayMapMsgWithAudio                 = 0x800869E4; // type:func
 Camera_PositionSet                           = 0x80086A94; // type:func
 Camera_LookAtSet                             = 0x80086B70; // type:func
-Event_CharaAnimPlayUntilEnd                  = 0x80086C58; // type:func
-Event_CharaAnimUnlockPlayUntilEnd            = 0x80086D04; // type:func
+Event_CharaAnimPlayToEnd                     = 0x80086C58; // type:func
+Event_CharaAnimUnlockPlayToEnd               = 0x80086D04; // type:func
 Event_BgTextureLoadFadeIn                    = 0x80086DA8; // type:func
 Event_BgTextureFadeIn                        = 0x80086E50; // type:func
 Event_DisplayMapMsgWithSfx                   = 0x80086FE8; // type:func
@@ -3080,7 +3080,7 @@ vcSelfViewTimer                              = 0x800C463C; // type:s32
 //--- PA: 0x09FAE0   VA: 0x800C4640   subsegment: .bss, events/events_util
 //------------------------------------------------------------------------
 g_Event_PathWaypoints                        = 0x800C4640; // size:0xC0
-g_Event_PathWaypointAngles                   = 0x800C4700;
+g_Event_PathWaypointHeadingAngles            = 0x800C4700;
 g_Event_TweenTimers                          = 0x800C4710;
 
 //-----------------------------------------------------------

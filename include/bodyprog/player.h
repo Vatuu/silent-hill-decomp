@@ -14,6 +14,10 @@
 // CONSTANTS
 // ==========
 
+#define DEFAULT_PLAYER_BOX_TOP          Q12(-1.6f)
+#define DEFAULT_PLAYER_BOX_OFFSET_Y     Q12(-1.1f)
+#define DEFAULT_PLAYER_CYLINDER_FIELD_2 Q12(0.23f)
+
 #define HARRY_UPPER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Root, HarryBone_RightHand)
 #define HARRY_LOWER_BODY_BONE_MASK BITMASK_RANGE(HarryBone_Hips, HarryBone_RightFoot)
 
@@ -678,17 +682,6 @@ static inline void Player_AnimFlagsSet(u32 flags)
     chara->model.anim.flags |= flags;
 }
 
-static inline void Player_CollisionReset()
-{
-    g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
-    g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-    g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
-}
-
 /** @brief Clears the given animation flags for both the player character data and extra player data.
  *
  * @param clearFlags Animation flags to clear.
@@ -702,12 +695,28 @@ static inline void Player_CollisionReset()
     playerChara->model.anim.flags &= ~(clearFlags);            \
 }
 
-/** @brief Resets player extra data state if `g_Player_AnimResetRequest` is set.
+/** @brief Resets the player character's collision shapes. */
+static inline void Player_CollisionReset()
+{
+    #define playerChara g_SysWork.playerWork.player
+
+    playerChara.collision.box.top                  = DEFAULT_PLAYER_BOX_TOP;
+    playerChara.collision.box.bottom               = Q12(0.0f);
+    playerChara.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
+    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
+    playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+
+    #undef playerChara
+}
+
+/** @brief Resets the extra player parameters state if `g_Player_AnimResetRequest` is set.
  *
  * @note This works similar to `Chara_AnimStateReset`.
  *
  * @param player Player character to update.
- * @param extra Player extra data to update.
+ * @param extra Extra player  parameters to update.
  */
 static inline void Player_AnimStateReset(s_SubCharacter* player, s_PlayerExtra* extra)
 {

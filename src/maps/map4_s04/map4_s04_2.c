@@ -258,7 +258,7 @@ void func_800D1910(void) // 0x800D1910
             ScreenFade_ResetTimestep();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 117, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 117, false);
             D_800D37C0 = 0;
 
             Gfx_MapInitMapEffectsUpdate(15, 15);
@@ -267,19 +267,19 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
 
             D_800D37C0 = 1;
 
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(1.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(1.0f), false);
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -297,7 +297,7 @@ void func_800D1910(void) // 0x800D1910
             g_Cutscene_Timer               = Q12(24.0f);
             g_WorldObject0.position.vz = Q12(140.8f);
 
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 135, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 135, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -323,22 +323,22 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 12:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.npcs[0], 10);
+            Event_CharaAnimPlayToEnd(&g_SysWork.npcs[0], 10);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             break;
 
         case 13:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.8f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.8f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
             break;
 
         case 14:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:
             // Return to gameplay.
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -418,18 +418,18 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 11, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 11, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 2:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.npcs[0], 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.npcs[0], 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.npcs[0], 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -442,7 +442,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 6:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 12, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 12, false);
             g_SysWork.lightIntensity = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
@@ -452,7 +452,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (g_Cutscene_Timer >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 134, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 134, false);
                 D_800D37C1++;
             }
             break;
@@ -462,14 +462,14 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (g_Cutscene_Timer >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 134, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 134, false);
                 D_800D37C1++;
             }
             break;
 
         case 9:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
 
             g_SysWork.lightIntensity = Q12(1.2f);
             g_Cutscene_Timer         = Q12(55.0f);
@@ -507,7 +507,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 17:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 13, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 13, false);
             g_SysWork.lightIntensity = Q12(1.2f);
             SysWork_StateStepIncrement(0);
 
@@ -522,8 +522,8 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 20:
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 53, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 21, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 21, false);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -532,7 +532,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 22:
             Sfx_WithFlagsPlay(Sfx_DoorOpen0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 23:
@@ -548,7 +548,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 26:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -565,8 +565,8 @@ void func_800D23E4(void) // 0x800D23E4
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_RightEntranceBroken);
             Savegame_EventFlagSet(EventFlag_340);
 
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
             func_8008D448();
             Game_FlashlightAttributesFix();

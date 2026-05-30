@@ -104,7 +104,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
     {
         case 0:
             Player_ControlFreeze();
-            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_SHATVIAL_TIM, false);
+            Event_BgTextureCmd(BgTextureCmd_QueueRead, FILE_TIM_SHATVIAL_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -112,42 +112,42 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 2:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case 3:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_AwaitLoad, 0, false);
             break;
 
         case 5:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_DisplayMapMsg(false, 16, 0, 0, 0, false); // "A glass vial lies shattered."
             break;
 
         case 8:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 10:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -181,7 +181,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_2:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
             break;
 
         case EventState_SfxId:
@@ -193,7 +193,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_5:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
             break;
 
         default:
@@ -203,7 +203,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
 
             // Replace Plastic Bottle with Unknown Liquid in inventory.
             Player_ItemRemove(InvItemId_PlasticBottle, 1);
-            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
+            Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_UnknownLiquid, DEFAULT_PICKUP_ITEM_COUNT, false);
             break;
     }
 }

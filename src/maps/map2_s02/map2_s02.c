@@ -92,7 +92,7 @@ void func_800E9EAC(void) // 0x800E9EAC
             break;
 
         case 1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 1, Q12(0.25f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 1, Q12(0.25f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -132,7 +132,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_189);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             break;
     }
 }

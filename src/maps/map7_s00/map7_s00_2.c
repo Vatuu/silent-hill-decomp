@@ -176,12 +176,12 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 135, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &lisaChara, 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 135, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 9, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.8f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.8f), false);
             break;
 
         case 5:
@@ -189,7 +189,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 6:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &lisaChara, 14, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 14, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -198,7 +198,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 8:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 136, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 136, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -212,7 +212,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 11:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &lisaChara, 15, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 15, false);
             Savegame_EventFlagSet(EventFlag_474);
             SysWork_StateStepIncrement(0);
 
@@ -223,7 +223,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 13:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 137, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 137, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -235,8 +235,8 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 16:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 138, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &lisaChara, 16, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 138, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 16, false);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -246,7 +246,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 18:
             Chara_ModelCharaIdClear(&lisaChara, 0, 0);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 139, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 139, false);
 
             Math_Vector3Set(&g_SysWork.lightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
@@ -280,7 +280,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 24:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
             g_SysWork.lightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 
@@ -294,7 +294,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case EventState_Skip:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 28:
@@ -307,8 +307,8 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             func_8008D448();
             Game_FlashlightAttributesFix();
 
@@ -470,7 +470,7 @@ void func_800D1604(void) // 0x800D1604
     {
         case 0:
             Player_ControlFreeze();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, 0, false);
 
             g_Cutscene_MapMsgAudioIdx = 0;
             D_800D31DC[1]    = 0;
@@ -501,7 +501,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 2, 0, false);
             break;
 
         case 6:
@@ -636,7 +636,7 @@ void func_800D1604(void) // 0x800D1604
 
         case 11:
             Event_PathWaypointExecutePlayer(53, 1, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.6f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.6f), false);
             Event_DisplayMapMsgWithAudio(46, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
 
             g_DeltaTime >>= 2;
@@ -656,7 +656,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 12:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, 0, false);
             break;
 
         default:
@@ -664,7 +664,7 @@ void func_800D1604(void) // 0x800D1604
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_472);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
 
             D_800D4362 = 0;
             break;

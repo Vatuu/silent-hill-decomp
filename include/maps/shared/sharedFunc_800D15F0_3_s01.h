@@ -42,7 +42,7 @@ void sharedFunc_800D15F0_3_s01(void)
         case 0:
 
             Player_ControlFreeze();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, false, false, false);
 
             sharedData_800D4D14_3_s01 = 0;
             sharedData_800D4D10_3_s01 = 0;
@@ -68,30 +68,30 @@ void sharedFunc_800D15F0_3_s01(void)
             if (Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_OperatingPrepRoomArrow) &&
                 Savegame_EventFlagGet(EventFlag_MapMark_AltHospital2F_CorridorMidArrows))
             {
-                Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_2_TIM, false);
+                Event_BgTextureCmd(BgTextureCmd_Auto, FILE_TIM_ELEVAT_2_TIM, false);
             }
             else
             {
-                Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVATOR_TIM, false);
+                Event_BgTextureCmd(BgTextureCmd_Auto, FILE_TIM_ELEVATOR_TIM, false);
             }
 #elif defined(MAP7_S01) || defined(MAP7_S02)
-            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_3_TIM, false);
+            Event_BgTextureCmd(BgTextureCmd_Auto, FILE_TIM_ELEVAT_3_TIM, false);
 #else
-            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_ELEVAT_4_TIM, false);
+            Event_BgTextureCmd(BgTextureCmd_Auto, FILE_TIM_ELEVAT_4_TIM, false);
 #endif
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, false, false, false);
             break;
 
         case 3:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, false, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, false, false, false);
             break;
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             sharedData_800D4D10_3_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
             sharedData_800D4D10_3_s01  = CLAMP_RANGE(sharedData_800D4D10_3_s01, Q12(-70.0f), Q12(68.0f));
 
@@ -202,7 +202,7 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 5:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             for (i = 0; i < 4; i++)
             {
@@ -229,14 +229,14 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 6:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, false, false);
             break;
 
         case 7:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, false, false, false);
             break;
 
         case 8:
@@ -248,7 +248,7 @@ void sharedFunc_800D15F0_3_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (sharedData_800D4D10_3_s01 != 0)
             {
@@ -259,23 +259,23 @@ void sharedFunc_800D15F0_3_s01(void)
                 }
 
                 Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
-                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(1.0f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, Q12(1.0f), false);
             }
             else
             {
-                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(2.0f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, Q12(2.0f), false);
             }
             break;
 
         case 10:
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, Q12(1.0f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, false, Q12(1.0f), false);
                 Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
             }
             else
             {
-                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, false, Q12(2.0f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, false, Q12(2.0f), false);
 
                 if (g_SysWork.sysStateSteps[0] != 10)
                 {
@@ -360,12 +360,12 @@ void sharedFunc_800D15F0_3_s01(void)
             }
             else
             {
-                Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, Q12(1.5f), false);
+                Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, Q12(1.5f), false);
             }
             break;
 
         case 17:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, false, false, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, false, false);
             break;
 
         default:

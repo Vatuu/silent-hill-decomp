@@ -53,12 +53,12 @@ typedef struct
 } s_IpdCollisionData_14;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_14, 10);
 
-typedef struct
+typedef struct _IpdCellRange
 {
     /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
     /* 0x2 */ s16 field_2;
-} s_IpdCellRangeInfo;
-STATIC_ASSERT_SIZEOF(s_IpdCellRangeInfo, 4);
+} s_IpdCellRange;
+STATIC_ASSERT_SIZEOF(s_IpdCellRange, 4);
 
 typedef struct _IpdCollisionData_18
 {
@@ -90,7 +90,7 @@ typedef struct _IpdCollisionData
     /* 0x1C   */ q7_8                   subCellSize;
     /* 0x1E   */ u8                     subCellXCount;
     /* 0x1F   */ u8                     subCellZCount;
-    /* 0x20   */ s_IpdCellRangeInfo*    cellRangeInfo;
+    /* 0x20   */ s_IpdCellRange*    cellRangeInfo;
     /* 0x24   */ u16                    field_24; // `field_24/``field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
                                                   // Both `field_24/field_26` are related to a amount of 1 byte things that are being pointed by
                                                   // `ptr_28`.

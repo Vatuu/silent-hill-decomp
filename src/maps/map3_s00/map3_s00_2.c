@@ -126,17 +126,17 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, g_SysWork.npcs, 6, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, g_SysWork.npcs, 6, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 2:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, g_SysWork.npcs, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, g_SysWork.npcs, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, g_SysWork.npcs, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, g_SysWork.npcs, 0, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_CutsceneStart:
@@ -149,7 +149,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 5:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, g_SysWork.npcs, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, g_SysWork.npcs, 0, false);
 
             if (g_Cutscene_Timer < Q12(11.0f))
             {
@@ -168,8 +168,8 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 6:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 7, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 0x73, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 7, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x73, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -218,7 +218,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 12:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 8, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 8, false);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -232,18 +232,18 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 14:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 15:
             g_Cutscene_Timer = Q12(110.0f);
 
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
             SysWork_StateStepIncrement(0);
 
         case 16:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 17:
@@ -264,7 +264,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 21:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, g_SysWork.npcs, 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, g_SysWork.npcs, 9, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -295,7 +295,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 24:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -315,7 +315,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 26:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 0x48, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x48, false);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -335,8 +335,8 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 28:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 10, false);
-            Event_CharaAnimCommandExecute(0u, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 10, false);
+            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -382,7 +382,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case EventState_CutsceneSkip:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 37:
@@ -395,8 +395,8 @@ void func_800D0CF8(void) // 0x800D0CF8
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             SD_Call(0x13);
 

@@ -55,7 +55,7 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case EventState_1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case EventState_2:
@@ -95,7 +95,7 @@ void func_800D03FC(void) // 0x800D03FC
             D_800D3154 = 0;
 
             Game_TurnFlashlightOff();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -273,8 +273,8 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.npcs[0], 2, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.0f), false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -282,12 +282,12 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 3:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.0f), false);
             Event_CutsceneTimerAdvance(&D_800D1FEC, Q12(12.0f), Q12(0.0f), Q12(75.0f), true, false);
             break;
 
         case 4:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         default:

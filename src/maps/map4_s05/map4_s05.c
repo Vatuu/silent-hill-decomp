@@ -89,7 +89,7 @@ void func_800D61AC(void) // 0x800D61AC
 
         case 1:
             Event_PathWaypointExecutePlayer(53, 5, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, 0, false);
             break;
 
         case 2:
@@ -128,7 +128,7 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_CharaAnimPlayUntilEnd(&g_SysWork.playerWork.player, 109);
+            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 109);
             break;
 
         case 10:
@@ -160,7 +160,7 @@ void func_800D61AC(void) // 0x800D61AC
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
 
             Savegame_EventFlagSet(EventFlag_349);
             g_SysWork.npcs[0].model.stateStep = 2;
@@ -190,7 +190,7 @@ void func_800D6800(void) // 0x800D6800
             // TODO: Likely wrong union field.
             MAP_POINTS[14].triggerParam0 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy) + Q12(1.0f)) >> 4;
 
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -204,7 +204,7 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
             Event_SysStateStepIncrementDelayed(Q12(3.5f), false);
 
             // Warp player.
@@ -222,7 +222,7 @@ void func_800D6800(void) // 0x800D6800
 
         case 4:
             Savegame_EventFlagSet(EventFlag_351);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 1, Q12(0.2f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 1, Q12(0.2f), false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -230,15 +230,15 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         case 6:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
             break;
 
         default:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -334,7 +334,7 @@ void func_800D6BC0(void) // 0x800D6BC0
         case 3:
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 3, 0, false);
             Dms_HeaderFixOffsets(FS_BUFFER_19);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -348,7 +348,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, 0, false);
             break;
 
         case 5:
@@ -413,11 +413,11 @@ void func_800D6BC0(void) // 0x800D6BC0
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
 
             Savegame_EventFlagSet(EventFlag_457);
-            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_ChannelingStone, 1, false);
+            Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 

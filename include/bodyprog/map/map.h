@@ -481,7 +481,7 @@ typedef struct _MapOverlayHdr
     /* 0xCC  */ void                   (*playerControlUnfreeze)(bool setIdle);
     /* 0xD0  */ bool                   (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     /* 0xD4  */ s32                    (*playerAnimStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaAnimStateSet` when player chara is passed.
-                                                                                       // @hack Points to `Player_AnimStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCommandExecute`
+                                                                                    // @hack Points to `Player_AnimStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCmdExecute`.
     /* 0xD8  */ void                   (*playerAnimReset)();
     /* 0xDC  */ void                   (*playerAnimLock)(void);
     /* 0xE0  */ void                   (*playerAnimIsLocked)(void);

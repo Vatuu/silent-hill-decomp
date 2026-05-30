@@ -121,22 +121,22 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 2:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 77, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 77, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             sharedFunc_800D2E6C_0_s00();
             SysWork_StateStepIncrement(0);
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimLock, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
             break;
 
         case 5:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -153,7 +153,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 9:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 78, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 78, false);
             D_800DE250 = 1;
             SysWork_StateStepIncrement(0);
 
@@ -187,8 +187,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
             if (D_800DE251 == 0 && g_Cutscene_Timer > Q12(38.0f))
             {
-                Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 10, false);
-                Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 110, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 10, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 110, false);
 
                 D_800DE251++;
             }
@@ -196,7 +196,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             temp_s0_5 = D_800DE251;
             if (D_800DE251 == 1 && Chara_AnimPlaybackStateGet(&cybilChara) == temp_s0_5)
             {
-                Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 11, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 11, false);
                 D_800DE251++;
             }
             break;
@@ -219,7 +219,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 18:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 93, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 93, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -227,7 +227,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 20:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -236,7 +236,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 22:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 7, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 7, false);
             SD_Call(Sfx_XaAudio12);
             SysWork_StateStepIncrement(0);
 
@@ -247,7 +247,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 24:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 71, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 71, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -256,8 +256,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 26:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 8, 0);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 8, 0);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -268,7 +268,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 28:
             g_Cutscene_Timer = Q12(195.0f);
 
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -284,7 +284,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 32:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -292,7 +292,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 34:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 6, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 6, false);
             SysWork_StateStepIncrement(0);
 
         case 35:
@@ -311,8 +311,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 38:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 9, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 0x4C, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x4C, false);
             SysWork_StateStepIncrement(0);
 
         case 39:
@@ -325,7 +325,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 41:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, g_SysWork.npcs, 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, g_SysWork.npcs, 5, false);
             SysWork_StateStepIncrement(0);
 
         case 42:
@@ -333,7 +333,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 43:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             g_Cutscene_Timer = Q12(297.0f);
             SysWork_StateStepIncrement(0);
 
@@ -342,8 +342,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 45:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &g_SysWork.playerWork.player, 90, false);
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &cybilChara, 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 90, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 46:
@@ -360,11 +360,11 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Chara_ModelCharaIdClear(&cybilChara, 0, 0);
             SD_Call(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, 0, 0);
-            Event_InvItemCommand(InvItemCommand_AddItem, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
+            Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
 
         case 49:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 50:
@@ -377,7 +377,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case EventState_Skip:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 53:
@@ -389,8 +389,8 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SD_Call(23);
 
             Savegame_EventFlagSet(EventFlag_49);
@@ -429,24 +429,24 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, Q12(0.0f), false);
-            Event_BgTextureCommand(BgTextureCommand_QueueRead, FILE_TIM_CONTINUE_TIM, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(0.0f), false);
+            Event_BgTextureCmd(BgTextureCmd_QueueRead, FILE_TIM_CONTINUE_TIM, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
             return;
 
         case 3:
-            Event_BgTextureCommand(BgTextureCommand_AwaitLoad, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_AwaitLoad, 0, false);
             return;
 
         case 4:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(2.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -462,17 +462,17 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             break;
 
         case 7:
-            Event_BgTextureCommand(BgTextureCommand_Auto, FILE_TIM_COMESOON_TIM, false);
+            Event_BgTextureCmd(BgTextureCmd_Auto, FILE_TIM_COMESOON_TIM, false);
             break;
 
         case 8:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(1.5f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             Sd_SfxStop(Sfx_RadioInterferenceLoop);
             Sd_SfxStop(Sfx_RadioStaticLoop);
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
@@ -490,8 +490,8 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 6:
         case 10:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
 
         default:
@@ -536,7 +536,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
             g_Cutscene_Timer = Q12(26.0f);
 
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 3, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 3, Q12(0.0f), false);
 
             g_Cutscene_MapMsgAudioIdx = 0;
             SysWork_StateStepIncrement(0);
@@ -550,7 +550,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 3:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 91, 0);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 91, 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -574,7 +574,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 8:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 92, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 92, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -594,7 +594,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 11:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 53, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -606,7 +606,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 13:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, &playerChara, 89, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 89, false);
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSet(EventFlag_46);
@@ -664,7 +664,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
         case 21:
             Savegame_EventFlagSet(EventFlag_47);
             func_800D39F4(&airScreamerChara);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
             g_Cutscene_Timer = NO_VALUE;
 
@@ -727,7 +727,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -740,7 +740,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
 
@@ -755,7 +755,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepReset();
             break;
 
@@ -770,14 +770,14 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             g_Screen_BackgroundImgGamma = Q8(11.0f / 32.0f);
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
         case 8:
             LoadImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -808,7 +808,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, false, 0, Q12(0.0f), false);
             break;
 
         default:

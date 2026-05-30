@@ -59,7 +59,7 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, 0, false);
             break;
 
         case 2:
@@ -75,12 +75,12 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX << 13) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-115.0f), Q12(115.0f));
@@ -165,7 +165,7 @@ void sharedFunc_800DB60C_7_s01(void)
 
         case 5:
             Event_SysStateStepIncrementDelayed(Q12(0.6f), false);
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 
         case 6:
@@ -183,19 +183,19 @@ void sharedFunc_800DB60C_7_s01(void)
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_SysStateStepIncrementDelayed(0x800, false);
             break;
 
         case 8:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, 0, false);
             break;
 
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, 0, false);
 
             Savegame_EventFlagClear(EventFlag_493);
             Savegame_EventFlagClear(EventFlag_495);

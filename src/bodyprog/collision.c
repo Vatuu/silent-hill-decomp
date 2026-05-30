@@ -140,14 +140,14 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     s_CollisionCylinder cylinder;
     VECTOR3             pos;
     s_CollisionState    state;
-    s_IpdCollisionData* ipdCollData;
+    s_IpdCollisionData* collData;
 
     pos.vx = Q12(0.0f);
     pos.vy = Q12(0.0f);
     pos.vz = Q12(0.0f);
 
-    ipdCollData = Ipd_CollisionDataGet(posX, posZ);
-    if (ipdCollData == NULL)
+    collData = Ipd_CollisionDataGet(posX, posZ);
+    if (collData == NULL)
     {
         surface->groundHeight = Q12(8.0f);
         surface->tiltAngleZ   = Q12_ANGLE(0.0f);
@@ -167,7 +167,7 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     state.isCharaMoving = false;
     state.field_0_9     = false;
     state.field_0_10    = true;
-    Collision_CharaCollisionHandling(&state, ipdCollData);
+    Collision_CharaCollisionHandling(&state, collData);
 
     if (state.field_90 == 1)
     {
@@ -821,11 +821,11 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR
 
 void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData) // 0x8006AD44
 {
-    s32                  endIdx;
-    s32                  startIdx;
-    s32                  i;
-    s32                  j;
-    s_IpdCellRangeInfo* cellRangeInfoPtr;
+    s32             endIdx;
+    s32             startIdx;
+    s32             i;
+    s32             j;
+    s_IpdCellRange* curCellRange;
 
     if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
         !func_8006AEAC(collState, collData))
@@ -855,11 +855,11 @@ void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisio
 
     for (i = collState->field_A0.s_0.closestZSubCellIdx; i < (collState->field_A0.s_0.closestZSubCellIdx + collState->field_A0.s_0.closeFarZSubCellIdxDiff); i++)
     {
-        cellRangeInfoPtr = &collData->cellRangeInfo[(i * collData->subCellXCount) + startIdx];
+        curCellRange = &collData->cellRangeInfo[(i * collData->subCellXCount) + startIdx];
 
-        for (j = startIdx; j <= endIdx; j++, cellRangeInfoPtr++)
+        for (j = startIdx; j <= endIdx; j++, curCellRange++)
         {
-            func_8006B1C8(collState, collData, cellRangeInfoPtr);
+            func_8006B1C8(collState, collData, curCellRange);
         }
     }
 
@@ -973,13 +973,13 @@ bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollis
     return true;
 }
 
-void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* cellRangeInfoPtr) // 0x8006B1C8
+void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges) // 0x8006B1C8
 {
     s32 unkAmount;
     s32 i;
     u8  idx;
 
-    for (i = cellRangeInfoPtr[0].field_0; i < cellRangeInfoPtr[1].field_0; i++)
+    for (i = cellRanges[0].field_0; i < cellRanges[1].field_0; i++)
     {
         idx = collData->ptr_28[i];
 
@@ -994,7 +994,7 @@ void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_
                 {
                     if (collState->field_0_10)
                     {
-                        func_8006B6E8(collState, cellRangeInfoPtr);
+                        func_8006B6E8(collState, cellRanges);
                     }
 
                     if (collState->isCharaMoving || collState->field_0_9)
@@ -1126,7 +1126,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     return true;
 }
 
-void func_8006B6E8(s_CollisionState* collState, s_IpdCellRangeInfo* arg1) // 0x8006B6E8
+void func_8006B6E8(s_CollisionState* collState, s_IpdCellRange* cellRanges) // 0x8006B6E8
 {
     s32                  idx;
     s32                  temp_s1;
@@ -1866,7 +1866,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
     }
 }
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRangeInfo* arg2) // 0x8006CA18
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges) // 0x8006CA18
 {
     s32                    startIdx;
     s32                    endIdx;
@@ -1874,8 +1874,8 @@ void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_
     u8*                    curUnk;
     s_IpdCollisionData_10* ptr;
 
-    startIdx = arg2[0].field_2;
-    endIdx   = arg2[1].field_2;
+    startIdx = cellRanges[0].field_2;
+    endIdx   = cellRanges[1].field_2;
 
     if (startIdx == endIdx)
     {
@@ -2815,7 +2815,7 @@ void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) /
     }
 }
 
-void func_8006E53C(s_RayState* state, s_IpdCellRangeInfo* arg1, s_IpdCollisionData* collData) // 0x8006E53C
+void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollisionData* collData) // 0x8006E53C
 {
     s32                    i;
     s32                    temp_v0;
@@ -2830,7 +2830,7 @@ void func_8006E53C(s_RayState* state, s_IpdCellRangeInfo* arg1, s_IpdCollisionDa
     s_IpdCollisionData_18* temp_a1_2;
     s_IpdCollisionData_14* temp_a1;
 
-    for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
+    for (i = cellRanges[0].field_0; i < cellRanges[1].field_0; i++)
     {
         idx = collData->ptr_28[i];
         temp_a0 = collData->unkLoadedCount;

@@ -480,7 +480,7 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
 
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
-/** NPC-only, Among other things, sets the NPC's anim to anim 3 (which might actually be flags if the field packs more data). */
+/** NPC-only. Among other things, sets the NPC's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* npc, bool cond);
 
 /** NPC-only, sets `controlState` in properties. */

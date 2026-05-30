@@ -359,8 +359,8 @@ void MonsterCybil_Init(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x8
 void func_800D8A90(s_SubCharacter* monsterCybil) // 0x800D8A90
 {
     monsterCybil->collision.cylinder.radius  = Q12(0.3f);
-    monsterCybil->collision.cylinder.field_2 = Q12(0.23f);
-    monsterCybil->collision.box.top          = Q12(-1.6f);
+    monsterCybil->collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
+    monsterCybil->collision.box.top          = DEFAULT_PLAYER_BOX_TOP;
     monsterCybil->collision.box.offsetY      = Q12(-1.05f);
     monsterCybil->collision.box.field_8      = Q12(-1.45f);
 

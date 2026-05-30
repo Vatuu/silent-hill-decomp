@@ -1375,12 +1375,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     }
 
                     player->collision.cylinder.field_2 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.27f));
-                    player->collision.box.top += Q12_MULT_PRECISE(g_DeltaTime, Q12(1.2f));
-                    player->collision.box.offsetY += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.9f));
-
-                    player->collision.cylinder.field_2 = CLAMP(player->collision.cylinder.field_2, Q12(0.23f), Q12(0.5f));
-                    player->collision.box.top = CLAMP(player->collision.box.top, Q12(-1.6f), Q12(-0.4));
-                    player->collision.box.offsetY = CLAMP(player->collision.box.offsetY, Q12(-1.1f), Q12(-0.2f));
+                    player->collision.box.top          += Q12_MULT_PRECISE(g_DeltaTime, Q12(1.2f));
+                    player->collision.box.offsetY      += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.9f));
+                    player->collision.cylinder.field_2  = CLAMP(player->collision.cylinder.field_2, DEFAULT_PLAYER_CYLINDER_FIELD_2, Q12(0.5f));
+                    player->collision.box.top           = CLAMP(player->collision.box.top, DEFAULT_PLAYER_BOX_TOP, Q12(-0.4));
+                    player->collision.box.offsetY       = CLAMP(player->collision.box.offsetY, DEFAULT_PLAYER_BOX_OFFSET_Y, Q12(-0.2f));
 
                     if (player->health <= Q12(0.0f) && player->properties.player.afkTimer <= Q12(0.0f))
                     {
@@ -1824,14 +1823,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
                         playerChara.collision.cylinder.radius          = Q12(0.3f);
-                        playerChara.collision.cylinder.field_2         = Q12(0.23f);
-                        playerChara.collision.box.top               = Q12(-1.6f);
+                        playerChara.collision.cylinder.field_2         = DEFAULT_PLAYER_CYLINDER_FIELD_2;
+                        playerChara.collision.box.top                  = DEFAULT_PLAYER_BOX_TOP;
                         playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
                         playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
                         playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
                         playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
-                        playerChara.collision.box.bottom                  = Q12(0.0f);
-                        playerChara.collision.box.offsetY              = Q12(-1.1f);
+                        playerChara.collision.box.bottom               = Q12(0.0f);
+                        playerChara.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
                     }
 
                     player->attackReceived = NO_VALUE;
@@ -1949,9 +1948,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.top     = Q12(-1.6f);
+                            playerChara.collision.box.top     = DEFAULT_PLAYER_BOX_TOP;
                             playerChara.collision.box.bottom  = Q12(0.0f);
-                            playerChara.collision.box.offsetY = Q12(-1.1f);
+                            playerChara.collision.box.offsetY = DEFAULT_PLAYER_BOX_OFFSET_Y;
 
                             player->collision.cylinder.radius = Q12(0.3f);
                         }
@@ -1977,9 +1976,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.top     = Q12(-1.6f);
+                            playerChara.collision.box.top     = DEFAULT_PLAYER_BOX_TOP;
                             playerChara.collision.box.bottom  = Q12(0.0f);
-                            playerChara.collision.box.offsetY = Q12(-1.1f);
+                            playerChara.collision.box.offsetY = DEFAULT_PLAYER_BOX_OFFSET_Y;
 
                             player->collision.cylinder.radius = Q12(0.3f);
                         }
@@ -1996,7 +1995,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
-                player->collision.cylinder.field_2 = Q12(0.23f);
+                player->collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
             }
             break;
 
@@ -2006,7 +2005,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
             {
                 Player_ExtraStateSet(player, extra, PlayerState_None);
-                player->collision.cylinder.field_2 = Q12(0.23f);
+                player->collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
             }
             break;
 
@@ -7813,7 +7812,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_SysWork.playerWork.player.model.charaId              = Chara_Harry;
     g_SysWork.playerWork.extra.model.charaId               = Chara_Harry;
     g_SysWork.playerWork.player.collision.cylinder.radius  = Q12(0.3f);
-    g_SysWork.playerWork.player.collision.cylinder.field_2 = Q12(0.23f);
+    g_SysWork.playerWork.player.collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
 
     extraModel = &g_SysWork.playerWork.player.model;
     model      = &g_SysWork.playerWork.extra.model;
@@ -7927,7 +7926,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     player->properties.player.exhaustionTimer = Q12(0.0f);
     Player_CollisionReset();
     player->collision.cylinder.radius  = Q12(0.3f);
-    player->collision.cylinder.field_2 = Q12(0.23f);
+    player->collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
     g_GameWork.mapAnimIdx              = NO_VALUE;
 
     func_8007E9C4();
@@ -7987,7 +7986,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_SysWork.npcIdxs[2] = NO_VALUE;
     g_SysWork.npcIdxs[1] = NO_VALUE;
     g_SysWork.npcIdxs[0] = NO_VALUE;
-    player->collision.cylinder.field_2   = Q12(0.23f);
+    player->collision.cylinder.field_2   = DEFAULT_PLAYER_CYLINDER_FIELD_2;
 
     g_Player_IsAiming            = false;
     g_Player_IsRunning           = false;
@@ -8620,17 +8619,17 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     if (resetColl)
     {
         g_SysWork.playerWork.player.collision.cylinder.radius  = Q12(0.3f);
-        g_SysWork.playerWork.player.collision.cylinder.field_2 = Q12(0.23f);
+        g_SysWork.playerWork.player.collision.cylinder.field_2 = DEFAULT_PLAYER_CYLINDER_FIELD_2;
 
         // TODO: Doesn't match?
         //Player_CollisionReset();
-        g_SysWork.playerWork.player.collision.box.top                  = Q12(-1.6f);
+        g_SysWork.playerWork.player.collision.box.top                  = DEFAULT_PLAYER_BOX_TOP;
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
         g_SysWork.playerWork.player.collision.box.bottom               = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.box.offsetY              = Q12(-1.1f);
+        g_SysWork.playerWork.player.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
     }
 }
 

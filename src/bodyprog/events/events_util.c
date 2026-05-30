@@ -16,7 +16,7 @@
 #include "main/fsqueue.h"
 
 VECTOR3 g_Event_PathWaypoints[2][8];
-q3_12   g_Event_PathWaypointAngles[8]; // TODO: should only have 2 entries, 1 for each character slot?
+q3_12   g_Event_PathWaypointHeadingAngles[8]; // TODO: should only have 2 entries, 1 for each character slot?
 q19_12  g_Event_TweenTimers[6];
 
 // ========================================
@@ -65,24 +65,24 @@ void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep) // 0x8008
     }
 }
 
-void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara, s32 cmdArg, bool incSubStep) // 0x80085EB8
+void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 animState, bool incSubStep) // 0x80085EB8
 {
     s32 playbackState; // TODO: Not final name, only an indication.
 
     switch (cmd)
     {
-        case CharaAnimCommand_SetState:
+        case CharaAnimCmd_SetState:
             if (chara == &g_SysWork.playerWork.player)
             {
-                g_MapOverlayHdr.playerAnimStateSet(cmdArg);
+                g_MapOverlayHdr.playerAnimStateSet(animState);
             }
             else
             {
-                g_MapOverlayHdr.charaAnimStateSet(chara, cmdArg);
+                g_MapOverlayHdr.charaAnimStateSet(chara, animState);
             }
             break;
 
-        case CharaAnimCommand_AwaitAnimEnd:
+        case CharaAnimCmd_AwaitAnimEnd:
             if (chara == &g_SysWork.playerWork.player)
             {
                 playbackState = g_MapOverlayHdr.playerAnimPlaybackStateGet();
@@ -101,7 +101,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             break;
 
-        case CharaAnimCommand_AnimLock:
+        case CharaAnimCmd_AnimLock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHdr.playerAnimLock();
@@ -112,7 +112,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             break;
 
-        case CharaAnimCommand_AnimUnlock:
+        case CharaAnimCmd_AnimUnlock:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHdr.playerAnimUnlock();
@@ -123,7 +123,7 @@ void Event_CharaAnimCommandExecute(e_CharaAnimCommand cmd, s_SubCharacter* chara
             }
             break;
 
-        case CharaAnimCommand_AnimReset:
+        case CharaAnimCmd_AnimReset:
             if (chara == &g_SysWork.playerWork.player)
             {
                 g_MapOverlayHdr.playerAnimUnlock();
@@ -179,7 +179,7 @@ void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1,
     }
 }
 
-void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
+void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12 fadeTimestep, bool incSubStep) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -189,10 +189,10 @@ void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType
         FadeType_Unk3  = 3  // TODO: Investigate.
     } e_FadeType;
 
-    e_ScreenFadeCommand activeCmd;
+    e_ScreenFadeCmd activeCmd;
 
-    // If `cmd == ScreenFadeCommand_Auto`, `sysStateSteps[2]` dictates the command. This field is manipulated often in map event functions.
-    if (cmd != ScreenFadeCommand_Auto)
+    // If `cmd == ScreenFadeCmd_Auto`, `sysStateSteps[2]` dictates the command. This field is manipulated often in map event functions.
+    if (cmd != ScreenFadeCmd_Auto)
     {
         activeCmd = cmd;
     }
@@ -203,7 +203,7 @@ void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType
 
     switch (activeCmd)
     {
-        case ScreenFadeCommand_Start:
+        case ScreenFadeCmd_Start:
             if (fadeType != FadeType_Unk2)
             {
                 g_ScreenFadeTimestep = fadeTimestep;
@@ -245,13 +245,13 @@ void Event_ScreenFadeCommand(e_ScreenFadeCommand cmd, bool fadeOut, s32 fadeType
                 }
             }
 
-            if (cmd != ScreenFadeCommand_Start) // `cmd` will only be different if `ScreenFadeCommand_Auto` was passed.
+            if (cmd != ScreenFadeCmd_Start) // `cmd` will only be different if `ScreenFadeCmd_Auto` was passed.
             {
                 SysWork_StateStepIncrement(2);
             }
             break;
 
-        case ScreenFadeCommand_Await:
+        case ScreenFadeCmd_Await:
             if (fadeType < FadeType_Unk2)
             {
                 if ((fadeOut == false && ScreenFade_IsNone()) ||
@@ -276,33 +276,33 @@ const RECT D_8002AB10 =  // 0x8002AB10 .rodata
     (SCREEN_WIDTH / 5) * 3, SCREEN_HEIGHT
 };
 
-void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSubStep) // 0x800862F8
+void Event_BgTextureCmd(e_BgTextureCmd cmd, e_FsFile texFileIdx, bool incSubStep) // 0x800862F8
 {
-    e_BgTextureCommand activeCmd;
+    e_BgTextureCmd activeCmd;
 
-    if (cmd == BgTextureCommand_Auto)
+    if (cmd == BgTextureCmd_Auto)
     {
         activeCmd = g_SysWork.sysStateSteps[2];
     }
     else
     {
         activeCmd = cmd;
-        if (activeCmd == BgTextureCommand_8)
+        if (activeCmd == BgTextureCmd_8)
         {
-            activeCmd = BgTextureCommand_AwaitLoad;
+            activeCmd = BgTextureCmd_AwaitLoad;
             if (g_SysWork.sysStateSteps[2] == 0)
             {
-                activeCmd = BgTextureCommand_QueueReadSecondary;
+                activeCmd = BgTextureCmd_QueueReadSecondary;
             }
         }
     }
 
     switch (activeCmd)
     {
-        case BgTextureCommand_QueueRead:
-            Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &g_ItemInspectionImg);
+        case BgTextureCmd_QueueRead:
+            Fs_QueueStartReadTim(texFileIdx, FS_BUFFER_1, &g_ItemInspectionImg);
 
-            if (cmd != BgTextureCommand_QueueRead)
+            if (cmd != BgTextureCmd_QueueRead)
             {
                 SysWork_StateStepIncrement(2);
 
@@ -313,73 +313,73 @@ void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSu
             }
             break;
 
-        case BgTextureCommand_AwaitLoad:
+        case BgTextureCmd_AwaitLoad:
             if (Fs_QueueChunksLoad())
             {
                 Event_SysStateStepIncrement(incSubStep);
             }
             break;
 
-        case BgTextureCommand_Draw:
+        case BgTextureCmd_Draw:
             Screen_BackgroundImgDrawAlt(&g_ItemInspectionImg);
             break;
 
-        case BgTextureCommand_StoreVram:
+        case BgTextureCmd_StoreVram:
             DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             break;
 
-        case BgTextureCommand_QueueReadSecondary:
-            Fs_QueueStartReadTim(fileIdx, FS_BUFFER_1, &D_800A9A04);
+        case BgTextureCmd_QueueReadSecondary:
+            Fs_QueueStartReadTim(texFileIdx, FS_BUFFER_1, &D_800A9A04);
 
-            if (cmd == BgTextureCommand_8)
+            if (cmd == BgTextureCmd_8)
             {
-                SysWork_StateStepSet(2, BgTextureCommand_AwaitLoad);
+                SysWork_StateStepSet(2, BgTextureCmd_AwaitLoad);
             }
             break;
 
-        case BgTextureCommand_DrawSecondary:
+        case BgTextureCmd_DrawSecondary:
             Screen_BackgroundImgDrawAlt(&D_800A9A04);
             break;
 
-        case BgTextureCommand_RestoreVram:
+        case BgTextureCmd_RestoreVram:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             break;
     }
 }
 
-void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCount, bool incSubStep) // 0x80086470
+void Event_InvItemCmd(e_InvItemCmd cmd, e_InvItemId itemId, s32 itemCount, bool incSubStep) // 0x80086470
 {
-    // This func does weird remapping of the input `cmd` to `activeCmd`
+    // This func does weird remapping of the input `cmd` to `activeCmd`.
     // `cmd` is also `u32` while `activeCmd` is `s32`, added internal enum here to help func make more sense.
-    typedef enum _InvItemCommandInternal
+    typedef enum _InvItemCmdInternal
     {
-        InvItemCommandInternal_QueueLoad = 0,
-        InvItemCommandInternal_AwaitLoad = 1,
-        InvItemCommandInternal_AddItem   = 2, // Remapped from `InvItemCommand_AddItem` (3)
-        InvItemCommandInternal_Nop       = 3, // Remapped from `InvItemCommand_Nop` (2)
-        InvItemCommandInternal_Hack      = -1
-    } e_InvItemCommandInternal;
+        InvItemCmdInternal_QueueLoad = 0,
+        InvItemCmdInternal_AwaitLoad = 1,
+        InvItemCmdInternal_AddItem   = 2, // Remapped from `InvItemCmd_AddItem` (3)
+        InvItemCmdInternal_Nop       = 3, // Remapped from `InvItemCmd_Nop` (2)
+        InvItemCmdInternal_Hack      = -1
+    } e_InvItemCmdInternal;
 
-    e_InvItemCommandInternal activeCmd;
+    e_InvItemCmdInternal activeCmd;
 
-    if (cmd == InvItemCommand_6 && g_SysWork.sysStateSteps[2] == 0)
+    if (cmd == InvItemCmd_6 && g_SysWork.sysStateSteps[2] == 0)
     {
-        SysWork_StateStepSet(2, InvItemCommandInternal_AddItem);
+        SysWork_StateStepSet(2, InvItemCmdInternal_AddItem);
     }
 
     activeCmd = cmd;
-    if (cmd >= InvItemCommand_Nop)
+    if (cmd >= InvItemCmd_Nop)
     {
-        if (cmd == InvItemCommand_Nop)
+        if (cmd == InvItemCmd_Nop)
         {
-            activeCmd = InvItemCommandInternal_Nop;
+            activeCmd = InvItemCmdInternal_Nop;
         }
-        else if (cmd == InvItemCommand_AddItem)
+        else if (cmd == InvItemCmd_AddItem)
         {
-            activeCmd = InvItemCommandInternal_AddItem;
+            activeCmd = InvItemCmdInternal_AddItem;
         }
         else
         {
@@ -389,10 +389,10 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
 
     switch (activeCmd)
     {
-        case InvItemCommandInternal_QueueLoad:
+        case InvItemCmdInternal_QueueLoad:
             GameFs_UniqueItemModelLoad(itemId);
 
-            if (cmd == InvItemCommand_QueueLoad)
+            if (cmd == InvItemCmd_QueueLoad)
             {
                 SysWork_StateStepIncrement(1);
                 g_SysWork.sysStateSteps[1]--;
@@ -400,7 +400,7 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
 
             SysWork_StateStepIncrement(2);
 
-        case InvItemCommandInternal_AwaitLoad:
+        case InvItemCmdInternal_AwaitLoad:
             if (!Fs_QueueChunksLoad())
             {
                 break;
@@ -408,7 +408,7 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
 
             func_80054A04(itemId);
 
-            if (cmd == InvItemCommand_AwaitLoad || cmd == InvItemCommand_4)
+            if (cmd == InvItemCmd_AwaitLoad || cmd == InvItemCmd_4)
             {
                 Event_SysStateStepIncrement(incSubStep);
                 break;
@@ -416,10 +416,10 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
 
             SysWork_StateStepIncrement(2);
 
-        case InvItemCommandInternal_AddItem:
+        case InvItemCmdInternal_AddItem:
             SysWork_StateStepSet(2, 0);
 
-            if (cmd == InvItemCommand_AddItem || cmd == InvItemCommand_6)
+            if (cmd == InvItemCmd_AddItem || cmd == InvItemCmd_6)
             {
                 Inventory_AddSpecialItem(itemId, itemCount);
             }
@@ -427,35 +427,35 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
     }
 }
 
-void Event_PathWaypointSet(bool isAbsolute, s32 charaSlot, s32 waypointIdx, q3_12 angleY, q19_12 posX, q19_12 posZ) // 0x800865FC
+void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 headingAngle, q19_12 posX, q19_12 posZ) // 0x800865FC
 {
-    if (isAbsolute == false)
+    if (isAbs == false)
     {
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vx = g_SysWork.playerWork.player.position.vx + posX;
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vz = g_SysWork.playerWork.player.position.vz + posZ;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vx = g_SysWork.playerWork.player.position.vx + posX;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vz = g_SysWork.playerWork.player.position.vz + posZ;
 
-        // @bug `angleY` is stored per `charaSlot`, not per waypoint.
+        // @bug `headingAngle` is stored per `charaSlotIdx`, not per waypoint.
         // Event code often calls `Event_PathWaypointSet` multiple times in a single tick
-        // with different `angleY` values, but the same `charaSlot`.
-        // Only the last written `angleY` is retained, other values are silently discarded.
+        // with different `headingAngle` values, but the same `charaSlot`.
+        // Only the last written `headingAngle` is retained and other values are silently discarded.
         // Unlikely this was intentional, but doesn't seem to break things visually at least.
         // Maybe pathfinding code doesn't rely on this angle value that much?
-        g_Event_PathWaypointAngles[charaSlot] = angleY;
+        g_Event_PathWaypointHeadingAngles[charaSlotIdx] = headingAngle;
     }
-    else if (isAbsolute == true)
+    else if (isAbs == true)
     {
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vx = posX;
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
-        g_Event_PathWaypoints[charaSlot][waypointIdx].vz = posZ;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vx = posX;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vz = posZ;
 
-        g_Event_PathWaypointAngles[charaSlot] = angleY;
+        g_Event_PathWaypointHeadingAngles[charaSlotIdx] = headingAngle;
     }
 }
 
 void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep) // 0x800866D4
 {
-    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointAngles[0], waypointCount) == true)
+    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointHeadingAngles[0], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -463,7 +463,7 @@ void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubS
 
 void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep) // 0x80086728
 {
-    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount) == true)
+    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount) == true)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
@@ -471,7 +471,7 @@ void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypo
 
 void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount) // 0x8008677C
 {
-    g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount);
+    g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount);
 }
 
 void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
@@ -516,11 +516,11 @@ q19_12 Event_TweenLinear(q19_12 target, q19_12 duration, s32 idx) // 0x800868F4
     return (target * g_Event_TweenTimers[idx]) / duration;
 }
 
-q19_12 Event_TweenSine(q19_12 amplitude, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx) // 0x8008694C
+q19_12 Event_TweenSine(q19_12 amp, s16 startAngle, s16 sweepAngle, q19_12 duration, s32 idx) // 0x8008694C
 {
     g_Event_TweenTimers[idx] += g_DeltaTime;
     g_Event_TweenTimers[idx]  = (duration < g_Event_TweenTimers[idx]) ? duration : g_Event_TweenTimers[idx];
-    return Q12_MULT(amplitude, Math_Sin(startAngle + ((sweepAngle * g_Event_TweenTimers[idx]) / duration)));
+    return Q12_MULT(amp, Math_Sin(startAngle + ((sweepAngle * g_Event_TweenTimers[idx]) / duration)));
 }
 
 void Event_DisplayMapMsgWithAudio(s32 mapMsgIdx, u8* audioIdx, const u16* audioCmds) // 0x800869E4
@@ -670,17 +670,17 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     vcUserWatchTarget(&lookAtTarget, &camLookAtMoveParams, warp);
 }
 
-void Event_CharaAnimPlayUntilEnd(s_SubCharacter* chara, s32 animState) // 0x80086C58
+void Event_CharaAnimPlayToEnd(s_SubCharacter* chara, s32 animState) // 0x80086C58
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_SetState, chara, animState, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, chara, animState, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, chara, 0, true);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, chara, 0, true);
             break;
 
         default:
@@ -689,17 +689,17 @@ void Event_CharaAnimPlayUntilEnd(s_SubCharacter* chara, s32 animState) // 0x8008
     }
 }
 
-void Event_CharaAnimUnlockPlayUntilEnd(s_SubCharacter* chara) // 0x80086D04
+void Event_CharaAnimUnlockPlayToEnd(s_SubCharacter* chara) // 0x80086D04
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AnimUnlock, chara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, chara, 0, false);
             SysWork_StateStepIncrement(1);
             break;
 
         case 1:
-            Event_CharaAnimCommandExecute(CharaAnimCommand_AwaitAnimEnd, chara, 0, true);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, chara, 0, true);
             break;
 
         default:
@@ -708,43 +708,43 @@ void Event_CharaAnimUnlockPlayUntilEnd(s_SubCharacter* chara) // 0x80086D04
     }
 }
 
-void Event_BgTextureLoadFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep) // 0x80086DA8
+void Event_BgTextureLoadFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep) // 0x80086DA8
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_BgTextureCommand(BgTextureCommand_Auto, fileIdx, true);
+            Event_BgTextureCmd(BgTextureCmd_Auto, texFileIdx, true);
             break;
 
         default:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), false);
             break;
     }
 }
 
-void Event_BgTextureFadeIn(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
+void Event_BgTextureFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086E50
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_BgTextureCommand(BgTextureCommand_Auto, fileIdx, true);
+            Event_BgTextureCmd(BgTextureCmd_Auto, texFileIdx, true);
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
             break;
 
         default:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, false);
     }
 }
 
@@ -752,12 +752,12 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
 {
     if (g_SysWork.sysStateSteps[1] == 0)
     {
-        Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-        Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
+        Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+        Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
         return;
     }
 
-    Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
+    Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
     SysWork_StateStepIncrement(0);
 }
 
@@ -806,30 +806,30 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
     }
 }
 
-void Event_DisplayBgTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
+void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
+            Event_BgTextureCmd(BgTextureCmd_Auto, texFileIdx, true);
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
@@ -839,12 +839,12 @@ void Event_DisplayBgTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_1
             break;
 
         case 5:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -857,34 +857,34 @@ void Event_DisplayMapMsgWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
+            Event_BgTextureCmd(BgTextureCmd_Auto, textureFileIdx, true);
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx, 0, 0, 0, true);
             break;
 
         case 5:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -897,24 +897,24 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, fadeTimestep0, false);
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_BgTextureCommand(BgTextureCommand_Auto, textureFileIdx, true);
+            Event_BgTextureCmd(BgTextureCmd_Auto, textureFileIdx, true);
             break;
 
         case 2:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Await, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Await, true, 0, Q12(0.0f), true);
             break;
 
         case 3:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, fadeTimestep1, true);
             break;
 
         case 4:
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (mapMsgIdx0 != MapMsgCode_None)
             {
@@ -931,19 +931,19 @@ void Event_DisplayMapMsgWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimeste
 
         case 5:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_DisplayMapMsg(false, mapMsgIdx1, 0, 0, 0, true);
             break;
 
         case 6:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
-            Event_BgTextureCommand(BgTextureCommand_Draw, 0, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, fadeTimestep1, true);
+            Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
             break;
 
         default:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, fadeTimestep0, false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -977,12 +977,12 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
     {
         case 0: // Freeze player and start loading item model.
             g_MapOverlayHdr.playerControlFreeze();
-            Event_InvItemCommand(InvItemCommand_QueueLoad, itemId, 0, false);
+            Event_InvItemCmd(InvItemCmd_QueueLoad, itemId, 0, false);
 
             SysWork_StateStepIncrement(1);
 
         case 1: // Load model.
-            Event_InvItemCommand(InvItemCommand_AwaitLoad, itemId, 0, true);
+            Event_InvItemCmd(InvItemCmd_AwaitLoad, itemId, 0, true);
             break;
 
         case 2:
@@ -997,7 +997,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
             break;
 
         case 3: // "Yes" selected.
-            Event_InvItemCommand(InvItemCommand_AddItem, itemId, itemCount, false);
+            Event_InvItemCmd(InvItemCmd_AddItem, itemId, itemCount, false);
             SysWork_StateStepIncrement(1);
 
         default:
@@ -1077,7 +1077,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             SysWork_StateStepIncrement(1);
 
         case 1:
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), true);
             break;
 
         case 2:
@@ -1090,7 +1090,7 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             g_IntervalVBlanks = 1;
 
             GsSwapDispBuff();
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             Fs_QueueWaitForEmpty();
 
             SysWork_StateStepIncrement(1);
@@ -1140,14 +1140,14 @@ void Event_MapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx)
             g_Screen_BackgroundImgGamma = Q8(11.0f / 32.0f);
 
             Screen_BackgroundImgDraw(&g_PaperMapImg);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.0f), true);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), true);
             break;
 
         default:
             LoadImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
-            Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.0f), false);
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
             g_MapOverlayHdr.playerControlUnfreeze(0);
             SysWork_StateSetNext(SysState_Gameplay);
