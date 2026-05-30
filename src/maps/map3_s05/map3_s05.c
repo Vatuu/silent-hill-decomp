@@ -615,7 +615,7 @@ void func_800D6BE0(void) // 0x800D6BE0
             break;
 
         case 3:
-            func_80086F44(0, 0);
+            Event_BgTextureFadeOut(0, 0);
             break;
 
         default:
@@ -707,7 +707,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             SysWork_StateStepIncrement(0);
 
         case 12:
-            func_80086F44(0, 0);
+            Event_BgTextureFadeOut(0, 0);
             break;
 
         case 13:

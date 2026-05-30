@@ -247,13 +247,16 @@ void Event_BgTextureLoadFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep);
  */
 void Event_BgTextureFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-/** Odd code?
- * This function appears to circumvent an issue with fading.
- * When the player is about to leave the clock tower screen marking certain
- * times, breaking it causes the clock tower image to dissapear. It then fades in
- * and out to the black screen before returning to gameplay.
+/** @brief Fades out a background texture and returns to gameplay view.
+ *
+ * Counterpart to `Event_BgTextureFadeIn`. Continues drawing the current background
+ * texture while fading to black, then starts a fade from black to reveal the
+ * gameplay scene and advances `sysStateSteps[0]`.
+ *
+ * @param fadeTimestep0 Fade speed for the reveal (fade from black).
+ * @param fadeTimestep1 Fade speed for the hide (fade to black).
  */
-void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
+void Event_BgTextureFadeOut(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
 /** @brief Displays a map message with SFX.
  *

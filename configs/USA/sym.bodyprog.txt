@@ -953,6 +953,7 @@ Event_CharaAnimPlayToEnd                     = 0x80086C58; // type:func
 Event_CharaAnimUnlockPlayToEnd               = 0x80086D04; // type:func
 Event_BgTextureLoadFadeIn                    = 0x80086DA8; // type:func
 Event_BgTextureFadeIn                        = 0x80086E50; // type:func
+Event_BgTextureFadeOut                       = 0x80086F44; // type:func
 Event_DisplayMapMsgWithSfx                   = 0x80086FE8; // type:func
 Event_DisplayBgTexture                       = 0x8008716C; // type:func
 Event_DisplayMapMsgWithBg                    = 0x80087360; // type:func

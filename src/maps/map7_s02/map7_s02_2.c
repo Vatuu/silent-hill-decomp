@@ -2750,7 +2750,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 SysWork_StateStepIncrement(0);
 
             case 7:
-                func_80086F44(0, 0);
+                Event_BgTextureFadeOut(0, 0);
                 break;
 
             default:

@@ -577,7 +577,7 @@ void func_800D6B00(void) // 0x800D6B00
             SysWork_StateStepIncrement(0);
 
         case 11:
-            func_80086F44(0, 0);
+            Event_BgTextureFadeOut(0, 0);
             break;
 
         case 12:

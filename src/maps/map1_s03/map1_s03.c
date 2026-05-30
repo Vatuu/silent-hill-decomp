@@ -1071,7 +1071,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         case 12:
-            func_80086F44(Q12(1.5f), Q12(3.0f));
+            Event_BgTextureFadeOut(Q12(1.5f), Q12(3.0f));
             break;
 
         case EventState_Skip:

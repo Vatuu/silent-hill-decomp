@@ -372,7 +372,7 @@ void func_800D81CC(void) // 0x800D81CC
             break;
 
         case 5:
-            func_80086F44(Q12(3.0f), Q12(2.0f));
+            Event_BgTextureFadeOut(Q12(3.0f), Q12(2.0f));
             break;
 
         default:
@@ -418,7 +418,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         case 5:
-            func_80086F44(Q12(3.0f), Q12(2.0f));
+            Event_BgTextureFadeOut(Q12(3.0f), Q12(2.0f));
             break;
 
         default:
