@@ -32,20 +32,25 @@ q19_12  g_Event_TweenTimers[6];
 //
 // Example map event code:
 //
+// switch (g_SysWork.sysStateSteps[0])
+// {
 //   case 0:
 //       Event_WaitTimer(Q12(5.0f), false); // Called every tick until 5 seconds have elapsed.
-//       break;                             // Once elapsed, `Event_WaitTimer` increments sysStateSteps[0] to 1.
+//       break;                             // Once elapsed, `Event_WaitTimer` handles incrementing `sysStateSteps[0]` to 1.
 //
 //   case 1:
 //       Event_WaitPlayerStop();            // Called every tick until player has stopped.
-//       break;                             // Once stopped, `Event_WaitPlayerStop` increments sysStateSteps[0] to 2.
+//       break;                             // Once stopped, `Event_WaitPlayerStop` handles incrementing `sysStateSteps[0]` to 2.
 //
 //   case 2:
 //       DoSomething();                     // Only reached after both previous steps completed.
 //       break;
+// }
 //
 // This pattern lets sequential, blocking-style code be written without actually blocking the game's main loop.
 // The helpers above "wait" by simply returning without advancing the step, and "complete" by incrementing the step counter.
+// The animation/inventory item/MapMsg functions work similarly, being called every tick and "waiting" by simply not advancing the step.
+// TODO: describe the "Auto" commands that use `sysStateSteps[2]`, need to check how map events use that.
 // ========================================
 
 void Event_SysStateStepIncrement(bool incSubStep) // 0x80085D78
