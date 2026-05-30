@@ -326,7 +326,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             break;
 
         case 6:
-            func_800867B4(0, 1);
+            Event_PaperMapCmd(PaperMapCmd_Load, 1);
 
             D_800D778D = 0;
             D_800D778F = 0;
@@ -388,7 +388,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             break;
 
         case 13:
-            func_800867B4(2, 0);
+            Event_PaperMapCmd(PaperMapCmd_Unload, 0);
             SysWork_StateStepIncrement(0);
 
         case EventState_Skip:

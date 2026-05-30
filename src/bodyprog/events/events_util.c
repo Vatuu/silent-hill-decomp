@@ -508,35 +508,28 @@ void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32
     g_MapOverlayHdr.charaPathWaypointExecute(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointHeadingAngles[1], waypointCount);
 }
 
-void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
+void Event_PaperMapCmd(e_PaperMapCmd cmd, s32 paperMapIdx) // 0x800867B4
 {
-    typedef enum _EventState
+    switch (cmd)
     {
-        EventState_Initialize   = 0,
-        EventState_DrawPaperMap = 1,
-        EventState_2            = 2 // TODO: Name this.
-    } e_EventState;
-
-    switch (state)
-    {
-        case EventState_Initialize:
+        case PaperMapCmd_Load:
             DrawSync(SyncMode_Wait);
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFileIdx], FS_BUFFER_2, &g_PaperMapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[paperMapFileIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapIdx], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[paperMapIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
 
             Screen_Init(SCREEN_WIDTH, true);
             GsSwapDispBuff();
             Fs_QueueWaitForEmpty();
             break;
 
-        case EventState_DrawPaperMap:
+        case PaperMapCmd_Draw:
             Screen_BackgroundImgDraw(&g_PaperMapImg);
             break;
 
-        case EventState_2:
+        case PaperMapCmd_Unload:
             LoadImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);

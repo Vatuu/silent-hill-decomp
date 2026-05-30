@@ -311,7 +311,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
 
             ScreenFade_ResetTimestep();
-            func_800867B4(0, 1);
+            Event_PaperMapCmd(PaperMapCmd_Load, 1);
             func_800EB824(1);
             SysWork_StateStepIncrement(0);
 
@@ -349,7 +349,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
         case 4:
             g_SysWork.cutsceneBorderState = 20;
 
-            func_800867B4(2, 0);
+            Event_PaperMapCmd(PaperMapCmd_Unload, 0);
             Event_CameraPositionSet(NULL, Q12(-254.15f), Q12(-1.95f), Q12(-109.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(-257.0398f), Q12(-1.94f), Q12(-106.54f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
@@ -510,7 +510,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 5:
-            func_800867B4(0, 1);
+            Event_PaperMapCmd(PaperMapCmd_Load, 1);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -597,7 +597,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 12:
-            func_800867B4(2, 0);
+            Event_PaperMapCmd(PaperMapCmd_Unload, 0);
             D_800F228E = 0;
             SysWork_StateStepIncrement(0);
 
@@ -719,7 +719,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 10:
-            func_800867B4(0, 1);
+            Event_PaperMapCmd(PaperMapCmd_Load, 1);
             Savegame_EventFlagSet(EventFlag_147);
             SysWork_StateStepIncrement(0);
 
@@ -802,7 +802,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 17:
-            func_800867B4(2, 0);
+            Event_PaperMapCmd(PaperMapCmd_Unload, 0);
             Savegame_EventFlagSet(EventFlag_MapMark_OldTown_SchoolCircle);
 
             D_800F2295 = 0;
@@ -818,7 +818,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 22:
-            func_800867B4(2, 0);
+            Event_PaperMapCmd(PaperMapCmd_Unload, 0);
 
         case 21:
             Savegame_EventFlagSet(EventFlag_147);

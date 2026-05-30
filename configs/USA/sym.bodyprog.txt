@@ -943,6 +943,7 @@ Event_PathWaypointSet                        = 0x800865FC; // type:func
 Event_PathWaypointExecutePlayer              = 0x800866D4; // type:func
 Event_PathWaypointExecuteChara               = 0x80086728; // type:func
 Event_PathWaypointExecuteCharaNoWait         = 0x8008677C; // type:func
+Event_PaperMapCmd                            = 0x800867B4; // type:func
 Event_TweenReset                             = 0x800868DC; // type:func
 Event_TweenLinear                            = 0x800868F4; // type:func
 Event_TweenSine                              = 0x8008694C; // type:func

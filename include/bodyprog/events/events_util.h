@@ -38,6 +38,14 @@ typedef enum _InvItemCmd
     InvItemCmd_6         = 6, // Auto + add to inventory | @unused No caller passes thi, but code checks it.
 } e_InvItemCmd;
 
+typedef enum e_PaperMapCmd
+{
+    PaperMapCmd_Load   = 0,  // Store screen VRAM, load paper map textures.
+    PaperMapCmd_Draw   = 1,  // @unused | TODO: No events use this cmd, how do they draw the map?
+    PaperMapCmd_Unload = 2,  // Restore VRAM and reset screen.
+    PaperMapCmd_Hack   = -1, // Force enum as `s32`.
+} e_PaperMapCmd;
+
 /** @brief Screen fade commands. */
 typedef enum _ScreenFadeCmd
 {
@@ -146,8 +154,12 @@ void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypo
  */
 void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount);
 
-/** Paper map state handler. Rough name could be `Map_PaperMapBgStateUpdate`. */
-void func_800867B4(s32 state, s32 paperMapFileIdx);
+/** @brief Handles paper map loading/drawing/cleanup.
+ *
+ * @param cmd The paper map command to execute.
+ * @param paperMapIdx Index into `g_PaperMapFileIdxs` / `g_PaperMapMarkingFileIdxs` to select the area map.
+ */
+void Event_PaperMapCmd(e_PaperMapCmd cmd, s32 paperMapIdx);
 
 /** @brief Resets a tween timer slot to `Q12(0.0f)`.
  *
