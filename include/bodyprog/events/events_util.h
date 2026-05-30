@@ -38,6 +38,7 @@ typedef enum _InvItemCmd
     InvItemCmd_6         = 6, // Auto + add to inventory | @unused No caller passes thi, but code checks it.
 } e_InvItemCmd;
 
+/** @brief Paper map commands. */
 typedef enum e_PaperMapCmd
 {
     PaperMapCmd_Load   = 0,  // Store screen VRAM, load paper map textures.
@@ -54,10 +55,17 @@ typedef enum _ScreenFadeCmd
     ScreenFadeCmd_Auto  = 2 /** Uses `sysStateSteps[2]` as the command. */
 } e_ScreenFadeCmd;
 
-/** State step increment for some substate. */
+/** @brief Increments the event state step to use in next tick.
+ *
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
+ */
 void Event_SysStateStepIncrement(bool incSubStep);
 
-/** State step setter for some substate. */
+/** @brief Sets the event state step to a specific value for the next tick.
+ *
+ * @param setSubStep If `true`, sets `sysStateSteps[1]`, otherwise sets `sysStateSteps[0]`.
+ * @param sysStateStep The value to set the state step to.
+ */
 void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep);
 
 /** @brief Waits for the player to stop moving or a 1 second timeout, then increments `sysStateSteps[0]`.
@@ -112,7 +120,16 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, s32 fadeType, q19_12
  */
 void Event_BgTextureCmd(e_BgTextureCmd cmd, e_FsFile texFileIdx, bool incSubStep);
 
-/** Stepped state handler for displaying picked up items? */
+/** @brief Handles inventory item model loading and inventory add.
+ *
+ * Three main phases: queue model load, await load completion, and finalize (optionally adding the item to inventory).
+ * Commands 0-3 execute a specific phase directly. Commands 4-6 resume from `sysStateSteps[2]`?
+ *
+ * @param cmd The inventory item command to execute.
+ * @param itemId The inventory item to load/add.
+ * @param itemCount Number of items to add (only used by `InvItemCmd_AddItem` and `InvItemCmd_6`).
+ * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ */
 void Event_InvItemCmd(e_InvItemCmd stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
 
 /** @brief Sets a waypoint position for a character path.
