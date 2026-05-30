@@ -67,12 +67,15 @@ void Event_SysStateStepIncrementDelayed(q19_12 delay, bool incSubStep) // 0x8008
 
 void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 animState, bool incSubStep) // 0x80085EB8
 {
-    s32 playbackState; // TODO: Not final name, only an indication.
+    s32  playbackState;
+    bool isPlayer;
+
+    #define isPlayer (chara == &g_SysWork.playerWork.player)
 
     switch (cmd)
     {
         case CharaAnimCmd_SetState:
-            if (chara == &g_SysWork.playerWork.player)
+            if (isPlayer)
             {
                 g_MapOverlayHdr.playerAnimStateSet(animState);
             }
@@ -83,7 +86,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             break;
 
         case CharaAnimCmd_AwaitAnimEnd:
-            if (chara == &g_SysWork.playerWork.player)
+            if (isPlayer)
             {
                 playbackState = g_MapOverlayHdr.playerAnimPlaybackStateGet();
                 if (playbackState == AnimPlaybackState_End)
@@ -102,7 +105,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             break;
 
         case CharaAnimCmd_AnimLock:
-            if (chara == &g_SysWork.playerWork.player)
+            if (isPlayer)
             {
                 g_MapOverlayHdr.playerAnimLock();
             }
@@ -113,7 +116,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             break;
 
         case CharaAnimCmd_AnimUnlock:
-            if (chara == &g_SysWork.playerWork.player)
+            if (isPlayer)
             {
                 g_MapOverlayHdr.playerAnimUnlock();
             }
@@ -124,7 +127,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             break;
 
         case CharaAnimCmd_AnimReset:
-            if (chara == &g_SysWork.playerWork.player)
+            if (isPlayer)
             {
                 g_MapOverlayHdr.playerAnimUnlock();
                 g_MapOverlayHdr.playerAnimReset();
@@ -135,6 +138,8 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
             }
             break;
     }
+
+    #undef isPlayer
 }
 
 void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool setSubStep) // 0x8008605C

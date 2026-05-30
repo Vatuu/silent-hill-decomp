@@ -1030,7 +1030,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     temp_a3 = &collData->ptr_14[idx];
 
-    if (!((collState->flags >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
+    if (!((collState->flags >> ((temp_a3->field_0_14 * 4) | temp_a3->field_2_14)) & (1 << 0)))
     {
         return false;
     }

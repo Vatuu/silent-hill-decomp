@@ -501,12 +501,12 @@ typedef struct _MapOverlayHdr
     /* 0x118 */ void                   (*func_118)();
     /* 0x11C */ void                   (*func_11C)();
     /* 0x120 */ void                   (*func_120)();
-    /* 0x124 */ void                   (*charaAnimStateSet)(s_SubCharacter* npc, q19_12 afkTime);
+    /* 0x124 */ void                   (*charaAnimStateSet)(s_SubCharacter* chara, q19_12 afkTime);
     /* 0x128 */ s32                    (*charaAnimReset)(s_SubCharacter* player); // TODO: Not only used by the player.
-    /* 0x12C */ s32                    (*charaAnimLock)(s_SubCharacter* npc);
+    /* 0x12C */ s32                    (*charaAnimLock)(s_SubCharacter* chara);
     /* 0x130 */ void                   (*charaAnimIsLocked)(s_SubCharacter* chara);
     /* 0x134 */ s32                    (*charaAnimUnlock)(s_SubCharacter* chara);
-    /* 0x138 */ s32                    (*charaAnimPlaybackStateGet)(s_SubCharacter* npc);
+    /* 0x138 */ s32                    (*charaAnimPlaybackStateGet)(s_SubCharacter* chara);
     /* 0x13C */ bool                   (*func_13C)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
     /* 0x140 */ void                   (*charaVisibleSet)(s_SubCharacter* chara);
     /* 0x144 */ void                   (*charaInvisibleSet)(s_SubCharacter* chara);
