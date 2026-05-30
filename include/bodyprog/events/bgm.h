@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_SOUND_SOUND_H
-#define _BODYPROG_SOUND_SOUND_H
+#ifndef _BODYPROG_EVENTS_BGM_H
+#define _BODYPROG_EVENTS_BGM_H
 
 #define BGM_LAYER_COUNT 9
 
@@ -16,36 +16,6 @@ typedef enum _BgmStatusFlags
     BgmStatusFlag_6           = 1 << 6, // Something to do with the radio?
     BgmStatusFlag_RequestMute = 1 << 7
 } e_BgmStatusFlags;
-
-/** @brief SFX pair indices. Used for `SFX_PAIRS`. */
-typedef enum _SfxPairIdx
-{
-    SfxPairIdx_0  = 0,
-    SfxPairIdx_1  = 1,
-    SfxPairIdx_2  = 2,
-    SfxPairIdx_3  = 3,
-    SfxPairIdx_4  = 4,
-    SfxPairIdx_5  = 5,
-    SfxPairIdx_6  = 6,
-    SfxPairIdx_7  = 7,
-    SfxPairIdx_8  = 8,
-    SfxPairIdx_9  = 9,
-    SfxPairIdx_10 = 10,
-    SfxPairIdx_11 = 11,
-    SfxPairIdx_12 = 12,
-    SfxPairIdx_13 = 13,
-    SfxPairIdx_14 = 14,
-    SfxPairIdx_15 = 15,
-    SfxPairIdx_16 = 16,
-    SfxPairIdx_17 = 17,
-    SfxPairIdx_18 = 18,
-    SfxPairIdx_19 = 19,
-    SfxPairIdx_20 = 20,
-    SfxPairIdx_21 = 21,
-    SfxPairIdx_22 = 22,
-    SfxPairIdx_23 = 23,
-    SfxPairIdx_24 = 24
-} e_SfxPairIdx;
 
 /** @brief Background music flags. */
 typedef enum _BgmFlags
@@ -109,11 +79,53 @@ typedef enum _BgmTrackIdx
     BgmTrackIdx_41   = 41
 } e_BgmTrackIds;
 
-/** @brief SFX pair used for area transitions (e.g. door opening and closing). */
-typedef struct _AreaLoadSfx
+// ========
+// STRUCTS
+// ========
+
+typedef struct _BgmLayerLimits
 {
-    u16 sfx_0;
-    u16 sfx_2;
-} s_AreaLoadSfx;
+    /* 0x0 */ u8 limits[8];
+} s_BgmLayerLimits;
+
+// ==========
+// FUNCTIONS
+// ==========
+
+void Bgm_TrackUpdate(bool arg0);
+
+void Bgm_AllLayersMute(void);
+
+/** @unused. */
+bool Bgm_LayerOnCheck(void);
+
+void Bgm_GlobalLayerVariablesUpdate(void);
+
+/** @brief Undates background music.
+ *
+ * @param bgmFlags BGM layer flags.
+ * @param fadeSpeed Volume fade speed.
+ * @param layerLimits BGM layer limits.
+ */
+void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
+
+/** @brief Updates the track index and disables radio effects. */
+void func_800363D0(void);
+
+void Bgm_TrackChange(s32 bgmIdx);
+
+void Savegame_MapRoomIdxUpdate(void);
+
+/** @unused */
+s32 func_8003647C(void);
+
+/** @unused */
+s32 func_80036498(void);
+
+/** @unused */
+u32 func_800364BC(void);
+
+/** @brief Draws a palette of colors in the frame buffer. */
+void func_8003652C(void);
 
 #endif

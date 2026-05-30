@@ -1,6 +1,13 @@
 #ifndef _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
 #define _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
 
+/** @brief SFX pair used for area transitions (e.g. door opening and closing). */
+typedef struct _AreaLoadSfx
+{
+    u16 sfx_0;
+    u16 sfx_2;
+} s_AreaLoadSfx;
+
 extern const s_AreaLoadSfx SFX_PAIRS[25];
 
 extern s8 g_PaperMapFileIdxs[];

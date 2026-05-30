@@ -68,7 +68,7 @@ segments:
       - [0x610, .rodata, sys/memcard_2]
       - [0x68C, rodata] # Garbage padding
       - [0x698, .rodata, game_boot/game_boot]
-      - [0x6CC, .rodata, events/bgm_update]
+      - [0x6CC, .rodata, events/bgm]
       - [0x6F4, rodata] # Garbage padding
       - [0x6F8, .rodata, events/map_msg_display]
       - [0x750, rodata, events/bodyprog_data_800A99B4]
@@ -78,7 +78,7 @@ segments:
       - [0x9BC, .rodata, gfx/bodyprog_8003BE50]
       - [0x104C, .rodata, gfx/map_effects]
       - [0x107C, rodata] # Garbage padding
-      - [0x108C, .rodata, sound/sd_call]
+      - [0x108C, .rodata, sound/sound_system]
       - [0x11F8, rodata]
       - [0x1200, .rodata, text/text_draw_jp]
       - [0x145C, .rodata, items/item_screens_1]
@@ -122,7 +122,7 @@ segments:
       - [0x104A0, c, game_boot/fs_chara_anim]
       - [0x10994, c, game_boot/background_sound_init]
       - [0x10D18, c, game_boot/load_screen]
-      - [0x10FC8, c, events/bgm_update]
+      - [0x10FC8, c, events/bgm]
       - [0x117CC, c, events/map_msg_display]
       - [0x123CC, c, events/radio]
       - [0x12460, c, events/player_pos_update]
@@ -138,7 +138,7 @@ segments:
       - [0x1BDEC, c, gfx/bodyprog_80040B74]
       - [0x1F81C, c, gfx/bodyprog_anim_800445A4]
       - [0x2018C, c, gfx/bodyprog_bone_80044F14]
-      - [0x20CF4, c, sound/sd_call]
+      - [0x20CF4, c, sound/sound_system]
       - [0x23CB0, c, view/vw_main]
       - [0x241A0, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25AF4, c, text/text_draw_jp]
@@ -358,7 +358,7 @@ segments:
       - [0x87134, .data, sys/memcard_2]
       - [0x87164, .data, game_boot/background_sound_init]
       - [0x8725C, .data, game_boot/fs_chara_anim]
-      - [0x872FC, .data, events/bgm_update]
+      - [0x872FC, .data, events/bgm]
       - [0x8730C, .data, events/map_msg_display] # Garbage data at 0x87312 in JAP2
       - [0x87314, data]
       - [0x87380, .data, events/events_main]
@@ -395,7 +395,7 @@ segments:
       - [0x9A83C, pad]
       - [0x9A840, .bss, game_boot/game_boot]
       - [0x9A844, pad]
-      - [0x9A848, .bss, events/bgm_update]
+      - [0x9A848, .bss, events/bgm]
       - [0x9A858, .bss, events/map_msg_display]
       - [0x9A874, pad]
       - [0x9A878, .bss, events/game_sys_states]
@@ -409,7 +409,7 @@ segments:
       - [0x9F0A4, pad]
       - [0x9F0A8, .bss, gfx/bodyprog_bone_80044F14]
       - [0x9F0AD, pad]
-      - [0x9F0B0, .bss, sound/sd_call]
+      - [0x9F0B0, .bss, sound/sound_system]
       - [0xA12D8, .bss, view/vw_main]
       - [0xA1360, .bss, view/vw_calc]
       - [0xA13A0, .bss, text/text_draw_jp]

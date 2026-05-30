@@ -224,7 +224,7 @@ void Sfx_WithPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s8 pitch) /
     func_80046620(sfxId, balance, ~volCpy, pitch);
 }
 
-static inline s32 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)
+static inline q23_8 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)
 {
     q19_12 dist;
 
@@ -237,11 +237,11 @@ static inline s32 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)
 void Sfx_WithFalloffAndPitchPlay(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch)
 {
     s32 balance;
-    u16 finalVol;
-    s32 s3;
-    s32 att0;
-    u8  att1;
-    s32 att2;
+    u16 adjVol;
+    s32 unkVol;
+    s32 atten0;
+    u8  atten1;
+    s32 atten2;
 
     if (g_GameWork.config.soundType)
     {
@@ -262,22 +262,22 @@ void Sfx_WithFalloffAndPitchPlay(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 fa
         return;
     }
 
-    att0 = AttenuationCalc(vol, pos, falloff);
-    s3 = vol - Q8_CLAMPED(1.0f);
-    if ((att0 - s3) >= Q8_CLAMPED(1.0f) || (AttenuationCalc(vol, pos, falloff) - s3) >= 0)
+    atten0 = AttenuationCalc(vol, pos, falloff);
+    unkVol = vol - Q8_CLAMPED(1.0f);
+    if ((atten0 - unkVol) >= Q8_CLAMPED(1.0f) || (AttenuationCalc(vol, pos, falloff) - unkVol) >= 0)
     {
-        att2 = AttenuationCalc(vol, pos, falloff) - s3;
-        finalVol = Q8_CLAMPED(1.0f);
-        if (att2 < Q8_CLAMPED(1.0f))
+        atten2 = AttenuationCalc(vol, pos, falloff) - unkVol;
+        adjVol = Q8_CLAMPED(1.0f);
+        if (atten2 < Q8_CLAMPED(1.0f))
         {
-            att1 = AttenuationCalc(vol, pos, falloff) - (vol + 1);
-            finalVol = att1;
+            atten1 = AttenuationCalc(vol, pos, falloff) - (vol + 1);
+            adjVol = atten1;
         }
     }
     else
     {
-        finalVol = Q8(0.0f);
+        adjVol = Q8(0.0f);
     }
 
-    Sd_SfxAttributesUpdate(sfxId, balance, finalVol, pitch);
+    Sd_SfxAttributesUpdate(sfxId, balance, adjVol, pitch);
 }

@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
-#include "bodyprog/events/bgm_update.h"
+#include "bodyprog/events/bgm.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -353,7 +353,7 @@ void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) /
 
 void func_800363D0(void) // 0x800363D0
 {
-    g_RadioPitchState        = 0;
+    g_RadioPitchState         = 0;
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Duck;
     Bgm_TrackUpdate(false);
 }
@@ -372,12 +372,14 @@ void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
 
 void Savegame_MapRoomIdxUpdate(void) // 0x80036420
 {
-    s32 x;
-    s32 z;
-    s8  newMapRoomIdx;
+    q19_12 posX;
+    q19_12 posZ;
+    s8     newMapRoomIdx;
 
-    x = g_SysWork.playerWork.player.position.vx;
-    z = g_SysWork.playerWork.player.position.vz;
+    #define playerChara g_SysWork.playerWork.player
+
+    posX = playerChara.position.vx;
+    posZ = playerChara.position.vz;
 
     // Set map room index based on current player position.
     if (g_MapOverlayHdr.mapRoomIdxGet == NULL)
@@ -386,9 +388,11 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
     }
     else
     {
-        newMapRoomIdx = g_MapOverlayHdr.mapRoomIdxGet(x, z);
+        newMapRoomIdx = g_MapOverlayHdr.mapRoomIdxGet(posX, posZ);
     }
     g_SavegamePtr->mapRoomIdx = newMapRoomIdx;
+
+    #undef playerChara
 }
 
 s32 func_8003647C(void) // 0x8003647C

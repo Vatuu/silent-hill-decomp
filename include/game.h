@@ -8,11 +8,11 @@
 
 #include "bodyprog/anim.h"
 #include "bodyprog/chara/chara.h"
+#include "bodyprog/events/bgm.h"
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/model.h"
 #include "bodyprog/savegame.h"
-#include "bodyprog/sound/sound.h"
 #include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
 

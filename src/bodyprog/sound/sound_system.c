@@ -40,7 +40,8 @@ static u16 g_AudioPlayingIdxList[24];
 /** @brief Stores the pitch of currently playing SFX.
 * Shares the same index of where the SFX is stored in `g_AudioPlayingIdxList`.
 */
-static s16            g_AudioPlayingPitchList[24];
+static s16 g_AudioPlayingPitchList[24];
+
 static s_Sd_AudioWork g_Sd_AudioWork;
 
 /** @brief Holds states for different audio types streaming. */
@@ -55,7 +56,8 @@ static s_AudioStreamingStates g_Sd_AudioStreamingStates;
  */
 static s_ChannelsVolumeController gSDVolConfig;
 
-static s_800C1688                 D_800C1688;
+static s_800C1688       D_800C1688;
+static s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
 /** @brief Task pool related to audio and audio data streaming.
  * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
@@ -66,18 +68,22 @@ static s_800C1688                 D_800C1688;
  * this purpose. This game also features a similar command pool system
  * to the one in SH1.
  */
-static s_VabPlayingInfo g_Sd_VabPlayingInfo;
-static u8               g_Sd_TaskPool[32];
+static u8 g_Sd_TaskPool[32];
+
 /** Dead code. */
-static s32              D_800C16C8[0x840];
+static s32 D_800C16C8[2112];
+
 /** @brief The type of audio file being loaded. See `e_AudioType`. */
-static u8               g_Sd_AudioType;
+static u8 g_Sd_AudioType;
 
 /** @brief Amount of data moved when loading KDT/VAB files. */
-static u32              g_Sd_DataMoved;
-static u8               g_Sd_VabLoadAttemps;
+static u32 g_Sd_DataMoved;
+
+static u8 g_Sd_VabLoadAttemps;
+
 /* @brief Pointer to the data of the VAB loading to be used for music. */
 static s_AudioItemData* g_Sd_VabTargetLoad;
+
 static s_AudioItemData* g_Sd_KdtTargetLoad;
 static u8               D_800C37DC; // Boolean.
 static u8               g_Sd_CurrentTask;

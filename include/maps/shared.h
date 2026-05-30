@@ -3,7 +3,7 @@
 
 #include "game.h"
 
-#include "bodyprog/events/bgm_update.h"
+#include "bodyprog/events/bgm.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/background_draw.h"
 #include "bodyprog/screen/screen_draw.h"
