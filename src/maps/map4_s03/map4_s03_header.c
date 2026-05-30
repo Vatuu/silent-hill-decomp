@@ -3,6 +3,7 @@
 #include "maps/map4/map4_s03.h"
 #include "maps/particle.h"
 #include "maps/characters/player.h"
+#include "maps/characters/twinfeeler.h"
 
 extern s_AnimInfo HARRY_M4S03_ANIM_INFOS[];
 
