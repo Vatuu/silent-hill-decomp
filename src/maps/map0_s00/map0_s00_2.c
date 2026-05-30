@@ -333,11 +333,11 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 5:
@@ -345,16 +345,16 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f),  Q12(-11.0f), Q12(141.0f));
-            func_800865FC(true, 0, 1, Q12_ANGLE(180.0f),  Q12(-11.5f), Q12(137.0f));
-            func_800865FC(true, 0, 2, Q12_ANGLE(180.0f),  Q12(-9.0f),  Q12(133.0f));
-            func_800865FC(true, 0, 3, Q12_ANGLE(-135.0f), Q12(-10.5f), Q12(130.0f));
-            func_800865FC(true, 0, 4, Q12_ANGLE(-90.0f),  Q12(-14.0f), Q12(129.0f));
-            func_800865FC(true, 0, 5, Q12_ANGLE(-90.0f),  Q12(-18.0f), Q12(129.5f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f),  Q12(-11.0f), Q12(141.0f));
+            Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(180.0f),  Q12(-11.5f), Q12(137.0f));
+            Event_PathWaypointSet(true, 0, 2, Q12_ANGLE(180.0f),  Q12(-9.0f),  Q12(133.0f));
+            Event_PathWaypointSet(true, 0, 3, Q12_ANGLE(-135.0f), Q12(-10.5f), Q12(130.0f));
+            Event_PathWaypointSet(true, 0, 4, Q12_ANGLE(-90.0f),  Q12(-14.0f), Q12(129.0f));
+            Event_PathWaypointSet(true, 0, 5, Q12_ANGLE(-90.0f),  Q12(-18.0f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800866D4(54, 6, false);
+            Event_PathWaypointExecutePlayer(54, 6, false);
             break;
 
         default:
@@ -383,11 +383,11 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 5:
@@ -395,14 +395,14 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-6.0f),  Q12(135.0f));
-            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f), Q12(-7.0f),  Q12(131.0f));
-            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f), Q12(-11.0f), Q12(128.0f));
-            func_800865FC(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-17.5f), Q12(129.5f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f), Q12(-6.0f),  Q12(135.0f));
+            Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(-90.0f), Q12(-7.0f),  Q12(131.0f));
+            Event_PathWaypointSet(true, 0, 2, Q12_ANGLE(-90.0f), Q12(-11.0f), Q12(128.0f));
+            Event_PathWaypointSet(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-17.5f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800866D4(54, 4, false);
+            Event_PathWaypointExecutePlayer(54, 4, false);
             break;
 
         default:
@@ -430,11 +430,11 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
             break;
 
         case 3:
-            func_800865FC(false, 0, 0, Q12_ANGLE(-112.5f), Q12(0.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-112.5f), Q12(0.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 4:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 5:
@@ -442,13 +442,13 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
             break;
 
         case 6:
-            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(5.0f),   Q12(129.0f));
-            func_800865FC(true, 0, 1, Q12_ANGLE(-90.0f),  Q12(-6.0f),  Q12(128.0f));
-            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f),  Q12(-17.5f), Q12(129.5f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-135.0f), Q12(5.0f),   Q12(129.0f));
+            Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(-90.0f),  Q12(-6.0f),  Q12(128.0f));
+            Event_PathWaypointSet(true, 0, 2, Q12_ANGLE(-90.0f),  Q12(-17.5f), Q12(129.5f));
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800866D4(54, 3, false);
+            Event_PathWaypointExecutePlayer(54, 3, false);
             break;
 
         default:
@@ -565,7 +565,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
         case 0:
             Player_ControlFreeze();
             sharedFunc_800D88AC_0_s00(&cherylChara);
-            func_800865FC(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
+            Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(-135.0f), Q12(-35.0f), Q12(120.0f));
 
             prevPlayerPosX = playerChara.position.vx;
             prevPlayerPosZ = playerChara.position.vz;
@@ -593,13 +593,13 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
         case 3:
             cherylProps.moveDistance_124 = Q12(1.8f);
 
-            func_80086728(&cherylChara, 2, 1, 0);
+            Event_PathWaypointExecuteChara(&cherylChara, 2, 1, 0);
             Event_SysStateStepIncrementDelayed(Q12(1.5f), false);
             break;
 
         case 4:
             cherylProps.moveDistance_124 = Q12(1.8f);
-            func_80086728(&cherylChara, 2, 1, 0);
+            Event_PathWaypointExecuteChara(&cherylChara, 2, 1, 0);
             break;
 
         case 5:
@@ -607,11 +607,11 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             playerChara.position.vz = Q12(127.0f);
             playerChara.rotation.vy = Q12_ANGLE(-135.0f);
 
-            func_800865FC(true, 0, 0, Q12_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         case 7:
@@ -626,12 +626,12 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 9:
-            func_800865FC(true, 1, 0, Q12_ANGLE(-112.5f), Q12(-36.0f), Q12(119.5f));
+            Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(-112.5f), Q12(-36.0f), Q12(119.5f));
             SysWork_StateStepIncrement(0);
 
         case 10:
             cherylProps.moveDistance_124 = Q12(0.55f);
-            func_80086728(&cherylChara, 1, 1, 0);
+            Event_PathWaypointExecuteChara(&cherylChara, 1, 1, 0);
             break;
 
         case 11:
@@ -661,7 +661,7 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(-1.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(-1.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -677,7 +677,7 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
             break;
 
         case 4:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         default:
@@ -693,7 +693,7 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, Q12_ANGLE(90.0f), Q12(1.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(90.0f), Q12(1.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -709,7 +709,7 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
             break;
 
         case 4:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         default:
@@ -724,7 +724,7 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, Q12_ANGLE(-90.0f), Q12(-1.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-90.0f), Q12(-1.0f), Q12(0.0f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -740,7 +740,7 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
             break;
 
         case 4:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         default:
@@ -755,7 +755,7 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
     {
         case 0:
             Player_ControlFreeze();
-            func_800865FC(false, 0, 0, Q12(0.375f), Q12(0.7f), Q12(-0.7f));
+            Event_PathWaypointSet(false, 0, 0, Q12(0.375f), Q12(0.7f), Q12(-0.7f));
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -771,7 +771,7 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
             break;
 
         case 4:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         default:
@@ -810,7 +810,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             break;
 
         case 2:
-            func_800865FC(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(180.0f), Q12(0.0f), Q12(0.0f));
 
             // Warp camera.
             Camera_PositionSet(&playerChara.position,
@@ -826,23 +826,23 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 4:
-            func_800865FC(true, 0, 0,
+            Event_PathWaypointSet(true, 0, 0,
                          Q12_ANGLE(180.0f),
                          Q12(-62.0f), playerChara.position.vz - Q12(10.0f));
             Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 5:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             Event_SysStateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 6:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
 
             camPosY        = Q12_MULT(Math_Cos(playerChara.rotation.vy), Q12(0.6f)) - Q12(1.84f);
             playerOffsetZ0 = Q12_MULT(Math_Cos(playerChara.rotation.vy), Q12(2.0f)) + Q12(4.0f);
@@ -880,7 +880,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
             Savegame_EventFlagSet(EventFlag_7);
             Savegame_EventFlagSet(EventFlag_8);
 
-            func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+            Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
     }
 
     #undef playerChara
@@ -913,7 +913,7 @@ void func_800DB26C(void) // 0x800DB26C
         case 0:
             Player_ControlFreeze();
             Event_ScreenFadeCommand(ScreenFadeCommand_Start, true, 2, Q12(0.0f), false);
-            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), playerChara.position.vz);
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-60.5f), playerChara.position.vz);
 
             // Warp Cheryl.
             cherylChara.position.vx = Q12(-62.0f);
@@ -927,13 +927,13 @@ void func_800DB26C(void) // 0x800DB26C
             break;
 
         case 2:
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         case 3:
             g_DeltaTime >>= 1; // `/ 2`.
 
-            func_800865FC(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
+            Event_PathWaypointSet(false, 0, 0, Q12_ANGLE(-135.0f), Q12(0.0f), Q12(0.0f));
             Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
@@ -941,7 +941,7 @@ void func_800DB26C(void) // 0x800DB26C
             g_DeltaTime >>= 1; // `/ 2`.
 
             Savegame_EventFlagSet(EventFlag_8);
-            func_800866D4(54, 1, false);
+            Event_PathWaypointExecutePlayer(54, 1, false);
             break;
 
         case 5:
@@ -953,7 +953,7 @@ void func_800DB26C(void) // 0x800DB26C
             Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
 
-            func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
+            Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -1216,8 +1216,8 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             Map_ChunkPlace(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
-            func_800865FC(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
-            func_800865FC(true, 0, 1, Q12_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
+            Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
 
             D_800DFB61 = 0;
 
@@ -1232,7 +1232,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             break;
 
         case EventState_3:
-            func_800866D4(53, 2, 0);
+            Event_PathWaypointExecutePlayer(53, 2, 0);
             break;
 
         case EventState_LookAtDeadBody:
@@ -1390,7 +1390,7 @@ void func_800DC33C(void) // 0x800DC33C
 
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
-        func_800865FC(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
+        Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
         sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
 
         Savegame_EventFlagSet(EventFlag_5);
@@ -1463,7 +1463,7 @@ block7:
         }
 
         g_SysWork.npcs[0].properties.npc.moveDistance_124 = D_800DFAD0;
-        func_8008677C(&g_SysWork.npcs[0], 2, 1);
+        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
         return;
     }
 
@@ -1541,7 +1541,7 @@ block7:
 
         g_SysWork.npcs[0].properties.npc.moveDistance_124 = D_800DFAD4;
 
-        func_8008677C(&g_SysWork.npcs[0], 2, 1);
+        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
         return;
     }
 
@@ -1573,14 +1573,14 @@ void func_800DC8D8(void) // 0x800DC8D8
 
             Savegame_EventFlagSet(EventFlag_10);
 
-            func_800865FC(true, 1, 0, Q12_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
+            Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
         }
     }
     else
     {
         g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(1.8f);
 
-        func_8008677C(&g_SysWork.npcs[0], 2, 1);
+        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
 
         if (g_SysWork.npcs[0].position.vx > Q12(-58.0f))
         {

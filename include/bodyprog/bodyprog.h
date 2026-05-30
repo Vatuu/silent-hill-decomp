@@ -1025,14 +1025,6 @@ extern u8 g_Player_AnimResetRequest; /** `bool` */
 
 extern s_CollisionSurface D_800C4620;
 
-extern VECTOR3 D_800C4640[2][8];
-
-/** Y angles. */
-extern q3_12 D_800C4700[8];
-
-/** Times. */
-extern q19_12 D_800C4710[];
-
 /** Q19.12 */
 extern VECTOR3 D_800C4788[];
 

@@ -1306,10 +1306,10 @@ Event_DisplayMapMsg                          = 0x80087AEC; // type:func
 Event_ScreenFadeCommand                      = 0x80087BA8; // type:func
 Event_BgTextureCommand                       = 0x80087D34; // type:func
 Event_InvItemCommand                         = 0x80087EAC; // type:func
-func_800865FC                                = 0x80088038; // type:func
-func_800866D4                                = 0x80088110; // type:func
-func_80086728                                = 0x80088164; // type:func
-func_8008677C                                = 0x800881B8; // type:func
+Event_PathWaypointSet                        = 0x80088038; // type:func
+Event_PathWaypointExecutePlayer              = 0x80088110; // type:func
+Event_PathWaypointExecuteChara               = 0x80088164; // type:func
+Event_PathWaypointExecuteCharaNoWait         = 0x800881B8; // type:func
 func_800867B4                                = 0x800881F0; // type:func
 func_800868DC                                = 0x80088318; // type:func
 func_800868F4                                = 0x80088330; // type:func
@@ -3601,8 +3601,8 @@ vcSelfViewTimer                              = 0x800C6B6C;
 //------------------------------------------------------------------------
 //--- PA: 0x0A2010   VA: 0x800C6B70   subsegment: .bss, events/events_util
 //------------------------------------------------------------------------
-D_800C4640                                   = 0x800C6B70;
-D_800C4700                                   = 0x800C6C30;
+g_Event_PathWaypoints                        = 0x800C6B70;
+g_Event_PathWaypointAngles                   = 0x800C6C30;
 D_800C4702                                   = 0x800C6C32;
 D_800C4710                                   = 0x800C6C40;
 

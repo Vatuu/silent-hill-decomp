@@ -85,14 +85,44 @@ void Event_BgTextureCommand(e_BgTextureCommand cmd, e_FsFile fileIdx, bool incSu
 /** Stepped state handler for displaying picked up items? */
 void Event_InvItemCommand(e_InvItemCommand stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
 
-void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
+/** @brief Sets a waypoint position for a character path.
+ *
+ * @param isAbsolute If `true`, uses `posX`/`posZ` as absolute coordinates. If `false`, uses them as offsets from the player's current position.
+ * @param charaSlot Character slot index. 0 = player, 1 = NPC. (@note paths for NPCs are still offset from player position)
+ * @param waypointIdx Index of the waypoint along the path.
+ * @param angleY Angle for the character on this path.
+ * @param posX X position or offset from player character, depending on `isAbsolute`.
+ * @param posZ Z position or offset from player character, depending on `isAbsolute`.
+ */
+void Event_PathWaypointSet(bool isAbsolute, s32 charaSlot, s32 waypointIdx, q3_12 angleY, q19_12 posX, q19_12 posZ);
 
-/** State step increment. */
-void func_800866D4(s32 arg0, s32 arg1, bool incSubStep);
+/** @brief Executes the player's walk path and increments `sysStateSteps` on completion.
+ *
+ * @param animId Animation to use while walking.
+ * @param waypointCount Number of waypoints in the path.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ */
+void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep);
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep);
+/** @brief Executes an NPC's walk path and increments `sysStateSteps` on completion.
+ *
+ * @param chara The character to move.
+ * @param animId Animation to use while walking.
+ * @param waypointCount Number of waypoints in the path.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ */
+void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep);
 
-void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
+/** @brief Executes an NPC's walk path.
+ *
+ * @note Same as `Event_PathWaypointExecuteChara` but doesn't affect `sysStateSteps`.
+ * Used when event code doesn't need to wait for the waypoint to be reached?
+ *
+ * @param chara The character to move.
+ * @param animId Animation to use while walking.
+ * @param waypointCount Number of waypoints in the path.
+ */
+void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount);
 
 /** Paper map state handler. Rough name could be `Map_PaperMapBackgroundStateUpdate`. */
 void func_800867B4(s32 state, s32 paperMapFileIdx);

@@ -669,13 +669,13 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 4:
-            func_800865FC(true, 0, 0, Q12_ANGLE(0.0f), Q12(21.7f), Q12(-100.9f));
-            func_800865FC(true, 0, 1, Q12_ANGLE(0.0f), Q12(21.9f), Q12(-100.3f));
-            func_800865FC(true, 0, 2, Q12_ANGLE(0.0f), Q12(21.0f), Q12(-99.4f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(0.0f), Q12(21.7f), Q12(-100.9f));
+            Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(0.0f), Q12(21.9f), Q12(-100.3f));
+            Event_PathWaypointSet(true, 0, 2, Q12_ANGLE(0.0f), Q12(21.0f), Q12(-99.4f));
             SysWork_StateStepIncrement(0);
 
         case 5:
-            func_800866D4(53, 3, false);
+            Event_PathWaypointExecutePlayer(53, 3, false);
             Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
@@ -686,7 +686,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_800866D4(53, 3, false);
+            Event_PathWaypointExecutePlayer(53, 3, false);
             break;
 
         case 8:

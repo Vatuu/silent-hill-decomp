@@ -15,8 +15,8 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
-VECTOR3 D_800C4640[2][8];
-q3_12   D_800C4700[8];
+VECTOR3 g_Event_PathWaypoints[2][8];
+q3_12   g_Event_PathWaypointAngles[8]; // TODO: should only have 2 entries, 1 for each character slot?
 q19_12  D_800C4710[6];
 
 // ========================================
@@ -427,45 +427,45 @@ void Event_InvItemCommand(e_InvItemCommand cmd, e_InvItemId itemId, s32 itemCoun
     }
 }
 
-void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ) // 0x800865FC
+void Event_PathWaypointSet(bool isAbsolute, s32 charaSlot, s32 waypointIdx, q3_12 angleY, q19_12 posX, q19_12 posZ) // 0x800865FC
 {
-    if (!isPos)
+    if (!isAbsolute)
     {
-        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork.player.position.vx + offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork.player.position.vy;
-        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork.player.position.vz + offsetOrPosZ;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vx = g_SysWork.playerWork.player.position.vx + posX;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vz = g_SysWork.playerWork.player.position.vz + posZ;
 
-        D_800C4700[idx0] = angleY;
+        g_Event_PathWaypointAngles[charaSlot] = angleY;
     }
-    else if (isPos == true)
+    else if (isAbsolute == true)
     {
-        D_800C4640[idx0][idx1].vx = offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork.player.position.vy;
-        D_800C4640[idx0][idx1].vz = offsetOrPosZ;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vx = posX;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
+        g_Event_PathWaypoints[charaSlot][waypointIdx].vz = posZ;
 
-        D_800C4700[idx0] = angleY;
+        g_Event_PathWaypointAngles[charaSlot] = angleY;
     }
 }
 
-void func_800866D4(s32 arg0, s32 arg1, bool incSubStep) // 0x800866D4
+void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep) // 0x800866D4
 {
-    if (g_MapOverlayHdr.func_D0(arg0, &D_800C4640, D_800C4700[0], arg1) == 1)
+    if (g_MapOverlayHdr.func_D0(animId, &g_Event_PathWaypoints[0][0], g_Event_PathWaypointAngles[0], waypointCount) == 1)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
 }
 
-void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool incSubStep) // 0x80086728
+void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep) // 0x80086728
 {
-    if (g_MapOverlayHdr.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2) == 1)
+    if (g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount) == 1)
     {
         Event_SysStateStepIncrement(incSubStep);
     }
 }
 
-void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
+void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount) // 0x8008677C
 {
-    g_MapOverlayHdr.func_13C(chara, arg1, &D_800C4640[1][0], D_800C4700[1], arg2);
+    g_MapOverlayHdr.func_13C(chara, animId, &g_Event_PathWaypoints[1][0], g_Event_PathWaypointAngles[1], waypointCount);
 }
 
 void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4

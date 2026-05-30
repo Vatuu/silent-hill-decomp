@@ -76,11 +76,11 @@ void func_800D61AC(void) // 0x800D61AC
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
             g_SysWork.cutsceneBorderState                              = 20;
 
-            func_800865FC(true, 0, 0, 0, Q12(-115.5f), Q12(110.0f));
-            func_800865FC(true, 0, 1, 0, Q12(-115.6f), Q12(110.1f));
-            func_800865FC(true, 0, 2, Q12_ANGLE(-90.0f), Q12(-115.8f), Q12(110.5f));
-            func_800865FC(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-115.9f), Q12(110.6f));
-            func_800865FC(true, 0, 4, Q12_ANGLE(-90.0f), Q12(-116.08f), Q12(110.7f));
+            Event_PathWaypointSet(true, 0, 0, 0, Q12(-115.5f), Q12(110.0f));
+            Event_PathWaypointSet(true, 0, 1, 0, Q12(-115.6f), Q12(110.1f));
+            Event_PathWaypointSet(true, 0, 2, Q12_ANGLE(-90.0f), Q12(-115.8f), Q12(110.5f));
+            Event_PathWaypointSet(true, 0, 3, Q12_ANGLE(-90.0f), Q12(-115.9f), Q12(110.6f));
+            Event_PathWaypointSet(true, 0, 4, Q12_ANGLE(-90.0f), Q12(-116.08f), Q12(110.7f));
 
             Camera_PositionSet(NULL, Q12(-103.27f), Q12(2.02f), Q12(104.6f), 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, Q12(-107.06f), Q12(2.18f), Q12(105.87f), 0, 0, 0, 0, true);
@@ -88,12 +88,12 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_800866D4(53, 5, false);
+            Event_PathWaypointExecutePlayer(53, 5, false);
             Event_ScreenFadeCommand(ScreenFadeCommand_Auto, false, 0, 0, false);
             break;
 
         case 2:
-            func_800866D4(53, 5, false);
+            Event_PathWaypointExecutePlayer(53, 5, false);
             Event_SysStateStepIncrementDelayed(Q12(1.8f), false);
             break;
 
@@ -105,18 +105,18 @@ void func_800D61AC(void) // 0x800D61AC
         case 4:
             Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
             Camera_LookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
-            func_800866D4(53, 5, false);
+            Event_PathWaypointExecutePlayer(53, 5, false);
             break;
 
         case 5:
             Event_SysStateStepIncrementDelayed(Q12(0.8f), false);
-            func_800865FC(true, 0, 0, Q12_ANGLE(-112.5f), Q12(-120.0f), Q12(109.0f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-112.5f), Q12(-120.0f), Q12(109.0f));
             break;
 
         case 6:
             Camera_PositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
             Camera_LookAtSet(&g_SysWork.playerWork.player.position, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 7:

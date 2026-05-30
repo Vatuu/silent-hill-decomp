@@ -573,7 +573,7 @@ void func_800D1604(void) // 0x800D1604
             Camera_PositionSet(NULL, Q12(58.5f), Q12(-2.9f), g_SysWork.playerWork.player.position.vz, 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, g_SysWork.playerWork.player.position.vx - Q12(1.6f), Q12(-0.3f), g_SysWork.playerWork.player.position.vz, 0, 0, 0, 0, true);
 
-            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(51.8f), Q12(-139.05f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(51.8f), Q12(-139.05f));
 
             g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
             D_800D31DC[1]                                   = 0;
@@ -582,7 +582,7 @@ void func_800D1604(void) // 0x800D1604
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             Event_DisplayMapMsgWithAudio(43, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
             Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
@@ -592,7 +592,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 9:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             Event_DisplayMapMsgWithAudio(43, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
             Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
@@ -613,7 +613,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 10:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             Camera_LookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
@@ -635,7 +635,7 @@ void func_800D1604(void) // 0x800D1604
             break;
 
         case 11:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(0.6f), false);
             Event_DisplayMapMsgWithAudio(46, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
 

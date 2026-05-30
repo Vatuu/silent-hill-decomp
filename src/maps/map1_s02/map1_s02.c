@@ -216,7 +216,7 @@ void func_800DA384(void) // 0x800DA384
             g_SysWork.playerWork.player.position.vx = Q12(-13.3f);
             g_SysWork.playerWork.player.position.vz = Q12(-68.1f);
 
-            func_800865FC(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
 
             D_800E1EE2 = 0;
@@ -249,7 +249,7 @@ void func_800DA384(void) // 0x800DA384
 
         case 7:
             Savegame_EventFlagSet(EventFlag_92);
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 8:
@@ -611,7 +611,7 @@ void func_800DB368(void) // 0x800DB368
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_122);
             SD_Call(Sfx_XaAudio53);
-            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
 
             func_800868DC(0);
             func_800868DC(3);
@@ -632,7 +632,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 4:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             Event_SysStateStepIncrementDelayed(Q12(2.0f), false);
             break;
 
@@ -645,7 +645,7 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
             break;
 
         case 7:

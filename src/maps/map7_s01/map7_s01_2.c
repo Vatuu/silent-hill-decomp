@@ -1959,7 +1959,7 @@ void func_800DCE20(void) // 0x800DCE20
             Event_ScreenFadeCommand(ScreenFadeCommand_Start, false, 0, Q12(0.6f), false);
             Camera_PositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            func_800865FC(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
+            Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -1977,7 +1977,7 @@ void func_800DCE20(void) // 0x800DCE20
             Event_ScreenFadeCommand(ScreenFadeCommand_Auto, true, 0, Q12(1.5f), false);
 
         case 4:
-            func_800866D4(53, 1, false);
+            Event_PathWaypointExecutePlayer(53, 1, false);
 
         case 3:
             D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f)), Q12(0.1f));
@@ -2201,14 +2201,14 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 {
                     Savegame_EventFlagSet(EventFlag_485);
                     sharedFunc_800D88AC_0_s00(&g_SysWork.npcs[0]);
-                    func_800865FC(true, 1, 0, Q12_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
+                    Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
                     SD_Call(Sfx_XaAudio569);
                 }
             }
             else if (g_SysWork.npcs[0].model.charaId == Chara_GhostChildAlessa)
             {
                 g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(1.25f);
-                func_8008677C(&g_SysWork.npcs[0], 2, 1);
+                Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
                 npcTimer = 0;
 
                 audioStream = Sd_AudioStreamingCheck();
