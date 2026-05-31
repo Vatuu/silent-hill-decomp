@@ -770,9 +770,9 @@ func_800453E8                                = 0x800451C0; // type:func
 func_80045468                                = 0x80045240; // type:func
 func_80045534                                = 0x8004530C; // type:func
 
-//---------------------------------------------------------------------
-//--- PA: 0x020CF4   VA: 0x80045854   subsegment: c, sound/sound_system
-//---------------------------------------------------------------------
+//----------------------------------------------------------------
+//--- PA: 0x020CF4   VA: 0x80045854   subsegment: c, sound/sd_call
+//----------------------------------------------------------------
 SD_Call                                      = 0x80045854; // type:func
 Sd_AudioStreamingCheck                       = 0x80045900; // type:func
 func_80045BC8                                = 0x800459A0; // type:func
@@ -1140,8 +1140,8 @@ Collision_FlagBitsSet                        = 0x8006B33C; // type:func
 Collision_FlagBitsClear                      = 0x8006B354; // type:func
 Collision_NearbyTriggersGet                  = 0x8006B370; // type:func
 IpdCollData_FixOffsets                       = 0x8006B44C; // type:func
-func_80069994                                = 0x8006B4A4; // type:func
-func_800699E4                                = 0x8006B4F4; // type:func
+Collision_CellChecksReset                    = 0x8006B4A4; // type:func
+Collision_CellChecksCountUpdate              = 0x8006B4F4; // type:func
 Collision_SurfaceGet                         = 0x8006B508; // type:func
 Collision_WallDetect                         = 0x8006B634; // type:func
 Collision_WallResponse                       = 0x8006B6B8; // type:func
@@ -1153,7 +1153,7 @@ Collision_OffsetCheck                        = 0x8006BEC4; // type:func
 func_8006A42C                                = 0x8006BF3C; // type:func
 func_8006A4A8                                = 0x8006BFB8; // type:func
 Collision_TargetCharaCollidingSlowDown       = 0x8006C450; // type:func
-Collision_QueryInit                          = 0x8006C660; // type:func
+Collision_CollStateInit                      = 0x8006C660; // type:func
 Collision_MoveDirectionCalc                  = 0x8006C6D0; // type:func
 Collision_CharaCollisionHandling             = 0x8006C854; // type:func
 func_8006AEAC                                = 0x8006C9BC; // type:func
@@ -3378,9 +3378,9 @@ g_Map                                        = 0x800C3678;
 D_800C15B0                                   = 0x800C3C08;
 D_800C15B4                                   = 0x800C3C0C;
 
-//------------------------------------------------------------------------
-//--- PA: 0x09F0B0   VA: 0x800C3C10   subsegment: .bss, sound/sound_system
-//------------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x09F0B0   VA: 0x800C3C10   subsegment: .bss, sound/sd_call
+//-------------------------------------------------------------------
 D_800C15B8                                   = 0x800C3C10;
 D_800C15BC                                   = 0x800C3C14;
 D_800C15BE                                   = 0x800C3C16;

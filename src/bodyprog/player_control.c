@@ -7447,7 +7447,7 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
             {
                 if ((player->position.vy - Q12(1.3f)) < traces[0].groundHeight ||
                     traces[0].groundType == GroundType_Default ||
-                    traces[0].groundType == GroundType_12)
+                    traces[0].groundType == GroundType_None)
                 {
                     if ((player->position.vy - Q12(0.3f)) >= traces[0].groundHeight)
                     {
@@ -9028,7 +9028,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
             }
             break;
 
-        case GroundType_12:
+        case GroundType_None:
             groundHeight = Q12(8.0f);
 
             switch (g_SavegamePtr->mapIdx)

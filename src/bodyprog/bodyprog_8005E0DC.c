@@ -682,7 +682,7 @@ bool func_8005F680(s_CollisionSurface* surface) // 0x8005F680
 
     isSomeGroundGroup = false;
     if (groundType == GroundType_Default ||
-        groundType == GroundType_12 ||
+        groundType == GroundType_None ||
         groundType == GroundType_7)
     {
         isSomeGroundGroup = true;

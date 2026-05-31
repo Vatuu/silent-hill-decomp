@@ -263,7 +263,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     {
         Collision_SurfaceGet(&surface, romper->position.vx, romper->position.vz);
 
-        if (surface.groundType == GroundType_12)
+        if (surface.groundType == GroundType_None)
         {
             if (Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1) < romper->position.vy)
             {

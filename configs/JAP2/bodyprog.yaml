@@ -78,7 +78,7 @@ segments:
       - [0x9BC, .rodata, gfx/bodyprog_8003BE50]
       - [0x104C, .rodata, gfx/map_effects]
       - [0x107C, rodata] # Garbage padding
-      - [0x108C, .rodata, sound/sound_system]
+      - [0x108C, .rodata, sound/sd_call]
       - [0x11F8, rodata]
       - [0x1200, .rodata, text/text_draw_jp]
       - [0x145C, .rodata, items/item_screens_1]
@@ -138,7 +138,7 @@ segments:
       - [0x1BDEC, c, gfx/bodyprog_80040B74]
       - [0x1F81C, c, gfx/bodyprog_anim_800445A4]
       - [0x2018C, c, gfx/bodyprog_bone_80044F14]
-      - [0x20CF4, c, sound/sound_system]
+      - [0x20CF4, c, sound/sd_call]
       - [0x23CB0, c, view/vw_main]
       - [0x241A0, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25AF4, c, text/text_draw_jp]
@@ -409,7 +409,7 @@ segments:
       - [0x9F0A4, pad]
       - [0x9F0A8, .bss, gfx/bodyprog_bone_80044F14]
       - [0x9F0AD, pad]
-      - [0x9F0B0, .bss, sound/sound_system]
+      - [0x9F0B0, .bss, sound/sd_call]
       - [0xA12D8, .bss, view/vw_main]
       - [0xA1360, .bss, view/vw_calc]
       - [0xA13A0, .bss, text/text_draw_jp]

@@ -60,7 +60,6 @@ typedef struct _ActiveCollisionTriggers
 {
     /* 0x0 */ u16                 flags; /** `e_CollisionTriggerFlags` */
     /* 0x2 */ u8                  collisionTriggerCount;
-    /* 0x3 */ u8                  __pad_3;
     /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
 } s_ActiveCollisionTriggers;
 
@@ -77,10 +76,10 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
-    /* 0x0 */ u8  field_0;
-    /* 0x1 */ u8  field_1;
-    /* 0x2 */ s16 field_2;
-    /* 0x4 */ s32 field_4;
+    /* 0x0 */ u8    field_0;
+    /* 0x1 */ u8    field_1; // Index for `s_IpdCollisionData::materialFlags`.
+    /* 0x2 */ q7_8  field_2;
+    /* 0x4 */ q23_8 field_4;
 } s_CollisionState_A8;
 
 typedef struct
@@ -100,16 +99,6 @@ typedef struct
     /* 0x36 */ s16                   field_36;
 } s_CollisionState_44;
 
-typedef union
-{
-    /* 0x0 */ s16 field_0;
-              struct
-              {
-                  /* 0x0 */ u8 field_0;
-                  /* 0x1 */ u8 field_1;
-    /* 0x0 */ } s_field_0;
-} s_CollisionState_CC_C;
-
 typedef struct
 {
     /* 0x0  */ DVECTOR_XZ field_0;
@@ -121,23 +110,34 @@ typedef struct
     /* 0x14 */ DVECTOR_XZ field_14;
 } s_CollisionState_CC_20;
 
-typedef struct
+typedef union
+{
+    /* 0x0 */ q7_8 field_0; // Something related to character radius???
+              struct
+              {
+                  /* 0x0 */ u8 mat0;
+                  /* 0x1 */ u8 mat1;
+    /* 0x0 */ } cellMaterials;
+} s_CollisionState_CC_C;
+
+
+typedef struct _CollisionCellInfo
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
-    /* 0x4  */ u8                     field_4; // `s_IpdCollisionData::ptr_14` Index.
+    /* 0x4  */ u8                     cellIdx; // `s_IpdCollisionData::cellsInfo` Index.
     /* 0x5  */ u8                     field_5;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
     /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
     /* 0xF  */ u8                     field_F;  // }
-    /* 0x10 */ u8                     field_10; // } Index from `s_IpdCollisionData::field_6_5`.
-    /* 0x11 */ u8                     field_11; // }
+    /* 0x10 */ u8                     disableMat0Height; /** `Boolean` */
+    /* 0x11 */ u8                     disableMat1Height; /** `Boolean` */
     /* 0x12 */ SVECTOR3               collisionVertex0; // Data from `s_IpdCollisionData::collisionVertices`
     /* 0x18 */ SVECTOR3               collisionVertex1; // Data from `s_IpdCollisionData::collisionVertices`
     /* 0x1E */ s8                     unk_1E[2];
     /* 0x20 */ s_CollisionState_CC_20 field_20;
-} s_CollisionState_CC;
-STATIC_ASSERT_SIZEOF(s_CollisionState_CC, 56);
+} s_CollisionCellInfo;
+STATIC_ASSERT_SIZEOF(s_CollisionCellInfo, 56);
 
 /** @brief Character collision cstate. */
 typedef struct _CollisionCharaState
@@ -178,7 +178,7 @@ typedef struct _CollisionState
     /* 0x84   */ q23_8                 field_84; // Z }
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
-    /* 0x90   */ s32                   field_90; // `bool`?
+    /* 0x90   */ bool                  heightDisabled;   /** `Boolean` */
     /* 0x94   */ s32                   groundType; /** `e_GroundType` */
 
                  union
@@ -217,7 +217,7 @@ typedef struct _CollisionState
     /* 0xC8   */ u8                  field_C8;
     /* 0xC9   */ u8                  unk_C9[1];
     /* 0xCA   */ q7_8                groundHeight;
-    /* 0xCC   */ s_CollisionState_CC field_CC;
+    /* 0xCC   */ s_CollisionCellInfo curCellCollision;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
 
@@ -368,9 +368,9 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
-void func_80069994(s_IpdCollisionData* collData);
+void Collision_CellChecksReset(s_IpdCollisionData* collData);
 
-void func_800699E4(s_IpdCollisionData* collData);
+void Collision_CellChecksCountUpdate(s_IpdCollisionData* collData);
 
 // ========================================
 // @split? IPD/ground collision detection.
@@ -467,7 +467,7 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
  * @param cylinder Collision cylinder.
  * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_QueryInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
+void Collision_CollStateInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
 
 // ========================================
 // @split? Collision state fill.
@@ -489,14 +489,14 @@ bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollis
 
 void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
-bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 idx);
+bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 cellIdx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_CollisionState* collState, s_IpdCellRange* cellRanges);
 
 bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1);
 
-void func_8006B8F8(s_CollisionState_CC* arg0);
+void func_8006B8F8(s_CollisionCellInfo* arg0);
 
 void func_8006B9C8(s_CollisionState* collState);
 
@@ -585,7 +585,7 @@ void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
 void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollisionData* collData);
 
-void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
+void func_8006E78C(s_RayState* state, s_IpdCollCellInfo* arg1, SVECTOR3* arg2, s_IpdCollMaterialFlags* arg3, s32 arg4);
 
 void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 

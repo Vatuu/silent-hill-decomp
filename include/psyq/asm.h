@@ -61,7 +61,7 @@
 #define s0	$16	/* callee saved */
 #define s1	$17
 #define s2	$18
-#define unkVol	$19
+#define s3	$19
 #define s4	$20
 #define s5	$21
 #define s6	$22
