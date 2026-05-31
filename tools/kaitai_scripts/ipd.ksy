@@ -60,7 +60,7 @@ types:
       - id: textures_offset
         type: u1
 
-      - id: unk_20
+      - id: unk_1d
         size: 51
 
       - id: model_order_list_offset

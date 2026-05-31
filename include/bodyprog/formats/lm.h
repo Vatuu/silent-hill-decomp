@@ -4,8 +4,8 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
 
-#define LM_HEADER_MAGIC  '0'
-#define LM_VERSION       6
+#define LM_HEADER_MAGIC '0'
+#define LM_VERSION      6
 
 /** @brief LM file material. */
 typedef struct _Material

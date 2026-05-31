@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_EVENTS_EVENTSUTIL_H
 #define _BODYPROG_EVENTS_EVENTSUTIL_H
 
-/** @brief Bachground texture commands. */
+/** @brief Background texture commands. */
 typedef enum _BgTextureCmd
 {
     BgTextureCmd_QueueRead          = 0,
@@ -23,7 +23,7 @@ typedef enum _CharaAnimCmd
     CharaAnimCmd_AwaitAnimEnd = 1, // Calls `Event_SysStateStepIncrement` when an animation reaches its end.
     CharaAnimCmd_AnimLock     = 2,
     CharaAnimCmd_AnimUnlock   = 3,
-    CharaAnimCmd_AnimReset    = 4 // TODO: Unsure on name, could be a forced stop.
+    CharaAnimCmd_AnimReset    = 4  // TODO: Unsure on name, could be a forced stop.
 } e_CharaAnimCmd;
 
 /** @brief Inventory item commands. */
@@ -39,12 +39,13 @@ typedef enum _InvItemCmd
 } e_InvItemCmd;
 
 /** @brief Paper map commands. */
-typedef enum e_PaperMapCmd
+typedef enum _PaperMapCmd
 {
-    PaperMapCmd_Load   = 0,  // Store screen VRAM, load paper map textures.
-    PaperMapCmd_Draw   = 1,  // @unused | TODO: No events use this cmd, how do they draw the map?
-    PaperMapCmd_Unload = 2,  // Restore VRAM and reset screen.
-    PaperMapCmd_Hack   = -1, // Force enum as `s32`.
+    PaperMapCmd_Load   = 0, /** Stores screen VRAM and loads paper map textures. */
+    PaperMapCmd_Draw   = 1, /** @unused | TODO: No events use this cmd, how do they draw the map? */
+    PaperMapCmd_Unload = 2, /** Restores VRAM and resets the screen. */
+
+    PaperMapCmd_Hack   = -1 /** @hack Forces the enum as `s32`. */
 } e_PaperMapCmd;
 
 /** @brief Screen fade commands. */
@@ -62,10 +63,11 @@ typedef enum _ScreenFadeType
     ScreenFadeType_White            = 1,
     ScreenFadeType_ScreenBorders    = 2, // TODO: Investigate. Seems to enable borders around screen?
     ScreenFadeType_CutsceneBorders  = 3, // TODO: Investigate. Same as `ScreenBorders` but also sets cutscene flag?
-    ScreenFadeType_Hack             = -1 // Force enum as `s32`.
+
+    ScreenFadeType_Hack             = -1 /** @hack Forces the enum as `s32`. */
 } e_ScreenFadeType;
 
-/** @brief Increments the event state step to use in next tick.
+/** @brief Increments the event state step to use on next tick.
  *
  * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
@@ -78,25 +80,27 @@ void Event_SysStateStepIncrement(bool incSubStep);
  */
 void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep);
 
-/** @brief Waits for the player to stop moving or a 1 second timeout, then increments `sysStateSteps[0]`.
+/** @brief Waits for either the player to stop moving or a 1 second timeout, then increments `sysStateSteps[0]`.
  *
- * Used after `Player_ControlFreeze()` to ensure the player has come to a halt before continuing the event sequence.
+ * @note Used after `Player_ControlFreeze()` to ensure the player has come to a halt before continuing the event sequence.
  */
 void Event_WaitPlayerStop(void);
 
-/** @brief Waits for a specified delay before incrementing `sysStateSteps[0]`.
+/** @brief Waits for a specified delay before incrementing the event state step.
  *
- * @note `g_SysWork.timer_2C` must be cleared before the first call to this.
+ * @note `g_SysWork.timer_2C` must be cleared before the first call to this function.
  *
  * @param delay Duration to wait before advancing.
- * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
 void Event_WaitTimer(q19_12 delay, bool incSubStep);
 
 /** @brief Updates character states during events and cutscenes.
  *
  * @param cmd Character animation command.
- * @param chara
+ * @param chara Character to update.
+ * @param animState Animation state.
+ * @param setSubStep If `true`, sets `sysStateSteps[1]`, otherwise sets `sysStateSteps[0]`.
  */
 void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 animState, bool incSubStep);
 
@@ -105,7 +109,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
  * @param eventFlagIdx Index of the event flag to check.
  * @param stepTrue Step to use if flag is set.
  * @param stepFalse Step to use if flag is not set.
- * @param setSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
+ * @param setSubStep If `true`, sets `sysStateSteps[1]`, otherwise sets `sysStateSteps[0]`.
  */
 void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool setSubStep);
 
@@ -116,23 +120,24 @@ void Event_SysStateBranchOnFlag(e_EventFlag eventFlagIdx, s32 stepTrue, s32 step
  * @param step0 Step to use if selection #0 is chosen.
  * @param step1 Step to use if selection #1 is chosen.
  * @param step2 Step to use if selection #2 is chosen.
- * @param incSubStep If `true`, sets `sysStateSteps[1]` instead of `sysStateSteps[0]`, otherwise sets `sysStateSteps[0]`.
+ * @param incSubStep If `true`, sets `sysStateSteps[1]`, otherwise sets `sysStateSteps[0]`.
  */
 void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool incSubStep);
 
 /** @brief Executes a screen fade or cutscene border transition command.
  *
- * Two phases: start the transition, then poll until complete.
- *
+ * @note Two phases:
+ *   - Start the transition.
+ *   - Poll until complete.
  * Fade types 0-1 perform actual screen fades (to/from black or white) using `ScreenFade_Start`.
  * Fade types 2-3 use cutscene letterbox borders instead of a screen fade? Type 3 additionally
  * sets `SysFlag_CutsceneActive`.
  *
- * @param cmd The screen fade command to execute.
- * @param fadeOut If `true`, fades to black/white or shows borders. If `false`, fades from black/white or hides borders.
- * @param fadeType The type of transition.
- * @param fadeTimestep Speed of the fade.
- * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ * @param cmd Screen fade command to execute.
+ * @param fadeOut If `true`, fades to black/white or shows borders, otherwise fades from black/white or hides borders.
+ * @param fadeType Transition type.
+ * @param fadeTimestep Fade speed.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
 void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fadeType, q19_12 fadeTimestep, bool incSubStep);
 
@@ -144,15 +149,18 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
  */
 void Event_BgTextureCmd(e_BgTextureCmd cmd, e_FsFile texFileIdx, bool incSubStep);
 
-/** @brief Handles inventory item model loading and inventory add.
+/** @brief Handles an inventory item model load and optionally adds the item to the inventory.
  *
- * Three main phases: queue model load, await load completion, and finalize (optionally adding the item to inventory).
- * Commands 0-3 execute a specific phase directly. Commands 4-6 resume from `sysStateSteps[2]`?
+ * @note Three main phases:
+ *   - Queue model load.
+ *   - Await load completion.
+ *   - Finalize, optionally adding the item to inventory.
+ * TODO: Commands 0-3 execute a specific phase directly. Commands 4-6 resume from `sysStateSteps[2]`?
  *
- * @param cmd The inventory item command to execute.
- * @param itemId The inventory item to load/add.
+ * @param cmd Inventory item command to execute.
+ * @param itemId Inventory item to load and add.
  * @param itemCount Number of items to add (only used by `InvItemCmd_AddItem` and `InvItemCmd_6`).
- * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
 void Event_InvItemCmd(e_InvItemCmd stateStep, e_InvItemId itemId, s32 itemCount, bool incSubStep);
 
@@ -162,8 +170,8 @@ void Event_InvItemCmd(e_InvItemCmd stateStep, e_InvItemId itemId, s32 itemCount,
  * @param charaSlotIdx Character slot index. 0 = player, 1 = NPC. @note Paths for NPCs are still offset from player position.
  * @param waypointIdx Index of the waypoint along the path.
  * @param headingAngle Heading angle for the character on this path.
- * @param posX X position or offset from player character, depending on `isAbsolute`.
- * @param posZ Z position or offset from player character, depending on `isAbsolute`.
+ * @param posX X position or offset from the player, depending on `isAbsolute`.
+ * @param posZ Z position or offset from the player, depending on `isAbsolute`.
  */
 void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 headingAngle, q19_12 posX, q19_12 posZ);
 
@@ -171,7 +179,7 @@ void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 
  *
  * @param animId Animation to use while walking.
  * @param waypointCount Number of waypoints in the path.
- * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
 void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubStep);
 
@@ -180,7 +188,7 @@ void Event_PathWaypointExecutePlayer(s32 animId, s32 waypointCount, bool incSubS
  * @param chara Character to move.
  * @param animId Animation to use while walking.
  * @param waypointCount Number of waypoints in the path.
- * @param incSubStep If `true`, increments `sysStateSteps[1]` instead of `sysStateSteps[0]`.
+ * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.
  */
 void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypointCount, bool incSubStep);
 
@@ -195,10 +203,10 @@ void Event_PathWaypointExecuteChara(s_SubCharacter* chara, s32 animId, s32 waypo
  */
 void Event_PathWaypointExecuteCharaNoWait(s_SubCharacter* chara, s32 animId, s32 waypointCount);
 
-/** @brief Handles paper map loading/drawing/cleanup.
+/** @brief Handles paper map loading, drawing, and cleanup.
  *
- * @param cmd The paper map command to execute.
- * @param paperMapIdx Index into `g_PaperMapFileIdxs` / `g_PaperMapMarkingFileIdxs` to select the area map.
+ * @param cmd Paper map command to execute.
+ * @param paperMapIdx Index for `g_PaperMapFileIdxs` and `g_PaperMapMarkingFileIdxs` to select the area map.
  */
 void Event_PaperMapCmd(e_PaperMapCmd cmd, s32 paperMapIdx);
 
@@ -258,10 +266,10 @@ void Event_CameraPositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrP
  * @param lookAtOffsetOrPosX If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, X target look-at position.
  * @param lookAtOffsetOrPosY If `lookAt` is valid, X offset for `lookAt`. If `lookAt` is `NULL`, Y target look-at position.
  * @param lookAtOffsetOrPosZ If `lookAt` is valid, Z offset for `lookAt`. If `lookAt` is `NULL`, Z target look-at position.
- * @param angularAccelX TODO
- * @param angularAccelY TODO
- * @param angularSpeedXMax TODO
- * @param angularSpeedYMax TODO
+ * @param angularAccelX Angular acceleration on the X axis.
+ * @param angularAccelY Angular acceleration on the Y axis.
+ * @param angularSpeedXMax Max angular speed on the X axis.
+ * @param angularSpeedYMax Max angular speed on the Y axis.
  * @param warp If `true`, warp to the look-at target, otherwise transition over time.
  */
 void Event_CameraLookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
@@ -300,16 +308,16 @@ void Event_BgTextureLoadFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep);
  */
 void Event_BgTextureFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-/** @brief Fades out a background texture and returns to gameplay view.
+/** @brief Fades out a background texture and returns to gameplay.
  *
  * Counterpart to `Event_BgTextureFadeIn`. Continues drawing the current background
  * texture while fading to black, then starts a fade from black to reveal the
  * gameplay scene and advances `sysStateSteps[0]`.
  *
- * @param fadeTimestep0 Fade speed for the reveal (fade from black).
- * @param fadeTimestep1 Fade speed for the hide (fade to black).
+ * @param fadeTimestepFromBlack Fade speed for the reveal.
+ * @param fadeTimestepToBlack Fade speed for the hide.
  */
-void Event_BgTextureFadeOut(s32 fadeTimestep0, q19_12 fadeTimestep1);
+void Event_BgTextureFadeOut(s32 fadeTimestepFromBlack, q19_12 fadeTimestepToBlack);
 
 /** @brief Displays a map message with SFX.
  *
@@ -323,16 +331,16 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
  * The image remains on the screen until a button is pressed by the user.
  *
  * @param texFileIdx Texture file index of the background to display.
- * @param fadeTimestep0 Image fade timestep 0. TODO
- * @param fadeTimestep1 Image fade timestep 1. TODO
+ * @param fadeTimestep0 Image fade timestep 0. TODO: Specify.
+ * @param fadeTimestep1 Image fade timestep 1. TODO: Specify.
  */
 void Event_DisplayBgTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 /** @brief Displays a message with a background texture.
  *
  * @param texFileIdx Texture file index of the background to display.
- * @param fadeTimestep0 TODO
- * @param fadeTimestep1 TODO
+ * @param fadeTimestep0 TODO: Specify.
+ * @param fadeTimestep1 TODO: Specify.
  * @param mapMsgIdx Index of the map message to display.
  */
 void Event_DisplayMapMsgWithBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
@@ -340,8 +348,8 @@ void Event_DisplayMapMsgWithBg(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12
 /** @brief Displays a message with a background texture that is dimmed after reading the first message.
  *
  * @param texFileIdx Texture file index of the background to display.
- * @param fadeTimestep0 TODO
- * @param fadeTimestep1 TODO
+ * @param fadeTimestep0 TODO: Specify.
+ * @param fadeTimestep1 TODO: Specify.
  * @param mapMsgIdx0 Index of the first map message to display.
  * @param mapMsgIdx1 Index of the second map message to display.
  */

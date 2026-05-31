@@ -15,43 +15,42 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
+/** @brief EVENT AND INTERACTION HELPERS
+ *
+ * The following are helper functions for map events.
+ * Most are designed to be called once per tick and track their own progress across ticks.
+ *
+ * Map events use a state machine driven by `sysStateSteps[0]` (or `sysStateSteps[1]` for sub-steps).
+ * Each tick, the game re-enters the map event function and runs the case matching the current step.
+ * The helper called within that case does its work and only advances `sysStateSteps` when
+ * complete, allowing the next tick to move on to the next case.
+ *
+ * Example map event code:
+ *
+ * switch (g_SysWork.sysStateSteps[0])
+ * {
+ *   case 0:
+ *       Event_WaitTimer(Q12(5.0f), false); // Called every tick until 5 seconds have elapsed.
+ *       break;                             // Once elapsed, `Event_WaitTimer` handles incrementing `sysStateSteps[0]` to 1.
+ *
+ *   case 1:
+ *       Event_WaitPlayerStop();            // Called every tick until player has stopped.
+ *       break;                             // Once stopped, `Event_WaitPlayerStop` handles incrementing `sysStateSteps[0]` to 2.
+ *
+ *   case 2:
+ *       DoSomething();                     // Only reached after both previous steps have completed.
+ *       break;
+ * }
+ *
+ * This pattern allows sequential, blocking-style code to be written without actually blocking the game's main loop.
+ * The helpers above "wait" by simply returning without advancing the step, and "complete" by incrementing the step counter.
+ * The animation/inventory item/map message functions work similarly, being called every tick and "waiting" by simply not advancing the step.
+ * TODO: Describe the "Auto" commands that use `sysStateSteps[2]`. Need to check how map events use that.
+ */
+
 VECTOR3 g_Event_PathWaypoints[2][8];
 q3_12   g_Event_PathWaypointHeadingAngles[8]; // TODO: should only have 2 entries, 1 for each character slot?
 q19_12  g_Event_TweenTimers[6];
-
-// ========================================
-// EVENT AND INTERACTION HELPERS
-//
-// Functions in this file are helper functions for map events.
-// Most are designed to be called once per tick, and track their own progress across ticks.
-//
-// Map events use a state machine driven by `sysStateSteps[0]` (or `sysStateSteps[1]` for sub-steps).
-// Each tick the game re-enters the map event function and runs the case matching the current step.
-// The helper called within that case will do its work and only advance `sysStateSteps` once
-// complete, allowing the next tick to move on to the next case.
-//
-// Example map event code:
-//
-// switch (g_SysWork.sysStateSteps[0])
-// {
-//   case 0:
-//       Event_WaitTimer(Q12(5.0f), false); // Called every tick until 5 seconds have elapsed.
-//       break;                             // Once elapsed, `Event_WaitTimer` handles incrementing `sysStateSteps[0]` to 1.
-//
-//   case 1:
-//       Event_WaitPlayerStop();            // Called every tick until player has stopped.
-//       break;                             // Once stopped, `Event_WaitPlayerStop` handles incrementing `sysStateSteps[0]` to 2.
-//
-//   case 2:
-//       DoSomething();                     // Only reached after both previous steps completed.
-//       break;
-// }
-//
-// This pattern lets sequential, blocking-style code be written without actually blocking the game's main loop.
-// The helpers above "wait" by simply returning without advancing the step, and "complete" by incrementing the step counter.
-// The animation/inventory item/MapMsg functions work similarly, being called every tick and "waiting" by simply not advancing the step.
-// TODO: describe the "Auto" commands that use `sysStateSteps[2]`, need to check how map events use that.
-// ========================================
 
 void Event_SysStateStepIncrement(bool incSubStep) // 0x80085D78
 {
@@ -787,16 +786,16 @@ void Event_BgTextureFadeIn(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fad
     }
 }
 
-void Event_BgTextureFadeOut(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
+void Event_BgTextureFadeOut(q19_12 fadeTimestepFromBlack, q19_12 fadeTimestepToBlack) // 0x80086F44
 {
     if (g_SysWork.sysStateSteps[1] == 0)
     {
         Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-        Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestep1, true);
+        Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, fadeTimestepToBlack, true);
         return;
     }
 
-    Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestep0, false);
+    Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, fadeTimestepFromBlack, false);
     SysWork_StateStepIncrement(0);
 }
 

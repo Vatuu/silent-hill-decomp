@@ -1223,7 +1223,7 @@ bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1) // 0
             switch (arg0->field_0)
             {
                 case 1:
-                    if (arg1->field_C < arg0->field_4 - 6)
+                    if (arg1->field_C < (arg0->field_4 - 6))
                     {
                         return true;
                     }
@@ -1256,19 +1256,19 @@ void func_8006B8F8(s_CollisionState_CC* arg0) // 0x8006B8F8
     temp_a3                    = (u16)arg0->collisionVertex0.vx;
     temp_a1                    = (u16)arg0->collisionVertex1.vx;
     temp_a2                    = (u16)arg0->collisionVertex1.vz;
-    arg0->collisionVertex1.vx      = temp_a3;
+    arg0->collisionVertex1.vx  = temp_a3;
     temp_a3                    = (u16)arg0->collisionVertex0.vy;
-    arg0->collisionVertex0.vy      = arg0->collisionVertex1.vy;
-    arg0->collisionVertex0.vx      = temp_a1;
+    arg0->collisionVertex0.vy  = arg0->collisionVertex1.vy;
+    arg0->collisionVertex0.vx  = temp_a1;
     arg0->field_6.vx           = -arg0->field_6.vx;
-    arg0->collisionVertex1.vy      = temp_a3;
+    arg0->collisionVertex1.vy  = temp_a3;
     arg0->field_6.vy           = -arg0->field_6.vy;
     temp_a3                    = (u16)arg0->collisionVertex0.vz;
-    arg0->collisionVertex1.vz      = temp_a3;
+    arg0->collisionVertex1.vz  = temp_a3;
     temp_a3                    = arg0->field_C.s_field_0.field_0;
     arg0->field_20.field_14.vx = -arg0->field_20.field_14.vx;
 
-    arg0->collisionVertex0.vz           = temp_a2;
+    arg0->collisionVertex0.vz       = temp_a2;
     arg0->field_C.s_field_0.field_0 = arg0->field_C.s_field_0.field_1;
 
     ptr = &arg0->field_20;

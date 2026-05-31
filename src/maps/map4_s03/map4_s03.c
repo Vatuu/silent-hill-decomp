@@ -1,6 +1,6 @@
 #include "inline_no_dmpsx.h"
 
-#include <psyq/gtemac.h> 
+#include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"

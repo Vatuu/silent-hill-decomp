@@ -777,7 +777,10 @@ void func_800DBB34(void) // 0x800DBB34
             ScreenFade_ResetTimestep();
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D438();
-            Event_CameraPositionSet(NULL, Q12(20.09f), Q12(-0.9f), Q12(-97.78f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(20.09f), Q12(-0.9f),
+                                    Q12(-97.78f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(18.5f), Q12(0.2f), Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
 
@@ -797,9 +800,11 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 4:
             Event_CameraLookAtSet(NULL,
-                             Event_TweenLinear(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
-                             Event_TweenLinear(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
-                             Event_TweenLinear(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                                  Event_TweenLinear(Q12(-0.7901f), Q12(3.0f), 3) + Q12(18.5f),
+                                  Event_TweenLinear(Q12(-2.1299f), Q12(3.0f), 4) + Q12(0.2f),
+                                  Event_TweenLinear(Q12(0.45f), Q12(3.0f), 5) + Q12(-101.28f), Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  false);
             Event_WaitTimer(Q12(3.0f), false);
             break;
 
@@ -823,9 +828,12 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 8:
             Event_CameraLookAtSet(NULL,
-                             Event_TweenLinear(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
-                             Event_TweenLinear(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
-                             Event_TweenLinear(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+                                  Event_TweenLinear(Q12(3.74f), Q12(3.4f), 3) + Q12(17.71f),
+                                  Event_TweenLinear(Q12(0.3902f), Q12(3.4f), 4) + Q12(-1.93f),
+                                  Event_TweenLinear(Q12(-0.6602f), Q12(3.4f), 5) + Q12(-100.83f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  false);
             Event_WaitTimer(Q12(3.4f), false);
             break;
 
@@ -842,9 +850,9 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 11:
             Event_CameraLookAtSet(NULL,
-                             Event_TweenLinear(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
-                             Event_TweenLinear(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
-                             Event_TweenLinear(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                                  Event_TweenLinear(Q12(-0.1302f), Q12(0.6f), 3) + Q12(21.45f),
+                                  Event_TweenLinear(Q12(1.21f), Q12(0.6f), 4) + Q12(-1.54f),
+                                  Event_TweenLinear(Q12(-0.05f), Q12(0.6f), 5) + Q12(-101.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_WaitTimer(Q12(0.6f), false);
             break;
 
@@ -877,8 +885,10 @@ void func_800DBB34(void) // 0x800DBB34
             SysWork_StateStepIncrement(0);
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_548);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
