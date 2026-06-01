@@ -2501,8 +2501,20 @@ g_Inventory_DescriptionRollTimer             = 0x800AE1A0;
 g_Inventory_ScrollTransitionTimer            = 0x800AE1A4;
 g_Items_PickupAnimState                      = 0x800AE1AC;
 g_Items_PickupScale                          = 0x800AE1B0;
+
+//----------------------------------------------------------------------------
+//--- PA: 0x089654   VA: 0x800AE1B4   subsegment: .data, gfx/bodyprog_80055028
+//----------------------------------------------------------------------------
 D_800AE204                                   = 0x800AE204; // size:0x2D8
+
+//----------------------------------------------------------------------------------
+//--- PA: 0x089BE0   VA: 0x800AE740   subsegment: .data, bodyprog_mapscreen_80066D90
+//----------------------------------------------------------------------------------
 D_800AE8A0                                   = 0x800AE8A0; // size:0x51C
+
+//---------------------------------------------------------------------
+//--- PA: 0x08A37C   VA: 0x800AEEDC   subsegment: .data, player_control
+//---------------------------------------------------------------------
 g_Player_GrabReleaseInputTimer               = 0x800AF20C;
 g_Player_FlexRotationY                       = 0x800AF210;
 g_Player_FlexRotationX                       = 0x800AF212;

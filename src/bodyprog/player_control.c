@@ -21,6 +21,273 @@
 // GLOBAL VARIABLES
 // ========================================
 
+s16 D_800AEEDC[][2] = {
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE6B9, 0xEE67 },
+    { 0xE70B, 0xEEB9 },
+    { 0xE75D, 0xEEB9 },
+    { 0xE7AF, 0xEEB9 },
+    { 0xE800, 0xEFAF },
+    { 0xE8F6, 0xF052 },
+    { 0xEA15, 0xF052 },
+    { 0xEB34, 0xF11F },
+    { 0xEF34, 0xF59A },
+    { 0xF0F6, 0xF667 },
+    { 0xF47B, 0xF800 },
+    { 0xF571, 0xF8A4 },
+    { 0xF5C3, 0xF948 },
+    { 0xF615, 0xF99A },
+    { 0xF6E2, 0xFA3E },
+    { 0xF734, 0xFAE2 },
+    { 0xF734, 0xFA3E },
+    { 0xF615, 0xF91F },
+    { 0xF59A, 0xF800 },
+    { 0xF452, 0xF70B },
+    { 0xF3D8, 0xF667 },
+    { 0xF2E2, 0xF5C3 },
+    { 0xF2E2, 0xF5C3 },
+    { 0xF23E, 0xF4A4 },
+    { 0xF148, 0xF429 },
+    { 0xF000, 0xF334 },
+    { 0xED71, 0xF215 },
+    { 0xEA90, 0xF0F6 },
+    { 0xE8F6, 0xF07B },
+    { 0xE7AF, 0xEFD8 },
+    { 0xE6E2, 0xEF86 },
+    { 0xE667, 0xEE67 },
+};
+
+s16 D_800AEF78[][2] = {
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE6B9, 0xEEE2 },
+    { 0xE948, 0xF029 },
+    { 0xE948, 0xF052 },
+    { 0xE829, 0xEF86 },
+    { 0xE99A, 0xEFAF },
+    { 0xE9EC, 0xF052 },
+    { 0xED1F, 0xF400 },
+    { 0xF0F6, 0xF829 },
+    { 0xF2E2, 0xF99A },
+    { 0xF47B, 0xFA15 },
+    { 0xF571, 0xFA90 },
+    { 0xF571, 0xFA90 },
+    { 0xF75D, 0xFB34 },
+    { 0xF75D, 0xFB86 },
+    { 0xF75D, 0xFB86 },
+    { 0xF800, 0xFC00 },
+    { 0xF852, 0xFC00 },
+    { 0xF852, 0xFC00 },
+    { 0xF667, 0xFBD8 },
+    { 0xF4F6, 0xFB86 },
+    { 0xF3D8, 0xFAB9 },
+    { 0xF290, 0xFA15 },
+    { 0xF215, 0xFA15 },
+    { 0xF148, 0xF9C3 },
+    { 0xF07B, 0xF852 },
+    { 0xEDEC, 0xF548 },
+    { 0xEC7B, 0xF400 },
+    { 0xE91F, 0xF0F6 },
+    { 0xE70B, 0xEFD8 },
+    { 0xE6B9, 0xEEB9 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+    { 0xE667, 0xEE67 },
+};
+s16 D_800AF014[] = {
+    0x0000, 0x0000, 0xFFD8, 0xFFAF,
+    0xFF86, 0xFF5D, 0xFF0B, 0xFEB9,
+    0xFE67, 0xFE15, 0xFDC3, 0xFD71,
+    0xFD1F, 0xFCCD, 0xFC7B, 0xFCCD,
+    0xFD1F, 0xFD71, 0xFDC3, 0xFE67,
+    0xFEB9, 0xFF0B, 0xFF5D, 0xFF86,
+    0xFFAF, 0xFFD8, 0x0000, 0x0000,
+};
+
+s16 D_800AF04C[] = {
+    0x0000, 0x0000, 0xFFD8, 0xFF86,
+    0xFF34, 0xFEE2, 0xFE90, 0xFE3E,
+    0xFDEC, 0xFD9A, 0xFD48, 0xFD1F,
+    0xFD48, 0xFD9A, 0xFE15, 0xFEB9,
+    0xFF5D, 0x0000
+};
+
+// Distances used in player code.
+q3_12 D_800AF070[] = {
+    Q12(0.0f), Q12(0.04f), Q12(0.08f), Q12(0.12f),
+    Q12(0.16f), Q12(0.20f), Q12(0.24f), Q12(0.28f),
+    Q12(0.32f), Q12(0.36f), Q12(0.40f), Q12(0.44f),
+    Q12(0.48f), Q12(0.52f), Q12(0.56f), Q12(0.60f),
+    Q12(0.64f), Q12(0.68f), Q12(0.72f), Q12(0.76f),
+    Q12(0.80f), Q12(0.84f), Q12(0.88f), Q12(0.92f),
+    Q12(0.96f), Q12(1.00f), Q12(1.04f), Q12(1.08f),
+    Q12(1.12f), Q12(1.16f), Q12(1.20f), Q12(1.24f),
+    Q12(1.28f), Q12(1.32f), Q12(1.36f), Q12(1.40f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(-0.01f), Q12(-0.08f), Q12(-0.15f),
+    Q12(-0.20f), Q12(-0.23f), Q12(-0.26f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.29f), Q12(-0.29f),
+    Q12(-0.29f), Q12(-0.29f), Q12(-0.34f), Q12(-0.35f),
+    Q12(-0.35f), Q12(-0.34f), Q12(-0.34f), Q12(-0.33f),
+    Q12(-0.33f), Q12(-0.33f), Q12(-0.32f), Q12(-0.32f),
+    Q12(-0.31f), Q12(-0.29f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(-0.05f), Q12(-0.11f), Q12(-0.15f), Q12(-0.20f),
+    Q12(-0.25f), Q12(-0.30f), Q12(-0.30f), Q12(-0.27f),
+    Q12(-0.24f), Q12(-0.21f), Q12(-0.18f), Q12(-0.15f),
+    Q12(-0.12f), Q12(-0.09f), Q12(-0.06f), Q12(-0.03f),
+    Q12(0.0f), Q12(0.03f), Q12(0.07f), Q12(0.0f),
+    Q12(-0.02f), Q12(-0.03f), Q12(-0.03f), Q12(-0.02f),
+    Q12(-0.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.32f), Q12(0.33f), Q12(0.34f), Q12(0.35f),
+    Q12(0.36f), Q12(0.37f), Q12(0.38f), Q12(0.39f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.40f), Q12(0.40f),
+    Q12(0.40f), Q12(0.40f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.30f), Q12(0.30f), Q12(0.30f),
+    Q12(0.30f), Q12(0.0f)
+};
+
+// Distances used in player code.
+q3_12 D_800AF1FC[] = {
+    Q12(0.08f), Q12(0.16f), Q12(0.24f), Q12(0.32f),
+    Q12(0.4f),  Q12(0.48f), Q12(0.48f), Q12(0.0f)
+};
+
+q19_12 g_Player_GrabReleaseInputTimer     = Q12(0.0f);
+q3_12  g_Player_FlexRotationY             = Q12_ANGLE(0.0f);
+q3_12  g_Player_FlexRotationX             = Q12_ANGLE(0.0f);
+u8     g_Player_IsInWalkToRunTransition   = false;
+u8     g_Player_DisableControl            = false;
+u8     D_800AF216                         = 0; // Left Y analog stick value.
+s8     g_Player_RockDrill_DirectionAttack = 0;
+u32    D_800AF218                         = 0;
+s32    g_Player_TargetNpcIdx              = NO_VALUE;
+u8     D_800AF220                         = 0; // Keyframe index in map overlay header struct.
+// 3 bytes of padding.
+s32    g_Player_LastWeaponSelected        = NO_VALUE;
+
+// TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
+s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, NO_VALUE, 1   },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)                      }, 0,        0   },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)                     }, NO_VALUE, 1   },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 1,        23  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)                     }, NO_VALUE, 26  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 26,       45  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)                     }, NO_VALUE, 46  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 46,       69  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)                     }, NO_VALUE, 70  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 70,       94  },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)                     }, NO_VALUE, 95  },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_SidestepRight,           true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 95,       119 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeft,                 false), false, ANIM_STATUS(HarryAnim_RunLeft,                 true), { Q12(20.0f)                     }, NO_VALUE, 121 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunLeft,                 true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 121,      133 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRight,                false), false, ANIM_STATUS(HarryAnim_RunRight,                true), { Q12(20.0f)                     }, NO_VALUE, 136 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_RunRight,                true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 136,      148 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(50.0f)                     }, NO_VALUE, 150 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(15.0f)                     }, 150,      159 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(50.0f)                     }, NO_VALUE, 160 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(15.0f)                     }, 160,      169 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardStumble,       false), false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(50.0f)                     }, NO_VALUE, 170 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunForwardStumble,       true),  false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(15.0f)                     }, 170,      179 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnLeft,                false), false, ANIM_STATUS(HarryAnim_TurnLeft,                true), { Q12(50.0f)                     }, NO_VALUE, 180 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnLeft,                true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 180,      192 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnRight,               false), false, ANIM_STATUS(HarryAnim_TurnRight,               true), { Q12(50.0f)                     }, NO_VALUE, 193 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_TurnRight,               true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 193,      205 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnRight,          false), false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(50.0f)                     }, NO_VALUE, 206 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnRight,          true),  false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(28.0f)                     }, 206,      217 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnLeft,           false), false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(50.0f)                     }, NO_VALUE, 219 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(28.0f)                     }, 219,      230 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_JumpBackward,            false), false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, NO_VALUE, 240 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_JumpBackward,            true),  false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, 240,      247 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_LookAround,              false), false, ANIM_STATUS(HarryAnim_LookAround,              true), { Q12(50.0f)                     }, NO_VALUE, 248 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_LookAround,              true),  false, NO_VALUE,                                             { Q12(7.0f)                      }, 248,      320 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftWallStop,         false), false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(50.0f)                     }, NO_VALUE, 321 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(20.0f)                     }, 321,      336 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftStumble,          false), false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(50.0f)                     }, NO_VALUE, 337 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunLeftStumble,          true),  false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(15.0f)                     }, 337,      349 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightWallStop,        false), false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(50.0f)                     }, NO_VALUE, 350 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightWallStop,        true),  false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(20.0f)                     }, 350,      365 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightStumble,         false), false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(50.0f)                     }, NO_VALUE, 366 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_RunRightStumble,         true),  false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(15.0f)                     }, 366,      378 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallForward,             false), false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(30.0f)                     }, NO_VALUE, 387 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallForward,             true),  false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(20.0f)                     }, 387,      417 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallBackward,            false), false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(30.0f)                     }, NO_VALUE, 418 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_FallBackward,            true),  false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(20.0f)                     }, 418,      456 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Kick,                    false), false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(5.0f)                      }, NO_VALUE, 457 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Kick,                    true),  false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(20.0f)                     }, 457,      484 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Stomp,                   false), false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(5.0f)                      }, NO_VALUE, 485 },
+    { Anim_PlaybackOnce, ANIM_STATUS(HarryAnim_Stomp,                   true),  false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(20.0f)                     }, 485,      502 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)                      }, NO_VALUE, 503 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)                     }, 503,      542 },
+    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)                      }, NO_VALUE, 543 },
+    { Anim_PlaybackLoop, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 543,      567 },
+    {}
+};
+// TODO: `func_8007EBBC` indicates there should be more.
+
+u8  __padding1[14] = {};
+s16 D_800AF5C6 = 0;
+u32 D_800AF5C8[23] = {}; // Padding?
+s16 D_800AF624 = 0;
+s16 D_800AF626 = 0;
+u32 D_800AF628[368] = {};
+s32 g_Player_AttackAnimIdx    = 0;
+s32 g_Player_MeleeAttackType  = 0;
+s32 g_Player_IsMultiTapAttack = 0;
+
+s_800AFBF4 D_800AFBF4[11] = {
+    {},
+    { 1293, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1294, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1295, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1301, 0,    0,    64, 62, 63, 0,  52, 0 },
+    { 1303, 0,    0,    64, 58, 59, 0,  20, 0 },
+    { 1283, 1284, 1285, 66, 72, 61, 37, 37, 0 },
+    { 1290, 1291, 1292, 66, 72, 61, 24, 37, 0 },
+    { 1287, 1288, 1289, 66, 72, 61, 23, 37, 0 },
+    { 1299, 0,    0,    66, 72, 61, 0,  37, 0 },
+    { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
+};
+
+/** @brief Cached collision point data. */
+s_CollisionPoint g_CollisionPointCache = {
+    .position   = {},
+    .surface    = {},
+    .groundType = NO_VALUE
+};
+
 s_800C44F0 D_800C44F0[10];
 VECTOR3    g_TargetEnemyPosition;
 q19_12     D_800C454C;
