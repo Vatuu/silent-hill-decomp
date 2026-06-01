@@ -237,8 +237,8 @@ typedef struct
 
 typedef struct
 {
-    u16 field_0;
-    u16 field_2;
+    u16 sfxId_0;  /** `e_SfxId` */
+    u16 sfxVol_2;
     u16 field_4;
     u16 field_6;
 } s_800EC770;

@@ -1565,7 +1565,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
             (D_800E6388 == 4 && D_800E638C > Q12(8.6f)) ||
             (D_800E6388 == 5 && D_800E638C > Q12(9.3f)))
         {
-            Sfx_WithFlagsPlay(0x5BC, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1468, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
             D_800E6388++;
         }
     }

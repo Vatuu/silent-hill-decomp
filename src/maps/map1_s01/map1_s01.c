@@ -1059,7 +1059,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
             {
                 if (vcRetCamMvSmoothF() == VC_MV_CHASE)
                 {
-                    Sfx_WithFlagsPlay(0x5AA, &QVECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                    Sfx_WithFlagsPlay(Sfx_Unk1450, &QVECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                     Savegame_EventFlagSet(EventFlag_240);
                 }
             }

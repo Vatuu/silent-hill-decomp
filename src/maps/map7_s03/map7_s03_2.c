@@ -3122,7 +3122,7 @@ void func_800DBAE8(const VECTOR3* pos, s32 idx) // 0x800DBAE8
         D_800EC770[idx].field_6 = temp_s0 + (Rng_Rand16() / ((SHRT_MAX / (temp_s0 >> 3)) + 1));
         D_800F3D98[idx]         = 0;
 
-        Sfx_WithFlagsPlay(D_800EC770[idx].field_0, pos, D_800EC770[idx].field_2, SfxFlag_None);
+        Sfx_WithFlagsPlay(D_800EC770[idx].sfxId_0, pos, D_800EC770[idx].sfxVol_2, SfxFlag_None);
     }
 }
 
