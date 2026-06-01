@@ -139,28 +139,6 @@ extern s32 g_Inventory_ItemNameTimer; // 0x800AE19C
 /** @brief Timer used for displaying item descriptions in the inventory. */
 extern s32 g_Inventory_DescriptionRollTimer; // 0x800AE1A0
 
-extern s_800AEDBC D_800AEDBC[];
-
-extern s32 D_800AE71C[][2];
-
-extern q3_12 D_800AE73C; // Timer.
-
-extern s_800AE710 D_800AE710[4];
-
-extern VECTOR3 D_800AE1B4[1];
-
-extern s32 D_800AE1C0[];
-
-extern RECT D_800AE5A8[4];
-
-extern u16 D_800AE5C8[2];
-
-extern s8 D_800AE774[8][7][2];
-
-extern s8 D_800AE7E4[5][6][2];
-
-extern s8 D_800AE820[8][8][2];
-
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================

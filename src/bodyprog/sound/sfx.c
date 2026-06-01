@@ -10,7 +10,7 @@
  * Possibly a data entry error (switched 7 and 8).
  * Others match closely to `2^(-i/32)`
  */
-s16 g_Pow2NegFracTable[] = {
+q3_12 g_Pow2NegFracTable[] = {
     Q12(1.0f),    Q12(0.9876f), Q12(0.9576f), Q12(0.9371f),
     Q12(0.917f),  Q12(0.8973f), Q12(0.878f),  Q12(0.8592f),
     Q12(0.8406f), Q12(0.8228f), Q12(0.8052f), Q12(0.788f),
@@ -159,7 +159,7 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* pos, q23_8 vol) // 0x8005D9
 
 void Sfx_WithFlagsPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags) // 0x8005DC1C
 {
-    Sfx_WithFlagsAndPitchPlay(sfxId, pos, vol, sfxFlags, SfxFlag_None);
+    Sfx_WithFlagsAndPitchPlay(sfxId, pos, vol, sfxFlags, 0);
 }
 
 void Sfx_WithFlagsAndPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch) // 0x8005DC3C

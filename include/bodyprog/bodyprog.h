@@ -859,79 +859,9 @@ extern s8 __pad_bss_800BCDD5[3];
 
 extern s_EventData* g_MapEventData;
 
-/** `e_InvItemId` | related to displaying items. */
-extern u8 D_800AE187;
-
-extern s16 D_800AE1A8;
-
-extern s_800AE204 D_800AE204[26];
-
-extern s32 g_Items_PickupAnimState;
-
-extern q19_12 g_Items_PickupScale;
-
-extern s_800AE4DC D_800AE4DC[3];
-extern SVECTOR    D_800AE500[4];
-
-extern s16 D_800AE520[];
-
-extern s16 D_800AE5CC[];
-
-extern s16 D_800AE5F0[];
-
-extern u8 D_800AE700[];
-
-/** `[1]` contains relative paper map file indices. */
-extern u8 D_800AE740[][2];
-
-extern bool D_800AE770;
-
 extern q3_12 g_Player_FlexRotationY;
 
 extern q3_12 g_Player_FlexRotationX;
-
-/** Related to player. */
-extern u8 D_800AF220;
-
-/** @brief Last weapon selected. While it is being assigned the value of
- * `g_SysWork::playerCombat::weaponAttack` this time it is used to determine
- * the last weapon used in order to load the required animation data.
- */
-extern s32 g_Player_LastWeaponSelected;
-
-extern s_AnimInfo HARRY_BASE_ANIM_INFOS[]; // Maybe part of bigger struct. 0x800AF228
-
-extern s16 D_800AF506;
-
-extern s16 D_800AF526;
-
-extern s16 D_800AF5C6;
-
-extern s16 D_800AF624;
-
-/** Keyframe index. */
-extern s16 D_800AF626;
-
-/** Generic collision global used by high-level getters. */
-extern s_CollisionPoint g_CollisionPointCache;
-
-extern u8 D_800AFD04;
-
-extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
-
-extern u8 D_800AFD05;
-
-extern s32 D_800AFD3C;
-
-extern s32 D_800AFD44;
-
-extern s32 D_800AFD60;
-
-extern s32 D_800AFD9C;
-
-extern SVECTOR D_800AFDB0;
-
-extern s32 D_800AFDEC;
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 

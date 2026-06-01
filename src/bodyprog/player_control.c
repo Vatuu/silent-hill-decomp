@@ -191,8 +191,16 @@ u8     D_800AF216                         = 0; // Left Y analog stick value.
 s8     g_Player_RockDrill_DirectionAttack = 0;
 u32    D_800AF218                         = 0;
 s32    g_Player_TargetNpcIdx              = NO_VALUE;
+
+/** Related to player. */
 u8     D_800AF220                         = 0; // Keyframe index in map overlay header struct.
 // 3 bytes of padding.
+
+
+/** @brief Last weapon selected. While it is being assigned the value of
+ * `g_SysWork::playerCombat::weaponAttack` this time it is used to determine
+ * the last weapon used in order to load the required animation data.
+ */
 s32    g_Player_LastWeaponSelected        = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
@@ -261,7 +269,7 @@ u8  __padding1[14] = {};
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?
 s16 D_800AF624 = 0;
-s16 D_800AF626 = 0;
+s16 D_800AF626 = 0; /** Keyframe index. */
 u32 D_800AF628[368] = {};
 s32 g_Player_AttackAnimIdx    = 0;
 s32 g_Player_MeleeAttackType  = 0;
@@ -281,7 +289,7 @@ s_800AFBF4 D_800AFBF4[11] = {
     { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
 };
 
-/** @brief Cached collision point data. */
+/** @brief Cached collision point data. Generic collision global used by high-level getters. */
 s_CollisionPoint g_CollisionPointCache = {
     .position   = {},
     .surface    = {},

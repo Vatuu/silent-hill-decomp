@@ -19,6 +19,7 @@
 // Used by `func_80068CC0` and `GameState_PaperMapScreen_Update`.
 // I think this is save file flags related to
 // placing the markings on the map.
+/** `[1]` contains relative paper map file indices. */
 u8 D_800AE740[][2] = {
     { 0x00, 0x00 },
     { 0x00, 0x00 },
