@@ -33,10 +33,19 @@ typedef enum _SfxPairIdx
     SfxPairIdx_24 = 24
 } e_SfxPairIdx;
 
-s32 func_8005D86C(q19_12 arg0);
+/** @brief Computes 2^(-x) using table interpolation.
+ *
+ * @param x Input value in Q19.12.
+ * @return 2^(-x) in Q12. Returns 0 if x >= 12, INT_MAX if x < -20.
+ */
+q19_12 Math_Pow2Neg(q19_12 x);
 
-/** Looks like a clamping function. */
-s32 func_8005D974(s32 arg0);
+/** @brief Computes 2^(-x) clamped to [0, Q12(4.0)].
+ *
+ * @param x Input value in Q19.12.
+ * @return 2^(-x) in Q12, clamped.
+ */
+q19_12 Math_Pow2NegClamped(q19_12 x);
 
 /** @brief Computes the distance-attenuated SFX volume from a source position.
  *

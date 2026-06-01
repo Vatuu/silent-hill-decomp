@@ -875,9 +875,6 @@ extern SVECTOR    D_800AE500[4];
 
 extern s16 D_800AE520[];
 
-// Related to audio. Maybe Q12?
-extern s16 D_800AE564[];
-
 extern s16 D_800AE5CC[];
 
 extern s16 D_800AE5F0[];

@@ -1006,8 +1006,8 @@ func_8005D50C                                = 0x8005EF60; // type:func
 //------------------------------------------------------------
 //--- PA: 0x03A760   VA: 0x8005F2C0   subsegment: c, sound/sfx
 //------------------------------------------------------------
-func_8005D86C                                = 0x8005F2C0; // type:func
-func_8005D974                                = 0x8005F3C8; // type:func
+Math_Pow2Neg                                 = 0x8005F2C0; // type:func
+Math_Pow2NegClamped                          = 0x8005F3C8; // type:func
 Sfx_DistanceAttenuatedVolumeGet              = 0x8005F40C; // type:func
 Sfx_WithFlagsPlay                            = 0x8005F670; // type:func
 Sfx_WithFlagsAndPitchPlay                    = 0x8005F690; // type:func
@@ -2969,7 +2969,7 @@ D_800AE204                                   = 0x800B05C4;
 D_800AE4DC                                   = 0x800B089C;
 D_800AE500                                   = 0x800B08C0;
 D_800AE520                                   = 0x800B08E0;
-D_800AE564                                   = 0x800B0924;
+g_Pow2NegFracTable                           = 0x800B0924;
 D_800AE5A8                                   = 0x800B0968; // size:0x20
 D_800AE5C8                                   = 0x800B0988;
 D_800AE5CC                                   = 0x800B098C;

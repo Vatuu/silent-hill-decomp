@@ -1,26 +1,26 @@
 #include "game.h"
-#include "inline_no_dmpsx.h"
-
-#include <psyq/gtemac.h>
-#include <psyq/libapi.h>
-#include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sound/sfx.h"
-#include "bodyprog/math/math.h"
-#include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
 
-s16 D_800AE564[] = {
-    0x1000, 0x0FCD, 0xF52, 0xEFE,
-    0xEAC, 0xE5B, 0xE0C, 0xDBF,
-    0xD73, 0xD2A, 0xCE2, 0xC9B,
-    0xC56, 0xC12, 0xBD0, 0xB8F,
-    0xB50, 0xB12, 0xAD5, 0xA9A,
-    0xA5F, 0xA26, 0x9EF, 0x9B8,
-    0x983, 0x94F, 0x91C, 0x8EA,
-    0x8B9, 0x889, 0x85A, 0x82C,
-    0x800, 
+/** @brief Lookup table for `2^(-i/32)` in Q12, i = 0..32.
+ * Used by `Math_Pow2Neg` for exponential decay via table interpolation.
+ * @bug Entry [1] (0.9876) deviates from expected value of ~0.9785.
+ * Possibly a data entry error (switched 7 and 8).
+ * Others match closely to `2^(-i/32)`
+ */
+s16 g_Pow2NegFracTable[] = {
+    Q12(1.0f),    Q12(0.9876f), Q12(0.9576f), Q12(0.9371f),
+    Q12(0.917f),  Q12(0.8973f), Q12(0.878f),  Q12(0.8592f),
+    Q12(0.8406f), Q12(0.8228f), Q12(0.8052f), Q12(0.788f),
+    Q12(0.771f),  Q12(0.7544f), Q12(0.7383f), Q12(0.7225f),
+    Q12(0.7071f), Q12(0.692f),  Q12(0.6771f), Q12(0.6626f),
+    Q12(0.6482f), Q12(0.6343f), Q12(0.621f),  Q12(0.6075f),
+    Q12(0.5945f), Q12(0.582f),  Q12(0.5694f), Q12(0.5572f),
+    Q12(0.5452f), Q12(0.5335f), Q12(0.522f),  Q12(0.5108f),
+    Q12(0.5f),
+    // TODO: Garbage padding follows.
 #if VERSION_IS(JAP0)
     0x5455
 #elif VERSION_IS(JAP1)
@@ -35,63 +35,63 @@ s16 D_800AE564[] = {
 static VECTOR3  g_Sfx_CameraPosition; // Q19.12
 static VECTOR3* g_Sfx_PlayerPosition; // Q19.12
 
-s32 func_8005D86C(q19_12 arg0) // 0x8005D86C
+q19_12 Math_Pow2Neg(q19_12 x) // 0x8005D86C
 {
-    s32    var_a0;
-    s32    var_v1;
-    s32    temp_a1;
-    q19_12 temp_a2;
+    q19_12 fracPart;
+    s32    intPart;
+    q19_12 alpha;
     s32    idx;
-    q19_12 temp;
+    s32    tableVal;
+    s32    nextTableVal;
 
-    temp    = Q12_FRACT(arg0);
-    temp_a1 = FP_FROM(arg0, Q12_SHIFT);
+    fracPart = Q12_FRACT(x);
+    intPart  = FP_FROM(x, Q12_SHIFT);
 
-    if (temp_a1 >= 12)
+    if (intPart >= 12)
     {
         return 0;
     }
-    if (temp_a1 < -20)
+    if (intPart < -20)
     {
         return INT_MAX;
     }
 
-    temp_a2 = (arg0 & 0x7F) << 5;
-    idx = temp >> 7;
+    alpha = (x & 0x7F) << 5;
+    idx = fracPart >> 7;
 
-    var_a0 = D_800AE564[idx];
-    if (temp_a1 > 0)
+    tableVal = g_Pow2NegFracTable[idx];
+    if (intPart > 0)
     {
-        var_a0 >>= temp_a1;
+        tableVal >>= intPart;
     }
-    else if (temp_a1 < 0)
+    else if (intPart < 0)
     {
-        var_a0 <<= -temp_a1;
+        tableVal <<= -intPart;
     }
 
-    if (temp_a2 != 0)
+    if (alpha != 0)
     {
-        var_v1 = D_800AE564[idx + 1];
-        if (temp_a1 > 0)
+        nextTableVal = g_Pow2NegFracTable[idx + 1];
+        if (intPart > 0)
         {
-            var_v1 >>= temp_a1;
+            nextTableVal >>= intPart;
         }
-        else if (temp_a1 < 0)
+        else if (intPart < 0)
         {
-            var_v1 <<= -temp_a1;
+            nextTableVal <<= -intPart;
         }
 
-        var_a0 = Q12_MULT_PRECISE(var_a0, Q12(1.0f) - temp_a2) + Q12_MULT_PRECISE(var_v1, temp_a2);
+        tableVal = Q12_MULT_PRECISE(tableVal, Q12(1.0f) - alpha) + Q12_MULT_PRECISE(nextTableVal, alpha);
     }
 
-    return var_a0;
+    return tableVal;
 }
 
-s32 func_8005D974(s32 arg0) // 0x8005D974
+q19_12 Math_Pow2NegClamped(q19_12 x) // 0x8005D974
 {
-    s32 val;
+    q19_12 val;
 
-    val = func_8005D86C(arg0);
+    val = Math_Pow2Neg(x);
     if (val > Q12(4.0f))
     {
         val = Q12(4.0f);
@@ -109,32 +109,32 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* pos, q23_8 vol) // 0x8005D9
     q19_12 offsetX;
     q19_12 offsetY;
     q19_12 offsetZ;
-    q19_12 camToPlayerFactor;
-    q19_12 playerToPos;
+    q19_12 camDistAtten; // Camera-to-player distance attenuation
+    q19_12 srcDistAtten; // Source-to-player distance attenuation
     q23_8  adjVol;
 
     vwGetViewPosition(&g_Sfx_CameraPosition);
     g_Sfx_PlayerPosition = &g_SysWork.playerWork.player.position;
 
-    offsetX           = g_Sfx_CameraPosition.vx - g_Sfx_PlayerPosition->vx;
-    offsetY           = g_Sfx_CameraPosition.vy - g_Sfx_PlayerPosition->vy;
-    offsetZ           = g_Sfx_CameraPosition.vz - g_Sfx_PlayerPosition->vz;
-    camToPlayerFactor = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
-                                                    Q12_MULT_PRECISE(offsetY, offsetY) +
-                                                    Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(2.5f)) / 10);
-    if (camToPlayerFactor > Q12(1.0f))
+    offsetX      = g_Sfx_CameraPosition.vx - g_Sfx_PlayerPosition->vx;
+    offsetY      = g_Sfx_CameraPosition.vy - g_Sfx_PlayerPosition->vy;
+    offsetZ      = g_Sfx_CameraPosition.vz - g_Sfx_PlayerPosition->vz;
+    camDistAtten = Math_Pow2NegClamped((SquareRoot12(Q12_SQUARE_PRECISE(offsetX) +
+                                                     Q12_SQUARE_PRECISE(offsetY) +
+                                                     Q12_SQUARE_PRECISE(offsetZ)) - Q12(2.5f)) / 10);
+    if (camDistAtten > Q12(1.0f))
     {
-        camToPlayerFactor = Q12(1.0f);
+        camDistAtten = Q12(1.0f);
     }
 
-    offsetX     = g_Sfx_PlayerPosition->vx - pos->vx;
-    offsetY     = g_Sfx_PlayerPosition->vy - pos->vy;
-    offsetZ     = g_Sfx_PlayerPosition->vz - pos->vz;
-    playerToPos = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(offsetX, offsetX) +
-                                              Q12_MULT_PRECISE(offsetY, offsetY) +
-                                              Q12_MULT_PRECISE(offsetZ, offsetZ)) - Q12(6.0f)) / 4);
+    offsetX      = g_Sfx_PlayerPosition->vx - pos->vx;
+    offsetY      = g_Sfx_PlayerPosition->vy - pos->vy;
+    offsetZ      = g_Sfx_PlayerPosition->vz - pos->vz;
+    srcDistAtten = Math_Pow2NegClamped((SquareRoot12(Q12_SQUARE_PRECISE(offsetX) +
+                                                     Q12_SQUARE_PRECISE(offsetY) +
+                                                     Q12_SQUARE_PRECISE(offsetZ)) - Q12(6.0f)) / 4);
 
-    adjVol = Q12_MULT_PRECISE(camToPlayerFactor, playerToPos);
+    adjVol = Q12_MULT_PRECISE(camDistAtten, srcDistAtten);
     if (adjVol > Q8(32.0f))
     {
         adjVol = Q8(32.0f);
