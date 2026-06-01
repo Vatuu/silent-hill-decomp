@@ -99,7 +99,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
     }
 
     *((u32*)&g_Text_Debug_PositionSet1) = (posX & 0xFFFF) + (posY << 16);
-    tPage                                = (DR_TPAGE*)packet;
+    tPage                               = (DR_TPAGE*)packet;
 
     setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 4, 1));
     addPrim(ot, tPage);
@@ -154,7 +154,7 @@ char* Text_Debug_IntToString(s32 widthMin, s32 val) // 0x80032154
 }
 
 #if VERSION_EQUAL_OR_OLDER(PROTO_981216)
-void Text_Debug_DecToStringConversion(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
+void Text_Debug_DrawQ12(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
 {
     s32 i;
 
@@ -163,69 +163,71 @@ void Text_Debug_DecToStringConversion(s32 offsetX, s32 fracDigits, q19_12 val) /
         val *= 10;
     }
 
-    func_800321EC((offsetX - fracDigits) - ((fracDigits > 0) ? 1 : 0), fracDigits, val / Q12(1.0f), 1);
+    Text_Debug_DrawDecimal((offsetX - fracDigits) - ((fracDigits > 0) ? 1 : 0), fracDigits, val / Q12(1.0f), 1);
 }
 #endif
 
-void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800321EC
+void Text_Debug_DrawDecimal(s32 fieldWidth, s32 fracDigits, s32 value, bool round) // 0x800321EC
 {
     s32  quotient;
     s32  i;
     bool isNegative;
-    s8*  str;
+    s8*  cursor;
 
-    for (i = 0; i < (arg0 - 1); i++)
+    for (i = 0; i < (fieldWidth - 1); i++)
     {
         g_Text_Debug_PositionSet1.vx += 8;
     }
 
-    str  = PSX_SCRATCH_ADDR(0x2F);
-    *str = 0;
+    cursor  = PSX_SCRATCH_ADDR(0x2F);
+    *cursor = 0;
 
-    if (arg2 < 0)
+    if (value < 0)
     {
         isNegative = true;
-        arg2       = -arg2;
+        value      = -value;
     }
     else
     {
         isNegative = false;
     }
 
-    if (arg3 != 0)
+    if (round)
     {
-        arg2 = (arg2 + 5) / 10;
+        value = (value + 5) / 10;
     }
 
-    if (arg1 != 0)
+    if (fracDigits != 0)
     {
-        for (i = 0; i < arg1; i++)
+        for (i = 0; i < fracDigits; i++)
         {
-            str--;
-            *str = (arg2 % 10) + '0';
-            arg2 /= 10;
+            cursor--;
+            *cursor = (value % 10) + '0';
+            value  /= 10;
         }
 
-        str--;
-        *str = '.';
+        cursor--;
+        *cursor = '.';
     }
 
-    while (arg2 >= 10)
+    while (value >= 10)
     {
-        str--;
-        quotient                      = arg2 / 10;
-        *str                          = (arg2 - (quotient * 10)) + '0';
-        arg2                          = quotient;
+        cursor--;
+        quotient                      = value / 10;
+        *cursor                       = (value - (quotient * 10)) + '0';
+        value                         = quotient;
         g_Text_Debug_PositionSet1.vx -= 8;
     }
 
-    str--;
-    *str = arg2 + '0';
+    cursor--;
+    *cursor = value + '0';
 
     if (isNegative != 0)
     {
-        str--;
-        *str                          = '-';
+        cursor--;
+        *cursor                       = '-';
         g_Text_Debug_PositionSet1.vx -= 8;
     }
+
+    // TODO: Retail is missing `Text_Debug_Draw` here?
 }

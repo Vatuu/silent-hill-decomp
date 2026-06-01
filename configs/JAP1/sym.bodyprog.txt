@@ -325,7 +325,7 @@ Screen_BackgroundMotionBlur                  = 0x80031A34; // type:func
 Text_Debug_PositionSet                       = 0x80031C64; // type:func
 Text_Debug_Draw                              = 0x80031CA8; // type:func
 Text_Debug_IntToString                       = 0x80031EBC; // type:func
-func_800321EC                                = 0x80031F54; // type:func
+Text_Debug_DrawDecimal                       = 0x80031F54; // type:func
 
 //---------------------------------------------------------------------
 //--- PA: 0x00D560   VA: 0x800320C0   subsegment: c, screen/screen_draw
