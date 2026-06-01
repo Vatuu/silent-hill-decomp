@@ -77,7 +77,7 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 typedef struct
 {
     /* 0x0 */ u8    field_0;
-    /* 0x1 */ u8    field_1; // Index for `s_IpdCollisionData::materialFlags`.
+    /* 0x1 */ u8    materialIdx; // Index for `s_IpdCollisionData::materialsFlags`.
     /* 0x2 */ q7_8  field_2;
     /* 0x4 */ q23_8 field_4;
 } s_CollisionState_A8;
@@ -124,7 +124,7 @@ typedef union
 typedef struct _CollisionCellInfo
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
-    /* 0x4  */ u8                     cellIdx; // `s_IpdCollisionData::cellsInfo` Index.
+    /* 0x4  */ u8                     subCellIdx; // `s_IpdCollisionData::subCellsInfo` Index.
     /* 0x5  */ u8                     field_5;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
@@ -163,7 +163,6 @@ typedef struct _CollisionState
     /* 0x0+8  */ s8                    isCharaMoving : 1; /** `bool` */
     /* 0x0+9  */ s8                    field_0_9     : 1; /** `bool` */
     /* 0x0+10 */ s8                    field_0_10    : 1; /** `bool` */
-    /* 0x0+11 */ s8                    field_0_11    : 5;
     /* 0x2    */ u16                   flags         : 16; /** `e_CollisionTriggerFlags` */
     /* 0x4    */ s_CollisionCharaState charaState;
     /* 0x34   */ s32                   field_34;
@@ -174,12 +173,12 @@ typedef struct _CollisionState
     /* 0x40   */ s8*                   field_40;
     /* 0x44   */ s_CollisionState_44   field_44;
     /* 0x7C   */ q23_8                 field_7C; // Related to ground height?
-    /* 0x80   */ q23_8                 field_80; // X } Related to ground surface.
-    /* 0x84   */ q23_8                 field_84; // Z }
+    /* 0x80   */ q23_8                 charaCellOffsetX; // } Character position in cell.
+    /* 0x84   */ q23_8                 charaCellOffsetZ; // } 
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
     /* 0x90   */ bool                  heightDisabled;   /** `Boolean` */
-    /* 0x94   */ s32                   groundType; /** `e_GroundType` */
+    /* 0x94   */ s32                   groundType;       /** `e_GroundType` */
 
                  union
                  {
@@ -195,12 +194,12 @@ typedef struct _CollisionState
                  {
                      struct
                      {
-                         /* 0x0 */ u8                  closestXSubCellIdx;
-                         /* 0x1 */ u8                  closestZSubCellIdx;
-                         /* 0x2 */ u8                  closeFarXSubCellIdxDiff;
-                         /* 0x3 */ u8                  closeFarZSubCellIdxDiff;
-                         /* 0x4 */ s_IpdCellRange*     cellRanges;
-                         /* 0x8 */ s_CollisionState_A8 field_8[4];
+                         /* 0x0 */ u8                     closestXSubCellIdx;
+                         /* 0x1 */ u8                     closestZSubCellIdx;
+                         /* 0x2 */ u8                     closeFarXSubCellIdxDiff;
+                         /* 0x3 */ u8                     closeFarZSubCellIdxDiff;
+                         /* 0x4 */ s_IpdCollSubCellRange* subCellRange;
+                         /* 0x8 */ s_CollisionState_A8    field_8[4];
                      } s_0;
                      struct
                      {
@@ -208,9 +207,7 @@ typedef struct _CollisionState
                          /* 0x2 */ q7_8 field_2; // Set to absolute character top height.
                          /* 0x4 */ s16  field_4;
                          /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
-                         /* 0x7 */ s8   __pad_7;
                          /* 0x8 */ u8*  field_8;
-                         /* 0xC */ s8   __pad_C[28];
                      } s_1;
     /* 0xA0   */ } field_A0;
 
@@ -368,9 +365,9 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
 
-void Collision_CellChecksReset(s_IpdCollisionData* collData);
+void Collision_SubCellChecksReset(s_IpdCollisionData* collData);
 
-void Collision_CellChecksCountUpdate(s_IpdCollisionData* collData);
+void Collision_SubCellChecksCountUpdate(s_IpdCollisionData* collData);
 
 // ========================================
 // @split? IPD/ground collision detection.
@@ -483,16 +480,16 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR
 
 void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-bool func_8006AEAC(s_CollisionState* collState, const s_IpdCollisionData* collData);
+bool Collision_SubCellInit(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-bool Collision_CharaSubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
+bool Collision_SubCellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
+void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollSubCellRange* subCellRanges);
 
-bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 cellIdx);
+bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 subCellIdx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_CollisionState* collState, s_IpdCellRange* cellRanges);
+void func_8006B6E8(s_CollisionState* collState, s_IpdCollSubCellRange* subCellRanges);
 
 bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1);
 
@@ -527,7 +524,7 @@ void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist);
 
 void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
+void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollSubCellRange* subCellRanges);
 
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
 
@@ -583,9 +580,9 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollisionData* collData);
+void func_8006E53C(s_RayState* state, s_IpdCollSubCellRange* subCellRanges, s_IpdCollisionData* collData);
 
-void func_8006E78C(s_RayState* state, s_IpdCollCellInfo* arg1, SVECTOR3* arg2, s_IpdCollMaterialFlags* arg3, s32 arg4);
+void func_8006E78C(s_RayState* state, s_IpdCollSubCellInfo* arg1, SVECTOR3* arg2, s_IpdCollMaterialFlags* arg3, s32 arg4);
 
 void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 
