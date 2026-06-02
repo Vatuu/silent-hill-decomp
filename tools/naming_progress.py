@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Usage:
-#   tools/naming_progress.py <elf path> [--verbose] [--code] [--data]
+#   tools/naming_progress.py <elf path> [--verbose] [--code] [--data] [--html outfile.html]
 # eg:
 #   tools/naming_progress.py build/USA/out/1ST/BODYPROG.BIN.elf
 #   tools/naming_progress.py build/USA/out/1ST/BODYPROG.BIN.elf --verbose
@@ -12,6 +12,8 @@
 # --verbose will also list each auto-generated/non-matched name.
 #
 # --code/--data can be used to only display functions or data.
+#
+# --html [outfile.html] will generate a HTML file that can be browsed through.
 #
 # Funcs/data are counted as auto-generated if they begin with
 #  func_ / sharedFunc_ / D_ / sharedData_
@@ -28,6 +30,7 @@
 # TODO: Test with maps/screens elf files.
 
 import bisect
+import json
 import os
 import re
 import sys
@@ -366,6 +369,495 @@ def print_per_file(result, sym_to_source, subseg_ranges, verbose=False,
             for name, addr in sorted(f["non_matching"], key=lambda x: x[1]):
                 print(f"    0x{addr:08X}  {name}  (non-matching)")
 
+def build_report_data(result, sym_to_source, subseg_ranges):
+    """Build a JSON-serializable report structure."""
+    files = {}
+    subseg_addrs = [va for va, _ in subseg_ranges]
+
+    def add(name, addr, category, kind):
+        source = lookup_source(name, addr, sym_to_source, subseg_ranges, subseg_addrs)
+        if source not in files:
+            files[source] = {"funcs": {"named": [], "auto": [], "non_matching": []},
+                             "data": {"named": [], "auto": [], "non_matching": []}}
+        files[source][kind][category].append({"name": name, "addr": f"0x{addr:08X}"})
+
+    for name, addr in result["functions"]["named"]:
+        add(name, addr, "named", "funcs")
+    for name, addr in result["functions"]["auto"]:
+        add(name, addr, "auto", "funcs")
+    for name, addr in result["functions"]["non_matching"]:
+        add(name, addr, "non_matching", "funcs")
+    for name, addr in result["data"]["named"]:
+        add(name, addr, "named", "data")
+    for name, addr in result["data"]["auto"]:
+        add(name, addr, "auto", "data")
+    for name, addr in result["data"]["non_matching"]:
+        add(name, addr, "non_matching", "data")
+
+    file_list = []
+    for source, cats in sorted(files.items(), key=lambda s: (s[0] == "<unknown>", s[0])):
+        if any(source.startswith(p) for p in SKIP_SOURCES):
+            continue
+        fn, dt = cats["funcs"], cats["data"]
+        file_list.append({
+            "name": source,
+            "funcs": fn,
+            "data": dt,
+        })
+
+    fn = result["functions"]
+    dt = result["data"]
+    return {
+        "summary": {
+            "functions": {
+                "named": len(fn["named"]),
+                "auto": len(fn["auto"]),
+                "non_matching": len(fn["non_matching"]),
+            },
+            "data": {
+                "named": len(dt["named"]),
+                "auto": len(dt["auto"]),
+                "non_matching": len(dt["non_matching"]),
+            },
+        },
+        "files": file_list,
+    }
+
+def generate_html(report_data, elf_path, output_path):
+    """Generate a self-contained HTML report."""
+    html = HTML_TEMPLATE.replace("__REPORT_DATA__", json.dumps(report_data))
+    html = html.replace("__ELF_PATH__",os.path.splitext(os.path.basename(elf_path))[0])
+    with open(output_path, "w") as f:
+        f.write(html)
+    print(f"HTML report written to {output_path}")
+
+HTML_TEMPLATE = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decomp Progress - __ELF_PATH__</title>
+<style>
+  body {
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    background: #eef1f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+  a { color: #2654a1; }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header bar */
+  .header {
+    background: #3c5a99;
+    background: linear-gradient(to bottom, #4a6fb5, #35507a);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #2d4470;
+    border-bottom: none;
+  }
+  .header h1 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header .path {
+    font-size: 11px;
+    color: #c0cce0;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  /* Main panel */
+  .panel {
+    background: #fff;
+    border: 1px solid #b0b8c4;
+    border-radius: 0 0 4px 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Summary boxes */
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    flex: 1;
+    background: #f7f8fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 3px;
+    padding: 10px 12px;
+  }
+  .stat-box h3 {
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+    border-bottom: 1px solid #e0e3e8;
+    padding-bottom: 4px;
+  }
+  .stat-line {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .stat-line .num { font-weight: bold; color: #222; }
+  .stat-pct {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .stat-pct.good { color: #2e7d32; }
+  .stat-pct.mid  { color: #e67c00; }
+  .stat-pct.low  { color: #c62828; }
+  .stat-bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+    border: 1px solid #c8ccd2;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 0.3s;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .controls label {
+    color: #666;
+    margin-right: 2px;
+  }
+  .btn {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 9px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #fff, #e8ecf0);
+    color: #333;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: linear-gradient(to bottom, #f0f4f8, #dde2e8);
+    border-color: #808890;
+  }
+  .btn.active {
+    background: linear-gradient(to bottom, #5a7db5, #3c5a8a);
+    border-color: #2d4470;
+    color: #fff;
+  }
+  .search-box {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 7px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    width: 180px;
+    margin-left: auto;
+  }
+  .search-box:focus { outline: none; border-color: #4a6fb5; }
+
+  /* File table */
+  table.files {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.files th {
+    text-align: left;
+    padding: 5px 8px;
+    background: #e8ecf0;
+    border: 1px solid #c8ccd2;
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+  }
+  table.files td {
+    padding: 4px 8px;
+    border: 1px solid #d8dce2;
+  }
+  table.files tr.file-row { cursor: pointer; }
+  table.files tr.file-row:hover { background: #f0f4fa; }
+  table.files tr.file-row:nth-child(odd) { background: #fafbfc; }
+  table.files tr.file-row:nth-child(odd):hover { background: #f0f4fa; }
+  .fname {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 11px;
+    color: #2654a1;
+    white-space: nowrap;
+  }
+  .ratio { font-family: 'Courier New', Courier, monospace; }
+  .pct { font-weight: bold; }
+  .pct-good { color: #2e7d32; }
+  .pct-mid  { color: #e67c00; }
+  .pct-low  { color: #c62828; }
+  .bar-cell { width: 200px; }
+  .bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border: 1px solid #c8ccd2;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 1px; }
+  .nm-cell {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e67c00;
+    font-weight: bold;
+    text-align: center;
+  }
+  .chevron {
+    display: inline-block;
+    width: 10px;
+    font-size: 9px;
+    color: #999;
+    margin-right: 4px;
+    transition: transform 0.1s;
+  }
+  tr.file-row.open .chevron { transform: rotate(90deg); }
+
+  /* Detail rows */
+  tr.detail-row { display: none; }
+  tr.detail-row.open { display: table-row; }
+  tr.detail-row td {
+    padding: 6px 8px 8px 28px;
+    background: #f4f5f8;
+    border: 1px solid #d8dce2;
+  }
+  .detail-heading {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    text-transform: uppercase;
+    margin: 6px 0 3px 0;
+    border-bottom: 1px dotted #c8ccd2;
+    padding-bottom: 2px;
+  }
+  .detail-heading:first-child { margin-top: 0; }
+  .sym-row {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .sym-row .addr { color: #888; }
+  .sym-row .name { color: #222; }
+  .tag {
+    font-family: Verdana, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+  .tag-auto { background: #fde8e8; color: #c62828; border: 1px solid #f5c0c0; }
+  .tag-nm   { background: #fff3d4; color: #b87000; border: 1px solid #f0d890; }
+  .tag-func { background: #e0ecf8; color: #2654a1; border: 1px solid #b0c8e8; }
+  .tag-data { background: #eee8f8; color: #6a40a0; border: 1px solid #c8b8e0; }
+
+  .empty-detail {
+    font-style: italic;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Decomp Naming Progress: __ELF_PATH__</h1>
+  </div>
+  <div class="panel">
+    <div class="summary-row" id="summary"></div>
+    <div class="controls">
+      <label>Show:</label>
+      <button class="btn active" data-filter="all">All</button>
+      <button class="btn" data-filter="code">Functions</button>
+      <button class="btn" data-filter="data">Data</button>
+      <span style="color:#aaa;margin:0 4px">|</span>
+      <label>Sort:</label>
+      <button class="btn active" data-sort="name">Name</button>
+      <button class="btn" data-sort="pct-asc">% Asc</button>
+      <button class="btn" data-sort="pct-desc">% Desc</button>
+      <button class="btn" data-sort="remaining">Remaining</button>
+      <input class="search-box" type="text" placeholder="Filter files..." id="searchInput">
+    </div>
+    <div id="fileTable"></div>
+  </div>
+  <div class="footer">generated by naming_progress.py</div>
+</div>
+<script>
+const DATA = __REPORT_DATA__;
+
+function pctClass(p) { return p >= 75 ? 'good' : p >= 40 ? 'mid' : 'low'; }
+function barColor(p) { return p >= 75 ? '#5a9e5f' : p >= 40 ? '#e6a817' : '#c84040'; }
+
+function makeStatBox(label, named, auto, nm) {
+  const total = named + auto;
+  const pct = total ? (named / total * 100) : 0;
+  const pc = pctClass(pct);
+  const bc = barColor(pct);
+  return `<div class="stat-box">
+    <h3>${label}</h3>
+    <div class="stat-pct ${pc}">${pct.toFixed(1)}%</div>
+    <div class="stat-line"><span class="num">${named}</span> / ${total} named</div>
+    <div class="stat-line">${auto} auto-generated</div>
+    ${nm ? `<div class="stat-line" style="color:#e67c00">${nm} non-matching</div>` : ''}
+    <div class="stat-bar-outer"><div class="stat-bar-fill" style="width:${pct}%;background:${bc}"></div></div>
+  </div>`;
+}
+
+const S = DATA.summary;
+const allN = S.functions.named + S.data.named;
+const allA = S.functions.auto + S.data.auto;
+const allNM = S.functions.non_matching + S.data.non_matching;
+document.getElementById('summary').innerHTML =
+  makeStatBox('Overall', allN, allA, allNM) +
+  makeStatBox('Functions', S.functions.named, S.functions.auto, S.functions.non_matching) +
+  makeStatBox('Data', S.data.named, S.data.auto, S.data.non_matching);
+
+let currentFilter = 'all';
+let currentSort = 'name';
+
+function getCounts(f, filter) {
+  let named = 0, auto = 0, nm = 0, autoList = [], nmList = [];
+  if (filter !== 'data') {
+    named += f.funcs.named.length;
+    auto += f.funcs.auto.length;
+    nm += f.funcs.non_matching.length;
+    autoList = autoList.concat(f.funcs.auto.map(s => ({...s, kind: 'func', tag: 'auto'})));
+    nmList = nmList.concat(f.funcs.non_matching.map(s => ({...s, kind: 'func', tag: 'nm'})));
+  }
+  if (filter !== 'code') {
+    named += f.data.named.length;
+    auto += f.data.auto.length;
+    nm += f.data.non_matching.length;
+    autoList = autoList.concat(f.data.auto.map(s => ({...s, kind: 'data', tag: 'auto'})));
+    nmList = nmList.concat(f.data.non_matching.map(s => ({...s, kind: 'data', tag: 'nm'})));
+  }
+  return { named, auto, nm, total: named + auto, autoList, nmList };
+}
+
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let files = DATA.files.map(f => {
+    const c = getCounts(f, currentFilter);
+    return { ...f, ...c };
+  }).filter(f => f.total > 0 && f.name.toLowerCase().includes(search));
+
+  if (currentSort === 'name') files.sort((a, b) => a.name.localeCompare(b.name));
+  else if (currentSort === 'pct-asc') files.sort((a, b) => (a.named/a.total) - (b.named/b.total));
+  else if (currentSort === 'pct-desc') files.sort((a, b) => (b.named/b.total) - (a.named/a.total));
+  else if (currentSort === 'remaining') files.sort((a, b) => b.auto - a.auto);
+
+  let html = `<table class="files">
+    <tr><th>File</th><th>Progress</th><th>%</th><th class="bar-cell">Bar</th><th>NM</th></tr>`;
+
+  files.forEach((f, i) => {
+    const pct = f.total ? (f.named / f.total * 100) : 0;
+    const pc = 'pct-' + pctClass(pct);
+    const bc = barColor(pct);
+
+    html += `<tr class="file-row" data-idx="${i}" onclick="toggleDetail(${i})">
+      <td class="fname"><span class="chevron">&#9654;</span>${f.name}</td>
+      <td class="ratio">${f.named}/${f.total}</td>
+      <td class="pct ${pc}">${pct.toFixed(1)}%</td>
+      <td class="bar-cell"><div class="bar-outer"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div></td>
+      <td class="nm-cell">${f.nm || ''}</td>
+    </tr>`;
+
+    const syms = f.autoList.concat(f.nmList).sort((a, b) => a.addr.localeCompare(b.addr));
+    html += `<tr class="detail-row" data-detail="${i}"><td colspan="5">`;
+    if (syms.length === 0) {
+      html += `<div class="empty-detail">All symbols have been named.</div>`;
+    } else {
+      const autoFuncs = syms.filter(s => s.tag === 'auto' && s.kind === 'func');
+      const autoData  = syms.filter(s => s.tag === 'auto' && s.kind === 'data');
+      const nmFuncs   = syms.filter(s => s.tag === 'nm'   && s.kind === 'func');
+      const nmData    = syms.filter(s => s.tag === 'nm'   && s.kind === 'data');
+
+      function renderGroup(label, items, tagClass, tagLabel) {
+        if (!items.length) return '';
+        let out = `<div class="detail-heading">${label} (${items.length})</div>`;
+        items.forEach(s => {
+          out += `<div class="sym-row">
+            <span class="addr">${s.addr}</span>&nbsp;
+            <span class="name">${s.name}</span>
+            <span class="tag tag-${s.kind}">${s.kind}</span>
+            <span class="tag ${tagClass}">${tagLabel}</span>
+          </div>`;
+        });
+        return out;
+      }
+
+      html += renderGroup('Auto-generated functions', autoFuncs, 'tag-auto', 'auto');
+      html += renderGroup('Auto-generated data', autoData, 'tag-auto', 'auto');
+      html += renderGroup('Non-matching functions', nmFuncs, 'tag-nm', 'non-matching');
+      html += renderGroup('Non-matching data', nmData, 'tag-nm', 'non-matching');
+    }
+    html += `</td></tr>`;
+  });
+
+  html += '</table>';
+  document.getElementById('fileTable').innerHTML = html;
+}
+
+function toggleDetail(idx) {
+  const row = document.querySelector(`tr.file-row[data-idx="${idx}"]`);
+  const detail = document.querySelector(`tr.detail-row[data-detail="${idx}"]`);
+  row.classList.toggle('open');
+  detail.classList.toggle('open');
+}
+
+document.querySelectorAll('.btn[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.querySelectorAll('.btn[data-sort]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-sort]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', renderTable);
+renderTable();
+</script>
+</body>
+</html>"""
+
 def main():
     parser = argparse.ArgumentParser(
         description="Show symbol naming progress from an ELF file"
@@ -386,6 +878,10 @@ def main():
     parser.add_argument(
         "--data", action="store_true",
         help="Only show data progress"
+    )
+    parser.add_argument(
+        "--html", default=None, metavar="OUTPUT",
+        help="Generate HTML report (requires sym.txt + config yaml)"
     )
     parser.add_argument(
         "--sym-txt", default=None,
@@ -455,12 +951,29 @@ def main():
         sys.exit(1)
 
     if args.verbose:
-        print(f"\nsym.txt: {sym_txt}")
-        print(f"config:  {config_yaml}")
+      print(f"\nsym.txt: {sym_txt}")
+      print(f"config:  {config_yaml}")
+
     sym_to_source = parse_sym_txt(sym_txt)
     subseg_ranges = parse_config_yaml(config_yaml)
     print_per_file(result, sym_to_source, subseg_ranges,
                     verbose=args.verbose, show_code=show_code, show_data=show_data)
+
+    if args.html:
+        sym_txt = args.sym_txt or find_sym_txt(args.elf_path)
+        config_yaml = args.config_yaml or find_config_yaml(args.elf_path)
+        if sym_txt is None or config_yaml is None:
+            missing = []
+            if sym_txt is None:
+                missing.append("sym.txt (use --sym-txt)")
+            if config_yaml is None:
+                missing.append("config YAML (use --config-yaml)")
+            print(f"\nCannot generate HTML: missing {', '.join(missing)}")
+            sys.exit(1)
+        sym_to_source = parse_sym_txt(sym_txt)
+        subseg_ranges = parse_config_yaml(config_yaml)
+        report = build_report_data(result, sym_to_source, subseg_ranges)
+        generate_html(report, args.elf_path, args.html)
 
 
 if __name__ == "__main__":
