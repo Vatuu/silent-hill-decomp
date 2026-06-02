@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decomp Progress - MAP2_S02.BIN</title>
+<style>
+  body {
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    background: #eef1f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+  a { color: #2654a1; }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header bar */
+  .header {
+    background: #3c5a99;
+    background: linear-gradient(to bottom, #4a6fb5, #35507a);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #2d4470;
+    border-bottom: none;
+  }
+  .header h1 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header .path {
+    font-size: 11px;
+    color: #c0cce0;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  /* Main panel */
+  .panel {
+    background: #fff;
+    border: 1px solid #b0b8c4;
+    border-radius: 0 0 4px 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Summary boxes */
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    flex: 1;
+    background: #f7f8fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 3px;
+    padding: 10px 12px;
+  }
+  .stat-box h3 {
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+    border-bottom: 1px solid #e0e3e8;
+    padding-bottom: 4px;
+  }
+  .stat-line {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .stat-line .num { font-weight: bold; color: #222; }
+  .stat-pct {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .stat-pct.good { color: #2e7d32; }
+  .stat-pct.mid  { color: #e67c00; }
+  .stat-pct.low  { color: #c62828; }
+  .stat-bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+    border: 1px solid #c8ccd2;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 0.3s;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .controls label {
+    color: #666;
+    margin-right: 2px;
+  }
+  .btn {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 9px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #fff, #e8ecf0);
+    color: #333;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: linear-gradient(to bottom, #f0f4f8, #dde2e8);
+    border-color: #808890;
+  }
+  .btn.active {
+    background: linear-gradient(to bottom, #5a7db5, #3c5a8a);
+    border-color: #2d4470;
+    color: #fff;
+  }
+  .search-box {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 7px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    width: 180px;
+    margin-left: auto;
+  }
+  .search-box:focus { outline: none; border-color: #4a6fb5; }
+
+  /* File table */
+  table.files {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.files th {
+    text-align: left;
+    padding: 5px 8px;
+    background: #e8ecf0;
+    border: 1px solid #c8ccd2;
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+  }
+  table.files td {
+    padding: 4px 8px;
+    border: 1px solid #d8dce2;
+  }
+  table.files tr.file-row { cursor: pointer; }
+  table.files tr.file-row:hover { background: #f0f4fa; }
+  table.files tr.file-row:nth-child(odd) { background: #fafbfc; }
+  table.files tr.file-row:nth-child(odd):hover { background: #f0f4fa; }
+  .fname {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 11px;
+    color: #2654a1;
+    white-space: nowrap;
+  }
+  .ratio { font-family: 'Courier New', Courier, monospace; }
+  .pct { font-weight: bold; }
+  .pct-good { color: #2e7d32; }
+  .pct-mid  { color: #e67c00; }
+  .pct-low  { color: #c62828; }
+  .bar-cell { width: 200px; }
+  .bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border: 1px solid #c8ccd2;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 1px; }
+  .nm-cell {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e67c00;
+    font-weight: bold;
+    text-align: center;
+  }
+  .chevron {
+    display: inline-block;
+    width: 10px;
+    font-size: 9px;
+    color: #999;
+    margin-right: 4px;
+    transition: transform 0.1s;
+  }
+  tr.file-row.open .chevron { transform: rotate(90deg); }
+
+  /* Detail rows */
+  tr.detail-row { display: none; }
+  tr.detail-row.open { display: table-row; }
+  tr.detail-row td {
+    padding: 6px 8px 8px 28px;
+    background: #f4f5f8;
+    border: 1px solid #d8dce2;
+  }
+  .detail-heading {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    text-transform: uppercase;
+    margin: 6px 0 3px 0;
+    border-bottom: 1px dotted #c8ccd2;
+    padding-bottom: 2px;
+  }
+  .detail-heading:first-child { margin-top: 0; }
+  .sym-row {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .sym-row .addr { color: #888; }
+  .sym-row .name { color: #222; }
+  .tag {
+    font-family: Verdana, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+  .tag-auto { background: #fde8e8; color: #c62828; border: 1px solid #f5c0c0; }
+  .tag-nm   { background: #fff3d4; color: #b87000; border: 1px solid #f0d890; }
+  .tag-func { background: #e0ecf8; color: #2654a1; border: 1px solid #b0c8e8; }
+  .tag-data { background: #eee8f8; color: #6a40a0; border: 1px solid #c8b8e0; }
+
+  .empty-detail {
+    font-style: italic;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Decomp Naming Progress: MAP2_S02.BIN</h1>
+  </div>
+  <div class="panel">
+    <div class="summary-row" id="summary"></div>
+    <div class="controls">
+      <label>Show:</label>
+      <button class="btn active" data-filter="all">All</button>
+      <button class="btn" data-filter="code">Functions</button>
+      <button class="btn" data-filter="data">Data</button>
+      <span style="color:#aaa;margin:0 4px">|</span>
+      <label>Sort:</label>
+      <button class="btn active" data-sort="name">Name</button>
+      <button class="btn" data-sort="pct-asc">% Asc</button>
+      <button class="btn" data-sort="pct-desc">% Desc</button>
+      <button class="btn" data-sort="remaining">Remaining</button>
+      <input class="search-box" type="text" placeholder="Filter files..." id="searchInput">
+    </div>
+    <div id="fileTable"></div>
+  </div>
+  <div class="footer">generated by naming_progress.py</div>
+</div>
+<script>
+const DATA = {"summary": {"functions": {"named": 121, "auto": 140, "non_matching": 0}, "data": {"named": 32, "auto": 123, "non_matching": 147}}, "files": [{"name": "Chara_AirScreamer", "funcs": {"named": [{"name": "AirScreamer_Control_29", "addr": "0x800D752C"}, {"name": "AirScreamer_Control_36", "addr": "0x800D88BC"}, {"name": "AirScreamer_Control_25", "addr": "0x800D6BE0"}, {"name": "AirScreamer_Control_15", "addr": "0x800D4BE8"}, {"name": "AirScreamer_Control_1", "addr": "0x800D2218"}, {"name": "AirScreamer_Control_43", "addr": "0x800DA094"}, {"name": "AirScreamer_Control_28", "addr": "0x800D741C"}, {"name": "AirScreamer_Control_38", "addr": "0x800D90E8"}, {"name": "AirScreamer_Control_4", "addr": "0x800D278C"}, {"name": "AirScreamer_Control_45", "addr": "0x800DA5D4"}, {"name": "AirScreamer_Control_9", "addr": "0x800D3A50"}, {"name": "AirScreamer_Control_48", "addr": "0x800DA6E4"}, {"name": "AirScreamer_Control_39", "addr": "0x800D9490"}, {"name": "AirScreamer_Control_46", "addr": "0x800DA6D4"}, {"name": "AirScreamer_Control_13", "addr": "0x800D4594"}, {"name": "AirScreamer_ControlUpdate", "addr": "0x800D1EEC"}, {"name": "AirScreamer_Control_31", "addr": "0x800D7A9C"}, {"name": "AirScreamer_ControlGlide", "addr": "0x800D7CD4"}, {"name": "AirScreamer_Control_41", "addr": "0x800D9A08"}, {"name": "AirScreamer_Control_21", "addr": "0x800D5D54"}, {"name": "AirScreamer_Control_26", "addr": "0x800D6E00"}, {"name": "AirScreamer_Control_2", "addr": "0x800D240C"}, {"name": "AirScreamer_Update", "addr": "0x800D0728"}, {"name": "AirScreamer_ControlRecoil", "addr": "0x800D4CEC"}, {"name": "AirScreamer_Control_14", "addr": "0x800D4824"}, {"name": "AirScreamer_HasLandedCheck", "addr": "0x800DACF4"}, {"name": "AirScreamer_Control_20", "addr": "0x800D598C"}, {"name": "AirScreamer_ControlStun", "addr": "0x800D5188"}, {"name": "AirScreamer_IsGroundedCheck", "addr": "0x800DA890"}, {"name": "AirScreamer_Control_24", "addr": "0x800D68D4"}, {"name": "AirScreamer_Control_27", "addr": "0x800D7070"}, {"name": "AirScreamer_Control_19", "addr": "0x800D5610"}, {"name": "AirScreamer_Control_10", "addr": "0x800D3D3C"}, {"name": "AirScreamer_Control_50", "addr": "0x800DA6F4"}, {"name": "AirScreamer_Control_49", "addr": "0x800DA6EC"}, {"name": "AirScreamer_Control_44", "addr": "0x800DA1A0"}, {"name": "AirScreamer_ControlStandIdle", "addr": "0x800D262C"}, {"name": "AirScreamer_Control_34", "addr": "0x800D80C4"}, {"name": "AirScreamer_Control_47", "addr": "0x800DA6DC"}, {"name": "AirScreamer_Control_8", "addr": "0x800D3660"}, {"name": "AirScreamer_Control_5", "addr": "0x800D2B40"}, {"name": "AirScreamer_Control_32", "addr": "0x800D7BD0"}, {"name": "AirScreamer_Control_35", "addr": "0x800D8448"}, {"name": "AirScreamer_DamageTake", "addr": "0x800D11C4"}, {"name": "AirScreamer_Control_22", "addr": "0x800D6134"}, {"name": "AirScreamer_Control_40", "addr": "0x800D9820"}, {"name": "AirScreamer_Control_42", "addr": "0x800D9D34"}, {"name": "AirScreamer_Control_37", "addr": "0x800D8D80"}, {"name": "AirScreamer_Control_51", "addr": "0x800DA6FC"}, {"name": "AirScreamer_Control_6", "addr": "0x800D2EB0"}, {"name": "AirScreamer_Init", "addr": "0x800D0F2C"}, {"name": "AirScreamer_Control_11", "addr": "0x800D415C"}, {"name": "AirScreamer_Control_23", "addr": "0x800D64F4"}, {"name": "AirScreamer_GroundWarp", "addr": "0x800D1168"}, {"name": "AirScreamer_Control_18", "addr": "0x800D5264"}, {"name": "AirScreamer_Control_7", "addr": "0x800D3284"}, {"name": "AirScreamer_Control_0", "addr": "0x800D1FB8"}, {"name": "AirScreamer_Control_30", "addr": "0x800D7988"}, {"name": "AirScreamer_Control_12", "addr": "0x800D4370"}], "auto": [{"name": "sharedFunc_800DD588_2_s00", "addr": "0x800DBD70"}, {"name": "sharedFunc_800D77D0_0_s01", "addr": "0x800E0750"}, {"name": "sharedFunc_800D7EBC_0_s01", "addr": "0x800E0E08"}, {"name": "sharedFunc_800D3630_0_s01", "addr": "0x800D1BF4"}, {"name": "sharedFunc_800D7AB0_0_s01", "addr": "0x800E0A30"}, {"name": "sharedFunc_800D2E04_0_s01", "addr": "0x800D13C8"}, {"name": "sharedFunc_800DE034_2_s00", "addr": "0x800DC81C"}, {"name": "sharedFunc_800D633C_0_s01", "addr": "0x800DF2BC"}, {"name": "sharedFunc_800DDE14_2_s00", "addr": "0x800DC5FC"}, {"name": "sharedFunc_800DC6E4_2_s00", "addr": "0x800DAECC"}, {"name": "sharedFunc_800D5C90_0_s01", "addr": "0x800DE72C"}, {"name": "sharedFunc_800D21E4_0_s01", "addr": "0x800D079C"}, {"name": "sharedFunc_800D31D0_0_s01", "addr": "0x800D1794"}, {"name": "sharedFunc_800D5B10_0_s01", "addr": "0x800DE5AC"}, {"name": "sharedFunc_800DD13C_2_s00", "addr": "0x800DB924"}, {"name": "sharedFunc_800E021C_2_s00", "addr": "0x800DEA04"}, {"name": "sharedFunc_800D5E78_0_s01", "addr": "0x800DEDF8"}, {"name": "sharedFunc_800DBF88_2_s00", "addr": "0x800DA770"}, {"name": "sharedFunc_800D2BF4_0_s01", "addr": "0x800D11AC"}, {"name": "sharedFunc_800D76A0_0_s01", "addr": "0x800E0620"}, {"name": "sharedFunc_800DEE24_2_s00", "addr": "0x800DD60C"}, {"name": "sharedFunc_800D4E84_0_s01", "addr": "0x800DB50C"}, {"name": "sharedFunc_800DF80C_2_s00", "addr": "0x800DDFF4"}, {"name": "sharedFunc_800DF8A0_2_s00", "addr": "0x800DE088"}, {"name": "sharedFunc_800D62D8_0_s01", "addr": "0x800DF258"}, {"name": "sharedFunc_800DC67C_2_s00", "addr": "0x800DAE64"}, {"name": "sharedFunc_800E041C_2_s00", "addr": "0x800DEC04"}, {"name": "sharedFunc_800D5274_0_s01", "addr": "0x800DB8FC"}, {"name": "sharedFunc_800D3DFC_0_s01", "addr": "0x800D2350"}, {"name": "sharedFunc_800DF2D0_2_s00", "addr": "0x800DDAB8"}, {"name": "sharedFunc_800DD834_2_s00", "addr": "0x800DC01C"}, {"name": "sharedFunc_800E04B0_2_s00", "addr": "0x800DEC98"}, {"name": "sharedFunc_800D8714_0_s01", "addr": "0x800E1660"}, {"name": "sharedFunc_800DE6A8_2_s00", "addr": "0x800DCE90"}, {"name": "sharedFunc_800D2274_0_s01", "addr": "0x800D082C"}, {"name": "sharedFunc_800D7714_0_s01", "addr": "0x800E0694"}, {"name": "sharedFunc_800D72E8_0_s01", "addr": "0x800E0268"}, {"name": "sharedFunc_800DC30C_2_s00", "addr": "0x800DAAF4"}, {"name": "sharedFunc_800DC200_2_s00", "addr": "0x800DA9E8"}, {"name": "sharedFunc_800D2B28_0_s01", "addr": "0x800D10E0"}, {"name": "sharedFunc_800D2B4C_0_s01", "addr": "0x800D1104"}, {"name": "sharedFunc_800D7560_0_s01", "addr": "0x800E04E0"}, {"name": "sharedFunc_800D5F00_0_s01", "addr": "0x800DEE80"}, {"name": "sharedFunc_800D81D0_0_s01", "addr": "0x800E111C"}, {"name": "sharedFunc_800D2B10_0_s01", "addr": "0x800D10C8"}, {"name": "sharedFunc_800DE250_2_s00", "addr": "0x800DCA38"}, {"name": "sharedFunc_800D5638_0_s01", "addr": "0x800DDA54"}, {"name": "sharedFunc_800D6C7C_0_s01", "addr": "0x800DFBFC"}, {"name": "sharedFunc_800D2200_0_s01", "addr": "0x800D07B8"}, {"name": "sharedFunc_800DC894_2_s00", "addr": "0x800DB07C"}, {"name": "sharedFunc_800DE578_2_s00", "addr": "0x800DCD60"}, {"name": "sharedFunc_800DE11C_2_s00", "addr": "0x800DC904"}, {"name": "sharedFunc_800D6600_0_s01", "addr": "0x800DF580"}, {"name": "sharedFunc_800D569C_0_s01", "addr": "0x800DE138"}, {"name": "sharedFunc_800DEC64_2_s00", "addr": "0x800DD44C"}, {"name": "sharedFunc_800D2B00_0_s01", "addr": "0x800D10B8"}, {"name": "sharedFunc_800DC438_2_s00", "addr": "0x800DAC20"}, {"name": "sharedFunc_800DDA80_2_s00", "addr": "0x800DC268"}, {"name": "sharedFunc_800DF710_2_s00", "addr": "0x800DDEF8"}, {"name": "sharedFunc_800D598C_0_s01", "addr": "0x800DE428"}, {"name": "sharedFunc_800E0514_2_s00", "addr": "0x800DECFC"}, {"name": "sharedFunc_800D81B0_0_s01", "addr": "0x800E10FC"}, {"name": "sharedFunc_800DF24C_2_s00", "addr": "0x800DDA34"}, {"name": "sharedFunc_800D529C_0_s01", "addr": "0x800DCD80"}, {"name": "sharedFunc_800D3430_0_s01", "addr": "0x800D19F4"}, {"name": "sharedFunc_800D7120_0_s01", "addr": "0x800E00A0"}, {"name": "sharedFunc_800D8804_0_s01", "addr": "0x800E1750"}, {"name": "sharedFunc_800D71F0_0_s01", "addr": "0x800E0170"}, {"name": "sharedFunc_800DECC4_2_s00", "addr": "0x800DD4AC"}, {"name": "sharedFunc_800D3814_0_s01", "addr": "0x800D1DD8"}, {"name": "sharedFunc_800DC0E4_2_s00", "addr": "0x800DA8CC"}, {"name": "sharedFunc_800DF22C_2_s00", "addr": "0x800DDA14"}, {"name": "sharedFunc_800DECA4_2_s00", "addr": "0x800DD48C"}, {"name": "sharedFunc_800DC3BC_2_s00", "addr": "0x800DABA4"}, {"name": "sharedFunc_800D2390_0_s01", "addr": "0x800D0948"}, {"name": "sharedFunc_800DD4EC_2_s00", "addr": "0x800DBCD4"}, {"name": "sharedFunc_800D82B8_0_s01", "addr": "0x800E1204"}, {"name": "sharedFunc_800DDF74_2_s00", "addr": "0x800DC75C"}, {"name": "sharedFunc_800D3508_0_s01", "addr": "0x800D1ACC"}, {"name": "sharedFunc_800DC598_2_s00", "addr": "0x800DAD80"}, {"name": "sharedFunc_800DF60C_2_s00", "addr": "0x800DDDF4"}, {"name": "sharedFunc_800D6EC4_0_s01", "addr": "0x800DFE44"}, {"name": "sharedFunc_800D2FB4_0_s01", "addr": "0x800D1578"}, {"name": "sharedFunc_800D3758_0_s01", "addr": "0x800D1D1C"}, {"name": "sharedFunc_800D7B14_0_s01", "addr": "0x800E0A94"}, {"name": "sharedFunc_800DEBCC_2_s00", "addr": "0x800DD3B4"}, {"name": "sharedFunc_800DE7E0_2_s00", "addr": "0x800DCFC8"}, {"name": "sharedFunc_800D5D80_0_s01", "addr": "0x800DE81C"}, {"name": "sharedFunc_800D4A80_0_s01", "addr": "0x800DA704"}, {"name": "sharedFunc_800D4AEC_0_s01", "addr": "0x800DB174"}, {"name": "sharedFunc_800D57C8_0_s01", "addr": "0x800DE264"}, {"name": "sharedFunc_800D2BE4_0_s01", "addr": "0x800D119C"}, {"name": "sharedFunc_800D87FC_0_s01", "addr": "0x800E1748"}, {"name": "sharedFunc_800DEC84_2_s00", "addr": "0x800DD46C"}, {"name": "sharedFunc_800D63A4_0_s01", "addr": "0x800DF324"}, {"name": "sharedFunc_800E012C_2_s00", "addr": "0x800DE914"}, {"name": "sharedFunc_800DE1F8_2_s00", "addr": "0x800DC9E0"}, {"name": "sharedFunc_800DF448_2_s00", "addr": "0x800DDC30"}, {"name": "sharedFunc_800D53AC_0_s01", "addr": "0x800DD128"}, {"name": "sharedFunc_800DD534_2_s00", "addr": "0x800DBD1C"}, {"name": "sharedFunc_800DD2C4_2_s00", "addr": "0x800DBAAC"}, {"name": "sharedFunc_800D6A60_0_s01", "addr": "0x800DF9E0"}, {"name": "sharedFunc_800DD4A4_2_s00", "addr": "0x800DBC8C"}, {"name": "sharedFunc_800DF358_2_s00", "addr": "0x800DDB40"}, {"name": "sharedFunc_800D7440_0_s01", "addr": "0x800E03C0"}, {"name": "sharedFunc_800D2364_0_s01", "addr": "0x800D091C"}, {"name": "sharedFunc_800D5E14_0_s01", "addr": "0x800DE8B0"}, {"name": "sharedFunc_800D8244_0_s01", "addr": "0x800E1190"}], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CA848", "addr": "0x800CA848"}, {"name": "D_800CA818", "addr": "0x800CA818"}, {"name": "D_800CA800", "addr": "0x800CA800"}, {"name": "sharedData_800CAA98_0_s01", "addr": "0x800CA898"}, {"name": "D_800CA830", "addr": "0x800CA830"}, {"name": "D_800CA7F0", "addr": "0x800CA7F0"}], "non_matching": [{"name": "D_800CA848", "addr": "0x800CA848"}, {"name": "D_800CA818", "addr": "0x800CA818"}, {"name": "D_800CA800", "addr": "0x800CA800"}, {"name": "sharedData_800CAA98_0_s01", "addr": "0x800CA898"}, {"name": "D_800CA830", "addr": "0x800CA830"}, {"name": "D_800CA7F0", "addr": "0x800CA7F0"}]}}, {"name": "Chara_Groaner", "funcs": {"named": [{"name": "Groaner_AnimUpdate", "addr": "0x800E4544"}, {"name": "Groaner_Control4", "addr": "0x800E3504"}, {"name": "Groaner_ControlStandRecoil", "addr": "0x800E3BCC"}, {"name": "Groaner_ControlDeath", "addr": "0x800E3FB0"}, {"name": "Groaner_ControlRunForward", "addr": "0x800E2514"}, {"name": "Groaner_ControlWalkForward", "addr": "0x800E2058"}, {"name": "Groaner_CollisionUpdate", "addr": "0x800E49B8"}, {"name": "Groaner_ControlJumpAttack", "addr": "0x800E2EB0"}, {"name": "Groaner_Init", "addr": "0x800E185C"}, {"name": "Groaner_ControlStun", "addr": "0x800E3C30"}, {"name": "Groaner_Update", "addr": "0x800E1760"}], "auto": [{"name": "sharedFunc_800E71E8_2_s00", "addr": "0x800E5868"}, {"name": "sharedFunc_800E5AA4_2_s00", "addr": "0x800E4124"}, {"name": "sharedFunc_800E33DC_2_s00", "addr": "0x800E1A5C"}, {"name": "sharedFunc_800E384C_2_s00", "addr": "0x800E1ECC"}], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "libsd/smf_mid", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapOverlayHdr", "addr": "0x800C957C"}], "auto": [], "non_matching": []}}, {"name": "map2_s02", "funcs": {"named": [{"name": "MapEvent_DoorJammed", "addr": "0x800E9C2C"}, {"name": "Romper_Control_4", "addr": "0x800E7540"}, {"name": "Romper_CollisionUpdate", "addr": "0x800E8DFC"}, {"name": "Romper_Control_7", "addr": "0x800E8158"}, {"name": "Romper_ControlGrabAttack", "addr": "0x800E86C0"}, {"name": "MapEvent_DoorLocked", "addr": "0x800E9CC0"}, {"name": "Romper_FootstepSfxPlay", "addr": "0x800E5FC8"}, {"name": "Map_WorldObjectsUpdate", "addr": "0x800EA1C4"}, {"name": "Romper_Control_10", "addr": "0x800E8480"}, {"name": "Romper_Init", "addr": "0x800E5DD8"}, {"name": "Romper_Control_8", "addr": "0x800E83D4"}, {"name": "Map_RoomIdxGet", "addr": "0x800E993C"}, {"name": "Map_RoomBgmInit", "addr": "0x800E9B38"}, {"name": "Map_WorldObjectsInit", "addr": "0x800EA0E0"}, {"name": "Romper_Control_3", "addr": "0x800E6C40"}, {"name": "GameBoot_LoadScreen_StageString", "addr": "0x800E9C24"}, {"name": "Romper_Update", "addr": "0x800E5D38"}, {"name": "Romper_Control_6", "addr": "0x800E803C"}, {"name": "Romper_ControlJump", "addr": "0x800E79D8"}, {"name": "Romper_Control_9", "addr": "0x800E8478"}, {"name": "Romper_Control_1", "addr": "0x800E6758"}, {"name": "Romper_ControlUpdate", "addr": "0x800E66E8"}, {"name": "Romper_ControlWalkForward", "addr": "0x800E6878"}], "auto": [{"name": "func_800E9EAC", "addr": "0x800E9EAC"}, {"name": "sharedFunc_800E8A40_2_s02", "addr": "0x800E8A40"}, {"name": "sharedFunc_800E8730_2_s02", "addr": "0x800E8730"}, {"name": "sharedFunc_800E60FC_2_s02", "addr": "0x800E60FC"}, {"name": "func_800E9FDC", "addr": "0x800E9FDC"}, {"name": "sharedFunc_800E9714_2_s02", "addr": "0x800E9714"}, {"name": "func_800E9D54", "addr": "0x800E9D54"}, {"name": "sharedFunc_800E6420_2_s02", "addr": "0x800E6420"}, {"name": "func_800EAA50", "addr": "0x800EAA50"}, {"name": "sharedFunc_800D929C_0_s00", "addr": "0x800E992C"}, {"name": "sharedFunc_800E939C_2_s02", "addr": "0x800E939C"}, {"name": "func_800E9E10", "addr": "0x800E9E10"}, {"name": "sharedFunc_800E94B4_2_s02", "addr": "0x800E94B4"}], "non_matching": []}, "data": {"named": [{"name": "MAP_MESSAGES", "addr": "0x800ED694"}], "auto": [], "non_matching": []}}, {"name": "map2_s02_anim_info", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "HARRY_M2S02_ANIM_INFOS", "addr": "0x800EAA9C"}], "auto": [], "non_matching": []}}, {"name": "map2_s02_events_data", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "MAP_EVENTS", "addr": "0x800ED6DC"}], "auto": [], "non_matching": []}}, {"name": "map2_s02_header", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapEventFuncs", "addr": "0x800ED67C"}, {"name": "g_LoadScreenFuncs", "addr": "0x800ED444"}, {"name": "MAP_POINTS", "addr": "0x800ED454"}], "auto": [], "non_matching": []}}, {"name": "particle", "funcs": {"named": [{"name": "Particle_SnowDraw", "addr": "0x800CD71C"}, {"name": "Particle_CameraMovedCheck", "addr": "0x800CCD90"}, {"name": "Particle_SpawnMovementApply", "addr": "0x800CDBEC"}, {"name": "Particle_PositionRandomize", "addr": "0x800CE238"}, {"name": "Particle_MovementUpdate", "addr": "0x800CDD3C"}, {"name": "Particle_BoundaryClamp", "addr": "0x800CE378"}, {"name": "Particle_SystemUpdate", "addr": "0x800CC8A4"}, {"name": "Particle_Spawn", "addr": "0x800CE2F0"}, {"name": "Particle_HyperBlasterBeamDraw", "addr": "0x800CE920"}, {"name": "Particle_Update", "addr": "0x800CD174"}, {"name": "Particle_SnowInitialize", "addr": "0x800CCE68"}, {"name": "Particle_SoundStop", "addr": "0x800CE900"}, {"name": "Particle_BeamDraw", "addr": "0x800CF198"}], "auto": [{"name": "sharedFunc_800CE954_7_s03", "addr": "0x800CE230"}, {"name": "sharedFunc_800D0B18_0_s00", "addr": "0x800CE768"}, {"name": "sharedFunc_800D08B8_0_s00", "addr": "0x800CE530"}, {"name": "sharedFunc_800D0A60_0_s00", "addr": "0x800CE6B0"}, {"name": "sharedFunc_800CFFF8_0_s00", "addr": "0x800CE104"}], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CD768_tbl", "addr": "0x800CD768"}], "non_matching": []}}, {"name": "player", "funcs": {"named": [{"name": "Player_MoveSpeedClear", "addr": "0x800D0210"}, {"name": "Player_MatchArmAnimDisable", "addr": "0x800CFCE0"}, {"name": "Player_AnimLock", "addr": "0x800D00F4"}, {"name": "Player_FallBackward", "addr": "0x800D0224"}, {"name": "Player_AnimReset", "addr": "0x800D00DC"}, {"name": "Player_MoveSpeedIsZero", "addr": "0x800D0200"}, {"name": "Player_Stub_F8", "addr": "0x800D022C"}, {"name": "Player_PathWaypointExecute", "addr": "0x800D0024"}, {"name": "Player_ControlUnfreeze", "addr": "0x800CFE4C"}, {"name": "Player_ControlFreeze", "addr": "0x800CFCEC"}, {"name": "Player_AnimUnlock", "addr": "0x800D0134"}, {"name": "Player_AnimStateSet", "addr": "0x800D002C"}, {"name": "Player_AnimIsLocked", "addr": "0x800D011C"}, {"name": "Player_DamageFeetFront", "addr": "0x800D0234"}, {"name": "Player_AnimPlaybackStateGet", "addr": "0x800D015C"}], "auto": [{"name": "sharedFunc_800D2E6C_0_s00", "addr": "0x800D021C"}, {"name": "sharedFunc_800D2EF4_0_s00", "addr": "0x800D0714"}, {"name": "sharedFunc_800D2EB4_0_s00", "addr": "0x800D06D4"}, {"name": "sharedFunc_800D2E9C_0_s00", "addr": "0x800D024C"}, {"name": "sharedFunc_800D2E94_0_s00", "addr": "0x800D0244"}, {"name": "sharedFunc_800D2EA4_0_s00", "addr": "0x800D06C4"}, {"name": "sharedFunc_800CDAA8_0_s02", "addr": "0x800CF584"}, {"name": "sharedFunc_800D1C38_0_s00", "addr": "0x800CF878"}, {"name": "sharedFunc_800D209C_0_s00", "addr": "0x800CFCA4"}, {"name": "sharedFunc_800D2E8C_0_s00", "addr": "0x800D023C"}], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "unnamed_800CC274", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CC274", "addr": "0x800CC274"}], "non_matching": [{"name": "D_800CC274", "addr": "0x800CC274"}]}}, {"name": "unnamed_800EACAC", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapHeaderTable_38", "addr": "0x800EACAC"}, {"name": "g_Romper_ControlFuncs", "addr": "0x800ECC14"}, {"name": "g_ParticleCameraMoved", "addr": "0x800EAD60"}, {"name": "g_ParticlesAddedCount", "addr": "0x800EAD58"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800EAD34"}, {"name": "g_AirScreamer_ControlFuncs", "addr": "0x800EAD6C"}, {"name": "ROMPER_ANIM_INFOS", "addr": "0x800EC954"}, {"name": "GROANER_ANIM_INFOS", "addr": "0x800EAE8C"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800ED3C4"}], "auto": [{"name": "sharedData_800ED2D4_2_s02", "addr": "0x800ED2D4"}, {"name": "D_800EAE88", "addr": "0x800EAE88"}, {"name": "sharedData_800ED2C0_2_s02", "addr": "0x800ED2C0"}, {"name": "sharedData_800EF4D0_2_s00", "addr": "0x800EB848"}, {"name": "sharedData_800DD591_0_s00", "addr": "0x800EAD61"}, {"name": "sharedData_800DD880_0_s01", "addr": "0x800EAE7C"}, {"name": "sharedData_800ECB22_2_s02", "addr": "0x800ECB22"}, {"name": "sharedData_800ECC44_2_s02", "addr": "0x800ECC44"}, {"name": "sharedData_800F0268_2_s00", "addr": "0x800EC5E0"}, {"name": "sharedData_800EF0AC_2_s00", "addr": "0x800EB424"}, {"name": "sharedData_800ECF00_2_s02", "addr": "0x800ECF00"}, {"name": "sharedData_800ECBC2_2_s02", "addr": "0x800ECBC2"}, {"name": "sharedData_800EF7A0_2_s00", "addr": "0x800EBB18"}, {"name": "sharedData_800ECC58_2_s02", "addr": "0x800ECC58"}, {"name": "sharedData_800ECD48_2_s02", "addr": "0x800ECD48"}, {"name": "sharedData_800ED430_2_s02", "addr": "0x800ED430"}, {"name": "sharedData_800EF19C_2_s00", "addr": "0x800EB514"}, {"name": "sharedData_800ECCD0_2_s02", "addr": "0x800ECCD0"}, {"name": "sharedData_800DD592_0_s00", "addr": "0x800EAD62"}, {"name": "sharedData_800EF1B0_2_s00", "addr": "0x800EB528"}, {"name": "sharedData_800EF368_2_s00", "addr": "0x800EB6E0"}, {"name": "sharedData_800EF7B4_2_s00", "addr": "0x800EBB2C"}, {"name": "sharedData_800F0038_2_s00", "addr": "0x800EC3B0"}, {"name": "sharedData_800EF638_2_s00", "addr": "0x800EB9B0"}, {"name": "sharedData_800ECBD0_2_s02", "addr": "0x800ECBD0"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800EAD68"}, {"name": "sharedData_800ED018_2_s02", "addr": "0x800ED018"}, {"name": "sharedData_800ED314_2_s02", "addr": "0x800ED314"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800EAD64"}, {"name": "sharedData_800ECE24_2_s02", "addr": "0x800ECE24"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800EAD57"}, {"name": "sharedData_800EFA84_2_s00", "addr": "0x800EBDFC"}, {"name": "sharedData_800ED43C_2_s02", "addr": "0x800ED43C"}, {"name": "sharedData_800EF28C_2_s00", "addr": "0x800EB604"}, {"name": "sharedData_800F03A8_2_s00", "addr": "0x800EC720"}, {"name": "sharedData_800EF624_2_s00", "addr": "0x800EB99C"}, {"name": "sharedData_800ECF64_2_s02", "addr": "0x800ECF64"}, {"name": "sharedData_800DD870_0_s01", "addr": "0x800EAE6C"}, {"name": "sharedData_800EEAC4_2_s00", "addr": "0x800EAE3C"}, {"name": "sharedData_800EEE54_2_s00", "addr": "0x800EB1CC"}, {"name": "sharedData_800EFCDC_2_s00", "addr": "0x800EC054"}, {"name": "sharedData_800EC950_2_s02", "addr": "0x800EC950"}, {"name": "sharedData_800ECA4C_2_s02", "addr": "0x800ECA4C"}, {"name": "sharedData_800EFF48_2_s00", "addr": "0x800EC2C0"}, {"name": "sharedData_800F00EC_2_s00", "addr": "0x800EC464"}, {"name": "sharedData_800EF4BC_2_s00", "addr": "0x800EB834"}, {"name": "sharedData_800ECCBC_2_s02", "addr": "0x800ECCBC"}, {"name": "sharedData_800EEE14_2_s00", "addr": "0x800EB18C"}, {"name": "sharedData_800F04C0_2_s00", "addr": "0x800EC838"}, {"name": "sharedData_800EEE3C_2_s00", "addr": "0x800EB1B4"}, {"name": "sharedData_800ED1D0_2_s02", "addr": "0x800ED1D0"}, {"name": "sharedData_800EF250_2_s00", "addr": "0x800EB5C8"}, {"name": "sharedData_800ECACC_2_s02", "addr": "0x800ECACC"}, {"name": "D_800EAE78", "addr": "0x800EAE78"}, {"name": "sharedData_800ECD34_2_s02", "addr": "0x800ECD34"}, {"name": "D_800EB1BC", "addr": "0x800EB1BC"}], "non_matching": [{"name": "sharedData_800ED2D4_2_s02", "addr": "0x800ED2D4"}, {"name": "D_800EAE88", "addr": "0x800EAE88"}, {"name": "sharedData_800ED2C0_2_s02", "addr": "0x800ED2C0"}, {"name": "sharedData_800EF4D0_2_s00", "addr": "0x800EB848"}, {"name": "sharedData_800DD591_0_s00", "addr": "0x800EAD61"}, {"name": "sharedData_800DD880_0_s01", "addr": "0x800EAE7C"}, {"name": "sharedData_800ECB22_2_s02", "addr": "0x800ECB22"}, {"name": "sharedData_800ECC44_2_s02", "addr": "0x800ECC44"}, {"name": "sharedData_800F0268_2_s00", "addr": "0x800EC5E0"}, {"name": "sharedData_800EF0AC_2_s00", "addr": "0x800EB424"}, {"name": "sharedData_800ECF00_2_s02", "addr": "0x800ECF00"}, {"name": "sharedData_800ECBC2_2_s02", "addr": "0x800ECBC2"}, {"name": "sharedData_800EF7A0_2_s00", "addr": "0x800EBB18"}, {"name": "sharedData_800ECC58_2_s02", "addr": "0x800ECC58"}, {"name": "sharedData_800ECD48_2_s02", "addr": "0x800ECD48"}, {"name": "sharedData_800ED430_2_s02", "addr": "0x800ED430"}, {"name": "g_MapHeaderTable_38", "addr": "0x800EACAC"}, {"name": "sharedData_800EF19C_2_s00", "addr": "0x800EB514"}, {"name": "sharedData_800ECCD0_2_s02", "addr": "0x800ECCD0"}, {"name": "sharedData_800DD592_0_s00", "addr": "0x800EAD62"}, {"name": "sharedData_800EF1B0_2_s00", "addr": "0x800EB528"}, {"name": "sharedData_800EF368_2_s00", "addr": "0x800EB6E0"}, {"name": "sharedData_800EF7B4_2_s00", "addr": "0x800EBB2C"}, {"name": "g_Romper_ControlFuncs", "addr": "0x800ECC14"}, {"name": "sharedData_800F0038_2_s00", "addr": "0x800EC3B0"}, {"name": "sharedData_800EF638_2_s00", "addr": "0x800EB9B0"}, {"name": "g_ParticleCameraMoved", "addr": "0x800EAD60"}, {"name": "sharedData_800ECBD0_2_s02", "addr": "0x800ECBD0"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800EAD68"}, {"name": "g_ParticlesAddedCount", "addr": "0x800EAD58"}, {"name": "sharedData_800ED018_2_s02", "addr": "0x800ED018"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800EAD34"}, {"name": "g_AirScreamer_ControlFuncs", "addr": "0x800EAD6C"}, {"name": "sharedData_800ED314_2_s02", "addr": "0x800ED314"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800EAD64"}, {"name": "sharedData_800ECE24_2_s02", "addr": "0x800ECE24"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800EAD57"}, {"name": "sharedData_800EFA84_2_s00", "addr": "0x800EBDFC"}, {"name": "sharedData_800ED43C_2_s02", "addr": "0x800ED43C"}, {"name": "sharedData_800EF28C_2_s00", "addr": "0x800EB604"}, {"name": "sharedData_800F03A8_2_s00", "addr": "0x800EC720"}, {"name": "ROMPER_ANIM_INFOS", "addr": "0x800EC954"}, {"name": "sharedData_800EF624_2_s00", "addr": "0x800EB99C"}, {"name": "sharedData_800ECF64_2_s02", "addr": "0x800ECF64"}, {"name": "sharedData_800DD870_0_s01", "addr": "0x800EAE6C"}, {"name": "sharedData_800EEAC4_2_s00", "addr": "0x800EAE3C"}, {"name": "sharedData_800EEE54_2_s00", "addr": "0x800EB1CC"}, {"name": "sharedData_800EFCDC_2_s00", "addr": "0x800EC054"}, {"name": "sharedData_800EC950_2_s02", "addr": "0x800EC950"}, {"name": "GROANER_ANIM_INFOS", "addr": "0x800EAE8C"}, {"name": "sharedData_800ECA4C_2_s02", "addr": "0x800ECA4C"}, {"name": "sharedData_800EFF48_2_s00", "addr": "0x800EC2C0"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800ED3C4"}, {"name": "sharedData_800F00EC_2_s00", "addr": "0x800EC464"}, {"name": "sharedData_800EF4BC_2_s00", "addr": "0x800EB834"}, {"name": "sharedData_800ECCBC_2_s02", "addr": "0x800ECCBC"}, {"name": "sharedData_800EEE14_2_s00", "addr": "0x800EB18C"}, {"name": "sharedData_800F04C0_2_s00", "addr": "0x800EC838"}, {"name": "sharedData_800EEE3C_2_s00", "addr": "0x800EB1B4"}, {"name": "sharedData_800ED1D0_2_s02", "addr": "0x800ED1D0"}, {"name": "sharedData_800EF250_2_s00", "addr": "0x800EB5C8"}, {"name": "sharedData_800ECACC_2_s02", "addr": "0x800ECACC"}, {"name": "D_800EAE78", "addr": "0x800EAE78"}, {"name": "sharedData_800ECD34_2_s02", "addr": "0x800ECD34"}, {"name": "D_800EB1BC", "addr": "0x800EB1BC"}]}}, {"name": "unnamed_800ED8D4", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_ParticleMapIdx1", "addr": "0x800ED948"}, {"name": "g_ParticleVectors0", "addr": "0x800EE2F4"}, {"name": "g_Particles", "addr": "0x800EE364"}, {"name": "g_Particle_PrevRotationY", "addr": "0x800F0908"}, {"name": "g_ParticleMapIdx0", "addr": "0x800ED944"}, {"name": "g_Particle_PrevPosition", "addr": "0x800F08F4"}, {"name": "g_ParticleVectors1", "addr": "0x800EE324"}, {"name": "g_Particle_SpeedX", "addr": "0x800EDAA4"}, {"name": "g_CommonWorldObjects", "addr": "0x800F0B34"}, {"name": "g_Effect_BloodSplats", "addr": "0x800EE284"}, {"name": "g_CommonWorldObjectPoses", "addr": "0x800ED8D4"}, {"name": "g_ParticleSpawnCount", "addr": "0x800F090A"}, {"name": "g_Particle_RotationY", "addr": "0x800EE316"}, {"name": "g_Player_MoveSpeed", "addr": "0x800F0978"}, {"name": "g_Particle_SpeedZ", "addr": "0x800EDAA8"}, {"name": "g_Particle_Position", "addr": "0x800F08E4"}], "auto": [{"name": "sharedData_800DE170_0_s01", "addr": "0x800ED954"}, {"name": "D_800ED9B0", "addr": "0x800ED9B0"}, {"name": "sharedData_800DE210_0_s01", "addr": "0x800EDA64"}, {"name": "D_800ED9F0", "addr": "0x800ED9F0"}, {"name": "D_800ED9C0", "addr": "0x800ED9C0"}, {"name": "sharedData_800DE1C0_0_s01", "addr": "0x800ED9C4"}, {"name": "D_800F08F0", "addr": "0x800F08F0"}, {"name": "sharedData_800DE200_0_s01", "addr": "0x800EDA54"}, {"name": "D_800ED970", "addr": "0x800ED970"}, {"name": "D_800EDA7C", "addr": "0x800EDA7C"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800EDAAC"}, {"name": "sharedData_800F216C_2_s00", "addr": "0x800ED984"}, {"name": "sharedData_800E325C_0_s00", "addr": "0x800F0904"}, {"name": "sharedData_800F21FC_2_s00", "addr": "0x800EDA14"}, {"name": "sharedData_800DE1E0_0_s01", "addr": "0x800EDA34"}, {"name": "sharedData_800F21CC_2_s00", "addr": "0x800ED9E4"}, {"name": "sharedData_800F21BC_2_s00", "addr": "0x800ED9D4"}, {"name": "D_800ED9A0", "addr": "0x800ED9A0"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800EE350"}, {"name": "sharedData_800F21EC_2_s00", "addr": "0x800EDA04"}, {"name": "D_800F0B2C", "addr": "0x800F0B2C"}, {"name": "D_800EDA20", "addr": "0x800EDA20"}, {"name": "D_800ED960", "addr": "0x800ED960"}, {"name": "D_800EDA00", "addr": "0x800EDA00"}, {"name": "sharedData_800E326C_0_s00", "addr": "0x800F0914"}, {"name": "D_800ED990", "addr": "0x800ED990"}, {"name": "D_800ED9D0", "addr": "0x800ED9D0"}, {"name": "D_800ED980", "addr": "0x800ED980"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800EE362"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800EDAB0"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800EE358"}, {"name": "sharedData_800F21DC_2_s00", "addr": "0x800ED9F4"}, {"name": "sharedData_800DE1B0_0_s01", "addr": "0x800ED9B4"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800EE354"}, {"name": "D_800F0BDC", "addr": "0x800F0BDC"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800EDAB4"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800EE35E"}, {"name": "sharedData_800DE190_0_s01", "addr": "0x800ED974"}, {"name": "D_800EDA30", "addr": "0x800EDA30"}, {"name": "sharedData_800DE230_0_s01", "addr": "0x800EDA84"}, {"name": "D_800ED938", "addr": "0x800ED938"}, {"name": "sharedData_800E2350_0_s01", "addr": "0x800F0B04"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800F0974"}, {"name": "D_800ED9E0", "addr": "0x800ED9E0"}, {"name": "D_800EDA10", "addr": "0x800EDA10"}, {"name": "sharedData_800DE1D0_0_s01", "addr": "0x800EDA24"}, {"name": "sharedData_800E3258_0_s00", "addr": "0x800F0900"}, {"name": "sharedData_800DE220_0_s01", "addr": "0x800EDA74"}, {"name": "sharedData_800DE180_0_s01", "addr": "0x800ED964"}, {"name": "sharedData_800E21D0_0_s01", "addr": "0x800F0984"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800EE35C"}, {"name": "sharedData_800E2330_0_s01", "addr": "0x800F0AE4"}, {"name": "sharedData_800E2370_0_s01", "addr": "0x800F0B24"}, {"name": "sharedData_800DE1A0_0_s01", "addr": "0x800ED9A4"}, {"name": "D_800EDA50", "addr": "0x800EDA50"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800EE360"}, {"name": "sharedData_800F217C_2_s00", "addr": "0x800ED994"}, {"name": "sharedData_800DE1F0_0_s01", "addr": "0x800EDA44"}, {"name": "D_800EDA40", "addr": "0x800EDA40"}], "non_matching": [{"name": "sharedData_800DE170_0_s01", "addr": "0x800ED954"}, {"name": "D_800ED9B0", "addr": "0x800ED9B0"}, {"name": "sharedData_800DE210_0_s01", "addr": "0x800EDA64"}, {"name": "D_800ED9F0", "addr": "0x800ED9F0"}, {"name": "g_ParticleMapIdx1", "addr": "0x800ED948"}, {"name": "D_800ED9C0", "addr": "0x800ED9C0"}, {"name": "g_ParticleVectors0", "addr": "0x800EE2F4"}, {"name": "sharedData_800DE1C0_0_s01", "addr": "0x800ED9C4"}, {"name": "g_Particles", "addr": "0x800EE364"}, {"name": "D_800F08F0", "addr": "0x800F08F0"}, {"name": "sharedData_800DE200_0_s01", "addr": "0x800EDA54"}, {"name": "D_800ED970", "addr": "0x800ED970"}, {"name": "D_800EDA7C", "addr": "0x800EDA7C"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800EDAAC"}, {"name": "sharedData_800F216C_2_s00", "addr": "0x800ED984"}, {"name": "sharedData_800E325C_0_s00", "addr": "0x800F0904"}, {"name": "g_Particle_PrevRotationY", "addr": "0x800F0908"}, {"name": "g_ParticleMapIdx0", "addr": "0x800ED944"}, {"name": "sharedData_800F21FC_2_s00", "addr": "0x800EDA14"}, {"name": "sharedData_800DE1E0_0_s01", "addr": "0x800EDA34"}, {"name": "sharedData_800F21CC_2_s00", "addr": "0x800ED9E4"}, {"name": "sharedData_800F21BC_2_s00", "addr": "0x800ED9D4"}, {"name": "D_800ED9A0", "addr": "0x800ED9A0"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800EE350"}, {"name": "g_Particle_PrevPosition", "addr": "0x800F08F4"}, {"name": "sharedData_800F21EC_2_s00", "addr": "0x800EDA04"}, {"name": "g_ParticleVectors1", "addr": "0x800EE324"}, {"name": "D_800F0B2C", "addr": "0x800F0B2C"}, {"name": "D_800EDA20", "addr": "0x800EDA20"}, {"name": "D_800ED960", "addr": "0x800ED960"}, {"name": "D_800EDA00", "addr": "0x800EDA00"}, {"name": "sharedData_800E326C_0_s00", "addr": "0x800F0914"}, {"name": "D_800ED990", "addr": "0x800ED990"}, {"name": "D_800ED9D0", "addr": "0x800ED9D0"}, {"name": "D_800ED980", "addr": "0x800ED980"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800EE362"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800EDAB0"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800EE358"}, {"name": "g_Particle_SpeedX", "addr": "0x800EDAA4"}, {"name": "g_CommonWorldObjects", "addr": "0x800F0B34"}, {"name": "sharedData_800F21DC_2_s00", "addr": "0x800ED9F4"}, {"name": "sharedData_800DE1B0_0_s01", "addr": "0x800ED9B4"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800EE354"}, {"name": "D_800F0BDC", "addr": "0x800F0BDC"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800EDAB4"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800EE35E"}, {"name": "g_Effect_BloodSplats", "addr": "0x800EE284"}, {"name": "sharedData_800DE190_0_s01", "addr": "0x800ED974"}, {"name": "D_800EDA30", "addr": "0x800EDA30"}, {"name": "sharedData_800DE230_0_s01", "addr": "0x800EDA84"}, {"name": "D_800ED938", "addr": "0x800ED938"}, {"name": "g_CommonWorldObjectPoses", "addr": "0x800ED8D4"}, {"name": "sharedData_800E2350_0_s01", "addr": "0x800F0B04"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800F0974"}, {"name": "D_800ED9E0", "addr": "0x800ED9E0"}, {"name": "g_ParticleSpawnCount", "addr": "0x800F090A"}, {"name": "D_800EDA10", "addr": "0x800EDA10"}, {"name": "sharedData_800DE1D0_0_s01", "addr": "0x800EDA24"}, {"name": "sharedData_800E3258_0_s00", "addr": "0x800F0900"}, {"name": "sharedData_800DE220_0_s01", "addr": "0x800EDA74"}, {"name": "sharedData_800DE180_0_s01", "addr": "0x800ED964"}, {"name": "g_Particle_RotationY", "addr": "0x800EE316"}, {"name": "g_Player_MoveSpeed", "addr": "0x800F0978"}, {"name": "sharedData_800E21D0_0_s01", "addr": "0x800F0984"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800EE35C"}, {"name": "sharedData_800E2330_0_s01", "addr": "0x800F0AE4"}, {"name": "sharedData_800E2370_0_s01", "addr": "0x800F0B24"}, {"name": "sharedData_800DE1A0_0_s01", "addr": "0x800ED9A4"}, {"name": "D_800EDA50", "addr": "0x800EDA50"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800EE360"}, {"name": "g_Particle_SpeedZ", "addr": "0x800EDAA8"}, {"name": "sharedData_800F217C_2_s00", "addr": "0x800ED994"}, {"name": "sharedData_800DE1F0_0_s01", "addr": "0x800EDA44"}, {"name": "D_800EDA40", "addr": "0x800EDA40"}, {"name": "g_Particle_Position", "addr": "0x800F08E4"}]}}]};
+
+function pctClass(p) { return p >= 75 ? 'good' : p >= 40 ? 'mid' : 'low'; }
+function barColor(p) { return p >= 75 ? '#5a9e5f' : p >= 40 ? '#e6a817' : '#c84040'; }
+
+function makeStatBox(label, named, auto, nm) {
+  const total = named + auto;
+  const pct = total ? (named / total * 100) : 0;
+  const pc = pctClass(pct);
+  const bc = barColor(pct);
+  return `<div class="stat-box">
+    <h3>${label}</h3>
+    <div class="stat-pct ${pc}">${pct.toFixed(1)}%</div>
+    <div class="stat-line"><span class="num">${named}</span> / ${total} named</div>
+    <div class="stat-line">${auto} auto-generated</div>
+    ${nm ? `<div class="stat-line" style="color:#e67c00">${nm} non-matching</div>` : ''}
+    <div class="stat-bar-outer"><div class="stat-bar-fill" style="width:${pct}%;background:${bc}"></div></div>
+  </div>`;
+}
+
+const S = DATA.summary;
+const allN = S.functions.named + S.data.named;
+const allA = S.functions.auto + S.data.auto;
+const allNM = S.functions.non_matching + S.data.non_matching;
+document.getElementById('summary').innerHTML =
+  makeStatBox('Overall', allN, allA, allNM) +
+  makeStatBox('Functions', S.functions.named, S.functions.auto, S.functions.non_matching) +
+  makeStatBox('Data', S.data.named, S.data.auto, S.data.non_matching);
+
+let currentFilter = 'all';
+let currentSort = 'name';
+
+function getCounts(f, filter) {
+  let named = 0, auto = 0, nm = 0, autoList = [], nmList = [];
+  if (filter !== 'data') {
+    named += f.funcs.named.length;
+    auto += f.funcs.auto.length;
+    nm += f.funcs.non_matching.length;
+    autoList = autoList.concat(f.funcs.auto.map(s => ({...s, kind: 'func', tag: 'auto'})));
+    nmList = nmList.concat(f.funcs.non_matching.map(s => ({...s, kind: 'func', tag: 'nm'})));
+  }
+  if (filter !== 'code') {
+    named += f.data.named.length;
+    auto += f.data.auto.length;
+    nm += f.data.non_matching.length;
+    autoList = autoList.concat(f.data.auto.map(s => ({...s, kind: 'data', tag: 'auto'})));
+    nmList = nmList.concat(f.data.non_matching.map(s => ({...s, kind: 'data', tag: 'nm'})));
+  }
+  return { named, auto, nm, total: named + auto, autoList, nmList };
+}
+
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let files = DATA.files.map(f => {
+    const c = getCounts(f, currentFilter);
+    return { ...f, ...c };
+  }).filter(f => f.total > 0 && f.name.toLowerCase().includes(search));
+
+  if (currentSort === 'name') files.sort((a, b) => a.name.localeCompare(b.name));
+  else if (currentSort === 'pct-asc') files.sort((a, b) => (a.named/a.total) - (b.named/b.total));
+  else if (currentSort === 'pct-desc') files.sort((a, b) => (b.named/b.total) - (a.named/a.total));
+  else if (currentSort === 'remaining') files.sort((a, b) => b.auto - a.auto);
+
+  let html = `<table class="files">
+    <tr><th>File</th><th>Progress</th><th>%</th><th class="bar-cell">Bar</th><th>NM</th></tr>`;
+
+  files.forEach((f, i) => {
+    const pct = f.total ? (f.named / f.total * 100) : 0;
+    const pc = 'pct-' + pctClass(pct);
+    const bc = barColor(pct);
+
+    html += `<tr class="file-row" data-idx="${i}" onclick="toggleDetail(${i})">
+      <td class="fname"><span class="chevron">&#9654;</span>${f.name}</td>
+      <td class="ratio">${f.named}/${f.total}</td>
+      <td class="pct ${pc}">${pct.toFixed(1)}%</td>
+      <td class="bar-cell"><div class="bar-outer"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div></td>
+      <td class="nm-cell">${f.nm || ''}</td>
+    </tr>`;
+
+    const syms = f.autoList.concat(f.nmList).sort((a, b) => a.addr.localeCompare(b.addr));
+    html += `<tr class="detail-row" data-detail="${i}"><td colspan="5">`;
+    if (syms.length === 0) {
+      html += `<div class="empty-detail">All symbols have been named.</div>`;
+    } else {
+      const autoFuncs = syms.filter(s => s.tag === 'auto' && s.kind === 'func');
+      const autoData  = syms.filter(s => s.tag === 'auto' && s.kind === 'data');
+      const nmFuncs   = syms.filter(s => s.tag === 'nm'   && s.kind === 'func');
+      const nmData    = syms.filter(s => s.tag === 'nm'   && s.kind === 'data');
+
+      function renderGroup(label, items, tagClass, tagLabel) {
+        if (!items.length) return '';
+        let out = `<div class="detail-heading">${label} (${items.length})</div>`;
+        items.forEach(s => {
+          out += `<div class="sym-row">
+            <span class="addr">${s.addr}</span>&nbsp;
+            <span class="name">${s.name}</span>
+            <span class="tag tag-${s.kind}">${s.kind}</span>
+            <span class="tag ${tagClass}">${tagLabel}</span>
+          </div>`;
+        });
+        return out;
+      }
+
+      html += renderGroup('Auto-generated functions', autoFuncs, 'tag-auto', 'auto');
+      html += renderGroup('Auto-generated data', autoData, 'tag-auto', 'auto');
+      html += renderGroup('Non-matching functions', nmFuncs, 'tag-nm', 'non-matching');
+      html += renderGroup('Non-matching data', nmData, 'tag-nm', 'non-matching');
+    }
+    html += `</td></tr>`;
+  });
+
+  html += '</table>';
+  document.getElementById('fileTable').innerHTML = html;
+}
+
+function toggleDetail(idx) {
+  const row = document.querySelector(`tr.file-row[data-idx="${idx}"]`);
+  const detail = document.querySelector(`tr.detail-row[data-detail="${idx}"]`);
+  row.classList.toggle('open');
+  detail.classList.toggle('open');
+}
+
+document.querySelectorAll('.btn[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.querySelectorAll('.btn[data-sort]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-sort]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', renderTable);
+renderTable();
+</script>
+</body>
+</html>

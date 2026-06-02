@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decomp Progress - MAP5_S02.BIN</title>
+<style>
+  body {
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    background: #eef1f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+  a { color: #2654a1; }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header bar */
+  .header {
+    background: #3c5a99;
+    background: linear-gradient(to bottom, #4a6fb5, #35507a);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #2d4470;
+    border-bottom: none;
+  }
+  .header h1 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header .path {
+    font-size: 11px;
+    color: #c0cce0;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  /* Main panel */
+  .panel {
+    background: #fff;
+    border: 1px solid #b0b8c4;
+    border-radius: 0 0 4px 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Summary boxes */
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    flex: 1;
+    background: #f7f8fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 3px;
+    padding: 10px 12px;
+  }
+  .stat-box h3 {
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+    border-bottom: 1px solid #e0e3e8;
+    padding-bottom: 4px;
+  }
+  .stat-line {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .stat-line .num { font-weight: bold; color: #222; }
+  .stat-pct {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .stat-pct.good { color: #2e7d32; }
+  .stat-pct.mid  { color: #e67c00; }
+  .stat-pct.low  { color: #c62828; }
+  .stat-bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+    border: 1px solid #c8ccd2;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 0.3s;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .controls label {
+    color: #666;
+    margin-right: 2px;
+  }
+  .btn {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 9px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #fff, #e8ecf0);
+    color: #333;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: linear-gradient(to bottom, #f0f4f8, #dde2e8);
+    border-color: #808890;
+  }
+  .btn.active {
+    background: linear-gradient(to bottom, #5a7db5, #3c5a8a);
+    border-color: #2d4470;
+    color: #fff;
+  }
+  .search-box {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 7px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    width: 180px;
+    margin-left: auto;
+  }
+  .search-box:focus { outline: none; border-color: #4a6fb5; }
+
+  /* File table */
+  table.files {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.files th {
+    text-align: left;
+    padding: 5px 8px;
+    background: #e8ecf0;
+    border: 1px solid #c8ccd2;
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+  }
+  table.files td {
+    padding: 4px 8px;
+    border: 1px solid #d8dce2;
+  }
+  table.files tr.file-row { cursor: pointer; }
+  table.files tr.file-row:hover { background: #f0f4fa; }
+  table.files tr.file-row:nth-child(odd) { background: #fafbfc; }
+  table.files tr.file-row:nth-child(odd):hover { background: #f0f4fa; }
+  .fname {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 11px;
+    color: #2654a1;
+    white-space: nowrap;
+  }
+  .ratio { font-family: 'Courier New', Courier, monospace; }
+  .pct { font-weight: bold; }
+  .pct-good { color: #2e7d32; }
+  .pct-mid  { color: #e67c00; }
+  .pct-low  { color: #c62828; }
+  .bar-cell { width: 200px; }
+  .bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border: 1px solid #c8ccd2;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 1px; }
+  .nm-cell {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e67c00;
+    font-weight: bold;
+    text-align: center;
+  }
+  .chevron {
+    display: inline-block;
+    width: 10px;
+    font-size: 9px;
+    color: #999;
+    margin-right: 4px;
+    transition: transform 0.1s;
+  }
+  tr.file-row.open .chevron { transform: rotate(90deg); }
+
+  /* Detail rows */
+  tr.detail-row { display: none; }
+  tr.detail-row.open { display: table-row; }
+  tr.detail-row td {
+    padding: 6px 8px 8px 28px;
+    background: #f4f5f8;
+    border: 1px solid #d8dce2;
+  }
+  .detail-heading {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    text-transform: uppercase;
+    margin: 6px 0 3px 0;
+    border-bottom: 1px dotted #c8ccd2;
+    padding-bottom: 2px;
+  }
+  .detail-heading:first-child { margin-top: 0; }
+  .sym-row {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .sym-row .addr { color: #888; }
+  .sym-row .name { color: #222; }
+  .tag {
+    font-family: Verdana, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+  .tag-auto { background: #fde8e8; color: #c62828; border: 1px solid #f5c0c0; }
+  .tag-nm   { background: #fff3d4; color: #b87000; border: 1px solid #f0d890; }
+  .tag-func { background: #e0ecf8; color: #2654a1; border: 1px solid #b0c8e8; }
+  .tag-data { background: #eee8f8; color: #6a40a0; border: 1px solid #c8b8e0; }
+
+  .empty-detail {
+    font-style: italic;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Decomp Naming Progress: MAP5_S02.BIN</h1>
+  </div>
+  <div class="panel">
+    <div class="summary-row" id="summary"></div>
+    <div class="controls">
+      <label>Show:</label>
+      <button class="btn active" data-filter="all">All</button>
+      <button class="btn" data-filter="code">Functions</button>
+      <button class="btn" data-filter="data">Data</button>
+      <span style="color:#aaa;margin:0 4px">|</span>
+      <label>Sort:</label>
+      <button class="btn active" data-sort="name">Name</button>
+      <button class="btn" data-sort="pct-asc">% Asc</button>
+      <button class="btn" data-sort="pct-desc">% Desc</button>
+      <button class="btn" data-sort="remaining">Remaining</button>
+      <input class="search-box" type="text" placeholder="Filter files..." id="searchInput">
+    </div>
+    <div id="fileTable"></div>
+  </div>
+  <div class="footer">generated by naming_progress.py</div>
+</div>
+<script>
+const DATA = {"summary": {"functions": {"named": 63, "auto": 31, "non_matching": 0}, "data": {"named": 36, "auto": 89, "non_matching": 117}}, "files": [{"name": "Chara_Kaufmann", "funcs": {"named": [{"name": "Kaufmann_MovementUpdate", "addr": "0x800D2F64"}, {"name": "Kaufmann_AnimUpdate", "addr": "0x800D2F1C"}, {"name": "Kaufmann_Update", "addr": "0x800D2EA8"}, {"name": "Kaufmann_Init", "addr": "0x800D3AC0"}, {"name": "Kaufmann_ControlUpdate", "addr": "0x800D30FC"}], "auto": [], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "characters", "funcs": {"named": [{"name": "Stalker_ControlUpdate", "addr": "0x800CE844"}, {"name": "Player_MoveSpeedClear", "addr": "0x800CDB60"}, {"name": "Stalker_Control_2", "addr": "0x800CEBF4"}, {"name": "Stalker_Init", "addr": "0x800CDD9C"}, {"name": "Stalker_Control_9", "addr": "0x800D0E6C"}, {"name": "Player_MatchArmAnimDisable", "addr": "0x800CD630"}, {"name": "Player_AnimLock", "addr": "0x800CDA44"}, {"name": "Player_FallBackward", "addr": "0x800CDB74"}, {"name": "Stalker_Update", "addr": "0x800CDC08"}, {"name": "Stalker_Control_4", "addr": "0x800CF7CC"}, {"name": "Player_AnimReset", "addr": "0x800CDA2C"}, {"name": "Stalker_Control_13", "addr": "0x800D15FC"}, {"name": "Stalker_Control_5", "addr": "0x800CFF38"}, {"name": "Stalker_CollisionUpdate", "addr": "0x800D1FB4"}, {"name": "Player_MoveSpeedIsZero", "addr": "0x800CDB50"}, {"name": "Player_Stub_F8", "addr": "0x800CDB7C"}, {"name": "Player_PathWaypointExecute", "addr": "0x800CD974"}, {"name": "Player_ControlUnfreeze", "addr": "0x800CD79C"}, {"name": "Stalker_Control_12", "addr": "0x800D1444"}, {"name": "Stalker_Control_3", "addr": "0x800CEBFC"}, {"name": "Stalker_Control_8", "addr": "0x800D0B04"}, {"name": "Player_ControlFreeze", "addr": "0x800CD63C"}, {"name": "Player_AnimUnlock", "addr": "0x800CDA84"}, {"name": "Player_AnimStateSet", "addr": "0x800CD97C"}, {"name": "Stalker_Control_6", "addr": "0x800D0348"}, {"name": "Stalker_Control_7", "addr": "0x800D09E8"}, {"name": "Player_AnimIsLocked", "addr": "0x800CDA6C"}, {"name": "Stalker_Control_11", "addr": "0x800D143C"}, {"name": "Stalker_Control_10", "addr": "0x800D1270"}, {"name": "Player_DamageFeetFront", "addr": "0x800CDB84"}, {"name": "Player_AnimPlaybackStateGet", "addr": "0x800CDAAC"}], "auto": [{"name": "sharedFunc_800D2E6C_0_s00", "addr": "0x800CDB6C"}, {"name": "sharedFunc_800D2EF4_0_s00", "addr": "0x800CDBF4"}, {"name": "sharedFunc_800D2EB4_0_s00", "addr": "0x800CDBB4"}, {"name": "sharedFunc_800D2E9C_0_s00", "addr": "0x800CDB9C"}, {"name": "sharedFunc_800D7BE8_0_s00", "addr": "0x800D2AD8"}, {"name": "sharedFunc_800D3308_0_s00", "addr": "0x800CE008"}, {"name": "sharedFunc_800D2E94_0_s00", "addr": "0x800CDB94"}, {"name": "sharedFunc_800D2EA4_0_s00", "addr": "0x800CDBA4"}, {"name": "sharedFunc_800D7E04_0_s00", "addr": "0x800D2CF4"}, {"name": "sharedFunc_800CDAA8_0_s02", "addr": "0x800CC854"}, {"name": "sharedFunc_800D67FC_0_s00", "addr": "0x800D16EC"}, {"name": "sharedFunc_800D6970_0_s00", "addr": "0x800D1860"}, {"name": "sharedFunc_800D1C38_0_s00", "addr": "0x800CD1A4"}, {"name": "sharedFunc_800D209C_0_s00", "addr": "0x800CD5F4"}, {"name": "sharedFunc_800D2E8C_0_s00", "addr": "0x800CDB8C"}], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CD768_tbl", "addr": "0x800CD768"}], "non_matching": []}}, {"name": "libsd/smf_mid", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapOverlayHdr", "addr": "0x800C957C"}], "auto": [], "non_matching": []}}, {"name": "map5_s02_2", "funcs": {"named": [{"name": "Chara_AnimStartKeyframeIdxGet", "addr": "0x800D44A0"}, {"name": "MapEvent_DoorJammed", "addr": "0x800D4990"}, {"name": "Chara_AnimReset", "addr": "0x800D3B6C"}, {"name": "Chara_VisibleSet", "addr": "0x800D42B4"}, {"name": "Event_CutsceneTimerAdvance", "addr": "0x800D48F8"}, {"name": "Chara_CollisionReset", "addr": "0x800D44AC"}, {"name": "MapEvent_DoorLocked", "addr": "0x800D4A24"}, {"name": "Map_WorldObjectsUpdate", "addr": "0x800D68FC"}, {"name": "Chara_AnimIsLocked", "addr": "0x800D3B8C"}, {"name": "Map_RoomIdxGet", "addr": "0x800D451C"}, {"name": "Map_RoomBgmInit", "addr": "0x800D45B4"}, {"name": "Map_WorldObjectsInit", "addr": "0x800D6598"}, {"name": "GameBoot_LoadScreen_StageString", "addr": "0x800D48F0"}, {"name": "MapEvent_CommonItemTake", "addr": "0x800D4AB8"}, {"name": "Chara_AnimLock", "addr": "0x800D3B78"}, {"name": "Chara_PathWaypointExecute", "addr": "0x800D3C50"}, {"name": "Map_RoomBgmInit_CondFalse", "addr": "0x800D4664"}, {"name": "Chara_AnimStateSet", "addr": "0x800D3B54"}, {"name": "MapEvent_KaufmannBarFightCutscene", "addr": "0x800D5744"}, {"name": "Map_RoomBgmInit_CondTrue", "addr": "0x800D45E8"}, {"name": "Chara_InvisibleSet", "addr": "0x800D42C8"}, {"name": "Chara_AnimUnlock", "addr": "0x800D3BA0"}, {"name": "Chara_AnimPlaybackStateGet", "addr": "0x800D3BB4"}], "auto": [{"name": "sharedFunc_800D9188_0_s00", "addr": "0x800D43D8"}, {"name": "sharedFunc_800D88C0_0_s00", "addr": "0x800D3B10"}, {"name": "func_800D54D0", "addr": "0x800D54D0"}, {"name": "func_800D54A4", "addr": "0x800D54A4"}, {"name": "func_800D4E24", "addr": "0x800D4E24"}, {"name": "func_800D4B58", "addr": "0x800D4B58"}, {"name": "sharedFunc_800D929C_0_s00", "addr": "0x800D450C"}, {"name": "func_800D5478", "addr": "0x800D5478"}, {"name": "func_800D4E64", "addr": "0x800D4E64"}, {"name": "sharedFunc_800D908C_0_s00", "addr": "0x800D42DC"}, {"name": "sharedFunc_800D88AC_0_s00", "addr": "0x800D3AFC"}, {"name": "func_800D4DF8", "addr": "0x800D4DF8"}, {"name": "func_800D519C", "addr": "0x800D519C"}], "non_matching": []}, "data": {"named": [{"name": "MAP_MESSAGES", "addr": "0x800D92B4"}], "auto": [], "non_matching": []}}, {"name": "map5_s02_anim_info", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "HARRY_M5S02_ANIM_INFOS", "addr": "0x800D6F38"}], "auto": [], "non_matching": []}}, {"name": "map5_s02_events_data", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "MAP_EVENTS", "addr": "0x800D9380"}], "auto": [], "non_matching": []}}, {"name": "map5_s02_header", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapEventFuncs", "addr": "0x800D9284"}, {"name": "g_LoadScreenFuncs", "addr": "0x800D9190"}, {"name": "MAP_POINTS", "addr": "0x800D91A0"}], "auto": [], "non_matching": []}}, {"name": "particle", "funcs": {"named": [{"name": "Particle_SystemUpdate", "addr": "0x800CB6CC"}, {"name": "Particle_HyperBlasterBeamDraw", "addr": "0x800CBBF0"}, {"name": "Particle_SoundStop", "addr": "0x800CBBD0"}, {"name": "Particle_BeamDraw", "addr": "0x800CC468"}], "auto": [{"name": "sharedFunc_800D0B18_0_s00", "addr": "0x800CBA6C"}, {"name": "sharedFunc_800D08B8_0_s00", "addr": "0x800CB834"}, {"name": "sharedFunc_800D0A60_0_s00", "addr": "0x800CB9B4"}], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "unnamed_800CAAD4", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CAAD4", "addr": "0x800CAAD4"}], "non_matching": [{"name": "D_800CAAD4", "addr": "0x800CAAD4"}]}}, {"name": "unnamed_800D71A8", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapHeaderTable_38", "addr": "0x800D71A8"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800D7248"}, {"name": "KAUFMANN_ANIM_INFOS", "addr": "0x800D8E40"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800D9128"}, {"name": "STALKER_ANIM_INFOS", "addr": "0x800D7274"}], "auto": [{"name": "sharedData_800DF1FA_0_s00", "addr": "0x800D9126"}, {"name": "sharedData_800DD5A6_0_s00", "addr": "0x800D7271"}, {"name": "D_800D87EC", "addr": "0x800D87EC"}, {"name": "sharedData_800DE008_0_s00", "addr": "0x800D7CD4"}, {"name": "sharedData_800DF1F4_0_s00", "addr": "0x800D9120"}, {"name": "sharedData_800DDBA8_0_s00", "addr": "0x800D7874"}, {"name": "D_800D83DC", "addr": "0x800D83DC"}, {"name": "sharedData_800DE2C4_0_s00", "addr": "0x800D7F90"}, {"name": "sharedData_800DEB0C_0_s00", "addr": "0x800D87D8"}, {"name": "sharedData_800DE1E8_0_s00", "addr": "0x800D7EB4"}, {"name": "D_800D7EC8", "addr": "0x800D7EC8"}, {"name": "sharedData_800CFB24_0_s02", "addr": "0x800D9158"}, {"name": "sharedData_800DEE40_0_s00", "addr": "0x800D8B0C"}, {"name": "sharedData_800CFB3C_0_s02", "addr": "0x800D9170"}, {"name": "D_800D7D4C", "addr": "0x800D7D4C"}, {"name": "sharedData_800CFB14_0_s02", "addr": "0x800D9148"}, {"name": "sharedData_800DEDA0_0_s00", "addr": "0x800D8A6C"}, {"name": "sharedData_800DE440_0_s00", "addr": "0x800D810C"}, {"name": "sharedData_800DDCFC_0_s00", "addr": "0x800D79C8"}, {"name": "sharedData_800CFB4C_0_s02", "addr": "0x800D9180"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800D7270"}, {"name": "sharedData_800DE8C8_0_s00", "addr": "0x800D8594"}, {"name": "D_800D8238", "addr": "0x800D8238"}, {"name": "sharedData_800DEE04_0_s00", "addr": "0x800D8AD0"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800D726C"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800D7269"}, {"name": "sharedData_800DDD88_0_s00", "addr": "0x800D7A54"}, {"name": "sharedData_800DDC70_0_s00", "addr": "0x800D793C"}, {"name": "D_800D83C8", "addr": "0x800D83C8"}, {"name": "sharedData_800CFB2C_0_s02", "addr": "0x800D9160"}, {"name": "sharedData_800DEE68_0_s00", "addr": "0x800D8B34"}, {"name": "sharedData_800DE2EC_0_s00", "addr": "0x800D7FB8"}, {"name": "sharedData_800CFB54_0_s02", "addr": "0x800D9188"}, {"name": "sharedData_800DEF1C_0_s00", "addr": "0x800D8BE8"}, {"name": "sharedData_800DECB0_0_s00", "addr": "0x800D897C"}, {"name": "sharedData_800DDBBC_0_s00", "addr": "0x800D7888"}, {"name": "sharedData_800DEC74_0_s00", "addr": "0x800D8940"}, {"name": "sharedData_800DE300_0_s00", "addr": "0x800D7FCC"}, {"name": "sharedData_800DE580_0_s00", "addr": "0x800D824C"}, {"name": "D_800D8990", "addr": "0x800D8990"}, {"name": "D_800D7362", "addr": "0x800D7362"}, {"name": "sharedData_800DE2D8_0_s00", "addr": "0x800D7FA4"}, {"name": "sharedData_800DDEC8_0_s00", "addr": "0x800D7B94"}, {"name": "sharedData_800CFB1C_0_s02", "addr": "0x800D9150"}, {"name": "sharedData_800DE0E4_0_s00", "addr": "0x800D7DB0"}, {"name": "sharedData_800CFB34_0_s02", "addr": "0x800D9168"}, {"name": "sharedData_800CFB44_0_s02", "addr": "0x800D9178"}, {"name": "sharedData_800DF1F8_0_s00", "addr": "0x800D9124"}, {"name": "sharedData_800DDF2C_0_s00", "addr": "0x800D7BF8"}], "non_matching": [{"name": "sharedData_800DF1FA_0_s00", "addr": "0x800D9126"}, {"name": "sharedData_800DD5A6_0_s00", "addr": "0x800D7271"}, {"name": "D_800D87EC", "addr": "0x800D87EC"}, {"name": "sharedData_800DE008_0_s00", "addr": "0x800D7CD4"}, {"name": "sharedData_800DF1F4_0_s00", "addr": "0x800D9120"}, {"name": "sharedData_800DDBA8_0_s00", "addr": "0x800D7874"}, {"name": "D_800D83DC", "addr": "0x800D83DC"}, {"name": "sharedData_800DE2C4_0_s00", "addr": "0x800D7F90"}, {"name": "g_MapHeaderTable_38", "addr": "0x800D71A8"}, {"name": "sharedData_800DEB0C_0_s00", "addr": "0x800D87D8"}, {"name": "sharedData_800DE1E8_0_s00", "addr": "0x800D7EB4"}, {"name": "D_800D7EC8", "addr": "0x800D7EC8"}, {"name": "sharedData_800CFB24_0_s02", "addr": "0x800D9158"}, {"name": "sharedData_800DEE40_0_s00", "addr": "0x800D8B0C"}, {"name": "sharedData_800CFB3C_0_s02", "addr": "0x800D9170"}, {"name": "D_800D7D4C", "addr": "0x800D7D4C"}, {"name": "sharedData_800CFB14_0_s02", "addr": "0x800D9148"}, {"name": "sharedData_800DEDA0_0_s00", "addr": "0x800D8A6C"}, {"name": "sharedData_800DE440_0_s00", "addr": "0x800D810C"}, {"name": "sharedData_800DDCFC_0_s00", "addr": "0x800D79C8"}, {"name": "sharedData_800CFB4C_0_s02", "addr": "0x800D9180"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800D7270"}, {"name": "sharedData_800DE8C8_0_s00", "addr": "0x800D8594"}, {"name": "D_800D8238", "addr": "0x800D8238"}, {"name": "sharedData_800DEE04_0_s00", "addr": "0x800D8AD0"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800D7248"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800D726C"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800D7269"}, {"name": "KAUFMANN_ANIM_INFOS", "addr": "0x800D8E40"}, {"name": "sharedData_800DDD88_0_s00", "addr": "0x800D7A54"}, {"name": "sharedData_800DDC70_0_s00", "addr": "0x800D793C"}, {"name": "D_800D83C8", "addr": "0x800D83C8"}, {"name": "sharedData_800CFB2C_0_s02", "addr": "0x800D9160"}, {"name": "sharedData_800DEE68_0_s00", "addr": "0x800D8B34"}, {"name": "sharedData_800DE2EC_0_s00", "addr": "0x800D7FB8"}, {"name": "sharedData_800CFB54_0_s02", "addr": "0x800D9188"}, {"name": "sharedData_800DEF1C_0_s00", "addr": "0x800D8BE8"}, {"name": "sharedData_800DECB0_0_s00", "addr": "0x800D897C"}, {"name": "sharedData_800DDBBC_0_s00", "addr": "0x800D7888"}, {"name": "sharedData_800DEC74_0_s00", "addr": "0x800D8940"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800D9128"}, {"name": "sharedData_800DE300_0_s00", "addr": "0x800D7FCC"}, {"name": "sharedData_800DE580_0_s00", "addr": "0x800D824C"}, {"name": "STALKER_ANIM_INFOS", "addr": "0x800D7274"}, {"name": "D_800D8990", "addr": "0x800D8990"}, {"name": "D_800D7362", "addr": "0x800D7362"}, {"name": "sharedData_800DE2D8_0_s00", "addr": "0x800D7FA4"}, {"name": "sharedData_800DDEC8_0_s00", "addr": "0x800D7B94"}, {"name": "sharedData_800CFB1C_0_s02", "addr": "0x800D9150"}, {"name": "sharedData_800DE0E4_0_s00", "addr": "0x800D7DB0"}, {"name": "sharedData_800CFB34_0_s02", "addr": "0x800D9168"}, {"name": "sharedData_800CFB44_0_s02", "addr": "0x800D9178"}, {"name": "sharedData_800DF1F8_0_s00", "addr": "0x800D9124"}, {"name": "sharedData_800DDF2C_0_s00", "addr": "0x800D7BF8"}]}}, {"name": "unnamed_800D947C", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_WorldObject_SavePad", "addr": "0x800DA75C"}, {"name": "g_Cutscene_Timer", "addr": "0x800DA6EC"}, {"name": "g_ParticleMapIdx1", "addr": "0x800D94F0"}, {"name": "g_ParticleVectors0", "addr": "0x800DA5DC"}, {"name": "g_Cutscene_CameraPositionTarget", "addr": "0x800DA6CC"}, {"name": "g_ParticleMapIdx0", "addr": "0x800D94EC"}, {"name": "g_WorldObject_Key", "addr": "0x800DA82C"}, {"name": "g_ParticleVectors1", "addr": "0x800DA60C"}, {"name": "g_WorldObject_BDoor1", "addr": "0x800DA6FC"}, {"name": "g_Particle_SpeedX", "addr": "0x800D94F8"}, {"name": "g_CommonWorldObjects", "addr": "0x800DA91C"}, {"name": "g_WorldObject_UnkPose0", "addr": "0x800DA77C"}, {"name": "g_Effect_BloodSplats", "addr": "0x800DA4AC"}, {"name": "g_CommonWorldObjectPoses", "addr": "0x800D949C"}, {"name": "g_Cutscene_CameraLookAtTarget", "addr": "0x800DA6DC"}, {"name": "g_WorldObject_Daly", "addr": "0x800DA85C"}, {"name": "g_Player_MoveSpeed", "addr": "0x800DA66C"}, {"name": "g_WorldObject_UnkPose1", "addr": "0x800DA8AC"}, {"name": "g_WorldObject_Obj00", "addr": "0x800DA8EC"}, {"name": "g_WorldObject_06LBag", "addr": "0x800DA72C"}, {"name": "g_WorldObject_Drug", "addr": "0x800DA88C"}, {"name": "g_WorldObject_UnkPos", "addr": "0x800DA80C"}, {"name": "g_WorldObject_Box", "addr": "0x800DA79C"}, {"name": "g_Particle_SpeedZ", "addr": "0x800D94FC"}], "auto": [{"name": "D_800DA918", "addr": "0x800DA918"}, {"name": "D_800D94F4", "addr": "0x800D94F4"}, {"name": "D_800DA8E8", "addr": "0x800DA8E8"}, {"name": "sharedData_800E39E8_0_s00", "addr": "0x800DA674"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800D9500"}, {"name": "D_800DA888", "addr": "0x800DA888"}, {"name": "D_800D9520", "addr": "0x800D9520"}, {"name": "sharedData_800E3A20_0_s00", "addr": "0x800DA6B0"}, {"name": "sharedData_800E3A1C_0_s00", "addr": "0x800DA6AC"}, {"name": "D_800DA728", "addr": "0x800DA728"}, {"name": "sharedData_800E3A0C_0_s00", "addr": "0x800DA69C"}, {"name": "sharedData_800E3A24_0_s00", "addr": "0x800DA6B4"}, {"name": "D_800DA8A8", "addr": "0x800DA8A8"}, {"name": "D_800DA758", "addr": "0x800DA758"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800DA638"}, {"name": "sharedData_800E3A18_0_s00", "addr": "0x800DA6A8"}, {"name": "sharedData_800E3A28_0_s00", "addr": "0x800DA6B8"}, {"name": "sharedData_800E39EC_0_s00", "addr": "0x800DA67C"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800DA64A"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800D9504"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800DA640"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800DA63C"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800D950C"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800DA646"}, {"name": "D_800DA778", "addr": "0x800DA778"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800DA668"}, {"name": "D_800D947C", "addr": "0x800D947C"}, {"name": "sharedData_800E3A2C_0_s00", "addr": "0x800DA6BC"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800DA644"}, {"name": "D_800DA790", "addr": "0x800DA790"}, {"name": "sharedData_800E39BC_0_s00", "addr": "0x800DA64C"}, {"name": "sharedData_800E39E4_0_s00", "addr": "0x800DA670"}, {"name": "D_800DA858", "addr": "0x800DA858"}, {"name": "sharedData_800D5CF4_3_s00", "addr": "0x800DA6C0"}, {"name": "D_800DA6E8", "addr": "0x800DA6E8"}, {"name": "D_800DA824", "addr": "0x800DA824"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800DA648"}, {"name": "D_800DA9C4", "addr": "0x800DA9C4"}], "non_matching": [{"name": "g_WorldObject_SavePad", "addr": "0x800DA75C"}, {"name": "g_Cutscene_Timer", "addr": "0x800DA6EC"}, {"name": "g_ParticleMapIdx1", "addr": "0x800D94F0"}, {"name": "g_ParticleVectors0", "addr": "0x800DA5DC"}, {"name": "D_800DA918", "addr": "0x800DA918"}, {"name": "D_800D94F4", "addr": "0x800D94F4"}, {"name": "D_800DA8E8", "addr": "0x800DA8E8"}, {"name": "sharedData_800E39E8_0_s00", "addr": "0x800DA674"}, {"name": "g_Cutscene_CameraPositionTarget", "addr": "0x800DA6CC"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800D9500"}, {"name": "D_800DA888", "addr": "0x800DA888"}, {"name": "D_800D9520", "addr": "0x800D9520"}, {"name": "sharedData_800E3A20_0_s00", "addr": "0x800DA6B0"}, {"name": "sharedData_800E3A1C_0_s00", "addr": "0x800DA6AC"}, {"name": "D_800DA728", "addr": "0x800DA728"}, {"name": "sharedData_800E3A0C_0_s00", "addr": "0x800DA69C"}, {"name": "sharedData_800E3A24_0_s00", "addr": "0x800DA6B4"}, {"name": "g_ParticleMapIdx0", "addr": "0x800D94EC"}, {"name": "g_WorldObject_Key", "addr": "0x800DA82C"}, {"name": "D_800DA8A8", "addr": "0x800DA8A8"}, {"name": "D_800DA758", "addr": "0x800DA758"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800DA638"}, {"name": "g_ParticleVectors1", "addr": "0x800DA60C"}, {"name": "g_WorldObject_BDoor1", "addr": "0x800DA6FC"}, {"name": "sharedData_800E3A18_0_s00", "addr": "0x800DA6A8"}, {"name": "sharedData_800E3A28_0_s00", "addr": "0x800DA6B8"}, {"name": "sharedData_800E39EC_0_s00", "addr": "0x800DA67C"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800DA64A"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800D9504"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800DA640"}, {"name": "g_Particle_SpeedX", "addr": "0x800D94F8"}, {"name": "g_CommonWorldObjects", "addr": "0x800DA91C"}, {"name": "g_WorldObject_UnkPose0", "addr": "0x800DA77C"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800DA63C"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800D950C"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800DA646"}, {"name": "g_Effect_BloodSplats", "addr": "0x800DA4AC"}, {"name": "D_800DA778", "addr": "0x800DA778"}, {"name": "g_CommonWorldObjectPoses", "addr": "0x800D949C"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800DA668"}, {"name": "D_800D947C", "addr": "0x800D947C"}, {"name": "g_Cutscene_CameraLookAtTarget", "addr": "0x800DA6DC"}, {"name": "sharedData_800E3A2C_0_s00", "addr": "0x800DA6BC"}, {"name": "g_WorldObject_Daly", "addr": "0x800DA85C"}, {"name": "g_Player_MoveSpeed", "addr": "0x800DA66C"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800DA644"}, {"name": "D_800DA790", "addr": "0x800DA790"}, {"name": "sharedData_800E39BC_0_s00", "addr": "0x800DA64C"}, {"name": "sharedData_800E39E4_0_s00", "addr": "0x800DA670"}, {"name": "g_WorldObject_UnkPose1", "addr": "0x800DA8AC"}, {"name": "D_800DA858", "addr": "0x800DA858"}, {"name": "g_WorldObject_Obj00", "addr": "0x800DA8EC"}, {"name": "g_WorldObject_06LBag", "addr": "0x800DA72C"}, {"name": "g_WorldObject_Drug", "addr": "0x800DA88C"}, {"name": "sharedData_800D5CF4_3_s00", "addr": "0x800DA6C0"}, {"name": "D_800DA6E8", "addr": "0x800DA6E8"}, {"name": "g_WorldObject_UnkPos", "addr": "0x800DA80C"}, {"name": "D_800DA824", "addr": "0x800DA824"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800DA648"}, {"name": "g_WorldObject_Box", "addr": "0x800DA79C"}, {"name": "g_Particle_SpeedZ", "addr": "0x800D94FC"}, {"name": "D_800DA9C4", "addr": "0x800DA9C4"}]}}]};
+
+function pctClass(p) { return p >= 75 ? 'good' : p >= 40 ? 'mid' : 'low'; }
+function barColor(p) { return p >= 75 ? '#5a9e5f' : p >= 40 ? '#e6a817' : '#c84040'; }
+
+function makeStatBox(label, named, auto, nm) {
+  const total = named + auto;
+  const pct = total ? (named / total * 100) : 0;
+  const pc = pctClass(pct);
+  const bc = barColor(pct);
+  return `<div class="stat-box">
+    <h3>${label}</h3>
+    <div class="stat-pct ${pc}">${pct.toFixed(1)}%</div>
+    <div class="stat-line"><span class="num">${named}</span> / ${total} named</div>
+    <div class="stat-line">${auto} auto-generated</div>
+    ${nm ? `<div class="stat-line" style="color:#e67c00">${nm} non-matching</div>` : ''}
+    <div class="stat-bar-outer"><div class="stat-bar-fill" style="width:${pct}%;background:${bc}"></div></div>
+  </div>`;
+}
+
+const S = DATA.summary;
+const allN = S.functions.named + S.data.named;
+const allA = S.functions.auto + S.data.auto;
+const allNM = S.functions.non_matching + S.data.non_matching;
+document.getElementById('summary').innerHTML =
+  makeStatBox('Overall', allN, allA, allNM) +
+  makeStatBox('Functions', S.functions.named, S.functions.auto, S.functions.non_matching) +
+  makeStatBox('Data', S.data.named, S.data.auto, S.data.non_matching);
+
+let currentFilter = 'all';
+let currentSort = 'name';
+
+function getCounts(f, filter) {
+  let named = 0, auto = 0, nm = 0, autoList = [], nmList = [];
+  if (filter !== 'data') {
+    named += f.funcs.named.length;
+    auto += f.funcs.auto.length;
+    nm += f.funcs.non_matching.length;
+    autoList = autoList.concat(f.funcs.auto.map(s => ({...s, kind: 'func', tag: 'auto'})));
+    nmList = nmList.concat(f.funcs.non_matching.map(s => ({...s, kind: 'func', tag: 'nm'})));
+  }
+  if (filter !== 'code') {
+    named += f.data.named.length;
+    auto += f.data.auto.length;
+    nm += f.data.non_matching.length;
+    autoList = autoList.concat(f.data.auto.map(s => ({...s, kind: 'data', tag: 'auto'})));
+    nmList = nmList.concat(f.data.non_matching.map(s => ({...s, kind: 'data', tag: 'nm'})));
+  }
+  return { named, auto, nm, total: named + auto, autoList, nmList };
+}
+
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let files = DATA.files.map(f => {
+    const c = getCounts(f, currentFilter);
+    return { ...f, ...c };
+  }).filter(f => f.total > 0 && f.name.toLowerCase().includes(search));
+
+  if (currentSort === 'name') files.sort((a, b) => a.name.localeCompare(b.name));
+  else if (currentSort === 'pct-asc') files.sort((a, b) => (a.named/a.total) - (b.named/b.total));
+  else if (currentSort === 'pct-desc') files.sort((a, b) => (b.named/b.total) - (a.named/a.total));
+  else if (currentSort === 'remaining') files.sort((a, b) => b.auto - a.auto);
+
+  let html = `<table class="files">
+    <tr><th>File</th><th>Progress</th><th>%</th><th class="bar-cell">Bar</th><th>NM</th></tr>`;
+
+  files.forEach((f, i) => {
+    const pct = f.total ? (f.named / f.total * 100) : 0;
+    const pc = 'pct-' + pctClass(pct);
+    const bc = barColor(pct);
+
+    html += `<tr class="file-row" data-idx="${i}" onclick="toggleDetail(${i})">
+      <td class="fname"><span class="chevron">&#9654;</span>${f.name}</td>
+      <td class="ratio">${f.named}/${f.total}</td>
+      <td class="pct ${pc}">${pct.toFixed(1)}%</td>
+      <td class="bar-cell"><div class="bar-outer"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div></td>
+      <td class="nm-cell">${f.nm || ''}</td>
+    </tr>`;
+
+    const syms = f.autoList.concat(f.nmList).sort((a, b) => a.addr.localeCompare(b.addr));
+    html += `<tr class="detail-row" data-detail="${i}"><td colspan="5">`;
+    if (syms.length === 0) {
+      html += `<div class="empty-detail">All symbols have been named.</div>`;
+    } else {
+      const autoFuncs = syms.filter(s => s.tag === 'auto' && s.kind === 'func');
+      const autoData  = syms.filter(s => s.tag === 'auto' && s.kind === 'data');
+      const nmFuncs   = syms.filter(s => s.tag === 'nm'   && s.kind === 'func');
+      const nmData    = syms.filter(s => s.tag === 'nm'   && s.kind === 'data');
+
+      function renderGroup(label, items, tagClass, tagLabel) {
+        if (!items.length) return '';
+        let out = `<div class="detail-heading">${label} (${items.length})</div>`;
+        items.forEach(s => {
+          out += `<div class="sym-row">
+            <span class="addr">${s.addr}</span>&nbsp;
+            <span class="name">${s.name}</span>
+            <span class="tag tag-${s.kind}">${s.kind}</span>
+            <span class="tag ${tagClass}">${tagLabel}</span>
+          </div>`;
+        });
+        return out;
+      }
+
+      html += renderGroup('Auto-generated functions', autoFuncs, 'tag-auto', 'auto');
+      html += renderGroup('Auto-generated data', autoData, 'tag-auto', 'auto');
+      html += renderGroup('Non-matching functions', nmFuncs, 'tag-nm', 'non-matching');
+      html += renderGroup('Non-matching data', nmData, 'tag-nm', 'non-matching');
+    }
+    html += `</td></tr>`;
+  });
+
+  html += '</table>';
+  document.getElementById('fileTable').innerHTML = html;
+}
+
+function toggleDetail(idx) {
+  const row = document.querySelector(`tr.file-row[data-idx="${idx}"]`);
+  const detail = document.querySelector(`tr.detail-row[data-detail="${idx}"]`);
+  row.classList.toggle('open');
+  detail.classList.toggle('open');
+}
+
+document.querySelectorAll('.btn[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.querySelectorAll('.btn[data-sort]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-sort]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', renderTable);
+renderTable();
+</script>
+</body>
+</html>

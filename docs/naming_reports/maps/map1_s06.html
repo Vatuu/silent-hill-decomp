@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decomp Progress - MAP1_S06.BIN</title>
+<style>
+  body {
+    font-family: Verdana, Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    background: #eef1f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+  }
+  a { color: #2654a1; }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header bar */
+  .header {
+    background: #3c5a99;
+    background: linear-gradient(to bottom, #4a6fb5, #35507a);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #2d4470;
+    border-bottom: none;
+  }
+  .header h1 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header .path {
+    font-size: 11px;
+    color: #c0cce0;
+    margin-top: 2px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  /* Main panel */
+  .panel {
+    background: #fff;
+    border: 1px solid #b0b8c4;
+    border-radius: 0 0 4px 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Summary boxes */
+  .summary-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-box {
+    flex: 1;
+    background: #f7f8fa;
+    border: 1px solid #d0d5dd;
+    border-radius: 3px;
+    padding: 10px 12px;
+  }
+  .stat-box h3 {
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    margin: 0 0 6px 0;
+    border-bottom: 1px solid #e0e3e8;
+    padding-bottom: 4px;
+  }
+  .stat-line {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .stat-line .num { font-weight: bold; color: #222; }
+  .stat-pct {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .stat-pct.good { color: #2e7d32; }
+  .stat-pct.mid  { color: #e67c00; }
+  .stat-pct.low  { color: #c62828; }
+  .stat-bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 6px;
+    border: 1px solid #c8ccd2;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 1px;
+    transition: width 0.3s;
+  }
+
+  /* Controls row */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .controls label {
+    color: #666;
+    margin-right: 2px;
+  }
+  .btn {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 9px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #fff, #e8ecf0);
+    color: #333;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: linear-gradient(to bottom, #f0f4f8, #dde2e8);
+    border-color: #808890;
+  }
+  .btn.active {
+    background: linear-gradient(to bottom, #5a7db5, #3c5a8a);
+    border-color: #2d4470;
+    color: #fff;
+  }
+  .search-box {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    padding: 3px 7px;
+    border: 1px solid #a0a8b4;
+    border-radius: 3px;
+    width: 180px;
+    margin-left: auto;
+  }
+  .search-box:focus { outline: none; border-color: #4a6fb5; }
+
+  /* File table */
+  table.files {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  table.files th {
+    text-align: left;
+    padding: 5px 8px;
+    background: #e8ecf0;
+    border: 1px solid #c8ccd2;
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+  }
+  table.files td {
+    padding: 4px 8px;
+    border: 1px solid #d8dce2;
+  }
+  table.files tr.file-row { cursor: pointer; }
+  table.files tr.file-row:hover { background: #f0f4fa; }
+  table.files tr.file-row:nth-child(odd) { background: #fafbfc; }
+  table.files tr.file-row:nth-child(odd):hover { background: #f0f4fa; }
+  .fname {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 11px;
+    color: #2654a1;
+    white-space: nowrap;
+  }
+  .ratio { font-family: 'Courier New', Courier, monospace; }
+  .pct { font-weight: bold; }
+  .pct-good { color: #2e7d32; }
+  .pct-mid  { color: #e67c00; }
+  .pct-low  { color: #c62828; }
+  .bar-cell { width: 200px; }
+  .bar-outer {
+    height: 10px;
+    background: #dde0e6;
+    border: 1px solid #c8ccd2;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 1px; }
+  .nm-cell {
+    font-family: 'Courier New', Courier, monospace;
+    color: #e67c00;
+    font-weight: bold;
+    text-align: center;
+  }
+  .chevron {
+    display: inline-block;
+    width: 10px;
+    font-size: 9px;
+    color: #999;
+    margin-right: 4px;
+    transition: transform 0.1s;
+  }
+  tr.file-row.open .chevron { transform: rotate(90deg); }
+
+  /* Detail rows */
+  tr.detail-row { display: none; }
+  tr.detail-row.open { display: table-row; }
+  tr.detail-row td {
+    padding: 6px 8px 8px 28px;
+    background: #f4f5f8;
+    border: 1px solid #d8dce2;
+  }
+  .detail-heading {
+    font-size: 10px;
+    font-weight: bold;
+    color: #666;
+    text-transform: uppercase;
+    margin: 6px 0 3px 0;
+    border-bottom: 1px dotted #c8ccd2;
+    padding-bottom: 2px;
+  }
+  .detail-heading:first-child { margin-top: 0; }
+  .sym-row {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: #444;
+  }
+  .sym-row .addr { color: #888; }
+  .sym-row .name { color: #222; }
+  .tag {
+    font-family: Verdana, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+  .tag-auto { background: #fde8e8; color: #c62828; border: 1px solid #f5c0c0; }
+  .tag-nm   { background: #fff3d4; color: #b87000; border: 1px solid #f0d890; }
+  .tag-func { background: #e0ecf8; color: #2654a1; border: 1px solid #b0c8e8; }
+  .tag-data { background: #eee8f8; color: #6a40a0; border: 1px solid #c8b8e0; }
+
+  .empty-detail {
+    font-style: italic;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Decomp Naming Progress: MAP1_S06.BIN</h1>
+  </div>
+  <div class="panel">
+    <div class="summary-row" id="summary"></div>
+    <div class="controls">
+      <label>Show:</label>
+      <button class="btn active" data-filter="all">All</button>
+      <button class="btn" data-filter="code">Functions</button>
+      <button class="btn" data-filter="data">Data</button>
+      <span style="color:#aaa;margin:0 4px">|</span>
+      <label>Sort:</label>
+      <button class="btn active" data-sort="name">Name</button>
+      <button class="btn" data-sort="pct-asc">% Asc</button>
+      <button class="btn" data-sort="pct-desc">% Desc</button>
+      <button class="btn" data-sort="remaining">Remaining</button>
+      <input class="search-box" type="text" placeholder="Filter files..." id="searchInput">
+    </div>
+    <div id="fileTable"></div>
+  </div>
+  <div class="footer">generated by naming_progress.py</div>
+</div>
+<script>
+const DATA = {"summary": {"functions": {"named": 49, "auto": 41, "non_matching": 0}, "data": {"named": 36, "auto": 62, "non_matching": 77}}, "files": [{"name": "libsd/smf_mid", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapOverlayHdr", "addr": "0x800C957C"}], "auto": [], "non_matching": []}}, {"name": "map1_s06", "funcs": {"named": [{"name": "MapEvent_DoorJammed", "addr": "0x800D5450"}, {"name": "SplitHead_ControlUpdate", "addr": "0x800D0B08"}, {"name": "SplitHead_Control_2", "addr": "0x800D13FC"}, {"name": "SplitHead_DamageTake", "addr": "0x800D0948"}, {"name": "SplitHead_Control_7", "addr": "0x800D2EF8"}, {"name": "SplitHead_Control_3", "addr": "0x800D1C54"}, {"name": "SplitHead_Control_6", "addr": "0x800D2CC8"}, {"name": "SplitHead_Control_8", "addr": "0x800D30F0"}, {"name": "MapEvent_DoorLocked", "addr": "0x800D54E4"}, {"name": "Map_WorldObjectsUpdate", "addr": "0x800D6578"}, {"name": "SplitHead_Update", "addr": "0x800D02CC"}, {"name": "Map_RoomIdxGet", "addr": "0x800D5360"}, {"name": "SplitHead_Control_5", "addr": "0x800D246C"}, {"name": "SplitHead_Control_1", "addr": "0x800D0B84"}, {"name": "Map_RoomBgmInit", "addr": "0x800D5400"}, {"name": "Map_WorldObjectsInit", "addr": "0x800D63D8"}, {"name": "GameBoot_LoadScreen_StageString", "addr": "0x800D5448"}, {"name": "MapEvent_PaperMapTake", "addr": "0x800D63B0"}, {"name": "SplitHead_Init", "addr": "0x800D038C"}, {"name": "SplitHead_Control_4", "addr": "0x800D2270"}, {"name": "MapEvent_DoorUnlocked", "addr": "0x800D5578"}], "auto": [{"name": "sharedFunc_800D450C_1_s05", "addr": "0x800D4FC0"}, {"name": "func_800D6C88", "addr": "0x800D6C88"}, {"name": "sharedFunc_800D274C_1_s05", "addr": "0x800D3200"}, {"name": "sharedFunc_800D4530_1_s05", "addr": "0x800D4FE4"}, {"name": "func_800D5DD8", "addr": "0x800D5DD8"}, {"name": "sharedFunc_800CF990_1_s05", "addr": "0x800D0444"}, {"name": "sharedFunc_800D2D74_1_s05", "addr": "0x800D3828"}, {"name": "sharedFunc_800D4070_1_s05", "addr": "0x800D4B24"}, {"name": "sharedFunc_800D267C_1_s05", "addr": "0x800D3130"}, {"name": "func_800D5D6C", "addr": "0x800D5D6C"}, {"name": "func_800D5B98", "addr": "0x800D5B98"}, {"name": "sharedFunc_800D4408_1_s05", "addr": "0x800D4EBC"}, {"name": "func_800D6338", "addr": "0x800D6338"}, {"name": "sharedFunc_800D929C_0_s00", "addr": "0x800D5350"}, {"name": "sharedFunc_800D3388_1_s05", "addr": "0x800D3E3C"}, {"name": "func_800D560C", "addr": "0x800D560C"}, {"name": "sharedFunc_800D3AFC_1_s05", "addr": "0x800D45B0"}, {"name": "sharedFunc_800D3B30_1_s05", "addr": "0x800D45E4"}, {"name": "sharedFunc_800D4594_1_s05", "addr": "0x800D5048"}, {"name": "func_800D5614", "addr": "0x800D5614"}], "non_matching": []}, "data": {"named": [{"name": "jtbl_800CAF50", "addr": "0x800CAF50"}, {"name": "jtbl_800CA848", "addr": "0x800CA848"}, {"name": "jtbl_800CA8B0", "addr": "0x800CA8B0"}, {"name": "MAP_MESSAGES", "addr": "0x800D7494"}, {"name": "jtbl_800CA940", "addr": "0x800CA940"}, {"name": "jtbl_800CAF30", "addr": "0x800CAF30"}, {"name": "jtbl_800CAEF0", "addr": "0x800CAEF0"}, {"name": "jtbl_800CA920", "addr": "0x800CA920"}], "auto": [{"name": "D_800CAF98", "addr": "0x800CAF98"}, {"name": "D_800CAFB0", "addr": "0x800CAFB0"}, {"name": "D_800CAF8C", "addr": "0x800CAF8C"}, {"name": "D_800CAFA4", "addr": "0x800CAFA4"}, {"name": "D_800CAFBC", "addr": "0x800CAFBC"}], "non_matching": []}}, {"name": "map1_s06_anim_info", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "HARRY_M1S06_ANIM_INFOS", "addr": "0x800D6D40"}], "auto": [], "non_matching": []}}, {"name": "map1_s06_events_data", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "MAP_EVENTS", "addr": "0x800D7510"}], "auto": [], "non_matching": []}}, {"name": "map1_s06_header", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapEventFuncs", "addr": "0x800D7470"}, {"name": "g_LoadScreenFuncs", "addr": "0x800D71F0"}, {"name": "MAP_POINTS", "addr": "0x800D7200"}], "auto": [], "non_matching": []}}, {"name": "particle", "funcs": {"named": [{"name": "Particle_SnowDraw", "addr": "0x800CD684"}, {"name": "Particle_CameraMovedCheck", "addr": "0x800CCCE4"}, {"name": "Particle_SpawnMovementApply", "addr": "0x800CDAFC"}, {"name": "Particle_PositionRandomize", "addr": "0x800CE11C"}, {"name": "Particle_MovementUpdate", "addr": "0x800CDC4C"}, {"name": "Particle_BoundaryClamp", "addr": "0x800CE25C"}, {"name": "Particle_SystemUpdate", "addr": "0x800CC734"}, {"name": "Particle_Spawn", "addr": "0x800CE1D4"}, {"name": "Particle_HyperBlasterBeamDraw", "addr": "0x800CE804"}, {"name": "Particle_Update", "addr": "0x800CD0C0"}, {"name": "Particle_SnowInitialize", "addr": "0x800CCDBC"}, {"name": "Particle_SoundStop", "addr": "0x800CE7E4"}, {"name": "Particle_BeamDraw", "addr": "0x800CF07C"}], "auto": [{"name": "sharedFunc_800CE954_7_s03", "addr": "0x800CE114"}, {"name": "sharedFunc_800D0B18_0_s00", "addr": "0x800CE64C"}, {"name": "sharedFunc_800D08B8_0_s00", "addr": "0x800CE414"}, {"name": "sharedFunc_800D0A60_0_s00", "addr": "0x800CE594"}, {"name": "sharedFunc_800CFFF8_0_s00", "addr": "0x800CDFE8"}], "non_matching": []}, "data": {"named": [], "auto": [{"name": "D_800CD768_tbl", "addr": "0x800CD768"}], "non_matching": []}}, {"name": "player", "funcs": {"named": [{"name": "Player_MoveSpeedClear", "addr": "0x800D0224"}, {"name": "Player_MatchArmAnimDisable", "addr": "0x800CFCF4"}, {"name": "Player_AnimLock", "addr": "0x800D0108"}, {"name": "Player_FallBackward", "addr": "0x800D0238"}, {"name": "Player_AnimReset", "addr": "0x800D00F0"}, {"name": "Player_MoveSpeedIsZero", "addr": "0x800D0214"}, {"name": "Player_Stub_F8", "addr": "0x800D0240"}, {"name": "Player_PathWaypointExecute", "addr": "0x800D0038"}, {"name": "Player_ControlUnfreeze", "addr": "0x800CFE60"}, {"name": "Player_ControlFreeze", "addr": "0x800CFD00"}, {"name": "Player_AnimUnlock", "addr": "0x800D0148"}, {"name": "Player_AnimStateSet", "addr": "0x800D0040"}, {"name": "Player_AnimIsLocked", "addr": "0x800D0130"}, {"name": "Player_DamageFeetFront", "addr": "0x800D0248"}, {"name": "Player_AnimPlaybackStateGet", "addr": "0x800D0170"}], "auto": [{"name": "sharedFunc_800D2E6C_0_s00", "addr": "0x800D0230"}, {"name": "sharedFunc_800D2EF4_0_s00", "addr": "0x800D02B8"}, {"name": "sharedFunc_800D2EB4_0_s00", "addr": "0x800D0278"}, {"name": "sharedFunc_800D2E9C_0_s00", "addr": "0x800D0260"}, {"name": "sharedFunc_800D2E94_0_s00", "addr": "0x800D0258"}, {"name": "sharedFunc_800D2EA4_0_s00", "addr": "0x800D0268"}, {"name": "sharedFunc_800CDAA8_0_s02", "addr": "0x800CF468"}, {"name": "sharedFunc_800D1C38_0_s00", "addr": "0x800CF868"}, {"name": "sharedFunc_800D209C_0_s00", "addr": "0x800CFCB8"}, {"name": "sharedFunc_800D2E8C_0_s00", "addr": "0x800D0250"}], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "unk_draw_m1s05", "funcs": {"named": [], "auto": [{"name": "sharedFunc_800CCF30_1_s05", "addr": "0x800CC078"}, {"name": "sharedFunc_800CCE2C_1_s05", "addr": "0x800CBF74"}, {"name": "sharedFunc_800CBF74_1_s05", "addr": "0x800CB0BC"}, {"name": "sharedFunc_800CBE7C_1_s05", "addr": "0x800CAFC4"}, {"name": "sharedFunc_800CCDD4_1_s05", "addr": "0x800CBF1C"}, {"name": "sharedFunc_800CC618_1_s05", "addr": "0x800CB760"}], "non_matching": []}, "data": {"named": [], "auto": [], "non_matching": []}}, {"name": "unnamed_800CA7F0", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "jtbl_800CA7F0", "addr": "0x800CA7F0"}], "auto": [], "non_matching": []}}, {"name": "unnamed_800D6DD0", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_MapHeaderTable_38", "addr": "0x800D6DD0"}, {"name": "g_ParticleCameraMoved", "addr": "0x800D6E24"}, {"name": "g_ParticlesAddedCount", "addr": "0x800D6E1C"}, {"name": "g_SplitHead_ControlFuncs", "addr": "0x800D7014"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800D6DF8"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800D71B0"}, {"name": "SPLIT_HEAD_ANIM_INFOS", "addr": "0x800D6E34"}], "auto": [{"name": "sharedData_800D5884_1_s05", "addr": "0x800D6E30"}, {"name": "sharedData_800DD591_0_s00", "addr": "0x800D6E25"}, {"name": "sharedData_800D5AAE_1_s05", "addr": "0x800D705A"}, {"name": "sharedData_800DD592_0_s00", "addr": "0x800D6E26"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800D6E2C"}, {"name": "sharedData_800D5AB0_1_s05", "addr": "0x800D705C"}, {"name": "D_800D6E8C", "addr": "0x800D6E8C"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800D6E28"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800D6E1B"}, {"name": "D_800D71E8", "addr": "0x800D71E8"}, {"name": "sharedData_800D5A90_1_s05", "addr": "0x800D703C"}, {"name": "sharedData_800D5A8C_1_s05", "addr": "0x800D7038"}, {"name": "sharedData_800D5880_1_s05", "addr": "0x800D6E2E"}, {"name": "sharedData_800D5AAF_1_s05", "addr": "0x800D705B"}, {"name": "sharedData_800D5BE0_1_s05", "addr": "0x800D718C"}], "non_matching": [{"name": "sharedData_800D5884_1_s05", "addr": "0x800D6E30"}, {"name": "sharedData_800DD591_0_s00", "addr": "0x800D6E25"}, {"name": "sharedData_800D5AAE_1_s05", "addr": "0x800D705A"}, {"name": "g_MapHeaderTable_38", "addr": "0x800D6DD0"}, {"name": "sharedData_800DD592_0_s00", "addr": "0x800D6E26"}, {"name": "g_ParticleCameraMoved", "addr": "0x800D6E24"}, {"name": "sharedData_800DD59C_0_s00", "addr": "0x800D6E2C"}, {"name": "g_ParticlesAddedCount", "addr": "0x800D6E1C"}, {"name": "sharedData_800D5AB0_1_s05", "addr": "0x800D705C"}, {"name": "g_SplitHead_ControlFuncs", "addr": "0x800D7014"}, {"name": "LOADABLE_INVENTORY_ITEMS", "addr": "0x800D6DF8"}, {"name": "D_800D6E8C", "addr": "0x800D6E8C"}, {"name": "sharedData_800DD598_0_s00", "addr": "0x800D6E28"}, {"name": "sharedData_800DD584_0_s00", "addr": "0x800D6E1B"}, {"name": "D_800D71E8", "addr": "0x800D71E8"}, {"name": "sharedData_800D5A90_1_s05", "addr": "0x800D703C"}, {"name": "MAP_ROOM_IDXS", "addr": "0x800D71B0"}, {"name": "sharedData_800D5A8C_1_s05", "addr": "0x800D7038"}, {"name": "sharedData_800D5880_1_s05", "addr": "0x800D6E2E"}, {"name": "sharedData_800D5AAF_1_s05", "addr": "0x800D705B"}, {"name": "SPLIT_HEAD_ANIM_INFOS", "addr": "0x800D6E34"}, {"name": "sharedData_800D5BE0_1_s05", "addr": "0x800D718C"}]}}, {"name": "unnamed_800D775C", "funcs": {"named": [], "auto": [], "non_matching": []}, "data": {"named": [{"name": "g_ParticleMapIdx1", "addr": "0x800D7768"}, {"name": "g_ParticleVectors0", "addr": "0x800D8874"}, {"name": "g_Particles", "addr": "0x800D88E4"}, {"name": "g_Particle_PrevRotationY", "addr": "0x800DAE88"}, {"name": "g_ParticleMapIdx0", "addr": "0x800D7764"}, {"name": "g_Particle_PrevPosition", "addr": "0x800DAE74"}, {"name": "g_ParticleVectors1", "addr": "0x800D88A4"}, {"name": "g_Particle_SpeedX", "addr": "0x800D7794"}, {"name": "g_Effect_BloodSplats", "addr": "0x800D8744"}, {"name": "g_ParticleSpawnCount", "addr": "0x800DAE8A"}, {"name": "g_Particle_RotationY", "addr": "0x800D8896"}, {"name": "g_Player_MoveSpeed", "addr": "0x800DAEF8"}, {"name": "g_Particle_SpeedZ", "addr": "0x800D7798"}, {"name": "g_Particle_Position", "addr": "0x800DAE64"}], "auto": [{"name": "D_800DAFB4", "addr": "0x800DAFB4"}, {"name": "D_800DAF78", "addr": "0x800DAF78"}, {"name": "D_800D778D", "addr": "0x800D778D"}, {"name": "D_800DB055", "addr": "0x800DB055"}, {"name": "sharedData_800D8610_1_s05", "addr": "0x800DAEFC"}, {"name": "D_800DAFF4", "addr": "0x800DAFF4"}, {"name": "D_800D778E", "addr": "0x800D778E"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800D779C"}, {"name": "D_800DAFE4", "addr": "0x800DAFE4"}, {"name": "sharedData_800D8616_1_s05", "addr": "0x800DAF02"}, {"name": "sharedData_800E325C_0_s00", "addr": "0x800DAE84"}, {"name": "sharedData_800D8688_1_s05", "addr": "0x800DAF74"}, {"name": "sharedData_800D8684_1_s05", "addr": "0x800DAF70"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800D88D0"}, {"name": "D_800D775C", "addr": "0x800D775C"}, {"name": "D_800D7760", "addr": "0x800D7760"}, {"name": "sharedData_800D5D08_1_s05", "addr": "0x800D7784"}, {"name": "sharedData_800E326C_0_s00", "addr": "0x800DAE94"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800D88E2"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800D77A0"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800D88D8"}, {"name": "D_800DB064", "addr": "0x800DB064"}, {"name": "D_800D778F", "addr": "0x800D778F"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800D88D4"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800D77A4"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800D88DE"}, {"name": "D_800D7790", "addr": "0x800D7790"}, {"name": "D_800DB024", "addr": "0x800DB024"}, {"name": "D_800DAE70", "addr": "0x800DAE70"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800DAEF4"}, {"name": "sharedData_800D8614_1_s05", "addr": "0x800DAF00"}, {"name": "D_800D7761", "addr": "0x800D7761"}, {"name": "D_800DB054", "addr": "0x800DB054"}, {"name": "sharedData_800E3258_0_s00", "addr": "0x800DAE80"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800D88DC"}, {"name": "D_800DB094", "addr": "0x800DB094"}, {"name": "sharedData_800D8618_1_s05", "addr": "0x800DAF04"}, {"name": "D_800D9EB4", "addr": "0x800D9EB4"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800D88E0"}, {"name": "D_800DAF84", "addr": "0x800DAF84"}, {"name": "sharedData_800D5CF8_1_s05", "addr": "0x800D7774"}], "non_matching": [{"name": "D_800DAFB4", "addr": "0x800DAFB4"}, {"name": "D_800DAF78", "addr": "0x800DAF78"}, {"name": "D_800D778D", "addr": "0x800D778D"}, {"name": "g_ParticleMapIdx1", "addr": "0x800D7768"}, {"name": "g_ParticleVectors0", "addr": "0x800D8874"}, {"name": "D_800DB055", "addr": "0x800DB055"}, {"name": "g_Particles", "addr": "0x800D88E4"}, {"name": "sharedData_800D8610_1_s05", "addr": "0x800DAEFC"}, {"name": "D_800DAFF4", "addr": "0x800DAFF4"}, {"name": "D_800D778E", "addr": "0x800D778E"}, {"name": "sharedData_800DFB6C_0_s00", "addr": "0x800D779C"}, {"name": "D_800DAFE4", "addr": "0x800DAFE4"}, {"name": "sharedData_800D8616_1_s05", "addr": "0x800DAF02"}, {"name": "sharedData_800E325C_0_s00", "addr": "0x800DAE84"}, {"name": "sharedData_800D8688_1_s05", "addr": "0x800DAF74"}, {"name": "g_Particle_PrevRotationY", "addr": "0x800DAE88"}, {"name": "g_ParticleMapIdx0", "addr": "0x800D7764"}, {"name": "sharedData_800D8684_1_s05", "addr": "0x800DAF70"}, {"name": "sharedData_800E0CA8_0_s00", "addr": "0x800D88D0"}, {"name": "D_800D775C", "addr": "0x800D775C"}, {"name": "g_Particle_PrevPosition", "addr": "0x800DAE74"}, {"name": "g_ParticleVectors1", "addr": "0x800D88A4"}, {"name": "D_800D7760", "addr": "0x800D7760"}, {"name": "sharedData_800D5D08_1_s05", "addr": "0x800D7784"}, {"name": "sharedData_800E326C_0_s00", "addr": "0x800DAE94"}, {"name": "sharedData_800E0CBA_0_s00", "addr": "0x800D88E2"}, {"name": "sharedData_800DFB70_0_s00", "addr": "0x800D77A0"}, {"name": "sharedData_800E0CB0_0_s00", "addr": "0x800D88D8"}, {"name": "g_Particle_SpeedX", "addr": "0x800D7794"}, {"name": "D_800DB064", "addr": "0x800DB064"}, {"name": "D_800D778F", "addr": "0x800D778F"}, {"name": "sharedData_800E0CAC_0_s00", "addr": "0x800D88D4"}, {"name": "sharedData_800DFB7C_0_s00", "addr": "0x800D77A4"}, {"name": "sharedData_800E0CB6_0_s00", "addr": "0x800D88DE"}, {"name": "g_Effect_BloodSplats", "addr": "0x800D8744"}, {"name": "D_800D7790", "addr": "0x800D7790"}, {"name": "D_800DB024", "addr": "0x800DB024"}, {"name": "D_800DAE70", "addr": "0x800DAE70"}, {"name": "sharedData_800E39D8_0_s00", "addr": "0x800DAEF4"}, {"name": "g_ParticleSpawnCount", "addr": "0x800DAE8A"}, {"name": "sharedData_800D8614_1_s05", "addr": "0x800DAF00"}, {"name": "D_800D7761", "addr": "0x800D7761"}, {"name": "D_800DB054", "addr": "0x800DB054"}, {"name": "sharedData_800E3258_0_s00", "addr": "0x800DAE80"}, {"name": "g_Particle_RotationY", "addr": "0x800D8896"}, {"name": "g_Player_MoveSpeed", "addr": "0x800DAEF8"}, {"name": "sharedData_800E0CB4_0_s00", "addr": "0x800D88DC"}, {"name": "D_800DB094", "addr": "0x800DB094"}, {"name": "sharedData_800D8618_1_s05", "addr": "0x800DAF04"}, {"name": "D_800D9EB4", "addr": "0x800D9EB4"}, {"name": "sharedData_800E0CB8_0_s00", "addr": "0x800D88E0"}, {"name": "g_Particle_SpeedZ", "addr": "0x800D7798"}, {"name": "g_Particle_Position", "addr": "0x800DAE64"}, {"name": "D_800DAF84", "addr": "0x800DAF84"}, {"name": "sharedData_800D5CF8_1_s05", "addr": "0x800D7774"}]}}]};
+
+function pctClass(p) { return p >= 75 ? 'good' : p >= 40 ? 'mid' : 'low'; }
+function barColor(p) { return p >= 75 ? '#5a9e5f' : p >= 40 ? '#e6a817' : '#c84040'; }
+
+function makeStatBox(label, named, auto, nm) {
+  const total = named + auto;
+  const pct = total ? (named / total * 100) : 0;
+  const pc = pctClass(pct);
+  const bc = barColor(pct);
+  return `<div class="stat-box">
+    <h3>${label}</h3>
+    <div class="stat-pct ${pc}">${pct.toFixed(1)}%</div>
+    <div class="stat-line"><span class="num">${named}</span> / ${total} named</div>
+    <div class="stat-line">${auto} auto-generated</div>
+    ${nm ? `<div class="stat-line" style="color:#e67c00">${nm} non-matching</div>` : ''}
+    <div class="stat-bar-outer"><div class="stat-bar-fill" style="width:${pct}%;background:${bc}"></div></div>
+  </div>`;
+}
+
+const S = DATA.summary;
+const allN = S.functions.named + S.data.named;
+const allA = S.functions.auto + S.data.auto;
+const allNM = S.functions.non_matching + S.data.non_matching;
+document.getElementById('summary').innerHTML =
+  makeStatBox('Overall', allN, allA, allNM) +
+  makeStatBox('Functions', S.functions.named, S.functions.auto, S.functions.non_matching) +
+  makeStatBox('Data', S.data.named, S.data.auto, S.data.non_matching);
+
+let currentFilter = 'all';
+let currentSort = 'name';
+
+function getCounts(f, filter) {
+  let named = 0, auto = 0, nm = 0, autoList = [], nmList = [];
+  if (filter !== 'data') {
+    named += f.funcs.named.length;
+    auto += f.funcs.auto.length;
+    nm += f.funcs.non_matching.length;
+    autoList = autoList.concat(f.funcs.auto.map(s => ({...s, kind: 'func', tag: 'auto'})));
+    nmList = nmList.concat(f.funcs.non_matching.map(s => ({...s, kind: 'func', tag: 'nm'})));
+  }
+  if (filter !== 'code') {
+    named += f.data.named.length;
+    auto += f.data.auto.length;
+    nm += f.data.non_matching.length;
+    autoList = autoList.concat(f.data.auto.map(s => ({...s, kind: 'data', tag: 'auto'})));
+    nmList = nmList.concat(f.data.non_matching.map(s => ({...s, kind: 'data', tag: 'nm'})));
+  }
+  return { named, auto, nm, total: named + auto, autoList, nmList };
+}
+
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let files = DATA.files.map(f => {
+    const c = getCounts(f, currentFilter);
+    return { ...f, ...c };
+  }).filter(f => f.total > 0 && f.name.toLowerCase().includes(search));
+
+  if (currentSort === 'name') files.sort((a, b) => a.name.localeCompare(b.name));
+  else if (currentSort === 'pct-asc') files.sort((a, b) => (a.named/a.total) - (b.named/b.total));
+  else if (currentSort === 'pct-desc') files.sort((a, b) => (b.named/b.total) - (a.named/a.total));
+  else if (currentSort === 'remaining') files.sort((a, b) => b.auto - a.auto);
+
+  let html = `<table class="files">
+    <tr><th>File</th><th>Progress</th><th>%</th><th class="bar-cell">Bar</th><th>NM</th></tr>`;
+
+  files.forEach((f, i) => {
+    const pct = f.total ? (f.named / f.total * 100) : 0;
+    const pc = 'pct-' + pctClass(pct);
+    const bc = barColor(pct);
+
+    html += `<tr class="file-row" data-idx="${i}" onclick="toggleDetail(${i})">
+      <td class="fname"><span class="chevron">&#9654;</span>${f.name}</td>
+      <td class="ratio">${f.named}/${f.total}</td>
+      <td class="pct ${pc}">${pct.toFixed(1)}%</td>
+      <td class="bar-cell"><div class="bar-outer"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div></td>
+      <td class="nm-cell">${f.nm || ''}</td>
+    </tr>`;
+
+    const syms = f.autoList.concat(f.nmList).sort((a, b) => a.addr.localeCompare(b.addr));
+    html += `<tr class="detail-row" data-detail="${i}"><td colspan="5">`;
+    if (syms.length === 0) {
+      html += `<div class="empty-detail">All symbols have been named.</div>`;
+    } else {
+      const autoFuncs = syms.filter(s => s.tag === 'auto' && s.kind === 'func');
+      const autoData  = syms.filter(s => s.tag === 'auto' && s.kind === 'data');
+      const nmFuncs   = syms.filter(s => s.tag === 'nm'   && s.kind === 'func');
+      const nmData    = syms.filter(s => s.tag === 'nm'   && s.kind === 'data');
+
+      function renderGroup(label, items, tagClass, tagLabel) {
+        if (!items.length) return '';
+        let out = `<div class="detail-heading">${label} (${items.length})</div>`;
+        items.forEach(s => {
+          out += `<div class="sym-row">
+            <span class="addr">${s.addr}</span>&nbsp;
+            <span class="name">${s.name}</span>
+            <span class="tag tag-${s.kind}">${s.kind}</span>
+            <span class="tag ${tagClass}">${tagLabel}</span>
+          </div>`;
+        });
+        return out;
+      }
+
+      html += renderGroup('Auto-generated functions', autoFuncs, 'tag-auto', 'auto');
+      html += renderGroup('Auto-generated data', autoData, 'tag-auto', 'auto');
+      html += renderGroup('Non-matching functions', nmFuncs, 'tag-nm', 'non-matching');
+      html += renderGroup('Non-matching data', nmData, 'tag-nm', 'non-matching');
+    }
+    html += `</td></tr>`;
+  });
+
+  html += '</table>';
+  document.getElementById('fileTable').innerHTML = html;
+}
+
+function toggleDetail(idx) {
+  const row = document.querySelector(`tr.file-row[data-idx="${idx}"]`);
+  const detail = document.querySelector(`tr.detail-row[data-detail="${idx}"]`);
+  row.classList.toggle('open');
+  detail.classList.toggle('open');
+}
+
+document.querySelectorAll('.btn[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.querySelectorAll('.btn[data-sort]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn[data-sort]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', renderTable);
+renderTable();
+</script>
+</body>
+</html>

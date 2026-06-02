@@ -26,8 +26,6 @@
 # Some syms detected as auto-generated might not actually exist in the C/headers too.
 # These likely only exist in the splat ASM, and our C code might use an array/struct field to access it instead.
 # To fix these just add a `size:0xXX` to the splat sym it belongs inside and rebuild.
-#
-# TODO: Test with maps/screens elf files.
 
 import bisect
 import json
@@ -35,6 +33,7 @@ import os
 import re
 import sys
 import argparse
+from argparse import Namespace
 
 import yaml
 from elftools.elf.elffile import ELFFile
@@ -56,56 +55,84 @@ SKIP_SOURCES = (
     "libcard/", "libcd/", "libgpu/", "libspu/",
 )
 
-def find_config(elf_path, filename_fmt, ext):
-    """Find a config file for the given ELF.
-
-    Searches:
-      configs/USA/<name>.<ext>
-      configs/USA/maps/<name>.<ext>
-      configs/USA/screens/<name>.<ext>
-    """
-    basename = os.path.basename(elf_path)
-    elfname = basename.split(".")[0].lower()
-
-    # Walk up from elf_path to find repo root (where configs/ lives)
-    search = os.path.abspath(os.path.dirname(elf_path))
+def find_repo_root(start_path=None):
+    """Walk up from start_path (or cwd) to find the repo root containing configs/."""
+    search = os.path.abspath(start_path or os.getcwd())
     for _ in range(10):
-        configs_dir = os.path.join(search, "configs", "USA")
-        if os.path.isdir(configs_dir):
-            break
+        if os.path.isdir(os.path.join(search, "configs", "USA")):
+            return search
         parent = os.path.dirname(search)
         if parent == search:
             return None
         search = parent
-    else:
-        return None
-
-    name = filename_fmt.format(elfname)
-    candidates = [
-        os.path.join(configs_dir, f"{name}.{ext}"),
-        os.path.join(configs_dir, "maps", f"{name}.{ext}"),
-        os.path.join(configs_dir, "screens", f"{name}.{ext}"),
-    ]
-
-    for path in candidates:
-        if os.path.isfile(path):
-            return path
-
     return None
 
-def find_sym_txt(elf_path):
-    return find_config(elf_path, "sym.{}", "txt")
+def find_config_yaml(name, repo_root=None):
+    """Find a splat config YAML by overlay name.
 
-def find_config_yaml(elf_path):
-    return find_config(elf_path, "{}", "yaml")
+    Searches:
+      configs/USA/<name>.yaml
+      configs/USA/maps/<name>.yaml
+      configs/USA/screens/<name>.yaml
+    """
+    root = repo_root or find_repo_root()
+    if root is None:
+        return None
 
-def parse_sym_txt(path):
-    """Parse a splat sym.txt file.
+    configs_dir = os.path.join(root, "configs", "USA")
+    for subdir in ["", "maps", "screens"]:
+        path = os.path.join(configs_dir, subdir, f"{name}.yaml")
+        if os.path.isfile(path):
+            return path
+    return None
+
+def load_config(yaml_path):
+    """Load a splat config YAML and extract paths.
+
+    Returns a dict with:
+      'yaml_path': path to the YAML
+      'elf_path': path to the ELF (derived from target_path)
+      'sym_paths': list of symbol file paths
+      'config': the raw parsed YAML
+    """
+    repo_root = find_repo_root(os.path.dirname(yaml_path))
+
+    with open(yaml_path, "r") as f:
+        config = yaml.safe_load(f)
+
+    options = config.get("options", {})
+
+    # ELF path from target_path: assets/USA/1ST/BODYPROG.BIN -> build/USA/out/1ST/BODYPROG.BIN.elf
+    target = options.get("target_path", "")
+    # Strip leading assets/ prefix and rebuild as build path
+    if target.startswith("assets/"):
+        target = target[len("assets/"):]
+    elf_path = os.path.join(repo_root, "build", target + ".elf") if target else None
+
+    # Symbol files
+    sym_raw = options.get("symbol_addrs_path", [])
+    if isinstance(sym_raw, str):
+        sym_raw = [sym_raw]
+    sym_paths = [os.path.join(repo_root, p) for p in sym_raw]
+
+    return {
+        "yaml_path": yaml_path,
+        "elf_path": elf_path,
+        "sym_paths": sym_paths,
+        "config": config,
+        "repo_root": repo_root,
+    }
+
+def parse_sym_txt(paths):
+    """Parse one or more splat sym.txt files.
 
     Returns a dict of symbol_name -> source_file.
     Source file comes from subsegment comments like:
       //--- PA: 0x009AD0   VA: 0x8002E630   subsegment: c, memcard
     """
+    if isinstance(paths, str):
+        paths = [paths]
+
     sym_to_source = {}
     current_source = None
 
@@ -114,31 +141,35 @@ def parse_sym_txt(path):
     # Unnamed: "subsegment: bss" (no comma, no source name)
     unnamed_re = re.compile(r"//---.*VA:\s*(0x[0-9A-Fa-f]+).*subsegment:\s*(\S+)\s*$")
 
-    with open(path, "r") as f:
-        for line in f:
-            line = line.strip()
+    for path in paths:
+        if not os.path.isfile(path):
+            continue
+        current_source = None
+        with open(path, "r") as f:
+            for line in f:
+                line = line.strip()
 
-            m = named_re.match(line)
-            if m:
-                current_source = m.group(2).rstrip(",")
-                continue
+                m = named_re.match(line)
+                if m:
+                    current_source = m.group(2).rstrip(",")
+                    continue
 
-            m = unnamed_re.match(line)
-            if m:
-                va = m.group(1)
-                current_source = f"unnamed_{int(va, 16):08X}"
-                continue
+                m = unnamed_re.match(line)
+                if m:
+                    va = m.group(1)
+                    current_source = f"unnamed_{int(va, 16):08X}"
+                    continue
 
-            if not line or line.startswith("//"):
-                continue
+                if not line or line.startswith("//"):
+                    continue
 
-            parts = line.split("=")
-            if len(parts) != 2:
-                continue
+                parts = line.split("=")
+                if len(parts) != 2:
+                    continue
 
-            name = parts[0].strip()
-            if current_source:
-                sym_to_source[name] = current_source
+                name = parts[0].strip()
+                if current_source:
+                    sym_to_source[name] = current_source
 
     return sym_to_source
 
@@ -426,7 +457,7 @@ def build_report_data(result, sym_to_source, subseg_ranges):
 def generate_html(report_data, elf_path, output_path):
     """Generate a self-contained HTML report."""
     html = HTML_TEMPLATE.replace("__REPORT_DATA__", json.dumps(report_data))
-    html = html.replace("__ELF_PATH__",os.path.splitext(os.path.basename(elf_path))[0])
+    html = html.replace("__ELF_PATH__", os.path.splitext(os.path.basename(elf_path))[0])
     with open(output_path, "w") as f:
         f.write(html)
     print(f"HTML report written to {output_path}")
@@ -858,11 +889,117 @@ renderTable();
 </body>
 </html>"""
 
+def run(args):
+  # Resolve target: either an overlay name or a direct ELF path
+  if os.path.isfile(args.target) and args.target.endswith(".elf"):
+      # Direct ELF path -- try to find YAML from the ELF name
+      elf_path = args.target
+      elfname = os.path.basename(elf_path).split(".")[0].lower()
+      yaml_path = find_config_yaml(elfname)
+      if yaml_path:
+          cfg = load_config(yaml_path)
+          sym_paths = cfg["sym_paths"]
+          config_yaml = yaml_path
+      else:
+          sym_paths = []
+          config_yaml = None
+  else:
+      # Overlay name -- find YAML, derive everything from it
+      config_yaml = find_config_yaml(args.target.lower())
+      if config_yaml is None:
+          print(f"Could not find config YAML for '{args.target}'")
+          print("Searched configs/USA/, configs/USA/maps/, configs/USA/screens/")
+          sys.exit(1)
+
+      cfg = load_config(config_yaml)
+      elf_path = cfg["elf_path"]
+      sym_paths = cfg["sym_paths"]
+
+      if elf_path is None or not os.path.isfile(elf_path):
+          if elf_path is not None: # Hack, not sure why yaml has wrong path?
+              elf_path = elf_path.replace("VIN/", "out/VIN/")
+              elf_path = elf_path.replace("1ST/", "out/1ST/")
+          if elf_path is None or not os.path.isfile(elf_path):
+              print(f"ELF not found: {elf_path}")
+              print("Has the project been built?")
+              sys.exit(1)
+
+  print(f"Config: {config_yaml}")
+  print(f"ELF:    {elf_path}")
+  if sym_paths:
+      print(f"Syms:   {len(sym_paths)} file(s)")
+
+  result = parse_elf_symbols(elf_path, base_filter=not args.no_filter)
+
+  fn = result["functions"]
+  dt = result["data"]
+
+  # If neither --code nor --data, show both
+  show_code = args.code or not args.data
+  show_data = args.data or not args.code
+
+  total_all = 0
+  named_all = 0
+  nm_all = 0
+  if show_code:
+      total_all += len(fn["named"]) + len(fn["auto"])
+      named_all += len(fn["named"])
+      nm_all += len(fn["non_matching"])
+  if show_data:
+      total_all += len(dt["named"]) + len(dt["auto"])
+      named_all += len(dt["named"])
+      nm_all += len(dt["non_matching"])
+
+  if total_all == 0:
+      print("No matching symbols found in ELF.")
+      sys.exit(1)
+
+  pct_all = named_all / total_all * 100
+
+  print()
+  print(f"=== Overall ===")
+  print(f"  {'Total symbols:':16s}{total_all:>5}")
+  print(f"  {'Named:':16s}{named_all:>5}  ({pct_all:5.1f}%)  {print_bar(pct_all / 100)}")
+  print(f"  {'Auto-generated:':16s}{total_all - named_all:>5}  ({100 - pct_all:5.1f}%)")
+
+  if nm_all:
+      print(f"  {'Non-matching:':16s}{nm_all:>5}")
+
+  if show_code:
+      print(f"\n=== Functions ===")
+      print_category("Functions", fn["named"], fn["auto"], fn["non_matching"])
+
+  if show_data:
+      print(f"\n=== Data ===")
+      print_category("Data", dt["named"], dt["auto"], dt["non_matching"])
+
+  # Per-file and HTML both need sym + yaml data
+  if not sym_paths:
+      print("\nNo symbol files found. Cannot generate per-file breakdown.")
+      sys.exit(1)
+  if config_yaml is None:
+      print("\nNo config YAML found. Cannot generate per-file breakdown.")
+      sys.exit(1)
+
+  sym_to_source = parse_sym_txt(sym_paths)
+  subseg_ranges = parse_config_yaml(config_yaml)
+
+  print_per_file(result, sym_to_source, subseg_ranges,
+                  verbose=args.verbose, show_code=show_code, show_data=show_data)
+
+  if args.html:
+      report = build_report_data(result, sym_to_source, subseg_ranges)
+      generate_html(report, elf_path, args.html)
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Show symbol naming progress from an ELF file"
+        description="Show symbol naming progress for an overlay",
+        usage="%(prog)s <overlay_name | elf_path> [options]",
     )
-    parser.add_argument("elf_path", help="Path to the ELF file")
+    parser.add_argument(
+        "target",
+        help="Overlay name (e.g. 'bodyprog') or path to an ELF file"
+    )
     parser.add_argument(
         "--verbose", "-v", action="store_true",
         help="List all auto-generated symbol names"
@@ -880,100 +1017,48 @@ def main():
         help="Only show data progress"
     )
     parser.add_argument(
+        "--auto", action="store_true",
+        help="Run through all overlays, write reports to docs/naming_reports/"
+    )
+    parser.add_argument(
         "--html", default=None, metavar="OUTPUT",
-        help="Generate HTML report (requires sym.txt + config yaml)"
-    )
-    parser.add_argument(
-        "--sym-txt", default=None,
-        help="Path to splat sym.txt (auto-detected if not given)"
-    )
-    parser.add_argument(
-        "--config-yaml", default=None,
-        help="Path to splat config YAML (auto-detected if not given)"
+        help="Generate HTML report to OUTPUT path"
     )
     args = parser.parse_args()
 
-    result = parse_elf_symbols(args.elf_path, base_filter=not args.no_filter)
+    if args.target == "all":
+        OverlayNames = [
+            "bodyprog", "b_konami", "credits", "options", "saveload", "stream",
+            "map0_s00", "map0_s01", "map0_s02",
+            "map1_s00", "map1_s01", "map1_s02", "map1_s03", "map1_s04", "map1_s05", "map1_s06",
+            "map2_s00", "map2_s01", "map2_s02", "map2_s03", "map2_s04",
+            "map3_s00", "map3_s01", "map3_s02", "map3_s03", "map3_s04", "map3_s05", "map3_s06",
+            "map4_s00", "map4_s01", "map4_s02", "map4_s03", "map4_s04", "map4_s05", "map4_s06",
+            "map5_s00", "map5_s01", "map5_s02", "map5_s03",
+            "map6_s00", "map6_s01", "map6_s02", "map6_s03", "map6_s04", "map6_s05",
+            "map7_s00", "map7_s01", "map7_s02", "map7_s03",
+        ]
 
-    fn = result["functions"]
-    dt = result["data"]
+        for overlay in OverlayNames:
+            html_path = f"{overlay}.html"
+            if overlay.startswith("map"):
+              html_path = f"maps/{overlay}.html"
+            elif overlay == "bodyprog":
+              html_path = f"{overlay}.html"
+            else:
+              html_path = f"screens/{overlay}.html"
+            auto_args = Namespace(
+                target=overlay,
+                html=f"docs/naming_reports/{html_path}",
+                no_filter=args.no_filter,
+                code=args.code,
+                data=args.data,
+                verbose=args.verbose
+            )
 
-    # If neither --code nor --data, show both
-    show_code = args.code or not args.data
-    show_data = args.data or not args.code
-
-    total_all = 0
-    named_all = 0
-    nm_all = 0
-    if show_code:
-        total_all += len(fn["named"]) + len(fn["auto"])
-        named_all += len(fn["named"])
-        nm_all += len(fn["non_matching"])
-    if show_data:
-        total_all += len(dt["named"]) + len(dt["auto"])
-        named_all += len(dt["named"])
-        nm_all += len(dt["non_matching"])
-
-    if total_all == 0:
-        print("No matching symbols found in ELF.")
-        sys.exit(1)
-
-    pct_all = named_all / total_all * 100
-
-    print(f"ELF: {args.elf_path}")
-    print()
-    print(f"=== Overall ===")
-    print(f"  {'Total symbols:':16s}{total_all:>5}")
-    print(f"  {'Named:':16s}{named_all:>5}  ({pct_all:5.1f}%)  {print_bar(pct_all / 100)}")
-    print(f"  {'Auto-generated:':16s}{total_all - named_all:>5}  ({100 - pct_all:5.1f}%)")
-
-    if nm_all:
-        print(f"  {'Non-matching:':16s}{nm_all:>5}")
-
-    if show_code:
-        print(f"\n=== Functions ===")
-        print_category("Functions", fn["named"], fn["auto"], fn["non_matching"])
-
-    if show_data:
-        print(f"\n=== Data ===")
-        print_category("Data", dt["named"], dt["auto"], dt["non_matching"])
-
-    sym_txt = args.sym_txt or find_sym_txt(args.elf_path)
-    if sym_txt is None:
-        print(f"\nCould not find sym.txt for {args.elf_path}")
-        print("Use --sym-txt to specify the path manually.")
-        sys.exit(1)
-
-    config_yaml = args.config_yaml or find_config_yaml(args.elf_path)
-    if config_yaml is None:
-        print(f"\nCould not find config YAML for {args.elf_path}")
-        print("Use --config-yaml to specify the path manually.")
-        sys.exit(1)
-
-    if args.verbose:
-      print(f"\nsym.txt: {sym_txt}")
-      print(f"config:  {config_yaml}")
-
-    sym_to_source = parse_sym_txt(sym_txt)
-    subseg_ranges = parse_config_yaml(config_yaml)
-    print_per_file(result, sym_to_source, subseg_ranges,
-                    verbose=args.verbose, show_code=show_code, show_data=show_data)
-
-    if args.html:
-        sym_txt = args.sym_txt or find_sym_txt(args.elf_path)
-        config_yaml = args.config_yaml or find_config_yaml(args.elf_path)
-        if sym_txt is None or config_yaml is None:
-            missing = []
-            if sym_txt is None:
-                missing.append("sym.txt (use --sym-txt)")
-            if config_yaml is None:
-                missing.append("config YAML (use --config-yaml)")
-            print(f"\nCannot generate HTML: missing {', '.join(missing)}")
-            sys.exit(1)
-        sym_to_source = parse_sym_txt(sym_txt)
-        subseg_ranges = parse_config_yaml(config_yaml)
-        report = build_report_data(result, sym_to_source, subseg_ranges)
-        generate_html(report, args.elf_path, args.html)
+            run(auto_args)
+    else:
+        run(args)
 
 
 if __name__ == "__main__":
