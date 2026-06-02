@@ -331,15 +331,19 @@ def print_category(label, named, auto, non_matching):
 def lookup_source(name, addr, sym_to_source, subseg_ranges, subseg_addrs):
     """Look up source file for a symbol.
 
-    Tries name-based lookup in sym.txt first, then falls back to
-    address-based bisect into YAML subsegment ranges.
+    Tries address-based bisect into YAML subsegment ranges first,
+    then tries name-based lookup in sym.txt first.
     """
+    # YAML subsegment ranges first (module-specific)
+    idx = bisect.bisect_right(subseg_addrs, addr) - 1
+    if idx >= 0:
+        source = subseg_ranges[idx][1]
+        if source is not None:
+            return source
+    # Fall back to sym.txt name lookup
     source = sym_to_source.get(name)
     if source:
         return source
-    idx = bisect.bisect_right(subseg_addrs, addr) - 1
-    if idx >= 0:
-        return subseg_ranges[idx][1]
     return "<unknown>"
 
 def print_per_file(result, sym_to_source, subseg_ranges, verbose=False,
