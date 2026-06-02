@@ -236,6 +236,7 @@
   }
   .tag-auto { background: #fde8e8; color: #c62828; border: 1px solid #f5c0c0; }
   .tag-nm   { background: #fff3d4; color: #b87000; border: 1px solid #f0d890; }
+  .tag-named { background: #e0f0e0; color: #2e6e2e; border: 1px solid #b0d8b0; }
   .tag-func { background: #e0ecf8; color: #2654a1; border: 1px solid #b0c8e8; }
   .tag-data { background: #eee8f8; color: #6a40a0; border: 1px solid #c8b8e0; }
 
@@ -311,13 +312,14 @@ let currentFilter = 'all';
 let currentSort = 'name';
 
 function getCounts(f, filter) {
-  let named = 0, auto = 0, nm = 0, autoList = [], nmList = [];
+  let named = 0, auto = 0, nm = 0, namedList = [], autoList = [], nmList = [];
   if (filter !== 'data') {
     named += f.funcs.named.length;
     auto += f.funcs.auto.length;
     nm += f.funcs.non_matching.length;
     autoList = autoList.concat(f.funcs.auto.map(s => ({...s, kind: 'func', tag: 'auto'})));
     nmList = nmList.concat(f.funcs.non_matching.map(s => ({...s, kind: 'func', tag: 'nm'})));
+    namedList = namedList.concat(f.funcs.named.map(s => ({...s, kind: 'func', tag: 'named'})));
   }
   if (filter !== 'code') {
     named += f.data.named.length;
@@ -325,8 +327,9 @@ function getCounts(f, filter) {
     nm += f.data.non_matching.length;
     autoList = autoList.concat(f.data.auto.map(s => ({...s, kind: 'data', tag: 'auto'})));
     nmList = nmList.concat(f.data.non_matching.map(s => ({...s, kind: 'data', tag: 'nm'})));
+    namedList = namedList.concat(f.data.named.map(s => ({...s, kind: 'data', tag: 'named'})));
   }
-  return { named, auto, nm, total: named + auto, autoList, nmList };
+  return { named, auto, nm, total: named + auto, namedList, autoList, nmList };
 }
 
 function renderTable() {
@@ -358,34 +361,37 @@ function renderTable() {
       <td class="nm-cell">${f.nm || ''}</td>
     </tr>`;
 
-    const syms = f.autoList.concat(f.nmList).sort((a, b) => a.addr.localeCompare(b.addr));
+    const allSyms = f.namedList.concat(f.autoList);
+    const nmNames = new Set(f.nmList.map(s => s.name));
     html += `<tr class="detail-row" data-detail="${i}"><td colspan="5">`;
-    if (syms.length === 0) {
-      html += `<div class="empty-detail">All symbols have been named.</div>`;
+    if (allSyms.length === 0) {
+      html += `<div class="empty-detail">No symbols.</div>`;
     } else {
-      const autoFuncs = syms.filter(s => s.tag === 'auto' && s.kind === 'func');
-      const autoData  = syms.filter(s => s.tag === 'auto' && s.kind === 'data');
-      const nmFuncs   = syms.filter(s => s.tag === 'nm'   && s.kind === 'func');
-      const nmData    = syms.filter(s => s.tag === 'nm'   && s.kind === 'data');
+      const namedFuncs = allSyms.filter(s => s.tag === 'named' && s.kind === 'func');
+      const namedData  = allSyms.filter(s => s.tag === 'named' && s.kind === 'data');
+      const autoFuncs  = allSyms.filter(s => s.tag === 'auto'  && s.kind === 'func');
+      const autoData   = allSyms.filter(s => s.tag === 'auto'  && s.kind === 'data');
 
       function renderGroup(label, items, tagClass, tagLabel) {
         if (!items.length) return '';
+        const sorted = items.sort((a, b) => a.addr.localeCompare(b.addr));
         let out = `<div class="detail-heading">${label} (${items.length})</div>`;
-        items.forEach(s => {
+        sorted.forEach(s => {
           out += `<div class="sym-row">
             <span class="addr">${s.addr}</span>&nbsp;
             <span class="name">${s.name}</span>
             <span class="tag tag-${s.kind}">${s.kind}</span>
             <span class="tag ${tagClass}">${tagLabel}</span>
+            ${nmNames.has(s.name) ? '<span class="tag tag-nm">non-matching</span>' : ''}
           </div>`;
         });
         return out;
       }
 
+      html += renderGroup('Named functions', namedFuncs, 'tag-named', 'named');
+      html += renderGroup('Named data', namedData, 'tag-named', 'named');
       html += renderGroup('Auto-generated functions', autoFuncs, 'tag-auto', 'auto');
       html += renderGroup('Auto-generated data', autoData, 'tag-auto', 'auto');
-      html += renderGroup('Non-matching functions', nmFuncs, 'tag-nm', 'non-matching');
-      html += renderGroup('Non-matching data', nmData, 'tag-nm', 'non-matching');
     }
     html += `</td></tr>`;
   });
