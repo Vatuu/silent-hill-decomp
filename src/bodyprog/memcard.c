@@ -20,6 +20,21 @@ static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
 static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[MEMCARD_FILE_COUNT_MAX];
 static s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
 
+u32 g_MemCard_SaveIconTim[48] = {
+    0x00000010, 0x00000008, 0x0000002C, 0x00000000,
+    0x00010010, 0x84438000, 0x88658C62, 0x8CA798A4,
+    0xA10794C8, 0xA92794EA, 0xA16C992C, 0xA9F3A58F,
+    0xAE37AE16, 0x0000008C, 0x00000000, 0x00100004,
+    0x65553300, 0x00001136, 0x01113310, 0x00033111,
+    0x58ACC610, 0x00132111, 0xFFEEFC00, 0x0022111A,
+    0xFEDEED00, 0x0022103D, 0xEEEFFD10, 0x0022116D,
+    0x633AA510, 0x0022158A, 0x001CA500, 0x00745CA5,
+    0xCBDEEC00, 0x00BB7CDE, 0xDEDDEC00, 0x004B79BC,
+    0xACC8A800, 0x00049978, 0x8BCA8500, 0x00049976,
+    0x65558100, 0x00097777, 0x58AAA000, 0x000B9444,
+    0x246A5000, 0x006CB422, 0x01300000, 0x06DCCA31,
+};
+
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
@@ -1226,7 +1241,7 @@ void MemCard_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveIdx
 
     bzero(saveBlock->field_44, 0x1C);
 
-    OpenTIM(&D_800A8D98);
+    OpenTIM(g_MemCard_SaveIconTim);
     ReadTIM(&iconTexture);
 
     memcpy(saveBlock->iconPalette, iconTexture.caddr, iconTexture.crect->w * iconTexture.crect->h * 2);

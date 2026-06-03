@@ -360,8 +360,6 @@ extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
-extern s_FsImageDesc D_800A8D98;
-
 extern u8 D_800A97D7;
 
 extern s8 D_800A97D8;

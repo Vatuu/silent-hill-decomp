@@ -349,7 +349,7 @@ segments:
       - [0x84678, c, libsd/smf_main]
       - [0x84918, c, libsd/smf_mid]
 
-      - [0x866F8, data, bodyprog]
+      - [0x866F8, data, bodyprog] # TODO [.data, memcard]
       - [0x867B8, .data, screen/background_draw]
       - [0x867BC, .data, screen/screen_fade]
       - [0x867F8, .data, screen/cutscene_border]

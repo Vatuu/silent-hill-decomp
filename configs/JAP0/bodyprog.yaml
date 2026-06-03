@@ -369,11 +369,10 @@ segments:
       - [0x84554, c, libsd/smf_main]
       - [0x847F4, c, libsd/smf_mid]
 
-      # TODO - [0x6CF9C, asm, bodyprog_data_800A8D98] # Data
       # TODO - [0x6CF9C, asm, screen/screen_data]     # Data
       # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
-      - [0x865D4, data, bodyprog]
+      - [0x865D4, data, bodyprog] # TODO [.data, memcard]
       - [0x86694, .data, screen/background_draw]
       - [0x86698, .data, screen/screen_fade]
       - [0x866D4, .data, screen/cutscene_border]

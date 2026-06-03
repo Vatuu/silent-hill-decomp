@@ -127,7 +127,6 @@ segments:
       - [auto,      c, sys/map_info]
       - [auto,      c, events/bodyprog_data_800A99B4]
       - [auto,      c, sound/sound_data]
-      - [auto,      c, bodyprog_data_800A8D98]
       
       
       - [0x9AD0,    c, memcard]
@@ -374,7 +373,7 @@ segments:
       - [0x82458,   c, libsd/smf_mid]
 
       # .data section
-      - [0x84238, .data, bodyprog_data_800A8D98]
+      - [0x84238, .data, memcard]
       - [0x842F8, .data, screen/background_draw]
       - [0x842FC, .data, screen/screen_fade]
       - [0x84338, .data, screen/cutscene_border]
