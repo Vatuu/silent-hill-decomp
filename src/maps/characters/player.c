@@ -249,7 +249,7 @@ void Player_ControlFreeze(void)
     D_800AF216 = 0;
 
     playerChara->properties.player.afkTimer        = Q12(0.0f);
-    playerChara->properties.player.runTimer_F8     = Q12(0.0f);
+    playerChara->properties.player.runStepsGiven   = 0;
     playerChara->properties.player.exhaustionTimer = Q12(0.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Reset);

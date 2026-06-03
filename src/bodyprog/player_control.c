@@ -729,11 +729,11 @@ void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lo
 {
     if (g_SysWork.playerWork.extra.lowerBodyState != lowerBodyState)
     {
-        player->model.stateStep              = 0;
-        player->model.controlState           = 0;
-        player->properties.player.runTimer_F8 = Q12(0.0f);
-        player->properties.player.afkTimer = Q12(0.0f);
-        g_SysWork.playerStopFlags          = PlayerStopFlag_None;
+        player->model.stateStep                 = 0;
+        player->model.controlState              = 0;
+        player->properties.player.runStepsGiven = 0;
+        player->properties.player.afkTimer      = Q12(0.0f);
+        g_SysWork.playerStopFlags               = PlayerStopFlag_None;
     }
 }
 
@@ -4602,8 +4602,9 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 animStatus0,
 
 void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x80077D00
 {
-    #define MOVE_DIST_MAX Q12(1000000.0f)
-    #define MOVE_DIST_MIN 1
+    #define MOVE_DIST_MAX            Q12(1000000.0f)
+    #define MOVE_DIST_MIN            1
+    #define RUN_STUMBLE_TRIGGER_DIST (u32)Q12(10.0f)
 
     // Used for `player.moveSpeed`.
     #define GET_MOVE_SPEED(zoneType)                      \
@@ -4978,7 +4979,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                  g_Player_IsTurningLeft || g_Player_IsTurningRight)
             {
                 playerProps.headingAngle = Q12_ANGLE(0.0f);
-                g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+                g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             }
             break;
 
@@ -5034,9 +5035,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                         }
 
-                        playerProps.moveSpeed = CLAMP(playerProps.moveSpeed,
-                                                                                                        Q12(0.0f),
-                                                                                                        Q12(1.4f));
+                        playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.4f));
                     }
 
                     if (g_Controller0->heldBtnFlags & ControllerFlag_LStickUp)
@@ -5143,7 +5142,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             playerProps.headingAngle = Q12_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
 
             if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunForward)
             {
@@ -5238,7 +5237,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Stumble;
                         }
@@ -5259,7 +5258,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         break;
 
                     case PlayerLowerBodyState_RunForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
                         }
@@ -5301,20 +5300,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
-                            else if (player->properties.player.runTimer_F8 >= 5 &&
+                            else if (player->properties.player.runStepsGiven >= 5 &&
                                      playerProps.moveSpeed >= Q12(3.125f))
                             {
                                 if (player->model.anim.keyframeIdx >= 33 &&
                                     player->model.anim.keyframeIdx <= 34)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags &= ~PlayerFlag_WallStopRight;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    playerProps.flags                        &= ~PlayerFlag_WallStopRight;
                                 }
                                 else if (player->model.anim.keyframeIdx >= 43 &&
                                          player->model.anim.keyframeIdx <= 44)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags |= PlayerFlag_WallStopRight;
+                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    playerProps.flags                        |= PlayerFlag_WallStopRight;
                                 }
                             }
                             // Change state from running to walking. Difference with first conditional is this only triggers if
@@ -5755,7 +5754,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightStumble;
                         }
@@ -5770,7 +5769,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         break;
 
                     case PlayerLowerBodyState_RunForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                         }
@@ -5785,7 +5784,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         break;
 
                     default:
-                        if (player->properties.player.runTimer_F8 >= 5 &&
+                        if (player->properties.player.runStepsGiven >= 5 &&
                             playerProps.moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx >= 144 && (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
@@ -5807,7 +5806,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(4);
 
             playerProps.headingAngle = Q12_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_RunLeft:
@@ -5823,9 +5822,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             else if (playerProps.moveSpeed < Q12(3.1739f))
             {
                 playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed,
-                                                                                                 Q12(0.0f),
-                                                                                                 Q12(3.1739f));
+                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(3.1739f));
             }
 
             if (player->model.stateStep == 0)
@@ -5845,7 +5842,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
                         }
@@ -5860,7 +5857,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         break;
 
                     case PlayerLowerBodyState_RunForward:
-                        if (player->properties.player.runTimer_108 >= (u32)Q12(10.0f))
+                        if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
                             g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                         }
@@ -5875,7 +5872,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         break;
 
                     default:
-                        if (player->properties.player.runTimer_F8 >= 5 &&
+                        if (player->properties.player.runStepsGiven >= 5 &&
                             playerProps.moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx > 128 && (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
@@ -5896,7 +5893,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(4);
 
             playerProps.headingAngle = Q12_ANGLE(-90.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
@@ -6671,7 +6668,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunForward:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForward, true), player, 31, 41, sfxId, pitch1))
             {
-                player->properties.player.runTimer_F8++;
+                player->properties.player.runStepsGiven++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -6690,7 +6687,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunRight:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRight, true), player, 145, 139, sfxId, pitch1))
             {
-                player->properties.player.runTimer_F8++;
+                player->properties.player.runStepsGiven++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -6699,7 +6696,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeft:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeft, true), player, 131, 125, sfxId, pitch1))
             {
-                player->properties.player.runTimer_F8++;
+                player->properties.player.runStepsGiven++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -6942,13 +6939,13 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunRight   ||
         g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_RunLeft)
     {
-        player->properties.player.runTimer_108 += Math_Vector3MagCalc(g_Player_CollisionResult.offset.vx,
+        player->properties.player.runDistance += Math_Vector3MagCalc(g_Player_CollisionResult.offset.vx,
                                                                       g_Player_CollisionResult.offset.vy,
                                                                       g_Player_CollisionResult.offset.vz);
     }
     else
     {
-        player->properties.player.runTimer_108 = Q12(0.0f);
+        player->properties.player.runDistance = Q12(0.0f);
     }
 
     if (g_SavegamePtr->mapIdx     == MapIdx_MAP1_S00 &&
@@ -8239,14 +8236,14 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsAttacking    = false;
 
     player->properties.player.afkTimer      = Q12(0.0f);
-    player->properties.player.field_F4         = 0;
-    player->properties.player.runTimer_F8      = Q12(0.0f);
-    player->properties.player.field_100        = 0;
-    player->properties.player.field_104        = 0;
-    player->properties.player.runTimer_108     = Q12(0.0f);
-    player->properties.player.timer_110        = 0;
-    player->properties.player.flags        = 0;
-    player->properties.player.moveSpeed = 0;
+    player->properties.player.field_F4      = 0;
+    player->properties.player.runStepsGiven = 0;
+    player->properties.player.field_100     = 0;
+    player->properties.player.field_104     = 0;
+    player->properties.player.runDistance   = Q12(0.0f);
+    player->properties.player.timer_110     = 0;
+    player->properties.player.flags         = 0;
+    player->properties.player.moveSpeed     = 0;
 
     Chara_DamageClear(player);
 

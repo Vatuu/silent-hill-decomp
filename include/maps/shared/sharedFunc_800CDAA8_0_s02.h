@@ -1783,7 +1783,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk54:
             if (Player_FootstepSfxPlay(7, player, 31, 41, footstepSfxId, pitch1) != false)
             {
-                player->properties.player.runTimer_F8++;
+                player->properties.player.runStepsGiven++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -2068,7 +2068,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk124:
             if (Player_FootstepSfxPlay(player->model.anim.status, player, 80, 87, footstepSfxId, pitch1))
             {
-                player->properties.player.runTimer_F8++;
+                player->properties.player.runStepsGiven++;
             }
             break;
 #endif

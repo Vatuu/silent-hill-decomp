@@ -19,7 +19,7 @@ typedef struct _Savegame
     /* 0xAA     */ u8              equippedWeapon;              /** `e_InvItemId` | Affects the visible player weapon model. */
     /* 0xAB     */ u8              inventorySlotCount;          /** Item slots. */
     /* 0xAC     */ u32             itemToggleFlags;             /** `e_ItemToggleFlags` */
-    /* 0xB0     */ s32             ovlEnemyStates[Chara_Count]; /** Flags indicating the enemy states in a given overlay.
+    /* 0xB0     */ s32             ovlEnemyStates[45];          /** Flags indicating the enemy states in a given overlay.
                                                                  * All set to 1 by default. As soon as they are killed (not just stunned),
                                                                  * set to 0 based on a currently unknown index value.
                                                                  */

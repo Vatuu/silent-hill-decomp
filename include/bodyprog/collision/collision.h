@@ -9,6 +9,13 @@ struct _IpdCollisionData;
 
 // TODO: `collision.c` is too big and in dire need of splits. There are a few potential groupings.
 
+typedef enum _SubChunkTransitionDirection
+{
+    SubChunkTransitionDirection_None = 0,
+    SubChunkTransitionDirection_Z    = 1,
+    SubChunkTransitionDirection_X    = 2
+} e_SubChunkTransitionDirection;
+
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
  */
@@ -76,10 +83,10 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
-    /* 0x0 */ u8    field_0;
+    /* 0x0 */ u8    subChunkTransDir;     // `e_SubChunkTransitionDirection`.
     /* 0x1 */ u8    materialIdx; // Index for `s_IpdCollisionData::materialsFlags`.
-    /* 0x2 */ q7_8  field_2;
-    /* 0x4 */ q23_8 field_4;
+    /* 0x2 */ q7_8  collDiffDist;
+    /* 0x4 */ q23_8 radiusCollDiffDist;
 } s_CollisionState_A8;
 
 typedef struct
@@ -101,13 +108,13 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0  */ DVECTOR_XZ field_0;
-    /* 0x4  */ DVECTOR_XZ field_4;
-    /* 0x8  */ u32        field_8;
-    /* 0xC  */ q23_8      field_C; // Radius?
-    /* 0x10 */ q7_8       field_10;
-    /* 0x12 */ s8         __pad_12[2];
-    /* 0x14 */ DVECTOR_XZ field_14;
+    /* 0x0  */ DVECTOR_XZ charaVertDiff;
+    /* 0x4  */ DVECTOR_XZ charaMoveVertDiff;
+    /* 0x8  */ u32        subChunkTransDir; // `e_SubChunkTransitionDirection`.
+    /* 0xC  */ q23_8      radiusCollDiffDist; // Radius?
+    /* 0x10 */ q7_8       collDiffDist;
+    /* 0x12 */ s8         __pad[2];
+    /* 0x14 */ DVECTOR_XZ charaMoveOffset;
 } s_CollisionState_CC_20;
 
 typedef union
@@ -125,7 +132,7 @@ typedef struct _CollisionCellInfo
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
     /* 0x4  */ u8                     subCellIdx; // `s_IpdCollisionData::subCellsInfo` Index.
-    /* 0x5  */ u8                     field_5;
+    /* 0x5  */ u8                     heightDisabled;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
     /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
@@ -134,7 +141,6 @@ typedef struct _CollisionCellInfo
     /* 0x11 */ u8                     disableMat1Height; /** `Boolean` */
     /* 0x12 */ SVECTOR3               collisionVertex0; // Data from `s_IpdCollisionData::collisionVertices`
     /* 0x18 */ SVECTOR3               collisionVertex1; // Data from `s_IpdCollisionData::collisionVertices`
-    /* 0x1E */ s8                     unk_1E[2];
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCellInfo;
 STATIC_ASSERT_SIZEOF(s_CollisionCellInfo, 56);
@@ -146,7 +152,7 @@ typedef struct _CollisionCharaState
     /* 0x4  */ bool       field_4;        // Flag set when the character collisions being check is any of the ones being
                                           // in the of `Collision_CharaCollisionSetup`.
     /* 0x8  */ q19_12     distance;
-    /* 0xC  */ SVECTOR    offset; /** Q23.8 */
+    /* 0xC  */ SVECTOR    offset; /** Q23.8. Offset direction where the character is moving. */
     /* 0x14 */ DVECTOR_XZ direction;
     /* 0x18 */ q23_8      positionFromX;
     /* 0x1C */ q23_8      positionFromZ;
@@ -167,7 +173,7 @@ typedef struct _CollisionState
     /* 0x4    */ s_CollisionCharaState charaState;
     /* 0x34   */ s32                   field_34;
     /* 0x38   */ s16                   field_38;
-    /* 0x3A   */ s16                   field_3A;
+    /* 0x3A   */ q11_4                 field_3A;
     /* 0x3C   */ s16                   field_3C; // X?
     /* 0x3E   */ s16                   field_3E; // Z?
     /* 0x40   */ s8*                   field_40;
@@ -211,8 +217,7 @@ typedef struct _CollisionState
                      } s_1;
     /* 0xA0   */ } field_A0;
 
-    /* 0xC8   */ u8                  field_C8;
-    /* 0xC9   */ u8                  unk_C9[1];
+    /* 0xC8   */ u8                  subCellIdx; /** Secondary. Used only in case of detecting a subcell after not finding one. */
     /* 0xCA   */ q7_8                groundHeight;
     /* 0xCC   */ s_CollisionCellInfo curCellCollision;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
@@ -491,7 +496,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
 void func_8006B6E8(s_CollisionState* collState, s_IpdCollSubCellRange* subCellRanges);
 
-bool func_8006B7E0(s_CollisionState_A8* arg0, s_CollisionState_CC_20* arg1);
+bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev);
 
 void func_8006B8F8(s_CollisionCellInfo* arg0);
 
@@ -510,7 +515,7 @@ void func_8006BE40(s_CollisionState* collState);
 
 void func_8006BF88(s_CollisionState* collState, SVECTOR3* arg1);
 
-void func_8006C0C8(s_CollisionState* collState, s16 arg1, s16 arg2);
+void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState);
 

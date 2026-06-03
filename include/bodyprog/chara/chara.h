@@ -153,11 +153,11 @@ typedef struct _PropsPlayer
     /* 0xEC  */ q19_12        groundHeight;
     /* 0xF0  */ q19_12        field_F0;
     /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
-    /* 0xF8  */ q19_12        runTimer_F8;
+    /* 0xF8  */ s32           runStepsGiven;
     /* 0xFC  */ q19_12        exhaustionTimer;
     /* 0x100 */ q19_12        field_100;    // Angle?
     /* 0x104 */ q19_12        field_104;    // Distance?
-    /* 0x108 */ q19_12        runTimer_108;
+    /* 0x108 */ q19_12        runDistance;
     /* 0x10C */ u8            field_10C;    // Player SFX pitch?
     /* 0x10D */ u8            field_10D;
     /* 0x10E */ s8            __pad_10E[2];

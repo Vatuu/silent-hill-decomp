@@ -73,7 +73,7 @@ typedef struct _IpdCollisionData_18
     /* 0x0+8  */ u16      field_0_8     : 4;
     /* 0x0+12 */ u16      field_0_12    : 3;
     /* 0x0+15 */ u16      field_0_15    : 1;
-    /* 0x2    */ SVECTOR3 vec_2;
+    /* 0x2    */ SVECTOR3 offset;
     /* 0x8    */ q7_8     field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
