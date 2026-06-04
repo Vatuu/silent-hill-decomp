@@ -400,23 +400,23 @@ void func_800DED30(void) // 0x800DED30
     func_800DEAA8(0);
 }
 
-void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2) // 0x800DED50
+void func_800DED50(MATRIX* outMat, GsCOORDINATE2* rootCoord, s32 scale) // 0x800DED50
 {
-    MATRIX sp10;
-    VECTOR sp30;
+    MATRIX transformMat;
+    VECTOR scaleVec;
 
-    Vw_CoordHierarchyMatrixCompute(arg1, &sp10);
+    Vw_CoordHierarchyMatrixCompute(rootCoord, &transformMat);
 
-    sp30.vx = arg2;
-    sp30.vy = arg2;
-    sp30.vz = arg2;
+    scaleVec.vx = scale;
+    scaleVec.vy = scale;
+    scaleVec.vz = scale;
 
-    sp10.t[0] -= D_800C3868.t[0];
-    sp10.t[1] -= D_800C3868.t[1];
-    sp10.t[2] -= D_800C3868.t[2];
+    transformMat.t[0] -= D_800C3868.t[0];
+    transformMat.t[1] -= D_800C3868.t[1];
+    transformMat.t[2] -= D_800C3868.t[2];
 
-    ScaleMatrix(&sp10, &sp30);
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &sp10, arg0);
+    ScaleMatrix(&transformMat, &scaleVec);
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &transformMat, outMat);
 }
 
 bool func_800DEDEC(s_800ED848* arg0) // 0x800DEDEC
@@ -463,7 +463,7 @@ void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
 
     ptr1 = UNK_FS_BUFFER_6;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < ARRAY_SIZE(sp10); i++)
     {
         ptr = func_800DEA4C();
 

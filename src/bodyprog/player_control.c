@@ -193,15 +193,15 @@ u32    D_800AF218                         = 0;
 s32    g_Player_TargetNpcIdx              = NO_VALUE;
 
 /** Related to player. */
-u8     D_800AF220                         = 0; // Keyframe index in map overlay header struct.
-// 3 bytes of padding.
+u8 D_800AF220 = 0; // Keyframe index in map overlay header struct.
 
+// 3 bytes of padding.
 
 /** @brief Last weapon selected. While it is being assigned the value of
  * `g_SysWork::playerCombat::weaponAttack` this time it is used to determine
  * the last weapon used in order to load the required animation data.
  */
-s32    g_Player_LastWeaponSelected        = NO_VALUE;
+s32 g_Player_LastWeaponSelected = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
@@ -731,7 +731,7 @@ void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lo
     {
         player->model.stateStep                 = 0;
         player->model.controlState              = 0;
-        player->properties.player.runStepsGiven = 0;
+        player->properties.player.runStepSfxCount = 0;
         player->properties.player.afkTimer      = Q12(0.0f);
         g_SysWork.playerStopFlags               = PlayerStopFlag_None;
     }
@@ -4615,15 +4615,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     #define GET_VAL(val) \
         (((val) < Q12(3.5f)) ? (((g_DeltaTime) * Q12(0.75f)) / TIMESTEP_30_FPS) : (((g_DeltaTime) + (((g_DeltaTime) < 0) ? 3 : 0)) >> 2))
 
-    q19_12                 speedX;
-    q19_12                 speedZ;
-    s32                    travelDistStep;
+    q19_12                 moveOffsetX;
+    q19_12                 moveOffsetZ;
+    q19_12                 moveDist;
     s32                    speedZoneType; // `e_SpeedZoneType`
-    e_PlayerLowerBodyState temp_s3;       // runningState?
+    e_PlayerLowerBodyState lowerBodyMoveState;
     s32                    var_a3;
     s32                    aimState;
 
-    if (g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim)
+    #define playerExtra g_SysWork.playerWork.extra // @hack Often needed instead of `extra` for match.
+    #define stillAnim   HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)]
+
+    if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
     {
         aimState = 0;
     }
@@ -4633,13 +4636,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     }
 
     // Compute move distance step.
-    temp_s3        = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
-    speedZoneType  = Map_SpeedZoneTypeGet(player->position.vx, player->position.vz);
-    speedX         = SQUARE(player->position.vx - g_Player_PrevPosition.vx);
-    speedZ         = SQUARE(player->position.vz - g_Player_PrevPosition.vz);
-    travelDistStep = SquareRoot0(speedX + speedZ);
+    lowerBodyMoveState = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
+    speedZoneType      = Map_SpeedZoneTypeGet(player->position.vx, player->position.vz);
+    moveOffsetX        = SQUARE(player->position.vx - g_Player_PrevPosition.vx);
+    moveOffsetZ        = SQUARE(player->position.vz - g_Player_PrevPosition.vz);
+    moveDist     = SquareRoot0(moveOffsetX + moveOffsetZ);
 
-    switch (g_SysWork.playerWork.extra.lowerBodyState)
+    // Track travel distances.
+    switch (playerExtra.lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4654,17 +4658,17 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerLowerBodyState_AimWalkBackward:
         case PlayerLowerBodyState_AimSidestepRight:
         case PlayerLowerBodyState_AimSidestepLeft:
-            g_SavegamePtr->walkDistance += travelDistStep;
+            g_SavegamePtr->walkDistance += moveDist;
             g_SavegamePtr->walkDistance  = CLAMP(g_SavegamePtr->walkDistance, MOVE_DIST_MIN, MOVE_DIST_MAX);
             break;
 
         default:
-            g_SavegamePtr->runDistance += travelDistStep;
+            g_SavegamePtr->runDistance += moveDist;
             g_SavegamePtr->runDistance  = CLAMP(g_SavegamePtr->runDistance, MOVE_DIST_MIN, MOVE_DIST_MAX);
             break;
     }
 
-    switch (g_SysWork.playerWork.extra.lowerBodyState)
+    switch (playerExtra.lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4695,10 +4699,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Sets animations during specific idle states while aiming or standing.
-            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
+            if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
             {
                 // Aim to idle.
-                if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop)
+                if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStop)
                 {
                     if (!g_SysWork.playerCombat.isAiming && player->model.stateStep == 0)
                     {
@@ -4723,7 +4727,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
             else
             {
-                if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop)
+                if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStop)
                 {
                     if (!g_SysWork.playerCombat.isAiming && player->model.stateStep == 0)
                     {
@@ -4758,7 +4762,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+                else if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4787,7 +4791,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Set idle to move depending on user input.
-            if (g_SysWork.playerWork.extra.state == PlayerState_Combat) // Aiming at or shooting enemy.
+            if (playerExtra.state == PlayerState_Combat) // Aiming at or shooting enemy.
             {
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
@@ -4798,11 +4802,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (g_Player_IsMovingForward)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                         }
                     }
                 }
@@ -4822,48 +4826,48 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         if (g_Player_IsMovingForward)
                         {
                             // Restrict aiming when going from idle to run.
-                            if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
+                            if ((g_Player_IsRunning && lowerBodyMoveState == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming)) &&
                                  WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack) == EquippedWeaponId_SteelPipe))
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                            playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
                             player->headingAngle = player->headingAngle + Q12_ANGLE(90.0f);
-                            temp_s3                = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
+                            lowerBodyMoveState                = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
-                            if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
+                            if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
                             player->headingAngle -= Q12_ANGLE(90.0f);
-                            temp_s3                 = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
+                            lowerBodyMoveState    = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
-                            if (g_Player_IsRunning && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
+                            if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
                         }
 
@@ -4874,15 +4878,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             {
                                 if (g_Player_IsMovingBackward)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
-                                    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
-                                    extra->model.stateStep                      = 0;
-                                    extra->model.controlState                          = 0;
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                    playerExtra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
+                                    extra->model.stateStep     = 0;
+                                    extra->model.controlState  = 0;
                                 }
                             }
                         }
 
-                        if (g_SysWork.playerWork.extra.lowerBodyState == aimState && !g_Player_IsInWalkToRunTransition)
+                        if (playerExtra.lowerBodyState == aimState && !g_Player_IsInWalkToRunTransition)
                         {
                             Player_CharaTurn_0(player, aimState);
                         }
@@ -4900,7 +4904,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     Player_CharaRotate(7);
                 }
 
-                if (aimState != 0 && g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_Aim)
+                if (aimState != 0 && playerExtra.upperBodyState == PlayerUpperBodyState_Aim)
                 {
                     if (D_800C454C != Q12(0.0f))
                     {
@@ -4955,14 +4959,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     (player->model.anim.status == ANIM_STATUS(HarryAnim_Idle, true) ||
                      player->model.anim.status == ANIM_STATUS(HarryAnim_IdleExhausted, true)))
                 {
-                    player->model.stateStep      = 2;
+                    player->model.stateStep   = 2;
                     player->model.anim.status = ANIM_STATUS(HarryAnim_TurnLeft, false);
                 }
                 else if (g_Player_IsTurningRight && player->model.stateStep == 1 &&
                          (player->model.anim.status == ANIM_STATUS(HarryAnim_Idle, true) ||
                           player->model.anim.status == ANIM_STATUS(HarryAnim_IdleExhausted, true)))
                 {
-                    player->model.stateStep      = 2;
+                    player->model.stateStep   = 2;
                     player->model.anim.status = ANIM_STATUS(HarryAnim_TurnRight, false);
                 }
 
@@ -4971,7 +4975,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                      player->model.anim.status == ANIM_STATUS(HarryAnim_TurnLeft, true)))
                 {
                     player->model.anim.status = ANIM_STATUS(HarryAnim_Idle, false);
-                    player->model.stateStep      = 0;
+                    player->model.stateStep   = 0;
                 }
             }
 
@@ -4991,8 +4995,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((g_SysWork.playerStopFlags & PlayerStopFlag_StopWalking) &&
-                g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
+                playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
             {
                 if (playerProps.moveSpeed != Q12(0.0f))
                 {
@@ -5052,16 +5056,16 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Something related to anim and states when aiming or attacking while moving.
-            if (g_SysWork.playerWork.extra.state == PlayerState_Combat)
+            if (playerExtra.state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags & PlayerStopFlag_StopWalking)
                 {
-                    if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                         g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                    if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                         playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11) ||
                           player->model.anim.keyframeIdx == 22 || player->model.anim.keyframeIdx == 21)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
@@ -5079,28 +5083,28 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     // Code to change the player's state to running.
                     if (g_Player_IsRunning)
                     {
-                        if (aimState == 0 && temp_s3 == PlayerLowerBodyState_None &&
-                            (g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_WalkForward ||
-                             g_SysWork.playerWork.extra.upperBodyState == PlayerUpperBodyState_AimStop))
+                        if (aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None &&
+                            (playerExtra.upperBodyState == PlayerUpperBodyState_WalkForward ||
+                             playerExtra.upperBodyState == PlayerUpperBodyState_AimStop))
                         {
                             if (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 36;
-                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_RunForward, true);
-                                playerProps.flags |= PlayerFlag_Unk5;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                stillAnim.endKeyframeIdx   = 36;
+                                stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_RunForward, true);
+                                playerProps.flags         |= PlayerFlag_Unk5;
                             }
                             else if (player->model.anim.keyframeIdx >= 21 && player->model.anim.keyframeIdx <= 22)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
-                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 26;
-                                HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_RunForward, true);
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                stillAnim.endKeyframeIdx   = 26;
+                                stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_RunForward, true);
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                          g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                else if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                          playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11) ||
                           player->model.anim.keyframeIdx == 22 || player->model.anim.keyframeIdx == 21)
                 {
@@ -5114,25 +5118,25 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                              g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags |= PlayerFlag_Unk10;
-                            player->model.stateStep                                  = 0;
-                            player->model.controlState                                      = 0;
-                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
+                            playerProps.flags         |= PlayerFlag_Unk10;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                            playerProps.flags &= ~PlayerFlag_Unk10;
+                            playerExtra.lowerBodyState = aimState;
+                            playerProps.flags         &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                        playerProps.flags &= ~PlayerFlag_Unk10;
+                        playerExtra.lowerBodyState = aimState;
+                        playerProps.flags         &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.playerWork.extra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) && !g_Player_IsInWalkToRunTransition)
+                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) && !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(player, aimState);
                 }
@@ -5144,7 +5148,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             playerProps.headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_RunForward)
+            if (playerExtra.lowerBodyState == PlayerLowerBodyState_RunForward)
             {
                 player->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 player->model.stateStep++;
@@ -5159,7 +5163,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 D_800AF216 = ABS(g_Controller0->sticks_20.sticks_0.leftY);
 
-                speedX = GET_MOVE_SPEED(speedZoneType);
+                moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
                 if (playerProps.moveSpeed < Q12(3.5f))
                 {
@@ -5167,19 +5171,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
                 else
                 {
-                    speedZ   = g_DeltaTime;
-                    speedZ  += (speedZ < 0) ? 3 : 0;
-                    var_a3 = speedZ >> 2;
+                    moveOffsetZ  = g_DeltaTime;
+                    moveOffsetZ += (moveOffsetZ < 0) ? 3 : 0;
+                    var_a3       = moveOffsetZ >> 2;
                 }
 
-                func_80070CF0(player, Q12(2.0f), speedX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                func_80070CF0(player, Q12(2.0f), moveOffsetX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
             }
             // Stopped running.
             else
             {
                 if (D_800AF216 != 0)
                 {
-                    speedX = GET_MOVE_SPEED(speedZoneType);
+                    moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
                     if (playerProps.moveSpeed < Q12(3.5f))
                     {
@@ -5187,12 +5191,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                     else
                     {
-                        speedZ   = g_DeltaTime;
-                        speedZ  += (speedZ < Q12(0.0f)) ? 3 : Q12(0.0f);
-                        var_a3 = speedZ >> 2;
+                        moveOffsetZ  = g_DeltaTime;
+                        moveOffsetZ += (moveOffsetZ < Q12(0.0f)) ? 3 : Q12(0.0f);
+                        var_a3       = moveOffsetZ >> 2;
                     }
 
-                    func_80070CF0(player, Q12(2.0f), speedX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                    func_80070CF0(player, Q12(2.0f), moveOffsetX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
                 }
                 else if (playerProps.moveSpeed > GET_MOVE_SPEED(speedZoneType))
                 {
@@ -5223,58 +5227,58 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if ((player->model.anim.keyframeIdx == 43 || player->model.anim.keyframeIdx == 33) &&
+            if ((player->model.anim.keyframeIdx == 43 ||
+                 player->model.anim.keyframeIdx == 33) &&
                 player->position.vy == player->properties.player.groundHeight)
             {
                 player->fallSpeed = Q12(-1.25f);
             }
 
             // Running.
-            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
+            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
                 player->model.anim.status == ANIM_STATUS(HarryAnim_RunForward, true))
             {
-                // TODO: What does `Player_LowerBodyMoveStateGet` do?
-                switch (temp_s3)
+                switch (lowerBodyMoveState)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Stumble;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_Stumble;
                         }
                         else if (player->model.anim.keyframeIdx >= 30 &&
                                  player->model.anim.keyframeIdx <= 31)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = temp_s3;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                            playerExtra.lowerBodyState = lowerBodyMoveState;
+                            stillAnim.endKeyframeIdx   = 8;
+                            stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (player->model.anim.keyframeIdx >= 41 &&
                                  player->model.anim.keyframeIdx <= 42)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = temp_s3;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                            playerExtra.lowerBodyState = lowerBodyMoveState;
+                            stillAnim.endKeyframeIdx   = 20;
+                            stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         break;
 
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
                         }
                         else if (player->model.anim.keyframeIdx >= 30 &&
                                  player->model.anim.keyframeIdx <= 31)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                            stillAnim.endKeyframeIdx   = 8;
+                            stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (player->model.anim.keyframeIdx >= 41 &&
                                  player->model.anim.keyframeIdx <= 42)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
-                            HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                            stillAnim.endKeyframeIdx   = 20;
+                            stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         break;
 
@@ -5287,53 +5291,53 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                 if (player->model.anim.keyframeIdx >= 30 &&
                                     player->model.anim.keyframeIdx <= 31)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    stillAnim.endKeyframeIdx   = 8;
+                                    stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (player->model.anim.keyframeIdx >= 41 &&
                                          player->model.anim.keyframeIdx <= 42)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    stillAnim.endKeyframeIdx   = 20;
+                                    stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
-                            else if (player->properties.player.runStepsGiven >= 5 &&
+                            else if (player->properties.player.runStepSfxCount >= 5 &&
                                      playerProps.moveSpeed >= Q12(3.125f))
                             {
                                 if (player->model.anim.keyframeIdx >= 33 &&
                                     player->model.anim.keyframeIdx <= 34)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags                        &= ~PlayerFlag_WallStopRight;
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    playerProps.flags         &= ~PlayerFlag_WallStopRight;
                                 }
                                 else if (player->model.anim.keyframeIdx >= 43 &&
                                          player->model.anim.keyframeIdx <= 44)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags                        |= PlayerFlag_WallStopRight;
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    playerProps.flags         |= PlayerFlag_WallStopRight;
                                 }
                             }
-                            // Change state from running to walking. Difference with first conditional is this only triggers if
-                            // walking is abruptly stopped wall crash anim was not triggered.
+                            // Change state from run to walk. Difference with first conditional is this only triggers if
+                            // a walk is interrupted and a wall crash anim was not triggered.
                             // In-game, appears as though player goes directly to idle. Mechanically, it goes through this state, then to idle.
                             else
                             {
                                 if (player->model.anim.keyframeIdx >= 30 &&
                                     player->model.anim.keyframeIdx <= 31)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 8;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    stillAnim.endKeyframeIdx   = 8;
+                                    stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (player->model.anim.keyframeIdx >= 41 &&
                                          player->model.anim.keyframeIdx <= 42)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_WalkForward;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].endKeyframeIdx = 20;
-                                    HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus         = ANIM_STATUS(HarryAnim_WalkForward, true);
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    stillAnim.endKeyframeIdx   = 20;
+                                    stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                         }
@@ -5341,17 +5345,17 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_RunForward)
+            if (playerExtra.lowerBodyState != PlayerLowerBodyState_RunForward)
             {
                 Player_MovementStateReset(player, PlayerLowerBodyState_RunForward);
             }
 
             Player_CharaRotate(4);
 
-            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             playerProps.headingAngle = Q12_ANGLE(0.0f);
 
-            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_WalkForward)
+            if (playerExtra.lowerBodyState == PlayerLowerBodyState_WalkForward)
             {
                 player->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 player->model.stateStep++;
@@ -5384,14 +5388,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true) &&
                     player->model.anim.keyframeIdx >= 168 ||
                     player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true) &&
                     player->model.anim.keyframeIdx >= 158)
                 {
-                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                    playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                     Player_MovementStateReset(player, PlayerLowerBodyState_RunForwardWallStop);
                 }
 
@@ -5407,8 +5411,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((g_SysWork.playerStopFlags & PlayerStopFlag_StopRunning) &&
-                g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
+                playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
             {
                 if (playerProps.moveSpeed != Q12(0.0f))
                 {
@@ -5447,9 +5451,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                     }
 
-                    playerProps.moveSpeed = CLAMP(playerProps.moveSpeed,
-                                                                                                    Q12(0.0f),
-                                                                                                    Q12(1.15f));
+                    playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.15f));
                 }
 
                 if (g_Controller0->heldBtnFlags & ControllerFlag_LStickDown)
@@ -5464,18 +5466,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (g_SysWork.playerWork.extra.state == PlayerState_Combat)
+            if (playerExtra.state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags & PlayerStopFlag_StopRunning)
                 {
-                    if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                         g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                    if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                         playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 56 &&
                           player->model.anim.keyframeIdx <= 57) ||
                          player->model.anim.keyframeIdx == 67 ||
                          player->model.anim.keyframeIdx == 66)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
@@ -5494,23 +5496,23 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                           player->model.anim.keyframeIdx <= 67) ||
                          player->model.anim.keyframeIdx == 46 ||
                          player->model.anim.keyframeIdx == 47) &&
-                        aimState == 0 && g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
+                        aimState == 0 && playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
                         if (( g_GameWork.config.extraWalkRunCtrl && !g_Player_IsRunning) ||
                             (!g_GameWork.config.extraWalkRunCtrl &&  g_Player_IsRunning))
                         {
                             if (g_Player_IsMovingBackward)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
-                                g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
-                                extra->model.stateStep                      = 0;
-                                extra->model.controlState                          = 0;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                playerExtra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
+                                extra->model.stateStep     = 0;
+                                extra->model.controlState  = 0;
                             }
                         }
                     }
                 }
-                else if ((g_SysWork.playerWork.extra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                          g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                else if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
+                          playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 56 && player->model.anim.keyframeIdx <= 57) ||
                           player->model.anim.keyframeIdx == 67 || player->model.anim.keyframeIdx == 66)
                 {
@@ -5523,25 +5525,25 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags |= PlayerFlag_Unk10;
-                            player->model.stateStep                                  = 0;
-                            player->model.controlState                                      = 0;
-                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
+                            playerProps.flags         |= PlayerFlag_Unk10;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                            playerProps.flags &= ~PlayerFlag_Unk10;
+                            playerExtra.lowerBodyState = aimState;
+                            playerProps.flags         &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState             = aimState;
-                        playerProps.flags &= ~PlayerFlag_Unk10;
+                        playerExtra.lowerBodyState = aimState;
+                        playerProps.flags         &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (g_SysWork.playerWork.extra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkBackward) &&
+                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkBackward) &&
                     !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(player, aimState);
@@ -5552,7 +5554,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             playerProps.headingAngle = Q12_ANGLE(180.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_SidestepRight:
@@ -5577,9 +5579,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed,
-                                                                                                Q12(0.0f),
-                                                                                                Q12(1.25f));
+                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.25f));
             }
 
             if (player->model.stateStep == 0)
@@ -5605,26 +5605,26 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags |= PlayerFlag_Unk10;
-                            player->model.stateStep                                  = 0;
-                            player->model.controlState                                      = 0;
-                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
+                            playerProps.flags         |= PlayerFlag_Unk10;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
+                            playerExtra.lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = aimState;
+                        playerExtra.lowerBodyState = aimState;
                     }
                 }
-                else if (g_Player_IsRunning != 0 && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
+                else if (g_Player_IsRunning != 0 && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                 {
-                    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
+                    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
                     }
                 }
             }
@@ -5634,7 +5634,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(3);
 
             playerProps.headingAngle = Q12_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
@@ -5659,9 +5659,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed,
-                                                                                                Q12(0.0f),
-                                                                                                Q12(1.25f));
+                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.25f));
             }
 
             if (player->model.stateStep == 0)
@@ -5686,26 +5684,26 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                               g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                              extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags |= PlayerFlag_Unk10;
-                            player->model.stateStep                                  = 0;
-                            player->model.controlState                                      = 0;
-                            g_SysWork.playerWork.extra.lowerBodyState             = PlayerLowerBodyState_Attack;
+                            playerProps.flags         |= PlayerFlag_Unk10;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
+                            playerExtra.lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = aimState;
+                        playerExtra.lowerBodyState = aimState;
                     }
                 }
-                else if (g_Player_IsRunning != 0 && aimState == 0 && temp_s3 == PlayerLowerBodyState_None)
+                else if (g_Player_IsRunning != 0 && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                 {
-                    if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStop)
+                    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                     }
                 }
             }
@@ -5715,7 +5713,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(3);
 
             playerProps.headingAngle = Q12_ANGLE(-90.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_RunRight:
@@ -5731,9 +5729,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             else if (playerProps.moveSpeed < Q12(3.1739f))
             {
                 playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed,
-                                                                                                 Q12(0.0f),
-                                                                                                 Q12(3.1739f));
+                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(3.1739f));
             }
 
             if (player->model.stateStep == 0)
@@ -5749,21 +5745,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->fallSpeed = Q12(-1.0f);
             }
 
-            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
-                switch (temp_s3)
+                switch (lowerBodyMoveState)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightStumble;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightStumble;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 player->model.anim.keyframeIdx >= 147)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5771,32 +5767,32 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 player->model.anim.keyframeIdx >= 147)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
-                        if (player->properties.player.runStepsGiven >= 5 &&
+                        if (player->properties.player.runStepSfxCount >= 5 &&
                             playerProps.moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx >= 144 && (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                             }
                         }
                         else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                  player->model.anim.keyframeIdx >= 147 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5837,21 +5833,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->fallSpeed = Q12(-1.0f);
             }
 
-            if (g_SysWork.playerWork.extra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
-                switch (temp_s3)
+                switch (lowerBodyMoveState)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 player->model.anim.keyframeIdx >= 132)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5859,31 +5855,31 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 player->model.anim.keyframeIdx >= 132)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
-                        if (player->properties.player.runStepsGiven >= 5 &&
+                        if (player->properties.player.runStepSfxCount >= 5 &&
                             playerProps.moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx > 128 && (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                             }
                         }
                         else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) && player->model.anim.keyframeIdx >= 132 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                            playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5938,9 +5934,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
+                    player->rotation.vy   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
                     playerProps.moveSpeed = Q12(1.4f);
-                    D_800C454C                                                              = Q12(0.0f);
+                    D_800C454C            = Q12(0.0f);
 
                     // State change.
                     if (player->model.anim.keyframeIdx >= 213)
@@ -5949,29 +5945,29 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -5979,15 +5975,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
@@ -5995,28 +5991,28 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (player->model.anim.keyframeIdx >= 216)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
-                            player->model.stateStep                      = 0;
-                            player->model.controlState                          = 0;
+                            playerExtra.lowerBodyState = aimState;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                     }
                 }
             }
 
             playerProps.headingAngle = Q12_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
@@ -6061,9 +6057,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy                                                   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
+                    player->rotation.vy   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
                     playerProps.moveSpeed = Q12(1.4f);
-                    D_800C454C                                                              = Q12(0.0f);
+                    D_800C454C            = Q12(0.0f);
 
                     // State change.
                     if (player->model.anim.keyframeIdx >= 226)
@@ -6072,29 +6068,29 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -6102,15 +6098,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
@@ -6118,21 +6114,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
-                            player->model.stateStep = 0;
-                            player->model.controlState     = 0;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                         else if (player->model.anim.keyframeIdx >= 229)
                         {
-                            g_SysWork.playerWork.extra.lowerBodyState = aimState;
-                            player->model.stateStep                      = 0;
-                            player->model.controlState                          = 0;
+                            playerExtra.lowerBodyState = aimState;
+                            player->model.stateStep    = 0;
+                            player->model.controlState = 0;
                         }
                     }
                 }
@@ -6161,7 +6157,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 player->model.controlState++;
                 playerProps.moveSpeed = Q12(2.25f);
-                D_800C4550                                                              = Q12(2.25f);
+                D_800C4550            = Q12(2.25f);
             }
             else
             {
@@ -6187,15 +6183,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
                 else
                 {
-                    g_SysWork.playerWork.extra.lowerBodyState = aimState;
-                    player->model.stateStep                      = 0;
-                    player->model.controlState                   = 0;
-                    player->fallSpeed                                 = Q12(0.0f);
+                    playerExtra.lowerBodyState = aimState;
+                    player->model.stateStep    = 0;
+                    player->model.controlState = 0;
+                    player->fallSpeed          = Q12(0.0f);
                 }
             }
 
             playerProps.headingAngle = Q12_ANGLE(180.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(180.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_Stumble:
@@ -6226,7 +6222,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardStumble, true) && player->model.anim.keyframeIdx == 179)
             {
-                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, PlayerLowerBodyState_Stumble);
             }
             break;
@@ -6262,19 +6258,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeftStumble, true) && player->model.anim.keyframeIdx == 349)
             {
-                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 15);
             }
 
-            if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_None)
+            if (playerExtra.lowerBodyState != PlayerLowerBodyState_None)
             {
                 playerProps.headingAngle = Q12_ANGLE(-90.0f);
-                g_Player_HeadingAngle                                             = Q12_ANGLE(-90.0f);
+                g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
                 break;
             }
 
             playerProps.headingAngle = Q12_ANGLE(0.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
@@ -6300,19 +6296,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRightStumble, true) && player->model.anim.keyframeIdx == 378)
             {
-                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 16);
             }
 
-            if (g_SysWork.playerWork.extra.lowerBodyState == PlayerLowerBodyState_None)
+            if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
             {
                 playerProps.headingAngle = Q12_ANGLE(0.0f);
-                g_Player_HeadingAngle                                             = Q12_ANGLE(0.0f);
+                g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
                 break;
             }
 
             playerProps.headingAngle = Q12_ANGLE(90.0f);
-            g_Player_HeadingAngle                                             = Q12_ANGLE(90.0f);
+            g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_Attack:
@@ -6384,7 +6380,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
                 else if (playerProps.flags & PlayerFlag_Unk10)
                 {
-                    if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) ||
+                    if (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                         g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if (player->model.stateStep == 0)
@@ -6399,11 +6395,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
 
-                    if (player->model.anim.keyframeIdx == D_800C44F0[0].field_6 || player->model.anim.keyframeIdx == D_800C44F0[5].field_6)
+                    if (player->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
+                        player->model.anim.keyframeIdx == D_800C44F0[5].field_6)
                     {
                         player->model.anim.status      = extra->model.anim.status;
                         player->model.anim.keyframeIdx = extra->model.anim.keyframeIdx;
-                        player->model.anim.time         = extra->model.anim.time;
+                        player->model.anim.time        = extra->model.anim.time;
                         player->model.stateStep++;
                     }
                 }
@@ -6482,30 +6479,30 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (playerProps.moveSpeed == Q12(0.0f))
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                             }
                         }
-                        else if (g_SysWork.playerWork.extra.state != PlayerState_Combat)
+                        else if (playerExtra.state != PlayerState_Combat)
                         {
                             if (!g_Player_IsSteppingRightHold)
                             {
                                 if (g_Player_IsSteppingLeftHold)
                                 {
-                                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
+                                    playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                                 }
                             }
                             else
                             {
-                                g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
+                                playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                             }
                         }
                     }
                     else
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                     }
 
-                    if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_Attack)
+                    if (playerExtra.lowerBodyState != PlayerLowerBodyState_Attack)
                     {
                         Player_MovementStateReset(player, PlayerLowerBodyState_Aim);
                         break;
@@ -6526,28 +6523,28 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 if (g_Player_IsMovingForward)
                 {
-                    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                    playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                 }
                 else if (g_Player_IsMovingBackward)
                 {
                     if (playerProps.moveSpeed == Q12(0.0f))
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                     }
                 }
-                else if (g_SysWork.playerWork.extra.state != PlayerState_Combat)
+                else if (playerExtra.state != PlayerState_Combat)
                 {
                     if (g_Player_IsSteppingRightHold)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                     }
                     else if (g_Player_IsSteppingLeftHold)
                     {
-                        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
+                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                     }
                 }
 
-                if (g_SysWork.playerWork.extra.lowerBodyState != PlayerLowerBodyState_Reload)
+                if (playerExtra.lowerBodyState != PlayerLowerBodyState_Reload)
                 {
                     Player_MovementStateReset(player, PlayerLowerBodyState_Aim);
                 }
@@ -6556,6 +6553,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     }
 
     func_8007B924(player, extra);
+
+    #undef playerExtra
+    #undef stillAnim
 }
 
 void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
@@ -6668,7 +6668,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunForward:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForward, true), player, 31, 41, sfxId, pitch1))
             {
-                player->properties.player.runStepsGiven++;
+                player->properties.player.runStepSfxCount++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -6687,7 +6687,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunRight:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRight, true), player, 145, 139, sfxId, pitch1))
             {
-                player->properties.player.runStepsGiven++;
+                player->properties.player.runStepSfxCount++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -6696,7 +6696,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeft:
             if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeft, true), player, 131, 125, sfxId, pitch1))
             {
-                player->properties.player.runStepsGiven++;
+                player->properties.player.runStepSfxCount++;
             }
 
             playerProps.flags |= PlayerFlag_Moving;
@@ -8237,7 +8237,7 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     player->properties.player.afkTimer      = Q12(0.0f);
     player->properties.player.field_F4      = 0;
-    player->properties.player.runStepsGiven = 0;
+    player->properties.player.runStepSfxCount = 0;
     player->properties.player.field_100     = 0;
     player->properties.player.field_104     = 0;
     player->properties.player.runDistance   = Q12(0.0f);

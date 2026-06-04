@@ -153,7 +153,7 @@ typedef struct _PropsPlayer
     /* 0xEC  */ q19_12        groundHeight;
     /* 0xF0  */ q19_12        field_F0;
     /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
-    /* 0xF8  */ s32           runStepsGiven;
+    /* 0xF8  */ s32           runStepSfxCount;
     /* 0xFC  */ q19_12        exhaustionTimer;
     /* 0x100 */ q19_12        field_100;    // Angle?
     /* 0x104 */ q19_12        field_104;    // Distance?

@@ -1093,10 +1093,10 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
     gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&collState->curCellCollision.field_20.charaMoveOffset);
-    /* Will - 1: ^ This values are normally set to 0 when standing still and it's only when moving that this value get modified.
+    /* Will - 1: ^ These values are normally set to 0 when standing still and are only modified when moving.
     
-       Will - 2: I think this a distance, the value when set isn't too big and also I think `charaState.offset` are the value of
-       the offset direction at which the character is moving, like the equivalent of doing `charaPositionFrom.offset.vx - charaPositionTo.offset.vx`
+       Will - 2: I think this a distance, the value when set isn't too big and also I think `charaState.offset` is the
+       character movement offset, like the equivalent of doing `charaPositionFrom.offset.vx - charaPositionTo.offset.vx`
        that may explain why it's 0 when standing still.
     */
     
@@ -1230,14 +1230,14 @@ bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev) // 0x
         case SubChunkTransitionDirection_Z:
             switch (cur->subChunkTransDir)
             {
-                case 1:
+                case SubChunkTransitionDirection_Z:
                     if (prev->radiusCollDiffDist < cur->radiusCollDiffDist)
                     {
                         return true;
                     }
                     break;
 
-                case 2:
+                case SubChunkTransitionDirection_X:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist + 6))
                     {
                         return true;
@@ -1249,14 +1249,14 @@ bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev) // 0x
         case SubChunkTransitionDirection_X:
             switch (cur->subChunkTransDir)
             {
-                case 1:
+                case SubChunkTransitionDirection_Z:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist - 6))
                     {
                         return true;
                     }
                     break;
 
-                case 2:
+                case SubChunkTransitionDirection_X:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist - 6))
                     {
                         return true;
@@ -1590,8 +1590,7 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2) // 0x8006C0
     }
 
     temp = ((collState->curCellCollision.collisionVertex1.vy - collState->curCellCollision.collisionVertex0.vy) * arg2) / collState->curCellCollision.field_6.vz;
-
-    if (temp + collState->curCellCollision.collisionVertex0.vy < collState->charaState.bottomPos)
+    if ((temp + collState->curCellCollision.collisionVertex0.vy) < collState->charaState.bottomPos)
     {
         collState->field_40 = &collState->curCellCollision.ipdCollisionData->subCellCheckIdx[collState->curCellCollision.subCellIdx];
         collState->field_34 = 1;

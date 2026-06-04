@@ -258,7 +258,7 @@ void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1);
 
 void func_800DED30(void);
 
-void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2);
+void func_800DED50(MATRIX* outMat, GsCOORDINATE2* rootCoord, s32 scale);
 
 bool func_800DEDEC(s_800ED848* arg0);
 

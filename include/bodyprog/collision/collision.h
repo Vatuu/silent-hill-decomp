@@ -83,8 +83,8 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
-    /* 0x0 */ u8    subChunkTransDir;     // `e_SubChunkTransitionDirection`.
-    /* 0x1 */ u8    materialIdx; // Index for `s_IpdCollisionData::materialsFlags`.
+    /* 0x0 */ u8    subChunkTransDir; /**`e_SubChunkTransitionDirection` */
+    /* 0x1 */ u8    materialIdx;      // Index for `s_IpdCollisionData::materialsFlags`.
     /* 0x2 */ q7_8  collDiffDist;
     /* 0x4 */ q23_8 radiusCollDiffDist;
 } s_CollisionState_A8;
@@ -110,7 +110,7 @@ typedef struct
 {
     /* 0x0  */ DVECTOR_XZ charaVertDiff;
     /* 0x4  */ DVECTOR_XZ charaMoveVertDiff;
-    /* 0x8  */ u32        subChunkTransDir; // `e_SubChunkTransitionDirection`.
+    /* 0x8  */ u32        subChunkTransDir;   /** `e_SubChunkTransitionDirection` */
     /* 0xC  */ q23_8      radiusCollDiffDist; // Radius?
     /* 0x10 */ q7_8       collDiffDist;
     /* 0x12 */ s8         __pad[2];
@@ -127,7 +127,6 @@ typedef union
     /* 0x0 */ } cellMaterials;
 } s_CollisionState_CC_C;
 
-
 typedef struct _CollisionCellInfo
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
@@ -135,12 +134,12 @@ typedef struct _CollisionCellInfo
     /* 0x5  */ u8                     heightDisabled;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
-    /* 0xE  */ u8                     field_E;  // } Index from `s_IpdCollisionData::field_6_8`.
-    /* 0xF  */ u8                     field_F;  // }
-    /* 0x10 */ u8                     disableMat0Height; /** `Boolean` */
-    /* 0x11 */ u8                     disableMat1Height; /** `Boolean` */
-    /* 0x12 */ SVECTOR3               collisionVertex0; // Data from `s_IpdCollisionData::collisionVertices`
-    /* 0x18 */ SVECTOR3               collisionVertex1; // Data from `s_IpdCollisionData::collisionVertices`
+    /* 0xE  */ u8                     field_E;           // } Index from `s_IpdCollisionData::field_6_8`.
+    /* 0xF  */ u8                     field_F;           // }
+    /* 0x10 */ u8                     disableMat0Height; /** `bool` */
+    /* 0x11 */ u8                     disableMat1Height; /** `bool` */
+    /* 0x12 */ SVECTOR3               collisionVertex0;  // Data from `s_IpdCollisionData::collisionVertices`
+    /* 0x18 */ SVECTOR3               collisionVertex1;  // Data from `s_IpdCollisionData::collisionVertices`
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCellInfo;
 STATIC_ASSERT_SIZEOF(s_CollisionCellInfo, 56);
@@ -152,7 +151,7 @@ typedef struct _CollisionCharaState
     /* 0x4  */ bool       field_4;        // Flag set when the character collisions being check is any of the ones being
                                           // in the of `Collision_CharaCollisionSetup`.
     /* 0x8  */ q19_12     distance;
-    /* 0xC  */ SVECTOR    offset; /** Q23.8. Offset direction where the character is moving. */
+    /* 0xC  */ SVECTOR    offset; /** Q23.8 | Character offset. */
     /* 0x14 */ DVECTOR_XZ direction;
     /* 0x18 */ q23_8      positionFromX;
     /* 0x1C */ q23_8      positionFromZ;
@@ -183,7 +182,7 @@ typedef struct _CollisionState
     /* 0x84   */ q23_8                 charaCellOffsetZ; // } 
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
-    /* 0x90   */ bool                  heightDisabled;   /** `Boolean` */
+    /* 0x90   */ bool                  heightDisabled;   /** `bool` */
     /* 0x94   */ s32                   groundType;       /** `e_GroundType` */
 
                  union
@@ -217,7 +216,7 @@ typedef struct _CollisionState
                      } s_1;
     /* 0xA0   */ } field_A0;
 
-    /* 0xC8   */ u8                  subCellIdx; /** Secondary. Used only in case of detecting a subcell after not finding one. */
+    /* 0xC8   */ u8                  subCellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
     /* 0xCA   */ q7_8                groundHeight;
     /* 0xCC   */ s_CollisionCellInfo curCellCollision;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.

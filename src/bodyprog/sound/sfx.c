@@ -4,11 +4,12 @@
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/sound/sound_system.h"
 
-/** @brief Lookup table for `2^(-i/32)` in Q12, i = 0..32.
+/** @brief Lookup table for `2^(-i / 32)` in Q12, i = 0..32.
  * Used by `Math_Pow2Neg` for exponential decay via table interpolation.
- * @bug Entry [1] (0.9876) deviates from expected value of ~0.9785.
+ *
+ * @bug Entry [1] (0.9876) deviates from the expected value of ~0.9785.
  * Possibly a data entry error (switched 7 and 8).
- * Others match closely to `2^(-i/32)`
+ * Others match closely to `2^(-i / 32)`
  */
 q3_12 g_Pow2NegFracTable[] = {
     Q12(1.0f),    Q12(0.9876f), Q12(0.9576f), Q12(0.9371f),
