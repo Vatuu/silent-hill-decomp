@@ -122,8 +122,8 @@ typedef union
     /* 0x0 */ q7_8 field_0; // Something related to character radius???
               struct
               {
-                  /* 0x0 */ u8 mat0;
-                  /* 0x1 */ u8 mat1;
+                  /* 0x0 */ u8 material0;
+                  /* 0x1 */ u8 material1;
     /* 0x0 */ } cellMaterials;
 } s_CollisionState_CC_C;
 
@@ -138,20 +138,20 @@ typedef struct _CollisionCellInfo
     /* 0xF  */ u8                     field_F;           // }
     /* 0x10 */ u8                     disableMat0Height; /** `bool` */
     /* 0x11 */ u8                     disableMat1Height; /** `bool` */
-    /* 0x12 */ SVECTOR3               collisionVertex0;  // Data from `s_IpdCollisionData::collisionVertices`
-    /* 0x18 */ SVECTOR3               collisionVertex1;  // Data from `s_IpdCollisionData::collisionVertices`
+    /* 0x12 */ SVECTOR3               collisionVertex0;  /** Q23.8 | Data from `s_IpdCollisionData::collisionVertices` */
+    /* 0x18 */ SVECTOR3               collisionVertex1;  /** Q23.8 | Data from `s_IpdCollisionData::collisionVertices` */
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCellInfo;
 STATIC_ASSERT_SIZEOF(s_CollisionCellInfo, 56);
 
-/** @brief Character collision cstate. */
+/** @brief Character collision state. */
 typedef struct _CollisionCharaState
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
     /* 0x4  */ bool       field_4;        // Flag set when the character collisions being check is any of the ones being
                                           // in the of `Collision_CharaCollisionSetup`.
     /* 0x8  */ q19_12     distance;
-    /* 0xC  */ SVECTOR    offset; /** Q23.8 | Character offset. */
+    /* 0xC  */ SVECTOR    offset; /** Q23.8 | Character movement offset. */
     /* 0x14 */ DVECTOR_XZ direction;
     /* 0x18 */ q23_8      positionFromX;
     /* 0x1C */ q23_8      positionFromZ;
@@ -164,10 +164,10 @@ typedef struct _CollisionCharaState
 
 typedef struct _CollisionState
 {
-    /* 0x0+0  */ u8                    field_0_0     : 8; // Boolean? Code only assigns 1.
-    /* 0x0+8  */ s8                    isCharaMoving : 1; /** `bool` */
-    /* 0x0+9  */ s8                    field_0_9     : 1; /** `bool` */
-    /* 0x0+10 */ s8                    field_0_10    : 1; /** `bool` */
+    /* 0x0+0  */ u8                    field_0_0     : 8;  // Boolean? Code only assigns 1.
+    /* 0x0+8  */ s8                    isCharaMoving : 1;  /** `bool` */
+    /* 0x0+9  */ s8                    field_0_9     : 1;  /** `bool` */
+    /* 0x0+10 */ s8                    field_0_10    : 1;  /** `bool` */
     /* 0x2    */ u16                   flags         : 16; /** `e_CollisionTriggerFlags` */
     /* 0x4    */ s_CollisionCharaState charaState;
     /* 0x34   */ s32                   field_34;
@@ -177,13 +177,13 @@ typedef struct _CollisionState
     /* 0x3E   */ s16                   field_3E; // Z?
     /* 0x40   */ s8*                   field_40;
     /* 0x44   */ s_CollisionState_44   field_44;
-    /* 0x7C   */ q23_8                 field_7C; // Related to ground height?
+    /* 0x7C   */ q23_8                 field_7C;         // Related to ground height?
     /* 0x80   */ q23_8                 charaCellOffsetX; // } Character position in cell.
     /* 0x84   */ q23_8                 charaCellOffsetZ; // } 
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
-    /* 0x90   */ bool                  heightDisabled;   /** `bool` */
-    /* 0x94   */ s32                   groundType;       /** `e_GroundType` */
+    /* 0x90   */ bool                  heightDisabled; /** `bool` */
+    /* 0x94   */ s32                   groundType;     /** `e_GroundType` */
 
                  union
                  {
@@ -222,12 +222,13 @@ typedef struct _CollisionState
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
 
+// Something with a projected character position.
 typedef struct
 {
-    /* 0x0 */ q23_8 field_0; // X position.
-    /* 0x4 */ q23_8 field_4; // Z position.
+    /* 0x0 */ q23_8 positionX;
+    /* 0x4 */ q23_8 positionZ;
     /* 0x8 */ q7_8  groundHeight;
-    /* 0xA */ q7_8  field_A; // Y??
+    /* 0xA */ q7_8  topHeight;
     /* 0xC */ q7_8  field_C; // Collision cylinder radius?
     /* 0xE */ s16   field_E;
 } s_RayState_6C;
@@ -253,10 +254,10 @@ typedef struct
     /* 0x1C */ q7_8             groundHeight;
     /* 0x1E */ s8               __pad_1E[2];
     /* 0x20 */ s_SubCharacter*  field_20;
-    /* 0x24 */ q3_12            field_24; // X
-    /* 0x26 */ q3_12            field_26; // Z
+    /* 0x24 */ q7_8             field_24;   // X offset.
+    /* 0x26 */ q7_8             field_26;   // Z offset.
     /* 0x28 */ s32              groundType; /** `e_GroundType` */
-    /* 0x2C */ VECTOR3          from; // Q23.8
+    /* 0x2C */ VECTOR3          from;       // Q23.8
     /* 0x38 */ s8               unk_38[4];
     /* 0x3C */ s32              field_3C; // X  } Q23.8 `VECTOR3`?
     /* 0x40 */ s32              field_40; // Y? }
@@ -264,7 +265,7 @@ typedef struct
     /* 0x48 */ s8               unk_48[4];
     /* 0x4C */ q7_8             field_4C; // X?
     /* 0x4E */ q7_8             field_4E; // Height offset.
-    /* 0x50 */ SVECTOR          offset; // Q23.8
+    /* 0x50 */ SVECTOR          offset;   // Q23.8
     /* 0x58 */ u16              field_58; // X
     /* 0x5A */ s16              field_5A; // Z
     /* 0x5C */ q7_8             rayDistance;
@@ -518,13 +519,13 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2);
 
 bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState);
 
-q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4);
+q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 arg4);
 
 bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx);
 
 void func_8006C45C(s_CollisionState* collState);
 
-void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist);
+void func_8006C794(s_CollisionState* collState, s32 arg1, q23_8 dist);
 
 void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
 
@@ -578,7 +579,7 @@ bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR
 bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state);
 
 // Fills `state` with info.
-void func_8006E0AC(s_RayState* state, s_IpdCollisionData* collData);
+void func_8006E0AC(s_RayState* state, const s_IpdCollisionData* collData);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 

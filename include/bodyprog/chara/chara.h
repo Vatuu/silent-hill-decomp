@@ -548,8 +548,8 @@ STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
 /** @brief Character collision cylinder. */
 typedef struct _CharaCylinder
 {
-    /* 0x0 */ q3_12 radius;
-    /* 0x2 */ q3_12 field_2; // Secondary radius?
+    /* 0x0 */ q3_12 radius;  // Map geometry collision radius?
+    /* 0x2 */ q3_12 field_2; // Character-to-character collision radius? Sometimes used as box extent?
 } s_CharaCylinder;
 STATIC_ASSERT_SIZEOF(s_CharaCylinder, 4);
 
