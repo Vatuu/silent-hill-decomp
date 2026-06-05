@@ -123,7 +123,8 @@ typedef union
     /* 0x0 */ } cellSurfaces;
 } s_CollisionState_CC_C;
 
-typedef struct _CollisionCell
+/** @brief Collision cell point data. */
+typedef struct _CollisionCellPoint
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
     /* 0x4  */ u8                     subcellIdx; // `s_IpdCollisionData::subcells` index.
@@ -137,8 +138,8 @@ typedef struct _CollisionCell
     /* 0x12 */ SVECTOR3               splitVertex0;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
     /* 0x18 */ SVECTOR3               splitVertex1;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
     /* 0x20 */ s_CollisionState_CC_20 field_20;
-} s_CollisionCell;
-STATIC_ASSERT_SIZEOF(s_CollisionCell, 56);
+} s_CollisionCellPoint;
+STATIC_ASSERT_SIZEOF(s_CollisionCellPoint, 56);
 
 /** @brief Character collision state. */
 typedef struct _CollisionCharaState
@@ -212,9 +213,9 @@ typedef struct _CollisionState
                      } s_1;
     /* 0xA0   */ } field_A0;
 
-    /* 0xC8   */ u8              subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
-    /* 0xCA   */ q7_8            groundHeight;
-    /* 0xCC   */ s_CollisionCell curCellCollision;
+    /* 0xC8   */ u8                   subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
+    /* 0xCA   */ q7_8                 groundHeight;
+    /* 0xCC   */ s_CollisionCellPoint point;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
 
@@ -390,7 +391,7 @@ void func_8006B6E8(s_CollisionState* state, s_IpdCollSubcellRange* subcellRanges
 
 bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev);
 
-void func_8006B8F8(s_CollisionCell* cell);
+void func_8006B8F8(s_CollisionCellPoint* cellPoint);
 
 void func_8006B9C8(s_CollisionState* state);
 

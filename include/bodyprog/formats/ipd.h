@@ -40,7 +40,7 @@ typedef struct _IpdCollSurface
                                          // it gives values up to 7 when it should have been `2` as it would
                                          // only ever give a value up to 4, but some dev didn't paid attention
                                          // and assigned 3 instead.
-    /* 0x6+11 */ u16  field_6_11 : 4;    /** `bool` */
+    /* 0x6+11 */ u16  field_6_11    : 4; /** `bool` */
     /* 0x8    */ q7_8 tiltAngleX;
     /* 0xA    */ q7_8 tiltAngleZ;
 } s_IpdCollSurface;
@@ -61,13 +61,6 @@ typedef struct _IpdCollSubcell
 } s_IpdCollSubcell;
 STATIC_ASSERT_SIZEOF(s_IpdCollSubcell, 10);
 
-typedef struct _IpdCollSubcellRange
-{
-    /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
-    /* 0x2 */ s16 field_2;
-} s_IpdCollSubcellRange;
-STATIC_ASSERT_SIZEOF(s_IpdCollSubcellRange, 4);
-
 typedef struct _IpdCollisionData_18
 {
     /* 0x0+0  */ u16      groundType    : 5; /** `e_GroundType` */
@@ -75,10 +68,17 @@ typedef struct _IpdCollisionData_18
     /* 0x0+8  */ u16      field_0_8     : 4;
     /* 0x0+12 */ u16      field_0_12    : 3;
     /* 0x0+15 */ u16      field_0_15    : 1;
-    /* 0x2    */ SVECTOR3 offset;
+    /* 0x2    */ SVECTOR3 offset;            /** Q7.8 */
     /* 0x8    */ q7_8     field_8;
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
+
+typedef struct _IpdCollSubcellRange
+{
+    /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
+    /* 0x2 */ s16 field_2;
+} s_IpdCollSubcellRange;
+STATIC_ASSERT_SIZEOF(s_IpdCollSubcellRange, 4);
 
 /** @brief IPD file collision data. */
 typedef struct _IpdCollisionData
@@ -90,7 +90,7 @@ typedef struct _IpdCollisionData
     /* 0x8+16 */ u32                    subcellCount     : 8; /** `subcells` size. */
     /* 0x8+24 */ u32                    field_8_24       : 8; /** `ptr_18` size. */
     /* 0xC    */ SVECTOR3*              splitVertices;        /** Split subcell vertices. Pairs define a split line. */
-    /* 0x10   */ s_IpdCollSurface*      surfaces;             /** Split subcell surfaces. */
+    /* 0x10   */ s_IpdCollSurface*      surfaces;             /** Q7.8 | Split subcell surfaces. */
     /* 0x14   */ s_IpdCollSubcell*      subcells;
     /* 0x18   */ s_IpdCollisionData_18* ptr_18;
     /* 0x1C   */ q7_8                   subcellSize;
@@ -140,7 +140,7 @@ typedef struct _IpdModelBuffer
     /* 0x8  */ q7_8                minZ; // }
     /* 0xA  */ q7_8                maxZ; // }
     /* 0xC  */ s_IpdModelInstance* modelInstances;
-    /* 0x10 */ SVECTOR*            field_10;         // Q7.8 | Pointer to unknown collision data. TODO Wrong struct? See `Ipd_ChunkDraw`.
+    /* 0x10 */ SVECTOR*            field_10;         // Q7.8 | Pointer to unknown collision data. TODO: Wrong struct? See `Ipd_ChunkDraw`.
     /* 0x14 */ SVECTOR*            subcellPositions; /** Q7.8 | XZ positions. TODO: Wrong struct? See `Gfx_ChunkSubcellVisibleCheck`. */
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);

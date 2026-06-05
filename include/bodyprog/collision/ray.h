@@ -24,8 +24,8 @@ typedef struct
     /* 0x0 */ q23_8 positionX;
     /* 0x4 */ q23_8 positionZ;
     /* 0x8 */ q7_8  groundHeight;
-    /* 0xA */ q7_8  topHeight;
-    /* 0xC */ q7_8  field_C; // Collision cylinder radius?
+    /* 0xA */ q7_8  topHeight; // Ceiling height?
+    /* 0xC */ q7_8  field_C;   // Collision cylinder radius?
     /* 0xE */ s16   field_E;
 } s_RayState_6C;
 
