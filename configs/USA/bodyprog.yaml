@@ -192,7 +192,7 @@ segments:
       - [0x42350,   c, bodyprog_mapscreen_80066D90]
       - [0x44C8C,   c, collision/collision]
       - [0x48DAC,   c, collision/ray]
-      - [0x4A6F0,   c, collision/trigger_utils]
+      - [0x4A6F0,   c, collision/trigger]
       - [0x4AE3C,   c, collision/los]
       - [0x4B7C0,   c, collision/chara]
       - [0x4BB84,   c, player_control]

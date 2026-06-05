@@ -3,6 +3,7 @@
 
 #include "bodyprog/anim.h"
 #include "bodyprog/chara/chara.h"
+#include "bodyprog/collision/collision.h"
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/view/structs.h"
 
@@ -394,18 +395,6 @@ typedef struct _SpawnInfo
     /* 0x8   */ q19_12 positionZ;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
-
-/** @brief World-space collision trigger used to inform uneven terrain such as walls and stairs. */
-typedef struct _CollisionTrigger
-{
-    /* 0x0+0  */ u8  isEndOfArray : 1;  /** `bool` | Marks last entry. */
-    /* 0x0+1  */ s32 positionX    : 10; /** Meter steps. */
-    /* 0x0+11 */ s32 positionZ    : 10; /** Meter steps. */
-    /* 0x0+21 */ u32 sizeX        : 4;  /** Meter steps. */
-    /* 0x0+25 */ u32 sizeZ        : 4;  /** Meter steps. */
-    /* 0x0+29 */ u32 height       : 3;  /** Half-meter steps. Used to set `s_func_8006F338::field_2C` which is then copied by `func_8006F250`. */
-} s_CollisionTrigger;
-STATIC_ASSERT_SIZEOF(s_CollisionTrigger, 4);
 
 /** TODO: `g_MapOverlayHdr` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
  * If field has a comment that lists only certain maps, it means all others set this field to 0.
