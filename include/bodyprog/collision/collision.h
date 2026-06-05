@@ -356,12 +356,12 @@ void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCy
 
 /** @brief Initializes a collision state for a new pass.
  *
- * @param collState Collision state to initialize.
+ * @param state Collision state to initialize.
  * @param moveOffset Movement offset.
  * @param cylinder Collision cylinder.
  * @param arg3 Configuration flag. TODO: What is it?
  */
-void Collision_CollStateInit(s_CollisionState* collState, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
+void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3);
 
 // ========================================
 // @split? Collision state fill.
@@ -375,69 +375,69 @@ void Collision_CollStateInit(s_CollisionState* collState, VECTOR3* moveOffset, c
  */
 void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder);
 
-void Collision_CharaCollisionHandling(s_CollisionState* collState, s_IpdCollisionData* collData);
+void Collision_CharaCollisionHandling(s_CollisionState* state, s_IpdCollisionData* collData);
 
-bool Collision_SubcellInit(s_CollisionState* collState, const s_IpdCollisionData* collData);
+bool Collision_SubcellInit(s_CollisionState* state, const s_IpdCollisionData* collData);
 
-bool Collision_SubcellIdxGet(s_CollisionState* collState, const s_IpdCollisionData* collData);
+bool Collision_SubcellIdxGet(s_CollisionState* state, const s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
+void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
 
-bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collData, s32 subcellIdx);
+bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, s32 subcellIdx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_CollisionState* collState, s_IpdCollSubcellRange* subcellRanges);
+void func_8006B6E8(s_CollisionState* state, s_IpdCollSubcellRange* subcellRanges);
 
 bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev);
 
-void func_8006B8F8(s_CollisionCell* collCell);
+void func_8006B8F8(s_CollisionCell* cell);
 
-void func_8006B9C8(s_CollisionState* collState);
+void func_8006B9C8(s_CollisionState* state);
 
-void func_8006BB50(s_CollisionState* collState, s32 arg1);
+void func_8006BB50(s_CollisionState* state, s32 arg1);
 
-q23_8 func_8006BC34(s_CollisionState* collState);
+q23_8 func_8006BC34(s_CollisionState* state);
 
 /** `arg3` and `arg4` might be XY or XZ position components. */
 void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7_8 distZ, q7_8 arg5);
 
 void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
-void func_8006BE40(s_CollisionState* collState);
+void func_8006BE40(s_CollisionState* state);
 
-void func_8006BF88(s_CollisionState* collState, const SVECTOR3* splitVert);
+void func_8006BF88(s_CollisionState* state, const SVECTOR3* splitVert);
 
-void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2);
+void func_8006C0C8(s_CollisionState* state, s16 arg1, q7_8 arg2);
 
-bool func_8006C1B8(u32 arg0, q3_12 arg1, s_CollisionState* collState);
+bool func_8006C1B8(u32 arg0, q3_12 arg1, s_CollisionState* state);
 
 q3_12 func_8006C248(s32 packedDir, q3_12 arg1, q3_12 deltaX, q7_8 deltaZ, q7_8 arg4);
 
-bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 subcellIdx);
+bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 subcellIdx);
 
-void func_8006C45C(s_CollisionState* collState);
+void func_8006C45C(s_CollisionState* state);
 
-void func_8006C794(s_CollisionState* collState, s32 arg1, q23_8 dist);
+void func_8006C794(s_CollisionState* state, s32 arg1, q23_8 dist);
 
-void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData);
+void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData);
 
-void func_8006CA18(s_CollisionState* collState, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
+void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
 
-q3_12 Collision_OffsetAlphaGet(s_CollisionState* collState);
+q3_12 Collision_OffsetAlphaGet(s_CollisionState* state);
 
-q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collState);
+q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state);
 
-void func_8006CC9C(s_CollisionState* collState);
+void func_8006CC9C(s_CollisionState* state);
 
-void func_8006CF18(s_CollisionState* collState, s_func_8006CF18* arg1, s32 idx);
+void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx);
 
-void func_8006D01C(VECTOR3* arg0, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionState* collState);
+void func_8006D01C(VECTOR3* arg0, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionState* state);
 
 void func_8006D2B4(VECTOR3* arg0, s_CollisionState_44* arg1);
 
 void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 dist);
 
-void func_8006D774(s_CollisionState* collState, VECTOR3* arg1, VECTOR3* arg2);
+void func_8006D774(s_CollisionState* state, VECTOR3* arg1, VECTOR3* arg2);
 
 /** Offsets are Q23.8. */
 void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* offset0, SVECTOR* offset1);
