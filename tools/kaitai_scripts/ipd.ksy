@@ -210,7 +210,7 @@ types:
         type: ipd_coll_surface
         repeat: expr
         repeat-expr: surface_count
-        doc: TODO Wrong offset.
+        doc: Q7.8. TODO Wrong offset.
 
       subcells:
         pos: subcells_offset
@@ -241,12 +241,15 @@ types:
     seq:
       - id: field_0
         type: s2
+        doc: Q7.8.
 
       - id: field_2
         type: s2
+        doc: Q7.8.
 
       - id: field_4
         type: s2
+        doc: Q7.8.
 
       - id: ground_type
         type: b5
@@ -262,23 +265,31 @@ types:
 
       - id: tilt_angle_x
         type: s2
+        doc: Q7.8.
 
       - id: tilt_angle_z
         type: s2
+        doc: Q7.8.
 
   ipd_subcell:
     seq:
       - id: field_0_0
         type: b14
+        doc: Q7.8.
 
       - id: field_0_14
         type: b2
 
       - id: field_2_0
         type: b14
+        doc: Q7.8.
 
       - id: field_2_14
         type: b2
+
+      - id: field_4
+        type: s2
+        doc: Q7.8.
 
       - id: split_vertex_idx_0
         type: u1
@@ -311,9 +322,11 @@ types:
 
       - id: offset
         type: svector_3
+        doc: Q7.8.
 
       - id: field_8
         type: u2
+        doc: Q7.8.
 
   ipd_coll_subcell_range:
     seq:
