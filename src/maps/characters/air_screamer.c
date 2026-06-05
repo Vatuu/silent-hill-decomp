@@ -13212,9 +13212,9 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
 
         func_800805BC(&var_t0_2[idx0], &temp_s5[idx0], &coords[idx2], idx1 - idx0);
 
-        var_t1   = 0;
-        height   = INT_MAX + 1;
-        top = INT_MAX;
+        var_t1 = 0;
+        height = INT_MAX + 1;
+        top    = INT_MAX;
 
         posX = airScreamer->position.vx;
         posY = airScreamer->position.vy;
@@ -13302,17 +13302,17 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
 void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 moveSpeed, q19_12 headingAngle)
 {
     q19_12           adjHeadingAngle;
-    q19_12           moveDist;
+    q19_12           cylinderOffsetDist;
     q19_12           moveDistBase;
     s32              idx;
     q19_12           cylinderOffsetX;
     q19_12           cylinderOffsetZ;
     s_func_800D2E04* base;
 
-    adjHeadingAngle               = headingAngle;
-    idx                           = sharedFunc_800D4A80_0_s01(airScreamer);
-    base                          = &sharedData_800CAA98_0_s01;
-    moveDistBase                  = base->field_D5C[idx][1];
+    adjHeadingAngle                   = headingAngle;
+    idx                               = sharedFunc_800D4A80_0_s01(airScreamer);
+    base                              = &sharedData_800CAA98_0_s01;
+    moveDistBase                      = base->field_D5C[idx][1];
     airScreamer->collision.box.bottom = base->field_D5C[idx][0];
 
     if (moveSpeed == Q12(0.0f))
@@ -13323,19 +13323,21 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 moveSpeed, q1
         return;
     }
 
-    moveDist = moveDistBase - Q12(0.4f);
-    if (moveDist < Q12(0.0f))
+    // Compute cylinder offset distance.
+    cylinderOffsetDist = moveDistBase - Q12(0.4f);
+    if (cylinderOffsetDist < Q12(0.0f))
     {
-        moveDist = Q12(0.0f);
+        cylinderOffsetDist = Q12(0.0f);
     }
 
+    // Reverse heading angle if moving backward.
     if (moveSpeed < Q12(0.0f))
     {
         adjHeadingAngle ^= Q12_ANGLE(180.0f);
     }
 
-    cylinderOffsetX = Q12_MULT_PRECISE(moveDist, Math_Sin(adjHeadingAngle));
-    cylinderOffsetZ = Q12_MULT_PRECISE(moveDist, Math_Cos(adjHeadingAngle));
+    cylinderOffsetX = Q12_MULT_PRECISE(cylinderOffsetDist, Math_Sin(adjHeadingAngle));
+    cylinderOffsetZ = Q12_MULT_PRECISE(cylinderOffsetDist, Math_Cos(adjHeadingAngle));
 
     airScreamer->collision.shapeOffsets.cylinder.vx = cylinderOffsetX;
     airScreamer->collision.shapeOffsets.cylinder.vz = cylinderOffsetZ;

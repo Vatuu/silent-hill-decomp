@@ -2313,7 +2313,7 @@ q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ);
 s32 func_800808AC(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */
-s32 Math_MagnitudeShiftGet(s32 mag);
+s32 Math_MagnitudeShiftGet(q19_12 mag);
 
 u32 func_8008A2E0(s32 arg0);
 

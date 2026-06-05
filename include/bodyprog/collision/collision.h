@@ -644,6 +644,7 @@ void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q
 // @split? High-level character collision.
 // ========================================
 
+// Returns angle.
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
 /** Angle getter. Something to do with the direction from a character to a target position, probably for NPC AI.

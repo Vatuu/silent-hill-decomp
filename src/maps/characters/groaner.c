@@ -679,7 +679,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     }
     else
     {
-        temp1 = groaner->rotation.vy + Q12(0.125f);
+        temp1 = groaner->rotation.vy + Q12_ANGLE(45.0f);
         temp2 = groaner->headingAngle + Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(67.8f));
         if (temp2 < temp1)
         {
@@ -687,7 +687,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         }
         else
         {
-            groaner->headingAngle = groaner->rotation.vy + Q12(0.125f);
+            groaner->headingAngle = groaner->rotation.vy + Q12_ANGLE(45.0f);
         }
     }
 
@@ -734,8 +734,8 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_RunForward)
     {
         groaner->model.controlState      = GroanerControl_4;
-        groaner->rotation.vy            += Q12(0.125f);
-        groanerProps.targetHeadingAngle += Q12(0.125f);
+        groaner->rotation.vy            += Q12_ANGLE(45.0f);
+        groanerProps.targetHeadingAngle += Q12_ANGLE(45.0f);
         g_SysWork.charaGroupFlags[3]    &= ~CharaGroupFlag_1;
 
         Chara_AnimSet(groaner, ANIM_STATUS(GroanerAnim_RunForward, true), 363);

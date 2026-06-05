@@ -332,6 +332,14 @@ typedef enum _PlayerLowerBodyState
     PlayerLowerBodyState_Reload             = 35
 } e_PlayerLowerBodyState;
 
+/** @brief Rock Drill weapon attack types. */
+typedef enum _RockDrillAttackType
+{
+    RockDrillAttackType_Down   = -1, /** Down input. */
+    RockDrillAttackType_Center = 0,  /** No input. */
+    RockDrillAttackType_Up     = 1   /** Up input */
+} e_RockDrillAttackType;
+
 // ========
 // STRUCTS
 // ========
@@ -357,9 +365,9 @@ STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 // Used in player lower body state handling.
 typedef struct
 {
-    /* 0x0  */ u8  unk_0;
-    /* 0x1  */ u8  groundType; /** `e_GroundType` */
-    /* 0x2  */ u8  unk_2[18];
+    /* 0x0  */ u8     unk_0;
+    /* 0x1  */ u8     groundType; /** `e_GroundType` */
+    /* 0x2  */ u8     unk_2[18];
     /* 0x14 */ q19_12 field_14; // Related to hit distance
 } s_800C45C8;
 
@@ -370,27 +378,21 @@ typedef struct
 /** @brief `bool` | Determines if the player is transitioning from a walk to a run and vice-versa. */
 extern u8 g_Player_IsInWalkToRunTransition;
 
-/** Boolean. */
+/** `bool` */
 extern u8 g_Player_DisableControl;
 
 extern u8 D_800AF216;
 
-/** @brief Indicates the direction which the Rock Drill will attack based on the press of
- * the movement directions.
- *
- * -1: Backward move - Pointing down.
- *  0: No input      - Pointing at the center.
- *  1: Forward move  - Pointing up.
- */
-extern s8 g_Player_RockDrill_DirectionAttack;
+/** @brief `e_RockDrillAttackType` | Rock Drill attack type based on D-Pad input. */
+extern s8 g_Player_RockDrill_AttackType;
 
 /** Another variable that saves the index of the enemy being attacked. */
 extern s32 g_Player_TargetNpcIdx;
 
-/** @brief Counts the amount inputs the player has pressed in order to free himselft from a grab. */
+/** @brief Counts the number inputs performed by the user to release an enemy grab. */
 extern s32 g_Player_GrabReleaseInputTimer;
 
-/** @brief current attack animation. */
+/** @brief Current attack animation. */
 extern s32 g_Player_AttackAnimIdx;
 
 /** @brief Indicates if a multiple button taps attack is being perfomed. */
