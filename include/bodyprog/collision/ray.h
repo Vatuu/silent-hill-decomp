@@ -125,7 +125,7 @@ void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
 void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_IpdCollisionData* collData);
 
-void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collVerts, s_IpdCollSurface* surfaces, bool hasSurface);
+void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* splitVerts, s_IpdCollSurface* surfaces, bool hasSurface);
 
 void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 

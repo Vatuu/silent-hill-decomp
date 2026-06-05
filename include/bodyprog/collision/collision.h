@@ -128,14 +128,14 @@ typedef struct _CollisionCell
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
     /* 0x4  */ u8                     subcellIdx; // `s_IpdCollisionData::subcells` index.
     /* 0x5  */ u8                     heightDisabled;
-    /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position?
+    /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position inside cell/subcell?
     /* 0xC  */ s_CollisionState_CC_C  field_C;
     /* 0xE  */ u8                     field_E;               // } Index from `s_IpdCollisionData::field_6_8`.
     /* 0xF  */ u8                     field_F;               // }
     /* 0x10 */ u8                     disableSurface0Height; /** `bool` */
     /* 0x11 */ u8                     disableSurface1Height; /** `bool` */
-    /* 0x12 */ SVECTOR3               collisionVertex0;      /** Q23.8 | Data from `s_IpdCollisionData::collisionVertices` */
-    /* 0x18 */ SVECTOR3               collisionVertex1;      /** Q23.8 | Data from `s_IpdCollisionData::collisionVertices` */
+    /* 0x12 */ SVECTOR3               splitVertex0;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
+    /* 0x18 */ SVECTOR3               splitVertex1;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCell;
 STATIC_ASSERT_SIZEOF(s_CollisionCell, 56);
@@ -212,8 +212,8 @@ typedef struct _CollisionState
                      } s_1;
     /* 0xA0   */ } field_A0;
 
-    /* 0xC8   */ u8                  subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
-    /* 0xCA   */ q7_8                groundHeight;
+    /* 0xC8   */ u8              subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
+    /* 0xCA   */ q7_8            groundHeight;
     /* 0xCC   */ s_CollisionCell curCellCollision;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
@@ -405,7 +405,7 @@ void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
 void func_8006BE40(s_CollisionState* collState);
 
-void func_8006BF88(s_CollisionState* collState, SVECTOR3* collVert);
+void func_8006BF88(s_CollisionState* collState, const SVECTOR3* splitVert);
 
 void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2);
 

@@ -210,7 +210,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
     {
         collData = *curCollData;
 
-        if (collData->surfaceCount || collData->subcellInfoCount || collData->field_8_24)
+        if (collData->surfaceCount || collData->subcellCount || collData->field_8_24)
         {
             func_8006E0AC(state, collData);
             Collision_SubcellChecksReset(collData);
@@ -257,8 +257,8 @@ void func_8006E0AC(s_RayState* state, const s_IpdCollisionData* arg1) // 0x8006E
     state->field_6C.topHeight = state->from.vz - state->field_6C.positionZ;
     state->field_6C.field_C = state->field_6C.groundHeight + state->offset.vx;
     state->field_6C.field_E = state->field_6C.topHeight + state->offset.vz;
-    state->field_7C = arg1->subcellXCount;
-    state->field_80 = arg1->subcellZCount;
+    state->field_7C = arg1->subcellCountX;
+    state->field_80 = arg1->subcellCountZ;
     state->field_84 = arg1->subcellSize;
 
     func_8006E150(&state->field_6C, ((DVECTOR*)&state->offset)[0], ((DVECTOR*)&state->offset)[1]);
@@ -438,11 +438,11 @@ void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_Ip
     {
         idx = collData->ptr_28[i];
 
-        if (collData->subcellsChecksCount >= collData->subcellCheckIdx[idx])
+        if (collData->subcellCheckCount >= collData->subcellCheckIdx[idx])
         {
-            collData->subcellCheckIdx[idx] = collData->subcellsChecksCount + 1;
+            collData->subcellCheckIdx[idx] = collData->subcellCheckCount + 1;
 
-            if (idx < collData->subcellInfoCount)
+            if (idx < collData->subcellCount)
             {
                 curSubcell = &collData->subcells[idx];
 
@@ -485,12 +485,12 @@ void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_Ip
                         }
                     }
 
-                    func_8006E78C(state, curSubcell, collData->collisionVertices, collData->surfaces, hasSurface);
+                    func_8006E78C(state, curSubcell, collData->splitVertices, collData->surfaces, hasSurface);
                 }
             }
             else
             {
-                temp_a1_2 = &collData->ptr_18[idx - collData->subcellInfoCount];
+                temp_a1_2 = &collData->ptr_18[idx - collData->subcellCount];
                 temp_v0_2 = (u16)state->field_4 >> temp_a1_2->field_0_8;
 
                 if ((temp_v0_2 & (1 << 0)) &&
@@ -506,26 +506,26 @@ void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_Ip
     }
 }
 
-void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collVerts, s_IpdCollSurface* surfaces, bool hasSurface) // 0x8006E78C
+void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* splitVerts, s_IpdCollSurface* surfaces, bool hasSurface) // 0x8006E78C
 {
     SVECTOR   sp0;
     SVECTOR   sp8;
-    SVECTOR3  sp10;
+    SVECTOR3  maybeSplitDiff;
     s32       var_a3;
     q19_12    unkX;
     q19_12    unkZ;
     s32       var_a2;
     s32       groundType; // `e_GroundType`
-    SVECTOR3* collVert1;
-    SVECTOR3* collVert0;
+    SVECTOR3* splitVert1;
+    SVECTOR3* splitVert0;
     s32       unkXz;
     s32       var_v1;
 
     groundType = GroundType_Default;
-    collVert1  = &collVerts[subcell->collisionVertexIdx1];
-    collVert0  = &collVerts[subcell->collisionVertexIdx0];
+    splitVert1  = &splitVerts[subcell->splitVertexIdx1];
+    splitVert0  = &splitVerts[subcell->splitVertexIdx0];
 
-    if (state->field_5E >= collVert1->vy || state->field_5E >= collVert0->vy)
+    if (state->field_5E >= splitVert1->vy || state->field_5E >= splitVert0->vy)
     {
         if (subcell->surfaceIdx0 != UCHAR_MAX)
         {
@@ -539,12 +539,12 @@ void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collV
         unkXz = PACKED_XZ16(state->field_58, state->field_5A);
         gte_ldR11R12(unkXz);
         gte_ldR13R21(unkXz);
-        gte_ldvxy0(PACKED_XZ16(collVert1->vx - state->field_6C.groundHeight, collVert1->vz - state->field_6C.topHeight));
+        gte_ldvxy0(PACKED_XZ16(splitVert1->vx - state->field_6C.groundHeight, splitVert1->vz - state->field_6C.topHeight));
         gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp0);
 
-        gte_ldvxy0(PACKED_XZ16(collVert0->vx - state->field_6C.groundHeight, collVert0->vz - state->field_6C.topHeight));
+        gte_ldvxy0(PACKED_XZ16(splitVert0->vx - state->field_6C.groundHeight, splitVert0->vz - state->field_6C.topHeight));
         gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp8);
@@ -579,13 +579,13 @@ void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collV
                 if (var_a3 >= 0 && state->rayDistance >= var_a3)
                 {
                     gte_lddp(var_v1);
-                    gte_ldsv3_(collVert0->vx - collVert1->vx, collVert0->vy - collVert1->vy, collVert0->vz - collVert1->vz);
+                    gte_ldsv3_(splitVert0->vx - splitVert1->vx, splitVert0->vy - splitVert1->vy, splitVert0->vz - splitVert1->vz);
                     gte_gpf12();
-                    gte_stsv(&sp10);
+                    gte_stsv(&maybeSplitDiff);
 
-                    sp10.vx += collVert1->vx;
-                    sp10.vy += collVert1->vy;
-                    sp10.vz += collVert1->vz;
+                    maybeSplitDiff.vx += splitVert1->vx;
+                    maybeSplitDiff.vy += splitVert1->vy;
+                    maybeSplitDiff.vz += splitVert1->vz;
 
                     var_a2 = state->from.vy + state->field_4E;
                     if (state->offset.vy != Q8(0.0f))
@@ -593,7 +593,7 @@ void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collV
                         var_a2 += (state->offset.vy * var_a3) / state->rayDistance;
                     }
 
-                    if (var_a2 >= sp10.vy && var_a3 < state->field_8)
+                    if (var_a2 >= maybeSplitDiff.vy && var_a3 < state->field_8)
                     {
                         unkX = subcell->field_2_0;
                         unkZ = -subcell->field_0_0;
@@ -604,10 +604,10 @@ void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* collV
                         }
 
                         state->field_8  = var_a3;
-                        state->field_C  = (sp10.vx + state->field_6C.positionX);
+                        state->field_C  = (maybeSplitDiff.vx + state->field_6C.positionX);
                         state->field_10 = (var_a2 - state->field_4E);
-                        state->field_14 = (sp10.vz + state->field_6C.positionZ);
-                        state->groundHeight = sp10.vy;
+                        state->field_14 = (maybeSplitDiff.vz + state->field_6C.positionZ);
+                        state->groundHeight = maybeSplitDiff.vy;
                         state->field_24 = unkX;
                         state->field_26 = unkZ;
                         state->field_20 = NULL;
