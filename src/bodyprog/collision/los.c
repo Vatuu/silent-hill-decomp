@@ -45,7 +45,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
             }
         }
 
-        if (!Ray_CharaLosHitCheck(chara, dist, curAngleOffset + headingAngle))
+        if (!Los_CharaHitCheck(chara, dist, curAngleOffset + headingAngle))
         {
             angleOffset = curAngleOffset;
         }
@@ -110,7 +110,7 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19
         curToX = chara->position.vx + Q12_MULT(dist, Math_Sin(curAngle));
         curToZ = chara->position.vz + Q12_MULT(dist, Math_Cos(curAngle));
 
-        if (!Ray_CharaToTargetLosHitCheck(chara, curToX, chara->position.vy, curToZ))
+        if (!Los_CharaToTargetHitCheck(chara, curToX, chara->position.vy, curToZ))
         {
             curOffsetX = Q12_TO_Q6(toX - curToX);
             curOffsetZ = Q12_TO_Q6(toZ - curToZ);
@@ -195,7 +195,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     return !Ray_CharaTraceQuery(&sp10, &pos, &offset, chara) || sp20.vx != Q12(0.0f);
 }
 
-bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ)
+bool Los_CharaToTargetHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ)
 {
     s_RayTrace trace;
     VECTOR3    offset; // Q19.12
@@ -207,7 +207,7 @@ bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 
     return Ray_LosHitCheck(&trace, &fromChara->position, &offset, fromChara);
 }
 
-bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ) // 0x80070084
+bool Los_CharaToCharaTargetCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ) // 0x80070084
 {
     s_RayTrace trace;
     VECTOR3    offset; // Q19.12
@@ -225,7 +225,7 @@ bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_1
     return isCharaMissed;
 }
 
-bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer) // 0x800700F8
+bool Los_NpcToPlayerHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer) // 0x800700F8
 {
     s_RayTrace trace;
     VECTOR3    from;   // Q19.12
@@ -240,7 +240,7 @@ bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlaye
     return Ray_LosHitCheck(&trace, &from, &offset, fromNpc) && trace.character == NULL;
 }
 
-bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x80070184
+bool Los_CharaToCharaDistCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x80070184
 {
     q19_12 toX;
     q19_12 toY;
@@ -255,10 +255,10 @@ bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 
     toY             = fromChara->position.vy;
     toZ             = fromChara->position.vz + Q12_MULT(dist, cosHeadingAngle);
 
-    return Ray_CharaToCharaTargetLosCheck(fromChara, toX, toY, toZ);
+    return Los_CharaToCharaTargetCheck(fromChara, toX, toY, toZ);
 }
 
-bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist) // 0x80070208
+bool Los_CharaToCharaFrontHitCheck(s_SubCharacter* fromChara, q19_12 dist) // 0x80070208
 {
     s_RayTrace trace;
     VECTOR3    offset; // Q19.12
@@ -276,7 +276,7 @@ bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist) //
     return hasHit;
 }
 
-bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x8007029C
+bool Los_CharaHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x8007029C
 {
     s_RayTrace trace;
     VECTOR3    offset; // Q19.12

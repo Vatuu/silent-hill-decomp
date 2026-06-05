@@ -398,7 +398,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
                                        creeperProps.targetPositionZ - creeper->position.vz);
 
     if (distToTarget < Q12(1.2f) && !(creeperProps.flags & CreeperFlag_HasAttacked) &&
-        !Ray_NpcToPlayerLosHitCheck(creeper, &playerChara))
+        !Los_NpcToPlayerHitCheck(creeper, &playerChara))
     {
         if (distToPlayer > Q12(1.2f))
         {
@@ -454,7 +454,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
 
         creeperProps.attackTimer += g_DeltaTime;
 
-        if ((ABS(angleDeltaToPlayer) > Q12_ANGLE(10.0f) && Ray_CharaToCharaDistLosCheck(creeper, Q12(1.0f), creeperProps.angleToTarget)) ||
+        if ((ABS(angleDeltaToPlayer) > Q12_ANGLE(10.0f) && Los_CharaToCharaDistCheck(creeper, Q12(1.0f), creeperProps.angleToTarget)) ||
             (!Rng_GenerateInt(0, 7) && // 1 in 8 chance.
              ((!(creeperProps.flags & CreeperFlag_HasAttacked) && creeperProps.attackTimer > Q12(0.5f)) ||
               ( (creeperProps.flags & CreeperFlag_HasAttacked) && creeperProps.attackTimer > Q12(2.0f)))))
@@ -506,7 +506,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
 
     #define playerChara g_SysWork.playerWork.player
 
-    if (Ray_NpcToPlayerLosHitCheck(creeper, &playerChara))
+    if (Los_NpcToPlayerHitCheck(creeper, &playerChara))
     {
         g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         creeper->model.controlState   = CreeperControl_WalkForward;

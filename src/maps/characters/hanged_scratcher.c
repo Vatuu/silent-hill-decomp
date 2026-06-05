@@ -339,7 +339,7 @@ void HangedScratcher_Control_1(s_SubCharacter* scratcher)
 
     // TODO: Invert to return early instead?
     if (distToPlayer < Q12(1.0f) &&
-        !Ray_NpcToPlayerLosHitCheck(scratcher, &g_SysWork.playerWork.player) &&
+        !Los_NpcToPlayerHitCheck(scratcher, &g_SysWork.playerWork.player) &&
         (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2 && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
          ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) &&
           (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
@@ -576,7 +576,7 @@ void HangedScratcher_Control_5(s_SubCharacter* scratcher)
         Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - scratcher->position.vx,
                             g_SysWork.playerWork.player.position.vz - scratcher->position.vz) < Q12(1.0f))
     {
-        if (Ray_NpcToPlayerLosHitCheck(scratcher, &g_SysWork.playerWork.player))
+        if (Los_NpcToPlayerHitCheck(scratcher, &g_SysWork.playerWork.player))
         {
             return;
         }
@@ -652,7 +652,7 @@ void HangedScratcher_ControlWalkForward(s_SubCharacter* scratcher)
         return;
     }
 
-    hasLosToPlayer = Ray_NpcToPlayerLosHitCheck(scratcher, &g_SysWork.playerWork.player);
+    hasLosToPlayer = Los_NpcToPlayerHitCheck(scratcher, &g_SysWork.playerWork.player);
     if (angleDeltaToPlayerAbs < TIMESTEP_ANGLE(1, 3) && !hasLosToPlayer)
     {
         Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);

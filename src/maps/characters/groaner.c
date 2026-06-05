@@ -378,7 +378,7 @@ void Groaner_ControlWalkForward(s_SubCharacter* groaner)
     }
     else
     {
-        if (Ray_CharaLosHitCheck(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy))
+        if (Los_CharaHitCheck(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy))
         {
             groanerProps.angleToTarget = func_8006F99C(groaner, Q12_ANGLE(306.0f), groaner->rotation.vy);
             if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
@@ -459,7 +459,7 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
     distToPlayer    = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
                                           g_SysWork.playerWork.player.position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
-    hasLosToPlayer  = Ray_NpcToPlayerLosHitCheck(groaner, &g_SysWork.playerWork.player);
+    hasLosToPlayer  = Los_NpcToPlayerHitCheck(groaner, &g_SysWork.playerWork.player);
     if (distToPlayer < distToPlayerMax && !hasLosToPlayer)
     {
         groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
@@ -467,7 +467,7 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
     else
     {
         losDist   = Q12(0.9f) - Rng_GenerateInt(Q12(0.0f), Q12(0.2247f));
-        hasLosHit = Ray_CharaLosHitCheck(groaner, losDist, groaner->rotation.vy);
+        hasLosHit = Los_CharaHitCheck(groaner, losDist, groaner->rotation.vy);
 
         if ((groanerProps.timer_104 >= Q12(0.0f) && ((hasLosHit && (hasLosToPlayer || distToPlayer < losDist)) ||
              groanerProps.timer_104 == Q12(0.0f))) ||
@@ -764,7 +764,7 @@ void Groaner_Control4(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
-    hasLosHit = Ray_CharaLosHitCheck(groaner, Q12(0.9f) - Rng_GenerateInt(Q12(0.0f), Q12(0.2247f)), groaner->rotation.vy);
+    hasLosHit = Los_CharaHitCheck(groaner, Q12(0.9f) - Rng_GenerateInt(Q12(0.0f), Q12(0.2247f)), groaner->rotation.vy);
 
     if (groanerProps.timer_104 == Q12(0.0f) || !Rng_GenerateUInt(0, 31) || // 1 in 32 chance.
         (hasLosHit && groanerProps.timer_104 >= Q12(0.0f)))

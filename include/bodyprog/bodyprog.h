@@ -873,7 +873,7 @@ extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
 
-extern s_SubCharacter D_800BA00C; // Often passed to `Ray_NpcToPlayerLosHitCheck`, might not be full `s_SubCharacter`?
+extern s_SubCharacter D_800BA00C; // Often passed to `Los_NpcToPlayerHitCheck`, might not be full `s_SubCharacter`?
 
 extern u8 D_800BC74F;
 

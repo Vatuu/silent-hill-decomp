@@ -664,7 +664,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
  * @param toZ Target Z position.
  * @return `true` if there's an obstruction, `false` otherwise.
  */
-bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
+bool Los_CharaToTargetHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
 
 /** @brief Checks if there's an unobstructed target-based line of sight between a character and any other character.
  *
@@ -676,7 +676,7 @@ bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 
  * @param toZ Target Z position.
  * @return `true` if there's no obstruction, `false` otherwise.
  */
-bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
+bool Los_CharaToCharaTargetCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ);
 
 /** @brief Checks if there's an unobstructed line of sight between an NPC and a player.
  *
@@ -684,7 +684,7 @@ bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_1
  * @param toPlayer Target player character.
  * @return `true` if there's no obstruction, `false` otherwise.
  */
-bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
+bool Los_NpcToPlayerHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer);
 
 /** @brief Checks if there's an unobstructed distance-based line of sight between a character and any other character.
  *
@@ -695,7 +695,7 @@ bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlaye
  * @param headingAngle Ray heading angle on the XZ plane.
  * @return `true` if there's no obstruction, `false` otherwise.
  */
-bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
+bool Los_CharaToCharaDistCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
 /** @brief @unused Checks if there's another character obstructing the distance-based line of sight in front of a
  * character.
@@ -706,7 +706,7 @@ bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 
  * @param dist Ray distance.
  * @return `true` if there's another character in front, `false` otherwise.
  */
-bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist);
+bool Los_CharaToCharaFrontHitCheck(s_SubCharacter* fromChara, q19_12 dist);
 
 /** @brief Checks if there's an obstructed distance-based line of sight from a character.
  *
@@ -717,7 +717,7 @@ bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist);
  * @param headingAngle Ray heading angle on the XZ plane.
  * @return `true` if there's an obstruction, `false` otherwise.
  */
-bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
+bool Los_CharaHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle);
 
 bool func_80070320(void);
 

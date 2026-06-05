@@ -147,7 +147,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         case LarvalStalkerControl_2:
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
 
-            if (Ray_CharaToCharaDistLosCheck(larvalStalker, Q12(1.0f), larvalStalker->rotation.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
+            if (Los_CharaToCharaDistCheck(larvalStalker, Q12(1.0f), larvalStalker->rotation.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
             {
                 larvalStalker->model.anim.status = ANIM_STATUS(LarvalStalkerAnim_Idle, false);
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
@@ -196,7 +196,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalker->model.anim.status == ANIM_STATUS(LarvalStalkerAnim_Idle, true))
             {
-                hasLos = Ray_CharaToCharaDistLosCheck(larvalStalker, Q12(0.6f), larvalStalker->rotation.vy);
+                hasLos = Los_CharaToCharaDistCheck(larvalStalker, Q12(0.6f), larvalStalker->rotation.vy);
                 if ((hasLos && !Rng_GenerateInt(0, 3)) || // 1 in 4 chance.
                     !Rng_GenerateInt(0, 31))                 // 1 in 32 chance.
                 {
@@ -453,7 +453,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_Idle:
-            if (Ray_NpcToPlayerLosHitCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
+            if (Los_NpcToPlayerHitCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
             {
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
 
