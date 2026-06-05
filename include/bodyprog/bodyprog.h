@@ -646,7 +646,7 @@ extern RECT D_80028A20;
 
 extern const s_AnimInfo D_80028B94[];
 
-extern s_800C44F0 D_800294F4[];
+extern const s_800C44F0 D_800294F4[];
 
 extern const s_AnimInfo* D_800297B8;
 

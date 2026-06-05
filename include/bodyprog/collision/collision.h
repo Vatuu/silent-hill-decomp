@@ -5,7 +5,18 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
-struct _IpdCollisionData;
+#define INTERSECTION_BUFFER    Q12(0.1f)
+#define DEFAULT_CEILING_HEIGHT -16.0f
+
+/** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
 
 // TODO: `collision.c` is too big and in dire need of splits. There are a few potential groupings.
 
@@ -513,13 +524,13 @@ void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
 void func_8006BE40(s_CollisionState* collState);
 
-void func_8006BF88(s_CollisionState* collState, SVECTOR3* arg1);
+void func_8006BF88(s_CollisionState* collState, SVECTOR3* collVert);
 
 void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2);
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState);
+bool func_8006C1B8(u32 arg0, q3_12 arg1, s_CollisionState* collState);
 
-q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 arg4);
+q3_12 func_8006C248(s32 packedDir, q3_12 arg1, q3_12 deltaX, q7_8 deltaZ, q7_8 arg4);
 
 bool func_8006C3D4(s_CollisionState* collState, s_IpdCollisionData* collData, s32 idx);
 

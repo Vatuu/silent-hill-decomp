@@ -22,20 +22,7 @@
 // Please delete them or rewrite them properly after properly recognizing
 // the function purpose.
 
-#define INTERSECTION_BUFFER    Q12(0.1f)
-#define DEFAULT_CEILING_HEIGHT -16.0f
-
 s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
-
-/** @brief Computes a trigger height from half-meter height steps.
- *
- * @note The trigger height has a default offset of `Q12(-1.5f)`.
- *
- * @param steps Half-meter height steps.
- * @return Trigger height (Q19.12).
- */
-#define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
 
 void Collision_Init(void) // 0x800697EC
 {
@@ -304,17 +291,6 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
     #undef WALL_COUNT_THRESHOLD
     #undef WALL_HEIGHT
 }
-
-// Padding with garbage data.
-#if VERSION_IS(USA)
-    static const u8 __unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP0)
-    static const u8 __unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP1)
-    static const u8 __unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP2)
-    static const u8 __unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
-#endif
 
 void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
                                  q19_12 startGroundHeight, q19_12 startHeadingAngle) // 0x80069DF0
@@ -601,6 +577,8 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
+            // TODO: Wrong. `chara->collision.cylinder.radius` is `q9_12` while `collState.charaState.radius`
+            // is `q7_8`. Could be division?
             var_a0 = FP_FROM(chara->collision.cylinder.radius, Q4_SHIFT) + collState.charaState.radius;
 
             if (chara->collision.state < (u32)collState.charaState.collisionState)
@@ -991,12 +969,12 @@ void func_8006B1C8(s_CollisionState* collState, s_IpdCollisionData* collData, s_
 
                     if (collState->isCharaMoving || collState->field_0_9)
                     {
-                        if (collState->curCellCollision.field_C.cellMaterials.material1 == UCHAR_MAX)
+                        if (collState->curCellCollision.field_C.cellMaterials.material1 == 0xFF)
                         {
                             func_8006B9C8(collState);
                         }
 
-                        if (collState->curCellCollision.field_C.cellMaterials.material0 == UCHAR_MAX)
+                        if (collState->curCellCollision.field_C.cellMaterials.material0 == 0xFF)
                         {
                             func_8006B8F8(&collState->curCellCollision);
                             func_8006B9C8(collState);
@@ -1048,7 +1026,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     collState->curCellCollision.field_C.cellMaterials.material0 = subCellInfo->materialIdx0;
 
-    if (collState->curCellCollision.field_C.cellMaterials.material0 != UCHAR_MAX)
+    if (collState->curCellCollision.field_C.cellMaterials.material0 != 0xFF)
     {
         curCellMatlFlags                              = &collData->materialsFlags[collState->curCellCollision.field_C.cellMaterials.material0];
         collState->curCellCollision.field_E           = curCellMatlFlags->field_6_8;
@@ -1064,7 +1042,7 @@ bool func_8006B318(s_CollisionState* collState, const s_IpdCollisionData* collDa
 
     collState->curCellCollision.field_C.cellMaterials.material1 = subCellInfo->materialIdx1;
 
-    if (collState->curCellCollision.field_C.cellMaterials.material1 != UCHAR_MAX)
+    if (collState->curCellCollision.field_C.cellMaterials.material1 != 0xFF)
     {
         curCellMatlFlags                              = &collData->materialsFlags[collState->curCellCollision.field_C.cellMaterials.material1];
         collState->curCellCollision.field_F           = curCellMatlFlags->field_6_8;
@@ -1150,14 +1128,14 @@ void func_8006B6E8(s_CollisionState* collState, s_IpdCollSubCellRange* subCellRa
     bool                 disableMat1Height;
     s_CollisionState_A8* temp_s0;
 
-    material0              = collState->curCellCollision.field_C.cellMaterials.material0;
-    material1              = collState->curCellCollision.field_C.cellMaterials.material1;
+    material0         = collState->curCellCollision.field_C.cellMaterials.material0;
+    material1         = collState->curCellCollision.field_C.cellMaterials.material1;
     disableMat0Height = collState->curCellCollision.disableMat0Height;
     disableMat1Height = collState->curCellCollision.disableMat1Height;
 
-    if (material0 == UCHAR_MAX)
+    if (material0 == 0xFF)
     {
-        if (material1 == UCHAR_MAX)
+        if (material1 == 0xFF)
         {
             return;
         }
@@ -1230,14 +1208,14 @@ bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev) // 0x
         case SubChunkTransitionDirection_Z:
             switch (cur->subChunkTransDir)
             {
-                case SubChunkTransitionDirection_Z:
+                case 1:
                     if (prev->radiusCollDiffDist < cur->radiusCollDiffDist)
                     {
                         return true;
                     }
                     break;
 
-                case SubChunkTransitionDirection_X:
+                case 2:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist + 6))
                     {
                         return true;
@@ -1249,14 +1227,14 @@ bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev) // 0x
         case SubChunkTransitionDirection_X:
             switch (cur->subChunkTransDir)
             {
-                case SubChunkTransitionDirection_Z:
+                case 1:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist - 6))
                     {
                         return true;
                     }
                     break;
 
-                case SubChunkTransitionDirection_X:
+                case 2:
                     if (prev->radiusCollDiffDist < (cur->radiusCollDiffDist - 6))
                     {
                         return true;
@@ -1295,19 +1273,19 @@ void func_8006B8F8(s_CollisionCellInfo* arg0) // 0x8006B8F8
     temp_a3                           = arg0->field_C.cellMaterials.material0;
     arg0->field_20.charaMoveOffset.vx = -arg0->field_20.charaMoveOffset.vx;
 
-    arg0->collisionVertex0.vz        = temp_a2;
+    arg0->collisionVertex0.vz             = temp_a2;
     arg0->field_C.cellMaterials.material0 = arg0->field_C.cellMaterials.material1;
 
     ptr = &arg0->field_20;
 
-    arg0->field_C.cellMaterials.material1  = temp_a3;
-    temp_a3                           = arg0->field_E;
-    arg0->field_20.charaMoveOffset.vz = -arg0->field_20.charaMoveOffset.vz;
-    arg0->field_E                     = arg0->field_F;
-    arg0->field_F                     = temp_a3;
+    arg0->field_C.cellMaterials.material1 = temp_a3;
+    temp_a3                               = arg0->field_E;
+    arg0->field_20.charaMoveOffset.vz     = -arg0->field_20.charaMoveOffset.vz;
+    arg0->field_E                         = arg0->field_F;
+    arg0->field_F                         = temp_a3;
 
-    ptr->charaVertDiff.vz = -ptr->charaVertDiff.vz;
-    ptr->charaVertDiff.vx = (arg0->field_6.vz - ptr->charaVertDiff.vx);
+    ptr->charaVertDiff.vz     = -ptr->charaVertDiff.vz;
+    ptr->charaVertDiff.vx     = (arg0->field_6.vz - ptr->charaVertDiff.vx);
     ptr->charaMoveVertDiff.vz = -ptr->charaMoveVertDiff.vz;
     ptr->charaMoveVertDiff.vx = (arg0->field_6.vz - ptr->charaMoveVertDiff.vx);
 }
@@ -1490,7 +1468,7 @@ void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
 
     if (collState->curCellCollision.field_20.charaVertDiff.vz >= negRadius)
     {
-        if (collState->curCellCollision.field_20.charaVertDiff.vx >= 0)
+        if (collState->curCellCollision.field_20.charaVertDiff.vx >= Q8(0.0f))
         {
             if (collState->curCellCollision.field_6.vz >= collState->curCellCollision.field_20.charaVertDiff.vx)
             {
@@ -1557,17 +1535,17 @@ void func_8006BE40(s_CollisionState* collState) // 0x8006BE40
     }
 }
 
-void func_8006BF88(s_CollisionState* collState, SVECTOR3* arg1) // 0x8006BF88
+void func_8006BF88(s_CollisionState* collState, SVECTOR3* collVert) // 0x8006BF88
 {
-    s16 temp_v0;
-    s32 temp2;
-    s32 temp3;
+    q3_12 temp_v0;
+    s32   temp2;
+    s32   temp3;
 
     temp_v0 = func_8006C248(*(s32*)&collState->charaState.direction, collState->charaState.distance,
-                            arg1->vx - collState->charaPositionFrom.offset.vx,
-                            arg1->vz - collState->charaPositionFrom.offset.vz,
+                            collVert->vx - collState->charaPositionFrom.offset.vx,
+                            collVert->vz - collState->charaPositionFrom.offset.vz,
                             collState->charaState.radius);
-    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, collState) && collState->charaState.bottomPos > arg1->vy)
+    if (temp_v0 != NO_VALUE && func_8006C1B8(2, temp_v0, collState) && collState->charaState.bottomPos > collVert->vy)
     {
         collState->field_38 = temp_v0;
         collState->field_34 = 2;
@@ -1575,9 +1553,9 @@ void func_8006BF88(s_CollisionState* collState, SVECTOR3* arg1) // 0x8006BF88
         collState->field_3A = Q12_TO_Q4(collState->charaState.distance * temp_v0);
         collState->field_40 = &collState->curCellCollision.ipdCollisionData->subCellCheckIdx[collState->curCellCollision.subCellIdx];
 
-        collState->field_3C = temp2 - arg1->vx;
+        collState->field_3C = temp2 - collVert->vx;
         temp3               = collState->charaPositionFrom.offset.vz + Q12_MULT(collState->charaState.offset.vz, temp_v0);
-        collState->field_3E = temp3 - arg1->vz;
+        collState->field_3E = temp3 - collVert->vz;
     }
 }
 
@@ -1591,7 +1569,7 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2) // 0x8006C0
     }
 
     temp = ((collState->curCellCollision.collisionVertex1.vy - collState->curCellCollision.collisionVertex0.vy) * arg2) / collState->curCellCollision.field_6.vz;
-    if ((temp + collState->curCellCollision.collisionVertex0.vy) < collState->charaState.bottomPos)
+    if (temp + collState->curCellCollision.collisionVertex0.vy < collState->charaState.bottomPos)
     {
         collState->field_40 = &collState->curCellCollision.ipdCollisionData->subCellCheckIdx[collState->curCellCollision.subCellIdx];
         collState->field_34 = 1;
@@ -1602,7 +1580,7 @@ void func_8006C0C8(s_CollisionState* collState, s16 arg1, q7_8 arg2) // 0x8006C0
     }
 }
 
-bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B8
+bool func_8006C1B8(u32 arg0, q3_12 arg1, s_CollisionState* collState) // 0x8006C1B8
 {
     q27_4 var;
 
@@ -1648,11 +1626,11 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_CollisionState* collState) // 0x8006C1B
     return var < collState->field_3A;
 }
 
-q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 arg4) // 0x8006C248
+q3_12 func_8006C248(s32 packedDir, q3_12 arg1, q3_12 deltaX, q7_8 deltaZ, q7_8 arg4) // 0x8006C248
 {
     DVECTOR sp10; // Q19.12
     s16     temp_v0;
-    q3_12   dist;
+    s16     dist;
     q3_12   alpha;
 
     gte_ldR11R12(packedDir);
@@ -1662,7 +1640,7 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 a
     gte_rtv0();
     gte_stMAC12(&sp10.vx);
 
-    if (sp10.vx < 0)
+    if (sp10.vx < Q12(0.0f))
     {
         dist = Math_Vector2MagCalc(sp10.vx, sp10.vy);
     }
@@ -1676,7 +1654,7 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 a
         dist = ABS(sp10.vy);
     }
 
-    if (arg1 == 0)
+    if (arg1 == Q12(0.0f))
     {
         alpha = NO_VALUE;
         if (dist >= arg4)
@@ -1696,6 +1674,7 @@ q3_12 func_8006C248(s32 packedDir, s16 arg1, q3_12 deltaX, q3_12 deltaZ, q3_12 a
 
     alpha = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1; // TODO: Use `Math_Vector2MagCalc`.
     alpha = CLAMP(alpha, Q12(0.0f), Q12(1.0f));
+
     return alpha;
 }
 
@@ -1724,8 +1703,8 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
 {
     q7_8  distMax;
     q7_8  dist;
-    s16   var_s2;
-    s32   bound;
+    q3_12 var_s2;
+    q23_8 bound;
     q23_8 distX;
     q23_8 distZ;
     q23_8 temp_v1;
@@ -1762,10 +1741,10 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
 
     distX = collState->charaPositionFrom.offset.vx - collState->curCellCollision.field_6.vx;
     distZ = collState->charaPositionFrom.offset.vz - collState->curCellCollision.field_6.vz;
-    dist   = Math_Vector2MagCalc(distX, distZ);
+    dist  = Math_Vector2MagCalc(distX, distZ);
 
     if (dist < collState->curCellCollision.field_C.field_0 && collState->curCellCollision.heightDisabled != true &&
-        (collState->subCellIdx == UCHAR_MAX || collState->curCellCollision.field_6.vy < collState->groundHeight))
+        (collState->subCellIdx == 0xFF || collState->curCellCollision.field_6.vy < collState->groundHeight))
     {
         collState->subCellIdx   = collState->curCellCollision.subCellIdx;
         collState->groundHeight = collState->curCellCollision.field_6.vy;
@@ -1802,7 +1781,7 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
         return;
     }
 
-    if (var_s2 < 0)
+    if (var_s2 < Q12(0.0f))
     {
         var_s2 = 0;
     }
@@ -1820,7 +1799,7 @@ void func_8006C45C(s_CollisionState* collState) // 0x8006C45C
     }
 }
 
-void func_8006C794(s_CollisionState* collState, s32 arg1, q23_8 dist) // 0x8006C794
+void func_8006C794(s_CollisionState* collState, s32 arg1, s32 dist) // 0x8006C794
 {
     if (collState->charaState.bottomPos >= (collState->curCellCollision.field_6.vy + (dist - collState->curCellCollision.field_C.field_0)))
     {
@@ -1845,7 +1824,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
         return;
     }
 
-    if (collState->subCellIdx != UCHAR_MAX && collState->groundHeight < collState->field_7C)
+    if (collState->subCellIdx != 0xFF && collState->groundHeight < collState->field_7C)
     {
         temp_a0                     = &collData->ptr_18[collState->subCellIdx - collData->subCellInfoCount];
         collState->field_7C         = collState->groundHeight;
@@ -1859,7 +1838,7 @@ void func_8006C838(s_CollisionState* collState, s_IpdCollisionData* collData) //
 
     for (curUnk = &collState->field_A0.s_0.field_8[0]; curUnk < &collState->field_A0.s_0.field_8[4]; curUnk++)
     {
-        if (curUnk->materialIdx != UCHAR_MAX)
+        if (curUnk->materialIdx != 0xFF)
         {
             materialFlags = &collData->materialsFlags[curUnk->materialIdx];
 
@@ -1971,12 +1950,12 @@ q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* collSt
 
 void func_8006CC9C(s_CollisionState* collState) // 0x8006CC9C
 {
-    q19_12 deltaX;
-    q19_12 deltaZ;
-    s32    temp_v0;
-    s32    temp_s4;
-    s32    temp;
-    s32    temp2;
+    q23_8  deltaX;
+    q23_8  deltaZ;
+    q19_12 temp_v0;
+    q23_8  temp_s4;
+    q23_8  temp;
+    q23_8  temp2;
     s32    temp3;
     s32    temp4;
     s32    tarCharaBottom;
@@ -2048,7 +2027,7 @@ void func_8006CC9C(s_CollisionState* collState) // 0x8006CC9C
 
 void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0x8006CF18
 {
-    s32              var_a1;
+    q23_8            var_a1;
     s_func_8006CF18* curArg1;
 
     for (curArg1 = arg1; curArg1 < &arg1[idx]; curArg1++)
@@ -2062,11 +2041,11 @@ void func_8006CF18(s_CollisionState* state, s_func_8006CF18* arg1, s32 idx) // 0
         state->charaPositionFrom.field_0 = Q12_TO_Q8(curArg1->position.vx);
         state->charaPositionTo.field_0   = Q12_TO_Q8(curArg1->position.vz);
 
-        state->field_A0.s_1.field_0 = Q12_TO_Q8(curArg1->field_E + curArg1->position.vy);
-        state->field_A0.s_1.field_2 = Q12_TO_Q8(curArg1->field_C + curArg1->position.vy);
-        state->field_A0.s_1.field_4 = var_a1;
+        state->field_A0.s_1.field_0        = Q12_TO_Q8(curArg1->field_E + curArg1->position.vy);
+        state->field_A0.s_1.field_2        = Q12_TO_Q8(curArg1->field_C + curArg1->position.vy);
+        state->field_A0.s_1.field_4        = var_a1;
         state->field_A0.s_1.collisionState = curArg1->collisionState;
-        state->field_A0.s_1.field_8 = &curArg1->field_13;
+        state->field_A0.s_1.field_8        = &curArg1->field_13;
 
         if (state->field_0_0 == false)
         {
@@ -2433,1695 +2412,14 @@ void func_8006D7EC(s_CollisionCharaState* charaState, SVECTOR* moveOffset, SVECT
     charaState->positionToZ   = charaState->positionFromZ + charaState->offset.vz;
 }
 
-bool Ray_TraceQuery(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to) // 0x8006D90C
-{
-    s32         prevScratchAddr;
-    s_RayState* state;
-    VECTOR3     offset; // Q19.12
 
-    offset.vx = to->vx - from->vx;
-    offset.vy = to->vy - from->vy;
-    offset.vz = to->vz - from->vz;
-
-    trace->hasHit = false;
-
-    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, &offset, 0, 0, NULL, 0))
-    {
-        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(984));
-
-        state         = (s_RayState*)PSX_SCRATCH;
-        trace->hasHit = Ray_TraceRun(trace, state);
-
-        SetSp(prevScratchAddr);
-    }
-
-    if (!trace->hasHit)
-    {
-        Ray_MissSet(trace, from, &offset, state->rayDistance);
-    }
-
-    return trace->hasHit;
-}
-
-bool Ray_CharaTraceQuery(s_RayTrace* trace, const VECTOR3* from, VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DA08
-{
-    s32              collCharaCount;
-    s32              prevScratch;
-    s_RayState*      state;
-    s_SubCharacter** collCharas;
-
-    collCharas = Collision_CollidableCharasGet(&collCharaCount, excludedChara, false);
-
-    trace->hasHit = false;
-    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 0, 0, from, offset, 0, 0, collCharas, collCharaCount))
-    {
-        prevScratch   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
-
-        state         = (s_RayState*)PSX_SCRATCH;
-        trace->hasHit = Ray_TraceRun(trace, state);
-
-        SetSp(prevScratch);
-    }
-
-    if (!trace->hasHit)
-    {
-        Ray_MissSet(trace, from, offset, state->rayDistance);
-    }
-
-    return trace->hasHit;
-}
-
-void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist) // 0x8006DAE4
-{
-    trace->hasHit       = false;
-    trace->groundType   = GroundType_Default;
-    trace->target.vx    = from->vx + offset->vx;
-    trace->target.vy    = from->vy + offset->vy;
-    trace->target.vz    = from->vz + offset->vz;
-    trace->character    = NULL;
-    trace->hitDistance  = Q8_TO_Q12(dist);
-    trace->groundHeight = Q12(1.875f); // @bug? Awkward value suggests `Q8(30.0f)` may have been typed by mistake.
-    trace->field_1C     = Q12_ANGLE(0.0f);
-}
-
-bool Ray_LosHitCheck(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, s_SubCharacter* excludedChara) // 0x8006DB3C
-{
-    s32              collCharaCount;
-    s32              prevScratchAddr;
-    s_RayState*      state;
-    s_SubCharacter** collCharas;
-
-    collCharas = Collision_CollidableCharasGet(&collCharaCount, excludedChara, true);
-    trace->hasHit    = false;
-
-    if (Ray_TraceSetup((s_RayState*)PSX_SCRATCH, 1, 0, from, offset, 0, 0, collCharas, collCharaCount))
-    {
-        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(984));
-
-        state         = (s_RayState*)PSX_SCRATCH;
-        trace->hasHit = Ray_TraceRun(trace, state);
-
-        SetSp(prevScratchAddr);
-    }
-
-    if (!trace->hasHit)
-    {
-        Ray_MissSet(trace, from, offset, state->rayDistance);
-    }
-
-    return trace->hasHit;
-}
-
-bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset) // 0x8006DC18
-{
-    s32         prevScratchAddr;
-    s_RayState* state;
-
-    trace->hasHit = false;
-    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 76, from, offset, 0, 0, NULL, 0))
-    {
-        prevScratchAddr = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
-
-        state         = (s_RayState*)PSX_SCRATCH;
-        trace->hasHit = Ray_TraceRun(trace, state);
-
-        SetSp(prevScratchAddr);
-    }
-
-    if (!trace->hasHit)
-    {
-        Ray_MissSet(trace, from, offset, state->rayDistance);
-    }
-
-    return trace->hasHit;
-}
-
-bool Ray_TraceSetup(s_RayState* state, bool useCylinder, q7_8 arg2, const VECTOR3* from, const VECTOR3* offset, q19_12 arg5, q19_12 arg6,
-                    s_SubCharacter** collCharas, s32 collCharaCount)
-{
-    if (offset->vx == Q12(0.0f) && offset->vz == Q12(0.0f))
-    {
-        return false;
-    }
-
-    state->field_0  = useCylinder;
-    state->field_4  = g_ActiveCollisionTriggers.flags; // Struct could begin some point earlier.
-    state->field_6  = arg2;
-    state->field_8  = SHRT_MAX;
-    state->field_20 = 0;
-
-    state->from.vx = Q12_TO_Q8(from->vx);
-    state->from.vy = Q12_TO_Q8(from->vy);
-    state->from.vz = Q12_TO_Q8(from->vz);
-
-    state->offset.vx = Q12_TO_Q8(offset->vx);
-    state->offset.vy = Q12_TO_Q8(offset->vy);
-    state->offset.vz = Q12_TO_Q8(offset->vz);
-
-    state->field_3C = state->from.vx + state->offset.vx;
-
-    state->field_4C = Q12_TO_Q8(arg5);
-    state->field_4E = Q12_TO_Q8(arg6);
-
-    state->field_40 = state->from.vy + state->offset.vy;
-    state->field_44 = state->from.vz + state->offset.vz;
-
-    state->rayDistance = Math_Vector2MagCalc(state->offset.vx, state->offset.vz);
-    if (state->rayDistance == Q8(0.0f))
-    {
-        return false;
-    }
-
-    state->field_58 = (state->offset.vx << Q12_SHIFT) / state->rayDistance;
-    state->field_5A = (state->offset.vz << Q12_SHIFT) / state->rayDistance;
-
-    if (state->offset.vy < 0)
-    {
-        state->field_5E = state->from.vy + state->field_4E;
-        state->field_60 = state->field_40 + state->field_4E;
-    }
-    else
-    {
-        state->field_60 = state->from.vy + state->field_4E;
-        state->field_5E = state->field_40 + state->field_4E;
-    }
-
-    state->collCharas     = collCharas;
-    state->collCharaCount = collCharaCount;
-
-    return true;
-}
-
-bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
-{
-    s32                  collDataIdx;
-    s32                  temp_lo;
-    s_IpdCollisionData*  collData;
-    s_SubCharacter**     curCollChara;
-    s_IpdCollisionData** collDataPtrs;
-    s_IpdCollisionData** curCollData;
-    s_RayState_8C*       curUnk;
-
-    // Run through IPD collision data.
-    collDataPtrs = Ipd_ActiveChunksCollisionDataGet(&collDataIdx);
-    for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
-    {
-        collData = *curCollData;
-
-        if (collData->materialsCount || collData->subCellInfoCount || collData->field_8_24)
-        {
-            func_8006E0AC(state, collData);
-            Collision_SubCellChecksReset(collData);
-
-            for (curUnk = &state->field_8C; curUnk < &state->field_8C[state->field_88]; curUnk++)
-            {
-                temp_lo = curUnk->field_2 * state->field_7C;
-                func_8006E53C(state, &collData->subCellRanges[temp_lo + curUnk->field_0], collData);
-            }
-        }
-    }
-
-    // Run through collidable characters.
-    for (curCollChara = state->collCharas;
-         curCollChara < &state->collCharas[state->collCharaCount];
-         curCollChara++)
-    {
-        func_8006EE0C(&state->field_6C, state->field_0, *curCollChara);
-        func_8006EEB8(state, *curCollChara);
-    }
-
-    if (state->field_8 != SHRT_MAX)
-    {
-        trace->target.vx    = Q8_TO_Q12(state->field_C);
-        trace->target.vy    = Q8_TO_Q12(state->field_10);
-        trace->target.vz    = Q8_TO_Q12(state->field_14);
-        trace->character    = state->field_20;
-        trace->hitDistance  = Q8_TO_Q12(state->field_8);
-        trace->groundHeight = Q8_TO_Q12(state->groundHeight);
-        trace->field_1C     = ratan2(state->field_24, state->field_26);
-        trace->groundType   = state->groundType;
-        return true;
-    }
-
-    return false;
-}
-
-void func_8006E0AC(s_RayState* state, const s_IpdCollisionData* arg1) // 0x8006E0AC
-{
-    // `state` type might be wrong.
-    state->field_6C.positionX = arg1->positionX;
-    state->field_6C.positionZ = arg1->positionZ;
-    state->field_6C.groundHeight = state->from.vx - state->field_6C.positionX;
-    state->field_6C.topHeight = state->from.vz - state->field_6C.positionZ;
-    state->field_6C.field_C = state->field_6C.groundHeight + state->offset.vx;
-    state->field_6C.field_E = state->field_6C.topHeight + state->offset.vz;
-    state->field_7C = arg1->subCellXCount;
-    state->field_80 = arg1->subCellZCount;
-    state->field_84 = arg1->subCellSize;
-
-    func_8006E150(&state->field_6C, ((DVECTOR*)&state->offset)[0], ((DVECTOR*)&state->offset)[1]);
-}
-
-void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E150
-{
-    DVECTOR subroutine_arg4;
-    VECTOR  sp18;
-    VECTOR  pos;
-    s16     temp_lo;
-    s16     temp_lo_2;
-    s32     temp_a0_3;
-    s32     temp_lo_4;
-    s32     temp_t0;
-    s32     temp_t1;
-    s32     var_a2;
-    s32     var_a3;
-    u32     flags;
-
-    flags = OrientationFlags_None;
-    arg0->field_1C = Q8(0.0f);
-
-    if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
-        arg0->field_8.vy < 0 && arg0->field_E < 0)
-    {
-        return;
-    }
-
-    temp_lo   = arg0->field_10 * arg0->field_18;
-    temp_lo_2 = arg0->field_14 * arg0->field_18;
-
-    if (arg0->field_8.vx >= temp_lo && arg0->field_C >= temp_lo &&
-        arg0->field_8.vy >= temp_lo_2 && arg0->field_E >= temp_lo_2)
-    {
-        return;
-    }
-
-    subroutine_arg4 = arg0->field_8;
-
-    sp18.vz  = 0;
-    sp18.pad = 0;
-
-    sp18.vx = Q12(arg0->field_10);
-    sp18.vy = Q12(arg0->field_14);
-
-    if (arg1.vx < 0)
-    {
-        flags             |= OrientationFlags_InvertX;
-        subroutine_arg4.vx = -subroutine_arg4.vx;
-
-        arg1.vx = -arg1.vx;
-        sp18.vz = -sp18.vx;
-        sp18.vx = 0;
-    }
-
-    if (arg2.vx < 0)
-    {
-        flags             |= OrientationFlags_InvertZ;
-        subroutine_arg4.vy = -subroutine_arg4.vy;
-        arg2.vx            = -arg2.vx;
-        sp18.pad           = -sp18.vy;
-        sp18.vy            = 0;
-    }
-
-    if (arg1.vx < arg2.vx)
-    {
-        flags |= OrientationFlags_SwapXz;
-
-        temp_a0_3          = subroutine_arg4.vx;
-        subroutine_arg4.vx = subroutine_arg4.vy;
-        subroutine_arg4.vy = temp_a0_3;
-
-        temp_a0_3 = arg1.vx;
-        arg1.vx   = arg2.vx;
-        arg2.vx   = temp_a0_3;
-
-        temp_a0_3 = sp18.vz;
-        sp18.vz   = sp18.pad;
-        sp18.pad  = temp_a0_3;
-        temp_a0_3 = sp18.vx;
-        sp18.vx   = sp18.vy;
-        sp18.vy   = temp_a0_3;
-    }
-
-    if (subroutine_arg4.vx + arg1.vx < Q12_MULT(arg0->field_18, sp18.vx))
-    {
-        sp18.vx = Q12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
-    }
-
-    pos.vx = Q12(subroutine_arg4.vx) / arg0->field_18;
-    pos.vy = Q12(subroutine_arg4.vy) / arg0->field_18;
-    pos.vz = Q12(1.0f);
-
-    pos.pad  = Q12(arg2.vx) / arg1.vx;
-    temp_lo_4 = Q12_MULT(pos.pad, Q12_FRACT(pos.vx));
-
-    if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(pos.vx, Q12_SHIFT))
-    {
-        return;
-    }
-
-    do
-    {
-        func_8006E490(arg0, flags, pos.vx, pos.vy);
-
-        temp_t0 = pos.vy;
-        temp_t1 = pos.vx;
-        var_a3  = temp_t0 + pos.pad;
-        var_a2  = temp_t1 + Q12(1.0f);
-
-        pos.vy = var_a3;
-        pos.vx = var_a2;
-
-        if (FP_FROM(temp_t0, Q12_SHIFT) < FP_FROM(var_a3, Q12_SHIFT))
-        {
-            if (Q12_FRACT(var_a3) < temp_lo_4)
-            {
-                func_8006E490(arg0, flags, var_a2, temp_t0);
-            }
-            else
-            {
-                func_8006E490(arg0, flags, temp_t1, var_a3);
-            }
-        }
-    }
-    while (arg0->field_1C < Q8(0.08f) && FP_FROM(pos.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
-}
-
-void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) // 0x8006E490
-{
-    q19_12 tempPosX;
-
-    if (flags & OrientationFlags_SwapXz)
-    {
-        tempPosX = posX;
-        posX     = posZ;
-        posZ     = tempPosX;
-    }
-
-    if (flags & OrientationFlags_InvertZ)
-    {
-        posZ = -posZ;
-    }
-
-    if (flags & OrientationFlags_InvertX)
-    {
-        posX = -posX;
-    }
-
-    posX = FP_FROM(posX, Q12_SHIFT);
-    posZ = FP_FROM(posZ, Q12_SHIFT);
-    if (posX >= Q12(0.0f) && posX < arg0->field_10 &&
-        posZ >= Q12(0.0f) && posZ < arg0->field_14)
-    {
-        arg0->field_20[arg0->field_1C].vx = posX;
-        arg0->field_20[arg0->field_1C].vz = posZ;
-        arg0->field_1C++;
-    }
-}
-
-void func_8006E53C(s_RayState* state, s_IpdCollSubCellRange* subCellRanges, s_IpdCollisionData* collData) // 0x8006E53C
-{
-    s32                    i;
-    s32                    temp_v0;
-    s32                    temp_v0_2;
-    bool                   cond0;
-    bool                   cond1;
-    bool                   cond2;
-    s32                    temp_a0_3;
-    s32                    temp_a2;
-    s32                    idx;
-    s_IpdCollisionData_18* temp_a1_2;
-    s_IpdCollSubCellInfo*  temp_a1;
-
-    for (i = subCellRanges[0].field_0; i < subCellRanges[1].field_0; i++)
-    {
-        idx = collData->ptr_28[i];
-
-        if (collData->subCellsChecksCount >= collData->subCellCheckIdx[idx])
-        {
-            collData->subCellCheckIdx[idx] = collData->subCellsChecksCount + 1;
-
-            if (idx < collData->subCellInfoCount)
-            {
-                temp_a1 = &collData->subCellsInfo[idx];
-
-                temp_v0 = (u16)state->field_4 >> (temp_a1->field_0_14 * 4 | temp_a1->field_2_14);
-
-                if (temp_v0 & (1 << 0))
-                {
-                    temp_a0_3 = temp_a1->materialIdx0;
-                    temp_a2   = temp_a1->materialIdx1;
-
-                    cond0 = temp_a0_3 != UCHAR_MAX && temp_a2 != UCHAR_MAX;
-
-                    if (state->field_0 == true)
-                    {
-                        if (cond0)
-                        {
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        cond1 = false;
-                        cond2 = false;
-
-                        if (temp_a0_3 == UCHAR_MAX || collData->materialsFlags[temp_a0_3].groundType == GroundType_Default ||
-                            collData->materialsFlags[temp_a0_3].groundType == GroundType_None)
-                        {
-                            cond1 = true;
-                        }
-
-                        if (temp_a2 == UCHAR_MAX || collData->materialsFlags[temp_a2].groundType == GroundType_Default ||
-                            collData->materialsFlags[temp_a2].groundType == GroundType_None)
-                        {
-                            cond2 = true;
-                        }
-
-                        if (cond1 && cond2)
-                        {
-                            continue;
-                        }
-                    }
-
-                    func_8006E78C(state, temp_a1, collData->collisionVertices, collData->materialsFlags, cond0);
-                }
-            }
-            else
-            {
-                temp_a1_2 = &collData->ptr_18[idx - collData->subCellInfoCount];
-                temp_v0_2 = (u16)state->field_4 >> temp_a1_2->field_0_8;
-
-                if ((temp_v0_2 & (1 << 0)) &&
-                    (state->field_0 == true ||
-                     (temp_a1_2->groundType != GroundType_Default &&
-                      temp_a1_2->groundType != GroundType_None)) &&
-                    temp_a1_2->field_8 >= state->field_6)
-                {
-                    func_8006EB8C(state, temp_a1_2);
-                }
-            }
-        }
-    }
-}
-
-void func_8006E78C(s_RayState* state, s_IpdCollSubCellInfo* arg1, SVECTOR3* arg2, s_IpdCollMaterialFlags* arg3, s32 arg4) // 0x8006E78C
-{
-    SVECTOR   sp0;
-    SVECTOR   sp8;
-    SVECTOR3  sp10;
-    s32       var_a3;
-    q19_12    unkX;
-    q19_12    unkZ;
-    s32       var_a2;
-    s32       groundType; // `e_GroundType`
-    SVECTOR3* temp_t1;
-    SVECTOR3* temp_t2;
-    s32       temp_v1;
-    s32       var_v1;
-
-    groundType = GroundType_Default;
-    temp_t1 = &arg2[arg1->collisionVertexIdx1];
-    temp_t2 = &arg2[arg1->collisionVertexIdx0];
-
-    if (state->field_5E >= temp_t1->vy || state->field_5E >= temp_t2->vy)
-    {
-        if (arg1->materialIdx0 != UCHAR_MAX)
-        {
-            groundType = arg3[arg1->materialIdx0].groundType;
-        }
-        if (arg1->materialIdx1 != UCHAR_MAX)
-        {
-            groundType = arg3[arg1->materialIdx1].groundType;
-        }
-
-        temp_v1 = PACKED_XZ16(state->field_58, state->field_5A);
-        gte_ldR11R12(temp_v1);
-        gte_ldR13R21(temp_v1);
-        gte_ldvxy0(PACKED_XZ16(temp_t1->vx - state->field_6C.groundHeight, temp_t1->vz - state->field_6C.topHeight));
-        gte_ldvz0();
-        gte_rtv0();
-        gte_stMAC12(&sp0);
-
-        gte_ldvxy0(PACKED_XZ16(temp_t2->vx - state->field_6C.groundHeight, temp_t2->vz - state->field_6C.topHeight));
-        gte_ldvz0();
-        gte_rtv0();
-        gte_stMAC12(&sp8);
-
-        if ((sp0.vy & 0x8000) != (sp8.vy & 0x8000))
-        {
-            if (state->field_0 == true)
-            {
-                gte_ldsxy3(0, *(s32*)&sp0.vx, *(s32*)&sp8.vx);
-                gte_nclip();
-
-                if (gte_stMAC0() >= 0)
-                {
-                    if (arg1->materialIdx0 != UCHAR_MAX)
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    if (arg1->materialIdx1 != UCHAR_MAX)
-                    {
-                        return;
-                    }
-                }
-            }
-
-            if (sp0.vy != sp8.vy)
-            {
-                var_v1 = ((sp0.vy << 12) / (sp0.vy - sp8.vy));
-                var_a3 = (((sp8.vx - sp0.vx) * var_v1) >> 12) + sp0.vx;
-                if (var_a3 >= 0 && state->rayDistance >= var_a3)
-                {
-                    gte_lddp(var_v1);
-                    gte_ldsv3_(temp_t2->vx - temp_t1->vx, temp_t2->vy - temp_t1->vy, temp_t2->vz - temp_t1->vz);
-                    gte_gpf12();
-                    gte_stsv(&sp10);
-
-                    sp10.vx += temp_t1->vx;
-                    sp10.vy += temp_t1->vy;
-                    sp10.vz += temp_t1->vz;
-
-                    var_a2 = state->from.vy + state->field_4E;
-                    if (state->offset.vy != Q8(0.0f))
-                    {
-                        var_a2 += (state->offset.vy * var_a3) / state->rayDistance;
-                    }
-
-                    if (var_a2 >= sp10.vy && var_a3 < state->field_8)
-                    {
-                        unkX = arg1->field_2_0;
-                        unkZ = -arg1->field_0_0;
-                        if (state->field_0 != true && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
-                        {
-                            unkX = -unkX;
-                            unkZ = arg1->field_0_0;
-                        }
-
-                        state->field_8  = var_a3;
-                        state->field_C  = (sp10.vx + state->field_6C.positionX);
-                        state->field_10 = (var_a2 - state->field_4E);
-                        state->field_14 = (sp10.vz + state->field_6C.positionZ);
-                        state->groundHeight = sp10.vy;
-                        state->field_24 = unkX;
-                        state->field_26 = unkZ;
-                        state->field_20 = NULL;
-                        state->groundType = groundType;
-                    }
-                }
-            }
-        }
-    }
-}
-
-void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
-{
-    SVECTOR sp10;
-    SVECTOR sp18;
-    s16     temp_a1_3;
-    s32     temp_v0;
-    s16     temp_a1;
-    s32     temp_v1;
-
-    temp_a1 = arg1->field_8;
-    if (state->field_5E <= arg1->offset.vy)
-    {
-        return;
-    }
-
-    temp_v1 = PACKED_XZ16(state->field_58, state->field_5A);
-    gte_ldR11R12(temp_v1);
-    gte_ldR13R21(temp_v1);
-    gte_ldvxy0(PACKED_XZ16(arg1->offset.vx - state->field_6C.groundHeight, arg1->offset.vz - state->field_6C.topHeight));
-    gte_ldvz0();
-    gte_rtv0();
-    gte_stMAC12(&sp10);
-
-    if (-temp_a1 < sp10.vx && sp10.vx < (state->rayDistance + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
-    {
-        temp_v0   = SquareRoot0(SQUARE(temp_a1) - SQUARE(sp10.vy));
-        temp_a1_3 = sp10.vx - temp_v0;
-
-        if (temp_a1_3 >= -temp_v0 && state->rayDistance >= temp_a1_3 && temp_a1_3 < state->field_8)
-        {
-            gte_lddp(Q12(temp_a1_3) / state->rayDistance);
-            gte_ldsv3_(state->offset.vx, state->offset.vy, state->offset.vz);
-            gte_gpf12();
-            gte_stsv(&sp18);
-
-            if ((sp18.vy + state->from.vy + state->field_4E) >= arg1->offset.vy)
-            {
-                state->field_8  = temp_a1_3;
-                state->field_C  = sp18.vx + state->field_6C.groundHeight + state->field_6C.positionX;
-                state->field_10 = sp18.vy + state->from.vy;
-                state->field_14 = sp18.vz + state->field_6C.topHeight + state->field_6C.positionZ;
-                state->groundHeight = arg1->offset.vy;
-                state->field_24 = (sp18.vx + state->field_6C.groundHeight) - arg1->offset.vx;
-                state->field_26 = (sp18.vz + state->field_6C.topHeight) - arg1->offset.vz;
-                state->field_20 = NULL;
-                state->groundType = arg1->groundType;
-            }
-        }
-    }
-}
-
-void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* chara) // 0x8006EE0C
-{
-    q19_12 offsetZ;
-    q19_12 offsetX;
-    q19_12 topHeight;
-
-    if (useCylinder == true)
-    {
-        arg0->field_C = Q12_TO_Q8(chara->collision.cylinder.radius);
-        offsetX       = chara->collision.shapeOffsets.cylinder.vx;
-        offsetZ       = chara->collision.shapeOffsets.cylinder.vz;
-        topHeight     = chara->position.vy + chara->collision.box.bottom;
-    }
-    else
-    {
-        arg0->field_C = Q12_TO_Q8(chara->collision.cylinder.field_2);
-        offsetX       = chara->collision.shapeOffsets.box.vx;
-        offsetZ       = chara->collision.shapeOffsets.box.vz;
-        topHeight     = chara->position.vy + chara->collision.box.height;
-    }
-
-    arg0->topHeight    = Q12_TO_Q8(topHeight);
-    arg0->positionX    = Q12_TO_Q8(chara->position.vx + offsetX);
-    arg0->positionZ    = Q12_TO_Q8(chara->position.vz + offsetZ);
-    arg0->groundHeight = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
-}
-
-void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
-{
-    VECTOR3 pos; // Q23.8
-    s32     bound;
-    q3_12   alpha;
-    q3_12   clampedRayDist;
-    q23_8   x1;
-    q23_8   z1;
-    q23_8   x0;
-    q23_8   z0;
-    q19_12  var_v1;
-
-    if (state->from.vx <= state->field_3C)
-    {
-        x0 = state->from.vx;
-        z0 = state->field_3C;
-    }
-    else
-    {
-        x0 = state->field_3C;
-        z0 = state->from.vx;
-    }
-
-    if (state->from.vz <= state->field_44)
-    {
-        z1 = state->from.vz;
-        x1 = state->field_44;
-    }
-    else
-    {
-        z1 = state->field_44;
-        x1 = state->from.vz;
-    }
-
-    bound = state->field_6C.field_C;
-    if ((state->field_6C.positionX + bound) < x0 ||
-         z0 < (state->field_6C.positionX - bound))
-    {
-        return;
-    }
-
-    if ((state->field_6C.positionZ + bound) < z1 || x1 < (state->field_6C.positionZ - bound) ||
-        ((state->from.vy + state->field_4E) < state->field_6C.groundHeight && (state->field_40 + state->field_4E) < state->field_6C.groundHeight) ||
-        ((state->from.vy + state->field_4C) > state->field_6C.topHeight && state->field_6C.topHeight < (state->field_40 + state->field_4C)))
-    {
-        return;
-    }
-
-    alpha = func_8006C248(*(s32*)&state->field_58, state->rayDistance,
-                          state->field_6C.positionX - state->from.vx,
-                          state->field_6C.positionZ - state->from.vz,
-                          bound);
-    if (alpha == NO_VALUE)
-    {
-        return;
-    }
-
-    clampedRayDist = Q12_MULT(state->rayDistance, alpha);
-    if (clampedRayDist >= state->field_8)
-    {
-        return;
-    }
-
-    pos.vy = state->from.vy + (Q12_MULT(state->offset.vy, alpha));
-    if ((pos.vy + state->field_4E) < state->field_6C.groundHeight ||
-        state->field_6C.topHeight < (pos.vy + state->field_4C))
-    {
-        if (state->offset.vy == 0)
-        {
-            return;
-        }
-
-        if ((pos.vy + state->field_4E) < state->field_6C.groundHeight)
-        {
-            var_v1 = Q12(state->field_6C.groundHeight - (state->from.vy + state->field_4E)) / state->offset.vy;
-            if (var_v1 > Q12(1.0f))
-            {
-                return;
-            }
-            pos.vy = state->field_6C.groundHeight - state->field_4E;
-        }
-        else
-        {
-            var_v1 = Q12(state->field_6C.topHeight - (state->from.vy + state->field_4C)) / state->offset.vy;
-            if (var_v1 > Q12(1.0f))
-            {
-                return;
-            }
-            pos.vy = state->field_6C.topHeight - state->field_4C;
-        }
-
-        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, var_v1);
-        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, var_v1);
-        if ((SQUARE(state->field_6C.positionX - pos.vx) + SQUARE(state->field_6C.positionZ - pos.vz)) >= SQUARE(state->field_6C.field_C))
-        {
-            return;
-        }
-    }
-    else
-    {
-        pos.vx = state->from.vx + Q12_MULT(state->offset.vx, alpha);
-        pos.vz = state->from.vz + Q12_MULT(state->offset.vz, alpha);
-    }
-
-    state->field_8  = clampedRayDist;
-    state->field_C  = pos.vx;
-    state->field_10 = pos.vy;
-    state->field_14 = pos.vz;
-    state->groundHeight = state->field_6C.groundHeight;
-    state->field_24 = pos.vx - state->field_6C.positionX;
-    state->field_26 = pos.vz - state->field_6C.positionZ;
-    state->field_20 = chara;
-    state->groundType = GroundType_Default;
-}
-
-void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
-{
-    s32              i;
-    s_func_8006F338* ptr;
-
-    ptr = PSX_SCRATCH;
-
-    func_8006F338(ptr, posX, posZ, posDeltaX, posDeltaZ);
-
-    // Run through collision triggers.
-    for (i = 0; i < g_ActiveCollisionTriggers.collisionTriggerCount; i++)
-    {
-        if (func_8006F3C4(ptr, g_ActiveCollisionTriggers.collisionTriggers[i]))
-        {
-            break;
-        }
-    }
-
-    if (ptr->field_28 == Q12(1.0f))
-    {
-        arg0[0] = Q12(32.0f);
-        arg0[1] = Q12(-16.0f);
-    }
-    else
-    {
-        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(ptr->field_10, Q12(0.0f), ptr->field_14), ptr->field_28, Q12_SHIFT);
-        arg0[1] = ptr->triggerHeight;
-    }
-}
-
-void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F338
-{
-    q19_12 newPosX;
-    q19_12 field_4;
-
-    newPosX = posX + posDeltaX;
-
-    arg0->field_0  = posX;
-    arg0->field_4  = posZ;
-    arg0->field_10 = posDeltaX;
-    arg0->field_8  = posX + posDeltaX;
-    arg0->field_28 = Q12(1.0f);
-    arg0->triggerHeight = Q12(1048560.0f);
-    arg0->field_14 = posDeltaZ;
-
-    arg0->field_C = posZ + posDeltaZ;
-    if (newPosX >= arg0->field_0)
-    {
-        arg0->field_18 = arg0->field_0;
-        arg0->field_1C = arg0->field_8;
-    }
-    else
-    {
-        arg0->field_18 = posX + posDeltaX;
-        arg0->field_1C = arg0->field_0;
-    }
-
-    field_4 = arg0->field_4;
-    if (arg0->field_C >= arg0->field_4)
-    {
-        arg0->field_20 = field_4;
-        arg0->field_24 = arg0->field_C;
-        return;
-    }
-    else
-    {
-        arg0->field_20 = arg0->field_C;
-        arg0->field_24 = arg0->field_4;
-    }
-}
-
-bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 0x8006F3C4
-{
-    q19_12 temp_s1;
-    q19_12 var_v1;
-    q19_12 minX;
-    q19_12 maxX;
-    q19_12 minZ;
-    q19_12 maxZ;
-    q19_12 var_s1;
-    q19_12 var_v0;
-    q19_12 var_v0_2;
-
-    // Define AABB bounds.
-    minX = Q12(trigger->positionX);
-    maxX = Q12(trigger->positionX + trigger->sizeX);
-    minZ = Q12(trigger->positionZ);
-    maxZ = Q12(trigger->positionZ + trigger->sizeZ);
-
-    // Check for AABB intersection.
-    if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
-        (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
-    {
-        return false;
-    }
-
-    if (arg0->field_0 >= minX && maxX >= arg0->field_0 &&
-        arg0->field_4 >= minZ && maxZ >= arg0->field_4)
-    {
-        arg0->field_28 = Q12(0.0f);
-        arg0->triggerHeight = TRIGGER_HEIGHT_GET(trigger->height);
-    }
-    else
-    {
-        if (arg0->field_10 >= Q12(0.0f))
-        {
-            if (arg0->field_14 >= Q12(0.0f))
-            {
-                var_s1   = minX;
-                var_v0_2 = minZ;
-            }
-            else
-            {
-                var_s1   = minX;
-                var_v0_2 = maxZ;
-            }
-        }
-        else
-        {
-            if (arg0->field_14 >= Q12(0.0f))
-            {
-                var_s1   = maxX;
-                var_v0_2 = minZ;
-            }
-            else
-            {
-                var_s1   = maxX;
-                var_v0_2 = maxZ;
-            }
-        }
-
-        // TODO: What are these shifts? Converts up to Q24, then down to Q8??
-        temp_s1 = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(var_v0_2 - arg0->field_4, Q12_SHIFT) >> 16,
-                                FP_TO(minX - arg0->field_0, Q12_SHIFT) >> 16, FP_TO(maxX - arg0->field_0, Q12_SHIFT) >> 16);
-        var_v0  = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(var_s1 - arg0->field_0, Q12_SHIFT) >> 16,
-                                FP_TO(minZ - arg0->field_4, Q12_SHIFT) >> 16, FP_TO(maxZ - arg0->field_4, Q12_SHIFT) >> 16);
-
-        if (var_v0 >= temp_s1)
-        {
-            var_v1 = temp_s1;
-        }
-        else
-        {
-            var_v1 = var_v0;
-        }
-
-        if (var_v1 < arg0->field_28)
-        {
-            arg0->field_28 = var_v1;
-            arg0->triggerHeight = TRIGGER_HEIGHT_GET(trigger->height);
-        }
-    }
-
-    return arg0->field_28 == 0;
-}
-
-q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
-                                  const s_CollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
-{
-    q19_12              projOffsetToTriggerX;
-    q19_12              projOffsetToTriggerZ;
-    q19_12              offsetToTriggerX;
-    q19_12              offsetToTriggerZ;
-    q19_12              cylinderTop;
-    q19_12              projCylinderTop;
-    q19_12              pushOffsetX;
-    q19_12              pushOffsetZ;
-    q19_12              cylinderTopToCeilDist;
-    q19_12              triggerHeight;
-    q19_12              distToTrigger;
-    q19_12              pushDist;
-    q19_12              projDistToTrigger;
-    q19_12              angleToTrigger;
-    q19_12              allowedIntersectDist;
-    s32                 i;
-    q19_12              moveOffsetX;
-    q19_12              moveOffsetZ;
-    q19_12              ceilHeight;
-    q19_12              headroom;
-    s_CollisionTrigger* curTrigger;
-
-    ceilHeight  = Q12(DEFAULT_CEILING_HEIGHT);
-    pushOffsetX = Q12(0.0f);
-    pushOffsetZ = Q12(0.0f);
-
-    // Compute start parameters.
-    moveOffsetX     = moveOffset->vx;
-    moveOffsetZ     = moveOffset->vz;
-    cylinderTop     = cylinder->position.vy + cylinderHeight;
-    projCylinderTop = cylinderTop + moveOffset->vy;
-
-    // Run through collision triggers.
-    for (i = 0; i < g_ActiveCollisionTriggers.collisionTriggerCount; i++)
-    {
-        curTrigger = g_ActiveCollisionTriggers.collisionTriggers[i];
-
-        // Check if trigger overhead is avoided.
-        triggerHeight = TRIGGER_HEIGHT_GET(curTrigger->height);
-        if ((projCylinderTop - triggerHeight) >= Q12(0.0f))
-        {
-            continue;
-        }
-
-        // Check rough cylinder-trigger collision at projected position.
-        Collision_TriggerOffsetGet(&projOffsetToTriggerX, &projOffsetToTriggerZ,
-                                   cylinder->position.vx + moveOffsetX, cylinder->position.vz + moveOffsetZ,
-                                   curTrigger);
-        if (MAX(ABS(projOffsetToTriggerX), ABS(projOffsetToTriggerZ)) >= cylinderRadius)
-        {
-            continue;
-        }
-
-        // Check accurate cylinder-trigger collision at projected position.
-        projDistToTrigger = Vc_VectorMagnitudeCalc(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
-        if (projDistToTrigger >= cylinderRadius)
-        {
-            continue;
-        }
-
-        // Handle horizontal edge rejection.
-        if (projDistToTrigger > Q12(0.0f))
-        {
-            Collision_TriggerOffsetGet(&offsetToTriggerX, &offsetToTriggerZ,
-                                       cylinder->position.vx, cylinder->position.vz,
-                                       curTrigger);
-
-            // Compute allowed intersection depth.
-            allowedIntersectDist = INTERSECTION_BUFFER;
-            distToTrigger        = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
-            if ((cylinderRadius - distToTrigger) <= INTERSECTION_BUFFER)
-            {
-                allowedIntersectDist = cylinderRadius - distToTrigger;
-            }
-
-            // Check for projected intersection.
-            if ((projDistToTrigger - distToTrigger) < allowedIntersectDist)
-            {
-                // Compute push distance away from trigger.
-                angleToTrigger = ratan2(projOffsetToTriggerX, projOffsetToTriggerZ);
-                pushDist       = allowedIntersectDist - (projDistToTrigger - distToTrigger);
-
-                // Compute push offset.
-                pushOffsetX = Math_MulFixed(pushDist, Math_Sin(angleToTrigger), Q12_SHIFT);
-                pushOffsetZ = Math_MulFixed(pushDist, Math_Cos(angleToTrigger), Q12_SHIFT);
-            }
-        }
-        // Handle predictive ceiling rejection.
-        else
-        {
-            // Track lowest ceiling.
-            if (triggerHeight < ceilHeight)
-            {
-                ceilHeight = triggerHeight;
-            }
-
-            // Reset move offset.
-            moveOffsetX = moveOffset->vx;
-            moveOffsetZ = moveOffset->vz;
-            break;
-        }
-
-        // Apply push offset.
-        moveOffsetX += pushOffsetX;
-        moveOffsetZ += pushOffsetZ;
-    }
-
-    // Update movement offset.
-    moveOffset->vx = moveOffsetX;
-    moveOffset->vz = moveOffsetZ;
-
-    // Restrict vertical movement.
-    if (ceilHeight != Q12(DEFAULT_CEILING_HEIGHT))
-    {
-        // Compute headroom.
-        headroom              = INTERSECTION_BUFFER;
-        cylinderTopToCeilDist = ceilHeight - cylinderTop;
-        if (cylinderTopToCeilDist < INTERSECTION_BUFFER)
-        {
-            headroom = cylinderTopToCeilDist;
-        }
-
-        // Clamp movement to ceiling.
-        if (moveOffset->vy < headroom)
-        {
-            moveOffset->vy = headroom;
-        }
-    }
-
-    return ceilHeight;
-}
-
-void Collision_TriggerOffsetGet(q19_12* offsetX, q19_12* offsetZ, q19_12 posX, q19_12 posZ,
-                                const s_CollisionTrigger* trigger) // 0x8006F8FC
-{
-    q19_12 minX;
-    q19_12 maxX;
-    q19_12 minZ;
-    q19_12 maxZ;
-
-    // Define AABB bounds.
-    minX = FP_TO(trigger->positionX, Q12_SHIFT);
-    maxX = FP_TO(trigger->positionX + trigger->sizeX, Q12_SHIFT);
-    minZ = FP_TO(trigger->positionZ, Q12_SHIFT);
-    maxZ = FP_TO(trigger->positionZ + trigger->sizeZ, Q12_SHIFT);
-
-    if (posX < minX)
-    {
-        *offsetX = posX - minX;
-    }
-    else if (maxX >= posX)
-    {
-        *offsetX = Q12(0.0f);
-    }
-    else
-    {
-        *offsetX = posX - maxX;
-    }
-
-    if (posZ < minZ)
-    {
-        *offsetZ = posZ - minZ;
-        return;
-    }
-    else if (maxZ >= posZ)
-    {
-        *offsetZ = Q12(0.0f);
-        return;
-    }
-    else
-    {
-        *offsetZ = posZ - maxZ;
-        return;
-    }
-}
-
-q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
-{
-    q3_12 curAngleOffset;
-    q3_12 angleOffset;
-    s32   i;
-
-    angleOffset = NO_VALUE;
-    for (i = 0; i < 15; i++)
-    {
-        if (i == 0)
-        {
-            curAngleOffset = Rng_GenerateUInt(-32, 31);
-        }
-        else if (i & 0x1)
-        {
-            curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_GenerateUInt(0, 63);
-        }
-        else
-        {
-            curAngleOffset = -(256 << (i >> 1)) - Rng_GenerateUInt(0, 63);
-        }
-
-        if (angleOffset != NO_VALUE)
-        {
-            if (ABS(angleOffset) < ABS(curAngleOffset))
-            {
-                continue;
-            }
-        }
-
-        if (!Ray_CharaLosHitCheck(chara, dist, curAngleOffset + headingAngle))
-        {
-            angleOffset = curAngleOffset;
-        }
-    }
-
-    if (angleOffset != NO_VALUE)
-    {
-        return Math_AngleNormalizeSigned(angleOffset + headingAngle);
-    }
-
-    return Q12_ANGLE(360.0f);
-}
-
-q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19_12 toZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
-{
-    #define SPAN_STEP_COUNT 3
-
-    s16    spanAngleStep;
-    q3_12  curAngle;
-    q19_12 curToZ;
-    q19_12 curToX;
-    q25_6  curOffsetX;
-    q25_6  curOffsetZ;
-    q25_6  curDist;
-    s32    i;
-    q19_12 shortestOrLongestDist;
-    s32    stepCount;
-    q3_12  unkAngle;
-
-    // Define if distance should track minimum or maximum.
-    shortestOrLongestDist = Q12(0.0f);
-    if (isClockwise)
-    {
-        shortestOrLongestDist = INT_MAX;
-    }
-
-    spanAngleStep = spanAngle / SPAN_STEP_COUNT;
-    unkAngle = Q12_ANGLE(-360.0f);
-
-    // Define step count.
-    stepCount = 7;
-    if (spanAngle == Q12_ANGLE(360.0f))
-    {
-        stepCount = 12;
-    }
-
-    // Run through steps in span.
-    for (i = 0; i < stepCount; i++)
-    {
-        if (spanAngle == Q12_ANGLE(360.0f))
-        {
-            curAngle = Q12((i * 30) + (Rng_Rand16() % 30)) / 360;
-        }
-        else
-        {
-            curAngle = (chara->rotation.vy +
-                        ((i - SPAN_STEP_COUNT) * spanAngleStep) +
-                        ((Rng_Rand16() % spanAngleStep) >> 1)) -
-                       (spanAngleStep >> 2);
-        }
-
-        curToX = chara->position.vx + Q12_MULT(dist, Math_Sin(curAngle));
-        curToZ = chara->position.vz + Q12_MULT(dist, Math_Cos(curAngle));
-
-        if (!Ray_CharaToTargetLosHitCheck(chara, curToX, chara->position.vy, curToZ))
-        {
-            curOffsetX = Q12_TO_Q6(toX - curToX);
-            curOffsetZ = Q12_TO_Q6(toZ - curToZ);
-            curDist    = SQUARE(curOffsetX) + SQUARE(curOffsetZ);
-
-            if ((!isClockwise && (shortestOrLongestDist < curDist)) ||
-                ( isClockwise && (curDist               < shortestOrLongestDist)))
-            {
-                shortestOrLongestDist = curDist;
-                unkAngle              = curAngle;
-            }
-        }
-    }
-
-    if (unkAngle != Q12_ANGLE(-360.0f))
-    {
-        return Math_AngleNormalizeSigned(unkAngle);
-    }
-    return Q12_ANGLE(360.0f);
-
-    #undef SPAN_STEP_COUNT
-}
-
-bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep) // 0x8006FD90
-{
-    VECTOR3 sp10;
-    VECTOR3 sp20;
-    VECTOR3 pos;    // Q19.12
-    VECTOR3 offset; // Q19.12
-    s32     i;
-    q19_12  dist;
-    q19_12  distMult;
-    q19_12  distMax;
-
-    if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                         g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                                  chara->rotation.vy) < Q12_ANGLE(0.0f))
-    {
-        distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                                     g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                                              chara->rotation.vy) * 2) + Q12_ANGLE(360.0f);
-    }
-    else
-    {
-        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                                                          g_SysWork.playerWork.player.position.vz - chara->position.vz) -
-                                                                   chara->rotation.vy))) * 2;
-    }
-
-    for (i = distMult; count > 0; count--)
-    {
-        distMult = Q12_MULT_PRECISE(distMult, i);
-    }
-
-    dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                     g_SysWork.playerWork.player.position.vz - chara->position.vz);
-    distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
-    if (distMax < dist)
-    {
-        return false;
-    }
-
-    pos.vx = chara->position.vx;
-    pos.vz = chara->position.vz;
-
-    offset.vx = g_SysWork.playerWork.player.position.vx - chara->position.vx;
-    offset.vz = g_SysWork.playerWork.player.position.vz - chara->position.vz;
-
-    if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
-    {
-        offset.vy = Q12(0.0f);
-        pos.vy    = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.top;
-    }
-    else
-    {
-        pos.vy    = chara->position.vy + chara->collision.box.offsetY;
-        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY) -
-                    (chara->position.vy - chara->collision.box.offsetY);
-    }
-
-    // TODO: Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
-    return !Ray_CharaTraceQuery(&sp10, &pos, &offset, chara) || sp20.vx != Q12(0.0f);
-}
-
-bool Ray_CharaToTargetLosHitCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ)
-{
-    s_RayTrace trace;
-    VECTOR3    offset; // Q19.12
-
-    offset.vx = toX - fromChara->position.vx;
-    offset.vy = toY - fromChara->position.vy;
-    offset.vz = toZ - fromChara->position.vz;
-
-    return Ray_LosHitCheck(&trace, &fromChara->position, &offset, fromChara);
-}
-
-bool Ray_CharaToCharaTargetLosCheck(s_SubCharacter* fromChara, q19_12 toX, q19_12 toY, q19_12 toZ) // 0x80070084
-{
-    s_RayTrace trace;
-    VECTOR3    offset; // Q19.12
-    bool       isCharaMissed;
-
-    offset.vx = toX - fromChara->position.vx;
-    offset.vy = toY - fromChara->position.vy;
-    offset.vz = toZ - fromChara->position.vz;
-
-    isCharaMissed = false;
-    if (Ray_LosHitCheck(&trace, &fromChara->position, &offset, fromChara))
-    {
-        isCharaMissed = trace.character == NULL;
-    }
-    return isCharaMissed;
-}
-
-bool Ray_NpcToPlayerLosHitCheck(s_SubCharacter* fromNpc, s_SubCharacter* toPlayer) // 0x800700F8
-{
-    s_RayTrace trace;
-    VECTOR3    from;   // Q19.12
-    VECTOR3    offset; // Q19.12
-
-    from = fromNpc->position;
-
-    offset.vx = toPlayer->position.vx - fromNpc->position.vx;
-    offset.vy = Q12(-0.1f);
-    offset.vz = toPlayer->position.vz - fromNpc->position.vz;
-
-    return Ray_LosHitCheck(&trace, &from, &offset, fromNpc) && trace.character == NULL;
-}
-
-bool Ray_CharaToCharaDistLosCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x80070184
-{
-    q19_12 toX;
-    q19_12 toY;
-    q19_12 toZ;
-    q19_12 sinHeadingAngle;
-    q19_12 cosHeadingAngle;
-
-    sinHeadingAngle = Math_Sin(headingAngle);
-    toX             = fromChara->position.vx + Q12_MULT(dist, sinHeadingAngle);
-
-    cosHeadingAngle = Math_Cos(headingAngle);
-    toY             = fromChara->position.vy;
-    toZ             = fromChara->position.vz + Q12_MULT(dist, cosHeadingAngle);
-
-    return Ray_CharaToCharaTargetLosCheck(fromChara, toX, toY, toZ);
-}
-
-bool Ray_CharaToCharaFrontLosHitCheck(s_SubCharacter* fromChara, q19_12 dist) // 0x80070208
-{
-    s_RayTrace trace;
-    VECTOR3    offset; // Q19.12
-    bool       hasHit;
-
-    offset.vx = Q12_MULT(dist, Math_Sin(fromChara->rotation.vy));
-    offset.vy = Q12(0.0f);
-    offset.vz = Q12_MULT(dist, Math_Cos(fromChara->rotation.vy));
-
-    hasHit = false;
-    if (Ray_LosHitCheck(&trace, &fromChara->position, &offset, fromChara))
-    {
-        hasHit = trace.character > NULL;
-    }
-    return hasHit;
-}
-
-bool Ray_CharaLosHitCheck(s_SubCharacter* fromChara, q19_12 dist, q3_12 headingAngle) // 0x8007029C
-{
-    s_RayTrace trace;
-    VECTOR3    offset; // Q19.12
-
-    offset.vx = Q12_MULT(dist, Math_Sin(headingAngle));
-    offset.vy = Q12(0.0f);
-    offset.vz = Q12_MULT(dist, Math_Cos(headingAngle));
-
-    return Ray_LosHitCheck(&trace, &fromChara->position, &offset, fromChara);
-}
-
-bool func_80070320(void) // 0x80070320
-{
-    s32 i;
-
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs); i++)
-    {
-        if (g_SysWork.npcIdxs[i] != NO_VALUE)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80070360
-{
-    q25_6  offsetToPlayerX;
-    q25_6  offsetToPlayerZ;
-    q19_12 distToPlayer;
-    q19_12 result;
-
-    #define playerChara g_SysWork.playerWork.player
-    #define playerProps playerChara.properties.player
-
-    distToPlayer = someDist;
-    if (distToPlayer == Q12(0.0f))
-    {
-        offsetToPlayerX = Q12_TO_Q6(playerChara.position.vx - chara->position.vx);
-        offsetToPlayerZ = Q12_TO_Q6(playerChara.position.vz - chara->position.vz);
-        distToPlayer    = Q6_TO_Q12(Math_Vector2MagCalc(offsetToPlayerX, offsetToPlayerZ));
-    }
-
-    // TODO: Why `>> 8`? Odd type conversion?
-    result = Q12_MULT(arg2, playerProps.field_10C) - (distToPlayer >> 8);
-    if (result < Q12(0.0f))
-    {
-        result = Q12(0.0f);
-    }
-    return result;
-
-    #undef playerChara
-    #undef playerProps
-}
-
-void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
-{
-    q19_12 alpha;
-    q19_12 invAlpha;
-
-    // Compute alpha.
-    if (ANIM_STATUS_IS_ACTIVE(chara->model.anim.status))
-    {
-        alpha = Q12_FRACT(chara->model.anim.time);
-    }
-    else
-    {
-        alpha = chara->model.anim.alpha;
-    }
-    invAlpha = Q12(1.0f) - alpha;
-
-    // Set interpolated collision shapes for active frame.
-    chara->collision.box.top                  = FP_FROM((keyframe0->box.top                  * invAlpha) + (keyframe1->box.top                  * alpha), Q12_SHIFT);
-    chara->collision.box.bottom               = FP_FROM((keyframe0->box.bottom               * invAlpha) + (keyframe1->box.bottom               * alpha), Q12_SHIFT);
-    chara->collision.box.height               = FP_FROM((keyframe0->box.height               * invAlpha) + (keyframe1->box.height               * alpha), Q12_SHIFT);
-    chara->collision.box.offsetY              = FP_FROM((keyframe0->box.offsetY              * invAlpha) + (keyframe1->box.offsetY              * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vx = FP_FROM((keyframe0->shapeOffsets.cylinder.vx * invAlpha) + (keyframe1->shapeOffsets.cylinder.vx * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.cylinder.vz = FP_FROM((keyframe0->shapeOffsets.cylinder.vz * invAlpha) + (keyframe1->shapeOffsets.cylinder.vz * alpha), Q12_SHIFT);
-    chara->collision.cylinder.radius          = FP_FROM((keyframe0->box.field_8              * invAlpha) + (keyframe1->box.field_8              * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.box.vx      = FP_FROM((keyframe0->shapeOffsets.box.vx      * invAlpha) + (keyframe1->shapeOffsets.box.vx      * alpha), Q12_SHIFT);
-    chara->collision.shapeOffsets.box.vz      = FP_FROM((keyframe0->shapeOffsets.box.vz      * invAlpha) + (keyframe1->shapeOffsets.box.vz      * alpha), Q12_SHIFT);
-    chara->collision.cylinder.field_2         = FP_FROM((keyframe0->box.field_A              * invAlpha) + (keyframe1->box.field_A              * alpha), Q12_SHIFT);
-}
-
-void Chara_ModelBoneScaleSet(GsCOORDINATE2* boneCoords, s32 boneIdx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
-{
-    q3_12 scale[3];
-    s32   i;
-    s32   j;
-
-    #define boneCoord boneCoords[boneIdx]
-
-    // Set scale.
-    scale[0] = scaleX;
-    scale[1] = scaleY;
-    scale[2] = scaleZ;
-
-    // Run through scale components.
-    for (i = 0; i < ARRAY_SIZE(scale); i++)
-    {
-        // Ignore scale component of 1.
-        if (scale[i] == Q12(1.0f))
-        {
-            continue;
-        }
-
-        // Apply scale to bone matrix.
-        for (j = 0; j < ARRAY_SIZE(scale); j++)
-        {
-            boneCoord.coord.m[j][i] = Q12_MULT_PRECISE(scale[i], boneCoord.coord.m[j][i]);
-        }
-    }
-
-    boneCoords->flg = false;
-
-    #undef boneCoord
-}
-
-// Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.
-// Always copies 20 `s_AnimInfo`s, but most weapons use less than that.
-// @bug `EquippedWeaponId_HyperBlaster` will copy past the end of this array?
-const s_AnimInfo D_80028B94[] = {
-/* `EquippedWeaponId_Axe` */
-/* 0   */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 1   */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(25.0f)  }, 568, 577 },
-/* 2   */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 3   */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(20.0f)  }, 579, 598 },
-/* 4   */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 599 },
-/* 5   */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(18.0f)  }, 599, 615 },
-/* 6   */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 616 },
-/* 7   */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(20.0f)  }, 616, 635 },
-/* 8   */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
-/* 9   */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 577 },
-
-/* `EquippedWeaponId_Hammer` */
-/* 10  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 11  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(40.0f)  }, 568, 579 },
-/* 12  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
-/* 13  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(22.0f)  }, 584, 613 },
-/* 14  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 614 },
-/* 15  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(16.0f)  }, 614, 634 },
-/* 16  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 637 },
-/* 17  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(18.0f)  }, 637, 659 },
-/* 18  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 19  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
-
-/* `EquippedWeaponId_SteelPipe` */
-/* 20  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 21  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(45.0f)  }, 568, 579 },
-/* 22  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
-/* 23  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(25.0f)  }, 584, 613 },
-/* 24  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 614 },
-/* 25  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(16.0f)  }, 614, 634 },
-/* 26  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 637 },
-/* 27  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(20.0f)  }, 637, 659 },
-/* 28  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 29  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 579 },
-
-/* `EquippedWeaponId_KitchenKnife` */
-/* 30  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 31  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(30.0f)  }, 568, 575 },
-/* 32  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 581 },
-/* 33  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(20.0f)  }, 581, 595 },
-/* 34  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 596 },
-/* 35  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(16.0f)  }, 596, 611 },
-/* 36  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 613 },
-/* 37  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(16.0f)  }, 613, 629 },
-/* 38  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
-/* 39  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 577 },
-
-/* `EquippedWeaponId_Katana` */
-/* 40  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 41  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(30.0f) }, 568, 579 },
-/* 42  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 580 },
-/* 43  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(25.0f) }, 580, 597 },
-/* 44  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
-/* 45  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(16.0f) }, 598, 611 },
-/* 46  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 615 },
-/* 47  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(16.0f) }, 615, 625 },
-/* 48  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 49  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
-
-/* `EquippedWeaponId_Chainsaw` */
-/* 50  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 51  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(15.0f)  }, 568, 583 },
-/* 52  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
-/* 53  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(16.0f)  }, 584, 602 },
-/* 54  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 603 },
-/* 55  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(14.0f)  }, 603, 618 },
-/* 56  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 619 },
-/* 57  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(14.0f)  }, 619, 637 },
-/* 58  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 649 },
-/* 59  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 638, 649 },
-/* 60  */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 638 },
-/* 61  */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(24.0f)  }, 638, 649 },
-/* 62  */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 650 },
-/* 63  */ { Anim_PlaybackLoop, ANIM_STATUS(34, true),  false, NO_VALUE,              { Q12(20.0f)  }, 650, 655 },
-
-/* `EquippedWeaponId_RockDrill` */
-/* 64  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 65  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(18.0f)  }, 568, 583 },
-/* 66  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
-/* 67  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(24.0f)  }, 584, 597 },
-/* 68  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
-/* 69  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(20.0f)  }, 598, 611 },
-/* 70  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 612 },
-/* 71  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(22.0f)  }, 612, 625 },
-/* 72  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 636 },
-/* 73  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-25.0f) }, 626, 636 },
-/* 74  */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 626 },
-/* 75  */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(23.0f)  }, 626, 636 },
-/* 76  */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 637 },
-/* 77  */ { Anim_PlaybackLoop, ANIM_STATUS(34, true),  false, NO_VALUE,              { Q12(24.0f)  }, 637, 640 },
-
-/* `EquippedWeaponId_Handgun` */
-/* 78  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
-/* 79  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(35.0f)  }, 570, 579 },
-/* 80  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
-/* 81  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(40.0f)  }, 582, 592 },
-/* 82  */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 594 },
-/* 83  */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(25.0f)  }, 594, 604 },
-/* 84  */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 605 },
-/* 85  */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(30.0f)  }, 605, 658 },
-/* 86  */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 570 },
-/* 87  */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(60.0f)  }, 570, 592 },
-/* 88  */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 89  */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(-35.0f) }, 570, 579 },
-/* 90  */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 592 },
-/* 91  */ { Anim_PlaybackOnce, ANIM_STATUS(34, true),  false, ANIM_STATUS(34, true), { Q12(-35.0f) }, 580, 592 },
-/* 92  */ { Anim_BlendLinear,  ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 592 },
-/* 93  */ { Anim_PlaybackOnce, ANIM_STATUS(35, true),  false, ANIM_STATUS(35, true), { Q12(-30.0f) }, 570, 592 },
-/* 94  */ { Anim_BlendLinear,  ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
-/* 95  */ { Anim_PlaybackOnce, ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(25.0f)  }, 582, 604 },
-
-/* `EquippedWeaponId_HuntingRifle` */
-/* 96  */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 97  */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(35.0f)  }, 568, 587 },
-/* 98  */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 588 },
-/* 99  */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(25.0f)  }, 588, 597 },
-/* 100 */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
-/* 101 */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(16.0f)  }, 598, 607 },
-/* 102 */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 608 },
-/* 103 */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(20.0f)  }, 608, 642 },
-/* 104 */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 588 },
-/* 105 */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(25.0f)  }, 588, 597 },
-/* 106 */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 597 },
-/* 107 */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(-30.0f) }, 588, 597 },
-/* 108 */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 597 },
-/* 109 */ { Anim_PlaybackOnce, ANIM_STATUS(34, true),  false, ANIM_STATUS(34, true), { Q12(-30.0f) }, 597, 597 },
-/* 110 */ { Anim_BlendLinear,  ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 587 },
-/* 111 */ { Anim_PlaybackOnce, ANIM_STATUS(35, true),  false, ANIM_STATUS(35, true), { Q12(-22.0f) }, 568, 587 },
-/* 112 */ { Anim_BlendLinear,  ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 598 },
-/* 113 */ { Anim_PlaybackOnce, ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(16.0f)  }, 598, 607 },
-
-/* `EquippedWeaponId_Shotgun` */
-/* 114 */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
-/* 115 */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(40.0f)  }, 570, 579 },
-/* 116 */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
-/* 117 */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(30.0f)  }, 582, 592 },
-/* 118 */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 594 },
-/* 119 */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(22.0f)  }, 594, 604 },
-/* 120 */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 605 },
-/* 121 */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(17.0f)  }, 605, 641 },
-/* 122 */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 570 },
-/* 123 */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(60.0f)  }, 570, 592 },
-/* 124 */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 579 },
-/* 125 */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(-40.0f) }, 570, 579 },
-/* 126 */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 592 },
-/* 127 */ { Anim_PlaybackOnce, ANIM_STATUS(34, true),  false, ANIM_STATUS(34, true), { Q12(-40.0f) }, 580, 592 },
-/* 128 */ { Anim_BlendLinear,  ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 592 },
-/* 129 */ { Anim_PlaybackOnce, ANIM_STATUS(35, true),  false, ANIM_STATUS(35, true), { Q12(-20.0f) }, 570, 592 },
-/* 130 */ { Anim_BlendLinear,  ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
-/* 131 */ { Anim_PlaybackOnce, ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(22.0f)  }, 582, 604 },
-
-/* `EquippedWeaponId_HyperBlaster` */
-/* 132 */ { Anim_BlendLinear,  ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 133 */ { Anim_PlaybackOnce, ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(24.0f)  }, 568, 574 },
-/* 134 */ { Anim_BlendLinear,  ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 574 },
-/* 135 */ { Anim_PlaybackOnce, ANIM_STATUS(29, true),  false, ANIM_STATUS(29, true), { Q12(20.0f)  }, 574, 574 },
-/* 136 */ { Anim_BlendLinear,  ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 575 },
-/* 137 */ { Anim_PlaybackOnce, ANIM_STATUS(30, true),  false, ANIM_STATUS(30, true), { Q12(20.0f)  }, 575, 579 },
-/* 138 */ { Anim_BlendLinear,  ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 139 */ { Anim_PlaybackOnce, ANIM_STATUS(31, true),  false, ANIM_STATUS(31, true), { Q12(17.0f)  }, 568, 568 },
-/* 140 */ { Anim_BlendLinear,  ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 568 },
-/* 141 */ { Anim_PlaybackOnce, ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(24.0f)  }, 568, 574 },
-/* 142 */ { Anim_BlendLinear,  ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 574 },
-/* 143 */ { Anim_PlaybackOnce, ANIM_STATUS(33, true),  false, ANIM_STATUS(33, true), { Q12(-20.0f) }, 568, 574 },
-/* 144 */ { Anim_BlendLinear,  ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 574 },
-/* 145 */ { Anim_PlaybackOnce, ANIM_STATUS(34, true),  false, ANIM_STATUS(34, true), { Q12(-20.0f) }, 574, 574 },
-/* 146 */ { Anim_BlendLinear,  ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 574 },
-/* 147 */ { Anim_PlaybackOnce, ANIM_STATUS(35, true),  false, ANIM_STATUS(35, true), { Q12(-20.0f) }, 568, 574 },
-/* 148 */ { Anim_BlendLinear,  ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 574 },
-/* 149 */ { Anim_PlaybackOnce, ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(20.0f)  }, 574, 579 }
-};
-
-// Unused data?
-INCLUDE_RODATA("bodyprog/nonmatchings/collision", D_800294F4);
+// Padding with garbage data.
+#if VERSION_IS(USA)
+    static const u8 __unk_rdata[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+#elif VERSION_IS(JAP0)
+    static const u8 __unk_rdata[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
+#elif VERSION_IS(JAP1)
+    static const u8 __unk_rdata[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
+#elif VERSION_IS(JAP2)
+    static const u8 __unk_rdata[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
+#endif
