@@ -545,7 +545,7 @@ void Ipd_TexturesInit(void) // 0x80041D48
 void Map_CollisionDataInit(void) // 0x80041E98
 {
     bzero(&g_MapTerrain.collisionData, sizeof(s_IpdCollisionData));
-    g_MapTerrain.collisionData.subCellSize = Q8(2.0f);
+    g_MapTerrain.collisionData.subcellSize = Q8(2.0f);
 }
 
 void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0

@@ -216,7 +216,7 @@ typedef struct _PropsNpc
     /* 0x118 */ q3_12  field_118; // Angle.
     /* 0x11A */ q3_12  field_11A; // Angle.
     /* 0x11C */ s32    flags; /** `e_*Flags` */
-    /* 0x120 */ s16    field_120; // `bool`.
+    /* 0x120 */ s16    field_120; // `bool`
     /* 0x120 */ q3_12  field_122; // Angle.
     /* 0x124 */ q3_12  moveDistance_124;
     /* 0x126 */ q3_12  moveSpeed;
@@ -256,7 +256,7 @@ typedef struct _PropsBloodsucker
 /** @brief Cat character properties. */
 typedef struct _PropsCat
 {
-    /* 0xE8 */ u8 field_E8; // `bool`.
+    /* 0xE8 */ u8 field_E8; // `bool`
 } s_PropsCat;
 
 /** @brief Creeper character properties. */
@@ -402,7 +402,7 @@ typedef struct _PropsPuppetNurse
     /* 0x119 */ u8            modelVariantIdx;
     /* 0x11A */ q3_12         field_11A; // Timer.
     /* 0x11C */ q3_12         field_11C; // Heading angle.
-    /* 0x11E */ s16           field_11E; // `bool`.
+    /* 0x11E */ s16           field_11E; // `bool`
     /* 0x120 */ q3_12         field_120;
     /* 0x122 */ u16           flags_122; /** `e_PuppetNurseFlags` */
     /* 0x124 */ s_800D5710*   field_124;

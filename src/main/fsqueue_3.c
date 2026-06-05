@@ -233,7 +233,7 @@ bool Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
     ReadTIM(&tim);
 
     tempRect = *tim.prect;
-    if (entry->extra.image.u != 0xFF)
+    if (entry->extra.image.u != UCHAR_MAX)
     {
         // This contraption simply extracts XY from tPage value.
         // For some reason it seems to be byte swapped, or maybe tPage is stored as u8[2]?
