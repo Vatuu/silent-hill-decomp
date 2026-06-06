@@ -498,8 +498,8 @@ func_8003BCF4                                = 0x8003BA28; // type:func
 //--- PA: 0x016F00   VA: 0x8003BA60   subsegment: c, events/bodyprog_8003BD2C
 //---------------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BA60; // type:func
-func_8003BD48                                = 0x8003BA7C; // type:func
-func_8003BE28                                = 0x8003BB5C; // type:func
+Collision_FlagsLocationUpdate                = 0x8003BA7C; // type:func
+Collision_FlagsUpdate                        = 0x8003BB5C; // type:func
 
 //------------------------------------------------------------------------
 //--- PA: 0x017024   VA: 0x8003BB84   subsegment: c, gfx/bodyprog_8003BE50

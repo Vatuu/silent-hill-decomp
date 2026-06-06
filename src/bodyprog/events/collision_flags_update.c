@@ -3,28 +3,17 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/collision/collision.h"
+#include "bodyprog/map/map.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-// ========================================
-// NPC COLISIONS FLAGS UPDATE?
-// ========================================
-/** TODO - Remove later
- * This code looks weird. Testing in-game, it seems like collision flags are shared
- * between the player and the NPCs, so it's possible this is executed arbitrarily.
- */
-
-s32 Map_TypeGet(void) // 0x8003BD2C
-{
-    return g_WorldGfxWork.mapInfo - MAP_INFOS;
-}
-
-void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
+void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
 {
     u16 collFlags;
 
     g_CollisionTriggerFlags = Collision_FlagsGet();
-    collFlags        = g_CollisionTriggerFlags;
+    collFlags               = g_CollisionTriggerFlags;
 
     switch (Map_TypeGet())
     {
@@ -48,7 +37,7 @@ void func_8003BD48(const s_SubCharacter* chara) // 0x8003BD48
     Collision_FlagsSet(collFlags);
 }
 
-void func_8003BE28(void) // 0x8003BE28
+void Collision_FlagsUpdate(void) // 0x8003BE28
 {
     Collision_FlagsSet(g_CollisionTriggerFlags);
 }

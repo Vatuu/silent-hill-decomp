@@ -32,17 +32,14 @@ s8 g_CharaAnimDataIdxs[Chara_Count] = {
 
 s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
     {
-        .allocCharaId         = Chara_Harry,
-        .activeCharaId         = Chara_Harry,
-        .allocAddr        = (s_AnmHeader*)FS_BUFFER_0,
-        .activeAnmHdr        = (s_AnmHeader*)FS_BUFFER_0,
-        .allocSize  = 0x2E630,
-        .activeSize = 0x2E630,
-        .boneCoords         = NULL
-    },
-    {},
-    {},
-    {}
+        .allocCharaId  = Chara_Harry,
+        .activeCharaId = Chara_Harry,
+        .allocAddr     = (s_AnmHeader*)FS_BUFFER_0,
+        .activeAnmHdr  = (s_AnmHeader*)FS_BUFFER_0,
+        .allocSize     = 0x2E630,
+        .activeSize    = 0x2E630,
+        .boneCoords    = NULL
+    }
 };
 
 s_AnimInfo D_800A998C = {
@@ -54,6 +51,10 @@ s_AnimInfo D_800A998C = {
     .startKeyframeIdx    = 26,
     .endKeyframeIdx      = 44
 };
+
+// ========================================
+// ANIMATION FILE STREAMING
+// ========================================
 
 bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1) // 0x8003528C
 {

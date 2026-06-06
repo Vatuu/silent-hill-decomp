@@ -999,7 +999,7 @@ void SysState_Fmv_Update(void);
 
 s32 Map_TypeGet(void);
 
-void func_8003BD48(const s_SubCharacter* chara);
+void Collision_FlagsLocationUpdate(const s_SubCharacter* chara);
 
 void CharaModel_Free(s_CharaModel* model);
 

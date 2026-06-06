@@ -26,7 +26,7 @@
 #include "screens/stream/stream.h"
 
 // ========================================
-// GAME INIT 1
+// WORLD/ROOM INITIALIZATION PROCESS
 // ========================================
 
 static inline void Game_StateStepIncrement(void) // TODO: Move to header?
@@ -275,16 +275,12 @@ static void GameBoot_LoadingScreen(void) // 0x80034E58
     Screen_BackgroundMotionBlur(SyncMode_Wait2);
 }
 
-// ========================================
-// NPCS INIT
-// ========================================
-
 static void GameBoot_NpcClear(void) // 0x80034EC8
 {
     s32 i;
 
     g_SysWork.field_228C[0] = 0;
-    g_SysWork.npcFlags = 0;
+    g_SysWork.npcFlags      = 0;
 
     bzero(g_SysWork.npcs, ARRAY_SIZE(g_SysWork.npcs) * sizeof(s_SubCharacter));
 
@@ -313,10 +309,6 @@ static void GameBoot_NpcInit(void) // 0x80034F18
 
     #undef playerChara
 }
-
-// ========================================
-// GAME INIT 2
-// ========================================
 
 void GameBoot_InGameInit(void) // 0x80034FB8
 {

@@ -399,7 +399,7 @@ s32 func_8003647C(void) // 0x8003647C
 {
     return g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8;
 }
-
+//0x800C957C
 s32 func_80036498(void) // 80036498
 {
     return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8);

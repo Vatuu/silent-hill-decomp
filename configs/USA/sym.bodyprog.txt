@@ -356,10 +356,16 @@ MainMenu_FogRandomize                        = 0x8003BAC4; // type:func
 MainMenu_FogScatter                          = 0x8003BBF4; // type:func
 MainMenu_FogUpdate                           = 0x8003BC8C; // type:func
 
-//---------------------------------------------------------------------------
-//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, events/bodyprog_8003BD2C
-//---------------------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, events/map_type_get
+//----------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BD2C; // type:func
+
+//--------------------------------------------------------------------------------
+//--- PA: 0x0171E8   VA: 0x8003BD48   subsegment: c, events/collision_flags_update
+//--------------------------------------------------------------------------------
+Collision_FlagsLocationUpdate                = 0x8003BD48;
+Collision_FlagsUpdate                        = 0x8003BE28;
 
 //------------------------------------------------------------------------
 //--- PA: 0x0172F0   VA: 0x8003BE50   subsegment: c, gfx/bodyprog_8003BE50
