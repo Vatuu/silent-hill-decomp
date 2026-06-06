@@ -29,6 +29,7 @@ typedef struct
     /* 0xE */ s16   field_E;
 } s_RayState_6C;
 
+// Something related to subcell ranges.
 typedef struct
 {
     s16 field_0;
@@ -43,9 +44,7 @@ typedef struct
     /* 0x6  */ q7_8             field_6;
     /* 0x8  */ q7_8             field_8; // Hit distance? `SHRT_MAX` if no valid hit.
     /* 0xA  */ s8               __pad_A[2];
-    /* 0xC  */ q19_12           field_C;  // } Q19.12 `VECTOR3`
-    /* 0x10 */ q19_12           field_10; // }
-    /* 0x14 */ q19_12           field_14; // }
+    /* 0xC  */ VECTOR3          field_C; // Q19.12
     /* 0x18 */ s8               unk_18[4];
     /* 0x1C */ q7_8             groundHeight;
     /* 0x1E */ s8               __pad_1E[2];
@@ -75,8 +74,8 @@ typedef struct
     /* 0x80 */ s32              field_80;
     /* 0x84 */ u16              field_84;
     /* 0x86 */ u8               __pad_86[2];
-    /* 0x88 */ s32              field_88;
-    /* 0x8C */ s_RayState_8C    field_8C[1]; // Unknown size.
+    /* 0x88 */ s32              field_88;    // `field_8C` size.
+    /* 0x8C */ s_RayState_8C    field_8C[1]; // Unknown buffer size.
 } s_RayState;
 
 /** @brief Ray trace line of sight info. */
