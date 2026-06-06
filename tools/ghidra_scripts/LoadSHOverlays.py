@@ -27,6 +27,7 @@ from javax.swing import JFileChooser
 import re
 import os
 from os.path import basename, dirname, join
+from java.lang import Exception as JavaException
 
 MapNames = [
     "map0_s00", "map0_s01", "map0_s02",
@@ -88,22 +89,34 @@ def readOverlayAddressesFromExe():
 
     try:
         # Read b_konami/map address from 0x80010000
-        addr0010000 = default_space.getAddress(0x80010000)
-        map_addr = mem.getInt(addr0010000) & 0xFFFFFFFF
+        map_addr = mem.getInt(default_space.getAddress(0x80010000)) & 0xFFFFFFFF
         print("  b_konami/map address: 0x{:08X}".format(map_addr))
         
         # Read bodyprog address from 0x80010004
-        addr0010004 = default_space.getAddress(0x80010004)
-        bodyprog_addr = mem.getInt(addr0010004) & 0xFFFFFFFF
+        bodyprog_addr = mem.getInt(default_space.getAddress(0x80010004)) & 0xFFFFFFFF
         print("  bodyprog address: 0x{:08X}".format(bodyprog_addr))
         
         OverlayAddrs["b_konami"] = map_addr
         OverlayAddrs["map"] = map_addr
         OverlayAddrs["bodyprog"] = bodyprog_addr
         
-    except Exception as e:
-        printerr("Error reading overlay addresses from executable: {}".format(e))
-        printerr("Using default addresses instead.")
+    except (Exception, JavaException) as e:
+        # Demo versions move addr to different offset, try those
+        try:
+            # Read b_konami/map address from 0x80018000
+            map_addr = mem.getInt(default_space.getAddress(0x80018000)) & 0xFFFFFFFF
+            print("  b_konami/map address: 0x{:08X}".format(map_addr))
+            
+            # Read bodyprog address from 0x80018004
+            bodyprog_addr = mem.getInt(default_space.getAddress(0x80018004)) & 0xFFFFFFFF
+            print("  bodyprog address: 0x{:08X}".format(bodyprog_addr))
+            
+            OverlayAddrs["b_konami"] = map_addr
+            OverlayAddrs["map"] = map_addr
+            OverlayAddrs["bodyprog"] = bodyprog_addr
+        except (Exception, JavaException) as e2:
+            printerr("Error reading overlay addresses from executable: {}".format(e2))
+            printerr("Using default addresses instead.")
 
 
 def carveMemoryBlock(mem, start_addr, length):
@@ -135,14 +148,18 @@ def carveMemoryBlock(mem, start_addr, length):
             mem.split(block, end_split_addr)
             break
 
-    # Now that memory is split, find the new memory section and remove it
+    # Now that memory is split, remove all blocks fully within the carved range
     for block in list(mem.getBlocks()):
-        if block.getStart().compareTo(start_addr) == 0:
+        if block.getStart().compareTo(start_addr) >= 0 and block.getEnd().compareTo(end_addr) <= 0:
             mem.removeBlock(block, TaskMonitor.DUMMY)
 
 def createOverlayFromFile(filepath):
     with open(filepath, "rb") as f:
         file_data = f.read()
+        
+    if len(file_data) <= 256:
+        print("  File empty: {}".format(filepath))
+        return
 
     mem = currentProgram.getMemory()
     address_factory = currentProgram.getAddressFactory()
@@ -211,7 +228,7 @@ def loadSplatSymbolsFile(sym_path):
 
     if space is None:
         printerr("Memory space '{}' not found in program.".format(segment_name))
-        exit()
+        return
 
     # Parse the symbol file
     function_map = {}
@@ -253,10 +270,17 @@ def loadSplatSymbolsFile(sym_path):
 
 
 def loadSymbolsFromConfigs(assets_path):
-    region = askChoice("Select region to load symbols from", "Pick one:", ["USA", "EUR", "JAP0", "JAP1", "JAP2", "None"], "USA")
-    if region == "None":
+    try:
+        region = askChoice("Select region to load symbols from", "Pick one:", ["USA", "EUR", "JAP0", "JAP1", "JAP2", "None"], "USA")
+        if region == "None":
+            return
+    except:
         return
-    configs_path = os.path.normpath(os.path.join(assets_path, "..", "configs", region))
+    configs_path = os.path.normpath(os.path.join(assets_path, "..", "..", "configs", region))
+    
+    # JAP2 pretty much matches JAP1 so far
+    if region == "JAP2":
+        region = "JAP1"
 
     pattern = re.compile(r"^sym\..*\.txt$")  # regex for filenames like sym.X.txt
 
@@ -264,13 +288,18 @@ def loadSymbolsFromConfigs(assets_path):
         for fname in files:
             if fname.startswith("sym.") and fname.endswith(".txt"):
                 loadSplatSymbolsFile(os.path.join(root, fname))
+                
+    # JAP releases share main overlay addrs with USA
+    if region in ["JAP0", "JAP1", "JAP2"]:
+        usa_path = os.path.join(assets_path, "..", "..", "configs", "USA")
+        loadSplatSymbolsFile(os.path.join(usa_path, "sym.main.txt"))
 
 def tryLoadKnownOvl(ovl_path):
+    print("Loading overlay {}".format(ovl_path))
     if os.path.isfile(ovl_path):
-        print("Loading overlay {}".format(ovl_path))
         createOverlayFromFile(ovl_path)
     else:
-        print("File not found: {}".format(ovl_path))
+        print("  File not found: {}".format(ovl_path))
 
 # Entry point
 readOverlayAddressesFromExe()
@@ -294,9 +323,10 @@ if filepath:
                 print(ovl_path)
                 tryLoadKnownOvl(ovl_path)
 
-        if askYesNo("Load Symbols", "Do you want to load splat symbols?"):
+        if askYesNo("Load Symbols", "Do you want to load splat symbols? (press No if loading demo/prototype!)"):
             loadSymbolsFromConfigs(folder)
     else:
+        print("Loading overlay {}".format(filepath))
         createOverlayFromFile(filepath)
 else:
     print("No file selected.")
