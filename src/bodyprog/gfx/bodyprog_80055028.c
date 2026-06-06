@@ -752,7 +752,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
 // WORLD INITIALIZATION 2
 // ========================================
 
-void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
+void Lm_HeaderPtrsInit(s_LmHeader* lmHdr) // 0x800560FC
 {
     s32 i;
 
@@ -971,7 +971,7 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* active
     }
 }
 
-bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
+bool Lm_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
 {
     s_Material* curMat;
 

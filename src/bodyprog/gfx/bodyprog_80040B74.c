@@ -429,7 +429,7 @@ u32 IpdHeader_LoadStateGet(s_Chunk* chunk) // 0x80041B1C
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (chunk->ipdHdr->isLoaded && IpdHeader_IsTextureLoaded(chunk->ipdHdr))
+    else if (chunk->ipdHdr->isLoaded && Ipd_IsTextureLoaded(chunk->ipdHdr))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -454,7 +454,7 @@ u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
     {
         return StaticModelLoadState_Invalid;
     }
-    else if (globalLm->lmHdr->isLoaded && LmHeader_IsTextureLoaded(globalLm->lmHdr))
+    else if (globalLm->lmHdr->isLoaded && Lm_IsTextureLoaded(globalLm->lmHdr))
     {
         return StaticModelLoadState_Loaded;
     }
@@ -827,7 +827,7 @@ s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx) // 0x800
             ipdHdr = curChunk->ipdHdr;
             if (ipdHdr->isLoaded)
             {
-                collData = IpdHeader_CollisionDataGet(ipdHdr);
+                collData = Ipd_HeaderCollisionDataGet(ipdHdr);
                 if (collData != NULL)
                 {
                     g_Map_ActiveChunksCollisionData[(*collDataIdx)++] = collData;
@@ -1017,7 +1017,7 @@ void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projP
         fullPageTexCount                          = g_MapTerrain.chunkTextures.fullPage.count;
         g_MapTerrain.chunkTextures.fullPage.count = 4;
 
-        LmHeader_FixOffsets(g_MapTerrain.globalLm.lmHdr);
+        Lm_HeaderPtrsInit(g_MapTerrain.globalLm.lmHdr);
         Lm_MaterialsLoadWithFilter(g_MapTerrain.globalLm.lmHdr, &g_MapTerrain.chunkTextures.fullPage,
                                    NULL, g_MapTerrain.textureFileIdx, BlendMode_Additive);
         Lm_MaterialFlagsApply(g_MapTerrain.globalLm.lmHdr);
@@ -1029,7 +1029,7 @@ void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projP
     {
         if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
-            IpdHeader_FixOffsets(curChunk->ipdHdr, &g_MapTerrain.globalLm.lmHdr, 1,
+            Ipd_Init(curChunk->ipdHdr, &g_MapTerrain.globalLm.lmHdr, 1,
                                  &g_MapTerrain.chunkTextures.fullPage, &g_MapTerrain.chunkTextures.halfPage, g_MapTerrain.textureFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->cellX, curChunk->cellZ);
         }
@@ -1465,17 +1465,17 @@ bool Ipd_CellPositionMatchCheck(s_Chunk* chunk, s_MapTerrain* terrain)
     return terrain->isExterior != false;
 }
 
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
+bool Ipd_IsTextureLoaded(s_IpdHeader* ipdHdr) // 0x80043B70
 {
     if (!ipdHdr->isLoaded)
     {
         return false;
     }
 
-    return LmHeader_IsTextureLoaded(ipdHdr->lmHdr);
+    return Lm_IsTextureLoaded(ipdHdr->lmHdr);
 }
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA4
+s_IpdCollisionData* Ipd_HeaderCollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA4
 {
     if (ipdHdr->isLoaded)
     {
@@ -1485,7 +1485,9 @@ s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
     return NULL;
 }
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx) // 0x80043BC4
+void Ipd_Init(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
+              s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+              e_FsFile fileIdx) // 0x80043BC4
 {
     if (ipdHdr->isLoaded)
     {
@@ -1494,16 +1496,18 @@ void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCou
     ipdHdr->isLoaded = true;
 
     Ipd_HeaderPtrsInit(ipdHdr);
-    IpdCollData_FixOffsets(&ipdHdr->collisionData);
-    LmHeader_FixOffsets(ipdHdr->lmHdr);
+    Ipd_CollisionPtrsInit(&ipdHdr->collisionData);
+    Lm_HeaderPtrsInit(ipdHdr->lmHdr);
     func_8008E4EC(ipdHdr->lmHdr);
     Ipd_MaterialsLoad(ipdHdr, fullPageActiveTexs, halfPageActiveTexs, fileIdx);
     Lm_MaterialFlagsApply(ipdHdr->lmHdr);
-    IpdHeader_ModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
-    IpdHeader_ModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo);
+    Ipd_HeaderModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
+    Ipd_HeaderModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo);
 }
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx) // 0x80043C7C
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr,
+                       s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+                       e_FsFile fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded)
     {
@@ -1575,7 +1579,7 @@ void Ipd_HeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
     }
 }
 
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount) // 0x80043E50
+void Ipd_HeaderModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount) // 0x80043E50
 {
     s32             i;
     s32             j;
@@ -1621,7 +1625,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     return NULL;
 }
 
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
+void Ipd_HeaderModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
 {
     s_IpdModelBuffer*   curModelBuffer;
     s_IpdModelInstance* curModelInst;

@@ -15,6 +15,16 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
+/** @brief Computes a trigger height from half-meter height steps.
+ *
+ * @note The trigger height has a default offset of `Q12(-1.5f)`.
+ *
+ * @param steps Half-meter height steps.
+ * @return Trigger height (Q19.12).
+ */
+#define TRIGGER_HEIGHT_GET(steps) \
+    ((-Q12(steps) >> 1) - Q12(1.5f))
+
 void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
 {
     s32              i;

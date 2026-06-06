@@ -493,17 +493,17 @@ Ipd_ChunksLoadedCheck                        = 0x80043740; // type:func
 Ipd_NextChunkLoadCheck                       = 0x80043830; // type:func
 Ipd_ChunksDraw                               = 0x80043A24;
 Ipd_CellPositionMatchCheck                   = 0x80043B34; // type:func
-IpdHeader_IsTextureLoaded                    = 0x80043B70; // type:func
-IpdHeader_CollisionDataGet                   = 0x80043BA4; // type:func
-IpdHeader_FixOffsets                         = 0x80043BC4; // type:func
+Ipd_IsTextureLoaded                          = 0x80043B70; // type:func
+Ipd_HeaderCollisionDataGet                   = 0x80043BA4; // type:func
+Ipd_Init                                     = 0x80043BC4; // type:func
 Ipd_MaterialsLoad                            = 0x80043C7C; // type:func
 Ipd_HalfPageMaterialCountGet                 = 0x80043D00; // type:func
 LmFilter_IsFullPage                          = 0x80043D44; // type:func
 LmFilter_IsHalfPage                          = 0x80043D64; // type:func
 Ipd_HeaderPtrsInit                           = 0x80043DA4; // type:func
-IpdHeader_ModelLinkObjectLists               = 0x80043E50; // type:func
+Ipd_HeaderModelLinkObjectLists               = 0x80043E50; // type:func
 LmHeader_ModelHeaderSearch                   = 0x80043F2C; // type:func
-IpdHeader_ModelBufferLinkObjectLists         = 0x80043F88; // type:func
+Ipd_HeaderModelBufferLinkObjectLists         = 0x80043F88; // type:func
 Ipd_ChunkDraw                                = 0x80044090; // type:func
 Gfx_ChunkSubcellVisibleCheck                 = 0x80044420; // type:func
 
@@ -700,7 +700,7 @@ WorldEnv_LightPositionGet                    = 0x80055434; // type:func
 WorldEnv_LightRotationAndIntensityGet        = 0x8005545C; // type:func
 WorldEnv_LightDirectionAndIntensityGet       = 0x80055490; // type:func
 WorldEnv_FogDistanceSet                      = 0x80055840; // type:func
-LmHeader_FixOffsets                          = 0x800560FC; // type:func
+Lm_HeaderPtrsInit                            = 0x800560FC; // type:func
 ModelHeader_FixOffsets                       = 0x800561A4; // type:func
 Lm_TransparentPrimSet                        = 0x80056244;
 Lm_MaterialCountGet                          = 0x80056348; // type:func
@@ -709,7 +709,7 @@ Lm_MaterialFsImageApply1                     = 0x80056504; // type:func
 Lm_MaterialFsImageApply                      = 0x80056558; // type:func
 Material_FsImageApply                        = 0x8005660C; // type:func
 Lm_MaterialsLoadWithFilter                   = 0x80056774; // type:func
-LmHeader_IsTextureLoaded                     = 0x80056888; // type:func
+Lm_IsTextureLoaded                           = 0x80056888; // type:func
 Lm_MaterialFlagsApply                        = 0x80056954; // type:func
 Model_MaterialFlagsApply                     = 0x80056A88; // type:func
 Lm_MaterialRefCountDec                       = 0x80056BF8; // type:func
@@ -775,7 +775,7 @@ Collision_FlagsSet                           = 0x80069820; // type:func
 Collision_FlagBitsSet                        = 0x8006982C; // type:func
 Collision_FlagBitsClear                      = 0x80069844;
 Collision_NearbyTriggersGet                  = 0x80069860; // type:func
-IpdCollData_FixOffsets                       = 0x8006993C; // type:func
+Ipd_CollisionPtrsInit                        = 0x8006993C; // type:func
 Collision_SubcellChecksReset                 = 0x80069994;
 Collision_SurfaceGet                         = 0x800699F8; // type:func
 Collision_WallDetect                         = 0x80069B24; // type:func
@@ -804,9 +804,9 @@ Ray_LosHitCheck                              = 0x8006DB3C; // type:func
 Ray_TraceSetup                               = 0x8006DCE0; // type:func
 Ray_TraceRun                                 = 0x8006DEB0; // type:func
 
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------
 //--- PA: 0x04A6F0   VA: 0x8006F250   subsegment: c, collision/trigger
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------
 Collision_CeilingHeightGet                   = 0x8006F620; // type:func
 Collision_TriggerOffsetGet                   = 0x8006F8FC;
 

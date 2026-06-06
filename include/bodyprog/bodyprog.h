@@ -1269,13 +1269,17 @@ void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 bool Ipd_CellPositionMatchCheck(s_Chunk* chunk, s_MapTerrain* terrain);
 
 /** Checks if PLM texture is loaded? */
-bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
+bool Ipd_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
-s_IpdCollisionData* IpdHeader_CollisionDataGet(s_IpdHeader* ipdHdr);
+s_IpdCollisionData* Ipd_HeaderCollisionDataGet(s_IpdHeader* ipdHdr);
 
-void IpdHeader_FixOffsets(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx);
+void Ipd_Init(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
+              s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+              e_FsFile fileIdx);
 
-void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr, s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs, e_FsFile fileIdx);
+void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr,
+                       s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+                       e_FsFile fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -1288,13 +1292,13 @@ bool LmFilter_IsHalfPage(s_Material* mat);
 void Ipd_HeaderPtrsInit(s_IpdHeader* ipdHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
-void IpdHeader_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);
+void Ipd_HeaderModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);
 
 /** @brief Searches `s_LmHeader` for objects with the given `objName`. */
 s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
-void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
+void Ipd_HeaderModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
 
 /** Sets IPD collision data chunk cells? */
 void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
@@ -1517,7 +1521,7 @@ void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* world
 
 u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat);
 
-void LmHeader_FixOffsets(s_LmHeader* lmHdr);
+void Lm_HeaderPtrsInit(s_LmHeader* lmHdr);
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
@@ -1577,7 +1581,7 @@ void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 star
 void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
 
 /** Checks if LM textures are loaded? */
-bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
+bool Lm_IsTextureLoaded(s_LmHeader* lmHdr);
 
 void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
 
@@ -1820,6 +1824,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
 s32 func_8008D850(void);
 
+// Sets material flags?
 void func_8008E4EC(s_LmHeader* lmHdr);
 
 void func_8008D78C(void);

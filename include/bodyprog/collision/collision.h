@@ -12,25 +12,6 @@
 #define INTERSECTION_BUFFER    Q12(0.1f)
 #define DEFAULT_CEILING_HEIGHT -16.0f
 
-/** @brief Computes a trigger height from half-meter height steps.
- *
- * @note The trigger height has a default offset of `Q12(-1.5f)`.
- *
- * @param steps Half-meter height steps.
- * @return Trigger height (Q19.12).
- */
-#define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
-
-// TODO: `collision.c` is too big and in dire need of splits. There are a few potential groupings.
-
-typedef enum _SubChunkTransitionDirection
-{
-    SubChunkTransitionDirection_None = 0,
-    SubChunkTransitionDirection_Z    = 1,
-    SubChunkTransitionDirection_X    = 2
-} e_SubChunkTransitionDirection;
-
 /** @brief Global collision flags.
  * Applies for both NPCs and the player.
  */
@@ -40,7 +21,7 @@ typedef enum _CollisionTriggerFlags
     CollisionTriggerFlag_0    = 1 << 0, // Enables map collisions.
     CollisionTriggerFlag_1    = 1 << 1, // Enables objects collisions.
     CollisionTriggerFlag_2    = 1 << 2, // Enables alternative objects collisions?
-    CollisionTriggerFlag_3    = 1 << 3, // @unused Only ever call in `MAP6_S05`.
+    CollisionTriggerFlag_3    = 1 << 3, /** @unused Only ever called in `MAP6_S05`. */
     CollisionTriggerFlag_All  = 0xFFFF
 } e_CollisionTriggerFlags;
 
@@ -50,6 +31,13 @@ typedef enum _CollisionType
     CollisionType_Wall = 1,
     CollisionType_Unk2 = 2
 } e_CollisionType;
+
+typedef enum _SubChunkTransitionDirection
+{
+    SubChunkTransitionDirection_None = 0,
+    SubChunkTransitionDirection_Z    = 1,
+    SubChunkTransitionDirection_X    = 2
+} e_SubChunkTransitionDirection;
 
 /** @brief Collision surface data. */
 typedef struct _CollisionSurface
@@ -261,7 +249,7 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
 // @split? IPD functions.
 // ========================================
 
-void IpdCollData_FixOffsets(s_IpdCollisionData* collData);
+void Ipd_CollisionPtrsInit(s_IpdCollisionData* collData);
 
 void Collision_SubcellChecksReset(s_IpdCollisionData* collData);
 

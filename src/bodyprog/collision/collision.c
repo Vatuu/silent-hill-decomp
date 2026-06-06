@@ -89,7 +89,7 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
     #undef AABB_BUFFER
 }
 
-void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
+void Ipd_CollisionPtrsInit(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->splitVertices = (u8*)collData->splitVertices + (u32)collData;
     collData->surfaces      = (u8*)collData->surfaces      + (u32)collData;

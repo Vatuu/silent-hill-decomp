@@ -210,7 +210,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
     {
         collData = *curCollData;
 
-        if (collData->surfaceCount || collData->subcellCount || collData->field_8_24)
+        if (collData->surfaceCount != 0 || collData->subcellCount != 0 || collData->field_8_24 != 0)
         {
             func_8006E0AC(state, collData);
             Collision_SubcellChecksReset(collData);
@@ -250,16 +250,16 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
 
 void func_8006E0AC(s_RayState* state, const s_IpdCollisionData* arg1) // 0x8006E0AC
 {
-    // `state` type might be wrong.
-    state->field_6C.positionX = arg1->positionX;
-    state->field_6C.positionZ = arg1->positionZ;
+    // TODO: `state` type might be wrong.
+    state->field_6C.positionX    = arg1->positionX;
+    state->field_6C.positionZ    = arg1->positionZ;
     state->field_6C.groundHeight = state->from.vx - state->field_6C.positionX;
-    state->field_6C.topHeight = state->from.vz - state->field_6C.positionZ;
-    state->field_6C.field_C = state->field_6C.groundHeight + state->offset.vx;
-    state->field_6C.field_E = state->field_6C.topHeight + state->offset.vz;
-    state->field_7C = arg1->subcellCountX;
-    state->field_80 = arg1->subcellCountZ;
-    state->field_84 = arg1->subcellSize;
+    state->field_6C.topHeight    = state->from.vz - state->field_6C.positionZ;
+    state->field_6C.field_C      = state->field_6C.groundHeight + state->offset.vx;
+    state->field_6C.field_E      = state->field_6C.topHeight + state->offset.vz;
+    state->field_7C              = arg1->subcellCountX;
+    state->field_80              = arg1->subcellCountZ;
+    state->field_84              = arg1->subcellSize;
 
     func_8006E150(&state->field_6C, ((DVECTOR*)&state->offset)[0], ((DVECTOR*)&state->offset)[1]);
 }

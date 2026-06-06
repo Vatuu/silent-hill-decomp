@@ -66,7 +66,7 @@ void func_8003BED0(void) // 0x8003BED0
         return;
     }
 
-    LmHeader_FixOffsets(&g_WorldGfxWork.itemLmHdr);
+    Lm_HeaderPtrsInit(&g_WorldGfxWork.itemLmHdr);
     Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "TIM00", &IMAGE_TIM, 1);
     Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "BG_ETC", &IMAGE_ETC, 1);
     Lm_MaterialFlagsApply(&g_WorldGfxWork.itemLmHdr);
@@ -807,7 +807,7 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
         lmHdr = heldItem->lmHdr;
         if (!lmHdr->isLoaded)
         {
-            LmHeader_FixOffsets(lmHdr);
+            Lm_HeaderPtrsInit(lmHdr);
             Lm_MaterialFsImageApply1(lmHdr, heldItem->textureName, &heldItem->imageDesc, BlendMode_Additive);
             Lm_MaterialFlagsApply(lmHdr);
             Bone_ModelAssign(&heldItem->bone, heldItem->lmHdr, 0);
@@ -1166,7 +1166,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     {
         model->isLoaded = true;
 
-        LmHeader_FixOffsets(model->lmHdr);
+        Lm_HeaderPtrsInit(model->lmHdr);
         Lm_MaterialFileIdxApply(model->lmHdr, CHARA_FILE_INFOS[model->charaId].textureFileIdx, &model->texture, CHARA_FILE_INFOS[model->charaId].materialBlendMode % 4);
 
         skel = &model->skeleton;
