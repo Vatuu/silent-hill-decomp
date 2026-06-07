@@ -1,44 +1,45 @@
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef _VERSION_H
+#define _VERSION_H
 
-// Defines region and revision-specific version macros based on the `VER_XXX` Makefile target.
-//
-// Supports both region-gated code and date-based gating where changes are known to propagate
-// forward across releases.
-//
-// Three styles of version check macros are defined:
-//
-// - `VERSION_IS(USA)` — matches a single release exactly. Use for things that
-//   differ between every build (e.g. random padding bytes or raw addresses)
-//
-// - `VERSION_REGION_IS(NTSC)` — matches all releases in a region. Use for
-//   region-specific behavior (e.g. Japanese text rendering)
-//
-// - `VERSION_EQUAL_OR_NEWER(USA)` / `VERSION_EQUAL_OR_OLDER(JAP0)` — matches
-//   by build date. Use for changes introduced in one release and carried
-//   forward, such as bugfixes.
+/** @brief Defines region and revision-specific version macros based on the `VER_XXX` Makefile target.
+ *
+ * Supports both region-gated code and date-based gating where changes are known to propagate
+ * forward across releases.
+ *
+ * Three styles of version check macros are defined:
+ *
+ * - `VERSION_IS(USA)` — matches a single release exactly. Use for things that
+ *   differ between every build, e.g. random padding bytes or raw addresses.
+ *
+ * - `VERSION_REGION_IS(NTSC)` — matches all releases in a region. Use for
+ *   region-specific behavior, e.g. Japanese text rendering/
+ *
+ * - `VERSION_EQUAL_OR_NEWER(USA)` / `VERSION_EQUAL_OR_OLDER(JAP0)` — matches
+ *   by build date. Use for changes introduced in one release and carried
+ *   forward, e.g. bugfixes.
+ */
 
-/**
- * Checks if the build target is a specific release.
- * @param release The release identifier (JAP0, USA, JAP1, EUR, JAP2)
+/** @brief Checks if the build target is a specific release.
+ *
+ * @param release Release identifier (JAP0, USA, JAP1, EUR, JAP2).
  */
 #define VERSION_IS(release) defined(VER_##release)
 
-/**
- * Checks if the build target matches a given region.
- * @param region The region identifier (e.g. NTSC, NTSCJ, PAL)
+/** @brief Checks if the build target matches a given region.
+ *
+ * @param region Region identifier (NTSC, NTSCJ, PAL).
  */
 #define VERSION_REGION_IS(region) defined(VERSION_##region)
 
-/**
- * Checks if the build target version is equal to or newer than the given release.
- * @param release The release to compare against (PROTO_981216, JAP0, USA, JAP1, EUR, JAP2)
+/** @brief Checks if the build target version is equal to or newer than the given release.
+ *
+ * @param release Release to compare against (PROTO_981216, JAP0, USA, JAP1, EUR, JAP2).
  */
 #define VERSION_EQUAL_OR_NEWER(release) (VERSION_DATE >= VERSION_DATE_##release)
 
-/**
- * Checks if the build target version is equal to or older than the given release.
- * @param release The release to compare against (PROTO_981216, JAP0, USA, JAP1, EUR, JAP2)
+/** @brief Checks if the build target version is equal to or older than the given release.
+ *
+ * @param release Release to compare against (PROTO_981216, JAP0, USA, JAP1, EUR, JAP2).
  */
 #define VERSION_EQUAL_OR_OLDER(release) (VERSION_DATE <= VERSION_DATE_##release)
 

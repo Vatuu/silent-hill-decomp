@@ -133,6 +133,7 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     pos.vy = Q12(0.0f);
     pos.vz = Q12(0.0f);
 
+    // Get collision data at world position.
     collData = Ipd_CollisionDataGet(posX, posZ);
     if (collData == NULL)
     {
@@ -143,18 +144,20 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
         return;
     }
 
+    // Define cylinder.
     cylinder.position.vx = posX;
     cylinder.position.vy = Q12(0.0f);
     cylinder.position.vz = posZ;
     cylinder.bottom      = Q12(0.0f);
     cylinder.top         = Q12(0.0f);
     cylinder.radius      = Q12(0.0f);
+
     Collision_CollStateInit(&state, &pos, &cylinder, false);
 
     state.isCharaMoving = false;
     state.field_0_9     = false;
     state.field_0_10    = true;
-    Collision_CharaCollisionHandling(&state, collData);
+    Collision_CharaCollisionHandle(&state, collData);
 
     if (state.heightDisabled == true)
     {
@@ -563,7 +566,7 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
         // Run through collision data.
         for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
         {
-            Collision_CharaCollisionHandling(&state, *curCollData);
+            Collision_CharaCollisionHandle(&state, *curCollData);
         }
 
         if (state.field_44.field_0.field_0 && state.field_44.field_0.field_2.vx == state.field_44.field_0.field_2.vy)
@@ -747,7 +750,7 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
 
     Collision_MoveDirectionCalc(&state->charaState, moveOffset, cylinder);
 
-    state->field_7C = Q8(30.0f);
+    state->slopedGroundHeight = Q8(30.0f); // TODO: 30 metres might be a default constant. Also seen in `Collision_OffsetAlphaGet`.
     state->field_34 = 0;
     
     state->field_44.field_0.field_0  = 0;
@@ -762,7 +765,8 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
     state->groundType     = GroundType_Default;
 }
 
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder) // 0x8006ABC0
+void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
+                                 const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder) // 0x8006ABC0
 {
     q3_12 headingAngle;
 
@@ -797,23 +801,22 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR
     charaState->collisionState = cylinder->collisionState;
 }
 
-void Collision_CharaCollisionHandling(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006AD44
+void Collision_CharaCollisionHandle(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32                    endIdx;
     s32                    startIdx;
     s32                    i;
     s32                    j;
-    s_IpdCollSubcellRange* curCellRange;
-    
-    // Checks if IPD contains necessary collision information and if the game is able to get the
-    // sub-cell where the character is currently placed on.
+    s_IpdCollSubcellRange* curSubcellRanges;
+
+    // Check if IPD collision contains necessary information and the current subcell is accessible.
     if ((collData->surfaceCount == 0 && collData->subcellCount == 0 && collData->field_8_24 == 0) ||
         !Collision_SubcellInit(state, collData))
     {
         return;
     }
-    
-    if (state->field_0_0 == false)
+
+    if (!state->field_0_0)
     {
         Collision_SubcellChecksReset(collData);
     }
@@ -821,13 +824,15 @@ void Collision_CharaCollisionHandling(s_CollisionState* state, s_IpdCollisionDat
     startIdx = state->field_A0.s_0.closestXSubcellIdx;
     endIdx   = (state->field_A0.s_0.closestXSubcellIdx + state->field_A0.s_0.closeFarXSubcellIdxDiff) - 1;
 
-    for (i = state->field_A0.s_0.closestZSubcellIdx; i < (state->field_A0.s_0.closestZSubcellIdx + state->field_A0.s_0.closeFarZSubcellIdxDiff); i++)
+    for (i = state->field_A0.s_0.closestZSubcellIdx;
+         i < (state->field_A0.s_0.closestZSubcellIdx + state->field_A0.s_0.closeFarZSubcellIdxDiff);
+         i++)
     {
-        curCellRange = &collData->subcellRanges[(i * collData->subcellCountX) + startIdx];
+        curSubcellRanges = &collData->subcellRanges[(i * collData->subcellCountX) + startIdx];
 
-        for (j = startIdx; j <= endIdx; j++, curCellRange++)
+        for (j = startIdx; j <= endIdx; j++, curSubcellRanges++)
         {
-            func_8006B1C8(state, collData, curCellRange);
+            func_8006B1C8(state, collData, curSubcellRanges);
         }
     }
 
@@ -836,7 +841,7 @@ void Collision_CharaCollisionHandling(s_CollisionState* state, s_IpdCollisionDat
         Collision_SubcellChecksCountUpdate(collData);
     }
 
-    // Important for handling height and movement in slopes.
+    // TODO: Something that hangles height and movement on slopes.
     if (state->field_0_10)
     {
         func_8006C838(state, collData);
@@ -924,7 +929,10 @@ bool Collision_SubcellIdxGet(s_CollisionState* state, const s_IpdCollisionData* 
     charaCollDiffZClosest -= state->charaState.radius;
     charaCollDiffZFarest  += state->charaState.radius;
 
-    if (collCellXSize < charaCollDiffXClosest || collCellZSize < charaCollDiffZClosest || charaCollDiffXFarest < 0 || charaCollDiffZFarest < 0)
+    if (collCellXSize < charaCollDiffXClosest ||
+        collCellZSize < charaCollDiffZClosest ||
+        charaCollDiffXFarest < 0 ||
+        charaCollDiffZFarest < 0)
     {
         return false;
     }
@@ -936,8 +944,10 @@ bool Collision_SubcellIdxGet(s_CollisionState* state, const s_IpdCollisionData* 
 
     state->field_A0.s_0.closestXSubcellIdx      = charaCollDiffXClosest / collData->subcellSize;
     state->field_A0.s_0.closestZSubcellIdx      = charaCollDiffZClosest / collData->subcellSize;
-    state->field_A0.s_0.closeFarXSubcellIdxDiff = ((charaCollDiffXFarest / collData->subcellSize) - state->field_A0.s_0.closestXSubcellIdx) + 1;
-    state->field_A0.s_0.closeFarZSubcellIdxDiff = ((charaCollDiffZFarest / collData->subcellSize) - state->field_A0.s_0.closestZSubcellIdx) + 1;
+    state->field_A0.s_0.closeFarXSubcellIdxDiff = ((charaCollDiffXFarest / collData->subcellSize) -
+                                                   state->field_A0.s_0.closestXSubcellIdx) + 1;
+    state->field_A0.s_0.closeFarZSubcellIdxDiff = ((charaCollDiffZFarest / collData->subcellSize) -
+                                                   state->field_A0.s_0.closestZSubcellIdx) + 1;
 
     return true;
 }
@@ -996,7 +1006,7 @@ bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, 
     q23_8             charaVertDiffZ;
     q23_8             charaVertDiffX;
     s32               temp_v0;
-    s_IpdCollSurface* curCellSurface;
+    s_IpdCollSurface* curSurface;
     s_IpdCollSubcell* subcell;
 
     subcell = &collData->subcells[subcellIdx];
@@ -1029,12 +1039,12 @@ bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, 
 
     if (state->point.field_C.cellSurfaces.surfaceIdx0 != UCHAR_MAX)
     {
-        curCellSurface                     = &collData->surfaces[state->point.field_C.cellSurfaces.surfaceIdx0];
-        state->point.field_E               = curCellSurface->field_6_8;
-        state->point.disableSurface0Height = curCellSurface->disableHeight;
+        curSurface                         = &collData->surfaces[state->point.field_C.cellSurfaces.surfaceIdx0];
+        state->point.field_E               = curSurface->field_6_8;
+        state->point.disableSurface0Height = curSurface->disableHeight;
 
         if (state->charaState.field_4 &&
-            (curCellSurface->disableHeight == true || curCellSurface->groundType == GroundType_None))
+            (curSurface->disableHeight == true || curSurface->groundType == GroundType_None))
         {
             state->point.splitVertex0.vy -= Q8(-DEFAULT_CEILING_HEIGHT);
             state->point.splitVertex1.vy -= Q8(-DEFAULT_CEILING_HEIGHT);
@@ -1045,12 +1055,12 @@ bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, 
 
     if (state->point.field_C.cellSurfaces.surfaceIdx1 != UCHAR_MAX)
     {
-        curCellSurface                     = &collData->surfaces[state->point.field_C.cellSurfaces.surfaceIdx1];
-        state->point.field_F               = curCellSurface->field_6_8;
-        state->point.disableSurface1Height = curCellSurface->disableHeight;
+        curSurface                         = &collData->surfaces[state->point.field_C.cellSurfaces.surfaceIdx1];
+        state->point.field_F               = curSurface->field_6_8;
+        state->point.disableSurface1Height = curSurface->disableHeight;
 
         if (state->charaState.field_4 &&
-            (curCellSurface->disableHeight == true || curCellSurface->groundType == GroundType_None))
+            (curSurface->disableHeight == true || curSurface->groundType == GroundType_None))
         {
             state->point.splitVertex0.vy = Q8(DEFAULT_CEILING_HEIGHT);
             state->point.splitVertex1.vy = Q8(DEFAULT_CEILING_HEIGHT);
@@ -1818,7 +1828,7 @@ void func_8006C794(s_CollisionState* state, s32 arg1, s32 dist) // 0x8006C794
 
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006C838
 {
-    q19_12                 var_a0;
+    q19_12                 slopedGroundHeight;
     s_CollisionState_A8*   curUnk;
     s_IpdCollSurface*      curSurface;
     s_IpdCollisionData_18* temp_a0;
@@ -1828,16 +1838,16 @@ void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         return;
     }
 
-    if (state->subcellIdx != UCHAR_MAX && state->groundHeight < state->field_7C)
+    if (state->subcellIdx != UCHAR_MAX && state->groundHeight < state->slopedGroundHeight)
     {
-        temp_a0                 = &collData->ptr_18[state->subcellIdx - collData->subcellCount];
-        state->field_7C         = state->groundHeight;
-        state->charaCellOffsetX = state->charaPositionFrom.offset.vx + collData->positionX;
-        state->charaCellOffsetZ = state->charaPositionFrom.offset.vz + collData->positionZ;
-        state->tiltAngleX       = Q12_ANGLE(0.0f);
-        state->tiltAngleZ       = Q12_ANGLE(0.0f);
-        state->heightDisabled   = temp_a0->disableHeight;
-        state->groundType       = temp_a0->groundType;
+        temp_a0                   = &collData->ptr_18[state->subcellIdx - collData->subcellCount];
+        state->slopedGroundHeight = state->groundHeight;
+        state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
+        state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
+        state->tiltAngleX         = Q12_ANGLE(0.0f);
+        state->tiltAngleZ         = Q12_ANGLE(0.0f);
+        state->heightDisabled     = temp_a0->disableHeight;
+        state->groundType         = temp_a0->groundType;
     }
 
     for (curUnk = &state->field_A0.s_0.field_8[0]; curUnk < &state->field_A0.s_0.field_8[4]; curUnk++)
@@ -1846,27 +1856,26 @@ void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         {
             curSurface = &collData->surfaces[curUnk->surfaceIdx];
 
-            var_a0 = curSurface->field_2;
-
+            // Compute sloped ground height.
+            slopedGroundHeight = curSurface->baseGroundHeight;
             if (curSurface->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
+                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
             }
-
             if (curSurface->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                var_a0 += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
+                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
             }
 
-            if (var_a0 < state->field_7C)
+            if (slopedGroundHeight < state->slopedGroundHeight)
             {
-                state->field_7C         = var_a0;
-                state->charaCellOffsetX = state->charaPositionFrom.offset.vx + collData->positionX;
-                state->charaCellOffsetZ = state->charaPositionFrom.offset.vz + collData->positionZ;
-                state->tiltAngleX       = curSurface->tiltAngleX;
-                state->tiltAngleZ       = curSurface->tiltAngleZ;
-                state->heightDisabled   = curSurface->disableHeight;
-                state->groundType       = curSurface->groundType;
+                state->slopedGroundHeight = slopedGroundHeight;
+                state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
+                state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
+                state->tiltAngleX         = curSurface->tiltAngleX;
+                state->tiltAngleZ         = curSurface->tiltAngleZ;
+                state->heightDisabled     = curSurface->disableHeight;
+                state->groundType         = curSurface->groundType;
             }
         }
     }
@@ -1876,46 +1885,47 @@ void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
 {
     s32               startIdx;
     s32               endIdx;
-    q23_8             var_a2;
-    u8*               curUnk;
-    s_IpdCollSurface* surfaceAttribs;
+    q23_8             slopedGroundHeight;
+    u8*               curSurfaceIdx;
+    s_IpdCollSurface* curSurface;
 
     startIdx = subcellRanges[0].field_2;
     endIdx   = subcellRanges[1].field_2;
 
+    // Check for invalid range.
     if (startIdx == endIdx)
     {
         return;
     }
 
-    for (curUnk = &collData->ptr_2C[startIdx]; curUnk < &collData->ptr_2C[endIdx]; curUnk++)
+    // Run through surfaces.
+    for (curSurfaceIdx = &collData->ptr_2C[startIdx]; curSurfaceIdx < &collData->ptr_2C[endIdx]; curSurfaceIdx++)
     {
-        surfaceAttribs = &collData->surfaces[*curUnk];
+        curSurface = &collData->surfaces[*curSurfaceIdx];
 
-        if (((state->flags >> surfaceAttribs->field_6_11) & (1 << 0)) &&
-            surfaceAttribs->disableHeight != true)
+        if (((state->flags >> curSurface->field_6_11) & (1 << 0)) &&
+            curSurface->disableHeight != true)
         {
-            var_a2 = surfaceAttribs->field_2;
-
-            if (surfaceAttribs->tiltAngleX != Q12_ANGLE(0.0f))
+            // Compute sloped ground height.
+            slopedGroundHeight = curSurface->baseGroundHeight;
+            if (curSurface->tiltAngleX != Q8_ANGLE(0.0f))
             {
-                var_a2 += Q12_MULT(surfaceAttribs->tiltAngleX, state->charaPositionFrom.offset.vx - surfaceAttribs->field_0);
+                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
+            }
+            if (curSurface->tiltAngleZ != Q8_ANGLE(0.0f))
+            {
+                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
             }
 
-            if (surfaceAttribs->tiltAngleZ != Q12_ANGLE(0.0f))
+            if (slopedGroundHeight < state->slopedGroundHeight)
             {
-                var_a2 += Q12_MULT(surfaceAttribs->tiltAngleZ, state->charaPositionFrom.offset.vz - surfaceAttribs->field_4);
-            }
-
-            if (var_a2 < state->field_7C)
-            {
-                state->field_7C         = var_a2;
-                state->charaCellOffsetX = state->charaPositionFrom.offset.vx + collData->positionX;
-                state->charaCellOffsetZ = state->charaPositionFrom.offset.vz + collData->positionZ;
-                state->tiltAngleX       = surfaceAttribs->tiltAngleX;
-                state->tiltAngleZ       = surfaceAttribs->tiltAngleZ;
-                state->heightDisabled   = surfaceAttribs->disableHeight;
-                state->groundType       = surfaceAttribs->groundType;
+                state->slopedGroundHeight = slopedGroundHeight;
+                state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
+                state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
+                state->tiltAngleX         = curSurface->tiltAngleX;
+                state->tiltAngleZ         = curSurface->tiltAngleZ;
+                state->heightDisabled     = curSurface->disableHeight;
+                state->groundType         = curSurface->groundType;
             }
         }
     }
@@ -1925,14 +1935,14 @@ q3_12 Collision_OffsetAlphaGet(s_CollisionState* state) // 0x8006CB90
 {
     q23_8 groundHeight;
 
-    if (state->field_7C == Q8(30.0f))
+    if (state->slopedGroundHeight == Q8(30.0f))
     {
         return Q12(1.0f);
     }
 
     groundHeight = Ipd_GroundHeightGet(state->charaState.positionToX, state->charaState.positionToZ, state);
     if ((state->charaState.bottomPos + state->charaState.offset.vy) < groundHeight ||
-        groundHeight == state->field_7C)
+        groundHeight == state->slopedGroundHeight)
     {
         return Q12(1.0f);
     }
@@ -1947,7 +1957,7 @@ q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state)
     {
         return Q12_MULT(state->tiltAngleX, posX - state->charaCellOffsetX) +
                Q12_MULT(state->tiltAngleZ, posZ - state->charaCellOffsetZ) +
-               state->field_7C;
+               state->slopedGroundHeight;
     }
 
     return Q8(8.0f);

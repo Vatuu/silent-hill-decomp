@@ -27,9 +27,9 @@ typedef enum _GroundType
 /** @brief IPD file collision subcell split surface. */
 typedef struct _IpdCollSurface
 {
-    /* 0x0    */ q7_8 field_0;           // X
-    /* 0x2    */ q7_8 field_2;           // Y? Related to ground height?
-    /* 0x4    */ q7_8 field_4;           // Z
+    /* 0x0    */ q7_8 field_0;           // Relative X.
+    /* 0x2    */ q7_8 baseGroundHeight;  // Base ground height with slope unaccounted for?
+    /* 0x4    */ q7_8 field_4;           // Relative Z.
     /* 0x6+0  */ u16  groundType    : 5; /** `e_GroundType` */
     /* 0x6+5  */ u16  disableHeight : 3; /** `bool` */
     /* 0x6+8  */ u16  field_6_8     : 3; // Causes special collision triggers to behave differently.
@@ -40,7 +40,7 @@ typedef struct _IpdCollSurface
                                          // it gives values up to 7 when it should have been `2` as it would
                                          // only ever give a value up to 4, but some dev didn't paid attention
                                          // and assigned 3 instead.
-    /* 0x6+11 */ u16  field_6_11    : 4; /** `bool` */
+    /* 0x6+11 */ u16  field_6_11    : 4; /** `bool` | Indicates the surface has a slope? */
     /* 0x8    */ q7_8 tiltAngleX;
     /* 0xA    */ q7_8 tiltAngleZ;
 } s_IpdCollSurface;
@@ -76,7 +76,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 typedef struct _IpdCollSubcellRange
 {
     /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
-    /* 0x2 */ s16 field_2;
+    /* 0x2 */ s16 field_2; // Another index into `s_IpdCollisionData::ptr_28`.
 } s_IpdCollSubcellRange;
 STATIC_ASSERT_SIZEOF(s_IpdCollSubcellRange, 4);
 

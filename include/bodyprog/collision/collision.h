@@ -25,6 +25,7 @@ typedef enum _CollisionTriggerFlags
     CollisionTriggerFlag_All  = 0xFFFF
 } e_CollisionTriggerFlags;
 
+/** @brief Collision types. */
 typedef enum _CollisionType
 {
     CollisionType_None = 0,
@@ -39,7 +40,7 @@ typedef enum _SubChunkTransitionDirection
     SubChunkTransitionDirection_X    = 2
 } e_SubChunkTransitionDirection;
 
-/** @brief Collision surface data. */
+/** @brief Collision point surface data. */
 typedef struct _CollisionSurface
 {
     /* 0x0 */ q19_12 groundHeight;
@@ -58,6 +59,7 @@ typedef struct _CollisionPoint
     /* 0x18 */ s32                groundType; /** `e_GroundType` */
 } s_CollisionPoint;
 
+/** @brief Collision point probe result. */
 typedef struct _CollisionResult
 {
     /* 0x0  */ VECTOR3            offset; /** Q19.12 */
@@ -149,7 +151,7 @@ typedef struct _CollisionCharaState
 
 typedef struct _CollisionState
 {
-    /* 0x0+0  */ u8                    field_0_0     : 8;  // Boolean? Code only assigns 1.
+    /* 0x0+0  */ u8                    field_0_0     : 8;  /** `bool` TODO: Check, code only assigns 0 or 1. */
     /* 0x0+8  */ s8                    isCharaMoving : 1;  /** `bool` */
     /* 0x0+9  */ s8                    field_0_9     : 1;  /** `bool` */
     /* 0x0+10 */ s8                    field_0_10    : 1;  /** `bool` */
@@ -162,12 +164,12 @@ typedef struct _CollisionState
     /* 0x3E   */ s16                   field_3E; // Z?
     /* 0x40   */ s8*                   field_40;
     /* 0x44   */ s_CollisionState_44   field_44;
-    /* 0x7C   */ q23_8                 field_7C;         // Related to ground height?
+    /* 0x7C   */ q23_8                 slopedGroundHeight; // TODO: How is `groundHeight` different?
     /* 0x80   */ q23_8                 charaCellOffsetX; // } Character position in cell.
     /* 0x84   */ q23_8                 charaCellOffsetZ; // } 
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
-    /* 0x90   */ bool                  heightDisabled; /** `bool` */
+    /* 0x90   */ bool                  heightDisabled; /** `bool` | TODO: Does disabled height indicate a wall or pit? */
     /* 0x94   */ s32                   groundType;     /** `e_GroundType` */
 
                  union
@@ -202,7 +204,7 @@ typedef struct _CollisionState
     /* 0xA0   */ } field_A0;
 
     /* 0xC8   */ u8                   subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
-    /* 0xCA   */ q7_8                 groundHeight;
+    /* 0xCA   */ q7_8                 groundHeight; // TODO: Base ground height with slope unaccounted for?
     /* 0xCC   */ s_CollisionCellPoint point;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
@@ -362,9 +364,10 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
  * @param moveOffset Movement offset.
  * @param cylinder Collision cylinder.
  */
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState, const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder);
+void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
+                                 const VECTOR3* moveOffset, const s_CollisionCylinder* cylinder);
 
-void Collision_CharaCollisionHandling(s_CollisionState* state, s_IpdCollisionData* collData);
+void Collision_CharaCollisionHandle(s_CollisionState* state, s_IpdCollisionData* collData);
 
 bool Collision_SubcellInit(s_CollisionState* state, const s_IpdCollisionData* collData);
 
@@ -410,10 +413,13 @@ void func_8006C794(s_CollisionState* state, s32 arg1, q23_8 dist);
 
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData);
 
+// Accounts for slopes in ground height?
 void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
 
+// TODO: Computes alpha related to the ground slope?
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* state);
 
+// Gets sloped ground height, not the base height.
 q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state);
 
 void func_8006CC9C(s_CollisionState* state);

@@ -3,10 +3,6 @@
 
 #include "psyq/sys/types.h"
 
-#ifndef NULL
-    #define NULL 0
-#endif
-
 typedef signed char        byte;
 typedef signed char        s8;
 typedef signed short       s16;
@@ -38,52 +34,56 @@ typedef unsigned long long q52_12; // Q52.12 fixed-point.
     typedef enum { false, true } bool;
 #endif
 
+#ifndef NULL
+    #define NULL 0
+#endif
+
 #define NO_VALUE -1
 
 /** @brief Smaller `VECTOR` with padding removed. Used for fixed-point positions. */
-typedef struct
+typedef struct _VECTOR3
 {
-    long vx;
-    long vy;
-    long vz;
+    /* 0x0 */ long vx;
+    /* 0x4 */ long vy;
+    /* 0x8 */ long vz;
 } VECTOR3;
 
 /** @brief Smaller `SVECTOR` with padding removed. Used for fixed-point rotations. */
-typedef struct
+typedef struct _SVECTOR3
 {
-    s16 vx;
-    s16 vy;
-    s16 vz;
+    /* 0x0 */ s16 vx;
+    /* 0x2 */ s16 vy;
+    /* 0x4 */ s16 vz;
 } SVECTOR3;
 
 /** @brief `DVECTOR` variant with a `vz` component instead of `vy`. */
-typedef struct
+typedef struct _DVECTOR_XZ
 {
-    s16 vx;
-    s16 vz;
+    /* 0x0 */ s16 vx;
+    /* 0x2 */ s16 vz;
 } DVECTOR_XZ;
 
 /** @brief World position and rotation. */
-typedef struct
+typedef struct _Pose
 {
-    VECTOR3  position; /** Q19.12 */
-    SVECTOR3 rotation; /** Q19.12 */
+    /* 0x0 */ VECTOR3  position; /** Q19.12 */
+    /* 0xC */ SVECTOR3 rotation; /** Q19.12 */
 } s_Pose;
 
 /** @brief Polygon normal. */
 typedef struct _Normal
 {
-    s8 nx;
-    s8 ny;
-    s8 nz;
-    u8 count;
+    /* 0x0 */ s8 nx;
+    /* 0x1 */ s8 ny;
+    /* 0x2 */ s8 nz;
+    /* 0x3 */ u8 count;
 } s_Normal;
 
 /** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
 typedef union _Filename
 {
-    char str[8];
-    u32  u32[2];
+    /* 0x0 */ char str[8];
+    /* 0x8 */ u32  u32[2];
 } u_Filename;
 
 /** @brief Compares 8-character filenames using `u32`. Similar to `strcmp`.
