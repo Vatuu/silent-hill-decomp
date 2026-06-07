@@ -41,7 +41,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
     g_SysWork.cameraAngleY = headingAngle;
 
     func_8007E9C4();
-    Savegame_MapRoomIdxUpdate();
+    Game_MapRoomIdxUpdate();
 
     #undef playerChara
 }

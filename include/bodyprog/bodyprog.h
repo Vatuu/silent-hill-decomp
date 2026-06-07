@@ -980,6 +980,9 @@ extern s16 SQRT[100];
 // FUNCTIONS
 // ==========
 
+/** @brief Draws a palette of colors in the frame buffer. */
+void func_8003652C(void);
+
 /** @brief @unused Loading screen text.
  *
  * Just like in earlier builds of Silent Hill 2, the game

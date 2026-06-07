@@ -114,7 +114,7 @@ void func_800363D0(void);
 
 void Bgm_TrackChange(s32 bgmIdx);
 
-void Savegame_MapRoomIdxUpdate(void);
+void Game_MapRoomIdxUpdate(void);
 
 /** @unused */
 s32 func_8003647C(void);
@@ -124,8 +124,5 @@ s32 func_80036498(void);
 
 /** @unused */
 u32 func_800364BC(void);
-
-/** @brief Draws a palette of colors in the frame buffer. */
-void func_8003652C(void);
 
 #endif

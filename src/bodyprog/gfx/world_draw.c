@@ -125,10 +125,10 @@ void Item_HeldItemModelFree(void) // 0x8003C0C0
 
     heldItem = &g_WorldGfxWork.heldItem;
 
-    heldItem->itemId                       = NO_VALUE;
-    heldItem->lmHdr                       = HELD_ITEM_LM_BUFFER;
-    heldItem->bone.modelInfo.field_0    = 0;
-    heldItem->bone.modelInfo.coord      = NULL;
+    heldItem->itemId                  = NO_VALUE;
+    heldItem->lmHdr                   = HELD_ITEM_LM_BUFFER;
+    heldItem->bone.modelInfo.field_0  = 0;
+    heldItem->bone.modelInfo.coord    = NULL;
     heldItem->bone.modelInfo.modelHdr = NULL;
 }
 
@@ -594,62 +594,62 @@ s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId) // 0x8003CDA0
         case InvItemId_Handgun:
         case InvItemId_HuntingRifle:
         case InvItemId_Shotgun:
-            fileIdx                 = NO_VALUE;
+            fileIdx               = NO_VALUE;
             heldItem->textureName = "HERO";
             break;
 
         case InvItemId_SteelPipe:
-            fileIdx                 = FILE_ITEM_PIPE_TIM;
+            fileIdx               = FILE_ITEM_PIPE_TIM;
             heldItem->textureName = "PIPE";
             break;
 
         case InvItemId_CutscenePhone:
-            fileIdx                 = FILE_ITEM_PHONE_TIM;
+            fileIdx               = FILE_ITEM_PHONE_TIM;
             heldItem->textureName = "PHONE";
             break;
 
         case InvItemId_CutsceneFlauros:
-            fileIdx                 = FILE_ITEM_FLAUROS_TIM;
+            fileIdx               = FILE_ITEM_FLAUROS_TIM;
             heldItem->textureName = "FLAUROS";
             break;
 
         case InvItemId_CutsceneAglaophotis:
-            fileIdx                 = FILE_ITEM_AGLA_TIM;
+            fileIdx               = FILE_ITEM_AGLA_TIM;
             heldItem->textureName = "AGLA";
             break;
 
         case InvItemId_CutscenePlasticBottle:
-            fileIdx                 = FILE_ITEM_BOTL_TIM;
+            fileIdx               = FILE_ITEM_BOTL_TIM;
             heldItem->textureName = "BOTL";
             break;
 
         case InvItemId_CutsceneBaby:
-            fileIdx                 = FILE_ITEM_BABY_TIM;
+            fileIdx               = FILE_ITEM_BABY_TIM;
             heldItem->textureName = "BABY";
             break;
 
         case InvItemId_CutsceneBloodPack:
-            fileIdx                 = FILE_ITEM_BLOOD_TIM;
+            fileIdx               = FILE_ITEM_BLOOD_TIM;
             heldItem->textureName = "BLOOD";
             break;
 
         case InvItemId_Chainsaw:
-            fileIdx                 = FILE_ITEM_CSAW_TIM;
+            fileIdx               = FILE_ITEM_CSAW_TIM;
             heldItem->textureName = "CSAW";
             break;
 
         case InvItemId_HyperBlaster:
-            fileIdx                 = FILE_ITEM_HPRGUN_TIM;
+            fileIdx               = FILE_ITEM_HPRGUN_TIM;
             heldItem->textureName = "HPRGUN";
             break;
 
         case InvItemId_RockDrill:
-            fileIdx                 = FILE_ITEM_DRILL_TIM;
+            fileIdx               = FILE_ITEM_DRILL_TIM;
             heldItem->textureName = "DRILL";
             break;
 
         case InvItemId_Katana:
-            fileIdx                 = FILE_ITEM_KATANA_TIM;
+            fileIdx               = FILE_ITEM_KATANA_TIM;
             heldItem->textureName = "KATANA";
             break;
     }

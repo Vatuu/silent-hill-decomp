@@ -192,7 +192,7 @@ void Game_NpcUpdate(void) // 0x80038354
     }
 
     // Gets close NPC info index.
-    s32 func_800382EC()
+    static s32 func_800382EC()
     {
         s32 i;
 

@@ -15,22 +15,6 @@
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 
-/** @note This file should contain up to three or two splits,
- * Those being among `Bgm_TrackUpdate`, `Savegame_MapRoomIdxUpdate`
- * and `func_800364BC`, however, bss data heavily leans that all this
- * functions belongs to one same split as `bgmLayerVolumes` (0x800BCD50)
- * and `D_800BCD58` (0x800BCD58) should be static variables nested inside
- * the functions that exclusively uses it, and then `D_800BCD5C` (0x800BCD5C) should
- * be a global variable which is used in functions related to BGM handling.
- * The situation is that `D_800BCD58` is only ever used within
- * `func_800364BC` meaning that `D_800BCD5C` is either declared in a
- * different file, or `func_800364BC` is actually part of the same split
- * which contain all "CURRENT ROOM INFO GET" and "UNKNOWN" functions
- *
- * @note OPM16 and the November 24, 98 preview builds further confirm that this
- * functions belong to a same file.
- */
-
 extern const s8 D_80025234[];
 
 // ========================================
@@ -366,11 +350,7 @@ void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
     }
 }
 
-// ========================================
-// CURRENT ROOM INFO GETTERS
-// ========================================
-
-void Savegame_MapRoomIdxUpdate(void) // 0x80036420
+void Game_MapRoomIdxUpdate(void) // 0x80036420
 {
     q19_12 posX;
     q19_12 posZ;
@@ -397,18 +377,15 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
 
 s32 func_8003647C(void) // 0x8003647C
 {
-    return g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8;
+    return g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.unused_8;
 }
-//0x800C957C
+
 s32 func_80036498(void) // 80036498
 {
-    return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.field_8);
+    return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.unused_8);
 }
 
-// ========================================
-// UNKNOWN
-// ========================================
-
+// Actually used in some RoomBgmInit funcs.
 u32 func_800364BC(void) // 0x800364BC
 {
     u32        var0;
@@ -434,20 +411,3 @@ u32 func_800364BC(void) // 0x800364BC
 #elif VERSION_IS(JAP2)
     const s8 D_80025234[] = { 0x00, 0x00, 0x02, 0xAD, 0x00, 0x00, 0x00, 0x00 };
 #endif
-
-void func_8003652C(void) // 0x8003652C
-{
-    RECT rect;
-
-    u32 VALS[] = {
-        0xFFFF0000, 0xBBEEE318, 0xFFEC9304, 0x83FFE30C,
-        0x001F8318, 0x90840018, 0x90808080, 0x80048084
-    };
-
-    rect.x = 304;
-    rect.y = 510;
-    rect.w = 16;
-    rect.h = 1;
-
-    LoadImage(&rect, VALS);
-}

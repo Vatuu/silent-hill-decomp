@@ -71,13 +71,13 @@ segments:
       - [0x694,   rodata] # Garbage padding
       - [0x6A0,  .rodata, game_boot/game_boot]
       - [0x6D4,  .rodata, events/bgm]
-      - [0x6FC,   rodata] # Garbage padding
-      - [0x700,  .rodata, events/map_msg_display]
+      - [0x6DC,  .rodata, text/bodyprog_8003652C]
+      - [0x700,  .rodata, text/map_msg_display]
       - [0x758,  .rodata, events/bodyprog_data_800A99B4]
       - [0x818,  .rodata, events/game_sys_states]
       - [0x920,  .rodata, events/title]
       - [0x9C3,   rodata] # Garbage padding
-      - [0x9C8,  .rodata, gfx/bodyprog_8003BE50]
+      - [0x9C8,  .rodata, gfx/world_draw]
       - [0x1054, .rodata, gfx/map_effects]
       - [0x1084,  rodata] # Garbage padding
       - [0x1094, .rodata, sound/sd_call]
@@ -159,7 +159,9 @@ segments:
                                                  # considering is too close to this other functions and that
                                                  # in SH2 the main menu code it is within the `events` folder.
       - [0x11254,   c, events/bgm]               # }
-      - [0x11A58,   c, events/map_msg_display]   # }
+      - [0x119CC,   c, text/bodyprog_8003652C]
+      - [0x11A58,   c, text/map_msg_display]
+      - [0x122E8,   c, text/bodyprog_8004B45C]
       - [0x125F4,   c, events/radio]             # }
       - [0x12688,   c, events/player_pos_update] # }
       - [0x12828,   c, events/events_main]       # }
@@ -168,8 +170,9 @@ segments:
       - [0x15FC8,   c, events/title] # Name convention from SH2/4.
       - [0x171CC,   c, events/map_type_get]
       - [0x171E8,   c, events/collision_flags_update]
-      - [0x172F0,   c, gfx/bodyprog_8003BE50]
-      - [0x19A88,   c, gfx/map_effects]
+      - [0x172F0,   c, gfx/world_draw]
+      - [0x19A88,   c, gfx/option_brightness_line]
+      - [0x19BB0,   c, gfx/map_effects]
       - [0x1B4A4,   c, events/collision_trigger]
       - [0x1B4EC,   c, view/vc_util]
       - [0x1C014,   c, gfx/bodyprog_80040B74]
@@ -393,12 +396,12 @@ segments:
       - [0x84CA4, .data, game_boot/background_sound_init]
       - [0x84CA4, .data, game_boot/fs_chara_anim]
       - [0x84DCC, .data, events/bgm]
-      - [0x84E4C, .data, events/map_msg_display]
+      - [0x84E4C, .data, text/map_msg_display]
       - [0x84E54, .data, events/bodyprog_data_800A99B4]
       - [0x84EC0, .data, events/events_main]
       - [0x84ECC, .data, events/game_sys_states]
       - [0x84F14, .data, events/title]
-      - [0x8534C, .data, gfx/bodyprog_8003BE50]
+      - [0x8534C, .data, gfx/world_draw]
       - [0x85424, .data, gfx/map_effects]
       - [0x85468, .data, sound/sound_data]
       - [0x88920, .data, view/vw_calc]
@@ -471,7 +474,7 @@ segments:
       - [0x981E8, .bss, game_boot/game_boot]
       - [0x981EC,  pad] # Garbage.
       - [0x981F0, .bss, events/bgm]
-      - [0x98200, .bss, events/map_msg_display]
+      - [0x98200, .bss, text/map_msg_display]
       - [0x9821C,  pad] # Garbage.
       - [0x98220, .bss, events/game_sys_states]
       - [0x9827C,  pad] # Garbage.

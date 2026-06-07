@@ -363,8 +363,8 @@ typedef struct
 {
     s_MapEffectsInfo effectsInfo_0;
     q3_12            flashlightLensFlareIntensity_2C; // Stores flashlight lens flare intensity alpha.
-    q3_12            field_2E;                        // Some gamma or brightness layer alpha.
-    q19_12           field_30;                        // Stores fog distance.
+    q3_12            brightnessIntensity_2E;          // Some gamma or brightness layer alpha.
+    q19_12           fogDistance_30;                  // Stores fog distance.
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
@@ -376,11 +376,10 @@ typedef struct
     /* 0x8   */ s32             field_8;    // } Q19.12?
     /* 0xC   */ s32             field_C;    // }
     /* 0x10  */ s32             field_10;
-    /* 0x14  */ u8              field_14;
+    /* 0x14  */ u8              field_14;                   /** `bool` */
     /* 0x15  */ u8              isFlashlightOn_15;          /** `bool` */
     /* 0x16  */ u8              isFlashlightUnavailable_16; /** `bool` */
-    /* 0x17  */ s8              __pad_17;
-    /* 0x18  */ q3_12           flashlightIntensity_18;
+    /* 0x18  */ q3_12           flashlightIntensity;
     /* 0x1A  */ u16             field_1A;
     /* 0x1C  */ s_StructUnk3    field_1C[2];
     /* 0x84  */ s_StructUnk3    field_84[2];

@@ -86,7 +86,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         case 1:
             DrawSync(SyncMode_Wait);
             func_80037154();
-            Savegame_MapRoomIdxUpdate();
+            Game_MapRoomIdxUpdate();
             func_800892A4(1);
 
             g_IntervalVBlanks = 2;
@@ -193,7 +193,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     player = &g_SysWork.playerWork.player;
 
     Event_Update(player->attackReceived != NO_VALUE);
-    Savegame_MapRoomIdxUpdate();
+    Game_MapRoomIdxUpdate();
 
     switch (FP_ROUND_SCALED(player->health, 10, Q12_SHIFT))
     {
@@ -840,7 +840,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
                 SysWork_StateSetNext(SysState_Gameplay);
 
                 g_GameWork.gameStateSteps[0] = gameState;
-                g_GameWork.gameStatePrev    = gameState;
+                g_GameWork.gameStatePrev     = gameState;
                 g_GameWork.gameStateSteps[0] = 0;
             }
             break;
