@@ -101,16 +101,16 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.worldTintColor.b = 128;
 
     g_WorldEnvWork.isFogEnabled = false;
-    g_WorldEnvWork.field_2        = 0;
+    g_WorldEnvWork.field_2      = 0;
 
     g_WorldEnvWork.fog.color.r = 255;
     g_WorldEnvWork.fog.color.g = 255;
     g_WorldEnvWork.fog.color.b = 255;
 
-    g_WorldEnvWork.light.field_0      = 0;
+    g_WorldEnvWork.light.field_0            = 0;
     g_WorldEnvWork.light.lensFlareIntensity = Q12(0.0f);
-    g_WorldEnvWork.waterZones         = NULL;
-    g_WorldEnvWork.fog.intensity       = 0;
+    g_WorldEnvWork.waterZones               = NULL;
+    g_WorldEnvWork.fog.intensity            = 0;
 
     gte_SetFarColor(0, 0, 0);
 

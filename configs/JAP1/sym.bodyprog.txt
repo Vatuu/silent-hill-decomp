@@ -3369,7 +3369,7 @@ g_WorldGfxWork                               = 0x800BF470;
 //--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, gfx/bodyprog_80040B74
 //---------------------------------------------------------------------------
 g_Map_GfxPackets                             = 0x800C2248;
-g_Map_ActiveChunksCollisionData              = 0x800C3668;
+activeChunksCollisionData                    = 0x800C3668;
 g_Map                                        = 0x800C3678;
 
 //--------------------------------------------------------------------------------

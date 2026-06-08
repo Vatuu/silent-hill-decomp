@@ -176,6 +176,8 @@ segments:
       - [0x1B4A4,   c, events/collision_trigger]
       - [0x1B4EC,   c, view/vc_util]
       - [0x1C014,   c, gfx/bodyprog_80040B74]
+      - [0x1CF7C,   c, gfx/fs_ipd]
+      - [0x1F530,   c, gfx/ipd_draw]
       - [0x1FA44,   c, gfx/bodyprog_anim_800445A4]
       - [0x203B4,   c, gfx/bodyprog_bone_80044F14]
       - [0x20F1C,   c, sound/sd_call]
@@ -481,9 +483,13 @@ segments:
       - [0x98280, .bss, events/title]
       - [0x98284,  pad] # Garbage.
       - [0x98288, .bss, gfx/map_effects]
-      - [0x98298,  bss]
+      - [0x98298, .bss, view/vc_util]
+      - [0x982A4,  pad] # Unused
+      - [0x982B4, .bss, events/collision_flags_update]
+      - [0x982B8,  bss] # g_WorldGfxWork
       - [0x9B08C,  pad] # Garbage.
       - [0x9B090, .bss, gfx/bodyprog_80040B74]
+      - [0x9C4B0, .bss, gfx/fs_ipd]
       - [0x9CA4C,  pad] # Garbage.
       - [0x9CA50, .bss, gfx/bodyprog_bone_80044F14]
       - [0x9CA54,  pad] # Garbage.

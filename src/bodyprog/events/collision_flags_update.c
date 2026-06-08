@@ -8,6 +8,8 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
+u16 g_CollisionTriggerFlags;
+
 void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
 {
     u16 collFlags;
