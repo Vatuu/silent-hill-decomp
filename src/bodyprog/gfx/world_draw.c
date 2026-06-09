@@ -18,6 +18,8 @@
 
 const s32 pad_rodata_80025524 = 0;
 
+s_WorldGfxWork g_WorldGfxWork;
+
 // ========================================
 // MAP GRAPHIC INITALIZATION
 // ========================================

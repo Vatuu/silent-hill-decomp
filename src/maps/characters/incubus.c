@@ -147,7 +147,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
             incubus->damage.amount = 1;
         }
 
-        if (!func_8004C328(false))
+        if (!Inventory_GunsAvailableCheck(false))
         {
             incubusProps.bossFightTimer_F4 -= g_DeltaTime;
         }

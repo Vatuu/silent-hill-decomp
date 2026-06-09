@@ -488,7 +488,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
             chara->damage.amount = 1;
         }
 
-        if (!func_8004C328(false))
+        if (!Inventory_GunsAvailableCheck(false))
         {
             unknown23Props.bossFightTimer_F4 -= g_DeltaTime;
         }

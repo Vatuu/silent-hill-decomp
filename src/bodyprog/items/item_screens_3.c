@@ -542,53 +542,6 @@ s16 D_800AE1A8                                 = 0;
 s32    g_Items_PickupAnimState = 0;
 q19_12 g_Items_PickupScale     = Q12(0.0f);
 
-void Inventory_DirectionalInputSet(void) // 0x8004F5DC
-{
-    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ||
-        g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
-    {
-        // Up.
-        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp2;
-        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp2;
-
-        // Down.
-        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown2;
-        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown2;
-
-        // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft2;
-        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft2;
-
-        // Right.
-        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight2;
-        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight2;
-    }
-    else
-    {
-        // Up.
-        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp;
-        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp;
-
-        // Down.
-        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown;
-        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown;
-
-        // Left.
-        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft;
-        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft;
-
-        // Right.
-        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight;
-        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight;
-        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight;
-    }
-}
-
 void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 {
     #define LABEL_COUNT 8
@@ -2010,13 +1963,12 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             }
             break;
 
-        case 5:
+        case 5: // Equip weapon.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
-
-                g_SysWork.playerCombat.weaponAttack        = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 + 0x80; // TODO: Use macro.
+                g_SysWork.playerCombat.weaponAttack       = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 + 0x80; // TODO: Use macro.
                 g_SysWork.playerCombat.weaponInventoryIdx = g_SysWork.invItemSelectedIdx & 0xFF;
-                D_800C3E18[7]                                       = g_SysWork.invItemSelectedIdx;
+                D_800C3E18[7]                             = g_SysWork.invItemSelectedIdx;
 
                 for (k = 0; k < INV_ITEM_COUNT_MAX; k++)
                 {
@@ -2078,7 +2030,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             g_Items_Coords[7].coord.t[2] = Q8(0.0f);
             break;
 
-        case 6:
+        case 6: // Unequip weapon.
             g_Inventory_ScrollTransitionTimer++;
 
             if (g_Inventory_ScrollTransitionTimer == 9)
@@ -2102,7 +2054,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 D_800C3BA8                   = temp3;
 
                 func_8004EF48();
-                func_8004C564(0, -1);
+                func_8004C564(0, NO_VALUE);
             }
             else
             {
@@ -2116,7 +2068,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             g_Items_Coords[7].coord.t[2] = Q8(0.0f);
             break;
 
-        case 7:
+        case 7: // Reload equipped weapon.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
                 D_800C3BAC = NO_VALUE;
@@ -2224,7 +2176,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             }
             break;
 
-        case 8:
+        case 8: // Reload unequipped weapon.
             var_t3 = NO_VALUE;
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
@@ -2367,7 +2319,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             }
             break;
 
-        case 9:
+        case 9: // Apply health.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
                 switch (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0)

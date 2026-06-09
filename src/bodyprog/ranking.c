@@ -164,7 +164,7 @@ void func_8008F94C() // 0x8008F94C
         D_800C3E40 |= 0x10;
     }
 
-    if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (D_800C48B2 & 0x10))
+    if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (D_800C48B2 & (1 << 4)))
     {
         D_800C3E40 |= 0x20;
     }
@@ -413,7 +413,7 @@ void func_800904F4() // 0x800904F4
     g_SavegamePtr->locationId        = D_800C48B3;
     g_SavegamePtr->clearGameCount   = D_800C48B0;
     g_SavegamePtr->clearGameEndings = D_800C48B1;
-    g_SavegamePtr->field_27A            = ((D_800C48B2 & 0x10) * 8) + 64;
+    g_SavegamePtr->field_27A            = ((D_800C48B2 & (1 << 4)) * 8) + 64;
     g_SavegamePtr->isNextFearMode   = 1;
     g_SavegamePtr->mapIdx      = MapIdx_MAP0_S01;
 

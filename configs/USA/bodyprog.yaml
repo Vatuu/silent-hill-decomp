@@ -83,7 +83,7 @@ segments:
       - [0x1094, .rodata, sound/sd_call]
       - [0x1200,  rodata] # Garbage padding
       - [0x1208, .rodata, text/text_draw]
-      - [0x1330, .rodata, items/item_screens_1]
+      - [0x1330, .rodata, items/item_utils]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x179C, .rodata, items/item_screens_3]
       - [0x39CC, .rodata, gfx/bodyprog_80055028]
@@ -185,15 +185,15 @@ segments:
       - [0x243C8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25D1C,   c, text/text_draw]
       - [0x26FB0,   c, items/item_screens_cam]
-      - [0x27528,   c, items/item_screens_1]
-      - [0x27D7C,   c, items/item_screens_2]
+      - [0x27528,   c, items/item_utils]
+      - [0x27E50,   c, items/item_screens_2]
       - [0x2AA7C,   c, items/item_screens_3]
       - [0x304C8,   c, gfx/bodyprog_80055028]
       - [0x373D8,   c, bodyprog_math_8005BF38]
       - [0x37C70,   c, bodyprog_combat_8005BF38]
       - [0x38D0C,   c, sound/sfx]
       - [0x3957C,   c, bodyprog_8005E0DC]
-      - [0x40794,   c, bodyprog_800652F4]
+      - [0x40794,   c, bodyprog_800652F4] # Dead code
       - [0x42230,   c, bodyprog_mapscreen_80066EB0]
       - [0x42350,   c, bodyprog_mapscreen_80066D90]
       - [0x44C8C,   c, collision/collision]
@@ -486,8 +486,8 @@ segments:
       - [0x98298, .bss, view/vc_util]
       - [0x982A4,  pad] # Unused
       - [0x982B4, .bss, events/collision_flags_update]
-      - [0x982B8,  bss] # g_WorldGfxWork
-      - [0x9B08C,  pad] # Garbage.
+      - [0x982B8, .bss, gfx/world_draw]
+      - [0x9B074,  pad] # Garbage.
       - [0x9B090, .bss, gfx/bodyprog_80040B74]
       - [0x9C4B0, .bss, gfx/fs_ipd]
       - [0x9CA4C,  pad] # Garbage.
@@ -498,7 +498,7 @@ segments:
       - [0x9ED08, .bss, view/vw_calc]
       - [0x9ED48, .bss, text/text_draw]
       - [0x9EDC8, .bss, items/item_screens_cam]
-      - [0x9EE00, .bss, items/item_screens_1]
+      - [0x9EE00, .bss, items/item_utils]
       - [0x9EE08, .bss, items/item_screens_2]
       - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608,  bss, worldgfx]

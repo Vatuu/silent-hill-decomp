@@ -67,36 +67,6 @@ static const s8 D_80025EB0[] = {
     0,  0,  0,  0
 };
 
-void Game_TimerUpdate(void) // 0x8004C8DC
-{
-    #define TIME_290_HOURS        Q12((290.0f * 60.0f) * 60.0f)
-    #define TIME_130_HOURS        Q12((130.0f * 60.0f) * 60.0f)
-    #define TIME_290_OVERFLOW_MAX 3 // `add290Hours` has max value of 3.
-
-    g_SavegamePtr->gameplayTimer += g_DeltaTimeRaw;
-    if (g_SavegamePtr->gameplayTimer >= TIME_290_HOURS)
-    {
-        if (g_SavegamePtr->add290Hours < TIME_290_OVERFLOW_MAX)
-        {
-            g_SavegamePtr->add290Hours++;
-            g_SavegamePtr->gameplayTimer += (UINT_MAX - TIME_290_HOURS) + 1; // Wrap timer to 0 using unsigned overflow.
-        }
-        else
-        {
-            g_SavegamePtr->gameplayTimer = TIME_290_HOURS - 1;
-        }
-    }
-
-    if (g_SavegamePtr->add290Hours == TIME_290_OVERFLOW_MAX)
-    {
-        g_SavegamePtr->gameplayTimer = CLAMP(g_SavegamePtr->gameplayTimer, 1, TIME_130_HOURS);
-    }
-
-    #undef TIME_290_HOURS
-    #undef TIME_130_HOURS
-    #undef TIME_290_OVERFLOW_MAX
-}
-
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringSetColor(StringColorId_White);
@@ -107,17 +77,19 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
     {
         Game_TimerUpdate();
     }
-
+    
     switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
-            if (g_SavegamePtr->field_27A & 0x1F)
+            // Switch to results screen in case the player have finalized the game.
+            if (g_SavegamePtr->field_27A & (GameEndingFlag_GoodPlus | GameEndingFlag_Good | GameEndingFlag_BadPlus | GameEndingFlag_Bad | GameEndingFlag_Ufo))
             {
                 g_GameWork.gameStateSteps[1] = 21;
                 g_GameWork.gameStateSteps[2] = 0;
                 return;
             }
-
+            
+            // Throw player to intro screen after finalizing the game.
             if ((g_SavegamePtr->field_27A & (1 << 6)) &&
                 g_GameWork.gameStatePrev == GameState_SaveScreen)
             {
@@ -164,7 +136,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 case 18:
                     g_Inventory_SelectionId     = InventorySelectionId_Settings;
                     g_Inventory_PrevSelectionId = InventorySelectionId_Settings;
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bug
                     g_Inventory_IsScrolling = false;
 #endif
                     break;
@@ -172,7 +144,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 case 15:
                     g_Inventory_SelectionId     = InventorySelectionId_Map;
                     g_Inventory_PrevSelectionId = InventorySelectionId_Map;
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bug
                     g_Inventory_IsScrolling = false;
 #endif
                     break;
@@ -182,9 +154,9 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
 
             g_SysWork.playerWork.extra.lastUsedItem = InvItemId_Unequipped;
-            g_GameWork.background2dColor.r                = 0;
-            g_GameWork.background2dColor.g                = 0;
-            g_GameWork.background2dColor.b                = 0;
+            g_GameWork.background2dColor.r          = 0;
+            g_GameWork.background2dColor.g          = 0;
+            g_GameWork.background2dColor.b          = 0;
 
             Gfx_Items_DrawInit();
             func_8004EF48();
@@ -1886,6 +1858,53 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
     Gfx_StringSetColor(StringColorId_White);
     Gfx_StringDraw(STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 #endif
+}
+
+void Inventory_DirectionalInputSet(void) // 0x8004F5DC
+{
+    if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD ||
+        g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
+    {
+        // Up.
+        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp2;
+        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp2;
+
+        // Down.
+        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown2;
+        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown2;
+
+        // Left.
+        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft2;
+        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft2;
+
+        // Right.
+        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight2;
+        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight2;
+    }
+    else
+    {
+        // Up.
+        g_Inventory_IsUpClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickUp;
+        g_Inventory_IsUpPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickUp;
+
+        // Down.
+        g_Inventory_IsDownClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickDown;
+        g_Inventory_IsDownPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickDown;
+
+        // Left.
+        g_Inventory_IsLeftClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickLeft;
+        g_Inventory_IsLeftPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickLeft;
+
+        // Right.
+        g_Inventory_IsRightClicked = g_Controller0->clickedBtnFlags & ControllerFlag_LStickRight;
+        g_Inventory_IsRightHeld    = g_Controller0->heldBtnFlags    & ControllerFlag_LStickRight;
+        g_Inventory_IsRightPulsed  = g_Controller0->pulsedBtnFlags  & ControllerFlag_LStickRight;
+    }
 }
 
 #if VERSION_IS(USA)

@@ -8,12 +8,6 @@
 #include "bodyprog/math/math.h"
 
 static const s32 __pad_rodata_80025E90 = 0;
-
-s8 D_800C3960;
-s8 D_800C3961;
-s8 D_800C3962;
-u8 D_800C3963;
-
 s32 __pad_bss_800C3964;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
@@ -142,7 +136,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     #undef playerProps
 }
 
-bool func_8004C328(bool unused) // 0x8004C328
+bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
 {
     u32 itemIdx;
     u8  itemId;
@@ -283,6 +277,10 @@ s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
 void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 {
     s32 temp_v1;
+    static s8 D_800C3960;
+    static s8 D_800C3961;
+    static s8 D_800C3962;
+    static u8 D_800C3963;
 
     switch (weaponAttack)
     {
@@ -397,4 +395,34 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
             func_8008B3E4(NO_VALUE);
             break;
     }
+}
+
+void Game_TimerUpdate(void) // 0x8004C8DC
+{
+    #define TIME_290_HOURS        Q12((290.0f * 60.0f) * 60.0f)
+    #define TIME_130_HOURS        Q12((130.0f * 60.0f) * 60.0f)
+    #define TIME_290_OVERFLOW_MAX 3 // `add290Hours` has max value of 3.
+
+    g_SavegamePtr->gameplayTimer += g_DeltaTimeRaw;
+    if (g_SavegamePtr->gameplayTimer >= TIME_290_HOURS)
+    {
+        if (g_SavegamePtr->add290Hours < TIME_290_OVERFLOW_MAX)
+        {
+            g_SavegamePtr->add290Hours++;
+            g_SavegamePtr->gameplayTimer += (UINT_MAX - TIME_290_HOURS) + 1; // Wrap timer to 0 using unsigned overflow.
+        }
+        else
+        {
+            g_SavegamePtr->gameplayTimer = TIME_290_HOURS - 1;
+        }
+    }
+
+    if (g_SavegamePtr->add290Hours == TIME_290_OVERFLOW_MAX)
+    {
+        g_SavegamePtr->gameplayTimer = CLAMP(g_SavegamePtr->gameplayTimer, 1, TIME_130_HOURS);
+    }
+
+    #undef TIME_290_HOURS
+    #undef TIME_130_HOURS
+    #undef TIME_290_OVERFLOW_MAX
 }
