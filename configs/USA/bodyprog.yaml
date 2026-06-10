@@ -86,9 +86,11 @@ segments:
       - [0x1330, .rodata, items/item_utils]
       - [0x1350, .rodata, items/item_screens_2]
       - [0x179C, .rodata, items/item_screens_3]
-      - [0x39CC, .rodata, gfx/bodyprog_80055028]
+      - [0x39CC, .rodata, gfx/bodyprog_80056D8C]
+      - [0x39E4, .rodata, gfx/bodyprog_texture_8005B1A0]
+      - [0x39EC, pad]
       - [0x39F4, .rodata, bodyprog_combat_8005BF38]
-      - [0x3A14, .rodata, bodyprog_8005E0DC]
+      - [0x3A14, .rodata, gfx/bodyprog_effects_8005E0DC]
       - [0x3EB8,  rodata] # Garbage padding
       - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]
       - [0x3EC8,  rodata] # Garbage padding
@@ -187,13 +189,16 @@ segments:
       - [0x26FB0,   c, items/item_screens_cam]
       - [0x27528,   c, items/item_utils]
       - [0x27E50,   c, items/item_screens_2]
-      - [0x2AA7C,   c, items/item_screens_3]
+      - [0x2AC04,   c, items/item_screens_3]
       - [0x304C8,   c, gfx/bodyprog_80055028]
+      - [0x3159C,   c, gfx/bodyprog_materials_800560FC]
+      - [0x3222C,   c, gfx/bodyprog_80056D8C]
+      - [0x36640,   c, gfx/bodyprog_texture_8005B1A0]
       - [0x373D8,   c, bodyprog_math_8005BF38]
       - [0x37C70,   c, bodyprog_combat_8005BF38]
       - [0x38D0C,   c, sound/sfx]
-      - [0x3957C,   c, bodyprog_8005E0DC]
-      - [0x40794,   c, bodyprog_800652F4] # Dead code
+      - [0x3957C,   c, gfx/bodyprog_effects_8005E0DC]
+      - [0x40794,   c, gfx/bodyprog_800652F4] # Dead code
       - [0x42230,   c, bodyprog_mapscreen_80066EB0]
       - [0x42350,   c, bodyprog_mapscreen_80066D90]
       - [0x44C8C,   c, collision/collision]
@@ -204,7 +209,7 @@ segments:
       - [0x4BB84,   c, player_control]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, events/events_util]
-      - [0x63348,   c, bodyprog_bgm_80087EA8]
+      - [0x63348,   c, events/bodyprog_bgm_80087EA8]
       - [0x63658,   c, bodyprog_800881B8]
       - [0x6411C,   c, chara_spawn]
       - [0x64530,   c, bodyprog_80089090]
@@ -410,10 +415,11 @@ segments:
       - [0x88938, .data, text/text_draw]
       - [0x88940, .data, items/item_screens_3]
       - [0x89654, .data, gfx/bodyprog_80055028]
+      - [0x896A4, .data, gfx/bodyprog_texture_8005B1A0]
       - [0x899C0, .data, bodyprog_math_8005BF38]
       - [0x89A04, .data, sound/sfx]
-      - [0x89A48, .data, bodyprog_8005E0DC]
-      - [0x89BB0, .data, bodyprog_800652F4]
+      - [0x89A48, .data, gfx/bodyprog_effects_8005E0DC]
+      - [0x89BB0, .data, gfx/bodyprog_800652F4]
       - [0x89BE0, .data, bodyprog_mapscreen_80066D90]
       - [0x8A37C, .data, player_control]
       - [0x8B134, .data, view/vc_main]
@@ -512,8 +518,8 @@ segments:
                         # because of how far it is from bss data actually part
                         # of the file.
       - [0x9F774,  pad] # Garbage.
-      - [0x9F778, .bss, bodyprog_8005E0DC]
-      - [0x9F8C8, .bss, bodyprog_800652F4]
+      - [0x9F778, .bss, gfx/bodyprog_effects_8005E0DC]
+      - [0x9F8C8, .bss, gfx/bodyprog_800652F4]
       - [0x9F8E8, .bss, bodyprog_mapscreen_80066D90]
       - [0x9F8F4,  pad] # Garbage.
       - [0x9F8F8, .bss, collision/collision]

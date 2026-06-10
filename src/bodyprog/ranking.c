@@ -446,7 +446,7 @@ void func_800904F4() // 0x800904F4
         g_SavegamePtr->pickedUpSpecialItemCount = 1 << 3;
         if (D_800C48B5 == 100)
         {
-            g_SavegamePtr->field_27A                     |= 1 << 5;
+            g_SavegamePtr->field_27A               |= 1 << 5;
             g_SavegamePtr->pickedUpSpecialItemCount = 1 << 4;
         }
     }

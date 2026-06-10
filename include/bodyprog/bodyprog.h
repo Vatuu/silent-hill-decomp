@@ -124,11 +124,6 @@ typedef enum _StaticModelLoadState
 // ================
 // TODO: Deobfuscate these and move where they belong afterwardd.
 
-typedef struct
-{
-    char pad[12];
-} s_func_8005B424;
-
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
 {
