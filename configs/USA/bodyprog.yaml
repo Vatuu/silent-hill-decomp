@@ -90,6 +90,7 @@ segments:
       - [0x39E4, .rodata, gfx/bodyprog_texture_8005B1A0]
       - [0x39EC, pad]
       - [0x39F4, .rodata, bodyprog_combat_8005BF38]
+      - [0x3A0C, pad]
       - [0x3A14, .rodata, gfx/bodyprog_effects_8005E0DC]
       - [0x3EB8,  rodata] # Garbage padding
       - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]

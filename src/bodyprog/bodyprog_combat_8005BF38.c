@@ -169,7 +169,218 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 of
     return ret;
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_combat_8005BF38", func_8005CD38); // 0x8005CD38
+void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis, s32 mode) // 0x8005CD38
+{
+    VECTOR3    sp10;
+    s_RayTrace sp20;
+    VECTOR3    sp40;
+    VECTOR3    sp50;
+    VECTOR3    sp60;
+
+    s32 sp70[6];
+    s16 sp88[6];
+    s16 sp98[6];
+    s32 spA8[6];
+
+    s32 x, y, z;
+    s32 swap;
+    s32 i, j;
+    s32 count;
+
+    x = pos->vx;
+    y = pos->vy;
+    z = pos->vz;
+
+    sp10 = (VECTOR3){ x, y, z };
+
+    count = 0;
+
+    *out0 = -1;
+    for (i = 0; i < 6; i++)
+    {
+        if (g_SysWork.npcs[i].model.charaId == 0 || g_SysWork.npcs[i].health < 0)
+        {
+            continue;
+        }
+
+        sp60.vx = g_SysWork.npcs[i].position.vx + g_SysWork.npcs[i].collision.shapeOffsets.box.vx;
+        sp60.vy = g_SysWork.npcs[i].position.vy + g_SysWork.npcs[i].collision.box.offsetY;
+        sp60.vz = g_SysWork.npcs[i].position.vz + g_SysWork.npcs[i].collision.shapeOffsets.box.vz;
+
+        if (mode < 3)
+        {
+            if (SQUARE(min_dis >> 6) < (SQUARE((x - sp60.vx) >> 6) + SQUARE((y - sp60.vy) >> 6) + SQUARE((z - sp60.vz) >> 6)))
+            {
+                continue;
+            }
+
+            sp98[count] = ratan2(sp60.vx - x, sp60.vz - z);
+
+            if (min_ang < ABS(Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - sp98[count])))
+            {
+                continue;
+            }
+
+            if (mode != 0)
+            {
+                if (g_SysWork.targetNpcIdx == i)
+                {
+                    continue;
+                }
+
+                sp98[count] = Math_AngleNormalizeSigned(sp98[count] - g_SysWork.playerWork.player.angleToTarget);
+
+                if (mode == 1 && sp98[count] < 0)
+                {
+                    continue;
+                }
+
+                if (mode == 2 && sp98[count] > 0)
+                {
+                    continue;
+                }
+            }
+        }
+        else
+        {
+            sp50.vx = x + FP_MULTIPLY(min_ang, Math_Sin(g_SysWork.playerWork.player.rotation.vy), 12);
+            sp50.vz = z + FP_MULTIPLY(min_ang, Math_Cos(g_SysWork.playerWork.player.rotation.vy), 12);
+
+            if (SQUARE(min_dis >> 6) < (SQUARE((sp50.vx - sp60.vx) >> 6) + SQUARE((sp50.vz - sp60.vz) >> 6)))
+            {
+                continue;
+            }
+
+            sp98[count] = Math_AngleNormalizeSigned((ratan2(sp60.vx - x, sp60.vz - z) - g_SysWork.playerWork.player.rotation.vy));
+
+            if (mode != 3)
+            {
+                spA8[count] = SquareRoot0(SQUARE((sp60.vx - x) >> 6) + SQUARE((sp60.vz - z) >> 6)) << 6;
+            }
+        }
+
+        sp88[count] = ratan2(SquareRoot0(SQUARE((sp60.vx - x) >> 6) + SQUARE((sp60.vz - z) >> 6)) << 6, sp60.vy - y);
+
+        if (sp88[count] < 0)
+        {
+            continue;
+        }
+
+        if (sp88[count] > 0x800)
+        {
+            continue;
+        }
+
+        if (mode < 1 || mode >= 3)
+        {
+            if (g_SysWork.targetNpcIdx == i)
+            {
+                *out0 = i;
+                *out1 = sp88[count];
+                return;
+            }
+        }
+
+        sp70[count] = i;
+        count++;
+    }
+
+    if (count == 0)
+    {
+        return;
+    }
+
+    for (i = 0; i < count; i++)
+    {
+        for (j = i + 1; j < count; j++)
+        {
+            if ((!Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2) && !Chara_HasFlag(&g_SysWork.npcs[sp70[j]], 2)) ||
+                (Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2) && Chara_HasFlag(&g_SysWork.npcs[sp70[j]], 2)))
+            {
+                switch (mode)
+                {
+                    case 0:
+                    case 3:
+                        if (ABS(sp98[i]) > ABS(sp98[j]))
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case 1:
+                        if (sp98[i] > sp98[j])
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case 2:
+                        if (sp98[i] < sp98[j])
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case 4:
+                        if (SQUARE(spA8[i] >> 6) * abs(sp98[i]) > SQUARE(spA8[j] >> 6) * abs(sp98[j]))
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case 5:
+                        if (spA8[i] > spA8[j])
+                        {
+                            break;
+                        }
+                        continue;
+
+                    default:
+                        continue;
+                }
+            }
+            else if (!Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2))
+            {
+                continue;
+            }
+
+            if (mode > 3 && mode < 6)
+            {
+                swap    = spA8[i];
+                spA8[i] = spA8[j];
+                spA8[j] = swap;
+            }
+
+            swap    = sp98[i];
+            sp98[i] = sp98[j];
+            sp98[j] = swap;
+
+            swap    = sp88[i];
+            sp88[i] = sp88[j];
+            sp88[j] = swap;
+
+            swap    = sp70[i];
+            sp70[i] = sp70[j];
+            sp70[j] = swap;
+        }
+
+        j       = sp70[i];
+        sp40.vx = (g_SysWork.npcs[j].position.vx + g_SysWork.npcs[j].collision.shapeOffsets.box.vx) - x;
+        sp40.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY) - y;
+        sp40.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - z;
+
+        if (Ray_CharaTraceQuery(&sp20, &sp10, &sp40, &g_SysWork.playerWork.player) && sp20.character == &g_SysWork.npcs[j])
+        {
+            break;
+        }
+    }
+
+    if (i < count)
+    {
+        *out0 = sp70[i];
+        *out1 = sp88[i];
+    }
+}
 
 bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,
                    u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C

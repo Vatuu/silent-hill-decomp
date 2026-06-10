@@ -686,11 +686,11 @@ Gfx_Inventory_CmdOptionsDraw                 = 0x8004E864; // type:func
 Gfx_Inventory_ScrollArrowsDraw               = 0x8004EC7C; // type:func
 Player_ItemRemove                            = 0x8004EE94; // type:func
 Gfx_Inventory_UnavailableMapText             = 0x8004F57C; // type:func
+Inventory_DirectionalInputSet                = 0x8004F5DC; // type:func
 
 //-----------------------------------------------------------------------
-//--- PA: 0x02AA7C   VA: 0x8004F5DC   subsegment: c, items/item_screens_3
+//--- PA: 0x02AC04   VA: 0x8004F764   subsegment: c, items/item_screens_3
 //-----------------------------------------------------------------------
-Inventory_DirectionalInputSet                = 0x8004F5DC; // type:func
 Gfx_ItemScreens_DrawInit                     = 0x8004F764; // type:func
 Gfx_Inventory_2dBackgroundDraw               = 0x8004FBCC; // type:func
 Gfx_Inventory_HealthStatusDraw               = 0x80051020; // type:func
@@ -723,6 +723,10 @@ WorldEnv_LightPositionGet                    = 0x80055434; // type:func
 WorldEnv_LightRotationAndIntensityGet        = 0x8005545C; // type:func
 WorldEnv_LightDirectionAndIntensityGet       = 0x80055490; // type:func
 WorldEnv_FogDistanceSet                      = 0x80055840; // type:func
+
+//----------------------------------------------------------------------------------
+//--- PA: 0x03159C   VA: 0x800560FC   subsegment: c, gfx/bodyprog_materials_800560FC
+//----------------------------------------------------------------------------------
 Lm_HeaderPtrsInit                            = 0x800560FC; // type:func
 ModelHeader_FixOffsets                       = 0x800561A4; // type:func
 Lm_TransparentPrimSet                        = 0x80056244;
@@ -740,10 +744,18 @@ LmHeader_ModelCountGet                       = 0x80056C80; // type:func
 Bone_ModelAssign                             = 0x80056C8C; // type:func
 Lm_ModelFind                                 = 0x80056CB4; // type:func
 StringCopy                                   = 0x80056D64; // type:func
+
+//------------------------------------------------------------------------
+//--- PA: 0x03222C   VA: 0x80056D8C   subsegment: c, gfx/bodyprog_80056D8C
+//------------------------------------------------------------------------
 Gfx_FogOverlayQuadDraw                       = 0x80056D8C; // type:func
 func_800571D0                                = 0x800571D0; // type:func size:0x58 - Fix for truncated function.
 WorldEnv_LightTransform                      = 0x80057228; // type:func
 Gfx_MeshDraw                                 = 0x8005801C; // type:func
+
+//--------------------------------------------------------------------------------
+//--- PA: 0x036640   VA: 0x8005B1A0   subsegment: c, gfx/bodyprog_texture_8005B1A0
+//--------------------------------------------------------------------------------
 Texture_Init                                 = 0x8005B1A0; // type:func
 Texture_Get                                  = 0x8005B1FC; // type:func
 Texture_RefCountReset                        = 0x8005B370; // type:func
@@ -778,9 +790,9 @@ Sfx_WithFlagsAndPitchPlay                    = 0x8005DC3C; // type:func
 Sfx_WithPitchPlay                            = 0x8005DD44; // type:func
 Sfx_WithFalloffAndPitchPlay                  = 0x8005DE0C; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, bodyprog_8005E0DC
-//--------------------------------------------------------------------
+//--------------------------------------------------------------------------------
+//--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, gfx/bodyprog_effects_8005E0DC
+//--------------------------------------------------------------------------------
 Map_EffectTexturesLoad                       = 0x8005E0DC; // type:func
 func_8005E89C                                = 0x8005E89C;
 
@@ -1005,9 +1017,9 @@ Event_ItemTake                               = 0x800877B8; // type:func
 Event_CommonItemTake                         = 0x800879FC; // type:func
 Event_PaperMapTake                           = 0x80087AF4; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, bodyprog_bgm_80087EA8
-//------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
+//--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, events/bodyprog_bgm_80087EA8
+//-------------------------------------------------------------------------------
 Bgm_PlayNewTrack                             = 0x80087EA8; // type:func
 Bgm_CrossfadeToTrack                         = 0x80087EDC; // type:func
 Bgm_CrossfadeToSilence                       = 0x80088028; // type:func
@@ -2549,9 +2561,9 @@ g_Inventory_ScrollTransitionTimer            = 0x800AE1A4;
 g_Items_PickupAnimState                      = 0x800AE1AC;
 g_Items_PickupScale                          = 0x800AE1B0;
 
-//----------------------------------------------------------------------------
-//--- PA: 0x089654   VA: 0x800AE1B4   subsegment: .data, gfx/bodyprog_80055028
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
+//--- PA: 0x0896A4   VA: 0x800AE204   subsegment: .data, gfx/bodyprog_texture_8005B1A0
+//------------------------------------------------------------------------------------
 D_800AE204                                   = 0x800AE204; // size:0x2D8
 
 //----------------------------------------------------------------
@@ -3103,9 +3115,9 @@ g_Sfx_PlayerPosition                         = 0x800C42CC;
 g_Player_RotationDeltaToTargetY              = 0x800C42D0;
 g_Player_RotationDeltaToTargetX              = 0x800C42D2;
 
-//-----------------------------------------------------------------------
-//--- PA: 0x09F778   VA: 0x800C42D8   subsegment: .bss, bodyprog_8005E0DC
-//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+//--- PA: 0x09F778   VA: 0x800C42D8   subsegment: .bss, gfx/bodyprog_effects_8005E0DC
+//-----------------------------------------------------------------------------------
 loadedEffectTextureFlags                     = 0x800C42D8;
 D_800C4418                                   = 0x800C4418; // size:0x10
 
