@@ -812,6 +812,7 @@ Collision_FlagBitsClear                      = 0x80069844;
 Collision_NearbyTriggersGet                  = 0x80069860; // type:func
 Ipd_CollisionPtrsInit                        = 0x8006993C; // type:func
 Collision_SubcellChecksReset                 = 0x80069994;
+Collision_SubcellChecksCountUpdate           = 0x800699E4; // type:func
 Collision_SurfaceGet                         = 0x800699F8; // type:func
 Collision_WallDetect                         = 0x80069B24; // type:func
 Collision_WallResponse                       = 0x80069BA8; // type:func
