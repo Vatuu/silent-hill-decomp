@@ -8,7 +8,7 @@
 
 #define V_BLANKS_MULT 11
 
-VECTOR3 vcRefPosSt;
+VECTOR3 vcRefPosSt; /** Q19.12 | View camera reference position start. */
 
 void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {
@@ -24,7 +24,7 @@ void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos
 
     g_SysWork.cameraAngleZ   = Q12_ANGLE(0.0f);
     g_SysWork.cameraRadiusXz = Q12(3.0f);
-    g_SysWork.cameraY_2384        = Q12(0.0f);
+    g_SysWork.cameraY        = Q12(0.0f);
 }
 
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
@@ -150,7 +150,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(NULL,
                                   vcRefPosSt.vx, vcRefPosSt.vy, vcRefPosSt.vz,
-                                  g_SysWork.cameraAngleY, g_SysWork.cameraAngleZ, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz);
+                                  g_SysWork.cameraAngleY, g_SysWork.cameraAngleZ, g_SysWork.cameraY, g_SysWork.cameraRadiusXz);
             break;
 
         case DebugCameraMode_AnalogStickControl:
@@ -221,11 +221,11 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
     }
     if (up_f)
     {
-        sys_p->cameraY_2384 -= POS_OFFSET;
+        sys_p->cameraY -= POS_OFFSET;
     }
     if (down_f)
     {
-        sys_p->cameraY_2384 += POS_OFFSET;
+        sys_p->cameraY += POS_OFFSET;
     }
     if (sys_p->cameraRadiusXz < RADIUS_MIN)
     {
@@ -350,7 +350,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
         ref_pos->vz = Q8_TO_Q12(newCamPos.vz + refOffset.vz);
 
         sys_p->cameraAngleY   = Math_AngleNormalize(cam_ang.vy + Q12_ANGLE(180.0f));
-        sys_p->cameraY_2384        = Q8_TO_Q12(-refOffset.vy);
+        sys_p->cameraY        = Q8_TO_Q12(-refOffset.vy);
         sys_p->cameraRadiusXz = Q8_TO_Q12(Math_Vector2MagCalc(refOffset.vx, refOffset.vz));
     }
 

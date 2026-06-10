@@ -361,24 +361,25 @@ STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
 typedef struct
 {
-    s_MapEffectsInfo effectsInfo_0;
-    q3_12            flashlightLensFlareIntensity_2C; // Stores flashlight lens flare intensity alpha.
-    q3_12            brightnessIntensity_2E;          // Some gamma or brightness layer alpha.
-    q19_12           fogDistance_30;                  // Stores fog distance.
+    /* 0x0  */ s_MapEffectsInfo effectsInfo;
+    /* 0x2C */ q3_12            flashlightLensFlareIntensity;
+    /* 0x2E */ q3_12            brightnessIntensity;
+    /* 0x30 */ q19_12           fogDistance;
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 // Extra effects info?
 typedef struct
 {
-    /* 0x0   */ s32             primType_0; /** `e_PrimitiveType` */
-    /* 0x4   */ s8*             field_4;    /** Points to different types of data depending on `field_0`. */
-    /* 0x8   */ s32             field_8;    // } Q19.12?
-    /* 0xC   */ s32             field_C;    // }
+    /* 0x0   */ s32             primitiveType; /** `e_PrimitiveType` */
+    /* 0x4   */ s8*             field_4;       /** Points to different types of data depending on `field_0`. */
+    /* 0x8   */ s32             field_8;       // } Q19.12?
+    /* 0xC   */ s32             field_C;       // }
     /* 0x10  */ s32             field_10;
-    /* 0x14  */ u8              field_14;                   /** `bool` */
-    /* 0x15  */ u8              isFlashlightOn_15;          /** `bool` */
-    /* 0x16  */ u8              isFlashlightUnavailable_16; /** `bool` */
+    /* 0x14  */ u8              field_14;                /** `bool` */
+    /* 0x15  */ u8              isFlashlightOn;          /** `bool` */
+    /* 0x16  */ u8              isFlashlightUnavailable; /** `bool` */
+                // 1 byte of padding.
     /* 0x18  */ q3_12           flashlightIntensity;
     /* 0x1A  */ u16             field_1A;
     /* 0x1C  */ s_StructUnk3    field_1C[2];
@@ -446,7 +447,7 @@ typedef struct _SysWork
     /* 0x237C   */ q3_12            cameraAngleZ;
     /* 0x237E   */ s16              field_237E;
     /* 0x2380   */ q19_12           cameraRadiusXz;
-    /* 0x2384   */ q19_12           cameraY_2384;
+    /* 0x2384   */ q19_12           cameraY;
     /* 0x2388   */ s_SysWork_2388   field_2388;
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;

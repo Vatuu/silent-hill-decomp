@@ -385,7 +385,6 @@ s32 func_80036498(void) // 80036498
     return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.unused_8);
 }
 
-// Actually used in some RoomBgmInit funcs.
 u32 func_800364BC(void) // 0x800364BC
 {
     u32        var0;

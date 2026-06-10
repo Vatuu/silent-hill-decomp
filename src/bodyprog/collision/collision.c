@@ -931,16 +931,16 @@ bool Collision_SubcellIdxGet(s_CollisionState* state, const s_IpdCollisionData* 
 
     if (collCellXSize < charaCollDiffXClosest ||
         collCellZSize < charaCollDiffZClosest ||
-        charaCollDiffXFarest < 0 ||
-        charaCollDiffZFarest < 0)
+        charaCollDiffXFarest < Q8(0.0f) ||
+        charaCollDiffZFarest < Q8(0.0f))
     {
         return false;
     }
 
-    charaCollDiffXClosest = limitRange(charaCollDiffXClosest, 0, collCellXLimit);
-    charaCollDiffZClosest = limitRange(charaCollDiffZClosest, 0, collCellZLimit);
-    charaCollDiffXFarest  = limitRange(charaCollDiffXFarest, 0, collCellXLimit);
-    charaCollDiffZFarest  = limitRange(charaCollDiffZFarest, 0, collCellZLimit);
+    charaCollDiffXClosest = limitRange(charaCollDiffXClosest, Q8(0.0f), collCellXLimit);
+    charaCollDiffZClosest = limitRange(charaCollDiffZClosest, Q8(0.0f), collCellZLimit);
+    charaCollDiffXFarest  = limitRange(charaCollDiffXFarest, Q8(0.0f), collCellXLimit);
+    charaCollDiffZFarest  = limitRange(charaCollDiffZFarest, Q8(0.0f), collCellZLimit);
 
     state->field_A0.s_0.closestXSubcellIdx      = charaCollDiffXClosest / collData->subcellSize;
     state->field_A0.s_0.closestZSubcellIdx      = charaCollDiffZClosest / collData->subcellSize;
@@ -962,13 +962,13 @@ void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
     {
         idx = collData->ptr_28[i];
         
-        // Checks if cell element haven't been analysed.
+        // Check if cell element hasn't been analyzed.
         if (collData->subcellCheckCount >= collData->subcellCheckIdx[idx])
         {
             collData->subcellCheckIdx[idx] = collData->subcellCheckCount + 1;
             subcellCount                   = collData->subcellCount;
             
-            // Checks if sub cell index is inside the defined sub cell information.
+            // Check if subcell index is inside defined subcell.
             if (idx < subcellCount)
             {
                 if (func_8006B318(state, collData, idx))

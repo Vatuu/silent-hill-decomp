@@ -475,10 +475,10 @@ Math_RelativeRotationGet                     = 0x8004122C; // type:func
 //-------------------------------------------------------------
 Map_ChunkLoadStateGet                        = 0x80041ADC; // type:func
 IpdHeader_LoadStateGet                       = 0x80041B1C; // type:func
-LmHeader_LoadStateGet                        = 0x80041BA0; // type:func
+Lm_LoadStateGet                        = 0x80041BA0; // type:func
 Map_Init                                     = 0x80041C24; // type:func
 Lm_Init                                      = 0x80041CB4; // type:func
-LmHeader_Init                                = 0x80041CEC; // type:func
+Lm_HeaderInit                                = 0x80041CEC; // type:func
 Map_ChunkQueueIdxsClear                      = 0x80041D10; // type:func
 Ipd_TexturesInit                             = 0x80041D48; // type:func
 Map_CollisionDataInit                        = 0x80041E98; // type:func
@@ -3026,7 +3026,7 @@ g_Map_GfxPackets                             = 0x800BFBF0; // size:0x1420
 //----------------------------------------------------------------
 //--- PA: 0x09C4B0   VA: 0x800C1010   subsegment: .bss, gfx/fs_ipd
 //----------------------------------------------------------------
-activeChunksCollisionData                    = 0x800C1010;
+activeChunksCollData                    = 0x800C1010;
 g_Map                                        = 0x800C1020; // type:u8 size:0x58C - size from bzero call
 
 //-------------------------------------------------------------------

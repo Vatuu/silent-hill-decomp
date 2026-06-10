@@ -1106,7 +1106,7 @@ void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
 void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
-void LmHeader_Init(s_LmHeader* lmHdr);
+void Lm_HeaderInit(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx` in an array of chunks. */
 void Map_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount);
@@ -1178,7 +1178,7 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
  * @param globalLm Global LM file to check.
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm);
+u32 Lm_LoadStateGet(s_GlobalLm* globalLm);
 
 /** @brief Gets the load state of an IPD file.
  *

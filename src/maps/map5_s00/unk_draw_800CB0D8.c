@@ -71,9 +71,9 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
         return false;
     }
 
-    if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
+    if (g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1))
     {
-        if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
+        if (g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0))
         {
             return false;
         }

@@ -558,7 +558,7 @@ extern VECTOR3 D_800C4610;
 // ==========
 
 /** Used for enemy target locking. Arg at index 3 is an angle? */
-void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis, s32 mode);
+void func_8005CD38(s32* out0, q3_12* out1, const VECTOR3* pos, q3_12 angleMin, q19_12 distMin, s32 mode);
 
 /** Used for player run displacement.
  *

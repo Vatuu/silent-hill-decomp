@@ -217,7 +217,7 @@ typedef struct _PropsNpc
     /* 0x11A */ q3_12  field_11A; // Angle.
     /* 0x11C */ s32    flags; /** `e_*Flags` */
     /* 0x120 */ s16    field_120; // `bool`
-    /* 0x120 */ q3_12  field_122; // Angle.
+    /* 0x120 */ q3_12  field_122; // Angle related to weapon target.
     /* 0x124 */ q3_12  moveDistance_124;
     /* 0x126 */ q3_12  moveSpeed;
 } s_PropsNpc;

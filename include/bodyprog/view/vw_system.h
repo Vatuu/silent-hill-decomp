@@ -79,7 +79,6 @@ extern VC_WATCH_MV_PARAM self_view_watch_mv_prm; /** First-person look-at move p
 extern VC_CAM_MV_PARAM   cam_mv_prm_user;        /** User camera move parameters. */
 extern q19_12            excl_r_ary[9];          /** Q19.12 | Exclusion radius array. */
 extern VC_WORK           vcWork;                 /** View camera workspace. */
-extern VECTOR3           vcRefPosSt;             /** Q19.12 | View camera reference position start. */
 extern VW_VIEW_WORK      vwViewPointInfo;
 extern MATRIX            D_800C3868;
 extern MATRIX            VbWvsMatrix;            /** View block's world view space matrix. */

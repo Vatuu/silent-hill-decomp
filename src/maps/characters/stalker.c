@@ -868,13 +868,13 @@ void Stalker_Control_3(s_SubCharacter* stalker)
                                               sharedData_800E3A1C_0_s00 - stalker->position.vz) -
                                        stalker->rotation.vy);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
         radiusMax = Q12(15.0f);
         radiusMin = Q12(5.5f);
         cond1  = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
 #if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP5_S02) || defined(MAP6_S03) || defined(MAP6_S04) || defined(MAP7_S02)
         radiusMax = Q12(16.0f);
@@ -1133,12 +1133,12 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                        g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
         dist1     = Q12(5.5f);
         condCombo = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
 #if defined(MAP1_S00) || defined(MAP1_S01)
         dist1     = Q12(4.5f);
@@ -1670,7 +1670,7 @@ void Stalker_Control_8(s_SubCharacter* stalker)
     }
 
     // @hack `animDiv` has to be used for certain stuff for a match, weird.
-    animDiv = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0;
+    animDiv = g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0;
     flags = animDiv & 0x3;
     if (flags == 0)
     {
@@ -1931,11 +1931,11 @@ void Stalker_Control_12(s_SubCharacter* stalker)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                        stalker->rotation.vy);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
         cond = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         cond = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }

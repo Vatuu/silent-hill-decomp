@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_GFX_MAPEFFECTS_H
 #define _BODYPROG_GFX_MAPEFFECTS_H
 
-void Options_BrightnessMenu_LinesDraw(s32 arg0);
+void Options_BrightnessMenu_LinesDraw(s32 brightness);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);

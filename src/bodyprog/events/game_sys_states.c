@@ -229,7 +229,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     }
 
     if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.light &&
-        g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
+        g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1))
     {
         Game_FlashlightToggle();
     }
@@ -503,9 +503,9 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             SysWork_StateSetNext(SysState_Gameplay);
         }
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
-             ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
-              (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn &&
+             ((g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) ||
+              (g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.map ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
@@ -923,8 +923,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ( (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
+                    if ((!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ( (g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         randTipVal += 3;
                     }
@@ -943,8 +943,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ( (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
+                    if ((!(g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ( (g_SysWork.field_2388.field_154.effectsInfo.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         if (randTipVal < 3)
                         {

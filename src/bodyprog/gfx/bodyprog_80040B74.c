@@ -9,7 +9,7 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-/** @note This code (excepting the first function) is seemly used for a initalization
+/** @note This code (except the first function) is seemly used for a initalization
  * process for 2D graphics.
  */
 
@@ -51,7 +51,7 @@ void func_80040BAC(void) // 0x80040BAC
     s32       j;
     s32*      ptr;
 
-    for (i = 0; i < 17; i++)
+    for (i = 0; i < ARRAY_SIZE(posTable); i++)
     {
         if (i < 2)
         {
@@ -81,7 +81,10 @@ void func_80040BAC(void) // 0x80040BAC
     }
 
     for (j = 0, ptr = &posTable[0], packet = &g_Map_GfxPackets; j < 2; j++,
-        packet += sizeof(DR_TPAGE) * 2 + sizeof(POLY_G4) * 16 * 3 + sizeof(POLY_G3) * 16 + sizeof(POLY_F4) * 16)
+        packet += (sizeof(DR_TPAGE) * 2)       +
+                  ((sizeof(POLY_G4) * 16) * 3) +
+                  (sizeof(POLY_G3) * 16)       +
+                  (sizeof(POLY_F4) * 16))
     {
         page = (DR_TPAGE*)packet;
 
@@ -90,7 +93,9 @@ void func_80040BAC(void) // 0x80040BAC
         SetDrawTPage(page, 1, 1, 0x20);
 
         poly_g3 = packet + sizeof(DR_TPAGE) * 2;
-        poly_f4 = packet + (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16);
+        poly_f4 = packet + (sizeof(DR_TPAGE) * 2)       +
+                           ((sizeof(POLY_G4) * 16) * 3) +
+                           (sizeof(POLY_G3) * 16);
 
         for (i = 0; i < 16; i++, poly_g3++, poly_f4++)
         {
@@ -100,10 +105,11 @@ void func_80040BAC(void) // 0x80040BAC
             setSemiTrans(poly_f4, true);
 
             *(s32*)&poly_f4->x2 = ptr[i % 16];
-            *(s32*)&poly_f4->x3 = ptr[i % 16 + 1];
+            *(s32*)&poly_f4->x3 = ptr[(i % 16) + 1];
         }
 
-        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16);
+        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) +
+                           (sizeof(POLY_G3) * 16);
 
         for (k = 0; k < 3; k++)
         {
@@ -134,14 +140,19 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
 
     colorTable[0] = COLOR_RGB(0, 0, 0);
     colorTable[1] = COLOR_RGB(arg3 / 3, arg4 / 3, arg5 / 3);
-    colorTable[2] = COLOR_RGB(arg3 * 2 / 3, arg4 * 2 / 3, arg5 * 2 / 3);
+    colorTable[2] = COLOR_RGB((arg3 * 2) / 3, (arg4 * 2) / 3, (arg5 * 2) / 3);
     colorTable[3] = COLOR_RGB(arg3, arg4, arg5);
 
     for (i = 0; i < 2; i++,
-        packet += (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16) + (sizeof(POLY_F4) * 16))
+        packet += (sizeof(DR_TPAGE) * 2)       +
+                  ((sizeof(POLY_G4) * 16) * 3) +
+                  (sizeof(POLY_G3) * 16)       +
+                  (sizeof(POLY_F4) * 16))
     {
         poly_g3 = packet + (sizeof(DR_TPAGE) * 2);
-        poly_f4 = packet + (sizeof(DR_TPAGE) * 2) + ((sizeof(POLY_G4) * 16) * 3) + (sizeof(POLY_G3) * 16);
+        poly_f4 = packet + (sizeof(DR_TPAGE) * 2)       +
+                           ((sizeof(POLY_G4) * 16) * 3) +
+                           (sizeof(POLY_G3) * 16);
 
         for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
         {
@@ -151,7 +162,8 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
             *(s32*)&poly_f4->r0 = colorTable[3] + (poly_f4->code << 24);
         }
 
-        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16);
+        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) +
+                           (sizeof(POLY_G3) * 16);
 
         for (k = 0; k < 3; k++)
         {
@@ -323,7 +335,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
     temp_s2 = Math_Cos(angle0);
     temp_a3 = Math_Sin(angle0);
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(sp10); i++)
     {
         temp_lo = Q12(var_s0 - (sp10[i] >> 1)) / var_s0;
         sp20[i].vx = arg1->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(sp10[i], temp_lo), temp_s2), temp_s1);

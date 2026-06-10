@@ -174,12 +174,12 @@ typedef struct _CollisionState
 
                  union
                  {
-                     DVECTOR_XZ offset;
+                     DVECTOR_XZ offset; /** Q23.8 */
                      s32        field_0;
     /* 0x98   */ } charaPositionFrom;
                  union
                  {
-                     DVECTOR_XZ offset;
+                     DVECTOR_XZ offset; /** Q23.8 */
                      s32        field_0;
     /* 0x9C   */ } charaPositionTo;
                  union

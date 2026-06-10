@@ -11,10 +11,6 @@
 
 static s_MapTerrain g_MapTerrain;
 
-// ========================================
-// MAP STREAMING
-// ========================================
-
 u32 Map_ChunkLoadStateGet(s32 queueIdx) // 0x80041ADC
 {
     if (queueIdx == NO_VALUE)
@@ -54,7 +50,7 @@ u32 IpdHeader_LoadStateGet(s_Chunk* chunk) // 0x80041B1C
     return StaticModelLoadState_Corrupted;
 }
 
-u32 LmHeader_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
+u32 Lm_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
 {
     s32 loadState;
     s32 loadStateCpy;
@@ -97,13 +93,13 @@ void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041
 void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 {
     globalLm->lmHdr = lmHdr;
-    LmHeader_Init(lmHdr);
+    Lm_HeaderInit(lmHdr);
 
     globalLm->queueIdx = 0;
     globalLm->fileIdx  = NO_VALUE;
 }
 
-void LmHeader_Init(s_LmHeader* lmHdr) // 0x80041CEC
+void Lm_HeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
 {
     lmHdr->magic         = LM_HEADER_MAGIC;
     lmHdr->version       = LM_VERSION;
@@ -432,7 +428,7 @@ s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx) // 0x800
     s_Chunk*                   curChunk;
     s_IpdCollisionData*        collData;
     s_IpdHeader*               ipdHdr;
-    static s_IpdCollisionData* activeChunksCollisionData[4];
+    static s_IpdCollisionData* activeChunksCollData[4];
 
     curChunk     = g_MapTerrain.activeChunks;
     *collDataIdx = 0;
@@ -448,7 +444,7 @@ s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx) // 0x800
                 collData = Ipd_HeaderCollisionDataGet(ipdHdr);
                 if (collData != NULL)
                 {
-                    activeChunksCollisionData[(*collDataIdx)++] = collData;
+                    activeChunksCollData[(*collDataIdx)++] = collData;
                 }
             }
         }
@@ -456,7 +452,7 @@ s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx) // 0x800
         curChunk++;
     }
 
-    return &activeChunksCollisionData[0];
+    return &activeChunksCollData[0];
 }
 
 s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
@@ -953,7 +949,7 @@ bool Ipd_ChunksLoadedCheck(void) // 0x80043740
     s32      i;
     s_Chunk* curChunk;
 
-    switch (LmHeader_LoadStateGet(&g_MapTerrain.globalLm))
+    switch (Lm_LoadStateGet(&g_MapTerrain.globalLm))
     {
         case StaticModelLoadState_Invalid:
             break;

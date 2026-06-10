@@ -630,10 +630,10 @@ func_8004137C                                = 0x800410B0; // type:func
 func_800414E0                                = 0x80041214; // type:func
 Map_ChunkLoadStateGet                        = 0x80041810; // type:func
 IpdHeader_LoadStateGet                       = 0x80041850; // type:func
-LmHeader_LoadStateGet                        = 0x800418D4; // type:func
+Lm_LoadStateGet                        = 0x800418D4; // type:func
 Map_Init                                     = 0x80041958; // type:func
 Lm_Init                                      = 0x800419E8; // type:func
-LmHeader_Init                                = 0x80041A20; // type:func
+Lm_HeaderInit                                = 0x80041A20; // type:func
 Map_ChunkQueueIdxsClear                      = 0x80041A44; // type:func
 Ipd_TexturesInit                             = 0x80041A7C; // type:func
 Map_CollisionDataInit                        = 0x80041BCC; // type:func
@@ -3352,7 +3352,7 @@ g_WorldGfxWork                               = 0x800BF348;
 //--- PA: 0x09D5C0   VA: 0x800C2120   subsegment: .bss, gfx/bodyprog_80040B74
 //---------------------------------------------------------------------------
 g_Map_GfxPackets                             = 0x800C2120;
-activeChunksCollisionData                    = 0x800C3540;
+activeChunksCollData                    = 0x800C3540;
 g_Map                                        = 0x800C3550;
 
 //--------------------------------------------------------------------------------

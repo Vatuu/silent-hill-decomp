@@ -632,7 +632,7 @@ void Inventory_Logic(void) // 0x8004D518
                      g_Inventory_SelectionBordersDraw >= 8)
             {
                 if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flauros ||
-                    (g_SysWork.field_2388.isFlashlightUnavailable_16 &&
+                    (g_SysWork.field_2388.isFlashlightUnavailable &&
                      g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 == InvItemId_Flashlight))
                 {
                     Sd_PlaySfx(Sfx_MenuError, 64, 64);
@@ -820,10 +820,10 @@ void Inventory_Logic(void) // 0x8004D518
             }
             else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
-                if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
-                     g_SysWork.field_2388.isFlashlightOn_15 ||
-                     (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
-                      !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
+                if ((!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)) ||
+                     g_SysWork.field_2388.isFlashlightOn ||
+                     (!(g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) &&
+                      !(g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))) &&
                     HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
@@ -860,10 +860,10 @@ void Inventory_Logic(void) // 0x8004D518
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }
-            else if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1) &&
-                     !g_SysWork.field_2388.isFlashlightOn_15 &&
-                     (g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0) ||
-                      g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
+            else if (g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1) &&
+                     !g_SysWork.field_2388.isFlashlightOn &&
+                     (g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & (1 << 0) ||
+                      g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
             {
                 Gfx_Inventory_UnavailableMapText(0);
             }
@@ -965,10 +965,10 @@ void Inventory_Logic(void) // 0x8004D518
                     case InvCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
-                                g_SysWork.field_2388.isFlashlightOn_15 ||
-                                (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
-                                 !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
+                            if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)) ||
+                                g_SysWork.field_2388.isFlashlightOn ||
+                                (!(g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) &&
+                                 !(g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0))))
                             {
                                 g_Inventory_SelectionBordersDraw = 1;
                                 g_Inventory_SelectionId              = InventorySelectionId_Examine;
@@ -1044,10 +1044,10 @@ void Inventory_Logic(void) // 0x8004D518
                         break;
 
                     case InvCmdId_Look:
-                        if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ||
-                            g_SysWork.field_2388.isFlashlightOn_15 ||
-                            (!(g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
-                             !(g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
+                        if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 1)) ||
+                            g_SysWork.field_2388.isFlashlightOn ||
+                            (!(g_SysWork.field_2388.field_1C[0].effectsInfo.field_0.s_field_0.field_0 & (1 << 0)) &&
+                             !(g_SysWork.field_2388.field_1C[1].effectsInfo.field_0.s_field_0.field_0 & (1 << 0))))
                         {
                             g_Inventory_SelectionBordersDraw = 1;
                             g_Inventory_SelectionId              = InventorySelectionId_Examine;
@@ -1290,7 +1290,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
     switch (g_SavegamePtr->items[idx].command_2)
     {
         case InvCmdId_OnOff:
-            if (!g_SysWork.field_2388.isFlashlightUnavailable_16 ||
+            if (!g_SysWork.field_2388.isFlashlightUnavailable ||
                 g_SavegamePtr->items[idx].id_0 != InvItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);

@@ -10,7 +10,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 
-void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
+void Options_BrightnessMenu_LinesDraw(s32 brightness) // 0x8003E5E8
 {
     s32       i;
     u8        color;
@@ -32,7 +32,7 @@ void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
         line->y0 = -16;
         line->y1 = (g_GameWork.gsScreenHeight / 2) - 45;
 
-        color = (arg0 * 8) + 4;
+        color = (brightness * 8) + 4;
 
         line->b1 = color;
         line->g1 = color;

@@ -169,54 +169,61 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 of
     return ret;
 }
 
-void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis, s32 mode) // 0x8005CD38
+void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin, q19_12 distMin, s32 mode) // 0x8005CD38
 {
-    VECTOR3    sp10;
-    s_RayTrace sp20;
-    VECTOR3    sp40;
-    VECTOR3    sp50;
-    VECTOR3    sp60;
+    VECTOR3    from;   // Q19.12
+    s_RayTrace trace;
+    VECTOR3    offset; // Q19.12
+    VECTOR3    curPos; // Q19.12
+    VECTOR3    boxPos; // Q19.12
+    s32        npcIdxs[ARRAY_SIZE(g_SysWork.npcs)];
+    q3_12      angles0[ARRAY_SIZE(g_SysWork.npcs)];
+    q3_12      angles2[ARRAY_SIZE(g_SysWork.npcs)];
+    q19_12     angles1[ARRAY_SIZE(g_SysWork.npcs)];
+    q19_12     posX;
+    q19_12     posY;
+    q19_12     posZ;
+    s32        swap;
+    s32        i;
+    s32        j;
+    s32        count;
 
-    s32 sp70[6];
-    s16 sp88[6];
-    s16 sp98[6];
-    s32 spA8[6];
-
-    s32 x, y, z;
-    s32 swap;
-    s32 i, j;
-    s32 count;
-
-    x = pos->vx;
-    y = pos->vy;
-    z = pos->vz;
-
-    sp10 = (VECTOR3){ x, y, z };
+    posX = pos->vx;
+    posY = pos->vy;
+    posZ = pos->vz;
+    from = (VECTOR3){ posX, posY, posZ };
 
     count = 0;
 
-    *out0 = -1;
-    for (i = 0; i < 6; i++)
+    *npcIdx = NO_VALUE;
+
+    // Run through NPCs.
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        if (g_SysWork.npcs[i].model.charaId == 0 || g_SysWork.npcs[i].health < 0)
+        #define curNpc g_SysWork.npcs[i]
+
+        // Check if NPC is valid.
+        if (curNpc.model.charaId == Chara_None || curNpc.health < Q12(0.0f))
         {
             continue;
         }
 
-        sp60.vx = g_SysWork.npcs[i].position.vx + g_SysWork.npcs[i].collision.shapeOffsets.box.vx;
-        sp60.vy = g_SysWork.npcs[i].position.vy + g_SysWork.npcs[i].collision.box.offsetY;
-        sp60.vz = g_SysWork.npcs[i].position.vz + g_SysWork.npcs[i].collision.shapeOffsets.box.vz;
+        // Define character box position.
+        boxPos.vx = curNpc.position.vx + curNpc.collision.shapeOffsets.box.vx;
+        boxPos.vy = curNpc.position.vy + curNpc.collision.box.offsetY;
+        boxPos.vz = curNpc.position.vz + curNpc.collision.shapeOffsets.box.vz;
 
         if (mode < 3)
         {
-            if (SQUARE(min_dis >> 6) < (SQUARE((x - sp60.vx) >> 6) + SQUARE((y - sp60.vy) >> 6) + SQUARE((z - sp60.vz) >> 6)))
+            if (Math_SqrMagCalcToQ6(distMin) < (Math_SqrMagCalcToQ6(posX - boxPos.vx) +
+                                                Math_SqrMagCalcToQ6(posY - boxPos.vy) +
+                                                Math_SqrMagCalcToQ6(posZ - boxPos.vz)))
             {
                 continue;
             }
 
-            sp98[count] = ratan2(sp60.vx - x, sp60.vz - z);
-
-            if (min_ang < ABS(Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - sp98[count])))
+            angles2[count] = ratan2(boxPos.vx - posX, boxPos.vz - posZ);
+            if (angleMin < ABS(Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - angles2[count])))
             {
                 continue;
             }
@@ -228,14 +235,14 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
                     continue;
                 }
 
-                sp98[count] = Math_AngleNormalizeSigned(sp98[count] - g_SysWork.playerWork.player.angleToTarget);
+                angles2[count] = Math_AngleNormalizeSigned(angles2[count] - g_SysWork.playerWork.player.angleToTarget);
 
-                if (mode == 1 && sp98[count] < 0)
+                if (mode == 1 && angles2[count] < 0)
                 {
                     continue;
                 }
 
-                if (mode == 2 && sp98[count] > 0)
+                if (mode == 2 && angles2[count] > 0)
                 {
                     continue;
                 }
@@ -243,30 +250,31 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
         }
         else
         {
-            sp50.vx = x + FP_MULTIPLY(min_ang, Math_Sin(g_SysWork.playerWork.player.rotation.vy), 12);
-            sp50.vz = z + FP_MULTIPLY(min_ang, Math_Cos(g_SysWork.playerWork.player.rotation.vy), 12);
-
-            if (SQUARE(min_dis >> 6) < (SQUARE((sp50.vx - sp60.vx) >> 6) + SQUARE((sp50.vz - sp60.vz) >> 6)))
+            curPos.vx = posX + FP_MULTIPLY(angleMin, Math_Sin(g_SysWork.playerWork.player.rotation.vy), Q12_SHIFT);
+            curPos.vz = posZ + FP_MULTIPLY(angleMin, Math_Cos(g_SysWork.playerWork.player.rotation.vy), Q12_SHIFT);
+            if (Math_SqrMagCalcToQ6(distMin) < (Math_SqrMagCalcToQ6(curPos.vx - boxPos.vx) +
+                                                Math_SqrMagCalcToQ6(curPos.vz - boxPos.vz)))
             {
                 continue;
             }
 
-            sp98[count] = Math_AngleNormalizeSigned((ratan2(sp60.vx - x, sp60.vz - z) - g_SysWork.playerWork.player.rotation.vy));
+            angles2[count] = Math_AngleNormalizeSigned(ratan2(boxPos.vx - posX, boxPos.vz - posZ) - g_SysWork.playerWork.player.rotation.vy);
 
             if (mode != 3)
             {
-                spA8[count] = SquareRoot0(SQUARE((sp60.vx - x) >> 6) + SQUARE((sp60.vz - z) >> 6)) << 6;
+                angles1[count] = Math_Vector2MagCalcSafeQ6(boxPos.vx - posX, boxPos.vz - posZ);
             }
+
+            #undef curNpc
         }
 
-        sp88[count] = ratan2(SquareRoot0(SQUARE((sp60.vx - x) >> 6) + SQUARE((sp60.vz - z) >> 6)) << 6, sp60.vy - y);
-
-        if (sp88[count] < 0)
+        angles0[count] = ratan2(Math_Vector2MagCalcSafeQ6(boxPos.vx - posX, boxPos.vz - posZ), boxPos.vy - posY);
+        if (angles0[count] < Q12_ANGLE(0.0f))
         {
             continue;
         }
 
-        if (sp88[count] > 0x800)
+        if (angles0[count] > Q12_ANGLE(180.0f))
         {
             continue;
         }
@@ -275,13 +283,13 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
         {
             if (g_SysWork.targetNpcIdx == i)
             {
-                *out0 = i;
-                *out1 = sp88[count];
+                *npcIdx = i;
+                *angle = angles0[count];
                 return;
             }
         }
 
-        sp70[count] = i;
+        npcIdxs[count] = i;
         count++;
     }
 
@@ -294,42 +302,42 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
     {
         for (j = i + 1; j < count; j++)
         {
-            if ((!Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2) && !Chara_HasFlag(&g_SysWork.npcs[sp70[j]], 2)) ||
-                (Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2) && Chara_HasFlag(&g_SysWork.npcs[sp70[j]], 2)))
+            if ((!Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 1 << 1) && !Chara_HasFlag(&g_SysWork.npcs[npcIdxs[j]], 1 << 1)) ||
+                ( Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 1 << 1) &&  Chara_HasFlag(&g_SysWork.npcs[npcIdxs[j]], 1 << 1)))
             {
                 switch (mode)
                 {
                     case 0:
                     case 3:
-                        if (ABS(sp98[i]) > ABS(sp98[j]))
+                        if (ABS(angles2[i]) > ABS(angles2[j]))
                         {
                             break;
                         }
                         continue;
 
                     case 1:
-                        if (sp98[i] > sp98[j])
+                        if (angles2[i] > angles2[j])
                         {
                             break;
                         }
                         continue;
 
                     case 2:
-                        if (sp98[i] < sp98[j])
+                        if (angles2[i] < angles2[j])
                         {
                             break;
                         }
                         continue;
 
                     case 4:
-                        if (SQUARE(spA8[i] >> 6) * abs(sp98[i]) > SQUARE(spA8[j] >> 6) * abs(sp98[j]))
+                        if ((Math_SqrMagCalcToQ6(angles1[i]) * abs(angles2[i])) > (Math_SqrMagCalcToQ6(angles1[j]) * abs(angles2[j])))
                         {
                             break;
                         }
                         continue;
 
                     case 5:
-                        if (spA8[i] > spA8[j])
+                        if (angles1[i] > angles1[j])
                         {
                             break;
                         }
@@ -339,37 +347,37 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
                         continue;
                 }
             }
-            else if (!Chara_HasFlag(&g_SysWork.npcs[sp70[i]], 2))
+            else if (!Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 2))
             {
                 continue;
             }
 
             if (mode > 3 && mode < 6)
             {
-                swap    = spA8[i];
-                spA8[i] = spA8[j];
-                spA8[j] = swap;
+                swap       = angles1[i];
+                angles1[i] = angles1[j];
+                angles1[j] = swap;
             }
 
-            swap    = sp98[i];
-            sp98[i] = sp98[j];
-            sp98[j] = swap;
+            swap       = angles2[i];
+            angles2[i] = angles2[j];
+            angles2[j] = swap;
 
-            swap    = sp88[i];
-            sp88[i] = sp88[j];
-            sp88[j] = swap;
+            swap       = angles0[i];
+            angles0[i] = angles0[j];
+            angles0[j] = swap;
 
-            swap    = sp70[i];
-            sp70[i] = sp70[j];
-            sp70[j] = swap;
+            swap       = npcIdxs[i];
+            npcIdxs[i] = npcIdxs[j];
+            npcIdxs[j] = swap;
         }
 
-        j       = sp70[i];
-        sp40.vx = (g_SysWork.npcs[j].position.vx + g_SysWork.npcs[j].collision.shapeOffsets.box.vx) - x;
-        sp40.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY) - y;
-        sp40.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - z;
+        j         = npcIdxs[i];
+        offset.vx = (g_SysWork.npcs[j].position.vx + g_SysWork.npcs[j].collision.shapeOffsets.box.vx) - posX;
+        offset.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY)         - posY;
+        offset.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - posZ;
 
-        if (Ray_CharaTraceQuery(&sp20, &sp10, &sp40, &g_SysWork.playerWork.player) && sp20.character == &g_SysWork.npcs[j])
+        if (Ray_CharaTraceQuery(&trace, &from, &offset, &g_SysWork.playerWork.player) && trace.character == &g_SysWork.npcs[j])
         {
             break;
         }
@@ -377,8 +385,8 @@ void func_8005CD38(s32* out0, s16* out1, VECTOR3* pos, s16 min_ang, s32 min_dis,
 
     if (i < count)
     {
-        *out0 = sp70[i];
-        *out1 = sp88[i];
+        *npcIdx = npcIdxs[i];
+        *angle  = angles0[i];
     }
 }
 
