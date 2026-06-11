@@ -3887,40 +3887,41 @@ void func_800E74C4(void) // 0x800E74C4
     GsOUT_PACKET_P = tpage;
 }
 
-void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800E75B8
+void func_800E75B8(s32 arg0, const VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x800E75B8
 {
     #define CLAMP_CUSTOM(a, b, min, max, x) \
         ((((a) - ((b) - (max))) >= (max) || ((a) - ((b) - (max))) >= (min)) ? (((a) - ((b) - (max))) < (max) ? ((a) - ((b) + (x))) : (max)) : (min))
 
     s32 max;
-    s32 var_s0;
+    s32 balance;
     int new_var;
 
     #define playerChara g_SysWork.playerWork.player
 
-    var_s0 = Vc_StereoBalanceGet(arg1);
-
+    // Compute audio balance.
+    balance = Vc_StereoBalanceGet(pos);
     if (arg4 == 2)
     {
-        var_s0 = 0;
+        balance = 0;
     }
     else if (arg4 == 1)
     {
-        var_s0 = var_s0 >> 1;
+        balance >>= 1;
 
-        if (D_800ED841 < var_s0)
+        if (D_800ED841 < balance)
         {
-            D_800ED841 = CLAMP_HIGH(var_s0, Q12_MULT_PRECISE(g_DeltaTime, 0xC0) + D_800ED841);
+            D_800ED841 = CLAMP_HIGH(balance, Q12_MULT_PRECISE(g_DeltaTime, 0xC0) + D_800ED841);
         }
 
-        if (var_s0 < D_800ED841)
+        if (balance < D_800ED841)
         {
-            D_800ED841 = MAX(var_s0, D_800ED841 - Q12_MULT_PRECISE(g_DeltaTime, 0xC0));
+            D_800ED841 = MAX(balance, D_800ED841 - Q12_MULT_PRECISE(g_DeltaTime, 0xC0));
         }
-        var_s0 = D_800ED841;
+
+        balance = D_800ED841;
     }
 
-    D_800ED841 = var_s0;
+    D_800ED841 = balance;
 
     if (arg2 == 0)
     {
@@ -3932,13 +3933,13 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
         arg2 = arg2 >> 1;
     }
 
-    max     = 0xFF;
+    max     = UCHAR_MAX;
     new_var = 1;
 
-    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalcSafe(playerChara.position.vx - arg1->vx,
-                                                                                  playerChara.position.vy - arg1->vy,
-                                                                                  playerChara.position.vz - arg1->vz)) /
-                                                       arg3, arg2, 0, max, new_var), 0);
+    Sd_SfxAttributesUpdate(arg0, balance, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalcSafe(playerChara.position.vx - pos->vx,
+                                                                                  playerChara.position.vy - pos->vy,
+                                                                                  playerChara.position.vz - pos->vz)) /
+                                                        arg3, arg2, 0, max, new_var), 0);
 
     #undef playerChara
 }

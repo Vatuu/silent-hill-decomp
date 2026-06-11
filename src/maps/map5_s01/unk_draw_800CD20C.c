@@ -16,20 +16,20 @@ s16 func_800CD20C(void) // 0x800CD20C
             if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickDown)
             {
                 D_800ED5C8 += 3;
-                Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
+                Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
             }
 
             if (g_Controller0->pulsedBtnFlags & ControllerFlag_LStickUp)
             {
                 D_800ED5C8 += 1;
-                Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
+                Sd_PlaySfx(Sfx_MenuMove, 0, Q8(0.25f));
             }
 
             D_800ED5C8 &= 0x3;
 
             if (g_Controller0->heldBtnFlags & ControllerFlag_LStickLeft)
             {
-                Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
+                Sd_PlaySfx(Sfx_Unk1589, 0, Q8(0.25f));
 
                 D_800F1598[D_800ED5C8]++;
                 if (D_800F1598[D_800ED5C8] == 8)
@@ -40,10 +40,10 @@ s16 func_800CD20C(void) // 0x800CD20C
 
             if (g_Controller0->heldBtnFlags & ControllerFlag_LStickRight)
             {
-                Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
+                Sd_PlaySfx(Sfx_Unk1589, 0, Q8(0.25f));
 
                 D_800F1598[D_800ED5C8]--;
-                if (D_800F1598[D_800ED5C8] == -1)
+                if (D_800F1598[D_800ED5C8] == NO_VALUE)
                 {
                     D_800F1598[D_800ED5C8] = 7;
                 }

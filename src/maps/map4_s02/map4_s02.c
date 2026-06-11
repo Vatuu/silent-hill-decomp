@@ -56,7 +56,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     s32      tmp0;
     s32      i;
     s32      vol;
-    s32      audioBalance;
+    s32      balance;
     s32      var_v0;
     s32      tmp1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
@@ -87,8 +87,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
         }
     }
 
-    audioBalance = 0;
-    tmp0         = Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
+    balance = 0;
+    tmp0    = Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f));
 
     for (i = 0; i < ARRAY_SIZE(D_800ED8B0); i++)
     {
@@ -140,7 +140,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
             WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
         }
 
-        audioBalance += Vc_StereoBalanceGet(&objPos);
+        balance   += Vc_StereoBalanceGet(&objPos);
         objPos.vz -= Q12(5.0f);
     }
 
@@ -180,7 +180,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
             D_800F13AC++;
         }
 
-        Sd_SfxAttributesUpdate(Sfx_Unk1542, audioBalance >> 4, -vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1542, balance >> 4, -vol, 0);
     }
     else if (D_800F13AC)
     {

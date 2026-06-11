@@ -1250,7 +1250,7 @@ void func_800E9DD8(void) // 0x800E9DD8
         case 5:
             Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             Screen_BackgroundImgDrawAlt(D_800F22A0);
-            Sd_PlaySfx(Sfx_Unk1390, 0, 0x80);
+            Sd_PlaySfx(Sfx_Unk1390, 0, Q8(0.5f));
             SysWork_StateStepIncrement(0);
             break;
 

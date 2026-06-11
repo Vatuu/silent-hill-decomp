@@ -820,10 +820,10 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
-        if (!D_800E1180)
+        if (D_800E1180 == 0)
         {
             D_800E1180 = 1;
-            Sd_PlaySfx(Sfx_Unk1359, 0, 232);
+            Sd_PlaySfx(Sfx_Unk1359, 0, Q8(29.0f / 32.0f));
         }
     }
 
@@ -832,7 +832,7 @@ void Map_WorldObjectsUpdate(void)
         if (D_800E1180 == 1)
         {
             D_800E1180 = 2;
-            Sd_PlaySfx(Sfx_Unk1359, 0, 216);
+            Sd_PlaySfx(Sfx_Unk1359, 0, Q8(27.0f / 32.0f));
         }
     }
 

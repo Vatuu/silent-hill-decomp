@@ -1187,9 +1187,9 @@ void func_800692A4(u16 x, u16 y, q4_12 scale)
 
             setPolyFT4(poly);
 
-            setXY0Fast(poly, D_80028B2C[tileX], D_80028B34[tileY]);
+            setXY0Fast(poly, D_80028B2C[tileX],     D_80028B34[tileY]);
             setXY1Fast(poly, D_80028B2C[tileX + 1], D_80028B34[tileY]);
-            setXY2Fast(poly, D_80028B2C[tileX], D_80028B34[tileY + 1]);
+            setXY2Fast(poly, D_80028B2C[tileX],     D_80028B34[tileY + 1]);
             setXY3Fast(poly, D_80028B2C[tileX + 1], D_80028B34[tileY + 1]);
 
             // N for matching: these are `int`s, but relX1 and v_temp are `short`s.
@@ -1200,7 +1200,7 @@ void func_800692A4(u16 x, u16 y, q4_12 scale)
 
             // @hack: Regalloc fixes. `hackVar` usages compile to nothing (gcc knows hackVar == 0), but the 4 vars
             // pad the stack frame to match.
-            // @hack: Two `D_80028B2C[tileX] & hackVar` loads bump the array pointer's ref count so it wins t8.
+            // @hack: Two `D_80028B2C[tileX] & hackVar` loads bump the array pointer's ref count so it wins `t8`.
             setUV1AndTPageSum(poly, relX + clampedRight, relY << 1,
                               getTPage(g_PaperMapImg.tPage[0],
                                        (hackVar << 5) | hackVar2 | hackVar3 | hackVar4 | (D_80028B2C[tileX] & hackVar), // @hack Evaluates to 0.
@@ -1215,7 +1215,7 @@ void func_800692A4(u16 x, u16 y, q4_12 scale)
             setUV3Sum(poly, clampedRight + relX1, v_temp + (clampedBottom << 1));
 
             setSemiTrans(poly, 0);
-            setRGB0Fast(poly, 0x80, 0x80, 0x80);
+            setRGB0Fast(poly, 128, 128, 128);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[4], poly);
             poly++;

@@ -362,7 +362,7 @@ void func_800E73B4(q19_12 arg0);
 
 void func_800E74C4(void);
 
-void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_800E75B8(s32 arg0, const VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800E7944(u32 arg0);
 
