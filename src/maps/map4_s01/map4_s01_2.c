@@ -455,7 +455,7 @@ void func_800D2408(void) // 0x800D2408
             D_800D8018 = 1;
             g_SysWork.lightIntensity = Q12(1.2f);
 
-            Event_CharaAnimCmdExecute(0U, playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, playerChara, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 36:

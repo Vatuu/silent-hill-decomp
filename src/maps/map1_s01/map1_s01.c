@@ -803,7 +803,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 85, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 85, false);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
@@ -831,7 +831,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             Savegame_EventFlagSet(EventFlag_76);
 
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 122, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 122, false);
             func_800892DC(18, 96);
             Sfx_WithFlagsPlay(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
             Sfx_WithFlagsPlay(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);

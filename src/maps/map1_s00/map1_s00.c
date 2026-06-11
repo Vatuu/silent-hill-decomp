@@ -471,7 +471,7 @@ void func_800D85D8(void) // 0x800D85D8
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
             SysWork_StateStepIncrement(0);
 
         case 3:

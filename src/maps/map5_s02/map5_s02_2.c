@@ -119,7 +119,7 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 66, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 66, false);
             CutsceneBorder_ForceShow();
 
             // Warp camera.

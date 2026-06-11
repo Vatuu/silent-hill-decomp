@@ -336,7 +336,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 28:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 10, false);
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 29:

@@ -599,7 +599,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 14:
             if (D_800DAB78 < Q12(1.5f) && (D_800DAB78 + g_DeltaTime) > Q12(1.5f))
             {
-                Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 114, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 114, false);
             }
 
             D_800DAB78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.6f, 12);
@@ -691,7 +691,7 @@ void func_800D732C(void) // 0x800D732C
             Event_CameraPositionSet(NULL, Q12(58.49f), Q12(1.18f), Q12(59.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(56.67f), Q12(-2.3f), Q12(59.86f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(0u, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
