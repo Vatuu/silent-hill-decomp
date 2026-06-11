@@ -1018,7 +1018,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             break;
 
         case 9:
-            Gfx_MapEffectsUpdate(10, 10, PrimitiveType_S32, &D_800DFB5C, 0, Q12(0.5f));
+            Gfx_MapEnviromentUpdate(10, 10, PrimitiveType_S32, &D_800DFB5C, 0, Q12(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -1664,7 +1664,7 @@ void func_800DCC54(void) // 0x800DCC54
 {
     if (D_800DFADC == NO_VALUE)
     {
-        Gfx_MapEffectsUpdate(6, 6, PrimitiveType_S32, &D_800DFADC, Q12(0.0f), Q12(100.0f));
+        Gfx_MapEnviromentUpdate(6, 6, PrimitiveType_S32, &D_800DFADC, Q12(0.0f), Q12(100.0f));
         D_800DFADC = Q12(0.0f);
 
         Sd_PlaySfx(Sfx_Unk1359, Q8(0.0f), Q8(7.0f / 8.0f));
@@ -1786,7 +1786,7 @@ void func_800DD0CC(void) // 0x800DD0CC
 
     if (D_800DFB40 == NO_VALUE)
     {
-        Gfx_MapEffectsUpdate(6, 6, PrimitiveType_S32, &D_800DFB40, 0, Q12(100.0f));
+        Gfx_MapEnviromentUpdate(6, 6, PrimitiveType_S32, &D_800DFB40, 0, Q12(100.0f));
         D_800DFB40 = 0;
     }
 

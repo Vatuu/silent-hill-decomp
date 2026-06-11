@@ -411,7 +411,7 @@ void func_800D64E0(void) // 0x800D64E0
     {
         case 0:
             D_800DACEC = 0;
-            Gfx_MapEffectsUpdate(7, 9, PrimitiveType_S32, &D_800DACEC, 0, 0x64000);
+            Gfx_MapEnviromentUpdate(7, 9, PrimitiveType_S32, &D_800DACEC, 0, 0x64000);
             break;
 
         case 5:

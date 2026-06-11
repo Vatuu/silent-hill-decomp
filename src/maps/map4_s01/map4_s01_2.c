@@ -743,7 +743,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.lensFlareBoneCoord = NULL;
             Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
-            Gfx_MapEffectsUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
+            Gfx_MapEnviromentUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
             D_800D5B00 = Q12(0.0f);
             func_8008D438();
 
