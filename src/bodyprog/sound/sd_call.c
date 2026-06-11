@@ -111,7 +111,7 @@ void SD_Call(u32 cmd) // 0x80045A7C
         // Play SFX. Range [1280, 1791].
         case 5:
         case 6:
-            Sd_PlaySfx(cmd, 0, 0);
+            Sd_PlaySfx(cmd, Q8(0.0f), Q8(0.0f));
             return;
 
         // Stop SFX. Range [1792, 2303].

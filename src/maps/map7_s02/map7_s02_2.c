@@ -1131,7 +1131,7 @@ void func_800DC954(void) // 0x800DC954
             break;
 
         case 7:
-            Sd_PlaySfx(Sfx_Unk1669, 0, Q8(0.5f));
+            Sd_PlaySfx(Sfx_Unk1669, Q8(0.0f), Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1167,7 +1167,7 @@ void func_800DC954(void) // 0x800DC954
     {
         if (D_800E9ED6 == 0 && !Savegame_EventFlagGet(EventFlag_555))
         {
-            Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
+            Sd_PlaySfx(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
             D_800E9ED6 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
         }
         else
@@ -1213,7 +1213,7 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
-                Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
+                Sd_PlaySfx(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
                 D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
@@ -1223,7 +1223,7 @@ void func_800DCD00(void) // 0x800DCD00
             break;
 
         case 4:
-            Sd_PlaySfx(Sfx_Unk1665, 0, Q8(0.5f));
+            Sd_PlaySfx(Sfx_Unk1665, Q8(0.0f), Q8(0.5f));
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1240,7 +1240,7 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
-                Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
+                Sd_PlaySfx(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
                 D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
@@ -1264,7 +1264,7 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
-                Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
+                Sd_PlaySfx(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
                 D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
@@ -1313,7 +1313,7 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
-                Sd_PlaySfx(Sfx_Unk1664, 0, Q8(7.0f / 8.0f));
+                Sd_PlaySfx(Sfx_Unk1664, Q8(0.0f), Q8(7.0f / 8.0f));
                 D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else

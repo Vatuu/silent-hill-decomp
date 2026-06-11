@@ -2343,7 +2343,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                                 break;
                         }
 
-                        Sd_PlaySfx(Sfx_Unk1325, -64, Q8(0.25f));
+                        Sd_PlaySfx(Sfx_Unk1325, Q8(-0.25f), Q8(0.25f));
                         g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, Q12(0.0f), Q12(100.0f));
                         g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1--;
                         break;
