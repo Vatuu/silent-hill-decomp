@@ -11,6 +11,7 @@ USA_BODYPROG = [
     [0x13A, b'\x08\x8E'],
     [0x9BF, b'\x4c\x00\x95\xab\x90'],
     [0x39E8, b'\x00\x61\x69\x6E'],
+    [0x3FDA, b'\x05\x80'],
     [0x8DAB7, b'\x18'],
     [0xA23DC, b'\x0A\x09\x2E\x62'],
     [0xA24CC, b'\x38\x0D\x0A\x09'],
