@@ -269,7 +269,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                 }
             }
 
-            func_800692A4(var_s6, var_s5, temp_s4);
+            PaperMap_DrawScaled(var_s6, var_s5, temp_s4);
 
             if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel) ||
                 (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
@@ -386,7 +386,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 
             func_80067914(paperMapIdx, 0, 0, Q12(1.0f));
             func_80068E0C(1, paperMapIdx, 0, 0, 0, 0, Q12(1.0f));
-            func_800692A4(0, 0, Q12(1.0f));
+            PaperMap_DrawScaled(0, 0, Q12(1.0f));
             break;
 
         case 1:
@@ -417,7 +417,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 
             func_80067914(paperMapIdx, var_s6, var_s5, temp_s4);
             func_80068E0C(1, paperMapIdx, 0, 0, var_s6, var_s5, temp_s4);
-            func_800692A4(var_s6, var_s5, temp_s4);
+            PaperMap_DrawScaled(var_s6, var_s5, temp_s4);
 
             if (ScreenFade_IsFinished())
             {
@@ -1115,21 +1115,21 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
     return true;
 }
 
-void func_800692A4(u16 x, u16 y, q4_12 scale)
+void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
 {
-    #define MIN_DIFF(a, b, c) \
-        (((a) < (b)) ? ((a) - (c)) : ((b) - (c)))
+    #define CLAMPED_EXTENT(a, b, base) \
+        (((a) < (b)) ? ((a) - (base)) : ((b) - (base)))
 
     u16       rightEdge;
     u16       bottomEdge;
     s16       clampedLeft;
-    s16       clampedRight;
+    s16       clampedWidth;
     s16       clampedTop;
-    s16       clampedBottom;
-    s32       relX;
-    s32       relY;
-    s16       relX1;
-    s16       v_temp;
+    s16       clampedHeight;
+    s32       tileU;
+    s32       tileV;
+    s16       tileU1;
+    s16       tileVBottom;
     s32       tileX;
     s32       tileY;
     s16       hackVar;
@@ -1138,21 +1138,24 @@ void func_800692A4(u16 x, u16 y, q4_12 scale)
     s16       hackVar4;
     POLY_FT4* poly;
 
-    s16 D_80028B2C[] = { -160, -160, -160, -160 };
-    s16 D_80028B34[] = { -SCREEN_HEIGHT, -SCREEN_HEIGHT, -SCREEN_HEIGHT };
+    // Accumulated screen-space X edges per tile column (center-relative coords).
+    s16 tileScreenEdgesX[] = { -160, -160, -160, -160 };
+    // Accumulated screen-space Y edges per tile row.
+    s16 tileScreenEdgesY[] = { -SCREEN_HEIGHT, -SCREEN_HEIGHT, -SCREEN_HEIGHT };
 
-    // Get bounds of scaled 320x240 image.
-    rightEdge  = (Q12_MULT_PRECISE(scale, SCREEN_WIDTH)  + x) - 1;
-    bottomEdge = (Q12_MULT_PRECISE(scale, SCREEN_HEIGHT) + y) - 1;
+    // Compute right/bottom edges of the scaled 320x240 image.
+    rightEdge  = (Q12_MULT_PRECISE(scale, SCREEN_WIDTH)  + scrollX) - 1;
+    bottomEdge = (Q12_MULT_PRECISE(scale, SCREEN_HEIGHT) + scrollY) - 1;
 
     poly = GsOUT_PACKET_P;
 
-    // Iterate 3x2 array of 128x128 tiles.
+    // Iterate 3x2 grid of 128x128 VRAM tiles covering the map image.
     for (tileX = 0; tileX < 3; tileX++)
     {
         for (tileY = 0; tileY < 2; tileY++)
         {
-            if ((((tileX + 1) * 128) < x) ||
+            // Skip if tile column is entirely outside the scaled image horizontally.
+            if ((((tileX + 1) * 128) < scrollX) ||
                 (tileX * 128) > rightEdge)
             {
                 // @hack Needed for regalloc match later in the function.
@@ -1164,55 +1167,59 @@ void func_800692A4(u16 x, u16 y, q4_12 scale)
                 continue;
             }
 
-            if ((((tileY + 1) * 128) < (y + (g_PaperMapImg.v >> 1))) ||
-                ((tileY * 128) > (bottomEdge + (g_PaperMapImg.v >> 1))))
+            // Skip if tile row is entirely outside the scaled image vertically.
+            if ((((tileY + 1) * 128) < (scrollY + (g_PaperMapImg.v / 2))) ||
+                ((tileY * 128) > (bottomEdge + (g_PaperMapImg.v / 2))))
             {
                 continue;
             }
 
-            // Clamp tile X to left bound.
-            clampedLeft = CLAMP_LOW(x, tileX * 128);
+            // Clamp tile left edge to image left edge.
+            clampedLeft = CLAMP_LOW(scrollX, tileX * 128);
 
-            // Clamp tile X to right bound.
-            clampedRight = MIN_DIFF((tileX + 1) * 128, rightEdge, clampedLeft);
+            // Compute visible width of this tile (clamped to image right edge).
+            clampedWidth = CLAMPED_EXTENT((tileX + 1) * 128, rightEdge, clampedLeft);
 
-            // Clamp Y to upper bound.
-            clampedTop = CLAMP_LOW(y + (g_PaperMapImg.v >> 1), tileY * 128);
+            // Clamp tile top edge to image top edge.
+            clampedTop = CLAMP_LOW(scrollY + (g_PaperMapImg.v / 2), tileY * 128);
 
-            // Clamp Y to lower bound.
-            clampedBottom = MIN_DIFF((tileY + 1) * 128, bottomEdge + (g_PaperMapImg.v >> 1), clampedTop);
+            // Compute visible height of this tile (clamped to image bottom edge).
+            clampedHeight = CLAMPED_EXTENT((tileY + 1) * 128, bottomEdge + (g_PaperMapImg.v / 2), clampedTop);
 
-            D_80028B2C[tileX + 1] = D_80028B2C[tileX] + (Q12(clampedRight)        / scale);
-            D_80028B34[tileY + 1] = D_80028B34[tileY] + ((Q12(clampedBottom) * 2) / scale);
+            // Advance accumulated screen edges by the inverse-scaled tile extent.
+            tileScreenEdgesX[tileX + 1] = tileScreenEdgesX[tileX] + (Q12(clampedWidth)        / scale);
+            tileScreenEdgesY[tileY + 1] = tileScreenEdgesY[tileY] + ((Q12(clampedHeight) * 2) / scale);
 
             setPolyFT4(poly);
 
-            setXY0Fast(poly, D_80028B2C[tileX],     D_80028B34[tileY]);
-            setXY1Fast(poly, D_80028B2C[tileX + 1], D_80028B34[tileY]);
-            setXY2Fast(poly, D_80028B2C[tileX],     D_80028B34[tileY + 1]);
-            setXY3Fast(poly, D_80028B2C[tileX + 1], D_80028B34[tileY + 1]);
+            // Set quad screen positions from accumulated edge arrays.
+            setXY0Fast(poly, tileScreenEdgesX[tileX],     tileScreenEdgesY[tileY]);
+            setXY1Fast(poly, tileScreenEdgesX[tileX + 1], tileScreenEdgesY[tileY]);
+            setXY2Fast(poly, tileScreenEdgesX[tileX],     tileScreenEdgesY[tileY + 1]);
+            setXY3Fast(poly, tileScreenEdgesX[tileX + 1], tileScreenEdgesY[tileY + 1]);
 
-            // N for matching: these are `int`s, but relX1 and v_temp are `short`s.
-            relX = clampedLeft - (tileX * 128);
-            relY = clampedTop  - (tileY * 128);
+            // Compute UV offset into this tile's VRAM region.
+            // N for matching: these are `int`s, but tileU1 and tileVBottom are `short`s.
+            tileU = clampedLeft - (tileX * 128);
+            tileV = clampedTop  - (tileY * 128);
 
-            setUV0AndClutSum(poly, relX, relY << 1, getClut(g_PaperMapImg.clutX, g_PaperMapImg.clutY));
+            setUV0AndClutSum(poly, tileU, tileV * 2, getClut(g_PaperMapImg.clutX, g_PaperMapImg.clutY));
 
             // @hack: Regalloc fixes. `hackVar` usages compile to nothing (gcc knows hackVar == 0), but the 4 vars
             // pad the stack frame to match.
-            // @hack: Two `D_80028B2C[tileX] & hackVar` loads bump the array pointer's ref count so it wins `t8`.
-            setUV1AndTPageSum(poly, relX + clampedRight, relY << 1,
+            // @hack: Two `tileScreenEdgesX[tileX] & hackVar` loads bump the array pointer's ref count so it wins `t8`.
+            setUV1AndTPageSum(poly, tileU + clampedWidth, tileV * 2,
                               getTPage(g_PaperMapImg.tPage[0],
-                                       (hackVar << 5) | hackVar2 | hackVar3 | hackVar4 | (D_80028B2C[tileX] & hackVar), // @hack Evaluates to 0.
+                                       (hackVar << 5) | hackVar2 | hackVar3 | hackVar4 | (tileScreenEdgesX[tileX] & hackVar),
                                        (g_PaperMapImg.tPage[1] + tileX + (tileY * 16)) << 6,
                                        (((g_PaperMapImg.tPage[1] + (tileY * 16)) >> 4) & 1) << 8));
 
-            relX1  = clampedLeft - (tileX * 128);
-            v_temp = ((clampedTop - (tileY * 128)) << 1) - 1;
+            tileU1      =  clampedLeft - (tileX * 128);
+            tileVBottom = ((clampedTop - (tileY * 128)) << 1) - 1;
 
-            // @hack Similar to above `D_80028B2C[tile_x_s8] & hackVar` is needed to fix regalloc.
-            setUV2Sum(poly, relX1 + (D_80028B2C[tileX] & hackVar), v_temp + (clampedBottom << 1));
-            setUV3Sum(poly, clampedRight + relX1, v_temp + (clampedBottom << 1));
+            // @hack Similar to above, `tileScreenEdgesX[tileX] & hackVar` is needed to fix regalloc.
+            setUV2Sum(poly, tileU1 + (tileScreenEdgesX[tileX] & hackVar), tileVBottom + (clampedHeight << 1));
+            setUV3Sum(poly, clampedWidth + tileU1, tileVBottom + (clampedHeight << 1));
 
             setSemiTrans(poly, 0);
             setRGB0Fast(poly, 128, 128, 128);

@@ -1936,7 +1936,7 @@ bool func_80068CC0(s32 arg0);
 /** Paper map func. Seems to draw map marking sprites. */
 bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6);
 
-void func_800692A4(u16 x, u16 y, q4_12 scale);
+void PaperMap_DrawScaled(u16 x, u16 y, q4_12 scale);
 
 void Player_FlexRotationYReset(void);
 

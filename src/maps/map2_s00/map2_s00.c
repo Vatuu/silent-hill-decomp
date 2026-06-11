@@ -318,7 +318,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
         case 1:
         case 2:
         case 3:
-            func_800692A4(0, 120, Q12(0.5f));
+            PaperMap_DrawScaled(0, 120, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 120, Q12(0.5f));
             func_80067914(1, 0, 120, Q12(0.5f));
 
@@ -514,13 +514,13 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_800692A4(0, 0, Q12(1.0f));
+            PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
-            func_800692A4(0, 0, Q12(1.0f));
+            PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
 
             D_800F228C += 0x20;
@@ -537,7 +537,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             // Decrement zoom counter.
             D_800F228C -= 0x40;
 
-            func_800692A4(0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
+            PaperMap_DrawScaled(0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
                           0x10 - Q12_MULT_PRECISE(D_800F228C, 0x10),
                           (D_800F228C >> 1) + Q12(0.5f));
 
@@ -557,13 +557,13 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 9:
-            func_800692A4(0x48, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
             Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 10:
-            func_800692A4(0x48, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
             func_80068E0C(2, 1, 0x36A, g_Gfx_PaperMapMarkingAlpha, 0x48, 0x10, Q12(0.5f));
 
@@ -590,7 +590,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 11:
-            func_800692A4(0x48, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
             func_80068E0C(2, 1, 0x36A, 128, 0x48, 0x10, Q12(0.5f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
@@ -724,13 +724,13 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             SysWork_StateStepIncrement(0);
 
         case 11:
-            func_800692A4(0, 0, Q12(1.0f));
+            PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
             break;
 
         case 12:
-            func_800692A4(0, 0, Q12(1.0f));
+            PaperMap_DrawScaled(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
             D_800F229C += 0x20;
             Map_BoxOutlineDraw(D_800F229C, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 8, 0x9F, 0xDF);
@@ -745,7 +745,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             // Decrement zoom counter.
             D_800F229C -= 0x40;
 
-            func_800692A4(0,
+            PaperMap_DrawScaled(0,
                           0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
                           (D_800F229C >> 1) + Q12(0.5f));
 
@@ -765,13 +765,13 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 14:
-            func_800692A4(0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             Event_WaitTimer(Q12(1.0f), false);
 
             break;
         case 15:
-            func_800692A4(0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 0x74, Q12(0.5f));
 
@@ -795,7 +795,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 16:
-            func_800692A4(0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             func_80068E0C(2, 1, 0x3A2, 128, 0, 0x74, Q12(0.5f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);

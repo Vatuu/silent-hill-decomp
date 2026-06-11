@@ -142,8 +142,8 @@ D_80028A20                                   = 0x8002874C;
 //------------------------------------------------------------------------------------
 //--- PA: 0x003BF8   VA: 0x80028758   subsegment: .rodata, bodyprog_mapscreen_80066D90
 //------------------------------------------------------------------------------------
-D_80028B2C                                   = 0x80028858;
-D_80028B34                                   = 0x80028860;
+tileScreenEdgesX                             = 0x80028858;
+tileScreenEdgesY                             = 0x80028860;
 
 //------------------------------------------------------------------
 //--- PA: 0x003D10   VA: 0x80028870   subsegment: .rodata, collision
@@ -1128,7 +1128,7 @@ GameState_PaperMapScreen_Update              = 0x800689B8; // type:func
 func_80067914                                = 0x8006941C; // type:func
 func_80068CC0                                = 0x8006A7D0; // type:func
 func_80068E0C                                = 0x8006A91C; // type:func
-func_800692A4                                = 0x8006ADB4; // type:func
+PaperMap_DrawScaled                          = 0x8006ADB4; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x04679C   VA: 0x8006B2FC   subsegment: c, collision

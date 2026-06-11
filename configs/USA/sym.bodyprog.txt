@@ -43,6 +43,12 @@ STRING_COLORS                                = 0x80025DC0;
 INV_ITEM_ROTATIONS                           = 0x800262FC; // type:DVECTOR size:0x380
 LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 
+//------------------------------------------------------------------------------------
+//--- PA: 0x003ECC   VA: 0x80028A2C   subsegment: .rodata, bodyprog_mapscreen_80066D90
+//------------------------------------------------------------------------------------
+tileScreenEdgesX                             = 0x80028B2C;
+tileScreenEdgesY                             = 0x80028B34;
+
 //-------------------------------------------------------------------------------
 //--- PA: 0x004034   VA: 0x80028B94   subsegment: .rodata, bodyprog_data_80028B94
 //-------------------------------------------------------------------------------
@@ -811,6 +817,7 @@ func_8005E89C                                = 0x8005E89C;
 //--- PA: 0x042350   VA: 0x80066EB0   subsegment: c, bodyprog_mapscreen_80066D90
 //------------------------------------------------------------------------------
 GameState_PaperMapScreen_Update              = 0x80066EB0; // type:func
+PaperMap_DrawScaled                          = 0x800692A4; // type:func
 
 //----------------------------------------------------------------------
 //--- PA: 0x044C8C   VA: 0x800697EC   subsegment: c, collision/collision
