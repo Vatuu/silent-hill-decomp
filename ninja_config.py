@@ -293,7 +293,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
     # Checks:
     # Enables SHIFT-JIS conversion if the file is part from a memcard file (bodyprog)
     # Assign proper DL flag for the executable or the overlays
-    # Assign proper compiler version for the `lib_unk` compilation
+    # Assign proper compiler version for the `libkpad` compilation
     if re.search("^src.bodyprog.memcard*", source_path):
         ninjaFile.build(
             outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
@@ -311,7 +311,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
                 "DLFLAG": DL_EXE_FLAGS
             }
         )
-    elif re.search("^src.bodyprog.lib_unk.*", source_path):
+    elif re.search("^src.bodyprog.libkpad.*", source_path):
         ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc272", inputs=f"{target_path}.i",
             variables={
@@ -329,7 +329,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
     # Checks:
     # Enables `--expand-div` for `smf_io` or `smf_mid`
     # Assign proper DL flag for the executable or the overlays
-    # Assign proper assembler version for the `lib_unk` compilation
+    # Assign proper assembler version for the `libkpad` compilation
     maspxVersion = "2.77"
     if re.search("(smf_io|smf_mid)", source_path):
         ninjaFile.build(
@@ -349,7 +349,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
                 "MASPSXVER": maspxVersion
             }
         )
-    elif re.search("^src.bodyprog.lib_unk.*", source_path):
+    elif re.search("^src.bodyprog.libkpad.*", source_path):
         maspxVersion = "2.67"
         ninjaFile.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
@@ -494,7 +494,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                 target_path = str(entry.object_path)
                 
                 match seg.type:
-                    case "asm" | "data" | "sdata" | "bss" | "sbss" | "rodata" | "header":
+                    case "asm" | "data" | "sdata" | "bss" | "sbss" | "rodata" | "header" | "hasm":
                         if re.search("^asm.(USA|EUR|JAP\d).main.*", source_path):
                             ninjaFile.build(outputs=target_path, rule="as", inputs=source_path, variables={ "DLFLAG": DL_EXE_FLAGS } )
                         else:

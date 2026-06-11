@@ -61,10 +61,11 @@ segments:
       # .rodata section
       - [0x0,    .rodata, bodyprog]
       - [0x4,    .rodata, memcard]
-      - [0x13C,   rodata] # Garbage padding (should start at 0x13A but causes mismatches)
-      - [0x140,  .rodata, screen/screen_fade]
+      - [0x138,   pad] # Garbage padding (should start at 0x13A but causes mismatches)
+      - [0x144,  .rodata, screen/screen_fade]
       - [0x184,  .rodata, screen/cutscene_border]
       - [0x1E4,  .rodata, sys/syswork_globals]
+      - [0x1F8,   pad]
       - [0x1FC,  .rodata, sys/map_info]
       - [0x5AC,  .rodata, sys/fs_screens]
       - [0x5BC,  .rodata, sys/settings_reset]
@@ -89,9 +90,9 @@ segments:
       - [0x179C, .rodata, items/item_screens_3]
       - [0x39CC, .rodata, gfx/bodyprog_80056D8C]
       - [0x39E4, .rodata, gfx/texture_utils]
-      - [0x39EC, pad]
+      - [0x39EC,  pad]
       - [0x39F4, .rodata, bodyprog_combat_8005BF38]
-      - [0x3A0C, pad]
+      - [0x3A0C,  pad]
       - [0x3A14, .rodata, gfx/bodyprog_effects_8005E0DC]
       - [0x3EB8,  rodata] # Garbage padding
       - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]
@@ -464,16 +465,22 @@ segments:
       
       # .sdata section
       - [0x8DAB0, .sdata, libkpad/libkpad]
-      - [0x8DAB6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
       # .bss section
       - [0x8DAB8, .bss, memcard]
       - [0x910C0, .bss, text/text_debug_draw]
       - [0x910C8, .bss, screen/screen_fade]
-      - [0x910CC, pad]
+      - [0x910CC,  pad]
       - [0x910D0, .bss, screen/screen_draw]
       - [0x910D4, .bss, screen/screen_data]
-      - [0x95170,  bss]
+      - [0x95170,  bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
+                        # way as it fits for `screen_data.c`, however due the hacky way we
+                        # use to define BSS data it's not possible to define it in order
+                        # and in any case of modify the struct names/values it would require
+                        # to replace struct, other way to circunvent the issue is too hacky
+                        # so until we don't find a way to replicate `COMM` segment behaviour
+                        # this will remain undefined. Maybe worth addding it with `NON_MATCHING`
+                        # mark in order to allow anybody to use it.
       - [0x95460, .bss, sys/syswork_globals]
       - [0x981A0,  bss]
       - [0x981B4,  pad] # Garbage.
@@ -549,30 +556,30 @@ segments:
       # Hack - For some reason garbage data begins just after a struct definition
       # that grabs 9 bytes and in case of properly defining the file position this causes missalignment issues.
       - [0x9FD94,  pad] # Garbage.
-      - [0x9FD98,   o, libapi/first, .bss]
-      - [0x9FDC8,   o, libapi/pad, .bss]
-      - [0x9FDD8,   o, libapi/patch, .bss]
-      - [0x9FDE8,   o, libapi/chclrpad, .bss]
-      - [0x9FDF8,   o, libcard/patch, .bss]
-      - [0x9FE08,   o, libcard/end, .bss]
-      - [0x9FE18,   o, libcd/cdrom, .bss]
-      - [0x9FE60,   o, libcd/iso9660, .bss]
-      - [0xA2260,   o, libcd/c_004, .bss]
-      - [0xA2270,   o, libcd/c_005, .bss]
-      - [0xA2278,   o, libcd/c_011, .bss]
-      - [0xA2288,   o, libgs/gs_001, .bss]
-      - [0xA2348,   o, libgs/matrix, .bss] # Resized matrix.o .bss section from 0x80 to 0x78.
-      - [0xA23C0,   o, libgs/gs_104, .bss]
-      - [0xA23DC, pad]  # Garbage.
-      - [0xA23E0,   o, libgs/gs_107, .bss]
-      - [0xA2420,   o, libgs/gs_123, .bss]
-      - [0xA24A0,   o, libgs/global, .bss]
-      - [0xA24CC, pad]  # Garbage.
-      - [0xA24D0,   o, libgs/objt3, .bss]
-      - [0xA2600,   o, libgte/patchgte, .bss]
-      - [0xA2610,   o, libpad/padmain, .bss]
-      - [0xA2630,   o, libpad/padcmd, .bss]
-      - [0xA2640,   o, libpad/padportd, .bss]
+      - [0x9FD98,    o, libapi/first, .bss]
+      - [0x9FDC8,    o, libapi/pad, .bss]
+      - [0x9FDD8,    o, libapi/patch, .bss]
+      - [0x9FDE8,    o, libapi/chclrpad, .bss]
+      - [0x9FDF8,    o, libcard/patch, .bss]
+      - [0x9FE08,    o, libcard/end, .bss]
+      - [0x9FE18,    o, libcd/cdrom, .bss]
+      - [0x9FE60,    o, libcd/iso9660, .bss]
+      - [0xA2260,    o, libcd/c_004, .bss]
+      - [0xA2270,    o, libcd/c_005, .bss]
+      - [0xA2278,    o, libcd/c_011, .bss]
+      - [0xA2288,    o, libgs/gs_001, .bss]
+      - [0xA2348,    o, libgs/matrix, .bss] # Resized matrix.o .bss section from 0x80 to 0x78.
+      - [0xA23C0,    o, libgs/gs_104, .bss]
+      - [0xA23DC,  pad]  # Garbage.
+      - [0xA23E0,    o, libgs/gs_107, .bss]
+      - [0xA2420,    o, libgs/gs_123, .bss]
+      - [0xA24A0,    o, libgs/global, .bss]
+      - [0xA24CC,  pad]  # Garbage.
+      - [0xA24D0,    o, libgs/objt3, .bss]
+      - [0xA2600,    o, libgte/patchgte, .bss]
+      - [0xA2610,    o, libpad/padmain, .bss]
+      - [0xA2630,    o, libpad/padcmd, .bss]
+      - [0xA2640,    o, libpad/padportd, .bss]
       - [0xA28B0,  bss] # waitrc2.o
       - [0xA28B8, .bss, libsd/smf_snd]
       - [0xA2B88,  pad]

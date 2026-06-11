@@ -2416,7 +2416,7 @@ g_MemCard_SaveIconTim                        = 0x800A8D98; // size:0xC0
 //-----------------------------------------------------------------------------
 //--- PA: 0x0842F8   VA: 0x800A8E58   subsegment: .data, screen/background_draw
 //-----------------------------------------------------------------------------
-g_Screen_BackgroundImgGamma                  = 0x800A8E58;
+g_Screen_BackgroundImgGamma                  = 0x800A8E58; // size:0x2
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0842FC   VA: 0x800A8E5C   subsegment: .data, screen/screen_fade

@@ -9,10 +9,6 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-#ifndef PAD_HACK_IGNORE
-    const s32 rodataPad_80024CA0 = 0;
-#endif
-
 // ========================================
 // STATIC VARIABLES
 // ========================================

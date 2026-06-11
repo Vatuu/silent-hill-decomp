@@ -10,5 +10,3 @@ s_Savegame* const       g_SavegamePtr   = &g_GameWork.savegame;
 s_ControllerData* const g_Controller0   = &g_GameWork.controllers[0];
 s_ControllerData* const g_Controller1   = &g_GameWork.controllers[1];
 s_GameWork* const       g_GameWorkPtr   = &g_GameWork;
-
-const u32 D_80024D58 = 0; // Nothing references it. Might be just padding.
