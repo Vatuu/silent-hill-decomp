@@ -942,10 +942,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D87AC
     s32     newZ;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    cellX = g_SysWork.playerWork.player.position.vx / CHUNK_CELL_SIZE;
+    cellX = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_CELL_SIZE);
     projCellX = (g_SysWork.playerWork.player.position.vx > Q12(0.0f)) ? (cellX + 1) : (cellX - 1);
 
-    cellZ = g_SysWork.playerWork.player.position.vz / CHUNK_CELL_SIZE;
+    cellZ = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_CELL_SIZE);
     projCellZ = (g_SysWork.playerWork.player.position.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
     collFlags = CollisionTriggerFlag_None;

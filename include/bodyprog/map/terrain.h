@@ -4,6 +4,10 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 
+// TODO: Need to decide on clearer terminology. Right now we have "chunk cells", "cells", and "subcells", which are
+// kind of confusing.
+#define CHUNK_CELL_SIZE 40.0f
+
 /** @brief Map terrain chunk IPD file load states.
  *
  * See `Map_ChunkLoadStateGet`.

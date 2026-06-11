@@ -8331,7 +8331,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
 
     for (i = 56; i < 76; i++)
     {
-        HARRY_BASE_ANIM_INFOS[i] = D_80028B94[(i - 56) + relAnimInfoIdx];
+        HARRY_BASE_ANIM_INFOS[i] = HARRY_WEAPON_ANIM_INFOS[(i - 56) + relAnimInfoIdx];
     }
 
     for (i = 0; i < 10; i++)

@@ -3406,8 +3406,8 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
         func_8003A16C();
     }
 
-    cellZ0 = playerChara.position.vz / CHUNK_CELL_SIZE;
-    cellX0 = playerChara.position.vx / CHUNK_CELL_SIZE;
+    cellZ0 = playerChara.position.vz / Q12(CHUNK_CELL_SIZE);
+    cellX0 = playerChara.position.vx / Q12(CHUNK_CELL_SIZE);
 
     if (playerChara.position.vx > Q12(0.0f))
     {

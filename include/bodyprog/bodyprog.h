@@ -127,60 +127,57 @@ typedef enum _StaticModelLoadState
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
 {
-    DVECTOR screenXy_0[90];
-    u16     screenZ_168[18];
+    /* 0x0   */ DVECTOR screenXy_0[90];
+    /* 0x168 */ u16     screenZ_168[18];
+    /* 0x18C */ s16     field_18C[99]; // The size changed from 150 due to the addition of `field_252`. Not sure if this is correct.
+    /* 0x252 */ u8      field_252[102];
+    /* 0x2B8 */ u8      field_2B8[200]; // Size likely incorrect.
 
-    s16 field_18C[99]; // The size changed from 150 due to the addition of `field_252`. Not sure if this is correct.
-    u8  field_252[102];
+               union
+               {
+                   MATRIX field_0;
+                   struct
+                   {
+                       /* 0x0  */ s32     field_0;
+                       /* 0x4  */ s32     field_4;
+                       /* 0x8  */ CVECTOR field_8;
+                       /* 0xC  */ CVECTOR field_C;
+                       /* 0x10 */ u8      field_10;
+                       /* 0x11 */ u8      field_11;
+                       /* 0x12 */ u8      field_12;
+                       /* 0x13 */ u8      field_13;
+                       /* 0x14 */ u8      field_14;
+                       /* 0x15 */ u8      field_15;
+                       /* 0x16 */ u8      field_16;
+                       /* 0x17 */ u8      field_17;
+                       /* 0x18 */ s32     field_18;
+                       /* 0x1C */ s32     field_1C;
+                   } s_0;
+    /* 0x380 */} field_380;
 
-    u8 field_2B8[200]; // Size likely incorrect.
-
-    union
-    {
-        MATRIX field_0;
-        struct
-        {
-            s32     field_0;
-            s32     field_4;
-            CVECTOR field_8;
-            CVECTOR field_C;
-            u8      field_10;
-            u8      field_11;
-            u8      field_12;
-            u8      field_13;
-            u8      field_14;
-            u8      field_15;
-            u8      field_16;
-            u8      field_17;
-            s32     field_18;
-            s32     field_1C;
-        } s_0;
-    } field_380;
-
-    s_Normal field_3A0;
-
-    DVECTOR  screenPos_3A4;
-    s32      depthP_3A8;
-    SVECTOR  field_3AC;
-    u8       unk_3B4[36];
-    CVECTOR  field_3D8; // Written by `func_8005A42C`.
-    DVECTOR  screenPos_3DC;
-    s32      depthP_3E0;
-    s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
+    /* 0x3A0 */ s_Normal field_3A0;
+    /* 0x3A4 */ DVECTOR  screenPos_3A4;
+    /* 0x3A8 */ s32      depthP_3A8;
+    /* 0x3AC */ SVECTOR  field_3AC;
+    /* 0x3B4 */ u8       unk_3B4[36];
+    /* 0x3D8 */ CVECTOR  field_3D8; // Written by `func_8005A42C`.
+    /* 0x3DC */ DVECTOR  screenPos_3DC;
+    /* 0x3E0 */ s32      depthP_3E0;
+    /* 0x3E4 */ s16      rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
 } s_GteScratchData;
 
 typedef struct
 {
-    s8  field_0;
-    s8  field_1;
-    s8  field_2;
-    s8  field_3;
-    s32 field_4[4];
+    /* 0x0 */ s8  field_0;
+    /* 0x1 */ s8  field_1;
+    /* 0x2 */ s8  field_2;
+    /* 0x3 */ s8  field_3;
+    /* 0x4 */ s32 field_4[4];
 } s_800382B0;
 
 typedef struct
 {
-    s16 field_0; // Flags?
+    /* 0x0 */ s16 field_0; // Flags?
 } s_8008D850;
 
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
@@ -217,63 +214,63 @@ STATIC_ASSERT_SIZEOF(s_RadioNpcInfo, 4);
 
 typedef struct
 {
-    u8      field_0; // `bool`?
-    u8      field_1; // `bool`?
-    u8      field_2; // `bool`?
-    u8      field_3;
-    s8      unk_4[4];
-    s16     field_8;
-    s16     field_A;
-    VECTOR3 field_C; // Q19.12
-    s8      unk_18[4];
-    s32     field_1C;
-    q19_12  field_20;
+    /* 0x0  */ u8      field_0; // `bool`?
+    /* 0x1  */ u8      field_1; // `bool`?
+    /* 0x2  */ u8      field_2; // `bool`?
+    /* 0x3  */ u8      field_3;
+    /* 0x4  */ s8      unk_4[4];
+    /* 0x8  */ s16     field_8;
+    /* 0xA  */ s16     field_A;
+    /* 0xC  */ VECTOR3 field_C; // Q19.12
+    /* 0x18 */ s8      unk_18[4];
+    /* 0x1C */ s32     field_1C;
+    /* 0x20 */ q19_12  field_20;
 } s_800C4818;
 
 typedef struct
 {
-    u8  unk_0[4];
-    s16 field_4;
-    s16 field_6; // Keyframe index or time.
+    /* 0x0 */ u8  unk_0[4];
+    /* 0x4 */ s16 field_4;
+    /* 0x6 */ s16 field_6; // Keyframe index or time.
 } s_800C44F0; // Probable size: 8 bytes.
 
 /** @brief Used for normal credits screen. */
 typedef struct
 {
-    s16  field_0;  /** Prim vertex X. */
-    s16  field_2;  /** Prim vertex Y. */
-    s16  field_4;  /** Width? */
-    s8   field_6;  /** Height? */
-    s8   field_7;  /** `bool` | Blend flag. */
-    s32  field_8;  /** Rgb24 color + code. */
-    s16* field_C;  /** Points to 0x801E5C24, data size 400. */
-    s32* field_10; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
-    u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E434C`. */
-    s16  field_16; /** Clut XY. */
-    u32  field_18; /** Texture UV. */
+    /* 0x0  */ s16  field_0;  /** Prim vertex X. */
+    /* 0x2  */ s16  field_2;  /** Prim vertex Y. */
+    /* 0x4  */ s16  field_4;  /** Width? */
+    /* 0x6  */ s8   field_6;  /** Height? */
+    /* 0x7  */ s8   field_7;  /** `bool` | Blend flag. */
+    /* 0x8  */ s32  field_8;  /** Rgb24 color + code. */
+    /* 0xC  */ s16* field_C;  /** Points to 0x801E5C24, data size 400. */
+    /* 0x10 */ s32* field_10; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
+    /* 0x14 */ u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E434C`. */
+    /* 0x16 */ s16  field_16; /** Clut XY. */
+    /* 0x18 */ u32  field_18; /** Texture UV. */
 } s_800AFE08;
 STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
 
 /** @brief Used for UFO ending credits screen. */
 typedef struct
 {
-    s_800AFE08 sub_0;
-    s32        field_1C;
-    s16        field_20;
-    s16        field_22;
-    s32        field_24;
-    s32        field_28;
-    s32        field_2C;
-    s32        field_30;
-    s32        field_34;
-    s32        field_38;
-    s32        field_3C;
-    s32        field_40;
-    s32        field_44;
-    s32        field_48;
-    s32        field_4C;
-    s32        field_50;
-    s32        field_54;
+    /* 0x0  */ s_800AFE08 sub_0;
+    /* 0x1C */ s32        field_1C;
+    /* 0x20 */ s16        field_20;
+    /* 0x22 */ s16        field_22;
+    /* 0x24 */ s32        field_24;
+    /* 0x28 */ s32        field_28;
+    /* 0x2C */ s32        field_2C;
+    /* 0x30 */ s32        field_30;
+    /* 0x34 */ s32        field_34;
+    /* 0x38 */ s32        field_38;
+    /* 0x3C */ s32        field_3C;
+    /* 0x40 */ s32        field_40;
+    /* 0x44 */ s32        field_44;
+    /* 0x48 */ s32        field_48;
+    /* 0x4C */ s32        field_4C;
+    /* 0x50 */ s32        field_50;
+    /* 0x54 */ s32        field_54;
 } s_800AFE24; // Size: 85
 
 typedef struct _MapEnvPresetIdxs
@@ -284,49 +281,49 @@ typedef struct _MapEnvPresetIdxs
 
 typedef struct
 {
-    DVECTOR  screenXy_0[90];
-    s16      screenZ_168[18];
-    s16      field_18C[72];
-    s32      field_21C[39]; // Used as `VECTOR3`?
-    u8       field_2B8[200];
-    MATRIX   field_380;
-    s_Normal field_3A0;
-    DVECTOR  screenPos_3A4;
-    s32      depthP_3A8;
-    SVECTOR  field_3AC;
-    u8       unk_3B4[36];
-    CVECTOR  field_3D8;
+    /* 0x0   */ DVECTOR  screenXy_0[90];
+    /* 0x168 */ s16      screenZ_168[18];
+    /* 0x18C */ s16      field_18C[72];
+    /* 0x21C */ s32      field_21C[39]; // Used as `VECTOR3`?
+    /* 0x2B8 */ u8       field_2B8[200];
+    /* 0x380 */ MATRIX   field_380;
+    /* 0x3A0 */ s_Normal field_3A0;
+    /* 0x3A4 */ DVECTOR  screenPos_3A4;
+    /* 0x3A8 */ s32      depthP_3A8;
+    /* 0x3AC */ SVECTOR  field_3AC;
+    /* 0x3B4 */ u8       unk_3B4[36];
+    /* 0x3D8 */ CVECTOR  field_3D8;
 
-    // Different functions access different data at 0x3DC onwards.
-    // Union works for it, but also possible those functions just took different `s_GteScratchData` structs.
-    union
-    {
-        struct
-        {
-            DVECTOR screenPos_3DC;
-            s32     depthP_3E0;
-            s16     rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
-        } vertex;
+                 // Different functions access different data at 0x3DC onwards.
+                 // Union works for it, but also possible those functions just took different `s_GteScratchData` structs.
+                 union
+                 {
+                     struct
+                     {
+                         /* 0x3DC */ DVECTOR screenPos_3DC;
+                         /* 0x3E0 */ s32     depthP_3E0;
+                         /* 0x3E4 */ s16     rotMatrix_3E4[3][3]; // Truncated `MATRIX` without the `long t[3];` transfer vector?
+                     } vertex;
 
-        struct
-        {
-            s_Normal field_3DC;
-            SVECTOR  field_3E0[3];
-        } normal;
+                     struct
+                     {
+                         /* 0x3DC */ s_Normal field_3DC;
+                         /* 0x3E0 */ SVECTOR  field_3E0[3];
+                     } normal;
 
-        struct
-        {
-            u8  field_0;
-            u8  field_1;
-            u8  field_2;
-            u8  field_3;
-            u8  field_4;
-            u8  field_5;
-            u8  field_6;
-            u8  field_7;
-            s32 field_8;
-        } s_1;
-    } u;
+                     struct
+                     {
+                         /* 0x0 */ u8  field_0;
+                         /* 0x1 */ u8  field_1;
+                         /* 0x2 */ u8  field_2;
+                         /* 0x3 */ u8  field_3;
+                         /* 0x4 */ u8  field_4;
+                         /* 0x5 */ u8  field_5;
+                         /* 0x6 */ u8  field_6;
+                         /* 0x7 */ u8  field_7;
+                         /* 0x8 */ s32 field_8;
+                     } s_1;
+    /* 0x3DC */ } u;
 } s_GteScratchData2;
 
 // Something for inventory items.
@@ -356,250 +353,250 @@ typedef struct
 
 typedef struct
 {
-    u8 field_0;
-    u8 field_1;
-    u8 field_2;
-    u8 field_3; // Map marking sprite height?
+    /* 0x0 */ u8 field_0;
+    /* 0x1 */ u8 field_1;
+    /* 0x2 */ u8 field_2;
+    /* 0x3 */ u8 field_3; // Map marking sprite height?
 } s_800AE8A0_0;
 
 typedef struct
 {
-    s8 field_0;
-    s8 field_1;
-    u8 field_2;
-    u8 field_3;
+    /* 0x0 */ s8 field_0;
+    /* 0x1 */ s8 field_1;
+    /* 0x2 */ u8 field_2;
+    /* 0x3 */ u8 field_3;
 } s_800AE8A0_4;
 
 /** Paper map marking graphic data? */
 typedef struct
 {
-    POLY_FT4*    field_0;
-    s_800AE8A0_0 field_4;
-    s_800AE8A0_4 field_8;
-    s32          field_C; // Count.
+    /* 0x0 */ POLY_FT4*    field_0;
+    /* 0x4 */ s_800AE8A0_0 field_4;
+    /* 0x8 */ s_800AE8A0_4 field_8;
+    /* 0xC */ s32          field_C; // Count.
 } s_func_80068E0C;
 
 typedef struct
 {
-    POLY_FT4* field_0;
-    SVECTOR   field_4; // Q23.8
-    MATRIX    field_C;
-    VECTOR3   field_2C; // Q23.8 | Set as grid-aligned player position in `func_80065B94`.
-    s32       field_38;
-    DVECTOR   field_3C;
-    s32       field_40;
-    DVECTOR   field_44;
-    DVECTOR   field_48;
+    /* 0x0  */ POLY_FT4* field_0;
+    /* 0x4  */ SVECTOR   field_4; // Q23.8
+    /* 0xC  */ MATRIX    field_C;
+    /* 0x2C */ VECTOR3   field_2C; // Q23.8 | Set as grid-aligned player position in `func_80065B94`.
+    /* 0x38 */ s32       field_38;
+    /* 0x3C */ DVECTOR   field_3C;
+    /* 0x40 */ s32       field_40;
+    /* 0x44 */ DVECTOR   field_44;
+    /* 0x48 */ DVECTOR   field_48;
 } s_func_80065B94;
 
 typedef struct
 {
-    POLY_GT4* field_0;
-    MATRIX    field_4;
-    SVECTOR   field_24[3];
-    VECTOR3   field_3C; // Q19.12
-    s32       field_48;
-    DVECTOR   field_4C;
-    DVECTOR   field_50;
-    DVECTOR   field_54;
-    DVECTOR   field_58;
-    s32       field_5C;
-    s32       field_60;
-    s32       field_64;
-    s32       field_68;
-    s32       field_6C;
-    s32       field_70;
-    s32       field_74;
-    s32       field_78;
+    /* 0x0  */ POLY_GT4* field_0;
+    /* 0x4  */ MATRIX    field_4;
+    /* 0x24 */ SVECTOR   field_24[3];
+    /* 0x3C */ VECTOR3   field_3C; // Q19.12
+    /* 0x48 */ s32       field_48;
+    /* 0x4C */ DVECTOR   field_4C;
+    /* 0x50 */ DVECTOR   field_50;
+    /* 0x54 */ DVECTOR   field_54;
+    /* 0x58 */ DVECTOR   field_58;
+    /* 0x5C */ s32       field_5C;
+    /* 0x60 */ s32       field_60;
+    /* 0x64 */ s32       field_64;
+    /* 0x68 */ s32       field_68;
+    /* 0x6C */ s32       field_6C;
+    /* 0x70 */ s32       field_70;
+    /* 0x74 */ s32       field_74;
+    /* 0x78 */ s32       field_78;
 } s_func_80066184;
 
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    s16 field_2; // XYZ? X and Y swapped?
-    s32 field_4; //
-    s32 field_8; //
+    /* 0x0 */ u8  field_0;
+    /* 0x1 */ u8  field_1;
+    /* 0x2 */ s16 field_2; // XYZ? X and Y swapped?
+    /* 0x4 */ s32 field_4; //
+    /* 0x8 */ s32 field_8; //
 } s_800C42E8;
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    u16 field_8;
-    u16 field_A;
-    u8  field_C;
+    /* 0x0 */ s16 field_0;
+    /* 0x2 */ s16 field_2;
+    /* 0x4 */ s16 field_4;
+    /* 0x6 */ s16 field_6;
+    /* 0x8 */ u16 field_8;
+    /* 0xA */ u16 field_A;
+    /* 0xC */ u8  field_C;
 } s_800C4418;
 
 typedef struct
 {
-    VECTOR3 field_0; // Q23.8 | Position.
-    MATRIX  field_C;
-    s32     field_2C;
-    DVECTOR field_30;
-    q3_12   field_34[24];
-    q3_12   field_64[24];
-    q3_12   field_94[24];
-    s16     field_C4;
-    s16     field_C6;
-    s16     field_C8;
-    s16     field_CA;
-    s16     field_CC;
-    s16     field_CE;
-    s32     field_D0;
-    s32     field_D4;
-    s32     field_D8;
-    s16     field_DC[4];
-    s16     field_E4[4];
-    union
-    {
-        DVECTOR field_0[4]; // Q19.12
-        s32     raw_0[4];
-    } u_field_EC;
-    union
-    {
-        DVECTOR field_0[4];
-        s32     raw_0[4];
-    } u_field_FC; // Q3.12 | Positions or offsets.
-    q19_12  field_10C[4]; // X offsets?
-    q19_12  field_11C[4]; // Z offsets?
+    /* 0x0   */ VECTOR3 field_0; // Q23.8 | Position.
+    /* 0xC   */ MATRIX  field_C;
+    /* 0x2C  */ s32     field_2C;
+    /* 0x30  */ DVECTOR field_30;
+    /* 0x34  */ q3_12   field_34[24];
+    /* 0x64  */ q3_12   field_64[24];
+    /* 0x94  */ q3_12   field_94[24];
+    /* 0xC4  */ s16     field_C4;
+    /* 0xC6  */ s16     field_C6;
+    /* 0xC8  */ s16     field_C8;
+    /* 0xCA  */ s16     field_CA;
+    /* 0xCC  */ s16     field_CC;
+    /* 0xCE  */ s16     field_CE;
+    /* 0xD0  */ s32     field_D0;
+    /* 0xD4  */ s32     field_D4;
+    /* 0xD8  */ s32     field_D8;
+    /* 0xDC  */ s16     field_DC[4];
+    /* 0xE4  */ s16     field_E4[4];
+                union
+                {
+                    DVECTOR field_0[4]; // Q19.12
+                    s32     raw_0[4];
+    /* 0xEC  */ } u_field_EC;
+                union
+                {
+                    DVECTOR field_0[4];
+                    s32     raw_0[4];
+    /* 0xFC  */ } u_field_FC; // Q3.12 | Positions or offsets.
+    /* 0x10C */ q19_12  field_10C[4]; // X offsets?
+    /* 0x11C */ q19_12  field_11C[4]; // Z offsets?
 } s_func_8005E89C;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    PACKET*         field_12C;
-    CVECTOR         field_130;
-    CVECTOR         field_134;
-    SVECTOR         field_138;
-    s32             field_140;
-    DVECTOR         field_144;
-    u16             field_148;
-    u8              unk_14A[2];
-    s32             field_14C;
-    s32             field_150;
-    s32             field_154;
-    s32             field_158;
-    s32             field_15C;
-    s32             field_160;
-    s32             field_164;
-    s32             field_168;
-    s32             field_16C;
-    s32             field_170;
-    s32             field_174;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ PACKET*         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ CVECTOR         field_134;
+    /* 0x138 */ SVECTOR         field_138;
+    /* 0x140 */ s32             field_140;
+    /* 0x144 */ DVECTOR         field_144;
+    /* 0x148 */ u16             field_148;
+    /* 0x14A */ u8              unk_14A[2];
+    /* 0x14C */ s32             field_14C;
+    /* 0x150 */ s32             field_150;
+    /* 0x154 */ s32             field_154;
+    /* 0x158 */ s32             field_158;
+    /* 0x15C */ s32             field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
+    /* 0x16C */ s32             field_16C;
+    /* 0x170 */ s32             field_170;
+    /* 0x174 */ s32             field_174;
 } s_func_80060044;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    CVECTOR         field_12C;
-    CVECTOR         field_130;
-    SVECTOR         field_134;
-    SVECTOR         field_13C;
-    SVECTOR         field_144;
-    VECTOR3         field_14C;
-    s32             field_158;
-    s32             field_15C;
-    s32             field_160;
-    s32             field_164;
-    s32             field_168;
-    DVECTOR         field_16C;
-    s32             field_170;
-    s32             field_174;
-    q19_12          field_178;
-    s32             field_17C;
-    s32             field_180;
-    s32             field_184;
-    s32             field_188;
-    s32             field_18C;
-    s32             field_190;
-    s32             field_194;
-    s32             field_198;
-    s32             field_19C;
-    s32             field_1A0;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ CVECTOR         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ SVECTOR         field_134;
+    /* 0x13C */ SVECTOR         field_13C;
+    /* 0x144 */ SVECTOR         field_144;
+    /* 0x14C */ VECTOR3         field_14C;
+    /* 0x158 */ s32             field_158;
+    /* 0x15C */ s32             field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
+    /* 0x16C */ DVECTOR         field_16C;
+    /* 0x170 */ s32             field_170;
+    /* 0x174 */ s32             field_174;
+    /* 0x178 */ q19_12          field_178;
+    /* 0x17C */ s32             field_17C;
+    /* 0x180 */ s32             field_180;
+    /* 0x184 */ s32             field_184;
+    /* 0x188 */ s32             field_188;
+    /* 0x18C */ s32             field_18C;
+    /* 0x190 */ s32             field_190;
+    /* 0x194 */ s32             field_194;
+    /* 0x198 */ s32             field_198;
+    /* 0x19C */ s32             field_19C;
+    /* 0x1A0 */ s32             field_1A0;
 } s_func_800611C0;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    CVECTOR         field_12C;
-    CVECTOR         field_130;
-    SVECTOR         field_134[25];
-    VECTOR3         field_1FC; // Q19.12
-    q20_12          field_208;
-    s32             field_20C;
-    s32             field_210;
-    s32             field_214[25];
-    DVECTOR         field_278[25];
-    s32             field_2DC;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ CVECTOR         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ SVECTOR         field_134[25];
+    /* 0x1FC */ VECTOR3         field_1FC; // Q19.12
+    /* 0x208 */ q20_12          field_208;
+    /* 0x20C */ s32             field_20C;
+    /* 0x210 */ s32             field_210;
+    /* 0x214 */ s32             field_214[25];
+    /* 0x278 */ DVECTOR         field_278[25];
+    /* 0x2DC */ s32             field_2DC;
 } s_func_80062708;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    SVECTOR field_12C;
-    s8      unk_138[8];
-    DVECTOR field_13C;
-    s32     field_140;
-    s32     field_144;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ SVECTOR         field_12C;
+    /* 0x138 */ s8              unk_138[8];
+    /* 0x13C */ DVECTOR         field_13C;
+    /* 0x140 */ s32             field_140;
+    /* 0x144 */ s32             field_144;
 } s_func_80064FC0;
 
 typedef struct
 {
-    POLY_G4*  field_0;
-    DR_TPAGE* field_4;
-    SVECTOR   field_8[3];
-    MATRIX    field_20;
-    VECTOR3   field_40; // Q23.8
-    s32       field_4C;
-    s16       field_50;
-    s32       field_54[3];
-    s16       field_60[3];
-    s32       field_68;
+    /* 0x0  */ POLY_G4*  field_0;
+    /* 0x4  */ DR_TPAGE* field_4;
+    /* 0x8  */ SVECTOR   field_8[3];
+    /* 0x20 */ MATRIX    field_20;
+    /* 0x40 */ VECTOR3   field_40; // Q23.8
+    /* 0x4C */ s32       field_4C;
+    /* 0x50 */ s16       field_50;
+    /* 0x54 */ s32       field_54[3];
+    /* 0x60 */ s16       field_60[3];
+    /* 0x68 */ s32       field_68;
 } s_func_800652F4;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    MATRIX          field_12C;
-    SVECTOR         field_14C[3];
-    SVECTOR         field_164;
-    VECTOR          field_16C[3];
-    VECTOR          field_19C;
-    VECTOR          field_1AC; // Q27.4
-    s32             field_1BC;
-    s32             field_1C0;
-    s32             field_1C4;
-    s32             field_1C8;
-    DVECTOR         field_1CC;
-    s16             field_1D0;
-    u8              unk_1D2[2];
-    s32             field_1D4; // Count.
-    s32             field_1D8;
-    s32             field_1DC;
-    s32             field_1E0;
-    s32             field_1E4;
-    q19_12          field_1E8;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ MATRIX          field_12C;
+    /* 0x14C */ SVECTOR         field_14C[3];
+    /* 0x164 */ SVECTOR         field_164;
+    /* 0x16C */ VECTOR          field_16C[3];
+    /* 0x19C */ VECTOR          field_19C;
+    /* 0x1AC */ VECTOR          field_1AC; // Q27.4
+    /* 0x1BC */ s32             field_1BC;
+    /* 0x1C0 */ s32             field_1C0;
+    /* 0x1C4 */ s32             field_1C4;
+    /* 0x1C8 */ s32             field_1C8;
+    /* 0x1CC */ DVECTOR         field_1CC;
+    /* 0x1D0 */ s16             field_1D0;
+    /* 0x1D2 */ u8              unk_1D2[2];
+    /* 0x1D4 */ s32             field_1D4; // Count.
+    /* 0x1D8 */ s32             field_1D8;
+    /* 0x1DC */ s32             field_1DC;
+    /* 0x1E0 */ s32             field_1E0;
+    /* 0x1E4 */ s32             field_1E4;
+    /* 0x1E8 */ q19_12          field_1E8;
 } s_func_80063A50;
 
 typedef struct
 {
-    s_func_8005E89C field_0;
-    PACKET*         field_12C;
-    CVECTOR         field_130;
-    CVECTOR         field_134;
-    SVECTOR         field_138;
-    u8              unk_140[16];
-    s32             field_150;
-    DVECTOR         field_154;
-    u16             field_158;
-    u16             field_15A;
-    u8              field_15C;
-    s32             field_160;
-    s32             field_164;
-    s32             field_168;
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ PACKET*         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ CVECTOR         field_134;
+    /* 0x138 */ SVECTOR         field_138;
+    /* 0x140 */ u8              unk_140[16];
+    /* 0x150 */ s32             field_150;
+    /* 0x154 */ DVECTOR         field_154;
+    /* 0x158 */ u16             field_158;
+    /* 0x15A */ u16             field_15A;
+    /* 0x15C */ u8              field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
 } s_func_80064334;
 
 typedef struct
@@ -621,12 +618,12 @@ typedef struct
 
 typedef struct
 {
-    MATRIX  field_0; // View matrix?
-    SVECTOR field_20;
-    VECTOR  field_28; // Q27.4
-    s32     field_38;
-    s32     field_3C[5];
-    s32     field_50;
+    /* 0x0  */ MATRIX  field_0; // View matrix?
+    /* 0x20 */ SVECTOR field_20;
+    /* 0x28 */ VECTOR  field_28; // Q27.4
+    /* 0x38 */ s32     field_38;
+    /* 0x3C */ s32     field_3C[5];
+    /* 0x50 */ s32     field_50;
 } s_func_8006342C;
 
 // ========
@@ -639,7 +636,7 @@ extern char D_80028544[16];
 
 extern RECT D_80028A20;
 
-extern const s_AnimInfo D_80028B94[];
+extern const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[];
 
 extern const s_800C44F0 D_800294F4[];
 

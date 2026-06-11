@@ -89,7 +89,7 @@ void Map_RoomBgmInit(bool arg0)
                     if (Savegame_EventFlagGet(EventFlag_330))
                     {
                         bgmFlags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4);
-                        fadeSpeed = CHUNK_CELL_SIZE;
+                        fadeSpeed = Q12(CHUNK_CELL_SIZE);
                     }
                     else
                     {
@@ -151,7 +151,7 @@ void Map_RoomBgmInit(bool arg0)
 
         if (!Savegame_EventFlagGet(EventFlag_314))
         {
-            if (g_SysWork.playerWork.player.position.vz < CHUNK_CELL_SIZE)
+            if (g_SysWork.playerWork.player.position.vz < Q12(CHUNK_CELL_SIZE))
             {
                 Savegame_EventFlagSet(EventFlag_314);
             }

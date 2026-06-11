@@ -363,7 +363,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
     {
         case 0:
         case 1:
-            arg0->fogDistance = effectsInfo->fogDistance_10;
+            arg0->fogDistance = effectsInfo->fogDistance;
             break;
 
         case 2:
@@ -371,7 +371,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
             break;
 
         case 3:
-            arg0->fogDistance = effectsInfo->fogDistance_10;
+            arg0->fogDistance = effectsInfo->fogDistance;
             break;
     }
 }
@@ -700,9 +700,9 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
     }
 
-    arg0->effectsInfo.worldTintR_8 = Math_WeightedAverageGet(arg1->effectsInfo.worldTintR_8, arg2->effectsInfo.worldTintR_8, weight);
-    arg0->effectsInfo.worldTintG_A = Math_WeightedAverageGet(arg1->effectsInfo.worldTintG_A, arg2->effectsInfo.worldTintG_A, weight);
-    arg0->effectsInfo.worldTintB_C = Math_WeightedAverageGet(arg1->effectsInfo.worldTintB_C, arg2->effectsInfo.worldTintB_C, weight);
+    arg0->effectsInfo.worldTintR = Math_WeightedAverageGet(arg1->effectsInfo.worldTintR, arg2->effectsInfo.worldTintR, weight);
+    arg0->effectsInfo.worldTintG = Math_WeightedAverageGet(arg1->effectsInfo.worldTintG, arg2->effectsInfo.worldTintG, weight);
+    arg0->effectsInfo.worldTintB = Math_WeightedAverageGet(arg1->effectsInfo.worldTintB, arg2->effectsInfo.worldTintB, weight);
 
     if (arg1->effectsInfo.field_0.s_field_0.field_2 == 1 && arg2->effectsInfo.field_0.s_field_0.field_2 == 2)
     {
@@ -791,10 +791,10 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     }
 
     arg0->fogDistance               = Math_WeightedAverageGet(arg1->fogDistance, arg2->fogDistance, weight0);
-    arg0->effectsInfo.fogDistance_10 = Math_WeightedAverageGet(arg1->effectsInfo.fogDistance_10, arg2->effectsInfo.fogDistance_10, weight1);
+    arg0->effectsInfo.fogDistance = Math_WeightedAverageGet(arg1->effectsInfo.fogDistance, arg2->effectsInfo.fogDistance, weight1);
     arg0->effectsInfo.field_6        = Math_WeightedAverageGet(arg1->effectsInfo.field_6, arg2->effectsInfo.field_6, weight0);
 
-    LoadAverageCol(&arg1->effectsInfo.fogColor_14.r, &arg2->effectsInfo.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->effectsInfo.fogColor_14.r);
+    LoadAverageCol(&arg1->effectsInfo.fogColor.r, &arg2->effectsInfo.fogColor.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->effectsInfo.fogColor.r);
 }
 
 void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FE04
@@ -803,10 +803,10 @@ void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, c
 
     alphaFrom = Q12(1.0f) - alphaTo;
     LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
-    LoadAverageCol(&arg1->screenTint_1D.r, &arg2->screenTint_1D.r, alphaFrom, alphaTo, &arg0->screenTint_1D.r);
+    LoadAverageCol(&arg1->screenTint.r, &arg2->screenTint.r, alphaFrom, alphaTo, &arg0->screenTint.r);
 
     if ((arg0->field_19.r || arg0->field_19.g || arg0->field_19.b) ||
-        (arg0->screenTint_1D.r || arg0->screenTint_1D.g || arg0->screenTint_1D.b))
+        (arg0->screenTint.r || arg0->screenTint.g || arg0->screenTint.b))
     {
         arg0->field_18 = 1;
     }
@@ -828,7 +828,7 @@ s32 func_8003FEC0(const s_MapEffectsInfo* arg0) // 0x8003FEC0
 
     if (g_WorldEnvWork.isFogEnabled)
     {
-        return arg0->fogDistance_10;
+        return arg0->fogDistance;
     }
 
     if (g_WorldEnvWork.field_0 == 1)
@@ -848,11 +848,11 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->effectsInfo.field_0.s_field_0.field_2, arg0->effectsInfo.field_6, arg0->effectsInfo.field_0.s_field_0.field_1, arg0->effectsInfo.worldTintR_8, arg0->effectsInfo.worldTintG_A, arg0->effectsInfo.worldTintB_C, brightness);
-    WorldEnv_FogParamsSet(arg0->effectsInfo.field_E != 0, arg0->effectsInfo.fogColor_14.r, arg0->effectsInfo.fogColor_14.g, arg0->effectsInfo.fogColor_14.b);
+    func_80055330(arg0->effectsInfo.field_0.s_field_0.field_2, arg0->effectsInfo.field_6, arg0->effectsInfo.field_0.s_field_0.field_1, arg0->effectsInfo.worldTintR, arg0->effectsInfo.worldTintG, arg0->effectsInfo.worldTintB, brightness);
+    WorldEnv_FogParamsSet(arg0->effectsInfo.field_E != 0, arg0->effectsInfo.fogColor.r, arg0->effectsInfo.fogColor.g, arg0->effectsInfo.fogColor.b);
 
-    temp_a0 = arg0->effectsInfo.fogDistance_10;
+    temp_a0 = arg0->effectsInfo.fogDistance;
 
     WorldEnv_FogDistanceSet(temp_a0, temp_a0 + Q12(1.0f));
-    func_800553E0(arg0->effectsInfo.field_18, arg0->effectsInfo.field_19.r, arg0->effectsInfo.field_19.g, arg0->effectsInfo.field_19.b, arg0->effectsInfo.screenTint_1D.r, arg0->effectsInfo.screenTint_1D.g, arg0->effectsInfo.screenTint_1D.b);
+    func_800553E0(arg0->effectsInfo.field_18, arg0->effectsInfo.field_19.r, arg0->effectsInfo.field_19.g, arg0->effectsInfo.field_19.b, arg0->effectsInfo.screenTint.r, arg0->effectsInfo.screenTint.g, arg0->effectsInfo.screenTint.b);
 }

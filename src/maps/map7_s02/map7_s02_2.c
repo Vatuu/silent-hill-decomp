@@ -3395,8 +3395,8 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
 
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    cellZ0 = g_SysWork.playerWork.player.position.vz / CHUNK_CELL_SIZE;
-    cellX0 = g_SysWork.playerWork.player.position.vx / CHUNK_CELL_SIZE;
+    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_CELL_SIZE);
+    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_CELL_SIZE);
 
     if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
     {

@@ -469,8 +469,8 @@ s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
     geomZ = Q12_TO_Q8(posZ);
 
     // Compute cell coordinates.
-    cellX = FLOOR_TO_STEP(geomX, Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellX = FLOOR_TO_STEP(geomX, Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(geomZ, Q8(CHUNK_CELL_SIZE));
 
     // Run through active chunks.
     for (curChunk = g_MapTerrain.activeChunks; curChunk < &g_MapTerrain.activeChunks[g_MapTerrain.activeChunkCount]; curChunk++)
@@ -530,8 +530,8 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
         return WorldModelLocation_Chunk1;
     }
 
-    cellX = FLOOR_TO_STEP(geomX, Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellX = FLOOR_TO_STEP(geomX, Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(geomZ, Q8(CHUNK_CELL_SIZE));
 
     // Run through active chunks.
     for (curChunk = g_MapTerrain.activeChunks, chunkCount = 0;
@@ -678,11 +678,11 @@ q19_12 Map_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ
     s32 cellPosZ;
 
     // Compute cell boundary position.
-    cellBoundX = cellX * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    cellBoundZ = cellZ * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundX = cellX * Q8(CHUNK_CELL_SIZE);
+    cellBoundZ = cellZ * Q8(CHUNK_CELL_SIZE);
 
-    cellPosX = OUTSIDE_DIST(posX, cellBoundX, cellBoundX + Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellPosZ = OUTSIDE_DIST(posZ, cellBoundZ, cellBoundZ + Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellPosX = OUTSIDE_DIST(posX, cellBoundX, cellBoundX + Q8(CHUNK_CELL_SIZE));
+    cellPosZ = OUTSIDE_DIST(posZ, cellBoundZ, cellBoundZ + Q8(CHUNK_CELL_SIZE));
     return Vc_VectorMagnitudeCalc(cellPosX, Q12(0.0f), cellPosZ);
 }
 
@@ -704,10 +704,10 @@ s32 Map_ChunkLoad(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX
 
     queueIdx = NO_VALUE;
 
-    cellX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(CHUNK_CELL_SIZE));
+    cellZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(CHUNK_CELL_SIZE));
+    cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(CHUNK_CELL_SIZE));
+    cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(CHUNK_CELL_SIZE));
 
     terrain->cellX = cellX1;
     terrain->cellZ = cellZ1;
@@ -1021,8 +1021,8 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     s32 cellX;
     s32 cellZ;
 
-    cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q12_TO_Q8(CHUNK_CELL_SIZE));
-    cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q8(CHUNK_CELL_SIZE));
 
     if (g_MapTerrain.isExterior)
     {
@@ -1269,6 +1269,6 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
 
     ipd->cellX                    = cellX;
     ipd->cellZ                    = cellZ;
-    ipd->collisionData.positionX += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    ipd->collisionData.positionZ += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData.positionX += (cellX - prevCellX) * Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData.positionZ += (cellZ - prevCellZ) * Q8(CHUNK_CELL_SIZE);
 }

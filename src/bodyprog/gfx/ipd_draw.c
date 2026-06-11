@@ -34,8 +34,8 @@ void Ipd_ChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
     geomZ = Q12_TO_Q8(posZ);
 
     // Compute cell boundary position.
-    cellBoundX = ipdHdr->cellX * Q12_TO_Q8(CHUNK_CELL_SIZE);
-    cellBoundZ = ipdHdr->cellZ * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundX = ipdHdr->cellX * Q8(CHUNK_CELL_SIZE);
+    cellBoundZ = ipdHdr->cellZ * Q8(CHUNK_CELL_SIZE);
 
     // Compute subcells.
     subcellX = FLOOR_TO_STEP(geomX - cellBoundX, CHUNK_SUBCELL_SIZE);

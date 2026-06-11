@@ -26,8 +26,6 @@
 #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 #define ORDERING_TABLE_SIZE            2048
 
-#define CHUNK_CELL_SIZE Q12(40.0f)
-
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
@@ -327,35 +325,35 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
 typedef union
 {
-    s32 field_0; // Flags?
-    struct
-    {
-        u8 field_0; // Flags.
-        u8 field_1;
-        u8 field_2;
-        u8 unk_3;
-    } s_field_0;
+    /* 0x0 */ s32 field_0; // Flags?
+              struct
+              {
+                  u8 field_0; // Flags.
+                  u8 field_1;
+                  u8 field_2;
+                  s8 __pad_3;
+    /* 0x4 */ } s_field_0;
 } u_Unk0;
 
 /** @brief Map effects info. */
 typedef struct _MapEffectsInfo
 {
-    u_Unk0  field_0;
-    q3_12   field_4; // Alpha.
-    q3_12   field_6; // World tint color intensity.
-    q3_12   worldTintR_8;
-    q3_12   worldTintG_A;
-    q3_12   worldTintB_C;
-    u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
-                     // Sets the transparent grey layer overlaid on characters and the enviroment.
-    q19_12  fogDistance_10;
-    CVECTOR fogColor_14;
-    u8      field_18; // `bool`?
-    CVECTOR field_19;
-    CVECTOR screenTint_1D; // Subtractive screen tint.
-    CVECTOR field_21;      // Particle effect related. Only the first value affects snow transparency.
-    CVECTOR field_25;
-    s8      __pad_29[3];
+    /* 0x0  */ u_Unk0  field_0;
+    /* 0x4  */ q3_12   field_4; // Alpha.
+    /* 0x6  */ q3_12   field_6; // World tint color intensity.
+    /* 0x8  */ q3_12   worldTintR;
+    /* 0xA  */ q3_12   worldTintG;
+    /* 0xC  */ q3_12   worldTintB;
+    /* 0xE  */ u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
+                                // Sets the transparent grey layer overlaid on characters and the enviroment.
+    /* 0x10 */ q19_12  fogDistance;
+    /* 0x14 */ CVECTOR fogColor;
+    /* 0x18 */ u8      field_18; // `bool`?
+    /* 0x19 */ CVECTOR field_19;
+    /* 0x1D */ CVECTOR screenTint; // Subtractive screen tint.
+    /* 0x21 */ CVECTOR field_21;   // Particle effect related. Only the first value affects snow transparency.
+    /* 0x25 */ CVECTOR field_25;
+    /* 0x29 */ s8      __pad_29[3];
 } s_MapEffectsInfo;
 STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
@@ -410,7 +408,7 @@ typedef struct _SysWork
     /* 0x2280   */ s8               npcFlagsId;                             // 1-based NPC ID for `npcFlags`.
     /* 0x2281   */ s8               loadingScreenIdx;
     /* 0x2282   */ s8               field_2282;                         /** `e_EventDataUnkState` */
-    /* 0x2283   */ s8               sfxPairIdx_2283;                    /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
+    /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
     /* 0x228C   */ s32              field_228C[1];

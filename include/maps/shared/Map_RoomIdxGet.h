@@ -275,7 +275,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     // If no match in primary grid, try fallback grid.
     if (res == 0)
     {
-#define MAP_ROOM_STRIDE_Z ((MAP_ROOM_MAX_Z - MAP_ROOM_MIN_Z) / CHUNK_CELL_SIZE)
+#define MAP_ROOM_STRIDE_Z ((MAP_ROOM_MAX_Z - MAP_ROOM_MIN_Z) / Q12(CHUNK_CELL_SIZE))
 
         if (x < MAP_ROOM_MIN_X || x >= MAP_ROOM_MAX_X ||
             z < MAP_ROOM_MIN_Z || z >= MAP_ROOM_MAX_Z)
@@ -289,8 +289,8 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         }
         else
         {
-            x = (x - MAP_ROOM_MIN_X) / CHUNK_CELL_SIZE;
-            z = (z - MAP_ROOM_MIN_Z) / CHUNK_CELL_SIZE;
+            x = (x - MAP_ROOM_MIN_X) / Q12(CHUNK_CELL_SIZE);
+            z = (z - MAP_ROOM_MIN_Z) / Q12(CHUNK_CELL_SIZE);
 
             res = MAP_ROOM_IDXS[(x * MAP_ROOM_STRIDE_Z) + z];
 #ifdef MAP_HAS_SECONDARY_GRID
