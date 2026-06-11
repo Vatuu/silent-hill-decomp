@@ -4,7 +4,7 @@
 #include "event_flags.h"
 #include "gpu.h"
 #include "types.h"
-#include "lib_unk.h"
+#include "libkpad.h"
 
 #include "bodyprog/anim.h"
 #include "bodyprog/chara/chara.h"
@@ -449,7 +449,7 @@ typedef struct _SysWork
     /* 0x2388   */ s_SysWork_2388   field_2388;
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;
-    /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `lib_unk`.*/
+    /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `libkpad`.*/
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT];
                    // 2 bytes of padding.
     /* 0x275C   */ q23_8            field_275C; // } SFX volumes?

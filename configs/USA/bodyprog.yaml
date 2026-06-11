@@ -216,7 +216,7 @@ segments:
       - [0x63348,   c, events/bodyprog_bgm_80087EA8]
       - [0x63658,   c, bodyprog_800881B8]
       - [0x6411C,   c, chara_spawn]
-      - [0x64530,   c, bodyprog_80089090] # Uses `s_SysWork_2514` which is mainly used for `lib_unk`, possibly vibration?
+      - [0x64530,   c, bodyprog_80089090] # Uses `s_SysWork_2514` which is mainly used for `libkpad`, possibly vibration?
       - [0x654F8,   c, bodyprog_combat_8008A058]
       - [0x67E40,   c, dms]
       - [0x688BC,   c, water]
@@ -369,7 +369,7 @@ segments:
       - [0x78A48,   o, libspu/s_sva]    # SpuSetVoiceAttr
       - [0x79048,   o, libspu/s_n2p]    # _spu_note2pitch _spu_pitch2note
       - [0x79248,   o, libspu/s_gva]    # SpuGetVoiceAttr
-      - [0x79638,   c, lib_unk/lib_8009E198]
+      - [0x79638,   c, libkpad/libkpad]
       - [0x7A244,   c, libsd/smf_snd]
       - [0x7D7FC,   o, libspu/s_q]      # SpuQuit
       - [0x7D87C,   o, libapi/a13]      # DisableEvent
@@ -459,11 +459,11 @@ segments:
       - [0x8C35C,   o, libpad/padportd, .data]
       - [0x8C36C,   o, libspu/zerobuf, .data]
       - [0x8C76C,   o, libspu/s_n2p, .data]
-      - [0x8C88C, .data, lib_unk/lib_8009E198]
+      - [0x8C88C, .data, libkpad/libkpad]
       - [0x8C8DC, .data, libsd/smf_main]
       
       # .sdata section
-      - [0x8DAB0, .sdata, lib_unk/lib_8009E198]
+      - [0x8DAB0, .sdata, libkpad/libkpad]
       - [0x8DAB6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
       # .bss section

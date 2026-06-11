@@ -167,9 +167,9 @@ TARGET_POSTBUILD := bodyprog screens/b_konami screens/stream maps/map3_s06 maps/
 # - Files under main executable paths use -G8; overlay files use -G0.
 # - Enables `--expand-div` for certain `libsd` sources which require it (others can't build with it).
 # - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
-# - Switches aspsx-version for lib_unk code.
+# - Switches aspsx-version for libkpad code.
 define FlagsSwitch
-    $(if $(or $(findstring /main/,$(1)),$(findstring lib_unk,$(1))), \
+    $(if $(or $(findstring /main/,$(1)),$(findstring libkpad,$(1))), \
     	$(eval DL_FLAGS = -G8), \
     	$(eval DL_FLAGS = -G0))
 
@@ -177,7 +177,7 @@ define FlagsSwitch
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	
-	$(if $(findstring lib_unk,$(1)), \
+	$(if $(findstring libkpad,$(1)), \
 		$(eval ASPSX_VERSION := 2.67), \
 		$(eval ASPSX_VERSION := 2.77))
 
@@ -707,8 +707,8 @@ endif
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
 	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t SHIFT-JIS $< -o $@
 
-# Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `lib_unk` code.
-$(BUILD_DIR)/src/bodyprog/lib_unk/%.c.s: CC := $(CC272)
+# Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `libkpad` code.
+$(BUILD_DIR)/src/bodyprog/libkpad/%.c.s: CC := $(CC272)
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
 	@mkdir -p $(dir $@)

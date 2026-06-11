@@ -3,8 +3,6 @@
 .set noat
 .set noreorder
 
-.include "macro.inc"
-
 .section .text, "ax"
 
 # =============================================================================

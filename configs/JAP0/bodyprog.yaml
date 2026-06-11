@@ -111,7 +111,7 @@ segments:
       - [0x69F4, o, libgs/gs_123, .rdata]
       - [0x6A84, o, libgs/objt, .rdata]
       - [0x6B24, o, libgs/objt3, .rdata]
-      - [0x6BC4, rodata, lib_unk2/lib_8009687C]
+      - [0x6BC4, rodata, libkmath/libkmath]
       - [0x93C4, o, libpad/padentry, .rdata]
       - [0x93E4, o, libspu/s_sva, .rdata]
       - [0x9424, o, libspu/s_sca, .rdata]
@@ -281,7 +281,7 @@ segments:
       - [0x73698, o, libgs/objt]
       - [0x73828, o, libgs/objt3]
 
-      - [0x740b8, asm, lib_unk2/lib_8009687C]
+      - [0x740b8, asm, libkmath/libkmath]
 
       - [0x74704, o, libgte/msc00]
       - [0x74794, o, libgte/msc01]
@@ -341,7 +341,7 @@ segments:
       - [0x7B3E4, o, libspu/s_n2p]
       - [0x7b5e4, o, libspu/s_gva]
 
-      - [0x7B9D4, c, lib_unk/lib_8009E198]
+      - [0x7B9D4, c, libkpad/libkpad]
       - [0x7c5e0, c, libsd/smf_snd]
 
       - [0x7fb98, o, libspu/s_q]      # SpuQuit
@@ -429,11 +429,11 @@ segments:
       - [0x8E88C, o, libpad/padportd, .data]
       - [0x8E89C, o, libspu/zerobuf, .data]
       - [0x8EC9C, o, libspu/s_n2p, .data]
-      - [0x8EDBC, .data, lib_unk/lib_8009E198]
+      - [0x8EDBC, .data, libkpad/libkpad]
       - [0x8EE0C, .data, libsd/smf_main]
       
       # .sdata section
-      - [0x8FFE0, .sdata, lib_unk/lib_8009E198]
+      - [0x8FFE0, .sdata, libkpad/libkpad]
       - [0x8FFE6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
       # .bss section
