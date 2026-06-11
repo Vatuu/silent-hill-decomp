@@ -12964,7 +12964,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
         sharedData_800DE220_0_s01.vx = Q12(0.0f);
         sharedData_800DE220_0_s01.vz = Q12(0.0f);
         sharedData_800DE220_0_s01.vy = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.3f);
-        Math_RotMatrixXyxGte(&sharedData_800DE220_0_s01, &sharedData_800DE230_0_s01);
+        Math_RotMatrixXyzGte(&sharedData_800DE220_0_s01, &sharedData_800DE230_0_s01);
         MulMatrix(&boneCoords[10].coord, &sharedData_800DE230_0_s01);
 
         scaledAngle = Q12_MULT_FLOAT_PRECISE(bendAngle, 0.5f);

@@ -39,6 +39,8 @@ def get_o_target(yaml_file, release, compile_asm_tu):
                                             splits_asm.append(f"{build_path}/{asm_tu}.o")
                                     case "asm":
                                         splits_asm.append(f"{asm_path}/{splits[2]}.s.o")
+                                    case "hasm":
+                                        splits_c.append(f"{src_path}/{splits[2]}.s.o")
                                     case ".rodata" | ".data" | ".sdata" | ".bss" | ".sbss" | "pad" | "lib" | ".rdata" | "o":
                                         """
                                         Hi, I don't have any SH fun fact for today.

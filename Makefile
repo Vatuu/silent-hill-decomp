@@ -213,12 +213,6 @@ find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/nul
 
 get_o_files = $(shell $(GET_O_FILES) $1 $(GAME_VERSION_DIR) $2)
 
-# Function to generate matching .o files for target name in build directory.
-gen_o_files = $(addprefix $(BUILD_DIR)/, \
-							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
-							$(patsubst %.c, %.c.o, $(call find_c_files, $1)) \
-							$(patsubst %.bin, %.bin.o, $(call find_bin_files, $1)))
-
 # Function to get path to .yaml file for given target.
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
@@ -660,7 +654,6 @@ clean:
 	rm -rf $(PERMUTER_DIR)
 
 reset: clean
-	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 
 clean-root:
@@ -668,7 +661,6 @@ clean-root:
 	rm -rf $(PERMUTER_DIR)
 
 reset-root: clean-root
-	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 
 # Rules - Misc.

@@ -12,6 +12,7 @@ options:
   o_path: ../../lib
   asset_path: asm/USA/bodyprog
   build_path: build/USA
+  hasm_in_src_path: True
 
   ld_script_path: linkers/USA/bodyprog.ld
 
@@ -115,7 +116,7 @@ segments:
       - [0x6CD4,       o, libgs/gs_123, .rdata]
       - [0x6D64,       o, libgs/objt, .rdata]
       - [0x6E04,       o, libgs/objt3, .rdata]
-      - [0x6EA4,  rodata, lib_unk2/lib_8009687C] # rsin_tbl, rcos_tbl
+      - [0x6EA4, .rodata, libkmath/libkmath] # rsin_tbl, rcos_tbl
       - [0x96A4,       o, libpad/padentry, .rdata]
       - [0x96C4,       o, libspu/s_sva, .rdata]
       - [0x9704,       o, libspu/s_sca, .rdata]
@@ -310,7 +311,7 @@ segments:
       - [0x7127C,   o, libgs/gs_127]
       - [0x712FC,   o, libgs/objt]
       - [0x7148C,   o, libgs/objt3]
-      - [0x71D1C, asm, lib_unk2/lib_8009687C] # Konami custom RotMatrix functions? Fewer branches and different GTE instructions compared to PSX SDK versions.
+      - [0x71D1C, hasm, libkmath/libkmath] # Konami custom RotMatrix functions? Fewer branches and different GTE instructions compared to PSX SDK versions.
       - [0x72368,   o, libgte/msc00]
       - [0x723F8,   o, libgte/msc01]
       - [0x72488,   o, libgte/msc02]
