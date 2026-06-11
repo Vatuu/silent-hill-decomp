@@ -159,7 +159,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords);
 
         Demo_DemoRandSeedRestore();
-        Gfx_FlashlightUpdate();
+        Gfx_EffectsUpdate();
 
         if (g_SavegamePtr->mapIdx != MapIdx_MAP7_S03)
         {

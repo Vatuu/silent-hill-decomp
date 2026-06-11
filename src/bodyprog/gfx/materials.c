@@ -14,52 +14,6 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-// ========================================
-// WORLD INITIALIZATION 2
-// ========================================
-
-extern s_WorldEnvWork g_WorldEnvWork;
-
-void Lm_HeaderPtrsInit(s_LmHeader* lmHdr) // 0x800560FC
-{
-    s32 i;
-
-    if (lmHdr->isLoaded == true)
-    {
-        return;
-    }
-    lmHdr->isLoaded = true;
-
-    // Add memory address of header to pointer fields.
-    lmHdr->materials   = (u8*)lmHdr->materials   + (u32)lmHdr;
-    lmHdr->modelHdrs   = (u8*)lmHdr->modelHdrs   + (u32)lmHdr;
-    lmHdr->modelOrder = (u8*)lmHdr->modelOrder + (u32)lmHdr;
-
-    for (i = 0; i < lmHdr->modelCount; i++)
-    {
-        if (lmHdr->magic == LM_HEADER_MAGIC)
-        {
-            ModelHeader_FixOffsets(&lmHdr->modelHdrs[i], lmHdr);
-        }
-    }
-}
-
-void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800561A4
-{
-    s_MeshHeader* curMeshHdr;
-
-    modelHdr->meshHdrs = (u8*)modelHdr->meshHdrs + (u32)lmHdr;
-
-    for (curMeshHdr = &modelHdr->meshHdrs[0]; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
-    {
-        curMeshHdr->primitives = (u8*)curMeshHdr->primitives + (u32)lmHdr;
-        curMeshHdr->verticesXy = (u8*)curMeshHdr->verticesXy + (u32)lmHdr;
-        curMeshHdr->verticesZ  = (u8*)curMeshHdr->verticesZ  + (u32)lmHdr;
-        curMeshHdr->normals   = (u8*)curMeshHdr->normals   + (u32)lmHdr;
-        curMeshHdr->unkPtr_14    = (u8*)curMeshHdr->unkPtr_14    + (u32)lmHdr;
-    }
-}
-
 void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent) // 0x80056244
 {
     s_ModelHeader* modelHdrs;
@@ -203,7 +157,8 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode)
                     ((image->clutX >> 4) & 0x3F);
 }
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
+/** @unused Change model's materials blending mode. */
+void Lm_MaterialBlendModeChange(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
 {
     char           filename[16];
     s32            i;

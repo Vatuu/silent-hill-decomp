@@ -280,7 +280,7 @@ typedef struct _MapEffectsPresetIdxs
 {
     u8 presetIdx1_0;
     u8 presetIdx2_1;
-} s_MapEffectsPresetIdxs;
+} s_MapEnviromentPresetIdxs;
 
 typedef struct
 {
@@ -808,15 +808,15 @@ extern s32 D_800A9F78;
 
 extern s32 D_800A9F7C;
 
-extern s_MapEffectsPresetIdxs D_800A9F80;
+extern s_MapEnviromentPresetIdxs D_800A9F80;
 
-extern s_MapEffectsPresetIdxs D_800A9F84;
+extern s_MapEnviromentPresetIdxs D_800A9F84;
 
-extern s_MapEffectsPresetIdxs D_800A9F88;
+extern s_MapEnviromentPresetIdxs D_800A9F88;
 
-extern s_MapEffectsPresetIdxs D_800A9F8C;
+extern s_MapEnviromentPresetIdxs D_800A9F8C;
 
-extern s_MapEffectsPresetIdxs D_800A9F98;
+extern s_MapEnviromentPresetIdxs D_800A9F98;
 
 extern u32 D_800A9FB0;
 
@@ -1485,7 +1485,7 @@ s32 WorldEnv_LightRotationAndIntensityGet(SVECTOR* rot);
 s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir);
 
 /** Light function. */
-void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
+void Gfx_FlashLightPosUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
                    SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
 
 /** Light function. */
@@ -1574,7 +1574,7 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
 
 void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode);
 
-void func_800566B4(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
+void Lm_MaterialBlendModeChange(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
 
 void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
 

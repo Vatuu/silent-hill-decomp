@@ -158,25 +158,25 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
 
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {
-    g_WorldEnvWork.field_0             = arg0;
-    g_WorldEnvWork.field_20            = arg1;
-    g_WorldEnvWork.field_3             = arg2;
+    g_WorldEnvWork.field_0          = arg0;
+    g_WorldEnvWork.field_20         = arg1;
+    g_WorldEnvWork.field_3          = arg2;
     g_WorldEnvWork.worldTintColor.r = tintR >> 5;
-    g_WorldEnvWork.colorMat.m[0][2]    = tintR;
-    g_WorldEnvWork.colorMat.m[0][1]    = tintR;
-    g_WorldEnvWork.colorMat.m[0][0]    = tintR;
+    g_WorldEnvWork.colorMat.m[0][2] = tintR;
+    g_WorldEnvWork.colorMat.m[0][1] = tintR;
+    g_WorldEnvWork.colorMat.m[0][0] = tintR;
     g_WorldEnvWork.worldTintColor.g = tintG >> 5;
-    g_WorldEnvWork.screenBrightness  = brightness;
+    g_WorldEnvWork.screenBrightness = brightness;
     g_WorldEnvWork.worldTintColor.b = tintB >> 5;
-    g_WorldEnvWork.colorMat.m[1][2]    = (s16)tintG;
-    g_WorldEnvWork.colorMat.m[1][1]    = (s16)tintG;
-    g_WorldEnvWork.colorMat.m[1][0]    = (s16)tintG;
-    g_WorldEnvWork.colorMat.m[2][2]    = (s16)tintB;
-    g_WorldEnvWork.colorMat.m[2][1]    = (s16)tintB;
-    g_WorldEnvWork.colorMat.m[2][0]    = (s16)tintB;
-    g_WorldEnvWork.field_24.r            = (tintR * arg1) >> 17;
-    g_WorldEnvWork.field_24.g            = (tintG * arg1) >> 17;
-    g_WorldEnvWork.field_24.b            = (tintB * arg1) >> 17;
+    g_WorldEnvWork.colorMat.m[1][2] = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[1][1] = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[1][0] = (s16)tintG;
+    g_WorldEnvWork.colorMat.m[2][2] = (s16)tintB;
+    g_WorldEnvWork.colorMat.m[2][1] = (s16)tintB;
+    g_WorldEnvWork.colorMat.m[2][0] = (s16)tintB;
+    g_WorldEnvWork.field_24.r       = (tintR * arg1) >> 17;
+    g_WorldEnvWork.field_24.g       = (tintG * arg1) >> 17;
+    g_WorldEnvWork.field_24.b       = (tintB * arg1) >> 17;
 }
 
 void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB) // 0x800553C4
@@ -214,8 +214,8 @@ s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir) // 0x80055490
     return g_WorldEnvWork.light.intensity;
 }
 
-void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
-                   SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones) // 0x800554C4
+void Gfx_FlashLightPosUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
+                             SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;
@@ -223,9 +223,9 @@ void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE
     VECTOR3* lightPos;            // Q19.12
     VECTOR3* transformedLightPos; // Q19.12
 
-    g_WorldEnvWork.light.intensity     = lightIntensity;
+    g_WorldEnvWork.light.intensity          = lightIntensity;
     g_WorldEnvWork.light.lensFlareIntensity = lensFlareIntensity;
-    g_WorldEnvWork.waterZones       = waterZones;
+    g_WorldEnvWork.waterZones               = waterZones;
 
     if (coord0 == NULL)
     {
@@ -267,13 +267,13 @@ void func_800554C4(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE
 
 void func_80055648(s32 intensity, const SVECTOR* dir) // 0x80055648
 {
-    s32            var_a2;
-    s32            temp_lo;
-    s32            temp_t1;
-    s32            temp_v0;
-    s32            temp_v1;
-    s32            j;
-    s32            i;
+    s32                var_a2;
+    s32                temp_lo;
+    s32                temp_t1;
+    s32                temp_v0;
+    s32                temp_v1;
+    s32                j;
+    s32                i;
     s_WorldEnvWork_84* curPtr;
 
     for (i = 0, curPtr = g_WorldEnvWork.light.field_38;
@@ -344,8 +344,8 @@ void WorldEnv_FogDistanceSet(q19_12 nearDist, q19_12 farDist) // 0x80055840
     nearDist = Q12_TO_Q8(nearDist);
 
     g_WorldEnvWork.fog.nearDistance = nearDist;
-    g_WorldEnvWork.fog.farDistance = Q12_TO_Q8(farDist);
-    g_WorldEnvWork.fog.depthShift  = 0x20 - Lzc(nearDist - 1);
+    g_WorldEnvWork.fog.farDistance  = Q12_TO_Q8(farDist);
+    g_WorldEnvWork.fog.depthShift   = 0x20 - Lzc(nearDist - 1);
 
     temp = (0x10 << (g_WorldEnvWork.fog.depthShift + 1)) / nearDist;
     for (var_t0 = 0, var_a3 = 0; var_t0 < Q12(1.0f) && var_a3 < 0x80; var_t0 += temp, var_a3++)
@@ -624,6 +624,7 @@ void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
     color->cd = prev_cd;
 }
 
+// Used for the transition world effect during Cereal Silent Hill.
 void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* worldMat) // 0x80055ECC
 {
     func_80055E90(color, func_80055F08(arg1, arg2, worldMat));
@@ -702,4 +703,44 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
     SetGeomScreen(geomScreen);
 
     return ret;
+}
+
+void Lm_HeaderPtrsInit(s_LmHeader* lmHdr) // 0x800560FC
+{
+    s32 i;
+
+    if (lmHdr->isLoaded == true)
+    {
+        return;
+    }
+    lmHdr->isLoaded = true;
+
+    // Add memory address of header to pointer fields.
+    lmHdr->materials  = (u8*)lmHdr->materials  + (u32)lmHdr;
+    lmHdr->modelHdrs  = (u8*)lmHdr->modelHdrs  + (u32)lmHdr;
+    lmHdr->modelOrder = (u8*)lmHdr->modelOrder + (u32)lmHdr;
+
+    for (i = 0; i < lmHdr->modelCount; i++)
+    {
+        if (lmHdr->magic == LM_HEADER_MAGIC)
+        {
+            ModelHeader_FixOffsets(&lmHdr->modelHdrs[i], lmHdr);
+        }
+    }
+}
+
+void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800561A4
+{
+    s_MeshHeader* curMeshHdr;
+
+    modelHdr->meshHdrs = (u8*)modelHdr->meshHdrs + (u32)lmHdr;
+
+    for (curMeshHdr = &modelHdr->meshHdrs[0]; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
+    {
+        curMeshHdr->primitives = (u8*)curMeshHdr->primitives + (u32)lmHdr;
+        curMeshHdr->verticesXy = (u8*)curMeshHdr->verticesXy + (u32)lmHdr;
+        curMeshHdr->verticesZ  = (u8*)curMeshHdr->verticesZ  + (u32)lmHdr;
+        curMeshHdr->normals    = (u8*)curMeshHdr->normals    + (u32)lmHdr;
+        curMeshHdr->unkPtr_14  = (u8*)curMeshHdr->unkPtr_14  + (u32)lmHdr;
+    }
 }

@@ -20,16 +20,16 @@ extern s_WorldEnvWork const g_WorldEnvWork;
 
 s16 D_800BCDE8[8];
 
-static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };
-static s_MapEffectsPresetIdxs D_800A9F84 = { 2, 2  };
-static s_MapEffectsPresetIdxs D_800A9F88 = { 6, 3  };
-static s_MapEffectsPresetIdxs D_800A9F8C = { 7, 4  };
-static s_MapEffectsPresetIdxs D_800A9F90 = { 6, 10 };
-static s_MapEffectsPresetIdxs D_800A9F94 = { 6, 5  };
-static s_MapEffectsPresetIdxs D_800A9F98 = { 9, 9  };
-static s_MapEffectsPresetIdxs D_800A9F9C = { 6, 6  };
-static s_MapEffectsPresetIdxs D_800A9FA0 = { 3, 3  };
-static s_MapEffectsPresetIdxs D_800A9FA4 = { 5, 5  };
+static s_MapEnviromentPresetIdxs D_800A9F80 = { 1, 1  };
+static s_MapEnviromentPresetIdxs D_800A9F84 = { 2, 2  };
+static s_MapEnviromentPresetIdxs D_800A9F88 = { 6, 3  };
+static s_MapEnviromentPresetIdxs D_800A9F8C = { 7, 4  };
+static s_MapEnviromentPresetIdxs D_800A9F90 = { 6, 10 };
+static s_MapEnviromentPresetIdxs D_800A9F94 = { 6, 5  };
+static s_MapEnviromentPresetIdxs D_800A9F98 = { 9, 9  };
+static s_MapEnviromentPresetIdxs D_800A9F9C = { 6, 6  };
+static s_MapEnviromentPresetIdxs D_800A9FA0 = { 3, 3  };
+static s_MapEnviromentPresetIdxs D_800A9FA4 = { 5, 5  };
 
 // ========================================
 // EFFECTS (FOG AND LIGHT)
@@ -196,9 +196,9 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 
 void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 {
-    bool                    hasActiveChunk;
-    u8                      flags;
-    s_MapEffectsPresetIdxs* presetIdxPtr;
+    bool                       hasActiveChunk;
+    u8                         flags;
+    s_MapEnviromentPresetIdxs* presetIdxPtr;
 
     flags          = mapHdr->mapInfo->flags;
     hasActiveChunk = false;
@@ -276,8 +276,8 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
 
 void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1) // 0x8003ED74
 {
-    Gfx_MapEffectsUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
-    Gfx_FlashlightUpdate();
+    Gfx_MapEnviromentUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_EffectsUpdate();
 }
 
 void func_8003EDA8(void) // 0x8003EDA8
@@ -304,17 +304,17 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1) // 0x8003EEDC
 {
-    Gfx_MapEffectsUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
-    Gfx_FlashlightUpdate();
+    Gfx_MapEnviromentUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_EffectsUpdate();
 }
 
-void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
+void Gfx_MapEnviromentUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    Gfx_MapEffectsStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
+    Gfx_MapEnviromentStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
 }
 
-void Gfx_MapEffectsStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
-                              e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void Gfx_MapEnviromentStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
+                                 e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (preset0 == preset1)
     {
@@ -376,7 +376,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
     }
 }
 
-void Gfx_FlashlightUpdate(void) // 0x8003F170
+void Gfx_EffectsUpdate(void) // 0x8003F170
 {
     MATRIX          viewMat;
     VECTOR          sp48;
@@ -450,9 +450,9 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo.field_4, ptr2->effectsInfo.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
-    func_800554C4(lightIntensity, ptr2->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
-                  g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
-                  g_WorldGfxWork.mapInfo->waterZones);
+    Gfx_FlashLightPosUpdate(lightIntensity, ptr2->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
+                            g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
+                            g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(ptr2->fogDistance);
 
     if (ptr->field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 3))

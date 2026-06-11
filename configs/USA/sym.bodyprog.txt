@@ -435,10 +435,10 @@ Game_FlashlightToggle                        = 0x8003ED08; // type:func
 Game_FlashlightIsOn                          = 0x8003ED64; // type:func
 Gfx_MapInitMapEffectsUpdate                  = 0x8003ED74; // type:func
 Gfx_LoadScreenMapEffectsUpdate               = 0x8003EEDC; // type:func
-Gfx_MapEffectsUpdate                         = 0x8003EF10; // type:func
-Gfx_MapEffectsStepUpdate                     = 0x8003EF74; // type:func
+Gfx_MapEnviromentUpdate                      = 0x8003EF10; // type:func
+Gfx_MapEnviromentStepUpdate                  = 0x8003EF74; // type:func
 Gfx_FogParametersSet                         = 0x8003F08C; // type:func
-Gfx_FlashlightUpdate                         = 0x8003F170; // type:func
+Gfx_EffectsUpdate                            = 0x8003F170; // type:func
 Gfx_ProgressAlphaGet                         = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
 
@@ -722,19 +722,21 @@ WorldEnv_FogParamsSet                        = 0x800553C4; // type:func
 WorldEnv_LightPositionGet                    = 0x80055434; // type:func
 WorldEnv_LightRotationAndIntensityGet        = 0x8005545C; // type:func
 WorldEnv_LightDirectionAndIntensityGet       = 0x80055490; // type:func
+Gfx_FlashLightPosUpdate                      = 0x800554C4;
 WorldEnv_FogDistanceSet                      = 0x80055840; // type:func
-
-//----------------------------------------------------------------------------------
-//--- PA: 0x03159C   VA: 0x800560FC   subsegment: c, gfx/bodyprog_materials_800560FC
-//----------------------------------------------------------------------------------
 Lm_HeaderPtrsInit                            = 0x800560FC; // type:func
 ModelHeader_FixOffsets                       = 0x800561A4; // type:func
+
+//----------------------------------------------------------------
+//--- PA: 0x0316E4   VA: 0x80056244   subsegment: c, gfx/materials
+//----------------------------------------------------------------
 Lm_TransparentPrimSet                        = 0x80056244;
 Lm_MaterialCountGet                          = 0x80056348; // type:func
 Lm_MaterialFileIdxApply                      = 0x80056464; // type:func
 Lm_MaterialFsImageApply1                     = 0x80056504; // type:func
 Lm_MaterialFsImageApply                      = 0x80056558; // type:func
 Material_FsImageApply                        = 0x8005660C; // type:func
+Lm_MaterialBlendModeChange                   = 0x800566B4;
 Lm_MaterialsLoadWithFilter                   = 0x80056774; // type:func
 Lm_IsTextureLoaded                           = 0x80056888; // type:func
 Lm_MaterialFlagsApply                        = 0x80056954; // type:func
@@ -753,9 +755,9 @@ func_800571D0                                = 0x800571D0; // type:func size:0x5
 WorldEnv_LightTransform                      = 0x80057228; // type:func
 Gfx_MeshDraw                                 = 0x8005801C; // type:func
 
-//--------------------------------------------------------------------------------
-//--- PA: 0x036640   VA: 0x8005B1A0   subsegment: c, gfx/bodyprog_texture_8005B1A0
-//--------------------------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x036640   VA: 0x8005B1A0   subsegment: c, gfx/texture_utils
+//--------------------------------------------------------------------
 Texture_Init                                 = 0x8005B1A0; // type:func
 Texture_Get                                  = 0x8005B1FC; // type:func
 Texture_RefCountReset                        = 0x8005B370; // type:func
@@ -764,6 +766,10 @@ Material_TimFileNameGet                      = 0x8005B3BC; // type:func
 Textures_ActiveTex_CountReset                = 0x8005B46C; // type:func
 Textures_ActiveTex_PutTextures               = 0x8005B474; // type:func
 Textures_ActiveTex_FindTexture               = 0x8005B4BC; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x0369FC   VA: 0x8005B55C   subsegment: c, gfx/billboard_draw
+//---------------------------------------------------------------------
 Gfx_BillboardDraw                            = 0x8005B62C; // type:func
 Gfx_DebugStringPositionSet                   = 0x8005BF0C; // type:func
 
@@ -2562,9 +2568,9 @@ g_Inventory_ScrollTransitionTimer            = 0x800AE1A4;
 g_Items_PickupAnimState                      = 0x800AE1AC;
 g_Items_PickupScale                          = 0x800AE1B0;
 
-//------------------------------------------------------------------------------------
-//--- PA: 0x0896A4   VA: 0x800AE204   subsegment: .data, gfx/bodyprog_texture_8005B1A0
-//------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+//--- PA: 0x0896A4   VA: 0x800AE204   subsegment: .data, gfx/billboard_draw
+//-------------------------------------------------------------------------
 D_800AE204                                   = 0x800AE204; // size:0x2D8
 
 //----------------------------------------------------------------
