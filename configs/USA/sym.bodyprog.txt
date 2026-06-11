@@ -64,6 +64,11 @@ hack_D_8002A844_fix                          = 0x8002A844; // type:s32
 //--------------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                  = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
+//--------------------------------------------------------------------------
+//--- PA: 0x006EA4   VA: 0x8002BA04   subsegment: .rodata, libkmath/libkmath
+//--------------------------------------------------------------------------
+g_SineTable                                  = 0x8002BA04;
+
 
 
 //================================================
@@ -1633,9 +1638,9 @@ GsLinkObject4                                = 0x80095E5C; // type:func
 //--------------------------------------------------------------
 GsSortObject4J                               = 0x80095FEC; // type:func
 
-//--------------------------------------------------------------------------
-//--- PA: 0x071D1C   VA: 0x8009687C   subsegment: asm, lib_unk2/lib_8009687C
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x071D1C   VA: 0x8009687C   subsegment: hasm, libkmath/libkmath
+//-----------------------------------------------------------------------
 // Custom Konami rotation matrix library?
 // TODO: identify the other RotMatrix funcs here
 Math_Sin                                     = 0x8009687C; // type:func
