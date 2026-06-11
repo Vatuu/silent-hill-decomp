@@ -44,9 +44,9 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
 
-void Gfx_MapEnviromentUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void Gfx_MapEnvUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void Gfx_MapEnviromentStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
+void Gfx_MapEnvStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
                               e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
 void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* preset);

@@ -20,16 +20,16 @@ extern s_WorldEnvWork const g_WorldEnvWork;
 
 s16 D_800BCDE8[8];
 
-static s_MapEnviromentPresetIdxs D_800A9F80 = { 1, 1  };
-static s_MapEnviromentPresetIdxs D_800A9F84 = { 2, 2  };
-static s_MapEnviromentPresetIdxs D_800A9F88 = { 6, 3  };
-static s_MapEnviromentPresetIdxs D_800A9F8C = { 7, 4  };
-static s_MapEnviromentPresetIdxs D_800A9F90 = { 6, 10 };
-static s_MapEnviromentPresetIdxs D_800A9F94 = { 6, 5  };
-static s_MapEnviromentPresetIdxs D_800A9F98 = { 9, 9  };
-static s_MapEnviromentPresetIdxs D_800A9F9C = { 6, 6  };
-static s_MapEnviromentPresetIdxs D_800A9FA0 = { 3, 3  };
-static s_MapEnviromentPresetIdxs D_800A9FA4 = { 5, 5  };
+static s_MapEnvPresetIdxs D_800A9F80 = { 1, 1  };
+static s_MapEnvPresetIdxs D_800A9F84 = { 2, 2  };
+static s_MapEnvPresetIdxs D_800A9F88 = { 6, 3  };
+static s_MapEnvPresetIdxs D_800A9F8C = { 7, 4  };
+static s_MapEnvPresetIdxs D_800A9F90 = { 6, 10 };
+static s_MapEnvPresetIdxs D_800A9F94 = { 6, 5  };
+static s_MapEnvPresetIdxs D_800A9F98 = { 9, 9  };
+static s_MapEnvPresetIdxs D_800A9F9C = { 6, 6  };
+static s_MapEnvPresetIdxs D_800A9FA0 = { 3, 3  };
+static s_MapEnvPresetIdxs D_800A9FA4 = { 5, 5  };
 
 // ========================================
 // EFFECTS (FOG AND LIGHT)
@@ -51,7 +51,7 @@ void GameFs_FlameGfxLoad(void) // 0x8003E710
 void func_8003E740(void) // 0x8003E740
 {
     DVECTOR   sp10;
-    MATRIX    sp18;
+    MATRIX    viewMat;
     SVECTOR   sp38;
     s32       sp40[4];
     SVECTOR   sp50;
@@ -84,9 +84,9 @@ void func_8003E740(void) // 0x8003E740
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    Vw_CoordToViewSpaceMatrix(&g_SysWork.playerBoneCoords[HarryBone_RightHand], &sp18);
-    SetRotMatrix(&sp18);
-    SetTransMatrix(&sp18);
+    Vw_CoordToViewSpaceMatrix(&g_SysWork.playerBoneCoords[HarryBone_RightHand], &viewMat);
+    SetRotMatrix(&viewMat);
+    SetTransMatrix(&viewMat);
 
     var_s5 = RotTransPers(&sp38, &sp10, &depthZ, &depthZ);
 
@@ -198,7 +198,7 @@ void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 {
     bool                       hasActiveChunk;
     u8                         flags;
-    s_MapEnviromentPresetIdxs* presetIdxPtr;
+    s_MapEnvPresetIdxs* presetIdxPtr;
 
     flags          = mapHdr->mapInfo->flags;
     hasActiveChunk = false;
@@ -240,7 +240,7 @@ void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
             break;
     }
 
-    Gfx_MapInitMapEffectsUpdate(presetIdxPtr->presetIdx1_0, presetIdxPtr->presetIdx2_1);
+    Gfx_MapInitMapEffectsUpdate(presetIdxPtr->presetIdx0, presetIdxPtr->presetIdx1);
 }
 
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
@@ -276,7 +276,7 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
 
 void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1) // 0x8003ED74
 {
-    Gfx_MapEnviromentUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_MapEnvUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
     Gfx_EffectsUpdate();
 }
 
@@ -304,16 +304,16 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1) // 0x8003EEDC
 {
-    Gfx_MapEnviromentUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_MapEnvUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     Gfx_EffectsUpdate();
 }
 
-void Gfx_MapEnviromentUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
+void Gfx_MapEnvUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    Gfx_MapEnviromentStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
+    Gfx_MapEnvStepUpdate(&MAP_EFFECTS_INFOS[idx0], &MAP_EFFECTS_INFOS[idx1], primType, primData, arg4, arg5);
 }
 
-void Gfx_MapEnviromentStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
+void Gfx_MapEnvStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
                                  e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (preset0 == preset1)
@@ -450,7 +450,7 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
 
     lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo.field_4, ptr2->effectsInfo.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
-    Gfx_FlashLightPosUpdate(lightIntensity, ptr2->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
+    Gfx_FlashlightPositionUpdate(lightIntensity, ptr2->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
                             g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
                             g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(ptr2->fogDistance);

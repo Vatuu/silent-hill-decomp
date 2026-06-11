@@ -1331,7 +1331,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
         case 0:
             Player_ControlFreeze();
             Gfx_MapInitMapEffectsUpdate(1, 1);
-            Gfx_MapEnviromentUpdate(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
+            Gfx_MapEnvUpdate(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
             g_SysWork.playerWork.player.position.vx = Q12(147.7f);
             g_SysWork.playerWork.player.position.vz = Q12(376.5f);

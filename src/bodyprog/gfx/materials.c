@@ -157,8 +157,7 @@ void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode)
                     ((image->clutX >> 4) & 0x3F);
 }
 
-/** @unused Change model's materials blending mode. */
-void Lm_MaterialBlendModeChange(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
+void Lm_MaterialBlendModeSet(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode) // 0x800566B4
 {
     char           filename[16];
     s32            i;

@@ -3075,7 +3075,7 @@ void func_800E787C(void) // 0x800E787C
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            Gfx_MapEnviromentUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
 
             D_800F483C = Q12(40.0f);
             D_800F4838 = 1;
@@ -3177,7 +3177,7 @@ void func_800E787C(void) // 0x800E787C
 
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
             Gfx_MapInitMapEffectsUpdate(9, 9);
-            Gfx_MapEnviromentUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(80.0f);
             SysWork_StateStepIncrement(0);
@@ -3387,7 +3387,7 @@ void func_800E86BC(void) // 0x800E86BC
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(70.0f);
             Gfx_MapInitMapEffectsUpdate(9, 9);
-            Gfx_MapEnviromentUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrement(0);
 
         case 9:
