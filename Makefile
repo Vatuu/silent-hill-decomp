@@ -654,6 +654,7 @@ clean:
 	rm -rf $(PERMUTER_DIR)
 
 reset: clean
+	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 
 clean-root:
@@ -661,6 +662,7 @@ clean-root:
 	rm -rf $(PERMUTER_DIR)
 
 reset-root: clean-root
+	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
 
 # Rules - Misc.
