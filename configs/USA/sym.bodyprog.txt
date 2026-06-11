@@ -479,7 +479,7 @@ Math_RelativeRotationGet                     = 0x8004122C; // type:func
 //--- PA: 0x01CF7C   VA: 0x80041ADC   subsegment: c, gfx/fs_ipd
 //-------------------------------------------------------------
 Map_ChunkLoadStateGet                        = 0x80041ADC; // type:func
-IpdHeader_LoadStateGet                       = 0x80041B1C; // type:func
+Ipd_LoadStateGet                             = 0x80041B1C; // type:func
 Lm_LoadStateGet                              = 0x80041BA0; // type:func
 Map_Init                                     = 0x80041C24; // type:func
 Lm_Init                                      = 0x80041CB4; // type:func
@@ -500,7 +500,7 @@ ConvertHexToS8                               = 0x8004255C; // type:func
 Ipd_ActiveChunksCollisionDataGet             = 0x800425D8; // type:func
 Ipd_CollisionDataGet                         = 0x800426E4; // type:func
 Map_WorldObjectModelLocationGet              = 0x8004287C; // type:func
-IpdHeader_IsLoaded                           = 0x80042C04; // type:func
+Ipd_IsLoaded                                 = 0x80042C04; // type:func
 Ipd_ChunkInit                                = 0x80042C3C; // type:func
 Map_PaddedDistanceToChunkEdgeGet             = 0x80042DE8; // type:func
 Map_DistanceToChunkEdgeGet                   = 0x80042E2C; // type:func

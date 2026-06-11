@@ -186,7 +186,7 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
     }
 }
 
-void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
+void WorldEnv_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
 {
     q23_8 posX;
     q23_8 posY;

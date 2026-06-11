@@ -530,7 +530,7 @@ void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat)
 
     if (lmIdx >= 3 && lmIdx < 7)
     {
-        if (!IpdHeader_IsLoaded(lmIdx - 3))
+        if (!Ipd_IsLoaded(lmIdx - 3))
         {
             model->metadata.lmIdx = WorldModelLocation_None;
         }

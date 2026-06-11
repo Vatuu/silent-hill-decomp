@@ -1130,7 +1130,8 @@ void Map_GlobalLmFree(void);
 
 s_Texture* Texture_InfoGet(char* texName);
 
-void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
+void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior,
+                        e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
 void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1);
 
@@ -1182,14 +1183,14 @@ u32 Lm_LoadStateGet(s_GlobalLm* globalLm);
  * @param
  * @return IPD file load state `(e_StaticModelLoadState`).
  */
-u32 IpdHeader_LoadStateGet(s_Chunk* chunk);
+u32 Ipd_LoadStateGet(s_Chunk* chunk);
 
 /** @brief Checks if an IPD file is loaded.
  *
  * @param ipdIdx IPD data index.
  * @return `true` if the IPD file is loaded, `false` otherwise.
  */
-bool IpdHeader_IsLoaded(s32 ipdIdx);
+bool Ipd_IsLoaded(s32 ipdIdx);
 
 /** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
 void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ);
@@ -1601,7 +1602,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* viewMa
 
 s32 func_800571D0(u32 arg0);
 
-void WorldEnv_LightTransform(MATRIX* worldMat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3);
+void WorldEnv_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, bool arg2, MATRIX* mat);
 

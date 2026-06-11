@@ -6,7 +6,12 @@
 
 // TODO: Need to decide on clearer terminology. Right now we have "chunk cells", "cells", and "subcells", which are
 // kind of confusing.
-#define CHUNK_CELL_SIZE 40.0f
+
+#define CHUNK_CELL_SIZE                   40.0f
+#define ACTIVE_CHUNK_COUNT_MAX            4
+#define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
+#define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
+#define FULL_PAGE_CHUNK_TEXTURE_COUNT_MAX 8
 
 /** @brief Map terrain chunk IPD file load states.
  *
@@ -44,7 +49,7 @@ STATIC_ASSERT_SIZEOF(s_ChunkColumn, 32);
 typedef struct _ActiveChunkTextures
 {
     /* 0x0 */ s32        count;
-    /* 0x4 */ s_Texture* textures[10];
+    /* 0x4 */ s_Texture* textures[ACTIVE_CHUNK_TEXTURE_COUNT_MAX];
 } s_ActiveChunkTextures;
 
 /** @brief Texture data associated with map terrain chunks. */
@@ -52,8 +57,8 @@ typedef struct _ChunkTextures
 {
     /* 0x0   */ s_ActiveChunkTextures fullPage;
     /* 0x2C  */ s_ActiveChunkTextures halfPage;
-    /* 0x58  */ s_Texture             fullPageTextures[8];
-    /* 0x118 */ s_Texture             halfPageTextures[2];
+    /* 0x58  */ s_Texture             fullPageTextures[FULL_PAGE_CHUNK_TEXTURE_COUNT_MAX];
+    /* 0x118 */ s_Texture             halfPageTextures[HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX];
 } s_ChunkTextures;
 STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 
@@ -69,7 +74,7 @@ typedef struct _MapTerrain
     /* 0x150 */ s_IpdHeader*       chunkBuffer;
     /* 0x154 */ s32                chunkBufferSize;
     /* 0x158 */ s32                activeChunkCount;
-    /* 0x15C */ s_Chunk            activeChunks[4];
+    /* 0x15C */ s_Chunk            activeChunks[ACTIVE_CHUNK_COUNT_MAX];
     /* 0x1CC */ s_ChunkColumn      chunkGrid[19];
     /* 0x42C */ s_ChunkColumn*     chunkGridCenter;
     /* 0x430 */ s_ChunkTextures    chunkTextures;
