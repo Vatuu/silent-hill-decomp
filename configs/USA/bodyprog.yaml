@@ -96,6 +96,7 @@ segments:
       - [0x3EC0, .rodata, bodyprog_mapscreen_80066EB0]
       - [0x3EC8,  rodata] # Garbage padding
       - [0x3ECC, .rodata, bodyprog_mapscreen_80066D90]
+      - [0x3FDC, rodata]
       - [0x3FE4, .rodata, collision/collision]
       - [0x4034, .rodata, bodyprog_data_80028B94]
       - [0x4BF0, .rodata, player_control]

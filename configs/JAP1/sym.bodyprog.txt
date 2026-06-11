@@ -688,7 +688,7 @@ func_8004137C                                = 0x80041154; // type:func
 func_800414E0                                = 0x800412B8; // type:func
 Map_ChunkLoadStateGet                        = 0x800418B4; // type:func
 IpdHeader_LoadStateGet                       = 0x800418F4; // type:func
-Lm_LoadStateGet                        = 0x80041978; // type:func
+Lm_LoadStateGet                              = 0x80041978; // type:func
 Map_Init                                     = 0x800419FC; // type:func
 Lm_Init                                      = 0x80041A8C; // type:func
 Lm_HeaderInit                                = 0x80041AC4; // type:func
@@ -3369,7 +3369,7 @@ g_WorldGfxWork                               = 0x800BF470;
 //--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, gfx/bodyprog_80040B74
 //---------------------------------------------------------------------------
 g_Map_GfxPackets                             = 0x800C2248;
-activeChunksCollData                    = 0x800C3668;
+activeChunksCollData                         = 0x800C3668;
 g_Map                                        = 0x800C3678;
 
 //--------------------------------------------------------------------------------

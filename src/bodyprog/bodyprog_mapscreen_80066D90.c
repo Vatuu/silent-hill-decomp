@@ -1115,8 +1115,107 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
     return true;
 }
 
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_mapscreen_80066D90", D_80028B2C);
+#define MIN_DIFF(a, b, c) (((a) < (b)) ? (a) - (c) : (b) - (c))
 
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_mapscreen_80066D90", D_80028B34);
+void func_800692A4(u16 x_arg0, u16 y_arg1, u16 scale_arg2)
+{
+    u16       right_edge_sp28;
+    u16       bottom_edge_sp30;
+    s16       clamped_left_t5;
+    s16       clamped_right_sp88;
+    s16       clamped_top_t4;
+    s16       clamped_bottom_sp80;
+    s32       x_relative_a3;
+    s32       y_relative_t0;
+    s16       x_relative2;
+    s16       v_temp;
+    s32       tile_x_s8;
+    s32       tile_y_s1;
+    POLY_FT4* poly;
+    s16       hack_var;
+    s16       hack_var2;
+    s16       hack_var3;
+    s16       hack_var4;
 
-INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_mapscreen_80066D90", func_800692A4); // 0x800692A4
+    s16 D_80028B2C[] = { -160, -160, -160, -160 };
+    s16 D_80028B34[] = { -240, -240, -240 };
+
+    // get bounds of scaled 320x240 image
+    right_edge_sp28  = Q12_MULT_PRECISE(scale_arg2, 320) + x_arg0 - 1;
+    bottom_edge_sp30 = Q12_MULT_PRECISE(scale_arg2, 240) + y_arg1 - 1;
+
+    poly = GsOUT_PACKET_P;
+
+    // iterate 3x2 array of 128x128 tiles
+    for (tile_x_s8 = 0; tile_x_s8 < 3; tile_x_s8++)
+    {
+        for (tile_y_s1 = 0; tile_y_s1 < 2; tile_y_s1++)
+        {
+            if (((tile_x_s8 + 1) * 128 < x_arg0) ||
+                (tile_x_s8 * 128) > right_edge_sp28)
+            {
+                // @hack Needed for regalloc match later in the func.
+                // (maybe params to macros below are actually meant to be locals? no luck changing them though)
+                hack_var = hack_var2 = hack_var3 = hack_var4 = 0;
+                continue;
+            }
+
+            if (((tile_y_s1 + 1) * 128 < y_arg1 + (g_PaperMapImg.v >> 1)) ||
+                (tile_y_s1 * 128 > (bottom_edge_sp30 + (g_PaperMapImg.v >> 1))))
+            {
+                continue;
+            }
+
+            // clamp tile x to left bound
+            clamped_left_t5 = CLAMP_LOW(x_arg0, tile_x_s8 * 128);
+
+            // clamp tile x to right bound
+            clamped_right_sp88 = MIN_DIFF((tile_x_s8 + 1) * 128, right_edge_sp28, clamped_left_t5);
+
+            // clamp y to upper bound
+            clamped_top_t4 = CLAMP_LOW(y_arg1 + (g_PaperMapImg.v >> 1), tile_y_s1 * 128);
+
+            // clamp y to lower bound
+            clamped_bottom_sp80 = MIN_DIFF((tile_y_s1 + 1) * 128, bottom_edge_sp30 + (g_PaperMapImg.v >> 1), clamped_top_t4);
+
+            D_80028B2C[tile_x_s8 + 1] = D_80028B2C[tile_x_s8] + (Q12(clamped_right_sp88) / scale_arg2);
+            D_80028B34[tile_y_s1 + 1] = D_80028B34[tile_y_s1] + ((Q12(clamped_bottom_sp80) * 2) / scale_arg2);
+
+            setPolyFT4(poly);
+
+            setXY0Fast(poly, D_80028B2C[tile_x_s8], D_80028B34[tile_y_s1]);
+            setXY1Fast(poly, D_80028B2C[tile_x_s8 + 1], D_80028B34[tile_y_s1]);
+            setXY2Fast(poly, D_80028B2C[tile_x_s8], D_80028B34[tile_y_s1 + 1]);
+            setXY3Fast(poly, D_80028B2C[tile_x_s8 + 1], D_80028B34[tile_y_s1 + 1]);
+
+            // note for matching: these are ints, but x_relative2 and v_temp are shorts
+            x_relative_a3 = clamped_left_t5 - (tile_x_s8 * 128);
+            y_relative_t0 = clamped_top_t4 - (tile_y_s1 * 128);
+
+            setUV0AndClutSum(poly, x_relative_a3, y_relative_t0 << 1, getClut(g_PaperMapImg.clutX, g_PaperMapImg.clutY));
+
+            // @hack: regalloc fixes, `hack_var` usages compile to nothing (gcc knows hack_var == 0), but the 4 vars pad the stack frame to match.
+            // @hack 2: two `D_80028B2C[tile_x_s8] & hack_var` loads bump the array pointer's ref count so it wins t8.
+            setUV1AndTPageSum(poly, x_relative_a3 + clamped_right_sp88, y_relative_t0 << 1,
+                              getTPage(g_PaperMapImg.tPage[0],
+                                       (hack_var << 5) | hack_var2 | hack_var3 | hack_var4 | (D_80028B2C[tile_x_s8] & hack_var), // @hack evaluates to 0!
+                                       (g_PaperMapImg.tPage[1] + tile_x_s8 + (tile_y_s1 * 0x10)) << 6,
+                                       (((g_PaperMapImg.tPage[1] + (tile_y_s1 * 0x10)) >> 4) & 1) << 8));
+
+            x_relative2 = clamped_left_t5 - (tile_x_s8 * 128);
+            v_temp      = ((clamped_top_t4 - (tile_y_s1 * 128)) << 1) - 1;
+            // @hack Similar to above `D_80028B2C[tile_x_s8] & hack_var` is needed to fix regalloc.
+            setUV2Sum(poly, x_relative2 + (D_80028B2C[tile_x_s8] & hack_var), v_temp + (clamped_bottom_sp80 << 1));
+            setUV3Sum(poly, clamped_right_sp88 + x_relative2, v_temp + (clamped_bottom_sp80 << 1));
+
+            setSemiTrans(poly, 0);
+            setRGB0Fast(poly, 0x80, 0x80, 0x80);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[4], poly);
+            poly++;
+        }
+    }
+
+    GsOUT_PACKET_P            = poly;
+    g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
+}
