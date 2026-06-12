@@ -537,18 +537,18 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             // Decrement zoom counter.
             D_800F228C -= 0x40;
 
-            PaperMap_DrawScaled(0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
-                          0x10 - Q12_MULT_PRECISE(D_800F228C, 0x10),
-                          (D_800F228C >> 1) + Q12(0.5f));
+            PaperMap_DrawScaled(72 - Q12_MULT_PRECISE(D_800F228C, 72),
+                                16 - Q12_MULT_PRECISE(D_800F228C, 16),
+                                (D_800F228C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0,
-                          0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
-                          0x10 - Q12_MULT_PRECISE(D_800F228C, 0x10),
+                          72 - Q12_MULT_PRECISE(D_800F228C, 72),
+                          16 - Q12_MULT_PRECISE(D_800F228C, 16),
                           (D_800F228C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
 
-            Map_BoxOutlineDraw(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0x10, -0xA0, 0, 0);
+            Map_BoxOutlineDraw(curve, -160, -224, 319, 447, -16, -160, 0, 0);
 
             if (D_800F228C == 0)
             {
@@ -557,15 +557,15 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 9:
-            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(72, 16, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 72, 16, Q12(0.5f));
             Event_WaitTimer(Q12(1.0f), false);
             break;
 
         case 10:
-            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
-            func_80068E0C(2, 1, 0x36A, g_Gfx_PaperMapMarkingAlpha, 0x48, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(72, 16, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 72, 16, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, g_Gfx_PaperMapMarkingAlpha, 72, 16, Q12(0.5f));
 
             // Fade in map marking to half opacity.
             g_Gfx_PaperMapMarkingAlpha++;
@@ -590,9 +590,9 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 11:
-            PaperMap_DrawScaled(0x48, 0x10, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
-            func_80068E0C(2, 1, 0x36A, 128, 0x48, 0x10, Q12(0.5f));
+            PaperMap_DrawScaled(72, 16, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 72, 16, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, 128, 72, 16, Q12(0.5f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 
@@ -746,16 +746,16 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             D_800F229C -= 0x40;
 
             PaperMap_DrawScaled(0,
-                          0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
+                          116 - FP_MULTIPLY_PRECISE(D_800F229C, 116, 12),
                           (D_800F229C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0, 0,
-                          0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
+                          116 - FP_MULTIPLY_PRECISE(D_800F229C, 116, 12),
                           (D_800F229C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F229C, 12) / (D_800F229C + Q12(1.0f))) * -1;
 
-            Map_BoxOutlineDraw(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 0xF0, 0, 0);
+            Map_BoxOutlineDraw(curve, -160, -224, 319, 447, -160, 240, 0, 0);
 
             if (D_800F229C == 0)
             {
@@ -765,15 +765,15 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 14:
-            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 116, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 116, Q12(0.5f));
             Event_WaitTimer(Q12(1.0f), false);
 
             break;
         case 15:
-            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
-            func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 116, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 116, Q12(0.5f));
+            func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 116, Q12(0.5f));
 
             D_800F2298++;
             if (D_800F2298 >= 0x80)
@@ -795,9 +795,9 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 16:
-            PaperMap_DrawScaled(0, 0x74, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
-            func_80068E0C(2, 1, 0x3A2, 128, 0, 0x74, Q12(0.5f));
+            PaperMap_DrawScaled(0, 116, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 116, Q12(0.5f));
+            func_80068E0C(2, 1, 0x3A2, 128, 0, 116, Q12(0.5f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(0.0f), false);
             break;
 

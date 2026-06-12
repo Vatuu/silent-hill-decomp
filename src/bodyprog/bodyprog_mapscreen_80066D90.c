@@ -196,13 +196,13 @@ s_800AEDBC D_800AEDBC[] = {
 void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 {
     s32           temp_s0_2;
-    s32           temp_s4;
+    q19_12        scale;
     s8            markingFileIdx;
-    u16           var_s5;
-    u16           var_s6;
+    u16           scrollY;
+    u16           scrollX;
     u32           temp_a0;
-    u32           temp;
-    u32           temp2;
+    q20_12        scrollPosX;
+    q20_12        scrollPosY;
     u32           temp3;
     u32           temp4;
     static u8     paperMapIdx;
@@ -242,24 +242,26 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             break;
 
         case 2:
+            // Compute paper map XY scroll values.
             if (screenPosX < Q12(0.0f))
             {
-                var_s5 = 0;
-                var_s6 = 0;
+                scrollY = 0;
+                scrollX = 0;
             }
             else
             {
-                temp   = screenPosX - Q12_MULT_PRECISE(D_800C4454, screenPosX);
-                var_s6 = FP_FROM(temp, Q12_SHIFT);
+                scrollPosX = screenPosX - Q12_MULT_PRECISE(D_800C4454, screenPosX);
+                scrollX    = FP_FROM(scrollPosX, Q12_SHIFT);
 
-                temp2  = screenPosY - Q12_MULT_PRECISE(D_800C4454, screenPosY);
-                var_s5 = FP_FROM(temp2, Q12_SHIFT);
+                scrollPosY = screenPosY - Q12_MULT_PRECISE(D_800C4454, screenPosY);
+                scrollY    = FP_FROM(scrollPosY, Q12_SHIFT);
             }
 
-            temp_s4 = (D_800C4454 >> 1) + Q12(0.5f);
+            // Compute paper map scale.
+            scale = (D_800C4454 >> 1) + Q12(0.5f);
 
-            temp_s0_2 = func_80067914(paperMapIdx, var_s6, var_s5, temp_s4);
-            func_80068E0C(1, paperMapIdx, 0, 0, var_s6, var_s5, temp_s4);
+            temp_s0_2 = func_80067914(paperMapIdx, scrollX, scrollY, scale);
+            func_80068E0C(1, paperMapIdx, 0, 0, scrollX, scrollY, scale);
 
             if (ScreenFade_IsNone())
             {
@@ -269,11 +271,13 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                 }
             }
 
-            PaperMap_DrawScaled(var_s6, var_s5, temp_s4);
+            PaperMap_DrawScaled(scrollX, scrollY, scale);
 
-            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen && g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel) ||
-                (g_GameWork.gameStatePrev != GameState_InventoryScreen && g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
-                                                                                                           g_GameWorkPtr->config.controllerConfig.map)))
+            if ((g_GameWork.gameStatePrev == GameState_InventoryScreen &&
+                 (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)) ||
+                (g_GameWork.gameStatePrev != GameState_InventoryScreen &&
+                 (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.cancel |
+                                                    g_GameWorkPtr->config.controllerConfig.map))))
             {
                 SD_Call(Sfx_MenuMap);
 
@@ -282,6 +286,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
                     VSync(SyncMode_Wait);
                     GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
+
                     func_80066E7C();
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapIdx);
                     func_80066D90();
@@ -293,7 +298,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                 }
 
                 g_GameWork.gameStateSteps[0] = 4;
-                g_SysWork.counters_1C[1]              = 0;
+                g_SysWork.counters_1C[1]        = 0;
                 g_GameWork.gameStateSteps[1] = 0;
                 g_GameWork.gameStateSteps[2] = 0;
                 break;
@@ -311,8 +316,8 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 
                     if (screenPosX < Q12(0.0f))
                     {
-                        screenPosX = Q12(CLAMP_LOW_THEN_MIN((s16)temp_s0_2 + 80, 0, 160));
-                        screenPosY = Q12(CLAMP_LOW_THEN_MIN((temp_s0_2 >> 16) + 60, 0, 120));
+                        screenPosX = Q12(CLAMP_LOW_THEN_MIN((s16)temp_s0_2    + 80, 0, SCREEN_WIDTH  / 2));
+                        screenPosY = Q12(CLAMP_LOW_THEN_MIN((temp_s0_2 >> 16) + 60, 0, SCREEN_HEIGHT / 2));
                     }
                 }
             }
@@ -330,9 +335,9 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
                             ScreenFade_Start(true, false, false);
 
-                            screenPosX                      = NO_VALUE;
+                            screenPosX                   = NO_VALUE;
                             g_GameWork.gameStateSteps[0] = 3;
-                            g_SysWork.counters_1C[1]              = 0;
+                            g_SysWork.counters_1C[1]        = 0;
                             g_GameWork.gameStateSteps[1] = 0;
                             g_GameWork.gameStateSteps[2] = 0;
                             break;
@@ -348,9 +353,9 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
                             ScreenFade_Start(true, false, false);
 
-                            screenPosX = NO_VALUE;
+                            screenPosX                   = NO_VALUE;
                             g_GameWork.gameStateSteps[0] = 3;
-                            g_SysWork.counters_1C[1]              = 0;
+                            g_SysWork.counters_1C[1]        = 0;
                             g_GameWork.gameStateSteps[1] = 0;
                             g_GameWork.gameStateSteps[2] = 0;
                             break;
@@ -378,7 +383,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                 SD_Call(Sfx_MenuMap);
 
                 g_GameWork.gameStateSteps[0] = 1;
-                g_SysWork.counters_1C[1]              = 0;
+                g_SysWork.counters_1C[1]        = 0;
                 g_GameWork.gameStateSteps[1] = 0;
                 g_GameWork.gameStateSteps[2] = 0;
                 break;
@@ -403,21 +408,21 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             ScreenFade_Start(true, true, false);
 
             g_GameWork.gameStateSteps[0] = 2;
-            g_SysWork.counters_1C[1]              = 0;
+            g_SysWork.counters_1C[1]        = 0;
             g_GameWork.gameStateSteps[1] = 0;
             g_GameWork.gameStateSteps[2] = 0;
             break;
 
         case 4:
             temp3   = screenPosX - Q12_MULT_PRECISE(D_800C4454, screenPosX);
-            var_s6  = FP_FROM(temp3, Q12_SHIFT);
+            scrollX = FP_FROM(temp3, Q12_SHIFT);
             temp4   = screenPosY - Q12_MULT_PRECISE(D_800C4454, screenPosY);
-            temp_s4 = (D_800C4454 >> 1) + Q12(0.5f);
-            var_s5  = FP_FROM(temp4, Q12_SHIFT);
+            scale   = (D_800C4454 >> 1) + Q12(0.5f);
+            scrollY = FP_FROM(temp4, Q12_SHIFT);
 
-            func_80067914(paperMapIdx, var_s6, var_s5, temp_s4);
-            func_80068E0C(1, paperMapIdx, 0, 0, var_s6, var_s5, temp_s4);
-            PaperMap_DrawScaled(var_s6, var_s5, temp_s4);
+            func_80067914(paperMapIdx, scrollX, scrollY, scale);
+            func_80068E0C(1, paperMapIdx, 0, 0, scrollX, scrollY, scale);
+            PaperMap_DrawScaled(scrollX, scrollY, scale);
 
             if (ScreenFade_IsFinished())
             {
@@ -444,7 +449,7 @@ static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
     return (coord >> shift) + offset;
 }
 
-s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
+s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x80067914
 {
     // TODO: Work out hex values in switches below.
     #define MAP_OFFSET(coord) \
@@ -456,7 +461,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     s32      sp10[6];
     s16      temp_s1;
     s16      temp_s2;
-    s16      temp_v0_7;
+    q3_12    angle1;
     s32      var_a3;
     s32      temp_s4;
     s32      cellX;
@@ -479,11 +484,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
     #define playerChara g_SysWork.playerWork.player
 
+    // Check if paper map is valid.
     if (g_SavegamePtr->paperMapIdx != paperMapIdx)
     {
         return 0;
     }
 
+    // Compute player cell.
     if (playerChara.position.vx <= Q12(0.0f))
     {
         cellX = (playerChara.position.vx - Q12(CHUNK_CELL_SIZE)) / Q12(CHUNK_CELL_SIZE);
@@ -492,7 +499,6 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     {
         cellX = (playerChara.position.vx / Q12(CHUNK_CELL_SIZE));
     }
-
     if (playerChara.position.vz <= Q12(0.0f))
     {
         cellZ = (playerChara.position.vz - Q12(CHUNK_CELL_SIZE)) / Q12(CHUNK_CELL_SIZE);
@@ -905,22 +911,22 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
     temp_a0 = SCREEN_WIDTH / 2;
     temp3   = ((var_a3 - (arg1 - temp_a0)) * SCREEN_WIDTH);
-    temp    = Q12_MULT_PRECISE(arg3, SCREEN_WIDTH);
+    temp    = Q12_MULT_PRECISE(scale, SCREEN_WIDTH);
     temp_s2 = (temp3 / temp) - (SCREEN_WIDTH / 2);
 
     temp_a0 = SCREEN_HEIGHT / 2;
     temp4   = ((mapCoordIdxZ - (arg2 - temp_a0)) * SCREEN_HEIGHT);
-    temp2   = Q12_MULT_PRECISE(arg3, SCREEN_HEIGHT);
+    temp2   = Q12_MULT_PRECISE(scale, SCREEN_HEIGHT);
     temp_s1 = (temp4 / temp2) - (SCREEN_HEIGHT / 2);
 
-    temp_v0_7 = Math_AngleNormalizeSigned(angle);
+    angle1 = Math_AngleNormalizeSigned(angle);
 
-    sp10[0] = temp_s2 + FP_FROM(Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
-    sp10[1] = (temp_s1 + FP_FROM(Math_Cos(temp_v0_7) * -6, Q12_SHIFT)) * 2;
-    sp10[2] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * 4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
-    sp10[3] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * 4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
-    sp10[4] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * -4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
-    sp10[5] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * -4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
+    sp10[0] = temp_s2 + FP_FROM(Math_Sin(angle1) * 6, Q12_SHIFT);
+    sp10[1] = (temp_s1 + FP_FROM(Math_Cos(angle1) * -6, Q12_SHIFT)) * 2;
+    sp10[2] = temp_s2 + FP_FROM(Math_Cos(angle1) * 4 - Math_Sin(angle1) * 6, Q12_SHIFT);
+    sp10[3] = (temp_s1 + FP_FROM(Math_Sin(angle1) * 4 + Math_Cos(angle1) * 6, Q12_SHIFT)) * 2;
+    sp10[4] = temp_s2 + FP_FROM(Math_Cos(angle1) * -4 - Math_Sin(angle1) * 6, Q12_SHIFT);
+    sp10[5] = (temp_s1 + FP_FROM(Math_Sin(angle1) * -4 + Math_Cos(angle1) * 6, Q12_SHIFT)) * 2;
 
     line = (LINE_F4*)GsOUT_PACKET_P;
     setLineF4(line);
@@ -992,7 +998,7 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
     return true;
 }
 
-bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
+bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale) // 0x80068E0C
 {
     s32              sp0;
     u16              sp4;
@@ -1036,7 +1042,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
     }
     else
     {
-        shade         = 128;
+        shade        = 128;
         ptr->field_C = (D_800AEDBC[idx].field_A - D_800AEDBC[idx].field_8) >> 1;
     }
 
@@ -1077,14 +1083,14 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
             sp4   = SCREEN_WIDTH / 2;
             temp6 = (ptr->field_8.field_0 << 1) - (arg4 - sp4);
-            x0    = (Q12(temp6) / arg6) - (SCREEN_WIDTH / 2);
+            x0    = (Q12(temp6) / scale) - (SCREEN_WIDTH / 2);
 
             sp4   = SCREEN_HEIGHT;
             temp4 = Q12((ptr->field_8.field_1 << 1) - ((arg5 * 2) - sp4));
-            y0    = (temp4 / arg6) - SCREEN_HEIGHT;
+            y0    = (temp4 / scale) - SCREEN_HEIGHT;
 
-            x1    = x0 + (Q12(ptr->field_4.field_2) / arg6);
-            temp3 = Q12(ptr->field_4.field_3) / arg6;
+            x1    = x0 + (Q12(ptr->field_4.field_2) / scale);
+            temp3 = Q12(ptr->field_4.field_3) / scale;
             y1    = y0 + temp3;
 
             // Set polygon vertices.
@@ -1117,9 +1123,6 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
 void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
 {
-    #define CLAMPED_EXTENT(a, b, base) \
-        (((a) < (b)) ? ((a) - (base)) : ((b) - (base)))
-
     u16       rightEdge;
     u16       bottomEdge;
     s16       clampedLeft;
@@ -1140,21 +1143,22 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
 
     // Accumulated screen-space X edges per tile column (center-relative coords).
     s16 tileScreenEdgesX[] = { -160, -160, -160, -160 };
+
     // Accumulated screen-space Y edges per tile row.
     s16 tileScreenEdgesY[] = { -SCREEN_HEIGHT, -SCREEN_HEIGHT, -SCREEN_HEIGHT };
 
-    // Compute right/bottom edges of the scaled 320x240 image.
+    // Compute right/bottom edges of scaled 320x240 image.
     rightEdge  = (Q12_MULT_PRECISE(scale, SCREEN_WIDTH)  + scrollX) - 1;
     bottomEdge = (Q12_MULT_PRECISE(scale, SCREEN_HEIGHT) + scrollY) - 1;
 
     poly = GsOUT_PACKET_P;
 
-    // Iterate 3x2 grid of 128x128 VRAM tiles covering the map image.
+    // Iterate 3x2 grid of 128x128 VRAM tiles covering map image.
     for (tileX = 0; tileX < 3; tileX++)
     {
         for (tileY = 0; tileY < 2; tileY++)
         {
-            // Skip if tile column is entirely outside the scaled image horizontally.
+            // Skip if tile column is entirely outside scaled image horizontally.
             if ((((tileX + 1) * 128) < scrollX) ||
                 (tileX * 128) > rightEdge)
             {
@@ -1167,7 +1171,7 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
                 continue;
             }
 
-            // Skip if tile row is entirely outside the scaled image vertically.
+            // Skip if tile row is entirely outside scaled image vertically.
             if ((((tileY + 1) * 128) < (scrollY + (g_PaperMapImg.v / 2))) ||
                 ((tileY * 128) > (bottomEdge + (g_PaperMapImg.v / 2))))
             {
@@ -1177,16 +1181,16 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
             // Clamp tile left edge to image left edge.
             clampedLeft = CLAMP_LOW(scrollX, tileX * 128);
 
-            // Compute visible width of this tile (clamped to image right edge).
-            clampedWidth = CLAMPED_EXTENT((tileX + 1) * 128, rightEdge, clampedLeft);
+            // Compute visible tile width (clamped to image right edge).
+            clampedWidth = MIN_EXTENT_OFFSET((tileX + 1) * 128, rightEdge, clampedLeft);
 
             // Clamp tile top edge to image top edge.
             clampedTop = CLAMP_LOW(scrollY + (g_PaperMapImg.v / 2), tileY * 128);
 
-            // Compute visible height of this tile (clamped to image bottom edge).
-            clampedHeight = CLAMPED_EXTENT((tileY + 1) * 128, bottomEdge + (g_PaperMapImg.v / 2), clampedTop);
+            // Compute visible tile height (clamped to image bottom edge).
+            clampedHeight = MIN_EXTENT_OFFSET((tileY + 1) * 128, bottomEdge + (g_PaperMapImg.v / 2), clampedTop);
 
-            // Advance accumulated screen edges by the inverse-scaled tile extent.
+            // Advance accumulated screen edges by inverse-scaled tile extent.
             tileScreenEdgesX[tileX + 1] = tileScreenEdgesX[tileX] + (Q12(clampedWidth)        / scale);
             tileScreenEdgesY[tileY + 1] = tileScreenEdgesY[tileY] + ((Q12(clampedHeight) * 2) / scale);
 
@@ -1198,16 +1202,16 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
             setXY2Fast(poly, tileScreenEdgesX[tileX],     tileScreenEdgesY[tileY + 1]);
             setXY3Fast(poly, tileScreenEdgesX[tileX + 1], tileScreenEdgesY[tileY + 1]);
 
-            // Compute UV offset into this tile's VRAM region.
-            // N for matching: these are `int`s, but tileU1 and tileVBottom are `short`s.
+            // Compute tile's UV offset into VRAM region.
+            // @note These are `int`s, but `tileU1` and `tileVBottom` are `short`s.
             tileU = clampedLeft - (tileX * 128);
             tileV = clampedTop  - (tileY * 128);
 
             setUV0AndClutSum(poly, tileU, tileV * 2, getClut(g_PaperMapImg.clutX, g_PaperMapImg.clutY));
 
-            // @hack: Regalloc fixes. `hackVar` usages compile to nothing (gcc knows hackVar == 0), but the 4 vars
+            // @hack Regalloc fixes. `hackVar` usages compile to nothing (GCC knows `hackVar == 0`), but the 4 vars
             // pad the stack frame to match.
-            // @hack: Two `tileScreenEdgesX[tileX] & hackVar` loads bump the array pointer's ref count so it wins `t8`.
+            // @hack Two `tileScreenEdgesX[tileX] & hackVar` loads bump the array pointer's ref count so it wins `t8`.
             setUV1AndTPageSum(poly, tileU + clampedWidth, tileV * 2,
                               getTPage(g_PaperMapImg.tPage[0],
                                        (hackVar << 5) | hackVar2 | hackVar3 | hackVar4 | (tileScreenEdgesX[tileX] & hackVar),

@@ -8,13 +8,13 @@
 # =============================================================================
 # q19_12 Math_Sin(q19_12 angle)
 # =============================================================================
-# Returns sin(angle) from the sine lookup table.
+# Returns `sin(angle)` from the sine lookup table.
 #
-# @note Angle is stored in table as Q3.12 but returned as Q19.12 for matching.
+# @note The angle is stored in the table as Q3.12 but returned as Q19.12 for matching.
 #
 # @param $a0 angle (12-bit, 0-4095)
 #
-# @return sin(angle)
+# @return `sin(angle)`
 # =============================================================================
 glabel Math_Sin
     /* 71D1C 8009687C FF0F8430 */  andi       $a0, $a0, 0xFFF
@@ -30,13 +30,13 @@ endlabel Math_Sin
 # =============================================================================
 # q19_12 Math_Cos(q19_12 angle)
 # =============================================================================
-# Returns cos(angle) from the sine lookup table.
+# Returns `cos(angle)` from the sine lookup table.
 #
-# @note Angle is stored in table as Q3.12 but returned as Q19.12 for matching.
+# @note The angle is stored in table as Q3.12 but returned as Q19.12 for matching.
 #
 # @param $a0 angle (12-bit, 0-4095)
 #
-# @return cos(angle)
+# @return `cos(angle)`
 # =============================================================================
 glabel Math_Cos
     /* 71D3C 8009689C FF0F8430 */  andi       $a0, $a0, 0xFFF
@@ -52,16 +52,16 @@ endlabel Math_Cos
 # =============================================================================
 # MATRIX* Math_RotMatrixZ(s32, MATRIX*)
 # =============================================================================
-# @brief Applies a Z-axis rotation to a 3x3 matrix via left-multiply: M = Rz(angle) * M
+# @brief Applies a Z-axis rotation to a 3x3 matrix via left-multiply: `M = Rz(angle) * M`.
 #
 #   Rz = | cos  -sin   0 |
 #        | sin   cos   0 |
 #        |  0     0    1 |
 #
-# @note Only rows 0 and 1 are modified; row 2 is untouched.
+# @note Only rows 0 and 1 are modified and row 2 is untouched.
 #
 # @param $a0 angle (12-bit, 0-4095)
-# @param $a1 pointer to MATRIX.
+# @param $a1 `MATRIX` pointer.
 # =============================================================================
 glabel Math_RotMatrixZ
     /* 71D5C 800968BC 0000A624 */  addiu      $a2, $a1, 0x0
@@ -73,10 +73,10 @@ glabel Math_RotMatrixZ
 # =============================================================================
 # RotMatrixZ_Apply
 # =============================================================================
-# Rotation kernel used by RotMatrixZ.
+# Rotation kernel used by `RotMatrixZ`.
 #
-# Unsure why this is separate, maybe was meant to be shared with RotMatrixX
-# and RotMatrixY functions that aren't included here?
+# Unsure why this is separate. Maybe it was meant to be shared with `RotMatrixX`
+# and `RotMatrixY` functions that aren't included here?
 #
 # @note Performs in-place on two matrix rows:
 #   new_row_a[j] = cos * row_a[j] - sin * row_b[j]     (j = 0,1,2)
@@ -191,8 +191,8 @@ endlabel Math_RotMatrixZ
 # =============================================================================
 # void Math_RotMatrixXyz(SVECTOR* rot, MATRIX* mat)
 # =============================================================================
-# @brief Builds a combined Euler rotation matrix M = Rx * Ry * Rz directly from 
-# three angles, without performing three separate matrix multiplies.
+# @brief Builds a combined Euler rotation matrix `M = Rx * Ry * Rz` directly from 
+# three angles without performing three separate matrix multiplies.
 #
 # Splits the work between two helper routines:
 #   Math_RotMatrix0 -- computes m[0][2], m[1][0], m[1][1], m[2][0], m[2][1]
@@ -201,7 +201,7 @@ endlabel Math_RotMatrixZ
 # @param $a0 pointer to SVECTOR (3 x int16 angles: x, y, z; 12-bit)
 # @param $a1 pointer to MATRIX
 #
-# @return MATRIX pointer (set by Math_RotMatrix1)
+# @return `MATRIX pointer` (set by `Math_RotMatrix1`).
 # =============================================================================
 glabel Math_RotMatrixXyz
     /* 71EFC 80096A5C 00008284 */  lh         $v0, 0x0($a0)
@@ -515,7 +515,7 @@ endlabel Math_RotMatrixZxyNegGte
 # =============================================================================
 # q3_12 g_SineTable[]
 # =============================================================================
-# Sine lookup table: 5120 entries of int16 Q3.12.
+# Sine lookup table: 5120 entries of `int16` Q3.12.
 # Entries 0-4095 cover one full revolution of `sin`.
 # Entries 1024-5119 (base + 0x800 bytes) are used for `cos` lookups, avoiding
 # the need to wrap the angle at runtime.

@@ -1929,14 +1929,14 @@ void func_80066E40(void);
 
 void func_80066E7C(void);
 
-s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3);
+s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale);
 
 bool func_80068CC0(s32 arg0);
 
 /** Paper map func. Seems to draw map marking sprites. */
-bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6);
+bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale);
 
-void PaperMap_DrawScaled(u16 x, u16 y, q4_12 scale);
+void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale);
 
 void Player_FlexRotationYReset(void);
 

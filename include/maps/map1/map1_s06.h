@@ -60,7 +60,8 @@ void func_800D5614(void);
 
 void func_800D5B98(void);
 
-void func_800D5D6C(u16 arg0);
+// Draws scaled paper map and calls two other funcs.
+void func_800D5D6C(u16 scrollX);
 
 void func_800D5DD8(void);
 

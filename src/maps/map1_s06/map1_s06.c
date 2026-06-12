@@ -248,11 +248,11 @@ void func_800D5B98(void) // 0x800D5B98
     }
 }
 
-void func_800D5D6C(u16 arg0) // 0x800D5D6C
+void func_800D5D6C(u16 scrollX) // 0x800D5D6C
 {
-    PaperMap_DrawScaled(arg0, 120, Q12(0.5f));
-    func_80067914(1, arg0, 120, Q12(0.5f));
-    func_80068E0C(1, 1, 0, 0, arg0, 120, Q12(0.5f));
+    PaperMap_DrawScaled(scrollX, 120, Q12(0.5f));
+    func_80067914(1, scrollX, 120, Q12(0.5f));
+    func_80068E0C(1, 1, 0, 0, scrollX, 120, Q12(0.5f));
 }
 
 void func_800D5DD8(void) // 0x800D5DD8

@@ -4,13 +4,13 @@
 
 .section .text, "ax"
 
-# psyq-obj-parser had issues with odd relocations inside snmain.obj
-# Instead we use a disassembled version here to help future builds 
-# where splitting orig EXE first isn't needed.
+# psyq-obj-parser had issues with odd relocations inside snmain.obj.
+# Instead, a disassembled version is used here to help future builds 
+# where splitting the original EXE first isn't needed.
 
-# @hack: override `main_BSS_END` with the same BSS end value
-# that the orig code would have used (snmain.s used `sectend(.bss)`)
-# We should be able to use existing main_BSS_END but our BSS
+# @hack Override `main_BSS_END` with the same BSS end value
+# that the original code would have used (snmain.s used `sectend(.bss)`).
+# The existing main_BSS_END should be used, but the BSS
 # section ends earlier than what the values used here show.
 # Likely the main EXE was truncated by devs after building?
 .set main_BSS_END, g_bodyProg
