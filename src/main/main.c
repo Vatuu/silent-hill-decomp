@@ -25,6 +25,10 @@
 
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
+// Overridable defines used by `snmain`
+s32 _ramsize = 2 * 1024 * 1024; // 2MiB of RAM
+s32 _stacksize = 32 * 1024;     // 32KiB of stack
+
 s_FsImageDesc g_MainImg0 = {
     .tPage = { 1, 13 },
     .u     = 32,
