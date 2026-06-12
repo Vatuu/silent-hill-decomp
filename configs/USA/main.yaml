@@ -11,6 +11,7 @@ options:
   src_path: src/main
   o_path: ../../lib
   build_path: build/USA
+  hasm_in_src_path: True
   # create_asm_dependencies: True
 
   ld_script_path: linkers/USA/main.ld
@@ -102,7 +103,7 @@ segments:
       - [0x372C, o, libapi/a07] #DeliverEvent
       - [0x373C, o, libc/c63] #printf
       - [0x374C, o, libspu/s_dcb]
-      - [0x377C, asm, psyq/libsn/snmain] # entry point (psyq-obj-parser doesn't support it...)
+      - [0x377C, hasm, libsn/snmain] # entry point
       - [0x38FC, o, libapi/c57] #InitHeap
       - [0x390C, o, libetc/vsync] #VSync
       - [0x3B1C, o, libapi/a91] #ChangeClearPAD
@@ -132,7 +133,7 @@ segments:
       - [0x11BCC, o, libspu/spu, .data]
       - [0x11C2C, o, libspu/s_rmp0, .data]
       - [0x11C2C, o, libspu/s_m, .data]
-      - [0x11C6C, data, psyq/libsn/snmain]
+      - [0x11C6C, .data, libsn/snmain]
       - [0x11C90, o, libetc/vsync, .data]
       - [0x11CB0, o, libetc/intr, .data]
       - [0x11CB0, o, libetc/intr_vb, .data]
@@ -150,10 +151,10 @@ segments:
       - [0x1346C, sdata, start]
       - [0x13474, .sdata, main]
       - [0x13488, pad]
-      - [0x13490, .sdata, rng]
 
       # .sbss section
-      - [0x13494, sbss, psyq/libsn/snmain]
+      - [0x13490, .sbss, rng]
+      - [0x13494, .sbss, libsn/snmain]
 
       # .bss section
       - [0x13498, .bss, fsqueue_1]

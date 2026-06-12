@@ -1,6 +1,6 @@
 #include "main/rng.h"
 
-u32 g_RngSeed = 0;
+u32 g_RngSeed;
 
 u32 Rng_Rand32(void)
 {
