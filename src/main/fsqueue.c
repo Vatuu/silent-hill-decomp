@@ -12,6 +12,8 @@
 #include <psyq/string.h>
 #include <psyq/sys/file.h>
 
+#define FSQUEUE_IDX_WRAP(idx) ((u32)(idx) % FS_QUEUE_LENGTH)
+
 s_FsQueue g_FsQueue;
 
 const char* const a_PcDrvPath = "sim:.\\DATA";
@@ -96,10 +98,10 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
     s32            fileIdx;
     s_FsQueueExtra extra;
 
-    fileIdx             = CHARA_FILE_INFOS[charaId].animFileIdx;
-    extra.anm.charaId = charaId;
-    extra.anm.field_0   = idx;
-    extra.anm.coords_8  = coords;
+    fileIdx            = CHARA_FILE_INFOS[charaId].animFileIdx;
+    extra.anm.charaId  = charaId;
+    extra.anm.field_0  = idx;
+    extra.anm.coords_8 = coords;
     return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Anm, false, dest, 0, &extra);
 }
 
@@ -118,7 +120,7 @@ s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, 
     // If left as they are in the queue struct, this doesn't match unless manually addressed.
     lastPtr = &g_FsQueue.last;
     lastPtr->idx++;
-    lastPtr->ptr = &g_FsQueue.entries[lastPtr->idx & (FS_QUEUE_LENGTH - 1)];
+    lastPtr->ptr = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(lastPtr->idx)];
 
     newEntry               = g_FsQueue.last.ptr;
     newEntry->info         = &g_FileTable[fileIdx];
@@ -162,7 +164,7 @@ void Fs_QueueReset(void)
     if (g_FsQueue.read.idx <= g_FsQueue.last.idx)
     {
         g_FsQueue.read.idx = g_FsQueue.read.idx + FS_QUEUE_LENGTH;
-        g_FsQueue.read.ptr = g_FsQueue.entries + (g_FsQueue.read.idx & (FS_QUEUE_LENGTH - 1));
+        g_FsQueue.read.ptr = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(g_FsQueue.read.idx)];
         g_FsQueue.last     = g_FsQueue.read;
     }
 
@@ -175,7 +177,9 @@ void Fs_QueueUpdate(void)
 {
     s_FsQueuePtr*   read;
     s_FsQueueEntry* tick;
-    s32             temp = 0;
+    bool            status;
+
+    status = false;
 
     // Pending read/seek operations; tick them.
     tick = g_FsQueue.read.ptr;
@@ -184,24 +188,24 @@ void Fs_QueueUpdate(void)
         switch (tick->operation)
         {
             case FsQueueOp_Seek:
-                temp = Fs_QueueUpdateSeek(tick);
+                status = Fs_QueueUpdateSeek(tick);
                 break;
 
             case FsQueueOp_Read:
-                temp = Fs_QueueUpdateRead(tick);
+                status = Fs_QueueUpdateRead(tick);
                 break;
         }
 
         // Seek or read done, proceed to next one.
-        // Alias and `temp` use seem to be required for match for some reason, might be an inline?
-        if (temp == 1)
+        if (status == true)
         {
+            s32 idx;
             read                  = &g_FsQueue.read;
             g_FsQueue.state       = 0; // `FsQueueReadState_Allocate` or `FSQS_SEEK_SETLOC`.
             g_FsQueue.resetTimer0 = 0;
             g_FsQueue.resetTimer1 = 0;
-            temp                  = ++read->idx;
-            read->ptr             = g_FsQueue.entries + (temp & (FS_QUEUE_LENGTH - 1));
+            idx                   = ++read->idx;
+            read->ptr             = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(idx)];
         }
     }
     // Nothing to read.
@@ -214,12 +218,12 @@ void Fs_QueueUpdate(void)
     tick = g_FsQueue.postLoad.ptr;
     if (g_FsQueue.postLoad.idx < g_FsQueue.read.idx)
     {
-        temp = Fs_QueueUpdatePostLoad(tick);
-        if (temp == true)
+        status = Fs_QueueUpdatePostLoad(tick);
+        if (status == true)
         {
             g_FsQueue.postLoadState = FsQueuePostLoadState_Init;
-            temp                    = ++g_FsQueue.postLoad.idx;
-            g_FsQueue.postLoad.ptr  = g_FsQueue.entries + (temp & (FS_QUEUE_LENGTH - 1));
+            status                  = ++g_FsQueue.postLoad.idx;
+            g_FsQueue.postLoad.ptr  = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(status)];
         }
     }
     // Nothing to post-load.
@@ -231,8 +235,11 @@ void Fs_QueueUpdate(void)
 
 bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 {
-    bool result = false;
-    s32  state  = g_FsQueue.state;
+    bool result;
+    s32  state;
+
+    result = false;
+    state  = g_FsQueue.state;
 
     switch (state)
     {
@@ -409,7 +416,9 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 
 bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 {
-    bool result = false;
+    bool result;
+    
+    result = false;
 
     if (entry->allocate)
     {
@@ -438,7 +447,7 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry)
 
     for (i = 0; i < queueLength; i++)
     {
-        other   = &g_FsQueue.entries[(g_FsQueue.postLoad.idx + i) & (FS_QUEUE_LENGTH - 1)];
+        other   = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(g_FsQueue.postLoad.idx + i)];
         overlap = false;
         if (other->postLoad || other->allocate)
         {
@@ -525,13 +534,13 @@ bool Fs_QueueResetTick(s_FsQueueEntry* entry)
 bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
 {
     s32         handle;
-    s32         temp;
     s32         retry;
     bool        result;
-    s_FileInfo* file = entry->info;
+    s_FileInfo* file;
     char        pathBuf[64];
     char        nameBuf[32];
 
+    file = entry->info;
     result = false;
 
     strcpy(pathBuf, a_PcDrvPath);
@@ -547,17 +556,14 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
             continue;
         }
 
-        temp = read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE));
-        if (temp == NO_VALUE)
+        if (read(handle,entry->data, ALIGN(file->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE)) == NO_VALUE)
         {
             continue;
         }
 
-        do
+        while(close(handle) == NO_VALUE)
         {
-            temp = close(handle);
         }
-        while (temp == NO_VALUE);
 
         result = true;
         break;
