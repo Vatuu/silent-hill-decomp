@@ -326,7 +326,7 @@ typedef struct _PropsGroaner
     /* 0x111 */ u8         playRightFootstepSfx; /** `bool` */
     /* 0x112 */ s8         __pad_112[2];
     /* 0x114 */ q3_12      field_114; // Move speed coefficient?
-} e_PropsGroaner;
+} s_PropsGroaner;
 
 /** @brief Hanged Scratcher character properties. */
 typedef struct _PropsHangedScratcher
@@ -614,7 +614,7 @@ typedef struct _SubCharacter
                    s_PropsCat             cat;
                    s_PropsCreeper         creeper;
                    s_PropsFloatstinger    floatstinger;
-                   e_PropsGroaner         groaner;
+                   s_PropsGroaner         groaner;
                    s_PropsHangedScratcher hangedScratcher;
                    s_PropsIncubus         incubus;
                    s_PropsLarvalStalker   larvalStalker;

@@ -25,7 +25,7 @@ typedef enum _ChunkLoadState
 } e_ChunkLoadState;
 
 /** @brief Map terrain chunk. */
-typedef struct _MapChunk
+typedef struct _Chunk
 {
     /* 0x0  */ s_IpdHeader* ipdHdr;
     /* 0x4  */ s32          queueIdx;
@@ -40,7 +40,7 @@ typedef struct _MapChunk
 STATIC_ASSERT_SIZEOF(s_Chunk, 28);
 
 /** @brief Map terrain chunk column. TODO: Or row? */
-typedef struct _MapChunkColumn
+typedef struct _ChunkColumn
 {
     /* 0x0 */ s16 idx[16];
 } s_ChunkColumn;

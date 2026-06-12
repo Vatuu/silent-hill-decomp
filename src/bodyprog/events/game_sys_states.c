@@ -750,9 +750,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
             Savegame_EventFlagSetAlt(g_MapEventData->disabledEventFlag);
 
             unfreezePlayerFunc = &g_MapOverlayHdr.playerControlUnfreeze;
-
             SysWork_StateSetNext(SysState_Gameplay);
-
             (*unfreezePlayerFunc)(false);
             break;
     }
@@ -764,7 +762,7 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 
     save = g_SavegamePtr;
 
-    save->locationId       = g_MapEventParam;
+    save->locationId      = g_MapEventParam;
     save->playerPositionX = g_SysWork.playerWork.player.position.vx;
     save->playerPositionZ = g_SysWork.playerWork.player.position.vz;
     save->playerRotationY = g_SysWork.playerWork.player.rotation.vy;
@@ -1026,7 +1024,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             Screen_BackgroundImgDraw(&g_DeathTipImg);
 
             if (!(g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                   g_GameWorkPtr->config.controllerConfig.cancel)))
+                                                    g_GameWorkPtr->config.controllerConfig.cancel)))
             {
                 if (g_SysWork.field_28 <= 480)
                 {
@@ -1034,7 +1032,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
                 }
             }
 
-            // TODO: some inline FlagSet func? couldn't get matching ver, but pretty sure temp_a0 can be removed somehow
+            // TODO: Some inline FlagSet func?
+            // Couldn't get matching version, but pretty sure `temp_a0` can be removed somehow.
             temp_a0 = &g_GameWork.config.seenGameOverTips[(prevTipIdx >> 5)];
             *temp_a0 |= (1 << 0) << (prevTipIdx & 0x1F);
 

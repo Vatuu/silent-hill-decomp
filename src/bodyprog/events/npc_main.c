@@ -303,7 +303,7 @@ void Game_NpcUpdate(void) // 0x80038354
                 break;
             }
 
-            // TODO: Approximage Q12 values don't seem right.
+            // TODO: Approximate Q12 values don't seem right.
 
             // Unload distant NPC to avoid drawing.
             distToNpcCpy = curDistToNpc;

@@ -257,7 +257,7 @@ typedef struct _WaterZone
 } s_WaterZone;
 
 /** @brief Map GFX info. */
-typedef struct _MapGfxInfo
+typedef struct _MapInfo
 {
     /* 0x0 */ s16                plmFileIdx;
     /* 0x2 */ char               tag[4];

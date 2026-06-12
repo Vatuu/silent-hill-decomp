@@ -98,7 +98,7 @@ typedef enum _HarryBone
     HarryBone_RightFoot     = 17,
 
     HarryBone_Count         = 18
-} s_HarryBone;
+} e_HarryBone;
 
 /** @brief Harry character hand mesh variant indices. */
 typedef enum _HarryHandMesh

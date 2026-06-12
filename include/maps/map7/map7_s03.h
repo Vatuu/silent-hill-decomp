@@ -5,6 +5,8 @@
 
 #include <psyq/libgs.h>
 
+#include "bodyprog/dms.h"
+
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
 #define HAS_PlayerState_Reset
@@ -339,7 +341,7 @@ extern s32 D_800ED744[9];
 
 extern u16 D_800ED768;
 
-extern u16 D_800ED77C;
+extern u16 g_Cutscene_MapMsgAudioCmds;
 
 extern u16 D_800ED7B4;
 
@@ -369,7 +371,7 @@ extern s_800ED7E0_ptr* D_800ED9BC[];
 
 extern s32 D_800EDA04;
 
-extern u8 D_800EDA08;
+extern u8 g_Cutscene_PrevPlayerPlaybackState; /** `e_AnimPlaybackState` */
 
 extern s32 D_800EDA0C;
 
@@ -394,10 +396,12 @@ extern q19_12 g_Cutscene_Timer; // Count of objects to load?
 
 extern VECTOR3 g_WorldObject_UnkPos;
 
-// Vars below might not be `bool`s but states of some kind, and 0/1 just happen to be most common.
-extern u8 D_800F4804; // `bool`
+extern u8 g_Cutscene_MapMsgAudioIdx;
+
 extern u8 D_800F4805;
-extern u8 D_800F4806; // `bool`
+
+extern u8 D_800F4806; // Index for `D_800ED230`.
+
 extern u8 g_Cutscene_UpdateHero; // `bool`
 extern u8 g_Cutscene_UpdateSibyl; // `bool`
 extern u8 g_Cutscene_UpdateDaria; // `bool`
@@ -408,7 +412,7 @@ extern u8 g_Cutscene_UpdateBar; // `bool`
 extern u8 g_Cutscene_UpdateLitl; // `bool`
 extern u8 g_Cutscene_UpdateBos; // `bool`
 extern u8 g_Cutscene_UpdateBin; // `bool`
-extern u8 D_800F4811; // `bool`
+extern u8 g_Cutscene_UpdateNu; // `bool`
 extern u8 g_Cutscene_UpdateBaby; // `bool`
 extern u8 D_800F4813;
 extern u8 D_800F4814;
@@ -429,7 +433,7 @@ extern s32 D_800F4824;
 
 extern s32 D_800F4828;
 
-extern s16 D_800F482C;
+extern q3_12 D_800F482C; // Rotation for "BIN" world object.
 
 extern s32 D_800F4830;
 
@@ -493,7 +497,7 @@ extern s_FsImageDesc D_800ED218;
 extern s_FsImageDesc D_800ED220;
 extern s_FsImageDesc D_800ED228;
 
-extern void* D_800ED230[];
+extern s_DmsHeader* D_800ED230[];
 
 extern VECTOR3 D_800ED244;
 extern VECTOR3 D_800ED250;

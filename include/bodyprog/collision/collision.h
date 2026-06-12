@@ -47,7 +47,7 @@ typedef struct _CollisionSurface
     /* 0x4 */ q3_12  tiltAngleX;
     /* 0x6 */ q3_12  tiltAngleZ;
     /* 0x8 */ s8     groundType; /** `e_GroundType` */
-    // 3 bytes of padding.
+              // 3 bytes of padding.
 } s_CollisionSurface;
 STATIC_ASSERT_SIZEOF(s_CollisionSurface, 12);
 

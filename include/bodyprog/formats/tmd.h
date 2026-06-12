@@ -1,5 +1,5 @@
 #ifndef _BODYPROG_FORMATS_TMD_H
-#define _BODYPROG_FORMATS_ANM_H
+#define _BODYPROG_FORMATS_TMD_H
 
 /** @brief TMD model file info. */
 typedef struct _TmdFile

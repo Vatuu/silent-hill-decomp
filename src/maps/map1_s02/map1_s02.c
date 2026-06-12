@@ -970,7 +970,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             Player_ControlFreeze();
 
             D_800E1FE2 = 0;
-            g_SysWork.field_28 = 0;
+            g_SysWork.field_28 = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -997,7 +997,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 if (g_SysWork.sysStateSteps[0] != 2 && g_SysWork.sysStateSteps[0] != 4)
                 {
                     g_SysWork.sysStateSteps[0] = 5;
-                    g_SysWork.field_28 = 0;
+                    g_SysWork.field_28 = Q12(0.0f);
                     g_SysWork.sysStateSteps[1] = 0;
                     g_SysWork.timer_2C = Q12(0.0f);
                     g_SysWork.sysStateSteps[2] = 0;
@@ -1007,7 +1007,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             else
             {
                 g_SysWork.sysStateSteps[0] = 5;
-                g_SysWork.field_28 = 0;
+                g_SysWork.field_28 = Q12(0.0f);
                 g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
@@ -1024,7 +1024,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 Sfx_WithFlagsPlay(Sfx_Unk1452, &D_800CB940, Q8(0.5f), SfxFlag_None);
             }
 
-            g_SysWork.field_28 = 0;
+            g_SysWork.field_28 = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -1164,7 +1164,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 Sd_SfxStop(Sfx_Unk1453);
 
                 g_SysWork.sysStateSteps[0] = 1;
-                g_SysWork.field_28 = 0;
+                g_SysWork.field_28 = Q12(0.0f);
                 g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;

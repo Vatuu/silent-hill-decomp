@@ -428,7 +428,7 @@ void func_800DAF18(void) // 0x800DAF18
             Savegame_EventFlagSet(EventFlag_MapMark_AltSchoolRF_ValveSign);
 
             D_800E2101                  = 0;
-            g_SysWork.field_28          = 0;
+            g_SysWork.field_28          = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -554,7 +554,7 @@ void func_800DAF18(void) // 0x800DAF18
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                              true);
 
-            g_SysWork.field_28          = 0;
+            g_SysWork.field_28          = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -566,7 +566,7 @@ void func_800DAF18(void) // 0x800DAF18
 
         case 6:
             D_800E20FE                  = 0;
-            g_SysWork.field_28          = 0;
+            g_SysWork.field_28          = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -600,7 +600,7 @@ void func_800DAF18(void) // 0x800DAF18
                              true);
 
             D_800E20FA                  = 0;
-            g_SysWork.field_28          = 0;
+            g_SysWork.field_28          = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
@@ -619,7 +619,7 @@ void func_800DAF18(void) // 0x800DAF18
 
             if (i == 6 || (!Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall) && i > 3))
             {
-                g_SysWork.field_28          = 0;
+                g_SysWork.field_28          = Q12(0.0f);
                 g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C          = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
@@ -682,7 +682,7 @@ void func_800DAF18(void) // 0x800DAF18
         case 10:
             if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
             {
-                g_SysWork.field_28          = 0;
+                g_SysWork.field_28          = Q12(0.0f);
                 g_SysWork.sysStateSteps[1] = 0;
                 g_SysWork.timer_2C          = Q12(0.0f);
                 g_SysWork.sysStateSteps[2] = 0;
@@ -719,7 +719,7 @@ void func_800DAF18(void) // 0x800DAF18
 
             D_800E2101                  = 0;
             D_800E20FE                  = 0;
-            g_SysWork.field_28          = 0;
+            g_SysWork.field_28          = Q12(0.0f);
             g_SysWork.sysStateSteps[1] = 0;
             g_SysWork.timer_2C          = Q12(0.0f);
             g_SysWork.sysStateSteps[2] = 0;
