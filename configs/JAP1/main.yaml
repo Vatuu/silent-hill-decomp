@@ -11,6 +11,7 @@ options:
   src_path: src/main
   o_path: ../../lib
   build_path: build/JAP1
+  hasm_in_src_path: True
   # create_asm_dependencies: True
 
   ld_script_path: linkers/JAP1/main.ld
@@ -62,9 +63,7 @@ segments:
     subsegments:
       # .rodata section
       - [0x800, .rodata, main]
-      - [0x808, .rodata, fsqueue_3]
-      - [0x814, pad]
-      - [0x818, .rodata, fsqueue_2] # jtbl
+      - [0x808, .rodata, fsqueue]
       - [0x830, o, libspu/spu, .rdata]
       - [0x880, o, libetc/vsync, .rdata]
       - [0x890, o, libetc/intr, .rdata]
@@ -79,9 +78,7 @@ segments:
       # .text section
       - [0xF70, c, main] # Main function.
       - [0x12D0, c, fileinfo] # File entry functions.
-      - [0x1658, c, fsqueue_1] # fs queue functions part 1.
-      - [0x1CC4, c, fsqueue_2] # fs queue functions part 2, split due to usage of jtbl in rodata.
-      - [0x1E30, c, fsqueue_3] # fs queue functions part 3.
+      - [0x1658, c, fsqueue] # fs queue functions.
       - [0x2470, c, fsmem] # fs heap allocator.
       - [0x2778, c, memcpy] # Custom memcpy implementation.
       - [0x28B8, c, rng] # RNG functions.
@@ -103,7 +100,7 @@ segments:
       - [0x372C, o, libapi/a07] #DeliverEvent
       - [0x373C, o, libc/c63] #printf
       - [0x374C, o, libspu/s_dcb]
-      - [0x377C, asm, psyq/libsn/snmain] # entry point (psyq-obj-parser doesn't support it...)
+      - [0x377C, hasm, libsn/snmain] # entry point (psyq-obj-parser doesn't support it...)
       - [0x38FC, o, libapi/c57] #InitHeap
       - [0x390C, o, libetc/vsync] #VSync
       - [0x3B1C, o, libapi/a91] #ChangeClearPAD
@@ -133,7 +130,7 @@ segments:
       - [0x11BCC, o, libspu/spu, .data]
       - [0x11C2C, o, libspu/s_rmp0, .data]
       - [0x11C2C, o, libspu/s_m, .data]
-      - [0x11C6C, data, psyq/libsn/snmain]
+      - [0x11C6C, .data, libsn/snmain]
       - [0x11C90, o, libetc/vsync, .data]
       - [0x11CB0, o, libetc/intr, .data]
       - [0x11CB0, o, libetc/intr_vb, .data]
@@ -148,16 +145,15 @@ segments:
       # .sdata section
       - [0x133B0, .sdata, fileinfo]
       - [0x13468, pad]
-      - [0x1346C, sdata, start]
-      - [0x13474, .sdata, main]
+      - [0x1346C, .sdata, main]
       - [0x13488, pad]
-      - [0x13490, .sdata, rng]
 
       # .sbss section
-      - [0x13494, sbss, psyq/libsn/snmain]
+      - [0x13490, .sbss, rng]
+      - [0x13494, .sbss, libsn/snmain]
 
       # .bss section
-      - [0x13498, .bss, fsqueue_1]
+      - [0x13498, .bss, fsqueue]
       - [0x138C0, .bss, fsmem]
       - [0x139A0, o, libspu/spu, .bss]
       - [0x139B4, pad]
