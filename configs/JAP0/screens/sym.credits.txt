@@ -9,4 +9,4 @@
 //------------------------------------------------------------
 //--- PA: 0x000820   VA: 0x801E2E20   subsegment: asm, credits
 //------------------------------------------------------------
-GameState_Unk15_Update = 0x801E308C; // type:func
+GameState_Credits_Update = 0x801E308C; // type:func

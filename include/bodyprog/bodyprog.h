@@ -234,45 +234,6 @@ typedef struct
     /* 0x6 */ s16 field_6; // Keyframe index or time.
 } s_800C44F0; // Probable size: 8 bytes.
 
-/** @brief Used for normal credits screen. */
-typedef struct
-{
-    /* 0x0  */ s16  field_0;  /** Prim vertex X. */
-    /* 0x2  */ s16  field_2;  /** Prim vertex Y. */
-    /* 0x4  */ s16  field_4;  /** Width? */
-    /* 0x6  */ s8   field_6;  /** Height? */
-    /* 0x7  */ s8   field_7;  /** `bool` | Blend flag. */
-    /* 0x8  */ s32  field_8;  /** Rgb24 color + code. */
-    /* 0xC  */ s16* field_C;  /** Points to 0x801E5C24, data size 400. */
-    /* 0x10 */ s32* field_10; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
-    /* 0x14 */ u16  field_14; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E434C`. */
-    /* 0x16 */ s16  field_16; /** Clut XY. */
-    /* 0x18 */ u32  field_18; /** Texture UV. */
-} s_800AFE08;
-STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
-
-/** @brief Used for UFO ending credits screen. */
-typedef struct
-{
-    /* 0x0  */ s_800AFE08 sub_0;
-    /* 0x1C */ s32        field_1C;
-    /* 0x20 */ s16        field_20;
-    /* 0x22 */ s16        field_22;
-    /* 0x24 */ s32        field_24;
-    /* 0x28 */ s32        field_28;
-    /* 0x2C */ s32        field_2C;
-    /* 0x30 */ s32        field_30;
-    /* 0x34 */ s32        field_34;
-    /* 0x38 */ s32        field_38;
-    /* 0x3C */ s32        field_3C;
-    /* 0x40 */ s32        field_40;
-    /* 0x44 */ s32        field_44;
-    /* 0x48 */ s32        field_48;
-    /* 0x4C */ s32        field_4C;
-    /* 0x50 */ s32        field_50;
-    /* 0x54 */ s32        field_54;
-} s_800AFE24; // Size: 85
-
 typedef struct _MapEnvPresetIdxs
 {
     /* 0x0 */ u8 presetIdx0;

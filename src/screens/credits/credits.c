@@ -16,50 +16,40 @@ extern s_800AFE24 D_800AFE24;
 
 s_801E5558 D_801E5558[6] = {
     {
-        .field_0 = 0x12D5,
+        .xaSfxId_0 = Sfx_XaAudio725,
         .field_2 = 0x0000,
         .field_4 = 0x21FC,
     },
     {
-        .field_0 = 0x12D3,
+        .xaSfxId_0 = Sfx_XaAudio723,
         .field_2 = 0xF6A0,
         .field_4 = 0x20D0,
     },
     {
-        .field_0 = 0x12D4,
+        .xaSfxId_0 = Sfx_XaAudio724,
         .field_2 = 0xFC7C,
         .field_4 = 0x21FC,
     },
     {
-        .field_0 = 0x12D5,
+        .xaSfxId_0 = Sfx_XaAudio725,
         .field_2 = 0xFF4C,
         .field_4 = 0x2148,
     },
     {
-        .field_0 = 0x12D6,
+        .xaSfxId_0 = Sfx_XaAudio726,
         .field_2 = 0xFF4C,
         .field_4 = 0x2274,
     },
     {
-        .field_0 = 0x12D6,
+        .xaSfxId_0 = Sfx_XaAudio726,
         .field_2 = 0xFF88,
         .field_4 = 0x20D0
     }
 };
 
 RECT D_801E557C[2] = {
-    {
-        .x = 320,
-        .y = 256,
-        .w = 160,
-        .h = 240
-    },
-    {
-        .x = 480,
-        .y = 16,
-        .w = 32,
-        .h = 480
-    }
+    { 320, 256, 160, 240 },
+    { 480, 16, 32, 480 }
 };
 
 void func_801E2E28(s32 idx) // 0x801E2E28
@@ -69,14 +59,14 @@ void func_801E2E28(s32 idx) // 0x801E2E28
 
     D_801E5E8C = idx;
 
-    Sd_XaPreLoadAudioPreTaskAdd(D_801E5558[idx].field_0);
-    var1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
+    Sd_XaPreLoadAudioPreTaskAdd(D_801E5558[idx].xaSfxId_0);
+    var1 = (D_801E5558[idx].field_4 * 2) - 504;
     var0 = var1 / D_801E5C20;
 
     D_801E5E7C = var1;
     D_801E5E88 = 1;
     D_801E5E7C = var0;
-    D_801E5E84 = (var0 * D_801E5C20) + 0x1E0;
+    D_801E5E84 = (var0 * D_801E5C20) + 480;
     D_801E5E80 = 0x10000 / var0;
 }
 
@@ -88,7 +78,7 @@ bool func_801E2ED8(void) // 0x801E2ED8
             break;
 
         case 1:
-            SD_Call((u16)D_801E5558[D_801E5E8C].field_0);
+            SD_Call((u16)D_801E5558[D_801E5E8C].xaSfxId_0);
             D_801E5E88++;
             break;
 
@@ -126,7 +116,7 @@ bool func_801E2FC0(void) // 0x801E2FC0
                 break;
             }
 
-            Game_StateSetNext(GameState_Unk15);
+            Game_StateSetNext(GameState_Credits);
             return true;
 
         case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false):
@@ -144,7 +134,7 @@ bool func_801E2FC0(void) // 0x801E2FC0
     return false;
 }
 
-void GameState_Unk15_Update(void) // 0x801E3094
+void GameState_Credits_Update(void) // 0x801E3094
 {
     bool (*funcs[3])() = {
         func_801E3124,
@@ -472,7 +462,7 @@ bool func_801E3684(void) // 0x801E3684
     }
 
     func_801E434C(1, 1);
-    func_801E4310(Q8_COLOR(0.19f), Q8_COLOR(0.19f), Q8_COLOR(0.19f));
+    Credits_TextColorSet(Q8_COLOR(0.19f), Q8_COLOR(0.19f), Q8_COLOR(0.19f));
 
     for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
     {
@@ -480,7 +470,7 @@ bool func_801E3684(void) // 0x801E3684
         {
             var_s4 = 0;
             func_801E434C(0, 0);
-            func_801E4310(Q8_COLOR(0.2525f), Q8_COLOR(0.2525f), Q8_COLOR(0.2525f));
+            Credits_TextColorSet(Q8_COLOR(0.2525f), Q8_COLOR(0.2525f), Q8_COLOR(0.2525f));
         }
 
         var_s3 = sp14 + var_s4;
@@ -489,13 +479,13 @@ bool func_801E3684(void) // 0x801E3684
         for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
         {
             temp_s0 = *var_s2;
-            func_801E42F8(0, var_s3);
+            Credits_TextPositionSet(0, var_s3);
             func_801E4394(temp_s0);
         }
 
         if (temp_fp != 0)
         {
-            func_801E42F8(0, var_s6 + var_s4);
+            Credits_TextPositionSet(0, var_s6 + var_s4);
             func_801E4394(D_801E5BD0);
         }
     }
@@ -608,7 +598,7 @@ bool func_801E3970(void) // 0x801E3970
         animateKcet = false;
     }
 
-    func_801E4310(Q8_COLOR(0.6275f), Q8_COLOR(0.6275f), Q8_COLOR(0.6275f));
+    Credits_TextColorSet(Q8_COLOR(0.6275f), Q8_COLOR(0.6275f), Q8_COLOR(0.6275f));
     func_801E434C(0, 0);
 
     lineY          = currentLinePosY;
@@ -929,21 +919,21 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     GsOUT_PACKET_P = packet;
 }
 
-void func_801E42F8(s32 arg0, s32 arg1) // 0x801E42F8
+void Credits_TextPositionSet(s32 x, s32 y) // 0x801E42F8
 {
-    D_800AFE08.field_0 = arg0;
-    D_800AFE08.field_2 = arg1;
-    D_800AFE08.field_4 = arg0;
+    D_800AFE08.textX = x;
+    D_800AFE08.textY = y;
+    D_800AFE08.leftMargin = x;
 }
 
-void func_801E4310(s32 r, s32 g, s32 b) // 0x801E4310
+void Credits_TextColorSet(s32 r, s32 g, s32 b) // 0x801E4310
 {
-    D_800AFE08.field_8 = COLOR_RGBC(r, g, b, PRIM_RECT | RECT_TEXTURE);
+    D_800AFE08.color = COLOR_RGBC(r, g, b, PRIM_RECT | RECT_TEXTURE);
 }
 
-void func_801E4340(s8 arg0) // 0x801E4340
+void Credits_TextLineHeightSet(s8 arg0) // 0x801E4340
 {
-    D_800AFE08.field_6 = arg0;
+    D_800AFE08.lineHeight = arg0;
 }
 
 void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
@@ -952,11 +942,12 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE08.field_7 = arg0 != 0;
+    D_800AFE08.semiTrans = arg0 != 0;
 
     if (arg1 < 4)
     {
-        maskedField_18  = D_800AFE08.field_18;
+        // TODO: Might be a `getTPage` macro?
+        maskedField_18  = D_800AFE08.uv;
         shiftedField_18 = (maskedField_18 << 4) & (1 << 8);
 
         maskedField_18   &= 0xF;
@@ -967,7 +958,7 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
         shiftedArg1  |= shiftedField_18;
         shiftedArg1  |= (u8)maskedField_18;
 
-        D_800AFE08.field_14 = shiftedArg1;
+        D_800AFE08.tpage = shiftedArg1;
     }
 }
 
@@ -975,8 +966,8 @@ void func_801E4394(u8* str) // 0x801E4394
 {
     s32       textX;
     s32       textY;
-    s32       marginX;
-    s32       fontH;
+    s32       leftMargin;
+    s32       lineHeight;
     u32       blendFlag;
     u32       charCode;
     u32       colorCode;
@@ -997,17 +988,17 @@ void func_801E4394(u8* str) // 0x801E4394
     GsOT*     ot;
 
     strPtr     = str;
-    textX      = D_800AFE08.field_0;
-    textY      = D_800AFE08.field_2;
-    marginX    = D_800AFE08.field_4;
-    fontH      = D_800AFE08.field_6;
-    widthTable = D_800AFE08.field_C;
-    colorTable = D_800AFE08.field_10;
+    textX      = D_800AFE08.textX;
+    textY      = D_800AFE08.textY;
+    leftMargin    = D_800AFE08.leftMargin;
+    lineHeight      = D_800AFE08.lineHeight;
+    widthTable = D_800AFE08.widthTable;
+    colorTable = D_800AFE08.colorTable;
     packet     = GsOUT_PACKET_P;
-    blendFlag  = (u8)D_800AFE08.field_7;
+    blendFlag  = (u8)D_800AFE08.semiTrans;
     charCode   = *strPtr;
-    colorCode  = D_800AFE08.field_8 | (blendFlag << 25); // RBG + code + semi-transparency flag.
-    clut       = (u16)D_800AFE08.field_16;               // Clut Y, clut Y.
+    colorCode  = D_800AFE08.color | (blendFlag << 25); // RBG + code + semi-transparency flag.
+    clut       = (u16)D_800AFE08.clut;               // Clut Y, clut Y.
     ot         = &g_OtTags0[g_ActiveBufferIdx][6];
 
     while (charCode != 0)
@@ -1065,7 +1056,7 @@ void func_801E4394(u8* str) // 0x801E4394
             // Change font color.
             else if (charCode >= 1 && charCode < 8)
             {
-                colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.field_7 << 25);
+                colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.semiTrans << 25);
             }
             // Change font width table?
             else if (charCode >= 208 && charCode < 216)
@@ -1105,24 +1096,24 @@ void func_801E4394(u8* str) // 0x801E4394
         {
             // Newline.
             case '\n':
-                textX = marginX;
-                textY += fontH;
+                textX = leftMargin;
+                textY += lineHeight;
                 break;
 
             // Vertical tab.
             case '\v':
-                textY += fontH;
+                textY += lineHeight;
                 break;
 
             // Carriage return.
             case '\r':
-                textX = marginX;
+                textX = leftMargin;
                 break;
 
             // Form feed.
             case '\f':
-                textX = D_800AFE08.field_0;
-                textY = D_800AFE08.field_2;
+                textX = D_800AFE08.textX;
+                textY = D_800AFE08.textY;
                 break;
 
             default:
@@ -1135,11 +1126,11 @@ void func_801E4394(u8* str) // 0x801E4394
     }
 
     tPage = (DR_TPAGE*)packet;
-    setDrawTPage(tPage, 0, 1, D_800AFE08.field_14);
+    setDrawTPage(tPage, 0, 1, D_800AFE08.tpage);
     addPrim(ot, tPage);
 
-    D_800AFE08.field_0 = textX;
-    D_800AFE08.field_2 = textY;
+    D_800AFE08.textX = textX;
+    D_800AFE08.textY = textY;
     GsOUT_PACKET_P     = packet + sizeof(DR_TPAGE);
 }
 
@@ -1161,9 +1152,9 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     s32  temp_v0_2;
     s32  temp_v0_3;
     s32  temp_v0_4;
-    bool check = D_800AFE24.sub_0.field_0 != arg0;
+    bool check = D_800AFE24.sub_0.textX != arg0;
 
-    if (D_800AFE24.sub_0.field_2 != arg1)
+    if (D_800AFE24.sub_0.textY != arg1)
     {
         temp_lo   = arg1 * D_800AFE24.field_3C;
         temp_t1   = D_800AFE24.field_24 << 0x16;
@@ -1180,9 +1171,9 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
         temp_t0   = Q12_MULT_PRECISE(temp_lo_3, temp_v0);
         temp_v0_2 = D_800AFE24.field_28 + Q12_MULT_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34);
 
-        D_800AFE24.sub_0.field_0  = arg0;
-        D_800AFE24.sub_0.field_2  = arg1;
-        D_800AFE24.sub_0.field_4  = arg0;
+        D_800AFE24.sub_0.textX  = arg0;
+        D_800AFE24.sub_0.textY  = arg1;
+        D_800AFE24.sub_0.leftMargin  = arg0;
         D_800AFE24.field_40 = temp_t0;
         D_800AFE24.field_44 = Q12_MULT_PRECISE(temp_lo_6, temp_v0);
         D_800AFE24.field_48 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_2) - Q12_MULT_PRECISE(temp_lo_3, D_800AFE24.field_28);
@@ -1197,10 +1188,10 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     }
     else if (check)
     {
-        temp_v0_4            = arg0 - D_800AFE24.sub_0.field_0;
+        temp_v0_4            = arg0 - D_800AFE24.sub_0.textX;
         temp_a2              = temp_v0_4 * D_800AFE24.field_48;
         temp_lo_15           = temp_v0_4 * D_800AFE24.field_4C;
-        D_800AFE24.sub_0.field_0   = arg0;
+        D_800AFE24.sub_0.textX   = arg0;
         D_800AFE24.field_40 += temp_a2;
         D_800AFE24.field_44 += temp_lo_15;
     }
@@ -1208,12 +1199,12 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
 
 void func_801E4B98(s32 r, s32 g, s32 b)
 {
-    D_800AFE24.sub_0.field_8 = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
+    D_800AFE24.sub_0.color = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
 }
 
 void func_801E4BC8(s8 arg0) // 0x801E4BC8
 {
-    D_800AFE24.sub_0.field_6 = arg0;
+    D_800AFE24.sub_0.lineHeight = arg0;
 }
 
 void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
@@ -1222,11 +1213,11 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE24.sub_0.field_7 = (arg0 != 0);
+    D_800AFE24.sub_0.semiTrans = (arg0 != 0);
 
     if (arg1 < 4)
     {
-        maskedField_18  = D_800AFE24.sub_0.field_18;
+        maskedField_18  = D_800AFE24.sub_0.uv;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
 
         maskedField_18 &= 0xF;
@@ -1237,7 +1228,7 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
         shiftedArg1 |= shiftedField_18;
         shiftedArg1 |= (u8)maskedField_18;
 
-        D_800AFE24.sub_0.field_14 = shiftedArg1;
+        D_800AFE24.sub_0.tpage = shiftedArg1;
     }
 }
 
@@ -1246,10 +1237,10 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     PACKET* packet;
     GsOT*   ot;
 
-    s32 textX   = D_800AFE24.sub_0.field_0;
-    s32 textY   = D_800AFE24.sub_0.field_2;
-    s32 marginX = D_800AFE24.sub_0.field_4;
-    s32 fontH   = D_800AFE24.sub_0.field_6;
+    s32 textX   = D_800AFE24.sub_0.textX;
+    s32 textY   = D_800AFE24.sub_0.textY;
+    s32 leftMargin = D_800AFE24.sub_0.leftMargin;
+    s32 lineHeight   = D_800AFE24.sub_0.lineHeight;
     u32 colorCode;
 
     s32 var_a3 = D_800AFE24.field_40;
@@ -1259,11 +1250,11 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     s32 var_t4 = D_800AFE24.field_50;
     s32 var_t5 = D_800AFE24.field_54;
 
-    u32       clut       = (u16)D_800AFE24.sub_0.field_16;
-    u32       tPage      = D_800AFE24.sub_0.field_14;
-    s16*      widthTable = D_800AFE24.sub_0.field_C;
-    s32*      colorTable = D_800AFE24.sub_0.field_10;
-    u32       blendFlag  = (u8)D_800AFE24.sub_0.field_7 << 25;
+    u32       clut       = (u16)D_800AFE24.sub_0.clut;
+    u32       tPage      = D_800AFE24.sub_0.tpage;
+    s16*      widthTable = D_800AFE24.sub_0.widthTable;
+    s32*      colorTable = D_800AFE24.sub_0.colorTable;
+    u32       blendFlag  = (u8)D_800AFE24.sub_0.semiTrans << 25;
     s32       charWidth;
     bool      textXChanged;
     bool      textYChanged;
@@ -1293,7 +1284,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     ot     = &g_OtTags0[g_ActiveBufferIdx][6];
 
     charCode  = *str;
-    colorCode = D_800AFE24.sub_0.field_8 | blendFlag; // RGB + code + semi-transparency flag.
+    colorCode = D_800AFE24.sub_0.color | blendFlag; // RGB + code + semi-transparency flag.
 
     while (charCode != 0)
     {
@@ -1359,7 +1350,7 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
         // Change font color.
         else if (charCode >= 1 && charCode < 8)
         {
-            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.sub_0.field_7 << 25);
+            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.sub_0.semiTrans << 25);
         }
         // Change font width table?
         else if (charCode >= 0xD0 && charCode < 0xD8)
@@ -1410,29 +1401,29 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
         switch ((s32)charCode)
         {
             // Newline.
-            case 10:
-                textX = marginX;
-                textY += fontH;
+            case '\n':
+                textX = leftMargin;
+                textY += lineHeight;
                 textYChanged = true;
                 break;
 
             // Vertical tab.
-            case 11:
-                textY += fontH;
+            case '\v':
+                textY += lineHeight;
                 textYChanged = true;
                 break;
 
             // Carriage return.
-            case 13:
-                charWidth    = textX - marginX;
-                textX        = marginX;
+            case '\r':
+                charWidth    = textX - leftMargin;
+                textX        = leftMargin;
                 textXChanged = true;
                 break;
 
             // Form feed.
-            case 12:
-                textX        = D_800AFE24.sub_0.field_0;
-                textY        = D_800AFE24.sub_0.field_2;
+            case '\f':
+                textX        = D_800AFE24.sub_0.textX;
+                textY        = D_800AFE24.sub_0.textY;
                 textYChanged = true;
                 break;
 
@@ -1479,8 +1470,8 @@ void func_801E4C1C(u8* str) // 0x801E4C1C
     }
 
     GsOUT_PACKET_P      = packet;
-    D_800AFE24.sub_0.field_0  = textX;
-    D_800AFE24.sub_0.field_2  = textY;
+    D_800AFE24.sub_0.textX  = textX;
+    D_800AFE24.sub_0.textY  = textY;
     D_800AFE24.field_40 = var_a3;
     D_800AFE24.field_44 = var_t3;
     D_800AFE24.field_48 = var_t7;

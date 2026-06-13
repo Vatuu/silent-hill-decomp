@@ -216,7 +216,7 @@ typedef enum _GameState
     GameState_OptionScreen        = 18,
     GameState_LoadStatusScreen    = 19,
     GameState_LoadMapScreen       = 20,
-    GameState_Unk15               = 21, // TODO: Some kind of special screen fade?
+    GameState_Credits             = 21,
     GameState_Unk16               = 22, /** Removed debug menu? Doesn't exist in function array, but `DebugMoviePlayer` state tries to switch to it. */
 
     GameState_Hack                = NO_VALUE // @hack Force enum to be treated as s32.

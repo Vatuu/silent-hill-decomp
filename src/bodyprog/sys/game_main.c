@@ -60,7 +60,7 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Options_Update,
     GameState_LoadStatusScreen_Update,
     GameState_LoadMapScreen_Update,
-    GameState_Unk15_Update
+    GameState_Credits_Update
 };
 
 // ========================================

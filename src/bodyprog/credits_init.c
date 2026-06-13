@@ -11,37 +11,37 @@
 s32 D_800C48F0;
 
 s_800AFE08 D_800AFE08 = {
-    .field_6  = 0x18,
-    .field_8  = 0x64FFFFFF,
+    .lineHeight  = 0x18,
+    .color  = 0x64FFFFFF,
 #if VERSION_IS(USA)
-    .field_C  = D_801E5C24,
-    .field_10 = D_801E5E24
+    .widthTable  = D_801E5C24,
+    .colorTable = D_801E5E24
 #elif VERSION_IS(JAP0)
     // TODO: Symbolise these pointers, so version check can be removed.
-    .field_C  = (s16*)0x801E5C1C,
-    .field_10 = (s32*)0x801E5E1C
+    .widthTable  = (s16*)0x801E5C1C,
+    .colorTable = (s32*)0x801E5E1C
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
     // TODO: Symbolise these pointers.
-    .field_C  = (s16*)0x801E5C24,
-    .field_10 = (s32*)0x801E5E24
+    .widthTable  = (s16*)0x801E5C24,
+    .colorTable = (s32*)0x801E5E24
 #endif
 };
 
 s_800AFE24 D_800AFE24 = {
     .sub_0 = {
-        .field_6  = 24,
-        .field_8  = 0x2CFFFFFF,
+        .lineHeight  = 24,
+        .color  = 0x2CFFFFFF,
 #if VERSION_IS(USA)
-        .field_C  = D_801E5C24,
-        .field_10 = D_801E5E40
+        .widthTable  = D_801E5C24,
+        .colorTable = D_801E5E40
 #elif VERSION_IS(JAP0)
         // TODO: Symbolise these pointers.
-        .field_C  = (s16*)0x801E5C1C,
-        .field_10 = (s32*)0x801E5E38
+        .widthTable  = (s16*)0x801E5C1C,
+        .colorTable = (s32*)0x801E5E38
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
         // TODO: Symbolise these pointers.
-        .field_C  = (s16*)0x801E5C24,
-        .field_10 = (s32*)0x801E5E40
+        .widthTable  = (s16*)0x801E5C24,
+        .colorTable = (s32*)0x801E5E40
 #endif
     },
     .field_1C = 4096,
@@ -73,12 +73,12 @@ void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0
 
     Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, img);
 
-    D_800AFE08.field_18 = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` does something similar.
+    D_800AFE08.uv = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` does something similar.
     tPage               = ((u8*)&img->tPage)[1];
 
-    D_800AFE08.field_14  = tPage & 0x10;
-    D_800AFE08.field_14 |= tPage & 0xF;
-    D_800AFE08.field_16  = (img->clutY << 6) | ((img->clutX >> 4) & 0x3F);
+    D_800AFE08.tpage  = tPage & 0x10;
+    D_800AFE08.tpage |= tPage & 0xF;
+    D_800AFE08.clut  = (img->clutY << 6) | ((img->clutX >> 4) & 0x3F);
 }
 
 void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8009185C
@@ -98,15 +98,15 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     temp_lo_4 = (arg6 + (s32)Q12_MULT_PRECISE(arg3, temp_lo_2)) >> 2;
     temp_lo_4 = temp_t1 / temp_lo_4;
 
-    D_800AFE24.sub_0.field_0  = 0;
-    D_800AFE24.sub_0.field_2  = 0;
-    D_800AFE24.sub_0.field_4  = 0;
-    D_800AFE24.sub_0.field_6  = 24;
-    D_800AFE24.sub_0.field_7  = 0;
-    D_800AFE24.sub_0.field_8  = 0x2CFFFFFF;
-    D_800AFE24.sub_0.field_18 = D_800AFE08.field_18;
-    D_800AFE24.sub_0.field_16 = D_800AFE08.field_16;
-    D_800AFE24.sub_0.field_14 = D_800AFE08.field_14;
+    D_800AFE24.sub_0.textX  = 0;
+    D_800AFE24.sub_0.textY  = 0;
+    D_800AFE24.sub_0.leftMargin  = 0;
+    D_800AFE24.sub_0.lineHeight  = 24;
+    D_800AFE24.sub_0.semiTrans  = 0;
+    D_800AFE24.sub_0.color  = 0x2CFFFFFF;
+    D_800AFE24.sub_0.uv = D_800AFE08.uv;
+    D_800AFE24.sub_0.clut = D_800AFE08.clut;
+    D_800AFE24.sub_0.tpage = D_800AFE08.tpage;
     D_800AFE24.field_1C = arg3;
     D_800AFE24.field_20 = arg0;
     D_800AFE24.field_22 = arg1;
