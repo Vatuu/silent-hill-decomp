@@ -477,7 +477,7 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
         {
             if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
             {
-                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(1.0f), romperProps.targetPositionX_FC,
+                romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, Q12(1.0f), romperProps.targetPositionX_FC,
                                                                                   romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), true);
             }
         }
@@ -620,13 +620,13 @@ void Romper_Control_3(s_SubCharacter* romper)
             {
                 unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), CLAMP_MIN_THEN_LOW(distToTarget - Q12(0.2f), Q12(0.2f), Q12(2.5f)));
 
-                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), true);
+                romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), true);
             }
         }
         else
         {
             unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), Q12(2.5f));
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), false);
+            romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, Q12_ANGLE(360.0f), false);
         }
 
         if (romperProps.rotationY_F2 == angleToTarget)
@@ -796,12 +796,12 @@ void Romper_Control_4(s_SubCharacter* romper)
         if (Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - romper->position.vx,
                                 g_SysWork.playerWork.player.position.vz - romper->position.vz) >= Q12_ANGLE(180.0f))
         {
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
+            romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
                                                                               romperProps.targetPositionZ_100, Q12(1.0f), true);
         }
         else
         {
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
+            romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
                                                                               romperProps.targetPositionZ_100, Q12(1.0f), false);
         }
 

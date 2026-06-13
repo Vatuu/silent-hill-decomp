@@ -403,7 +403,7 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
         scratcherProps.timer_EA += g_DeltaTime;
         if (distToPlayer > Q12(7.5f) && scratcherProps.timer_EA > Q12(1.8f))
         {
-            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
+            scratcherProps.targetHeadingAngle_EC = Los_CharaHeadingAngleGet(scratcher,
                                                                          Q12(5.0f),
                                                                          g_SysWork.playerWork.player.position.vx,
                                                                          g_SysWork.playerWork.player.position.vz,
@@ -418,7 +418,7 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
         }
         else if (distToPlayer > Q12(3.0f) && scratcherProps.timer_EA > Q12(0.6f))
         {
-            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
+            scratcherProps.targetHeadingAngle_EC = Los_CharaHeadingAngleGet(scratcher,
                                                                          Q12(1.5f),
                                                                          g_SysWork.playerWork.player.position.vx,
                                                                          g_SysWork.playerWork.player.position.vz,
@@ -693,7 +693,7 @@ void HangedScratcher_ControlWalkForward(s_SubCharacter* scratcher)
         {
             scratcherProps.timer_EA = Q12(0.0f);
 
-            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher, Q12(1.0f), g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, Q12_ANGLE(360.0f), true);
+            scratcherProps.targetHeadingAngle_EC = Los_CharaHeadingAngleGet(scratcher, Q12(1.0f), g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz, Q12_ANGLE(360.0f), true);
             if (scratcherProps.targetHeadingAngle_EC == Q12_ANGLE(360.0f))
             {
                 scratcherProps.targetHeadingAngle_EC = scratcher->rotation.vy - Q12_ANGLE(180.0f);

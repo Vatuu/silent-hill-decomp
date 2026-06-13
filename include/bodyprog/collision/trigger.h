@@ -14,18 +14,18 @@ STATIC_ASSERT_SIZEOF(s_CollisionCylinder, 20);
 
 typedef struct
 {
-    q19_12 field_0; // X position.
-    q19_12 field_4; // Z position.
-    q19_12 field_8;
-    q19_12 field_C;
-    q19_12 field_10; // X
-    q19_12 field_14; // Z
-    q19_12 field_18; // X } Bounds?
-    q19_12 field_1C; // X }
-    q19_12 field_20; // Z }
-    q19_12 field_24; // Z }
-    q19_12 field_28; // Maybe XZ position.
-    q19_12 triggerHeight;
+    /* 0x0  */ q19_12 positionX;
+    /* 0x4  */ q19_12 positionZ;
+    /* 0x8  */ q19_12 newPositionX;
+    /* 0xC  */ q19_12 newPositionZ;
+    /* 0x10 */ q19_12 offsetX;
+    /* 0x14 */ q19_12 offsetZ;
+    /* 0x18 */ q19_12 minX; // } TODO: Check. Maybe swapped.
+    /* 0x1C */ q19_12 maxX; // }
+    /* 0x20 */ q19_12 minZ; // } TODO: Check. Maybe swapped.
+    /* 0x24 */ q19_12 maxZ; // }
+    /* 0x28 */ q19_12 field_28; // Maybe XZ position.
+    /* 0x2C */ q19_12 triggerHeight;
 } s_func_8006F338;
 
 /** @brief World-space collision trigger used to inform uneven terrain such as walls and stairs. */
@@ -48,9 +48,9 @@ typedef struct _ActiveCollisionTriggers
     /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
 } s_ActiveCollisionTriggers;
 
-void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
+void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ);
 
-void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
+void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ);
 
 bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger);
 

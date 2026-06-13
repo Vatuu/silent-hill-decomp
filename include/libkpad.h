@@ -42,16 +42,16 @@ typedef struct
     s32                data_4;
 } s_SysWork_2514_C;
 
-typedef struct _s_SysWork_2514_18
+typedef struct _SysWork_2514_18
 {
-    struct _s_SysWork_2514_18* next_0;
-    struct _s_SysWork_2514_18* prev_4;
-    u_SysWork_2514_C_0         key_8;
-    s32                        field_C;
-    u8                         unk_10[8];
-    struct _s_SysWork_2514_18* unk_18;
-    u16                        field_1C;
-    u16                        field_1E;
+    struct _SysWork_2514_18* next_0;
+    struct _SysWork_2514_18* prev_4;
+    u_SysWork_2514_C_0       key_8;
+    s32                      field_C;
+    u8                       unk_10[8];
+    struct _SysWork_2514_18* unk_18;
+    u16                      field_1C;
+    u16                      field_1E;
 } s_SysWork_2514_18;
 
 typedef struct
@@ -83,20 +83,20 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
 // Controller node?
-typedef struct _s_SysWork_2510
+typedef struct _SysWork_2510
 {
-    struct _s_SysWork_2510* next_0;
-    u8                      key_4;
-    s8                      pad_5[3];
-    s32                     field_8;
-    s32                     (*func_C)(s_SysWork_2514* ptr, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
+    struct _SysWork_2510* next_0;
+    u8                    key_4;
+    s8                    pad_5[3];
+    s32                   field_8;
+    s32                   (*func_C)(s_SysWork_2514* ptr, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
 // Exception, as one of the unidentified structs uses this.
-typedef struct _s_8002AC04
+typedef struct _8002AC04
 {
-    struct _s_8002AC04* field_0;
+    struct _8002AC04* field_0;
 
     union
     {
@@ -121,12 +121,12 @@ typedef struct _s_8002AC04
 
         struct
         {
-            u8                  funcIdx_4;
-            u8                  field_5   : 7;
-            u32                 field_5_7 : 1;
-            u16                 field_6;
-            struct _s_8002AC04* field_8;
-            u32                 field_C;
+            u8                funcIdx_4;
+            u8                field_5   : 7;
+            u32               field_5_7 : 1;
+            u16               field_6;
+            struct _8002AC04* field_8;
+            u32               field_C;
         } func_80089BB8_data;
 
         struct

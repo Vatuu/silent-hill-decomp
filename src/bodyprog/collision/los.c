@@ -59,7 +59,7 @@ q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 
     return Q12_ANGLE(360.0f);
 }
 
-q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19_12 toZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
+q19_12 Los_CharaHeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 toX, q19_12 toZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
 {
     #define SPAN_STEP_COUNT 3
 
@@ -191,7 +191,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
                     (chara->position.vy - chara->collision.box.offsetY);
     }
 
-    // TODO: Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayTrace`?
+    // TODO: Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if it's `s_RayTrace`?
     return !Ray_CharaTraceQuery(&sp10, &pos, &offset, chara) || sp20.vx != Q12(0.0f);
 }
 

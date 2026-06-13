@@ -12,7 +12,13 @@
 #include <psyq/string.h>
 #include <psyq/sys/file.h>
 
-#define FSQUEUE_IDX_WRAP(idx) ((u32)(idx) % FS_QUEUE_LENGTH)
+/** @brief Wraps a filesystem queue entry index to `FS_QUEUE_LENGTH`.
+ *
+ * @param idx Index to wrap.
+ * @return Wrapped `idx`.
+ */
+#define FSQUEUE_IDX_WRAP(idx) \
+    ((u32)(idx) % FS_QUEUE_LENGTH)
 
 s_FsQueue g_FsQueue;
 
@@ -141,6 +147,7 @@ s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, 
 void Fs_QueueInitialize(void)
 {
     bzero(&g_FsQueue, sizeof(g_FsQueue));
+
     g_FsQueue.last.idx      = NO_VALUE;
     g_FsQueue.last.ptr      = &g_FsQueue.entries[FS_QUEUE_LENGTH - 1];
     g_FsQueue.read.idx      = 0;
@@ -151,6 +158,7 @@ void Fs_QueueInitialize(void)
     g_FsQueue.postLoadState = 0;
     g_FsQueue.resetTimer0   = 0;
     g_FsQueue.resetTimer1   = 0;
+
     Fs_InitializeMem(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
@@ -440,24 +448,24 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry)
 {
     s_FsQueueEntry* other;
     s32             queueLength;
-    s32             overlap;
+    bool            hasOverlap;
     s32             i;
 
     queueLength = g_FsQueue.read.idx - g_FsQueue.postLoad.idx;
 
     for (i = 0; i < queueLength; i++)
     {
-        other   = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(g_FsQueue.postLoad.idx + i)];
-        overlap = false;
+        other      = &g_FsQueue.entries[FSQUEUE_IDX_WRAP(g_FsQueue.postLoad.idx + i)];
+        hasOverlap = false;
         if (other->postLoad || other->allocate)
         {
-            overlap = Fs_QueueDoBuffersOverlap(entry->data,
-                                               ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
-                                               other->data,
-                                               other->info->blockCount * FS_BLOCK_SIZE);
+            hasOverlap = Fs_QueueDoBuffersOverlap(entry->data,
+                                                  ALIGN(entry->info->blockCount * FS_BLOCK_SIZE, FS_SECTOR_SIZE),
+                                                  other->data,
+                                                  other->info->blockCount * FS_BLOCK_SIZE);
         }
 
-        if (overlap == true)
+        if (hasOverlap == true)
         {
             return false;
         }
@@ -468,9 +476,13 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry)
 
 bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 {
-    u32 data0Low = (u32)data0 & 0xFFFFFF;
-    u32 data1Low = (u32)data1 & 0xFFFFFF;
-    if ((data1Low >= data0Low + size0) || (data0Low >= data1Low + size1))
+    u32 data0Low;
+    u32 data1Low;
+
+    data0Low = (u32)data0 & 0xFFFFFF;
+    data1Low = (u32)data1 & 0xFFFFFF;
+
+    if (data1Low >= (data0Low + size0) || data0Low >= (data1Low + size1))
     {
         return false;
     }
@@ -481,6 +493,7 @@ bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1)
 bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry)
 {
     CdlLOC cdloc;
+
     CdIntToPos(entry->info->startSector, &cdloc);
     return CdControl(CdlSetloc, (u_char*)&cdloc, NULL);
 }

@@ -406,7 +406,7 @@ void Groaner_ControlWalkForward(s_SubCharacter* groaner)
                                                                                 groaner->position.vz - groanerProps.targetPositionZ))) < (Rng_GenerateUInt(Q12_ANGLE(45.0f), Q12_ANGLE(50.7f) - 1)))
                 {
                     randTargetPosX             = groanerProps.targetPositionX + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
-                    groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, Q12_ANGLE(306.0f),
+                    groanerProps.angleToTarget = Los_CharaHeadingAngleGet(groaner, Q12_ANGLE(306.0f),
                                                                        randTargetPosX, groanerProps.targetPositionZ + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1),
                                                                        Q12_ANGLE(360.0f), true);
                     if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
@@ -482,7 +482,7 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
                 var_a1 = Rng_GenerateInt(Q12(1.5f), Q12(1.875f) - 1);
             }
 
-            headingAngle = Chara_HeadingAngleGet(groaner, var_a1, groanerProps.targetPositionX, groanerProps.targetPositionZ,
+            headingAngle = Los_CharaHeadingAngleGet(groaner, var_a1, groanerProps.targetPositionX, groanerProps.targetPositionZ,
                                                  Q12_ANGLE(360.0f), true);
             if (headingAngle == Q12_ANGLE(360.0f))
             {
@@ -770,7 +770,7 @@ void Groaner_Control4(s_SubCharacter* groaner)
         (hasLosHit && groanerProps.timer_104 >= Q12(0.0f)))
     {
         distMax = Q12(1.5f) - Rng_GenerateInt(Q12(0.0f), Q12(0.3748f));
-        groanerProps.angleToTarget = Chara_HeadingAngleGet(groaner, distMax, groanerProps.targetPositionX,
+        groanerProps.angleToTarget = Los_CharaHeadingAngleGet(groaner, distMax, groanerProps.targetPositionX,
                                                            groanerProps.targetPositionZ, Q12(1.0f), false);
         if (groanerProps.angleToTarget == Q12_ANGLE(360.0f))
         {

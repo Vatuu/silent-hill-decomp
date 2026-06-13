@@ -805,7 +805,7 @@ void Stalker_Control_2(s_SubCharacter* stalker)
         // Set target heading angle.
         if (stalkerProps.timer_F8 == Q12(0.0f))
         {
-            stalkerProps.targetHeadingAngle = Chara_HeadingAngleGet(stalker,
+            stalkerProps.targetHeadingAngle = Los_CharaHeadingAngleGet(stalker,
                                                                         Q12(2.0f),
                                                                         g_SysWork.playerWork.player.position.vx,
                                                                         g_SysWork.playerWork.player.position.vz,
@@ -1065,7 +1065,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
 
         if (stalkerProps.timer_F8 == Q12(0.0f))
         {
-            stalkerProps.targetHeadingAngle = Chara_HeadingAngleGet(stalker,
+            stalkerProps.targetHeadingAngle = Los_CharaHeadingAngleGet(stalker,
                                                                         Q12(2.5f),
                                                                         stalkerProps.targetPositionX,
                                                                         stalkerProps.targetPositionZ,

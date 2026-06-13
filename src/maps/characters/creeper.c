@@ -464,7 +464,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
                 creeperProps.flags &= ~CreeperFlag_HasAttacked;
             }
 
-            creeperProps.angleToTarget = Chara_HeadingAngleGet(creeper, Q12(1.2f),
+            creeperProps.angleToTarget = Los_CharaHeadingAngleGet(creeper, Q12(1.2f),
                                                                creeperProps.targetPositionX,
                                                                creeperProps.targetPositionZ,
                                                                Q12_ANGLE(360.0f), true);
@@ -608,7 +608,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         creeper->model.controlState   = CreeperControl_WalkForward;
         creeperProps.attackTimer      = Q12(0.0f);
-        creeperProps.angleToTarget    = Chara_HeadingAngleGet(creeper, Q12(4.8f),
+        creeperProps.angleToTarget    = Los_CharaHeadingAngleGet(creeper, Q12(4.8f),
                                                               playerChara.position.vx, playerChara.position.vz,
                                                               Q12_ANGLE(360.0f), false);
         creeper->field_44.field_0     = 0;

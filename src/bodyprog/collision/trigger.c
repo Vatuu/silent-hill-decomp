@@ -25,14 +25,14 @@
 #define TRIGGER_HEIGHT_GET(steps) \
     ((-Q12(steps) >> 1) - Q12(1.5f))
 
-void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
+void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ) // 0x8006F250
 {
     s32              i;
     s_func_8006F338* ptr;
 
     ptr = PSX_SCRATCH;
 
-    func_8006F338(ptr, posX, posZ, posDeltaX, posDeltaZ);
+    func_8006F338(ptr, posX, posZ, offsetX, offsetZ);
 
     // Run through collision triggers.
     for (i = 0; i < g_ActiveCollisionTriggers.collisionTriggerCount; i++)
@@ -43,6 +43,7 @@ void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19
         }
     }
 
+    // TODO: Does this define trigger size and height in `arg0`?
     if (ptr->field_28 == Q12(1.0f))
     {
         arg0[0] = Q12(32.0f);
@@ -50,49 +51,49 @@ void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19
     }
     else
     {
-        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(ptr->field_10, Q12(0.0f), ptr->field_14), ptr->field_28, Q12_SHIFT);
+        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(ptr->offsetX, Q12(0.0f), ptr->offsetZ), ptr->field_28, Q12_SHIFT);
         arg0[1] = ptr->triggerHeight;
     }
 }
 
-void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F338
+void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ) // 0x8006F338
 {
     q19_12 newPosX;
     q19_12 field_4;
 
-    newPosX = posX + posDeltaX;
+    newPosX = posX + offsetX;
 
-    arg0->field_0  = posX;
-    arg0->field_4  = posZ;
-    arg0->field_10 = posDeltaX;
-    arg0->field_8  = posX + posDeltaX;
-    arg0->field_28 = Q12(1.0f);
+    arg0->positionX     = posX;
+    arg0->positionZ     = posZ;
+    arg0->offsetX       = offsetX;
+    arg0->newPositionX  = posX + offsetX;
+    arg0->field_28      = Q12(1.0f);
     arg0->triggerHeight = Q12(1048560.0f);
-    arg0->field_14 = posDeltaZ;
+    arg0->offsetZ       = offsetZ;
 
-    arg0->field_C = posZ + posDeltaZ;
-    if (newPosX >= arg0->field_0)
+    arg0->newPositionZ = posZ + offsetZ;
+    if (newPosX >= arg0->positionX)
     {
-        arg0->field_18 = arg0->field_0;
-        arg0->field_1C = arg0->field_8;
+        arg0->minX = arg0->positionX;
+        arg0->maxX = arg0->newPositionX;
     }
     else
     {
-        arg0->field_18 = posX + posDeltaX;
-        arg0->field_1C = arg0->field_0;
+        arg0->minX = posX + offsetX;
+        arg0->maxX = arg0->positionX;
     }
 
-    field_4 = arg0->field_4;
-    if (arg0->field_C >= arg0->field_4)
+    field_4 = arg0->positionZ;
+    if (arg0->newPositionZ >= arg0->positionZ)
     {
-        arg0->field_20 = field_4;
-        arg0->field_24 = arg0->field_C;
+        arg0->minZ = field_4;
+        arg0->maxZ = arg0->newPositionZ;
         return;
     }
     else
     {
-        arg0->field_20 = arg0->field_C;
-        arg0->field_24 = arg0->field_4;
+        arg0->minZ = arg0->newPositionZ;
+        arg0->maxZ = arg0->positionZ;
     }
 }
 
@@ -115,23 +116,23 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
     maxZ = Q12(trigger->positionZ + trigger->sizeZ);
 
     // Check for AABB intersection.
-    if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
-        (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
+    if ((minX >= arg0->maxX || arg0->minX >= maxX) &&
+        (minZ >= arg0->maxZ || arg0->minZ >= maxZ))
     {
         return false;
     }
 
-    if (arg0->field_0 >= minX && maxX >= arg0->field_0 &&
-        arg0->field_4 >= minZ && maxZ >= arg0->field_4)
+    if (arg0->positionX >= minX && maxX >= arg0->positionX &&
+        arg0->positionZ >= minZ && maxZ >= arg0->positionZ)
     {
         arg0->field_28 = Q12(0.0f);
         arg0->triggerHeight = TRIGGER_HEIGHT_GET(trigger->height);
     }
     else
     {
-        if (arg0->field_10 >= Q12(0.0f))
+        if (arg0->offsetX >= Q12(0.0f))
         {
-            if (arg0->field_14 >= Q12(0.0f))
+            if (arg0->offsetZ >= Q12(0.0f))
             {
                 var_s1   = minX;
                 var_v0_2 = minZ;
@@ -144,7 +145,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
         }
         else
         {
-            if (arg0->field_14 >= Q12(0.0f))
+            if (arg0->offsetZ >= Q12(0.0f))
             {
                 var_s1   = maxX;
                 var_v0_2 = minZ;
@@ -157,10 +158,10 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
         }
 
         // TODO: What are these shifts? Converts up to Q24, then down to Q8??
-        temp_s1 = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(var_v0_2 - arg0->field_4, Q12_SHIFT) >> 16,
-                                FP_TO(minX - arg0->field_0, Q12_SHIFT) >> 16, FP_TO(maxX - arg0->field_0, Q12_SHIFT) >> 16);
-        var_v0  = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(var_s1 - arg0->field_0, Q12_SHIFT) >> 16,
-                                FP_TO(minZ - arg0->field_4, Q12_SHIFT) >> 16, FP_TO(maxZ - arg0->field_4, Q12_SHIFT) >> 16);
+        temp_s1 = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->offsetX, Q12_SHIFT) >> 16, FP_TO(arg0->offsetZ, Q12_SHIFT) >> 16, FP_TO(var_v0_2 - arg0->positionZ, Q12_SHIFT) >> 16,
+                                FP_TO(minX - arg0->positionX, Q12_SHIFT) >> 16, FP_TO(maxX - arg0->positionX, Q12_SHIFT) >> 16);
+        var_v0  = Vw_LineSegmentIntersectionCheck(FP_TO(arg0->offsetZ, Q12_SHIFT) >> 16, FP_TO(arg0->offsetX, Q12_SHIFT) >> 16, FP_TO(var_s1 - arg0->positionX, Q12_SHIFT) >> 16,
+                                FP_TO(minZ - arg0->positionZ, Q12_SHIFT) >> 16, FP_TO(maxZ - arg0->positionZ, Q12_SHIFT) >> 16);
 
         if (var_v0 >= temp_s1)
         {

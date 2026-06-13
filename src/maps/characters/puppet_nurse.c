@@ -910,7 +910,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
 
     // @note Did they forget to make it an if?
     Rng_Rand16();
-    localNurseProps.field_11C = Chara_HeadingAngleGet(nurse, Q12(1.0f),
+    localNurseProps.field_11C = Los_CharaHeadingAngleGet(nurse, Q12(1.0f),
                                                       g_SysWork.playerWork.player.position.vx,
                                                       g_SysWork.playerWork.player.position.vz,
                                                       Q12_ANGLE(360.0f), true);
@@ -1070,7 +1070,7 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
 
     if (Rng_GenerateUInt(0, Q8(1.0f) - 1) >= Q8(0.5f))
     {
-        nurseProps.field_11C = Chara_HeadingAngleGet(nurse, Q12(1.0f),
+        nurseProps.field_11C = Los_CharaHeadingAngleGet(nurse, Q12(1.0f),
                                                      g_SysWork.playerWork.player.position.vx,
                                                      g_SysWork.playerWork.player.position.vz,
                                                      Q12_ANGLE(360.0f), true);
@@ -1312,7 +1312,7 @@ void PuppetNurse_Control11(s_SubCharacter* nurse)
     {
         tmp                       = Q12(1.5f);
         temp_s0                   = localNurseProps.field_108 + ((Rng_Rand16() % Q12(3.0f)) - tmp);
-        localNurseProps.field_11C = Chara_HeadingAngleGet(nurse, Q12(1.0f), 
+        localNurseProps.field_11C = Los_CharaHeadingAngleGet(nurse, Q12(1.0f), 
                                                           temp_s0, 
                                                           localNurseProps.field_10C + ((Rng_Rand16() % Q12(3.0f)) - tmp),
                                                           Q12_ANGLE(360.0f), true);

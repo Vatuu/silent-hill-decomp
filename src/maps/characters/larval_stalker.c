@@ -245,7 +245,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     {
                         targetX = larvalStalkerProps.targetPositionX + Rng_GenerateInt(0, Q12(1.5f) - 1);
                         targetZ = larvalStalkerProps.targetPositionZ + Rng_GenerateInt(0, Q12(1.5f) - 1);
-                        larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), targetX, targetZ, Q12(1.0f), true);
+                        larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker, Q12(2.0f), targetX, targetZ, Q12(1.0f), true);
                         Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
                     }
                     else
@@ -259,7 +259,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 {
                     if (!Rng_GenerateInt(0, 31)) // 1 in 32 chance.
                     {
-                        larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), true);
+                        larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), true);
                     }
 
                     Chara_TurnModulate(Math_AngleNormalizeSigned(larvalStalkerProps.angle_108 - larvalStalker->rotation.vy), Q12_ANGLE(1.5f), Q12_ANGLE(30.0f));
@@ -414,7 +414,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
                 if (larvalStalkerProps.angle_108 == Q12(1.0f))
                 {
                     larvalStalkerProps.angle_108 = Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1);
@@ -536,7 +536,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker,
+                larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker,
                                                                      Q12(1.5f),
                                                                      larvalStalkerProps.targetPositionX,
                                                                      larvalStalkerProps.targetPositionZ,
@@ -680,7 +680,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12_ANGLE(180.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker, Q12_ANGLE(180.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
             }
 
             larvalStalkerProps.timer_EC += g_DeltaTime;
@@ -780,7 +780,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* bon
         if (sp18.offset.vx == Q12(0.0f) &&
             sp18.offset.vz == Q12(0.0f))
         {
-            larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker,
+            larvalStalkerProps.angle_108 = Los_CharaHeadingAngleGet(larvalStalker,
                                                                           Q12(1.0f),
                                                                           larvalStalkerProps.targetPositionX,
                                                                           larvalStalkerProps.targetPositionZ,

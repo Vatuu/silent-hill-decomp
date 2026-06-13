@@ -873,7 +873,7 @@ Collision_TriggerOffsetGet                   = 0x8006F8FC;
 //----------------------------------------------------------------
 //--- PA: 0x04AE3C   VA: 0x8006F99C   subsegment: c, collision/los
 //----------------------------------------------------------------
-Chara_HeadingAngleGet                        = 0x8006FAFC; // type:func
+Los_CharaHeadingAngleGet                     = 0x8006FAFC; // type:func
 Los_CharaToTargetHitCheck                    = 0x80070030; // type:func
 Los_CharaToCharaTargetCheck                  = 0x80070084; // type:func
 Los_NpcToPlayerHitCheck                      = 0x800700F8; // type:func
@@ -1049,9 +1049,9 @@ Bgm_PlayNewTrack                             = 0x80087EA8; // type:func
 Bgm_CrossfadeToTrack                         = 0x80087EDC; // type:func
 Bgm_CrossfadeToSilence                       = 0x80088028; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x063658   VA: 0x800881B8   subsegment: c, bodyprog_800881B8
-//--------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//--- PA: 0x063658   VA: 0x800881B8   subsegment: c, gfx/bodyprog_2d_800881B8
+//---------------------------------------------------------------------------
 Gfx_CursorDraw                               = 0x800881B8;
 Map_BoxOutlineDraw                           = 0x80088370;
 

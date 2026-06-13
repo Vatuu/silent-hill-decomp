@@ -1026,7 +1026,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             if (!(g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                     g_GameWorkPtr->config.controllerConfig.cancel)))
             {
-                if (g_SysWork.field_28 <= 480)
+                if (g_SysWork.field_28 <= 480) // TODO: Make float.
                 {
                     break;
                 }
@@ -1064,7 +1064,7 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
 {
     if (g_GameWork.gameStateSteps[0] == 0)
     {
-        g_IntervalVBlanks               = 1;
+        g_IntervalVBlanks = 1;
         ScreenFade_Start(true, true, false);
         g_GameWork.gameStateSteps[0] = 1;
     }
