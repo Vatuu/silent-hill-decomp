@@ -1037,7 +1037,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 
     splitHead->collision.state = CharaCollisionState_4;
 
-    func_8005CB20(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
+    Chara_MovementUpdate1(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
 
     sharedData_800D8614_1_s05 = Q12(0.0f);
     sharedData_800D8616_1_s05 = Q12(0.0f);

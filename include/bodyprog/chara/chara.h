@@ -336,7 +336,7 @@ typedef struct _PropsHangedScratcher
     /* 0xEC  */ q3_12  targetHeadingAngle_EC;
     /* 0xEE  */ u8     field_EE;
     /* 0xEF  */ s8     __pad_EF;
-    /* 0xF0  */ q3_12  offsetX_F0; // } Offsets passed to `func_8005CB20`
+    /* 0xF0  */ q3_12  offsetX_F0; // } Offsets passed to `Chara_MovementUpdate1`
     /* 0xF2  */ q3_12  offsetZ_F2; // }
     /* 0xF4  */ q19_12 positionX_F4;
     /* 0xF8  */ q19_12 positionZ_F8;

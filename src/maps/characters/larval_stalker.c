@@ -760,7 +760,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* bon
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        func_8005CB20(larvalStalker, &sp18, larvalStalkerProps.angle_100, larvalStalkerProps.angle_102);
+        Chara_MovementUpdate1(larvalStalker, &sp18, larvalStalkerProps.angle_100, larvalStalkerProps.angle_102);
     }
 
     larvalStalkerProps.angle_102 = Q12_ANGLE(0.0f);

@@ -2047,7 +2047,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        func_8005CB20(stalker, &sp10, stalkerProps.offset_EC, stalkerProps.offset_EE);
+        Chara_MovementUpdate1(stalker, &sp10, stalkerProps.offset_EC, stalkerProps.offset_EE);
     }
 
     stalkerProps.offset_EE = Q12(0.0f);

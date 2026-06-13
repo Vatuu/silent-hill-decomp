@@ -1121,7 +1121,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
             break;
     }
 
-    func_8005CB20(scratcher, &collResult, scratcherProps.offsetX_F0, scratcherProps.offsetZ_F2);
+    Chara_MovementUpdate1(scratcher, &collResult, scratcherProps.offsetX_F0, scratcherProps.offsetZ_F2);
 
     scratcherProps.offsetZ_F2 = Q12(0.0f);
     scratcherProps.offsetX_F0 = Q12(0.0f);

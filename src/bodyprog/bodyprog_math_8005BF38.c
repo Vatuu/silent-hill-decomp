@@ -13,7 +13,20 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-s16 D_800AE520[] = {
+/** @note This file is mostly conformed of unused code.
+ * The only functions used are `Math_AngleNormalizeSigned`
+ * and `func_8005C478`, while `Math_AngleNormalizeSigned` is
+ * broadly used through the code, `func_8005C478` is only
+ * used for something related to one of the beginning events
+ * and the Split Head code.
+ *
+ * Breaking `func_8005C478` causes the first section to break
+ * during the alleway part, while in the Split Head fight it
+ * will make Harry point toward completely random places when
+ * aiming to the boss.
+ */
+
+q3_12 D_800AE520[] = {
     0x3F6, 0x3E1, 0x3CD, 0x3B8,
     0x3A4, 0x38F, 0x37B, 0x366,
     0x351, 0x33B, 0x326, 0x310,
@@ -25,9 +38,6 @@ s16 D_800AE520[] = {
     0x0, 0x0
 };
 
-// ========================================
-// MATHS?
-// ========================================
 
 q3_12 Math_AngleNormalizeSigned(q3_12 angle) // 0x8005BF38
 {
@@ -169,7 +179,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     return 1;
 }
 
-u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 0x8005C478
+u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2)
 {
     s32   sp10;
     q3_12 angle0;

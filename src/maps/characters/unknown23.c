@@ -890,7 +890,7 @@ void func_800E0728(s_SubCharacter* chara) // 0x800E0728
     s_CollisionResult collResult;
 
     chara->fallSpeed += g_GravitySpeed;
-    Chara_MovementUpdate(chara, &collResult);
+    Chara_MovementUpdate0(chara, &collResult);
     chara->rotation.vy = Math_AngleNormalizeSigned(chara->rotation.vy);
 }
 

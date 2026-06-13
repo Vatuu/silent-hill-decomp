@@ -1120,7 +1120,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
         groaner->headingAngle = groaner->rotation.vy;
     }
 
-    func_8005CB20(groaner, &collResult, groanerProps.field_F0, groanerProps.field_F2);
+    Chara_MovementUpdate1(groaner, &collResult, groanerProps.field_F0, groanerProps.field_F2);
 
     groanerProps.field_F2 = Q12(0.0f);
     groanerProps.field_F0 = Q12(0.0f);

@@ -91,7 +91,7 @@ segments:
       - [0x39CC, .rodata, gfx/bodyprog_80056D8C]
       - [0x39E4, .rodata, gfx/texture_utils]
       - [0x39EC,  pad]
-      - [0x39F4, .rodata, bodyprog_combat_8005BF38]
+      - [0x39F4, .rodata, bodyprog_npc_8005BF38]
       - [0x3A0C,  pad]
       - [0x3A14, .rodata, gfx/bodyprog_effects_8005E0DC]
       - [0x3EB8,  rodata] # Garbage padding
@@ -200,7 +200,7 @@ segments:
       - [0x36640,   c, gfx/texture_utils]
       - [0x369FC,   c, gfx/billboard_draw]
       - [0x373D8,   c, bodyprog_math_8005BF38]
-      - [0x37C70,   c, bodyprog_combat_8005BF38]
+      - [0x37C70,   c, bodyprog_npc_8005BF38]
       - [0x38D0C,   c, sound/sfx]
       - [0x3957C,   c, gfx/bodyprog_effects_8005E0DC]
       - [0x40794,   c, gfx/bodyprog_800652F4] # Dead code
@@ -215,7 +215,7 @@ segments:
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, events/events_util]
       - [0x63348,   c, events/bodyprog_bgm_80087EA8]
-      - [0x63658,   c, bodyprog_800881B8]
+      - [0x63658,   c, gfx/bodyprog_2d_800881B8]
       - [0x6411C,   c, chara_spawn]
       - [0x64530,   c, bodyprog_80089090] # Uses `s_SysWork_2514` which is mainly used for `libkpad`, possibly vibration?
       - [0x654F8,   c, bodyprog_combat_8008A058]

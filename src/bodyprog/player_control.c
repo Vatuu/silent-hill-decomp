@@ -2830,12 +2830,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 0x1))
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                     func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                     func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
@@ -2873,11 +2873,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12(3.0f), Q12(3.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12(1.0f), Q12(1.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f), Q12(1.0f), 5);
                 }
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
@@ -3085,19 +3085,19 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     {
                         playerExtra.state          = PlayerState_None;
                         playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
-                        extra->model.controlState                 = 
-                        extra->model.stateStep                    = 0;
+                        extra->model.controlState  = 
+                        extra->model.stateStep     = 0;
 
                         if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
                         {
                             playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                            playerProps.flags                        &= ~PlayerFlag_Unk10;
+                            playerProps.flags         &= ~PlayerFlag_Unk10;
                         }
                     }
 
-                    playerProps.field_104               = 0;
-                    playerProps.flags                  &= ~PlayerFlag_Unk2;
-                    playerProps.flags                  &= ~PlayerFlag_Shooting;
+                    playerProps.field_104     = 0;
+                    playerProps.flags        &= ~PlayerFlag_Unk2;
+                    playerProps.flags        &= ~PlayerFlag_Shooting;
                     playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack), AttackInputType_Tap);
                     return true;
                 }
@@ -3122,14 +3122,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 playerExtra.state          = PlayerState_None;
                 playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
-                extra->model.controlState                 = extra->model.stateStep = 0;
+                extra->model.controlState  = extra->model.stateStep = 0;
 
                 if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
                 {
                     playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                    playerProps.flags                        &= ~PlayerFlag_Unk10;
-                    player->model.controlState                = 
-                    player->model.stateStep                   = 0;
+                    playerProps.flags         &= ~PlayerFlag_Unk10;
+                    player->model.controlState = 
+                    player->model.stateStep    = 0;
                 }
             }
 
@@ -3628,11 +3628,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
                 }
 
                 if (g_Player_TargetNpcIdx == NO_VALUE)
@@ -3649,16 +3649,16 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
                     {
                         playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                        player->model.controlState                =
-                        player->model.stateStep                   = 0;
+                        player->model.controlState =
+                        player->model.stateStep    = 0;
                     }
                 }
                 else
                 {
                     playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
-                    playerProps.flags                        |= PlayerFlag_Unk12;
-                    extra->model.controlState                 =
-                    extra->model.stateStep                    = 0;
+                    playerProps.flags         |= PlayerFlag_Unk12;
+                    extra->model.controlState  =
+                    extra->model.stateStep     = 0;
                 }
 
                 g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
@@ -3676,11 +3676,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     {
                         if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
                         {
-                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                         }
                         else
                         {
-                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(25.0f), Q12(3.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(25.0f), Q12(3.0f), 0);
                         }
 
                         g_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
@@ -3814,20 +3814,20 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                     }
                 }
                 else if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 1))
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(3.0f), Q12(7.0f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(0.9f), Q12(2.1f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(0.9f), Q12(2.1f), 4);
                 }
 
                 g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
@@ -4167,20 +4167,20 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         {
                             if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 1))
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                             }
                             else
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                             }
                         }
                         else if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & 1))
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(3.0f), Q12(7.0f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
                         }
                         else
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(0.9f), Q12(2.1f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(0.9f), Q12(2.1f), 4);
                         }
                     }
 
@@ -4199,8 +4199,8 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
                     {
                         playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                        player->model.stateStep                   = 0;
-                        player->model.controlState                = 0;
+                        player->model.stateStep    = 0;
+                        player->model.controlState = 0;
                     }
                     else if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
                     {
@@ -4281,13 +4281,13 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
             if (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
                 (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming))
             {
-                player->properties.player.field_F4        = 0;
-                playerExtra.upperBodyState = PlayerUpperBodyState_AimStop;
-                g_SysWork.targetNpcIdx                    = NO_VALUE;
-                playerProps.flags                        &= ~PlayerFlag_Unk0;
-                playerExtra.state          = PlayerState_None;
-                playerCombat.isAiming                     = false;
-                playerProps.flags                        &= ~PlayerFlag_Unk9;
+                player->properties.player.field_F4 = 0;
+                playerExtra.upperBodyState         = PlayerUpperBodyState_AimStop;
+                g_SysWork.targetNpcIdx             = NO_VALUE;
+                playerProps.flags                 &= ~PlayerFlag_Unk0;
+                playerExtra.state                  = PlayerState_None;
+                playerCombat.isAiming              = false;
+                playerProps.flags                 &= ~PlayerFlag_Unk9;
 
                 if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim ||
                     playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
@@ -4378,11 +4378,11 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & (1 << 0)))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(3.0f), Q12(3.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(1.0f), Q12(1.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f), Q12(1.0f), 5);
                     }
 
                     g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
@@ -4391,11 +4391,11 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 {
                     if (!(g_SysWork.field_2388.field_154.effectsInfo.field_0.s_field_0.field_0 & PlayerFlag_Unk0))
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(7.0f), Q12(7.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(7.0f), Q12(7.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat, Q12(2.1f), Q12(2.1f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(2.1f), Q12(2.1f), 5);
                     }
                 }
 

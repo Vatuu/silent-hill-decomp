@@ -699,7 +699,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
         creeper->headingAngle = creeper->rotation.vy;
     }
 
-    func_8005CB20(creeper, &collResult, creeperProps.collisionOffsetX, creeperProps.collisionOffsetZ);
+    Chara_MovementUpdate1(creeper, &collResult, creeperProps.collisionOffsetX, creeperProps.collisionOffsetZ);
     creeperProps.collisionOffsetZ = Q12(0.0f);
     creeperProps.collisionOffsetX = Q12(0.0f);
 

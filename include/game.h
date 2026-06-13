@@ -328,7 +328,7 @@ typedef union
     /* 0x0 */ s32 field_0; // Flags?
               struct
               {
-                  u8 field_0; // Flags.
+                  u8 field_0; // Flags. (1 << 0) Might be flashlight enabled.
                   u8 field_1;
                   u8 field_2;
                   s8 __pad_3;

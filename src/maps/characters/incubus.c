@@ -953,7 +953,7 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
     s_CollisionResult collResult;
 
     incubus->fallSpeed += g_GravitySpeed;
-    Chara_MovementUpdate(incubus, &collResult);
+    Chara_MovementUpdate0(incubus, &collResult);
     incubus->rotation.vy = Math_AngleNormalizeSigned(incubus->rotation.vy);
 }
 

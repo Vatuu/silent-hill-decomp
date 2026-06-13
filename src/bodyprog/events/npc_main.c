@@ -269,7 +269,7 @@ void Game_NpcUpdate(void) // 0x80038354
                 {
                     // Check X axis.
                     s32 playerCell = (g_SysWork.playerWork.player.position.vx + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
-                    s32 npcCell    = (curNpc->position.vx                        + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
+                    s32 npcCell    = (curNpc->position.vx                     + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
                     if (npcCell != playerCell)
                     {
                         continue;
@@ -277,7 +277,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
                     // Check Z axis.
                     playerCell = (g_SysWork.playerWork.player.position.vz + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
-                    npcCell    = (curNpc->position.vz                        + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
+                    npcCell    = (curNpc->position.vz                     + (Q12(CHUNK_CELL_SIZE) * 4)) / Q12(CHUNK_CELL_SIZE);
                     if (npcCell != playerCell)
                     {
                         continue;

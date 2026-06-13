@@ -14,10 +14,6 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-// ========================================
-// COMBAT 1
-// ========================================
-
 s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 {
     s32             i;
@@ -70,7 +66,7 @@ void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharac
     chara->collision.shapeOffsets.cylinder.vz = FP_FROM((-cylinderOffsetX * sinRotY) + (cylinderOffsetZ * cosRotY), Q12_SHIFT);
 }
 
-s32 Chara_MovementUpdate(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x8005C944
+s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult) // 0x8005C944
 {
     s_CollisionResult newCollResult;
     VECTOR3           offset;
@@ -117,19 +113,19 @@ s32 Chara_MovementUpdate(s_SubCharacter* chara, s_CollisionResult* collResult) /
     return wallResponse;
 }
 
-s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ) // 0x8005CB20
+s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ) // 0x8005CB20
 {
-    s_CollisionResult collResult0;
+    s_CollisionResult newCollResult;
     VECTOR3           offset; // Q19.12
     q19_12            headingAngle;
     q19_12            moveSpeed;
-    s32               temp_s0_2;
+    s32               moveDist;
     s32               scaleRestoreShift;
     s32               scaleReduceShift;
     s32               temp_v0_2;
     s32               temp_v0_4;
     q19_12            sinHeadingAngle;
-    s32               ret;
+    s32               wallResponse;
 
     headingAngle      = chara->headingAngle;
     moveSpeed         = Q12_MULT_PRECISE(g_DeltaTime, chara->moveSpeed);
@@ -137,36 +133,36 @@ s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 of
     scaleReduceShift  = scaleRestoreShift >> 1;
 
     sinHeadingAngle = Math_Sin(headingAngle);
-    temp_s0_2 = moveSpeed >> scaleReduceShift;
-    temp_v0_2 = sinHeadingAngle >> scaleReduceShift;
-    offset.vx = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_2) << scaleRestoreShift;
-
-    temp_v0_4 = Math_Cos(headingAngle) >> scaleReduceShift;
-    offset.vz = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_4) << scaleRestoreShift;
-
+    moveDist        = moveSpeed >> scaleReduceShift;
+    temp_v0_2       = sinHeadingAngle >> scaleReduceShift;
+    
+    offset.vx       = Q12_MULT_PRECISE(moveDist, temp_v0_2) << scaleRestoreShift;
+    temp_v0_4       = Math_Cos(headingAngle) >> scaleReduceShift;
+    offset.vz       = Q12_MULT_PRECISE(moveDist, temp_v0_4) << scaleRestoreShift;
     sinHeadingAngle = chara->fallSpeed;
+    
     offset.vx += offsetX;
     offset.vy  = Q12_MULT_PRECISE(g_DeltaTime, sinHeadingAngle);
     offset.vz += offsetZ;
 
-    ret = Collision_WallDetect(&collResult0, &offset, chara);
+    wallResponse = Collision_WallDetect(&newCollResult, &offset, chara);
 
-    chara->position.vx += collResult0.offset.vx;
-    chara->position.vy += collResult0.offset.vy;
-    chara->position.vz += collResult0.offset.vz;
+    chara->position.vx += newCollResult.offset.vx;
+    chara->position.vy += newCollResult.offset.vy;
+    chara->position.vz += newCollResult.offset.vz;
 
-    if (chara->position.vy > collResult0.surface.groundHeight)
+    if (chara->position.vy > newCollResult.surface.groundHeight)
     {
-        chara->position.vy = collResult0.surface.groundHeight;
+        chara->position.vy = newCollResult.surface.groundHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
     if (collResult != NULL)
     {
-        *collResult = collResult0;
+        *collResult = newCollResult;
     }
 
-    return ret;
+    return wallResponse;
 }
 
 void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin, q19_12 distMin, s32 mode) // 0x8005CD38
@@ -416,7 +412,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
     offsetToTarget.vz = (npc.position.vz + npc.collision.shapeOffsets.box.vz) - attackPos->vz;
 
     // Compute rotation to target.
-    targetDist   = Math_Vector2MagCalcSafeQ6(offsetToTarget.vx, offsetToTarget.vz);
+    targetDist    = Math_Vector2MagCalcSafeQ6(offsetToTarget.vx, offsetToTarget.vz);
     rotToTargetY0 = ratan2(offsetToTarget.vx, offsetToTarget.vz);
     rotToTargetX0 = ratan2(targetDist, offsetToTarget.vy);
 
@@ -430,9 +426,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
         #define curNpc g_SysWork.npcs[i]
 
         // Check if NPC is valid.
-        if (curNpc.model.charaId == Chara_None ||
-            curNpc.health < Q12(0.0f)          ||
-            i == npcIdx)
+        if (curNpc.model.charaId == Chara_None || curNpc.health < Q12(0.0f) || i == npcIdx)
         {
             continue;
         }

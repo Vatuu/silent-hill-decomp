@@ -1489,7 +1489,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse)
     nurse->headingAngle = ratan2(unkPosX, unkPosZ);
     nurse->fallSpeed   += g_GravitySpeed;
 
-    Chara_MovementUpdate(nurse, &collResult);
+    Chara_MovementUpdate0(nurse, &collResult);
 
     damagePosComp                 = nurseProps.damage.position.vx;
     nurse->moveSpeed              = nurseProps.moveSpeed;

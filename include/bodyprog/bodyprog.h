@@ -1627,13 +1627,13 @@ void func_8005B55C(GsCOORDINATE2* viewCoord);
 
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 arg5);
 
-u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
+u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2);
 
 s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
 void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara);
 
-s32 Chara_MovementUpdate(s_SubCharacter* chara, s_CollisionResult* collResult);
+s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult);
 
 /** Checks `groundType`. */
 bool func_8005F680(s_CollisionSurface* surface);
@@ -1898,7 +1898,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx);
 /** Displays gunfire effects. */
 void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coord);
 
-s32 func_8005CB20(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
+s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,

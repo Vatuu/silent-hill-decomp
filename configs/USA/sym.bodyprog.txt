@@ -794,12 +794,13 @@ Gfx_DebugStringPositionSet                   = 0x8005BF0C; // type:func
 //-------------------------------------------------------------------------
 Math_AngleNormalizeSigned                    = 0x8005BF38; // type:func
 
-//---------------------------------------------------------------------------
-//--- PA: 0x037C70   VA: 0x8005C7D0   subsegment: c, bodyprog_combat_8005BF38
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x037C70   VA: 0x8005C7D0   subsegment: c, bodyprog_npc_8005BF38
+//------------------------------------------------------------------------
 Chara_NpcIdxGet                              = 0x8005C7D0;
 Chara_CollisionShapeOffsetsUpdate            = 0x8005C814; //type:func
-Chara_MovementUpdate                         = 0x8005C944; // type:func
+Chara_MovementUpdate0                        = 0x8005C944; // type:func
+Chara_MovementUpdate1                        = 0x8005CB20;
 
 //------------------------------------------------------------
 //--- PA: 0x038D0C   VA: 0x8005D86C   subsegment: c, sound/sfx
