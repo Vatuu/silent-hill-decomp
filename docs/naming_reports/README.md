@@ -22,7 +22,7 @@ Percentages show named symbols out of total (named + auto-generated).
 | [credits](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/credits.html) | 8.0% (4/50) | 4.3% (1/23) | 11.1% (3/27) |
 | [options](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/options.html) | 96.5% (55/57) | 100.0% (26/26) | 93.5% (29/31) |
 | [saveload](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/saveload.html) | 79.7% (51/64) | 96.9% (31/32) | 62.5% (20/32) |
-| [stream](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/stream.html) | 95.3% (41/43) | 100.0% (31/31) | 83.3% (10/12) |
+| [stream](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/stream.html) | 97.6% (41/42) | 100.0% (31/31) | 90.9% (10/11) |
 
 ## Maps
 

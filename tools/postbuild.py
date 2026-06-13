@@ -1,9 +1,10 @@
 import sys
 import os
 
-# Patch garbage bytes in .bss segment
+# Patch garbage bytes back into built files
 
 USA_STREAM = [
+    [0x12ADC, b'\xA0\x05\x60\xAC'],
     [0x12AE4, b'\xE4\x73\x40\xAC']
 ]
 
