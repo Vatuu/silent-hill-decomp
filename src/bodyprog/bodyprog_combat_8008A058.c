@@ -1464,16 +1464,16 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
     if (var_s7 != 0)
     {
-        temp              = Q12_MULT_PRECISE(var_s7, offsetX);
+        temp                        = Q12_MULT_PRECISE(var_s7, offsetX);
         target->damage.position.vx += temp;
-        temp              = Q12_MULT_PRECISE(var_s7, offsetY);
+        temp                        = Q12_MULT_PRECISE(var_s7, offsetY);
         target->damage.position.vy += temp;
-        temp              = Q12_MULT_PRECISE(var_s7, offsetZ);
+        temp                        = Q12_MULT_PRECISE(var_s7, offsetZ);
         target->damage.position.vz += temp;
     }
 
-    target->attackReceived = weaponAttack;
-    sp14                     |= sp10;
+    target->attackReceived     = weaponAttack;
+    sp14                      |= sp10;
     attacker->field_44.field_8 = sp14;
 
     if (damageAmount | var_s7)

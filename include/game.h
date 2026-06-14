@@ -314,7 +314,7 @@ STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 typedef struct _PlayerCombat
 {
     /* 0x0  */ VECTOR3 attackPosition; /** Q19.12 */
-    /* 0xC  */ s8      __pad_C[3];
+    /* 0xC  */ s8      __pad[3];
     /* 0xF  */ s8      weaponAttack; /** Packed weapon attack. See `WEAPON_ATTACK`. */
     /* 0x10 */ u8      currentWeaponAmmo;
     /* 0x11 */ u8      totalWeaponAmmo;
@@ -348,12 +348,12 @@ typedef struct _MapEffectsInfo
                                 // Sets the transparent grey layer overlaid on characters and the enviroment.
     /* 0x10 */ q19_12  fogDistance;
     /* 0x14 */ CVECTOR fogColor;
-    /* 0x18 */ u8      field_18; // `bool`?
-    /* 0x19 */ CVECTOR field_19;
-    /* 0x1D */ CVECTOR screenTint; // Subtractive screen tint.
-    /* 0x21 */ CVECTOR field_21;   // Particle effect related. Only the first value affects snow transparency.
+    /* 0x18 */ u8      tintLightOverlapEnable; // `bool`.
+    /* 0x19 */ CVECTOR lightPointTint; /** Volumetric light point color. */
+    /* 0x1D */ CVECTOR worldTint; /** `CMY` */
+    /* 0x21 */ CVECTOR field_21;  // Particle effect related. Only the first value affects snow transparency.
     /* 0x25 */ CVECTOR field_25;
-    /* 0x29 */ s8      __pad_29[3];
+               // 3 byte of padding.
 } s_MapEffectsInfo;
 STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 

@@ -484,6 +484,9 @@ Vc_StereoBalanceGet                          = 0x80040A64; // type:func
 //--- PA: 0x01C014   VA: 0x80040B74   subsegment: c, gfx/bodyprog_80040B74
 //------------------------------------------------------------------------
 Chara_ModelLoadedCheck                       = 0x80040B74; // type:func
+func_80040BAC                                = 0x80040BAC;
+WorldEnv_WorldLightTintParamSet              = 0x80040E7C;
+func_80041074                                = 0x80041074;
 Math_RelativeRotationGet                     = 0x8004122C; // type:func
 
 //-------------------------------------------------------------
@@ -734,7 +737,9 @@ Items_AmmoReloadCalculation                  = 0x80054FC0; // type:func
 //------------------------------------------------------------------------
 WorldEnv_Init                                = 0x80055028; // type:func
 Gfx_2dEffectsDraw                            = 0x800550D0;
+WorldEnv_WorldLightingParamSet               = 0x80055330;
 WorldEnv_FogParamsSet                        = 0x800553C4; // type:func
+WorldEnv_WorldLightTintSet                   = 0x800553E0;
 WorldEnv_LightPositionGet                    = 0x80055434; // type:func
 WorldEnv_LightRotationAndIntensityGet        = 0x8005545C; // type:func
 WorldEnv_LightDirectionAndIntensityGet       = 0x80055490; // type:func

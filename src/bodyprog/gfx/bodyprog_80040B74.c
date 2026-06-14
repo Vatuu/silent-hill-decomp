@@ -9,8 +9,19 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-/** @note This code (except the first function) is seemly used for a initalization
- * process for 2D graphics.
+/** @note This code (except the first and possibly the second functions) are
+ * used for handling an overlaping lighting system.
+ *
+ * This system is seemly used only during one moment in the game as the only
+ * way this system is used is when a enviroment preset from `MAP_EFFECTS_INFOS`
+ * has `tintLightOverlapEnable` enabled or when `lightPointTint` and `worldTint`
+ * have a value defined, the code do not redefine these variables at any moment.
+ *
+ * This system replace or overlap the ambient lighting and the light point (flashlight)
+ * volumetric lighting but not the color of the light it applies on surfaces.
+ *
+ * The second function seems to be used for a initalization
+ * process for 2D graphics, probably related to this same system.
  */
 
 // ========================================
@@ -60,23 +71,23 @@ void func_80040BAC(void) // 0x80040BAC
         }
         else if (i < 6)
         {
-            posTable[i].vx = (g_GameWork.gsScreenWidth >> 1) - (((g_GameWork.gsScreenWidth >> 1) >> 1) * (i - 2));
+            posTable[i].vx = (g_GameWork.gsScreenWidth / 2) - (((g_GameWork.gsScreenWidth / 2) >> 1) * (i - 2));
             posTable[i].vy = g_GameWork.gsScreenHeight / 2;
         }
         else if (i < 10)
         {
             posTable[i].vx = -g_GameWork.gsScreenWidth / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight >> 1) - (((g_GameWork.gsScreenHeight >> 1) >> 1) * (i - 6));
+            posTable[i].vy = (g_GameWork.gsScreenHeight / 2) - (((g_GameWork.gsScreenHeight / 2) >> 1) * (i - 6));
         }
         else if (i < 14)
         {
-            posTable[i].vx = (-g_GameWork.gsScreenWidth / 2) + ((g_GameWork.gsScreenWidth >> 2) * (i - 10));
+            posTable[i].vx = (-g_GameWork.gsScreenWidth / 2) + ((g_GameWork.gsScreenWidth / 4) * (i - 10));
             posTable[i].vy = -g_GameWork.gsScreenHeight / 2;
         }
         else
         {
             posTable[i].vx = g_GameWork.gsScreenWidth / 2;
-            posTable[i].vy = -g_GameWork.gsScreenHeight / 2 + ((g_GameWork.gsScreenHeight >> 2) * (i - 14));
+            posTable[i].vy = (-g_GameWork.gsScreenHeight / 2) + ((g_GameWork.gsScreenHeight / 4) * (i - 14));
         }
     }
 
@@ -122,26 +133,26 @@ void func_80040BAC(void) // 0x80040BAC
     }
 }
 
-void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80040E7C
+void WorldEnv_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
 {
     u32      colorTable[4];
     s32      j;
     s32      i;
     s32      k;
-    u32      color;
+    u32      lightPointColor;
     POLY_G3* poly_g3;
     POLY_F4* poly_f4;
     POLY_G4* poly_g4;
     PACKET*  packet;
 
-    color = COLOR_RGB(arg0, arg1, arg2);
+    lightPointColor = COLOR_RGB(lightPosR, lightPosG, lightPosB);
 
     packet = &g_Map_GfxPackets;
 
     colorTable[0] = COLOR_RGB(0, 0, 0);
-    colorTable[1] = COLOR_RGB(arg3 / 3, arg4 / 3, arg5 / 3);
-    colorTable[2] = COLOR_RGB((arg3 * 2) / 3, (arg4 * 2) / 3, (arg5 * 2) / 3);
-    colorTable[3] = COLOR_RGB(arg3, arg4, arg5);
+    colorTable[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
+    colorTable[2] = COLOR_RGB((worldTintR * 2) / 3, (worldTintG * 2) / 3, (worldTintB * 2) / 3);
+    colorTable[3] = COLOR_RGB(worldTintR, worldTintG, worldTintB);
 
     for (i = 0; i < 2; i++,
         packet += (sizeof(DR_TPAGE) * 2)       +
@@ -156,7 +167,7 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
 
         for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
         {
-            *(s32*)&poly_g3->r0 = color + (poly_g3->code << 24);
+            *(s32*)&poly_g3->r0 = lightPointColor + (poly_g3->code << 24);
             *(s32*)&poly_g3->r1 = colorTable[0];
             *(s32*)&poly_g3->r2 = colorTable[0];
             *(s32*)&poly_f4->r0 = colorTable[3] + (poly_f4->code << 24);

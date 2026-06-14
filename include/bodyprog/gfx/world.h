@@ -13,22 +13,22 @@
  */
 typedef struct _WorldGfxWork
 {
-    /* 0x0    */ s_MapInfo*        mapInfo;
-    /* 0x4    */ u8                useStoredPoint; /** `bool` */
-    /* 0x5    */ s8                __pad_5[3];
-    /* 0x8    */ VECTOR3           ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
-    /* 0x14   */ u8*               charaLmBuffer;
-    /* 0x18   */ s_CharaModel*     registeredCharaModels[Chara_Count];
-    /* 0xCC   */ s_CharaModel      charaModels[CHARA_GROUP_COUNT];
-    /* 0x164C */ s_CharaModel      harryModel;
-    /* 0x1BAC */ s_HeldItem        heldItem; /** Item held by the player. */
-    /* 0x1BD8 */ s_CollisionTrigger*    collisionTriggers;
-    /* 0x1BDC */ VC_CAMERA_INTINFO vcCameraInternalInfo; /** Debug camera info. */
-    /* 0x1BE4 */ s_LmHeader        itemLmHdr;
-    /* 0x1BF4 */ u8                itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
-    /* 0x2BE4 */ s32               itemLmQueueIdx;
-    /* 0x2BE8 */ s32               objectCount;                     /** `objects` size. */
-    /* 0x2BEC */ s_WorldObject     objects[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
+    /* 0x0    */ s_MapInfo*          mapInfo;
+    /* 0x4    */ u8                  useStoredPoint; /** `bool` */
+    /* 0x5    */ s8                  __pad_5[3];
+    /* 0x8    */ VECTOR3             ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
+    /* 0x14   */ u8*                 charaLmBuffer;
+    /* 0x18   */ s_CharaModel*       registeredCharaModels[Chara_Count];
+    /* 0xCC   */ s_CharaModel        charaModels[CHARA_GROUP_COUNT];
+    /* 0x164C */ s_CharaModel        harryModel;
+    /* 0x1BAC */ s_HeldItem          heldItem; /** Item held by the player. */
+    /* 0x1BD8 */ s_CollisionTrigger* collisionTriggers;
+    /* 0x1BDC */ VC_CAMERA_INTINFO   vcCameraInternalInfo; /** Debug camera info. */
+    /* 0x1BE4 */ s_LmHeader          itemLmHdr;
+    /* 0x1BF4 */ u8                  itemLmData[4096 - sizeof(s_LmHeader)]; // 4kb allocated for 2.75kb game files.
+    /* 0x2BE4 */ s32                 itemLmQueueIdx;
+    /* 0x2BE8 */ s32                 objectCount;                     /** `objects` size. */
+    /* 0x2BEC */ s_WorldObject       objects[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
 } s_WorldGfxWork;
 STATIC_ASSERT_SIZEOF(s_WorldGfxWork, 11708);
 
@@ -69,9 +69,9 @@ typedef struct _PointLight
  */
 typedef struct _WorldEnvWork
 {
-    /* 0x0   */ u8           field_0;      // `bool`?
-    /* 0x1   */ u8           isFogEnabled; /** `bool` */
-    /* 0x2   */ u8           field_2;
+    /* 0x0   */ u8           field_0;                // `bool`?
+    /* 0x1   */ u8           isFogEnabled;           /** `bool` */
+    /* 0x2   */ u8           tintLightOverlapEnable; /** `bool`. Allows to overlap world tint and volumetric light color. @note Specifically modify the volumetric light color that the point light generates, the color it apply to the enviroment doesn't change. */
     /* 0x3   */ u8           field_3; // Enviroment lighting.
     /* 0x4   */ s_WaterZone* waterZones;
     /* 0x8   */ s32          screenBrightness;

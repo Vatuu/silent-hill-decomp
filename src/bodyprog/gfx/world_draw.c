@@ -1205,7 +1205,7 @@ void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12
     if (timer != Q12(0.0f))
     {
         tintColor = g_WorldEnvWork.worldTintColor;
-        func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
+        WorldEnv_WorldLightingParamSet(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.r) << 5,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.g) << 5,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.b) << 5,
@@ -1217,7 +1217,7 @@ void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12
 
     if (timer != Q12(0.0f))
     {
-        func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
+        WorldEnv_WorldLightingParamSet(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
                       tintColor.r << 5,
                       tintColor.g << 5,
                       tintColor.b << 5,

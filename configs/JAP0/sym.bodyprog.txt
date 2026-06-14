@@ -592,7 +592,7 @@ func_8003FCB0                                = 0x8003F9E4; // type:func
 func_8003FD38                                = 0x8003FA6C; // type:func
 func_8003FE04                                = 0x8003FB38; // type:func
 func_8003FEC0                                = 0x8003FBF4; // type:func
-func_8003FF2C                                = 0x8003FC60; // type:func
+WorldEnv_FogLightingParamsUpdate             = 0x8003FC60; // type:func
 
 //---------------------------------------------------------------------------
 //--- PA: 0x01B1D8   VA: 0x8003FD38   subsegment: c, events/collision_trigger
@@ -622,7 +622,7 @@ func_80040B6C                                = 0x800408A0; // type:func
 //------------------------------------------------------------------------
 Chara_ModelLoadedCheck                       = 0x800408A8; // type:func
 func_80040BAC                                = 0x800408E0; // type:func
-func_80040E7C                                = 0x80040BB0; // type:func
+WorldEnv_WorldLightTintParamSet              = 0x80040BB0; // type:func
 func_80041074                                = 0x80040DA8; // type:func
 func_800410D8                                = 0x80040E0C; // type:func
 Math_RelativeRotationGet                     = 0x80040F60; // type:func
@@ -911,9 +911,9 @@ Items_AmmoReloadCalculation                  = 0x80056A14; // type:func
 //------------------------------------------------------------------------
 WorldEnv_Init                                = 0x80056A7C; // type:func
 Gfx_2dEffectsDraw                            = 0x80056B24; // type:func
-func_80055330                                = 0x80056D84; // type:func
+WorldEnv_WorldLightingParamSet               = 0x80056D84; // type:func
 WorldEnv_FogParamsSet                        = 0x80056E18; // type:func
-func_800553E0                                = 0x80056E34; // type:func
+WorldEnv_WorldLightTintSet                   = 0x80056E34; // type:func
 WorldEnv_LightPositionGet                    = 0x80056E88; // type:func
 WorldEnv_LightRotationAndIntensityGet        = 0x80056EB0; // type:func
 WorldEnv_LightDirectionAndIntensityGet       = 0x80056EE4; // type:func

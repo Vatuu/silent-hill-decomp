@@ -56,8 +56,8 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.worldTintColor.g = 128;
     g_WorldEnvWork.worldTintColor.b = 128;
 
-    g_WorldEnvWork.isFogEnabled = false;
-    g_WorldEnvWork.field_2      = 0;
+    g_WorldEnvWork.isFogEnabled           = false;
+    g_WorldEnvWork.tintLightOverlapEnable = false;
 
     g_WorldEnvWork.fog.color.r = 255;
     g_WorldEnvWork.fog.color.g = 255;
@@ -85,7 +85,7 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
 
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
-    if (g_WorldEnvWork.field_2 != 0)
+    if (g_WorldEnvWork.tintLightOverlapEnable != false)
     {
         func_80041074(ot, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
     }
@@ -156,7 +156,7 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
     GsOUT_PACKET_P = packet + 24;
 }
 
-void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
+void WorldEnv_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {
     g_WorldEnvWork.field_0          = arg0;
     g_WorldEnvWork.field_20         = arg1;
@@ -187,13 +187,13 @@ void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogCo
     g_WorldEnvWork.fog.color.b  = fogColorB;
 }
 
-void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) // 0x800553E0
+void WorldEnv_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x800553E0
 {
-    g_WorldEnvWork.field_2 = arg0;
+    g_WorldEnvWork.tintLightOverlapEnable = overlapLighting;
 
-    if (arg0 != 0)
+    if (overlapLighting != false)
     {
-        func_80040E7C(arg1, arg2, arg3, arg4, arg5, arg6);
+        WorldEnv_WorldLightTintParamSet(lightPosR, lightPosG, lightPosB, worldTintR, worldTintG, worldTintB);
     }
 }
 

@@ -196,8 +196,8 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 
 void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 {
-    bool                       hasActiveChunk;
-    u8                         flags;
+    bool                hasActiveChunk;
+    u8                  flags;
     s_MapEnvPresetIdxs* presetIdxPtr;
 
     flags          = mapHdr->mapInfo->flags;
@@ -401,7 +401,7 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
 
     g_SysWork.field_2388.flashlightIntensity = CLAMP(g_SysWork.field_2388.flashlightIntensity, Q12(0.0f), Q12(1.0f));
 
-    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity != 0].effectsInfo.field_E == 3)
+    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity != Q12(0.0f)].effectsInfo.field_E == 3)
     {
         Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord, &viewMat);
         ApplyMatrixLV(&viewMat, (VECTOR*)&g_SysWork.lightPosition, &sp48); // Bug? `g_SysWork.lightPosition` is `VECTOR3`.
@@ -446,7 +446,7 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
     }
 
     ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo);
-    func_8003FF2C(ptr2);
+    WorldEnv_FogLightingParamsUpdate(ptr2);
 
     lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, ptr2->effectsInfo.field_4, ptr2->effectsInfo.field_0.s_field_0.field_2, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
@@ -760,7 +760,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         arg0->effectsInfo.field_4 = Math_WeightedAverageGet(arg1->effectsInfo.field_4, arg2->effectsInfo.field_4, weight);
     }
 
-    if (arg1->effectsInfo.field_18 == 0 && arg2->effectsInfo.field_18 != 0)
+    if (arg1->effectsInfo.tintLightOverlapEnable == false && arg2->effectsInfo.tintLightOverlapEnable != false)
     {
         func_8003FE04(&arg0->effectsInfo, &arg1->effectsInfo, &arg2->effectsInfo, weight1);
     }
@@ -802,17 +802,17 @@ void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, c
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
-    LoadAverageCol(&arg1->screenTint.r, &arg2->screenTint.r, alphaFrom, alphaTo, &arg0->screenTint.r);
+    LoadAverageCol(&arg1->lightPointTint.r, &arg2->lightPointTint.r, alphaFrom, alphaTo, &arg0->lightPointTint.r);
+    LoadAverageCol(&arg1->worldTint.r, &arg2->worldTint.r, alphaFrom, alphaTo, &arg0->worldTint.r);
 
-    if ((arg0->field_19.r || arg0->field_19.g || arg0->field_19.b) ||
-        (arg0->screenTint.r || arg0->screenTint.g || arg0->screenTint.b))
+    if ((arg0->lightPointTint.r || arg0->lightPointTint.g || arg0->lightPointTint.b) ||
+        (arg0->worldTint.r || arg0->worldTint.g || arg0->worldTint.b))
     {
-        arg0->field_18 = 1;
+        arg0->tintLightOverlapEnable = true;
     }
     else
     {
-        arg0->field_18 = 0;
+        arg0->tintLightOverlapEnable = false;
     }
 }
 
@@ -839,20 +839,20 @@ s32 func_8003FEC0(const s_MapEffectsInfo* arg0) // 0x8003FEC0
     return Q12(20.0f);
 }
 
-void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
+void WorldEnv_FogLightingParamsUpdate(s_StructUnk3* arg0) // 0x8003FF2C
 {
-    s32   temp_a0;
+    s32   fogDistCpy;
     s32   temp_v1;
     q23_8 brightness;
 
     temp_v1    = Q12_MULT(arg0->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->effectsInfo.field_0.s_field_0.field_2, arg0->effectsInfo.field_6, arg0->effectsInfo.field_0.s_field_0.field_1, arg0->effectsInfo.worldTintR, arg0->effectsInfo.worldTintG, arg0->effectsInfo.worldTintB, brightness);
+    WorldEnv_WorldLightingParamSet(arg0->effectsInfo.field_0.s_field_0.field_2, arg0->effectsInfo.field_6, arg0->effectsInfo.field_0.s_field_0.field_1, arg0->effectsInfo.worldTintR, arg0->effectsInfo.worldTintG, arg0->effectsInfo.worldTintB, brightness);
     WorldEnv_FogParamsSet(arg0->effectsInfo.field_E != 0, arg0->effectsInfo.fogColor.r, arg0->effectsInfo.fogColor.g, arg0->effectsInfo.fogColor.b);
 
-    temp_a0 = arg0->effectsInfo.fogDistance;
+    fogDistCpy = arg0->effectsInfo.fogDistance;
 
-    WorldEnv_FogDistanceSet(temp_a0, temp_a0 + Q12(1.0f));
-    func_800553E0(arg0->effectsInfo.field_18, arg0->effectsInfo.field_19.r, arg0->effectsInfo.field_19.g, arg0->effectsInfo.field_19.b, arg0->effectsInfo.screenTint.r, arg0->effectsInfo.screenTint.g, arg0->effectsInfo.screenTint.b);
+    WorldEnv_FogDistanceSet(fogDistCpy, fogDistCpy + Q12(1.0f));
+    WorldEnv_WorldLightTintSet(arg0->effectsInfo.tintLightOverlapEnable, arg0->effectsInfo.lightPointTint.r, arg0->effectsInfo.lightPointTint.g, arg0->effectsInfo.lightPointTint.b, arg0->effectsInfo.worldTint.r, arg0->effectsInfo.worldTint.g, arg0->effectsInfo.worldTint.b);
 }

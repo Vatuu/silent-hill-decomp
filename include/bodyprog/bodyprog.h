@@ -1027,7 +1027,7 @@ bool Chara_ModelLoadedCheck(e_CharaId charaId);
 /** Related to the screen. Called by `WorldEnv_Init`. */
 void func_80040BAC(void);
 
-void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
+void WorldEnv_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos);
 
@@ -1417,11 +1417,11 @@ void WorldEnv_Init(void);
 void Gfx_2dEffectsDraw(void);
 
 /** Sets visual world parameters. */
-void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
+void WorldEnv_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
 
 void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
-void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
+void WorldEnv_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 /** @brief Gets the point light position.
  *
