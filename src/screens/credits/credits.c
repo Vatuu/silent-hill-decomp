@@ -16,34 +16,34 @@ extern s_800AFE24 D_800AFE24;
 
 s_801E5558 D_801E5558[6] = {
     {
-        .xaSfxId_0 = Sfx_XaAudio725,
-        .field_2 = 0x0000,
-        .field_4 = 0x21FC,
+        .xaSfxId     = Sfx_XaAudio725,
+        .scrollDelay = 0,
+        .field_4     = 8700,
     },
     {
-        .xaSfxId_0 = Sfx_XaAudio723,
-        .field_2 = 0xF6A0,
-        .field_4 = 0x20D0,
+        .xaSfxId     = Sfx_XaAudio723,
+        .scrollDelay = -2400,
+        .field_4     = 8400,
     },
     {
-        .xaSfxId_0 = Sfx_XaAudio724,
-        .field_2 = 0xFC7C,
-        .field_4 = 0x21FC,
+        .xaSfxId     = Sfx_XaAudio724,
+        .scrollDelay = -900,
+        .field_4     = 8700,
     },
     {
-        .xaSfxId_0 = Sfx_XaAudio725,
-        .field_2 = 0xFF4C,
-        .field_4 = 0x2148,
+        .xaSfxId     = Sfx_XaAudio725,
+        .scrollDelay = -180,
+        .field_4     = 8520,
     },
     {
-        .xaSfxId_0 = Sfx_XaAudio726,
-        .field_2 = 0xFF4C,
-        .field_4 = 0x2274,
+        .xaSfxId     = Sfx_XaAudio726,
+        .scrollDelay = -180,
+        .field_4     = 8820,
     },
     {
-        .xaSfxId_0 = Sfx_XaAudio726,
-        .field_2 = 0xFF88,
-        .field_4 = 0x20D0
+        .xaSfxId     = Sfx_XaAudio726,
+        .scrollDelay = -120,
+        .field_4     = 8400
     }
 };
 
@@ -59,7 +59,7 @@ void func_801E2E28(s32 idx) // 0x801E2E28
 
     D_801E5E8C = idx;
 
-    Sd_XaPreLoadAudioPreTaskAdd(D_801E5558[idx].xaSfxId_0);
+    Sd_XaPreLoadAudioPreTaskAdd(D_801E5558[idx].xaSfxId);
     var1 = (D_801E5558[idx].field_4 * 2) - 504;
     var0 = var1 / D_801E5C20;
 
@@ -78,7 +78,7 @@ bool func_801E2ED8(void) // 0x801E2ED8
             break;
 
         case 1:
-            SD_Call((u16)D_801E5558[D_801E5E8C].xaSfxId_0);
+            SD_Call((u16)D_801E5558[D_801E5E8C].xaSfxId);
             D_801E5E88++;
             break;
 
@@ -89,7 +89,7 @@ bool func_801E2ED8(void) // 0x801E2ED8
                     return false;
 
                 case 1:
-                    D_800C48F0 = D_801E5558[D_801E5E8C].field_2;
+                    D_800C48F0 = D_801E5558[D_801E5E8C].scrollDelay;
                     return true;
 
                 default:
@@ -461,7 +461,7 @@ bool func_801E3684(void) // 0x801E3684
         var_s4 = -1;
     }
 
-    func_801E434C(1, 1);
+    Credits_TextBlendSet(true, 1);
     Credits_TextColorSet(Q8_COLOR(0.19f), Q8_COLOR(0.19f), Q8_COLOR(0.19f));
 
     for (var_s5 = 2; var_s5 >= 0; var_s5--, var_s4 += 2)
@@ -469,7 +469,7 @@ bool func_801E3684(void) // 0x801E3684
         if (var_s5 == 0)
         {
             var_s4 = 0;
-            func_801E434C(0, 0);
+            Credits_TextBlendSet(false, 0);
             Credits_TextColorSet(Q8_COLOR(0.2525f), Q8_COLOR(0.2525f), Q8_COLOR(0.2525f));
         }
 
@@ -480,13 +480,13 @@ bool func_801E3684(void) // 0x801E3684
         {
             temp_s0 = *var_s2;
             Credits_TextPositionSet(0, var_s3);
-            func_801E4394(temp_s0);
+            Credits_TextDraw(temp_s0);
         }
 
         if (temp_fp != 0)
         {
             Credits_TextPositionSet(0, var_s6 + var_s4);
-            func_801E4394(D_801E5BD0);
+            Credits_TextDraw(D_801E5BD0);
         }
     }
 
@@ -513,7 +513,7 @@ void func_801E386C(void) // 0x801E386C
 
     D_801E5E8C = var2;
     D_801E5E7C = var1 - 264;
-    D_800C48F0 = (s32)ptr->field_2;
+    D_800C48F0 = (s32)ptr->scrollDelay;
     D_801E5E7C = D_801E5E7C / D_801E5C20;
     D_801E5E84 = (D_801E5E7C * D_801E5C20) + SCREEN_HEIGHT;
     D_801E5E80 = 0x10000 / D_801E5E7C;
@@ -599,7 +599,7 @@ bool func_801E3970(void) // 0x801E3970
     }
 
     Credits_TextColorSet(Q8_COLOR(0.6275f), Q8_COLOR(0.6275f), Q8_COLOR(0.6275f));
-    func_801E434C(0, 0);
+    Credits_TextBlendSet(false, 0);
 
     lineY          = currentLinePosY;
     currentLinePtr = &g_CreditList[lineIdx];
@@ -607,8 +607,8 @@ bool func_801E3970(void) // 0x801E3970
     for (i = linesToDraw; i > 0; i--, lineY += lineHeight, currentLinePtr++)
     {
         lineStrPtr = *currentLinePtr;
-        func_801E47E0(0, lineY);
-        func_801E4C1C(lineStrPtr);
+        Credits_Text3dPositionSet(0, lineY);
+        Credits_Text3dDraw(lineStrPtr);
     }
 
     if (animateKcet)
@@ -661,8 +661,8 @@ bool func_801E3970(void) // 0x801E3970
 
     if (showKcet)
     {
-        func_801E47E0(0, var_fp);
-        func_801E4C1C(D_801E5BD0);
+        Credits_Text3dPositionSet(0, var_fp);
+        Credits_Text3dDraw(D_801E5BD0);
     }
 
     return isFinished;
@@ -936,13 +936,13 @@ void Credits_TextLineHeightSet(s8 arg0) // 0x801E4340
     D_800AFE08.lineHeight = arg0;
 }
 
-void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
+void Credits_TextBlendSet(bool semiTrans, u32 arg1) // 0x801E434C
 {
     u32 shiftedArg1;
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE08.semiTrans = arg0 != 0;
+    D_800AFE08.semiTrans = semiTrans != 0;
 
     if (arg1 < 4)
     {
@@ -962,7 +962,7 @@ void func_801E434C(u32 arg0, u32 arg1) // 0x801E434C
     }
 }
 
-void func_801E4394(u8* str) // 0x801E4394
+void Credits_TextDraw(char* str) // 0x801E4394
 {
     s32       textX;
     s32       textY;
@@ -1134,7 +1134,7 @@ void func_801E4394(u8* str) // 0x801E4394
     GsOUT_PACKET_P     = packet + sizeof(DR_TPAGE);
 }
 
-void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
+void Credits_Text3dPositionSet(s32 arg0, s32 arg1) // 0x801E47E0
 {
     s32  temp_a2;
     s32  temp_lo;
@@ -1197,23 +1197,23 @@ void func_801E47E0(s32 arg0, s32 arg1) // 0x801E47E0
     }
 }
 
-void func_801E4B98(s32 r, s32 g, s32 b)
+void Credits_Text3dColorSet(s32 r, s32 g, s32 b) // 0x801E4B98
 {
     D_800AFE24.sub_0.color = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
 }
 
-void func_801E4BC8(s8 arg0) // 0x801E4BC8
+void Credits_Text3dLineHeightSet(s8 arg0) // 0x801E4BC8
 {
     D_800AFE24.sub_0.lineHeight = arg0;
 }
 
-void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
+void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
 {
     u32 shiftedArg1;
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE24.sub_0.semiTrans = (arg0 != 0);
+    D_800AFE24.sub_0.semiTrans = (semiTrans != 0);
 
     if (arg1 < 4)
     {
@@ -1232,7 +1232,7 @@ void func_801E4BD4(u32 arg0, u32 arg1) // 0x801E4BD4
     }
 }
 
-void func_801E4C1C(u8* str) // 0x801E4C1C
+void Credits_Text3dDraw(u8* str) // 0x801E4C1C
 {
     PACKET* packet;
     GsOT*   ot;

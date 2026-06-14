@@ -9,10 +9,17 @@
 //----------------------------------------------------------
 //--- PA: 0x000828   VA: 0x801E2E28   subsegment: c, credits
 //----------------------------------------------------------
-GameState_Credits_Update  = 0x801E3094; // type:func
-Credits_TextPositionSet   = 0x801E42F8; // type:func
-Credits_TextColorSet      = 0x801E4310; // type:func
-Credits_TextLineHeightSet = 0x801E4340; // type:func
+GameState_Credits_Update    = 0x801E3094; // type:func
+Credits_TextPositionSet     = 0x801E42F8; // type:func
+Credits_TextColorSet        = 0x801E4310; // type:func
+Credits_TextLineHeightSet   = 0x801E4340; // type:func
+Credits_TextBlendSet        = 0x801E434C; // type:func
+Credits_TextDraw            = 0x801E4394; // type:func
+Credits_Text3dPositionSet   = 0x801E47E0; // type:func
+Credits_Text3dColorSet      = 0x801E4B98; // type:func
+Credits_Text3dLineHeightSet = 0x801E4BC8; // type:func
+Credits_Text3dBlendSet      = 0x801E4BD4; // type:func
+Credits_Text3dDraw          = 0x801E4C1C; // type:func
 
 
 
@@ -24,7 +31,7 @@ Credits_TextLineHeightSet = 0x801E4340; // type:func
 //--------------------------------------------------------------
 //--- PA: 0x002F58   VA: 0x801E5558   subsegment: .data, credits
 //--------------------------------------------------------------
-g_CreditList              = 0x801E5590;
-D_801E5C24                = 0x801E5C24; // size:0x200
-D_801E5E24                = 0x801E5E24; // size:0x1C
-D_801E5E40                = 0x801E5E40; // size:0x1C
+g_CreditList                = 0x801E5590;
+D_801E5C24                  = 0x801E5C24; // size:0x200
+D_801E5E24                  = 0x801E5E24; // size:0x1C
+D_801E5E40                  = 0x801E5E40; // size:0x1C

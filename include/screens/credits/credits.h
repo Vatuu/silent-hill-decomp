@@ -14,9 +14,9 @@ typedef struct
     /* 0x8  */ s32  color;  /** Rgb24 color + code. */
     /* 0xC  */ s16* widthTable;  /** Points to 0x801E5C24, data size 400. */
     /* 0x10 */ s32* colorTable; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
-    /* 0x14 */ u16  tpage; /** Tpage for `setDrawTPage`, calculated from `field_18` with `func_801E434C`. */
+    /* 0x14 */ u16  tpage; /** Tpage for `setDrawTPage`, calculated from `uv` with `Credits_TextBlendSet`. */
     /* 0x16 */ s16  clut; /** Clut XY. */
-    /* 0x18 */ u32  uv; /** Texture UV. */
+    /* 0x18 */ u32  uv; /** Texture UV, tpageXY might be more accurate?. */
 } s_800AFE08;
 STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
 
@@ -45,9 +45,9 @@ typedef struct
 // Used by `func_801E2E28`.
 typedef struct
 {
-    s16 xaSfxId_0; // SFX ID.
-    s16 field_2;
-    s16 field_4;
+    s16 xaSfxId;     /** SFX ID. */
+    s16 scrollDelay; /** Initial value for the scrolling text timer, negative values cause delay before text is shown. */
+    s16 field_4;     /** Text draw duration? Unsure. */
 } s_801E5558;
 STATIC_ASSERT_SIZEOF(s_801E5558, 6);
 
@@ -131,11 +131,11 @@ void Credits_TextColorSet(s32 r, s32 g, s32 b);
 
 void Credits_TextLineHeightSet(s8 arg0);
 
-void func_801E434C(u32 arg0, u32 arg1);
+void Credits_TextBlendSet(bool semiTrans, u32 arg1);
 
-void func_801E4394(u8* str);
+void Credits_TextDraw(char* str);
 
-void func_801E47E0(s32 arg0, s32 arg1);
+void Credits_Text3dPositionSet(s32 arg0, s32 arg1);
 
 /** @brief Sets the current RGB+command color for `D_800AFE2C`.
  *
@@ -146,13 +146,12 @@ void func_801E47E0(s32 arg0, s32 arg1);
  * @param g Green component.
  * @param b Blue component.
  */
-void func_801E4B98(s32 r, s32 g, s32 b);
+void Credits_Text3dColorSet(s32 r, s32 g, s32 b);
 
-void func_801E4BC8(s8 arg0);
+void Credits_Text3dLineHeightSet(s8 arg0);
 
-/** Identical to `func_801E434C` except for the global variable it modifies. */
-void func_801E4BD4(u32 arg0, u32 arg1);
+void Credits_Text3dBlendSet(bool semiTrans, u32 arg1);
 
-void func_801E4C1C(u8* str);
+void Credits_Text3dDraw(u8* str);
 
 #endif
