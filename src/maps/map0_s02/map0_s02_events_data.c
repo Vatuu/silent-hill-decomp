@@ -58,7 +58,7 @@ s_EventData MAP_EVENTS[29] = {
         .eventParam       = 2, // `MapEvent_CommonItemTake`
     },
     {
-        .requiredEventFlag  = EventFlag_58,
+        .requiredEventFlag  = EventFlag_M0S02_UnlockedChannelingStone,
         .disabledEventFlag  = EventFlag_M0S02_PickupChannelingStone,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
@@ -67,7 +67,7 @@ s_EventData MAP_EVENTS[29] = {
         .eventParam       = 6, // `MapEvent_ChannelingStoneItemTake`
     },
     {
-        .requiredEventFlag  = EventFlag_58,
+        .requiredEventFlag  = EventFlag_M0S02_UnlockedChannelingStone,
         .disabledEventFlag  = EventFlag_M0S02_PickupChannelingStone,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
@@ -169,7 +169,7 @@ s_EventData MAP_EVENTS[29] = {
         .eventParam       = 8,
     },
     {
-        .requiredEventFlag  = EventFlag_62,
+        .requiredEventFlag  = EventFlag_M0S02_UnlockedGasolineTank,
         .disabledEventFlag  = EventFlag_M0S02_PickupGasolineTank,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,

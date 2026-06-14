@@ -40,9 +40,9 @@ u8 g_RankingPickedUpSpecialItemCount;
 
 s8 g_RankingScore;
 
-u8 g_RankingHasEventFlag61;
+u8 g_RankingHasUsedGasolineOnChainsaw;
 
-u8 g_RankingHasEventFlag183;
+u8 g_RankingHasUsedGasolineOnRockDrill;
 
 u16 g_RankingEnemyKillsShooting;
 
@@ -101,9 +101,9 @@ void Ranking_EvaluateScore() // 0x8008F94C
     g_RankingClearGameCount = g_SavegamePtr->clearGameCount;
     g_RankingClearGameEndings = g_SavegamePtr->clearGameEndings;
     g_RankingCurrentEndingFlags = g_SavegamePtr->currentEndingFlags;
-    g_RankingHasEventFlag61 = Savegame_EventFlagGetAlt(EventFlag_61);
+    g_RankingHasUsedGasolineOnChainsaw = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnChainsaw);
     g_RankingPickedUpSpecialItemCount = 0;
-    g_RankingHasEventFlag183 = Savegame_EventFlagGetAlt(EventFlag_183);
+    g_RankingHasUsedGasolineOnRockDrill = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnRockDrill);
     g_RankingEnemyKillsShooting = func_8009146C(1);
     g_RankingEnemyKillsMelee = func_8009146C(0);
 
@@ -420,28 +420,28 @@ void Ranking_PrepareSavegame() // 0x800904F4
     g_SavegamePtr->isNextFearMode     = 1;
     g_SavegamePtr->mapIdx             = MapIdx_MAP0_S01;
 
-    if (g_RankingHasEventFlag61)
+    if (g_RankingHasUsedGasolineOnChainsaw)
     {
-        Savegame_EventFlagSet(EventFlag_61);
+        Savegame_EventFlagSet(EventFlag_M2S00_UsedGasolineOnChainsaw);
     }
 
-    if (g_RankingHasEventFlag183)
+    if (g_RankingHasUsedGasolineOnRockDrill)
     {
-        Savegame_EventFlagSet(EventFlag_183);
+        Savegame_EventFlagSet(EventFlag_M2S00_UsedGasolineOnRockDrill);
     }
 
-    Savegame_EventFlagSet(EventFlag_62);
+    Savegame_EventFlagSet(EventFlag_M0S02_UnlockedGasolineTank);
 
     extraOptions = g_GameWork.config.extraOptionsEnabled;
 
     if ((extraOptions & 0x3) && (extraOptions & 0xC))
     {
-        Savegame_EventFlagSet(EventFlag_57);
+        Savegame_EventFlagSet(EventFlag_M2S00_UnlockedKatanaRoom);
     }
 
     if (g_GameWork.config.extraOptionsEnabled & (1 << 0))
     {
-        Savegame_EventFlagSet(EventFlag_58);
+        Savegame_EventFlagSet(EventFlag_M0S02_UnlockedChannelingStone);
     }
 
     if (g_RankingScore >= 80)

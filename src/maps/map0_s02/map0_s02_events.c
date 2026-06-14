@@ -149,7 +149,7 @@ void Map_WorldObjectsUpdate(void)
      if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
      {
         WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad1.position, &g_WorldObjectPose_SavePad1.rotation);
-        if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupGasolineTank) && Savegame_EventFlagGet(EventFlag_62))
+        if (Savegame_EventFlagGet(EventFlag_M0S02_UnlockedGasolineTank) && !Savegame_EventFlagGet(EventFlag_M0S02_PickupGasolineTank))
         {
             WorldGfx_ObjectAdd(&g_WorldObject_Gas.object, &g_WorldObject_Gas.position, &g_WorldObject_Gas.rotation);
         }
@@ -157,9 +157,8 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-
         WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad2.position, &g_WorldObjectPose_SavePad2.rotation);
-        if (Savegame_EventFlagGet(EventFlag_58) && !Savegame_EventFlagGet(EventFlag_M0S02_PickupChannelingStone))
+        if (Savegame_EventFlagGet(EventFlag_M0S02_UnlockedChannelingStone) && !Savegame_EventFlagGet(EventFlag_M0S02_PickupChannelingStone))
         {
             WorldGfx_ObjectAdd(&g_WorldObject_Cosmo.object, &g_WorldObject_Cosmo.position, &g_WorldObject_Cosmo.rotation);
         }

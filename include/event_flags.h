@@ -65,12 +65,12 @@ typedef enum _EventFlag
 
     EventFlag_M0S02_PickupKatana = 56,
 
-    EventFlag_57                          = 57,
-    EventFlag_58                          = 58,
-    EventFlag_59                          = 59,
-    EventFlag_M0S02_PickupGasolineTank    = 60,
-    EventFlag_61                          = 61,
-    EventFlag_62                          = 62,
+    EventFlag_M2S00_UnlockedKatanaRoom      = 57, // Unlocks Katana room inside Levin Street house.
+    EventFlag_M0S02_UnlockedChannelingStone = 58,
+    EventFlag_59                            = 59,
+    EventFlag_M0S02_PickupGasolineTank      = 60,
+    EventFlag_M2S00_UsedGasolineOnChainsaw  = 61,
+    EventFlag_M0S02_UnlockedGasolineTank    = 62,
     EventFlag_M2S00_PickupChainsaw        = 63,
     EventFlag_M2S00_PickupRockDrill       = 64,
     EventFlag_65                          = 65,
@@ -187,7 +187,7 @@ typedef enum _EventFlag
 
     EventFlag_181 = 181,
     EventFlag_182 = 182,
-    EventFlag_183 = 183,
+    EventFlag_M2S00_UsedGasolineOnRockDrill = 183,
     EventFlag_184 = 184,
     EventFlag_185 = 185,
 

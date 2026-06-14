@@ -67,9 +67,9 @@ extern u8 g_RankingPickedUpSpecialItemCount;
 
 extern s8 g_RankingScore;
 
-extern u8 g_RankingHasEventFlag61;
+extern u8 g_RankingHasUsedGasolineOnChainsaw;
 
-extern u8 g_RankingHasEventFlag183;
+extern u8 g_RankingHasUsedGasolineOnRockDrill;
 
 extern u16 g_RankingEnemyKillsShooting;
 

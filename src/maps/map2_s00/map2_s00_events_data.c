@@ -620,7 +620,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 17, // `func_800E9DD8`
     },
     {
-        .requiredEventFlag  = EventFlag_57,
+        .requiredEventFlag  = EventFlag_M2S00_UnlockedKatanaRoom,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 28,
@@ -1464,7 +1464,7 @@ s_EventData MAP_EVENTS[201] = {
         .mapIdx   = MapIdx_MAP0_S02,
     },
     {
-        .requiredEventFlag  = EventFlag_183,
+        .requiredEventFlag  = EventFlag_M2S00_UsedGasolineOnRockDrill,
         .disabledEventFlag  = EventFlag_M2S00_PickupRockDrill,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
@@ -1473,7 +1473,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 5, // `func_800E816C`
     },
     {
-        .requiredEventFlag  = EventFlag_183,
+        .requiredEventFlag  = EventFlag_M2S00_UsedGasolineOnRockDrill,
         .disabledEventFlag  = EventFlag_M2S00_PickupRockDrill,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
@@ -1482,7 +1482,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 5, // `func_800E816C`
     },
     {
-        .disabledEventFlag  = EventFlag_183,
+        .disabledEventFlag  = EventFlag_M2S00_UsedGasolineOnRockDrill,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 131,
@@ -1491,7 +1491,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 77,
     },
     {
-        .disabledEventFlag  = EventFlag_183,
+        .disabledEventFlag  = EventFlag_M2S00_UsedGasolineOnRockDrill,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 132,
@@ -1516,7 +1516,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 71,
     },
     {
-        .requiredEventFlag  = EventFlag_61,
+        .requiredEventFlag  = EventFlag_M2S00_UsedGasolineOnChainsaw,
         .disabledEventFlag  = EventFlag_M2S00_PickupChainsaw,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
@@ -1525,7 +1525,7 @@ s_EventData MAP_EVENTS[201] = {
         .eventParam       = 6, // `func_800E8198`
     },
     {
-        .disabledEventFlag  = EventFlag_61,
+        .disabledEventFlag  = EventFlag_M2S00_UsedGasolineOnChainsaw,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 133,
