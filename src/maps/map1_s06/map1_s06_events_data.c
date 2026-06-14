@@ -10,14 +10,14 @@ s_EventData MAP_EVENTS[49] = {
     },
     {
         .disabledEventFlag = EventFlag_133,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_Fmv,
         .eventParam      = 14,
         .flags_8_13          = 2,
     },
     {
         .disabledEventFlag = EventFlag_134,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D5614`
     },
@@ -118,7 +118,7 @@ s_EventData MAP_EVENTS[49] = {
     {
         .requiredEventFlag = EventFlag_139,
         .disabledEventFlag = EventFlag_MapMark_FogSchool1F_LobbyArrows,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventSetFlag,
     },
     {
@@ -152,7 +152,7 @@ s_EventData MAP_EVENTS[49] = {
     {
         .requiredEventFlag = EventFlag_138,
         .disabledEventFlag = EventFlag_MapMark_FogSchool1F_BotRightCorridorArrows,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventSetFlag,
     },
     {
@@ -366,7 +366,7 @@ s_EventData MAP_EVENTS[49] = {
     {
         .requiredEventFlag = EventFlag_135,
         .disabledEventFlag = EventFlag_M1S06_ChurchMarkedOnMap,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 6, // `func_800D5DD8`
     },

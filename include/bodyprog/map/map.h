@@ -127,7 +127,7 @@ typedef enum _TriggerActivationType
 typedef enum _TriggerType
 {
     TriggerType_EndOfArray     = NO_VALUE,
-    TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
+    TriggerType_Tick           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set. Skips processing later events until flags deactivate it. */
     TriggerType_TouchAabb      = 1, /** Player has collided with an AABB. */
     TriggerType_TouchFacing    = 2, /** Player collided with a trigger is facing toward it. */
     TriggerType_TouchObbFacing = 3, /** Player collided with an OBB and is facing toward it. */

@@ -72,14 +72,14 @@ s_EventData MAP_EVENTS[17] = {
     {
         .requiredEventFlag = EventFlag_423,
         .disabledEventFlag = EventFlag_424,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800D13D8`
     },
     {
         .requiredEventFlag = EventFlag_425,
         .disabledEventFlag = EventFlag_426,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D236C`
     },
@@ -114,7 +114,7 @@ s_EventData MAP_EVENTS[17] = {
     {
         .requiredEventFlag = EventFlag_426,
         .disabledEventFlag = EventFlag_459,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventSetFlag,
     },
     {

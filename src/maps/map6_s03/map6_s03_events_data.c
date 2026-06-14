@@ -28,21 +28,21 @@ s_EventData MAP_EVENTS[16] = {
     {
         .requiredEventFlag = EventFlag_426,
         .disabledEventFlag = EventFlag_438,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_Fmv,
         .eventParam      = 9,
         .flags_8_13          = 2,
     },
     {
         .disabledEventFlag = EventFlag_431,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800D822C`
     },
     {
         .requiredEventFlag = EventFlag_431,
         .disabledEventFlag = EventFlag_432,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
     },
     {
@@ -71,7 +71,7 @@ s_EventData MAP_EVENTS[16] = {
     },
     {
         .requiredEventFlag = EventFlag_433,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 7,
         .mapIdx  = MapIdx_MAP6_S04,

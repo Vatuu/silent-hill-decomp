@@ -99,7 +99,7 @@ s_EventData MAP_EVENTS[121] = {
     },
     {
         .requiredEventFlag = EventFlag_225,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 21, // `func_800DD420`
     },
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[121] = {
     },
     {
         .requiredEventFlag = EventFlag_120,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 18,
         .mapIdx  = MapIdx_MAP1_S05,

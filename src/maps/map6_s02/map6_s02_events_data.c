@@ -38,7 +38,7 @@ s_EventData MAP_EVENTS[12] = {
     {
         .requiredEventFlag = EventFlag_405,
         .disabledEventFlag = EventFlag_409,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 3,
         .flags_8_13          = 1,
@@ -46,7 +46,7 @@ s_EventData MAP_EVENTS[12] = {
     {
         .requiredEventFlag = EventFlag_405,
         .disabledEventFlag = EventFlag_406,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 3,
         .flags_8_13          = 1,
@@ -54,20 +54,20 @@ s_EventData MAP_EVENTS[12] = {
     {
         .requiredEventFlag = EventFlag_407,
         .disabledEventFlag = EventFlag_408,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 4,
     },
     {
         .requiredEventFlag = EventFlag_409,
         .disabledEventFlag = EventFlag_410,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800CF0B8`
     },
     {
         .requiredEventFlag = EventFlag_588,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 6, // `func_800D32D0`
     },
@@ -82,7 +82,7 @@ s_EventData MAP_EVENTS[12] = {
     },
     {
         .requiredEventFlag = EventFlag_469,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 5, // `func_800D0500`
     },

@@ -87,7 +87,7 @@ s_EventData MAP_EVENTS[136] = {
     {
         .requiredEventFlag = EventFlag_216,
         .disabledEventFlag = EventFlag_220,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 124,
         .mapIdx  = MapIdx_MAP3_S05,
@@ -95,7 +95,7 @@ s_EventData MAP_EVENTS[136] = {
     {
         .requiredEventFlag = EventFlag_217,
         .disabledEventFlag = EventFlag_221,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 123,
         .mapIdx  = MapIdx_MAP3_S04,
@@ -103,14 +103,14 @@ s_EventData MAP_EVENTS[136] = {
     {
         .requiredEventFlag = EventFlag_218,
         .disabledEventFlag = EventFlag_222,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 38,
     },
     {
         .requiredEventFlag = EventFlag_219,
         .disabledEventFlag = EventFlag_223,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 1,
     },

@@ -61,14 +61,14 @@ s_EventData MAP_EVENTS[104] = {
     {
         .requiredEventFlag = EventFlag_216,
         .disabledEventFlag = EventFlag_220,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 2,
     },
     {
         .requiredEventFlag = EventFlag_217,
         .disabledEventFlag = EventFlag_221,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 95,
         .mapIdx  = MapIdx_MAP3_S04,
@@ -76,7 +76,7 @@ s_EventData MAP_EVENTS[104] = {
     {
         .requiredEventFlag = EventFlag_218,
         .disabledEventFlag = EventFlag_222,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 93,
         .mapIdx  = MapIdx_MAP3_S03,
@@ -84,7 +84,7 @@ s_EventData MAP_EVENTS[104] = {
     {
         .requiredEventFlag = EventFlag_219,
         .disabledEventFlag = EventFlag_223,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 94,
         .mapIdx  = MapIdx_MAP3_S03,
@@ -150,7 +150,7 @@ s_EventData MAP_EVENTS[104] = {
     {
         .requiredEventFlag = EventFlag_259,
         .disabledEventFlag = EventFlag_260,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 12, // `func_800D6D1C`
     },

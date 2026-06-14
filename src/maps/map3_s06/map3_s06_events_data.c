@@ -36,7 +36,7 @@ s_EventData MAP_EVENTS[50] = {
     },
     {
         .disabledEventFlag = EventFlag_295,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D0C14`
     },

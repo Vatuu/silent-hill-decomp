@@ -12,14 +12,14 @@ Percentages show named symbols out of total (named + auto-generated).
 
 | Overlay | Overall | Functions | Data |
 | --- | --- | --- | --- |
-| [bodyprog](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/bodyprog.html) | 72.3% (1703/2356) | 77.7% (1177/1515) | 62.5% (526/841) |
+| [bodyprog](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/bodyprog.html) | 72.5% (1709/2356) | 78.0% (1181/1515) | 62.8% (528/841) |
 
 ## Screens
 
 | Overlay | Overall | Functions | Data |
 | --- | --- | --- | --- |
 | [b_konami](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/b_konami.html) | 100.0% (22/22) | 100.0% (11/11) | 100.0% (11/11) |
-| [credits](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/credits.html) | 28.0% (14/50) | 47.8% (11/23) | 11.1% (3/27) |
+| [credits](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/credits.html) | 33.3% (17/51) | 47.8% (11/23) | 21.4% (6/28) |
 | [options](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/options.html) | 96.5% (55/57) | 100.0% (26/26) | 93.5% (29/31) |
 | [saveload](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/saveload.html) | 79.7% (51/64) | 96.9% (31/32) | 62.5% (20/32) |
 | [stream](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/screens/stream.html) | 97.6% (41/42) | 100.0% (31/31) | 90.9% (10/11) |
@@ -70,4 +70,4 @@ Percentages show named symbols out of total (named + auto-generated).
 | [map7_s00](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/maps/map7_s00.html) | 51.1% (68/133) | 61.8% (42/68) | 40.0% (26/65) |
 | [map7_s01](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/maps/map7_s01.html) | 42.9% (155/361) | 47.9% (79/165) | 38.8% (76/196) |
 | [map7_s02](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/maps/map7_s02.html) | 42.8% (175/409) | 60.7% (99/163) | 30.9% (76/246) |
-| [map7_s03](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/maps/map7_s03.html) | 23.3% (145/621) | 23.3% (81/347) | 23.4% (64/274) |
+| [map7_s03](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/maps/map7_s03.html) | 23.5% (146/621) | 23.3% (81/347) | 23.7% (65/274) |

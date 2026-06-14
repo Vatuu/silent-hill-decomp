@@ -3,7 +3,7 @@
 s_EventData MAP_EVENTS[72] = {
     {
         .disabledEventFlag = EventFlag_1,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 2, // `MapEvent_CutsceneOpening`
         .flags_8_13          = 1,
@@ -44,14 +44,14 @@ s_EventData MAP_EVENTS[72] = {
     {
         .requiredEventFlag = EventFlag_2,
         .disabledEventFlag = EventFlag_3,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_Fmv,
         .eventParam      = 16,
     },
     {
         .requiredEventFlag = EventFlag_3,
         .disabledEventFlag = EventFlag_4,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 6, // `MapEvent_CutsceneCherylSpotted`
     },
@@ -186,7 +186,7 @@ s_EventData MAP_EVENTS[72] = {
     {
         .requiredEventFlag = EventFlag_15,
         .disabledEventFlag = EventFlag_17,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 13, // `MapEven_CutsceneAlleyGetsDarker`
     },
@@ -262,14 +262,14 @@ s_EventData MAP_EVENTS[72] = {
     {
         .requiredEventFlag = EventFlag_25,
         .disabledEventFlag = EventFlag_26,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 16, // `func_800DBE00`
         .flags_8_13          = 1,
     },
     {
         .requiredEventFlag = EventFlag_26,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 4,
         .mapIdx  = MapIdx_MAP0_S01,

@@ -224,7 +224,7 @@ s_EventData MAP_EVENTS[111] = {
     {
         .requiredEventFlag = EventFlag_216,
         .disabledEventFlag = EventFlag_220,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 36,
     },
@@ -265,7 +265,7 @@ s_EventData MAP_EVENTS[111] = {
     {
         .requiredEventFlag = EventFlag_217,
         .disabledEventFlag = EventFlag_221,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 11,
     },
@@ -290,7 +290,7 @@ s_EventData MAP_EVENTS[111] = {
     {
         .requiredEventFlag = EventFlag_218,
         .disabledEventFlag = EventFlag_222,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 38,
     },
@@ -323,7 +323,7 @@ s_EventData MAP_EVENTS[111] = {
     {
         .requiredEventFlag = EventFlag_219,
         .disabledEventFlag = EventFlag_223,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 41,
     },
@@ -337,7 +337,7 @@ s_EventData MAP_EVENTS[111] = {
     },
     {
         .requiredEventFlag = EventFlag_224,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 56,
         .flags_8_13          = 1,

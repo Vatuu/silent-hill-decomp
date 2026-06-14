@@ -27,14 +27,14 @@ s_EventData MAP_EVENTS[24] = {
     },
     {
         .disabledEventFlag = EventFlag_402,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `func_800EB11C`
     },
     {
         .requiredEventFlag = EventFlag_402,
         .disabledEventFlag = EventFlag_403,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 2,
     },
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[24] = {
     },
     {
         .requiredEventFlag = EventFlag_411,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 11,
         .mapIdx  = MapIdx_MAP6_S03,

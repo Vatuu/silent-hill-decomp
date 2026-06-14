@@ -295,7 +295,7 @@ s_EventData MAP_EVENTS[201] = {
     {
         .requiredEventFlag = EventFlag_193,
         .disabledEventFlag = EventFlag_M2S00_WaterWorksCutscene,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `MapEvent_AtWaterWorks`
     },
@@ -372,7 +372,7 @@ s_EventData MAP_EVENTS[201] = {
     },
     {
         .disabledEventFlag = EventFlag_146,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 8, // `MapEvent_CutsceneExitCafe`
         .flags_8_13          = 1,
@@ -573,7 +573,7 @@ s_EventData MAP_EVENTS[201] = {
     {
         .requiredEventFlag = EventFlag_158,
         .disabledEventFlag = EventFlag_159,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 18, // `MapEvent_DoorOfEclipseEnter`
     },
@@ -1097,7 +1097,7 @@ s_EventData MAP_EVENTS[201] = {
     {
         .requiredEventFlag = EventFlag_168,
         .disabledEventFlag = EventFlag_169,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 24, // `func_800EB3F4`
     },

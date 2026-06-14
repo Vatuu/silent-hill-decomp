@@ -19,7 +19,7 @@ s_EventData MAP_EVENTS[23] = {
     },
     {
         .disabledEventFlag = EventFlag_M0S01_FmvStarted,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_Fmv,
         .eventParam      = 15,
         .flags_8_13          = 2,
@@ -27,7 +27,7 @@ s_EventData MAP_EVENTS[23] = {
     {
         .requiredEventFlag = EventFlag_M0S01_FmvStarted,
         .disabledEventFlag = EventFlag_M0S01_CafeCutsceneStarted,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 3, // `MapEvent_CafeCutscene`
         .flags_8_13          = 1,
@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[23] = {
     {
         .requiredEventFlag = EventFlag_M0S01_AirScreamerDied,
         .disabledEventFlag = EventFlag_M0S01_AirScreamerDeathPlayed,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 11, // `MapEvent_AirScreamerDeath`
     },

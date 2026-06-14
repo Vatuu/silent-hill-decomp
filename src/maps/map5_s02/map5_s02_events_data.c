@@ -36,7 +36,7 @@ s_EventData MAP_EVENTS[21] = {
     {
         .requiredEventFlag = EventFlag_378,
         .disabledEventFlag = EventFlag_379,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 10, // `MapEvent_KaufmannBarFightCutscene`
     },

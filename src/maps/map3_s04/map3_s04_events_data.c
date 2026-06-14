@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[53] = {
     {
         .requiredEventFlag = EventFlag_292,
         .disabledEventFlag = EventFlag_293,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_Fmv,
         .eventParam      = 10,
         .flags_8_13          = 2,
@@ -52,13 +52,13 @@ s_EventData MAP_EVENTS[53] = {
     {
         .requiredEventFlag = EventFlag_293,
         .disabledEventFlag = EventFlag_294,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D2668`
     },
     {
         .requiredEventFlag = EventFlag_294,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 39,
         .flags_8_13          = 4,
@@ -128,7 +128,7 @@ s_EventData MAP_EVENTS[53] = {
     {
         .requiredEventFlag = EventFlag_216,
         .disabledEventFlag = EventFlag_220,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 43,
         .mapIdx  = MapIdx_MAP3_S05,
@@ -136,14 +136,14 @@ s_EventData MAP_EVENTS[53] = {
     {
         .requiredEventFlag = EventFlag_217,
         .disabledEventFlag = EventFlag_221,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 17,
     },
     {
         .requiredEventFlag = EventFlag_218,
         .disabledEventFlag = EventFlag_222,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 41,
         .mapIdx  = MapIdx_MAP3_S03,
@@ -151,7 +151,7 @@ s_EventData MAP_EVENTS[53] = {
     {
         .requiredEventFlag = EventFlag_219,
         .disabledEventFlag = EventFlag_223,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadOverlay,
         .eventParam      = 42,
         .mapIdx  = MapIdx_MAP3_S03,

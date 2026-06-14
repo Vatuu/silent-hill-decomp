@@ -3,14 +3,14 @@
 s_EventData MAP_EVENTS[21] = {
     {
         .disabledEventFlag = EventFlag_237,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 5, // `func_800D0608`
     },
     {
         .requiredEventFlag = EventFlag_237,
         .disabledEventFlag = EventFlag_238,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_LoadRoom,
         .eventParam      = 1,
         .mapIdx  = MapIdx_MAP0_S02,
@@ -134,7 +134,7 @@ s_EventData MAP_EVENTS[21] = {
     {
         .requiredEventFlag = EventFlag_235,
         .disabledEventFlag = EventFlag_236,
-        .triggerType     = TriggerType_None,
+        .triggerType     = TriggerType_Tick,
         .sysState        = SysState_EventCallback,
         .eventParam      = 4, // `func_800D03FC`
     },
