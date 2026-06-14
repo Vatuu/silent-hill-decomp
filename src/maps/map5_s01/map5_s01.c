@@ -127,7 +127,7 @@ void MapEvent_CommonItemTake(void) // 0x800EB9A4
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 40:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -398,7 +398,7 @@ void func_800EBF70(void) // 0x800EBF70
 
 void func_800EC2D8(void) // 0x800EC2D8
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KaufmannKey, 1);
     Event_DisplayMapMsgWithSfx(17, Sfx_UseKey, &sfxPos); // "Used the Kaufmann key."

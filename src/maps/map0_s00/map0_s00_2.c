@@ -119,9 +119,9 @@ const char* MAP_MESSAGES[] = {
 void func_800D9610(void) // 0x800D9610
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionZ
     };
 
     switch (g_SysWork.sysStateSteps[0])

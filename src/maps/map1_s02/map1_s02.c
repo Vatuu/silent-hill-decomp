@@ -80,7 +80,7 @@ void func_800DA200(void) // 0x800DA200
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 107:
             pickupType   = CommonPickupItemId_Ampoule;
@@ -143,7 +143,7 @@ void func_800DA200(void) // 0x800DA200
 
 void MapEvent_LobbyKeyUse(void) // 0x800DA2E4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_LobbyKey, 1);
     Event_DisplayMapMsgWithSfx(19, Sfx_DoorUnlocked, &sfxPos); // Empty message?

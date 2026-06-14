@@ -96,7 +96,7 @@ void func_800E7B74(void) // 0x800E7B74
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 139:
             pickupType   = CommonPickupItemId_FirstAidKit;
@@ -1122,7 +1122,7 @@ void func_800E9CB4(void) // 0x800E9CB4
 
 void MapEvent_HouseKeyUse(void) // 0x800E9D1C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_HouseKey, 1);
     Event_DisplayMapMsgWithSfx(31, Sfx_UseKey, &sfxPos); // "Used the House Key."
@@ -1455,9 +1455,9 @@ void func_800EA6E0(void) // 0x800EA6E0
 void MapEvent_KGordonKeyUse(void) // 0x800EA894
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionZ
     };
 
     Player_ItemRemove(InvItemId_KGordonKey, 1);
@@ -1720,9 +1720,9 @@ void func_800EB174(void) // 0x800EB174
     {
         case 0:
             Player_ControlFreeze();
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->mapPointIdx].positionX;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->mapPointIdx].positionZ;
 
             Sfx_WithFlagsPlay(Sfx_Unk1349, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);

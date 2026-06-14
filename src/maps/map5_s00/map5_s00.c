@@ -397,14 +397,14 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800D67F4(void) // 0x800D67F4
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
 }
 
 void func_800D6888(void) // 0x800D6888
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
 }
@@ -427,7 +427,7 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 38:
             pickupType   = CommonPickupItemId_ShotgunShells;
@@ -475,9 +475,9 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
 
 void func_800D69DC(void) // 0x800D69DC
 {
-    VECTOR3 pos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 pos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 10:
             Player_ItemRemove(InvItemId_SewerKey, 1);

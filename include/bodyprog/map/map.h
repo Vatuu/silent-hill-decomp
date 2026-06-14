@@ -348,11 +348,11 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 /** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
 typedef struct _EventData
 {
-    /* 0x0    */ s16 requiredEventFlag;
-    /* 0x2    */ s16 disabledEventFlag;
+    /* 0x0    */ s16 requiredEventFlag;  /** `e_EventFlag` that must be set for event to trigger (or `EventFlag_None`) */
+    /* 0x2    */ s16 completeEventFlag;  /** `e_EventFlag` set on event completion, event is skipped if flag is already set. */
     /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
     /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
-    /* 0x5    */ u8  pointOfInterestIdx; /** Index into `g_MapOverlayHdr.mapPoints`. */
+    /* 0x5    */ u8  mapPointIdx;        /** Index into `g_MapOverlayHdr.mapPoints`. */
     /* 0x6    */ u8  requiredItemId;     /** `e_InvItemId` that player must use from item screen. */
     /* 0x7    */ u8  __pad_7;
     /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */

@@ -1,90 +1,103 @@
 #include "bodyprog/bodyprog.h"
 
 s_EventData MAP_EVENTS[13] = {
+    // [0]
     {
         .requiredEventFlag = EventFlag_587,
-        .disabledEventFlag = EventFlag_588,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 7, // `func_800E9AC8`
+        .completeEventFlag = EventFlag_588,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 7, // `func_800E9AC8`
     },
+    // [1]
     {
         .requiredEventFlag = EventFlag_583,
-        .disabledEventFlag = EventFlag_589,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .eventParam      = 3,
-        .flags_8_13          = 1,
+        .completeEventFlag = EventFlag_589,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .eventParam        = 3,
+        .flags_8_13        = 1,
     },
+    // [2]
     {
         .requiredEventFlag = EventFlag_584,
-        .disabledEventFlag = EventFlag_590,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 6, // `func_800E3E84`
+        .completeEventFlag = EventFlag_590,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 6, // `func_800E3E84`
     },
+    // [3]
     {
         .requiredEventFlag = EventFlag_585,
-        .disabledEventFlag = EventFlag_590,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .eventParam      = 2,
-        .flags_8_13          = 1,
+        .completeEventFlag = EventFlag_590,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .eventParam        = 2,
+        .flags_8_13        = 1,
     },
+    // [4]
     {
         .requiredEventFlag = EventFlag_586,
-        .disabledEventFlag = EventFlag_590,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .eventParam      = 1,
-        .flags_8_13          = 1,
+        .completeEventFlag = EventFlag_590,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .eventParam        = 1,
+        .flags_8_13        = 1,
     },
+    // [5]
     {
         .requiredEventFlag = EventFlag_590,
-        .disabledEventFlag = EventFlag_589,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .flags_8_13          = 1,
+        .completeEventFlag = EventFlag_589,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .flags_8_13        = 1,
     },
+    // [6]
     {
         .requiredEventFlag = EventFlag_589,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 8, // `func_800E9C28`
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 8, // `func_800E9C28`
     },
+    // [7]
     {
-        .disabledEventFlag = EventFlag_577,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 2, // `func_800E3390`
+        .completeEventFlag = EventFlag_577,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 2, // `func_800E3390`
     },
+    // [8]
     {
         .requiredEventFlag = EventFlag_578,
-        .disabledEventFlag = EventFlag_579,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 3, // `func_800E3B6C`
+        .completeEventFlag = EventFlag_579,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 3, // `func_800E3B6C`
     },
+    // [9]
     {
         .requiredEventFlag = EventFlag_579,
-        .disabledEventFlag = EventFlag_580,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .eventParam      = 4,
-        .flags_8_13          = 2,
+        .completeEventFlag = EventFlag_580,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .eventParam        = 4,
+        .flags_8_13        = 2,
     },
+    // [10]
     {
         .requiredEventFlag = EventFlag_580,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 4, // `func_800E3C48`
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 4, // `func_800E3C48`
     },
+    // [11]
     {
         .requiredEventFlag = EventFlag_582,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 5, // `func_800E3D18`
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 5, // `func_800E3D18`
     },
+    // [12]
     {
         .triggerType = TriggerType_EndOfArray,
     },

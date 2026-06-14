@@ -1,117 +1,133 @@
 #include "bodyprog/bodyprog.h"
 
 s_EventData MAP_EVENTS[16] = {
+    // [0]
     {
-        .disabledEventFlag  = EventFlag_M6S03_HealthDrink0,
-        .triggerType      = TriggerType_TouchFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 10,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 2, // `MapEvent_CommonItemTake`
+        .completeEventFlag = EventFlag_M6S03_HealthDrink0,
+        .triggerType       = TriggerType_TouchFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 10,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 2, // `MapEvent_CommonItemTake`
     },
+    // [1]
     {
-        .disabledEventFlag  = EventFlag_M6S03_HandgunBullets,
-        .triggerType      = TriggerType_TouchFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 11,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 2, // `MapEvent_CommonItemTake`
+        .completeEventFlag = EventFlag_M6S03_HandgunBullets,
+        .triggerType       = TriggerType_TouchFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 11,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 2, // `MapEvent_CommonItemTake`
     },
+    // [2]
     {
-        .disabledEventFlag  = EventFlag_M6S03_HealthDrink1,
-        .triggerType      = TriggerType_TouchFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 12,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 2, // `MapEvent_CommonItemTake`
+        .completeEventFlag = EventFlag_M6S03_HealthDrink1,
+        .triggerType       = TriggerType_TouchFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 12,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 2, // `MapEvent_CommonItemTake`
     },
+    // [3]
     {
         .requiredEventFlag = EventFlag_426,
-        .disabledEventFlag = EventFlag_438,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_Fmv,
-        .eventParam      = 9,
-        .flags_8_13          = 2,
+        .completeEventFlag = EventFlag_438,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_Fmv,
+        .eventParam        = 9,
+        .flags_8_13        = 2,
     },
+    // [4]
     {
-        .disabledEventFlag = EventFlag_431,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_EventCallback,
-        .eventParam      = 3, // `func_800D822C`
+        .completeEventFlag = EventFlag_431,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 3, // `func_800D822C`
     },
+    // [5]
     {
         .requiredEventFlag = EventFlag_431,
-        .disabledEventFlag = EventFlag_432,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_LoadRoom,
+        .completeEventFlag = EventFlag_432,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_LoadRoom,
     },
+    // [6]
     {
-        .disabledEventFlag  = EventFlag_433,
-        .triggerType      = TriggerType_TouchObbFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 2,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 4, // `func_800D84EC`
+        .completeEventFlag = EventFlag_433,
+        .triggerType       = TriggerType_TouchObbFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 2,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 4, // `func_800D84EC`
     },
+    // [7]
     {
-        .disabledEventFlag  = EventFlag_433,
-        .triggerType      = TriggerType_TouchObbFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 3,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 4, // `func_800D84EC`
+        .completeEventFlag = EventFlag_433,
+        .triggerType       = TriggerType_TouchObbFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 3,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 4, // `func_800D84EC`
     },
+    // [8]
     {
-        .disabledEventFlag  = EventFlag_433,
-        .triggerType      = TriggerType_TouchObbFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 4,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 4, // `func_800D84EC`
+        .completeEventFlag = EventFlag_433,
+        .triggerType       = TriggerType_TouchObbFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 4,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 4, // `func_800D84EC`
     },
+    // [9]
     {
         .requiredEventFlag = EventFlag_433,
-        .triggerType     = TriggerType_Tick,
-        .sysState        = SysState_LoadOverlay,
-        .eventParam      = 7,
-        .mapIdx  = MapIdx_MAP6_S04,
+        .triggerType       = TriggerType_Tick,
+        .sysState          = SysState_LoadOverlay,
+        .eventParam        = 7,
+        .mapIdx            = MapIdx_MAP6_S04,
     },
+    // [10]
     {
-        .disabledEventFlag  = EventFlag_434,
-        .triggerType      = TriggerType_TouchAabb,
-        .activationType   = TriggerActivationType_Exclusive,
-        .pointOfInterestIdx = 5,
-        .sysState         = SysState_EventSetFlag,
+        .completeEventFlag = EventFlag_434,
+        .triggerType       = TriggerType_TouchAabb,
+        .activationType    = TriggerActivationType_Exclusive,
+        .mapPointIdx       = 5,
+        .sysState          = SysState_EventSetFlag,
     },
+    // [11]
     {
-        .disabledEventFlag  = EventFlag_435,
-        .triggerType      = TriggerType_TouchAabb,
-        .activationType   = TriggerActivationType_Exclusive,
-        .pointOfInterestIdx = 6,
-        .sysState         = SysState_EventSetFlag,
+        .completeEventFlag = EventFlag_435,
+        .triggerType       = TriggerType_TouchAabb,
+        .activationType    = TriggerActivationType_Exclusive,
+        .mapPointIdx       = 6,
+        .sysState          = SysState_EventSetFlag,
     },
+    // [12]
     {
-        .disabledEventFlag  = EventFlag_M6S03_PickupMap,
-        .triggerType      = TriggerType_TouchObbFacing,
-        .activationType   = TriggerActivationType_Button,
-        .pointOfInterestIdx = 8,
-        .sysState         = SysState_EventCallback,
-        .eventParam       = 5, // `MapEvent_PaperMapTake`
+        .completeEventFlag = EventFlag_M6S03_PickupMap,
+        .triggerType       = TriggerType_TouchObbFacing,
+        .activationType    = TriggerActivationType_Button,
+        .mapPointIdx       = 8,
+        .sysState          = SysState_EventCallback,
+        .eventParam        = 5, // `MapEvent_PaperMapTake`
     },
+    // [13]
     {
         .triggerType    = TriggerType_TouchObbFacing,
         .activationType = TriggerActivationType_Button,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 16,
     },
+    // [14]
     {
-        .requiredEventFlag  = EventFlag_435,
-        .disabledEventFlag  = EventFlag_MapMark_FogHospital1F_MedicineRoomBotArrows,
-        .triggerType      = TriggerType_TouchAabb,
-        .activationType   = TriggerActivationType_Exclusive,
-        .pointOfInterestIdx = 9,
-        .sysState         = SysState_EventSetFlag,
+        .requiredEventFlag = EventFlag_435,
+        .completeEventFlag = EventFlag_MapMark_FogHospital1F_MedicineRoomBotArrows,
+        .triggerType       = TriggerType_TouchAabb,
+        .activationType    = TriggerActivationType_Exclusive,
+        .mapPointIdx       = 9,
+        .sysState          = SysState_EventSetFlag,
     },
+    // [15]
     {
         .triggerType = TriggerType_EndOfArray,
     },

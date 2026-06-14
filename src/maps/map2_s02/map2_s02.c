@@ -25,7 +25,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 void func_800E9D54(void) // 0x800E9D54
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_AntiqueShopKey, 1);
     Event_DisplayMapMsgWithSfx(15, Sfx_UseKey, &sfxPos);
@@ -47,7 +47,7 @@ void func_800E9E10(void) // 0x800E9E10
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 41:
             pickupType   = CommonPickupItemId_HealthDrink;

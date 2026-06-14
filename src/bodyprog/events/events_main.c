@@ -57,8 +57,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
     while (true)
     {
-        s32 disabledEventFlag_temp;
-        s16 disabledEventFlag;
+        s32 completeEventFlag_temp;
+        s16 completeEventFlag;
         s16 requiredEventFlag;
 
         mapEvent++;
@@ -68,21 +68,25 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             break;
         }
 
-        // `requiredEventFlag`: if set, EventFlag that must be set for event to trigger?
-        // `disabledEventFlag`: if set, EventFlag that must not be set for event to trigger?
-        // TODO: Can this s32 temp be removed? Trying to set `disabledEventFlag` directly results in `lhu` instead?
+        // `requiredEventFlag`: EventFlag that must be set for event to trigger.
+        // `completeEventFlag`: skips triggering event if EventFlag is set, otherwise will set this flag once event has completed.
+
+        // TODO: Can this s32 temp be removed? Trying to set `completeEventFlag` directly results in `lhu` instead?
         requiredEventFlag      = mapEvent->requiredEventFlag;
-        disabledEventFlag_temp = mapEvent->disabledEventFlag;
-        disabledEventFlag      = disabledEventFlag_temp;
+        completeEventFlag_temp = mapEvent->completeEventFlag;
+        completeEventFlag      = completeEventFlag_temp;
 
         if (requiredEventFlag != EventFlag_None && !Savegame_EventFlagGet(requiredEventFlag))
         {
             continue;
         }
 
-        if (disabledEventFlag != EventFlag_None && Savegame_EventFlagGet(disabledEventFlag) &&
-            (disabledEventFlag < 867 || mapEvent->activationType == TriggerActivationType_Exclusive ||
-             mapEvent->sysState == SysState_EventSetFlag))
+        if (completeEventFlag != EventFlag_None && Savegame_EventFlagGet(completeEventFlag) &&
+            // Completed map marker events with non-Exclusive activation
+            // and non-EventSetFlag state are allowed to re-trigger?
+            (completeEventFlag >= EventFlag_MapMark_Begin &&
+            mapEvent->activationType != TriggerActivationType_Exclusive &&
+            mapEvent->sysState != SysState_EventSetFlag) == false)
         {
             continue;
         }
@@ -107,7 +111,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        mapPoint = &g_MapOverlayHdr.mapPoints[mapEvent->pointOfInterestIdx];
+        mapPoint = &g_MapOverlayHdr.mapPoints[mapEvent->mapPointIdx];
 
         switch (mapEvent->triggerType)
         {
@@ -193,7 +197,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // (Same as `SysState_EventSetFlag_Update`.)
         if (mapEvent->sysState == SysState_EventSetFlag)
         {
-            Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag);
+            Savegame_EventFlagSetAlt(mapEvent->completeEventFlag);
             break;
         }
 

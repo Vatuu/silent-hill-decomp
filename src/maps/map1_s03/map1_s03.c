@@ -91,9 +91,9 @@ void GameBoot_LoadScreen_StageString(void) {}
 void func_800DA7F4(void) // 0x800DA7F4
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionZ
     };
 
     Player_ItemRemove(InvItemId_LibraryReserveKey, 1);
@@ -104,9 +104,9 @@ void func_800DA7F4(void) // 0x800DA7F4
 void func_800DA8B0(void) // 0x800DA8B0
 {
     VECTOR3 sfxPos = {
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX,
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
         Q12(-1.2f),
-        MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionZ
     };
 
     Player_ItemRemove(InvItemId_ClassroomKey, 1);
@@ -158,7 +158,7 @@ void func_800DA950(void) // 0x800DA950
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 84:
             pickupType   = CommonPickupItemId_ShotgunShells;
@@ -231,7 +231,7 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 3:
-            if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
+            if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
@@ -243,7 +243,7 @@ void func_800DAA28(void) // 0x800DAA28
                     Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                 }
             }
-            else if (g_MapEventData->pointOfInterestIdx == 17 || g_MapEventData->pointOfInterestIdx == 18)
+            else if (g_MapEventData->mapPointIdx == 17 || g_MapEventData->mapPointIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
@@ -275,7 +275,7 @@ void func_800DABC4(void) // 0x800DABC4
         case 0:
             Player_ControlFreeze();
 
-            if (g_MapEventData->pointOfInterestIdx == 17 || g_MapEventData->pointOfInterestIdx == 18)
+            if (g_MapEventData->mapPointIdx == 17 || g_MapEventData->mapPointIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                 {
@@ -287,7 +287,7 @@ void func_800DABC4(void) // 0x800DABC4
                     Savegame_EventFlagSet(EventFlag_112);
                 }
             }
-            else if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
+            else if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
@@ -328,7 +328,7 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            if (g_MapEventData->pointOfInterestIdx == 19 || g_MapEventData->pointOfInterestIdx == 20)
+            if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {

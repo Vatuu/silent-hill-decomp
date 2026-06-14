@@ -86,7 +86,7 @@ void func_800D151C(void) // 0x800D151C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 126:
             pickupType   = CommonPickupItemId_FirstAidKit;
@@ -249,9 +249,9 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 1:
-            sfxPos.vx = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX;
+            sfxPos.vx = MAP_POINTS[g_MapEventData->mapPointIdx].positionX;
             sfxPos.vy = Q12(-1.2f);
-            sfxPos.vz = MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ;
+            sfxPos.vz = MAP_POINTS[g_MapEventData->mapPointIdx].positionZ;
 
             Sfx_WithFlagsPlay(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);

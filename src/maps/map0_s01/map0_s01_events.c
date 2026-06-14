@@ -837,7 +837,7 @@ void MapEvent_CommonItemTake(void) // 0x800DC864
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 13:
             pickupType   = CommonPickupItemId_HealthDrink;

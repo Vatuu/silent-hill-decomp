@@ -90,7 +90,7 @@ void MapEvent_CommonItemTake(void) // 0x800D7A28
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventData->pointOfInterestIdx)
+    switch (g_MapEventData->mapPointIdx)
     {
         case 94:
             pickupType   = CommonPickupItemId_HandgunBullets;
@@ -384,7 +384,7 @@ void func_800D81CC(void) // 0x800D81CC
 
 void func_800D8354(void) // 0x800D8354
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->pointOfInterestIdx].positionZ };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     g_DeltaTime = Q12(0.0f);
 
@@ -554,11 +554,11 @@ void func_800D8948(void) // 0x800D8948
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 87, false);
 
-            if (g_MapEventData->pointOfInterestIdx == 16)
+            if (g_MapEventData->mapPointIdx == 16)
             {
                 Savegame_EventFlagSet(EventFlag_79);
             }
-            else if (g_MapEventData->pointOfInterestIdx == 17)
+            else if (g_MapEventData->mapPointIdx == 17)
             {
                 Savegame_EventFlagSet(EventFlag_80);
             }
