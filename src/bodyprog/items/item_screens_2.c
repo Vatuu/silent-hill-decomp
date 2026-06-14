@@ -82,7 +82,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
     {
         case 0:
             // Switch to results screen in case the player have finalized the game.
-            if (g_SavegamePtr->field_27A & (GameEndingFlag_GoodPlus | GameEndingFlag_Good | GameEndingFlag_BadPlus | GameEndingFlag_Bad | GameEndingFlag_Ufo))
+            if (g_SavegamePtr->currentEndingFlags & (GameEndingFlag_GoodPlus | GameEndingFlag_Good | GameEndingFlag_BadPlus | GameEndingFlag_Bad | GameEndingFlag_Ufo))
             {
                 g_GameWork.gameStateSteps[1] = 21;
                 g_GameWork.gameStateSteps[2] = 0;
@@ -90,7 +90,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
             
             // Throw player to intro screen after finalizing the game.
-            if ((g_SavegamePtr->field_27A & (1 << 6)) &&
+            if ((g_SavegamePtr->currentEndingFlags & GameEndingFlag_6) &&
                 g_GameWork.gameStatePrev == GameState_SaveScreen)
             {
                 g_Demo_ReproducedCount = 0;

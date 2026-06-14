@@ -17,15 +17,6 @@
 // ENUMS
 // ======
 
-typedef enum _GameEndingFlags
-{
-    GameEndingFlag_GoodPlus = 1 << 0,
-    GameEndingFlag_Good     = 1 << 1,
-    GameEndingFlag_BadPlus  = 1 << 2,
-    GameEndingFlag_Bad      = 1 << 3,
-    GameEndingFlag_Ufo      = 1 << 4
-} e_GameEndingFlags;
-
 typedef enum _InventoryItemFlags
 {
     InventoryItemFlag_PlateOfTurtle   = 1 << 0,

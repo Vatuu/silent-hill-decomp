@@ -18,31 +18,37 @@ extern s_CreditText3dState g_CreditText3dState;
 // Only looks like index 1 - 4 are used by `map7_s03` though? (which accounts for the 4 different normal endings)
 // TODO: is UFO ending also part of this?
 s_801E5558 D_801E5558[6] = {
+    /** `GameEnding_0`, never used? */
     {
         .xaSfxId     = Sfx_XaAudio725,
         .scrollDelay = 0,
         .field_4     = 8700,
     },
+    /** `GameEnding_GoodPlus` */
     {
         .xaSfxId     = Sfx_XaAudio723,
         .scrollDelay = -2400,
         .field_4     = 8400,
     },
+    /** `GameEnding_Good` */
     {
         .xaSfxId     = Sfx_XaAudio724,
         .scrollDelay = -900,
         .field_4     = 8700,
     },
+    /** `GameEnding_BadPlus` */
     {
         .xaSfxId     = Sfx_XaAudio725,
         .scrollDelay = -180,
         .field_4     = 8520,
     },
+    /** `GameEnding_Bad` */
     {
         .xaSfxId     = Sfx_XaAudio726,
         .scrollDelay = -180,
         .field_4     = 8820,
     },
+    /** `GameEnding_Ufo`, never used? */
     {
         .xaSfxId     = Sfx_XaAudio726,
         .scrollDelay = -120,

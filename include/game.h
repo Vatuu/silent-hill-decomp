@@ -262,6 +262,30 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+typedef enum _GameEnding
+{
+    GameEnding_0        = 0, // Unknown, credits has parameters setup for it, but nothing sets this.
+    GameEnding_GoodPlus = 1,
+    GameEnding_Good     = 2,
+    GameEnding_BadPlus  = 3,
+    GameEnding_Bad      = 4,
+    GameEnding_Ufo      = 5,
+} e_GameEnding;
+
+typedef enum _GameEndingFlags
+{
+    GameEndingFlag_GoodPlus = 1 << 0, // 1
+    GameEndingFlag_Good     = 1 << 1, // 2
+    GameEndingFlag_BadPlus  = 1 << 2, // 4
+    GameEndingFlag_Bad      = 1 << 3, // 8
+    GameEndingFlag_Ufo      = 1 << 4, // 16
+
+    // The following are only used in `currentEndingFlags`.
+    GameEndingFlag_5        = 1 << 5, // Unknown purpose, `func_800904F4` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
+    GameEndingFlag_6        = 1 << 6, // Set the first time ranking has been seen?
+    GameEndingFlag_7        = 1 << 7, // Set if ranking has been seen and ending was UFO?
+} e_GameEndingFlags;
+
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
 {

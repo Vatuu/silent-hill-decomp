@@ -424,8 +424,6 @@ extern u8 D_800F4819;
 extern u8 D_800F481A;
 extern u8 D_800F481B;
 
-extern u8 g_EndingIdx; // TODO: Enum.
-
 extern q20_12 D_800F3D98[5]; // Time.
 
 extern q19_12 D_800F4820; // Time.

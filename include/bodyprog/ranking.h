@@ -32,68 +32,68 @@ typedef struct
 //extern s_800AFDF4 D_800AFDF4;
 
 /** Savegame count. */
-extern s16 D_800C48A0;
+extern s16 g_RankingSavegameCount;
 
 /** Gameplay time. */
-extern u16 D_800C48A2;
+extern u16 g_RankingGameplayHours;
 
-extern u16 D_800C48A4;
+extern u16 g_RankingWalkDistKm;
 
-extern u16 D_800C48A6;
+extern u16 g_RankingWalkDistM;
 
-extern u16 D_800C48A8;
+extern u16 g_RankingRunDistKm;
 
-extern u16 D_800C48AA;
+extern u16 g_RankingRunDistM;
 
 /** Picked up item count. */
-extern u16 D_800C48AC;
+extern u16 g_RankingPickedUpItemCount;
 
-extern u8 D_800C48AE;
+extern u8 g_RankingGameplayMinutes;
 
-extern u8 D_800C48AF;
+extern u8 g_RankingGameplaySeconds;
 
 /** Clear game count. */
-extern u8 D_800C48B0;
+extern u8 g_RankingClearGameCount;
 
 /** Clear game endings. */
-extern u8 D_800C48B1;
+extern u8 g_RankingClearGameEndings;
 
-extern u8 D_800C48B2;
+extern u8 g_RankingCurrentEndingFlags;
 
 /** Location ID. */
-extern u8 D_800C48B3;
+extern u8 g_RankingEndLocationId;
 
-extern u8 D_800C48B4;
+extern u8 g_RankingPickedUpSpecialItemCount;
 
-extern s8 D_800C48B5;
+extern s8 g_RankingScore;
 
-extern u8 D_800C48B6;
+extern u8 g_RankingHasEventFlag61;
 
-extern u8 D_800C48B7;
+extern u8 g_RankingHasEventFlag183;
 
-extern u16 D_800C48B8;
+extern u16 g_RankingEnemyKillsShooting;
 
-extern u16 D_800C48BA;
+extern u16 g_RankingEnemyKillsMelee;
 
 /** Has fired shots. */
-extern bool D_800C48BC;
+extern bool g_RankingHasFiredShot;
 
 /** Close range shot count. */
-extern u32 D_800C48C0;
+extern u32 g_RankingCloseRangeShotPercent;
 
 /** Mid range shot count. */
-extern u32 D_800C48C4;
+extern u32 g_RankingMidRangeShotPercent;
 
 /** Long range shot count. */
-extern u32 D_800C48C8;
+extern u32 g_RankingLongRangeShotPercent;
 
-extern u32 D_800C48CC;
+extern u32 g_RankingNoAimingShotPercent;
 
 /** Game difficulty. */
-extern s8 D_800C48D0;
+extern s8 g_RankingGameDifficulty;
 
 /** Continue count. */
-extern u8 D_800C48D1;
+extern u8 g_RankingContinueCount;
 
 extern s8 __pad_bss_800C48D2[14];
 

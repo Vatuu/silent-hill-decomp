@@ -1762,11 +1762,11 @@ void func_800D32D0(void) // 0x800D32D0
 
         case 2:
             g_SavegamePtr->clearGameCount++;
-            g_SavegamePtr->clearGameCount                    = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
-            g_SavegamePtr->field_27A                             = 1 << 4;
-            g_SavegamePtr->clearGameEndings                 |= 1 << 4;
+            g_SavegamePtr->clearGameCount                = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
+            g_SavegamePtr->currentEndingFlags            = GameEndingFlag_Ufo;
+            g_SavegamePtr->clearGameEndings             |= GameEndingFlag_Ufo;
             g_GameWorkConst->config.extraOptionsEnabled |= 1 << 4;
-            g_SavegamePtr->locationId                         = SaveLocationId_NextFear;
+            g_SavegamePtr->locationId                    = SaveLocationId_NextFear;
 
             SysWork_StateSetNext(SysState_StatusMenu);
             break;

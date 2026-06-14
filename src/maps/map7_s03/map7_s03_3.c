@@ -22,6 +22,8 @@
 #include "maps/characters/unknown23.h"
 #include "screens/credits/credits.h"
 
+extern u8 g_EndingIdx; /** `e_GameEnding` */
+
 void func_800E0A34(void) // 0x800E0A34
 {
     s_FsImageDesc tex;
@@ -3773,13 +3775,14 @@ void Map_WorldObjectsInit(void) // 0x800E9528
 
     if (Savegame_EventFlagGet(EventFlag_449))
     {
-        g_EndingIdx = 1;
+        g_EndingIdx = GameEnding_GoodPlus;
     }
     else
     {
-        g_EndingIdx = 2;
+        g_EndingIdx = GameEnding_Good;
     }
 
+    // Switch to `GameEnding_BadPlus` or `GameEnding_Bad` if vial wasn't found.
     if (!Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
     {
         g_EndingIdx += 2;
@@ -3913,7 +3916,7 @@ void func_800E9AC8(void) // 0x800E9AC8
             Player_ControlFreeze();
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
 
-            if (g_EndingIdx == 1 || g_EndingIdx == 2)
+            if (g_EndingIdx == GameEnding_GoodPlus || g_EndingIdx == GameEnding_Good)
             {
                 g_SysWork.sysStateSteps[0] = 3;
                 break;
@@ -3969,7 +3972,7 @@ void func_800E9C28(void) // 0x800E9C28
             g_SavegamePtr->clearGameCount++;
             g_SavegamePtr->clearGameCount = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
 
-            g_SavegamePtr->field_27A                     = 1 << (g_EndingIdx - 1);
+            g_SavegamePtr->currentEndingFlags            = 1 << (g_EndingIdx - 1);
             g_SavegamePtr->clearGameEndings             |= 1 << (g_EndingIdx - 1);
             g_GameWorkConst->config.extraOptionsEnabled |= 1 << (g_EndingIdx - 1);
 
