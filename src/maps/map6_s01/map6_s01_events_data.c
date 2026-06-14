@@ -36,7 +36,7 @@ s_EventData MAP_EVENTS[17] = {
         .mapPointIdx       = 3,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 4,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
         .sfxPairIdx_8_19   = SfxPairIdx_10,
     },
     // [4]

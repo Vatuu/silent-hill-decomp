@@ -35,7 +35,7 @@ s_EventData MAP_EVENTS[16] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 9,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [4]
     {

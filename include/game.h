@@ -431,7 +431,7 @@ typedef struct _SysWork
     /* 0xFC0    */ GsCOORDINATE2    npcBoneCoordBuffer[NPC_BONE_COUNT_MAX]; /** Contiguous NPC bone coord buffer. */
     /* 0x2280   */ s8               npcFlagsId;                             // 1-based NPC ID for `npcFlags`.
     /* 0x2281   */ s8               loadingScreenIdx;
-    /* 0x2282   */ s8               field_2282;                         /** `e_EventDataUnkState` */
+    /* 0x2282   */ s8               areaTransitionFlags;               /** `e_AreaTransitionFlags` */
     /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.

@@ -16,7 +16,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 3,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [2]
     {
@@ -33,7 +33,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 2,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [4]
     {
@@ -42,7 +42,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 1,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [5]
     {
@@ -50,7 +50,7 @@ s_EventData MAP_EVENTS[13] = {
         .completeEventFlag = EventFlag_589,
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [6]
     {
@@ -81,7 +81,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 4,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [10]
     {

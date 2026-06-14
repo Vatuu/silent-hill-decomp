@@ -616,7 +616,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
     Game_StateSetNext(GameState_InGame);
 
     // If flag is set, returns to `GameState_InGame` with `gameStateSteps[0]` = 1.
-    if (g_MapEventData->flags_8_13 & EventParamUnkState_1)
+    if (g_MapEventData->transitionFlags & AreaTransitionFlag_SkipFadeIn)
     {
         g_GameWork.gameStateSteps[0] = 1;
     }
@@ -630,7 +630,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     g_SysWork.unused_229C       = 0;
     g_SysWork.loadingScreenIdx = D_800BCDB0.loadingScreenId;
     g_SysWork.sfxPairIdx  = g_MapEventData->sfxPairIdx_8_19;
-    g_SysWork.field_2282       = g_MapEventData->flags_8_13;
+    g_SysWork.areaTransitionFlags       = g_MapEventData->transitionFlags;
 
     SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx].sfx_0);
 
@@ -692,14 +692,14 @@ void AreaLoad_TransitionSound(void) // 0x80039F54
     SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx].sfx_2);
 }
 
-s8 func_80039F90(void) // 0x80039F90
+s8 AreaLoad_TransitionFlags(void) // 0x80039F90
 {
     if (g_SysWork.processFlags & (ProcessFlag_RoomTransition | ProcessFlag_OverlayTransition))
     {
-        return g_SysWork.field_2282;
+        return g_SysWork.areaTransitionFlags;
     }
 
-    return EventParamUnkState_None;
+    return AreaTransitionFlag_None;
 }
 
 void SysState_ReadMessage_Update(void) // 0x80039FB8
@@ -712,7 +712,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     // - A specific event related flag is disenabled.
     // - A specific camera related flag is disenabled.
     // - There is no alive enemy.
-    if (!(g_MapEventData->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.sysFlags & SysFlag_5))
+    if (!(g_MapEventData->transitionFlags & AreaTransitionFlag_0) && !(g_SysWork.sysFlags & SysFlag_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
@@ -847,7 +847,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 
 void SysState_EventCallback_Update(void) // 0x8003A3C8
 {
-    if (g_MapEventData->flags_8_13 != EventParamUnkState_None)
+    if (g_MapEventData->transitionFlags != AreaTransitionFlag_None)
     {
         Savegame_EventFlagSetAlt(g_MapEventData->completeEventFlag);
     }

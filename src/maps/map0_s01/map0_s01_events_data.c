@@ -25,7 +25,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 15,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [3]
     {
@@ -34,7 +34,7 @@ s_EventData MAP_EVENTS[23] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_EventCallback,
         .eventParam        = 3, // `MapEvent_CafeCutscene`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [4]
     {
@@ -73,7 +73,7 @@ s_EventData MAP_EVENTS[23] = {
         .mapPointIdx       = 6,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 71,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [8]
     {
@@ -91,7 +91,7 @@ s_EventData MAP_EVENTS[23] = {
         .mapPointIdx    = 6,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 67,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [10]
     {
@@ -147,7 +147,7 @@ s_EventData MAP_EVENTS[23] = {
         .mapPointIdx       = 4,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 65,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [16]
     {

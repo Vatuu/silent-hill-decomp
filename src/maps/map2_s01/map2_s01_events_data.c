@@ -16,7 +16,7 @@ s_EventData MAP_EVENTS[28] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 12,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [2]
     {
@@ -51,7 +51,7 @@ s_EventData MAP_EVENTS[28] = {
         .mapPointIdx    = 8,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 37,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [6]
     {
@@ -60,7 +60,7 @@ s_EventData MAP_EVENTS[28] = {
         .mapPointIdx    = 9,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 37,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [7]
     {
@@ -89,7 +89,7 @@ s_EventData MAP_EVENTS[28] = {
         .mapPointIdx       = 2,
         .sysState          = SysState_EventCallback,
         .eventParam        = 1, // `func_800CEC30`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [10]
     {
@@ -98,7 +98,7 @@ s_EventData MAP_EVENTS[28] = {
         .mapPointIdx    = 2,
         .sysState       = SysState_EventCallback,
         .eventParam     = 1, // `func_800CEC30`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [11]
     {
@@ -106,7 +106,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 3,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [12]
     {
@@ -114,7 +114,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 4,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [13]
     {

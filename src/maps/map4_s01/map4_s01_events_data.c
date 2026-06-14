@@ -102,7 +102,7 @@ s_EventData MAP_EVENTS[25] = {
         .mapPointIdx    = 18,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 115,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [12]
     {
@@ -112,7 +112,7 @@ s_EventData MAP_EVENTS[25] = {
         .mapPointIdx       = 17,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 4,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [13]
     {
@@ -130,7 +130,7 @@ s_EventData MAP_EVENTS[25] = {
         .mapPointIdx       = 7,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 94,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [15]
     {
@@ -139,7 +139,7 @@ s_EventData MAP_EVENTS[25] = {
         .mapPointIdx    = 7,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 94,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [16]
     {
@@ -158,7 +158,7 @@ s_EventData MAP_EVENTS[25] = {
         .mapPointIdx       = 4,
         .sysState          = SysState_EventCallback,
         .eventParam        = 5, // `func_800D3420`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [18]
     {
@@ -167,7 +167,7 @@ s_EventData MAP_EVENTS[25] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_LoadOverlay,
         .eventParam        = 14,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
         .mapIdx            = MapIdx_MAP4_S04,
     },
     // [19]
@@ -192,7 +192,7 @@ s_EventData MAP_EVENTS[25] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 16,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [22]
     {

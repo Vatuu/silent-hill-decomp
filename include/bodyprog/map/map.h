@@ -135,13 +135,13 @@ typedef enum _TriggerType
 } e_TriggerType;
 
 /** Some events indicate specific cutscenes behavior via flags. */
-typedef enum _EventDataUnkState
+typedef enum _AreaTransitionFlags
 {
-    EventParamUnkState_None = 0,
-    EventParamUnkState_0    = 1 << 0, /** Possible name: `EventParamUnkState_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
-    EventParamUnkState_1    = 1 << 1, /** Triggers cutscenes that go to the in-game mode. */
-    EventParamUnkState_2    = 1 << 2
-} e_EventDataUnkState;
+    AreaTransitionFlag_None          = 0,
+    AreaTransitionFlag_0             = 1 << 0, /** Possible name: `AreaTransitionFlag_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
+    AreaTransitionFlag_SkipFadeIn    = 1 << 1, /** Skips fade-in when returning to `GameState_InGame`. */
+    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** Skips `Sd_AmbientSfxInit` call inside `GameBoot_GameStartup`? */
+} e_AreaTransitionFlags;
 
 typedef enum _WorldModelLocation
 {
@@ -357,7 +357,7 @@ typedef struct _EventData
     /* 0x7    */ u8  __pad_7;
     /* 0x8+0  */ u32 sysState        : 5; /** `e_SysState` used by the event. */
     /* 0x8+5  */ u32 eventParam      : 8; /** Can be an ID of a `MapMsg`, sound effect, index into `mapEventFuncs`, or index into `mapPoints` for `areaLoad` events. */
-    /* 0x8+8  */ u32 flags_8_13      : 6; /** `e_EventDataUnkState` */
+    /* 0x8+8  */ u32 transitionFlags : 6; /** `e_AreaTransitionFlags` */
     /* 0x8+13 */ u32 sfxPairIdx_8_19 : 5; /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x8+19 */ u32 field_8_24      : 1; // `bool` | "Is on camera rail?"
     /* 0x8+24 */ u32 mapIdx          : 6;

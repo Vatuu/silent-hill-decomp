@@ -1969,7 +1969,7 @@ void AreaLoad_UpdatePlayerPosition(void);
  */
 void AreaLoad_TransitionSound(void);
 
-s8 func_80039F90(void);
+s8 AreaLoad_TransitionFlags(void);
 
 void SysState_ReadMessage_Update(void);
 

@@ -258,7 +258,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 3,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 132,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [30]
     {
@@ -267,7 +267,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 4,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 132,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [31]
     {
@@ -395,7 +395,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 30,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `MapEvent_DoorUnlocked`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [44]
     {
@@ -404,7 +404,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 10,
         .sysState       = SysState_EventCallback,
         .eventParam     = 1, // `MapEvent_DoorLocked`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [45]
     {
@@ -644,7 +644,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 55,
         .sysState       = SysState_EventCallback,
         .eventParam     = 1, // `MapEvent_DoorLocked`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [70]
     {
@@ -703,7 +703,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 67,
         .sysState          = SysState_EventCallback,
         .eventParam        = 39, // `sharedFunc_800DB60C_7_s01`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [76]
     {
@@ -791,7 +791,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 74,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 82,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
         .sfxPairIdx_8_19   = SfxPairIdx_12,
     },
     // [85]
@@ -830,7 +830,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 74,
         .sysState       = SysState_EventCallback,
         .eventParam     = 1, // `MapEvent_DoorLocked`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [89]
     {
@@ -889,7 +889,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx    = 75,
         .sysState       = SysState_EventCallback,
         .eventParam     = 1, // `MapEvent_DoorLocked`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [95]
     {
@@ -899,7 +899,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 76,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 84,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
         .sfxPairIdx_8_19   = SfxPairIdx_12,
     },
     // [96]
@@ -998,7 +998,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_AmuletOfSolomon,
         .sysState          = SysState_EventCallback,
         .eventParam        = 44, // `func_800E2DEC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [106]
     {
@@ -1009,7 +1009,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_CrestOfMercury,
         .sysState          = SysState_EventCallback,
         .eventParam        = 44, // `func_800E2DEC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [107]
     {
@@ -1020,7 +1020,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_Ankh,
         .sysState          = SysState_EventCallback,
         .eventParam        = 44, // `func_800E2DEC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [108]
     {
@@ -1031,7 +1031,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_DaggerOfMelchior,
         .sysState          = SysState_EventCallback,
         .eventParam        = 44, // `func_800E2DEC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [109]
     {
@@ -1042,7 +1042,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_DiskOfOuroboros,
         .sysState          = SysState_EventCallback,
         .eventParam        = 44, // `func_800E2DEC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [110]
     {
@@ -1058,7 +1058,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx = 88,
         .sysState    = SysState_LoadOverlay,
         .eventParam  = 91,
-        .flags_8_13  = 1,
+        .transitionFlags  = AreaTransitionFlag_0,
         .mapIdx      = MapIdx_MAP7_S03,
     },
     // [112]
@@ -1069,7 +1069,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 118,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 109,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [113]
     {
@@ -1079,7 +1079,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 119,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 109,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [114]
     {
@@ -1089,7 +1089,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 120,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 109,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [115]
     {
@@ -1099,7 +1099,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 121,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 109,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [116]
     {
@@ -1175,7 +1175,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 5,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [125]
     {
@@ -1210,7 +1210,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 127,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [129]
     {
@@ -1220,7 +1220,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 128,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [130]
     {
@@ -1230,7 +1230,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 129,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [131]
     {
@@ -1240,7 +1240,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 130,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [132]
     {
@@ -1250,7 +1250,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 131,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [133]
     {
@@ -1260,7 +1260,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 132,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [134]
     {
@@ -1270,7 +1270,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 133,
         .sysState          = SysState_EventCallback,
         .eventParam        = 31, // `func_800DFDDC`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [135]
     {
@@ -1371,7 +1371,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_Camera,
         .sysState          = SysState_EventCallback,
         .eventParam        = 38, // `func_800E1398`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [146]
     {
@@ -1382,7 +1382,7 @@ s_EventData MAP_EVENTS[251] = {
         .requiredItemId    = InvItemId_Camera,
         .sysState          = SysState_EventCallback,
         .eventParam        = 38, // `func_800E1398`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [147]
     {
@@ -1392,7 +1392,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 125,
         .sysState          = SysState_EventCallback,
         .eventParam        = 37, // `func_800E12E4`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [148]
     {
@@ -1402,7 +1402,7 @@ s_EventData MAP_EVENTS[251] = {
         .mapPointIdx       = 126,
         .sysState          = SysState_EventCallback,
         .eventParam        = 37, // `func_800E12E4`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [149]
     {
@@ -1571,7 +1571,7 @@ s_EventData MAP_EVENTS[251] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 142,
-        .flags_8_13        = 2,
+        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
     },
     // [167]
     {
@@ -1587,7 +1587,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 34,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [169]
     {
@@ -1595,7 +1595,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 35,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [170]
     {
@@ -1603,7 +1603,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 36,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [171]
     {
@@ -1611,7 +1611,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 37,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [172]
     {
@@ -1619,7 +1619,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 38,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [173]
     {
@@ -1627,7 +1627,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 42,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [174]
     {
@@ -1635,7 +1635,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 43,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [175]
     {
@@ -1643,7 +1643,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 44,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [176]
     {
@@ -1651,7 +1651,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 45,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [177]
     {
@@ -1659,7 +1659,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 50,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [178]
     {
@@ -1667,7 +1667,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 56,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [179]
     {
@@ -1675,7 +1675,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 57,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [180]
     {
@@ -1683,7 +1683,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 58,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [181]
     {
@@ -1691,7 +1691,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 59,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [182]
     {
@@ -1699,7 +1699,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 60,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [183]
     {
@@ -1707,7 +1707,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 61,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [184]
     {
@@ -1715,7 +1715,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 89,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [185]
     {
@@ -1723,7 +1723,7 @@ s_EventData MAP_EVENTS[251] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 90,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [186]
     {

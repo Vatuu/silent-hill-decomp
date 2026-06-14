@@ -179,7 +179,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 7:
-            if (func_80039F90() & EventParamUnkState_0)
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_0)
             {
                 Map_WorldClear();
             }
@@ -214,7 +214,7 @@ void GameBoot_GameStartup(void) // 0x80034964
                 g_SysWork.sysFlags |= SysFlag_DemoActive;
             }
 
-            if (func_80039F90() & EventParamUnkState_2 || !Sd_AmbientSfxInit())
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || !Sd_AmbientSfxInit())
             {
                 Game_StateStepIncrement();
             }
@@ -232,7 +232,9 @@ void GameBoot_GameStartup(void) // 0x80034964
                     GameBoot_InGameInit();
                 }
 
-                if (g_SysWork.processFlags <= (u32)ProcessFlag_OverlayTransition)
+                if (g_SysWork.processFlags == ProcessFlag_None || 
+                    g_SysWork.processFlags == ProcessFlag_RoomTransition ||
+                    g_SysWork.processFlags == ProcessFlag_OverlayTransition)
                 {
                     AreaLoad_TransitionSound();
                 }
@@ -247,7 +249,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             {
                 Game_StateSetNext(GameState_InGame);
 
-                if (func_80039F90() & EventParamUnkState_1)
+                if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipFadeIn)
                 {
                     g_GameWork.gameStateSteps[0] = 1;
                     g_Screen_FadeStatus          = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep, IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));

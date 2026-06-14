@@ -6,7 +6,7 @@ s_EventData MAP_EVENTS[2] = {
         .triggerType = TriggerType_Tick,
         .sysState    = SysState_ReadMessage,
         .eventParam  = 15,
-        .flags_8_13  = 1,
+        .transitionFlags  = AreaTransitionFlag_0,
     },
     // [1]
     {

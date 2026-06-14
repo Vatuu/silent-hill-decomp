@@ -80,7 +80,7 @@ s_EventData MAP_EVENTS[21] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 2,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [9]
     {
@@ -156,7 +156,7 @@ s_EventData MAP_EVENTS[21] = {
         .mapPointIdx    = 11,
         .sysState       = SysState_ReadMessage,
         .eventParam     = 48,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [17]
     {

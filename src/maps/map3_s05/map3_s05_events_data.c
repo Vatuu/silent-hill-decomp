@@ -265,7 +265,7 @@ s_EventData MAP_EVENTS[104] = {
         .mapPointIdx    = 42,
         .sysState       = SysState_EventCallback,
         .eventParam     = 15, // `func_800D719C`
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [29]
     {
@@ -274,7 +274,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 9,
         .sysState          = SysState_EventCallback,
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [30]
     {
@@ -347,7 +347,7 @@ s_EventData MAP_EVENTS[104] = {
         .mapPointIdx       = 11,
         .sysState          = SysState_EventCallback,
         .eventParam        = 1, // `MapEvent_DoorLocked`
-        .flags_8_13        = 1,
+        .transitionFlags        = AreaTransitionFlag_0,
     },
     // [37]
     {
@@ -401,7 +401,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 25,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [43]
     {
@@ -477,7 +477,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 28,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [51]
     {
@@ -504,7 +504,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 31,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [54]
     {
@@ -512,7 +512,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 32,
         .sysState       = SysState_EventCallback,
-        .flags_8_13     = 1,
+        .transitionFlags     = AreaTransitionFlag_0,
     },
     // [55]
     {

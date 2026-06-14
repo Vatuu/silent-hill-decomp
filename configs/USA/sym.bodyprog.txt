@@ -352,6 +352,7 @@ SysState_Fmv_Update                          = 0x80039A58; // type:func
 SysState_LoadArea_Update                     = 0x80039C40; // type:func
 AreaLoad_UpdatePlayerPosition                = 0x80039F30; // type:func
 AreaLoad_TransitionSound                     = 0x80039F54; // type:func
+AreaLoad_TransitionFlags                     = 0x80039F90; // type:func
 SysState_ReadMessage_Update                  = 0x80039FB8; // type:func
 SysWork_SavegameUpdatePlayer                 = 0x8003A120; // type:func
 SysWork_SavegameReadPlayer                   = 0x8003A1F4; // type:func
