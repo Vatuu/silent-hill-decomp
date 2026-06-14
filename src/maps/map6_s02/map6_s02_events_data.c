@@ -46,7 +46,7 @@ s_EventData MAP_EVENTS[12] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 3,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [5]
     {
@@ -55,7 +55,7 @@ s_EventData MAP_EVENTS[12] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 3,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [6]
     {

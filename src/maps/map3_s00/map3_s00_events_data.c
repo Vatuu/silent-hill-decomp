@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[17] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 13,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
     },
     // [2]
     {
@@ -50,7 +50,7 @@ s_EventData MAP_EVENTS[17] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 5,
         .sysState          = SysState_EventCallback,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [6]
     {

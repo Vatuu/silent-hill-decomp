@@ -244,7 +244,7 @@ ControllerData_AnalogToDigital               = 0x80034670; // type:func
 //----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 GameState_LoadScreen_Update                  = 0x800348E8; // type:func
-GameBoot_GameStartup                         = 0x80034964; // type:func
+GameBoot_WorldStartup                        = 0x80034964; // type:func
 GameBoot_LoadingScreen                       = 0x80034E58; // type:func
 GameBoot_NpcClear                            = 0x80034EC8; // type:func
 GameBoot_NpcInit                             = 0x80034F18; // type:func

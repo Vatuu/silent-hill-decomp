@@ -47,7 +47,7 @@ void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 void GameState_LoadScreen_Update(void) // 0x800348E8
 {
     GameBoot_LoadingScreen();
-    GameBoot_GameStartup();
+    GameBoot_WorldStartup();
 
     if (g_SysWork.sysFlags & SysFlag_LoadActive)
     {
@@ -63,7 +63,7 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     }
 }
 
-void GameBoot_GameStartup(void) // 0x80034964
+void GameBoot_WorldStartup(void) // 0x80034964
 {
     // It makes up to 5 attemps. If the load fails, it restarts
     // the entire process by restarting the timer used to check if a demo
@@ -179,7 +179,7 @@ void GameBoot_GameStartup(void) // 0x80034964
             break;
 
         case 7:
-            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_0)
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_UnfreezeWorld)
             {
                 Map_WorldClear();
             }

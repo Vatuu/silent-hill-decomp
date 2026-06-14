@@ -109,21 +109,21 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [12]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 3,
-        .sysState       = SysState_ReadMessage,
-        .eventParam     = 88,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 3,
+        .sysState        = SysState_ReadMessage,
+        .eventParam      = 88,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [13]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 4,
-        .sysState       = SysState_ReadMessage,
-        .eventParam     = 88,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 4,
+        .sysState        = SysState_ReadMessage,
+        .eventParam      = 88,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [14]
     {
@@ -133,7 +133,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 118,
         .sysState          = SysState_EventCallback,
         .eventParam        = 46, // `func_800D8A04`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [15]
     {
@@ -143,7 +143,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 119,
         .sysState          = SysState_EventCallback,
         .eventParam        = 46, // `func_800D8A04`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [16]
     {
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 120,
         .sysState          = SysState_EventCallback,
         .eventParam        = 46, // `func_800D8A04`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [17]
     {
@@ -163,7 +163,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 121,
         .sysState          = SysState_EventCallback,
         .eventParam        = 46, // `func_800D8A04`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [18]
     {
@@ -503,7 +503,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 5,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
     },
     // [54]
     {
@@ -538,7 +538,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 127,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [58]
     {
@@ -548,7 +548,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 128,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [59]
     {
@@ -558,7 +558,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 129,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [60]
     {
@@ -568,7 +568,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 130,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [61]
     {
@@ -578,7 +578,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 131,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [62]
     {
@@ -588,7 +588,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 132,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [63]
     {
@@ -598,7 +598,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 133,
         .sysState          = SysState_EventCallback,
         .eventParam        = 30, // `func_800D9C9C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [64]
     {
@@ -724,12 +724,12 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [77]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 111,
-        .sysState       = SysState_ReadMessage,
-        .eventParam     = 87,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 111,
+        .sysState        = SysState_ReadMessage,
+        .eventParam      = 87,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [78]
     {
@@ -748,7 +748,7 @@ s_EventData MAP_EVENTS[203] = {
         .requiredItemId    = InvItemId_Camera,
         .sysState          = SysState_EventCallback,
         .eventParam        = 39, // `func_800DB3D0`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [80]
     {
@@ -759,7 +759,7 @@ s_EventData MAP_EVENTS[203] = {
         .requiredItemId    = InvItemId_Camera,
         .sysState          = SysState_EventCallback,
         .eventParam        = 39, // `func_800DB3D0`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [81]
     {
@@ -769,7 +769,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 125,
         .sysState          = SysState_EventCallback,
         .eventParam        = 38, // `func_800DB31C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [82]
     {
@@ -779,7 +779,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 126,
         .sysState          = SysState_EventCallback,
         .eventParam        = 38, // `func_800DB31C`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [83]
     {
@@ -869,12 +869,12 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [92]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 5,
-        .sysState       = SysState_EventCallback,
-        .eventParam     = 1, // `func_800D82C4`
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 5,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800D82C4`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [93]
     {
@@ -982,16 +982,16 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 30,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D8358`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [104]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 10,
-        .sysState       = SysState_EventCallback,
-        .eventParam     = 1, // `func_800D82C4`
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 10,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800D82C4`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [105]
     {
@@ -1048,12 +1048,12 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [110]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 11,
-        .sysState       = SysState_EventCallback,
-        .eventParam     = 1, // `func_800D82C4`
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 11,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800D82C4`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [111]
     {
@@ -1097,12 +1097,12 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [115]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 12,
-        .sysState       = SysState_EventCallback,
-        .eventParam     = 1, // `func_800D82C4`
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 12,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800D82C4`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [116]
     {
@@ -1209,7 +1209,7 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 95,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
         .field_8_24        = 1,
     },
     // [128]
@@ -1398,12 +1398,12 @@ s_EventData MAP_EVENTS[203] = {
     },
     // [147]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 55,
-        .sysState       = SysState_EventCallback,
-        .eventParam     = 1, // `func_800D82C4`
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 55,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800D82C4`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [148]
     {
@@ -1462,7 +1462,7 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 67,
         .sysState          = SysState_EventCallback,
         .eventParam        = 40, // `sharedFunc_800DB60C_7_s01`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [154]
     {
@@ -1492,151 +1492,151 @@ s_EventData MAP_EVENTS[203] = {
         .mapPointIdx       = 68,
         .sysState          = SysState_EventCallback,
         .eventParam        = 40, // `sharedFunc_800DB60C_7_s01`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [157]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 34,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 34,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [158]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 35,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 35,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [159]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 36,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 36,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [160]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 37,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 37,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [161]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 38,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 38,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [162]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 42,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 42,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [163]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 43,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 43,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [164]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 44,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 44,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [165]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 45,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 45,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [166]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 50,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 50,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [167]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 56,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 56,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [168]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 57,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 57,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [169]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 58,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 58,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [170]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 59,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 59,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [171]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 60,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 60,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [172]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 61,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 61,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [173]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 89,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 89,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [174]
     {
-        .triggerType    = TriggerType_TouchObbFacing,
-        .activationType = TriggerActivationType_Button,
-        .mapPointIdx    = 90,
-        .sysState       = SysState_EventCallback,
-        .transitionFlags     = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_TouchObbFacing,
+        .activationType  = TriggerActivationType_Button,
+        .mapPointIdx     = 90,
+        .sysState        = SysState_EventCallback,
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [175]
     {

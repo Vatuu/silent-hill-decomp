@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[19] = {
         .mapPointIdx       = 9,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 7,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
         .sfxPairIdx_8_19   = SfxPairIdx_23,
         .mapIdx            = MapIdx_MAP7_S00,
     },
@@ -29,7 +29,7 @@ s_EventData MAP_EVENTS[19] = {
         .mapPointIdx       = 10,
         .sysState          = SysState_LoadRoom,
         .eventParam        = 7,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
         .sfxPairIdx_8_19   = SfxPairIdx_23,
         .mapIdx            = MapIdx_MAP7_S00,
     },
@@ -56,7 +56,7 @@ s_EventData MAP_EVENTS[19] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 8,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
     },
     // [6]
     {
@@ -89,7 +89,7 @@ s_EventData MAP_EVENTS[19] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 7,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
     },
     // [10]
     {

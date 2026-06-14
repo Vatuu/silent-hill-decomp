@@ -712,7 +712,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     // - A specific event related flag is disenabled.
     // - A specific camera related flag is disenabled.
     // - There is no alive enemy.
-    if (!(g_MapEventData->transitionFlags & AreaTransitionFlag_0) && !(g_SysWork.sysFlags & SysFlag_5))
+    if (!(g_MapEventData->transitionFlags & AreaTransitionFlag_UnfreezeWorld) && !(g_SysWork.sysFlags & SysFlag_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {

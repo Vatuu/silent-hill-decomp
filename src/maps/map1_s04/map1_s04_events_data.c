@@ -7,14 +7,14 @@ s_EventData MAP_EVENTS[3] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_ReadMessage,
         .eventParam        = 15,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [1]
     {
-        .triggerType = TriggerType_Tick,
-        .sysState    = SysState_EventCallback,
-        .eventParam  = 1, // `func_800CCA2C`
-        .transitionFlags  = AreaTransitionFlag_0,
+        .triggerType     = TriggerType_Tick,
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 1, // `func_800CCA2C`
+        .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [2]
     {

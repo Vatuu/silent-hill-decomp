@@ -238,7 +238,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 6,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D69DC`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [28]
     {
@@ -248,7 +248,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 5,
         .sysState          = SysState_EventCallback,
         .eventParam        = 1, // `func_800D6888`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [29]
     {
@@ -279,7 +279,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 10,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D69DC`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [32]
     {
@@ -291,7 +291,7 @@ s_EventData MAP_EVENTS[52] = {
         .requiredItemId    = InvItemId_SewerKey,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D69DC`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [33]
     {
@@ -301,7 +301,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 10,
         .sysState          = SysState_EventCallback,
         .eventParam        = 1, // `func_800D6888`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [34]
     {
@@ -332,7 +332,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 14,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D69DC`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [37]
     {
@@ -344,7 +344,7 @@ s_EventData MAP_EVENTS[52] = {
         .requiredItemId    = InvItemId_SewerExitKey,
         .sysState          = SysState_EventCallback,
         .eventParam        = 2, // `func_800D69DC`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [38]
     {
@@ -354,7 +354,7 @@ s_EventData MAP_EVENTS[52] = {
         .mapPointIdx       = 14,
         .sysState          = SysState_EventCallback,
         .eventParam        = 1, // `func_800D6888`
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [39]
     {

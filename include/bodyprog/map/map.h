@@ -137,10 +137,10 @@ typedef enum _TriggerType
 /** Some events indicate specific cutscenes behavior via flags. */
 typedef enum _AreaTransitionFlags
 {
-    AreaTransitionFlag_None          = 0,
-    AreaTransitionFlag_0             = 1 << 0, /** Possible name: `AreaTransitionFlag_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
-    AreaTransitionFlag_SkipFadeIn    = 1 << 1, /** Skips fade-in when returning to `GameState_InGame`. */
-    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** Skips `Sd_AmbientSfxInit` call inside `GameBoot_GameStartup`? */
+    AreaTransitionFlag_None               = 0,
+    AreaTransitionFlag_UnfreezeWorld      = 1 << 0, /** Dual purpose: `SysState_ReadMessage` unfreezes world if set, while `GameBoot_WorldStartup` calls `Map_WorldClear`? */
+    AreaTransitionFlag_SkipFadeIn         = 1 << 1, /** Skips fade-in when returning to `GameState_InGame`. */
+    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** Skips `Sd_AmbientSfxInit` call inside `GameBoot_WorldStartup`? */
 } e_AreaTransitionFlags;
 
 typedef enum _WorldModelLocation

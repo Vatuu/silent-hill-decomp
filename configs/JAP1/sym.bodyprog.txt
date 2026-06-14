@@ -408,7 +408,7 @@ func_8003483C                                = 0x800345B0; // type:func
 //----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x80034634; // type:func
 GameState_LoadScreen_Update                  = 0x8003465C; // type:func
-GameBoot_GameStartup                         = 0x800346D8; // type:func
+GameBoot_WorldStartup                        = 0x800346D8; // type:func
 GameBoot_LoadingScreen                       = 0x80034BCC; // type:func
 GameBoot_NpcClear                            = 0x80034C3C; // type:func
 GameBoot_NpcInit                             = 0x80034C8C; // type:func

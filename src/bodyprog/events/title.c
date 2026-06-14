@@ -101,7 +101,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_Main:
             if (playInGameDemo)
             {
-                GameBoot_GameStartup();
+                GameBoot_WorldStartup();
 
                 if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {
@@ -237,7 +237,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_DifficultySelector:
             if (playInGameDemo)
             {
-                GameBoot_GameStartup();
+                GameBoot_WorldStartup();
 
                 if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.counters_1C[1] == 0)
                 {

@@ -16,7 +16,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 3,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [2]
     {
@@ -33,7 +33,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 2,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [4]
     {
@@ -42,7 +42,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 1,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [5]
     {
@@ -50,7 +50,7 @@ s_EventData MAP_EVENTS[13] = {
         .completeEventFlag = EventFlag_589,
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
-        .transitionFlags        = AreaTransitionFlag_0,
+        .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [6]
     {
@@ -81,7 +81,7 @@ s_EventData MAP_EVENTS[13] = {
         .triggerType       = TriggerType_Tick,
         .sysState          = SysState_Fmv,
         .eventParam        = 4,
-        .transitionFlags        = AreaTransitionFlag_SkipFadeIn,
+        .transitionFlags   = AreaTransitionFlag_SkipFadeIn,
     },
     // [10]
     {
