@@ -98,7 +98,7 @@ void Map_RoomBgmInit_CondFalse(void)
         case 9:
             if (g_GameWork.bgmIdx == BgmTrackIdx_34)
             {
-                if (Savegame_EventFlagGet(EventFlag_391))
+                if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
                 {
                     fadeSpeed = Q12(240.0f);
                     bgmFlags  = BgmFlag_Layer0 | BgmFlag_MuteAll;

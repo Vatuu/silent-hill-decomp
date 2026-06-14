@@ -136,7 +136,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 10, // `func_800D2674`
     },
     {
-        .requiredEventFlag  = EventFlag_391,
+        .requiredEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 16,
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 67,
     },
     {
-        .requiredEventFlag  = EventFlag_391,
+        .requiredEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 17,
@@ -152,7 +152,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 67,
     },
     {
-        .requiredEventFlag  = EventFlag_391,
+        .requiredEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Button,
         .pointOfInterestIdx = 18,
@@ -160,7 +160,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 67,
     },
     {
-        .disabledEventFlag  = EventFlag_391,
+        .disabledEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 16,
@@ -169,7 +169,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 8, // `func_800D1AF8`
     },
     {
-        .disabledEventFlag  = EventFlag_391,
+        .disabledEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 17,
@@ -178,7 +178,7 @@ s_EventData MAP_EVENTS[46] = {
         .eventParam       = 8, // `func_800D1AF8`
     },
     {
-        .disabledEventFlag  = EventFlag_391,
+        .disabledEventFlag  = EventFlag_M5S03_KaufmannHasMotorcycleVial,
         .triggerType      = TriggerType_TouchObbFacing,
         .activationType   = TriggerActivationType_Item,
         .pointOfInterestIdx = 18,

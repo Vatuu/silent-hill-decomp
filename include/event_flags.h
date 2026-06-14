@@ -381,7 +381,12 @@ typedef enum _EventFlag
     EventFlag_388                = 388,
     EventFlag_389                = 389,
     EventFlag_390                = 390,
-    EventFlag_391                = 391,
+
+    /** Kaufmann has taken the vial from the motorcycle gas tank.
+     *
+     * Set after the last Kaufmann sidequest cutscene.
+     * Used in determining the ending. Also has minor effects to map audio? */
+    EventFlag_M5S03_KaufmannHasMotorcycleVial = 391,
 
     EventFlag_M5S03_SeenSecondNewspaper = 393,
     EventFlag_M5S01_KaufmannKeyUsed     = 394,

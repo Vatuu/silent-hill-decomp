@@ -17,13 +17,13 @@ typedef struct
     /* 0x14 */ u16  tpage; /** Tpage for `setDrawTPage`, calculated from `uv` with `Credits_TextBlendSet`. */
     /* 0x16 */ s16  clut; /** Clut XY. */
     /* 0x18 */ u32  uv; /** Texture UV, tpageXY might be more accurate?. */
-} s_800AFE08;
-STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
+} s_CreditTextState;
+STATIC_ASSERT_SIZEOF(s_CreditTextState, 28);
 
 /** @brief Used for UFO ending credits screen. */
 typedef struct
 {
-    /* 0x0  */ s_800AFE08 sub_0;
+    /* 0x0  */ s_CreditTextState sub_0;
     /* 0x1C */ s32        field_1C;
     /* 0x20 */ s16        field_20;
     /* 0x22 */ s16        field_22;
@@ -40,7 +40,8 @@ typedef struct
     /* 0x4C */ s32        field_4C;
     /* 0x50 */ s32        field_50;
     /* 0x54 */ s32        field_54;
-} s_800AFE24; // Size: 85
+} s_CreditText3dState;
+STATIC_ASSERT_SIZEOF(s_CreditText3dState, 0x58);
 
 // Used by `func_801E2E28`.
 typedef struct
@@ -61,9 +62,9 @@ extern s32 D_801E5C20;
 
 extern s16 D_801E5C24[256];
 
-extern s32 D_801E5E24[7];
+extern s32 g_CreditsColorTable[7];
 
-extern s32 D_801E5E40[7];
+extern s32 g_CreditsColorTable3d[7];
 
 extern u8 D_801E5FF8[];
 
@@ -118,9 +119,9 @@ s32 func_801E3DF8(u8 arg0);
 
 void Credits_TextPositionSet(s32 x, s32 y);
 
-/** @brief Sets the current RGB+command color for `D_800AFE08` struct.
+/** @brief Sets the current RGB+command color for `g_CreditTextState` struct.
  *
- * Sets the packed RGB+command color for `D_800AFE08`,
+ * Sets the packed RGB+command color for `g_CreditTextState`,
  * with the command component hard-set to `PRIM_RECT | RECT_TEXTURE`.
  *
  * @param r Red component.

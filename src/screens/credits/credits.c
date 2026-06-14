@@ -11,9 +11,12 @@
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 
-extern s_800AFE08 D_800AFE08;
-extern s_800AFE24 D_800AFE24;
+extern s_CreditTextState   g_CreditTextState;
+extern s_CreditText3dState g_CreditText3dState;
 
+// Seems to be params for each of the games endings.
+// Only looks like index 1 - 4 are used by `map7_s03` though? (which accounts for the 4 different normal endings)
+// TODO: is UFO ending also part of this?
 s_801E5558 D_801E5558[6] = {
     {
         .xaSfxId     = Sfx_XaAudio725,
@@ -47,7 +50,8 @@ s_801E5558 D_801E5558[6] = {
     }
 };
 
-RECT D_801E557C[2] = {
+// VRAM regions saved/restored with StoreImage/LoadImage.
+RECT g_CreditsVramSaveRects[2] = {
     { 320, 256, 160, 240 },
     { 480, 16, 32, 480 }
 };
@@ -178,8 +182,8 @@ bool func_801E3124(void) // 0x801E3124
             break;
 
         case 1:
-            StoreImage(&D_801E557C[0], (u_long*)IMAGE_BUFFER_0);
-            StoreImage(&D_801E557C[1], (u_long*)IMAGE_BUFFER_1);
+            StoreImage(&g_CreditsVramSaveRects[0], (u_long*)IMAGE_BUFFER_0);
+            StoreImage(&g_CreditsVramSaveRects[1], (u_long*)IMAGE_BUFFER_1);
             DrawSync(SyncMode_Wait);
 
             switch (g_Screen_FadeStatus)
@@ -239,8 +243,8 @@ bool func_801E3304(void) // 0x801E3304
         else
         {
             Screen_RectInterlacedClear(0, 32, 320, 448, Q8_COLOR(0.0f), Q8_COLOR(0.0f), Q8_COLOR(0.0f));
-            LoadImage(&D_801E557C[0], IMAGE_BUFFER_0);
-            LoadImage(&D_801E557C[1], IMAGE_BUFFER_1);
+            LoadImage(&g_CreditsVramSaveRects[0], IMAGE_BUFFER_0);
+            LoadImage(&g_CreditsVramSaveRects[1], IMAGE_BUFFER_1);
             DrawSync(SyncMode_Wait);
             VSync(SyncMode_Wait2);
 
@@ -348,7 +352,7 @@ s32 D_801E5C20 = 400;
 
 #include "widthtable.h"
 
-s32 D_801E5E24[7] = {
+s32 g_CreditsColorTable[7] = {
     0x64FF0000,
     0x640000FF,
     0x64FF00FF,
@@ -358,7 +362,7 @@ s32 D_801E5E24[7] = {
     0x64FFFFFF,
 };
 
-s32 D_801E5E40[7] = {
+s32 g_CreditsColorTable3d[7] = {
     0x2CFF0000,
     0x2C0000FF,
     0x2CFF00FF,
@@ -921,19 +925,19 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
 
 void Credits_TextPositionSet(s32 x, s32 y) // 0x801E42F8
 {
-    D_800AFE08.textX = x;
-    D_800AFE08.textY = y;
-    D_800AFE08.leftMargin = x;
+    g_CreditTextState.textX = x;
+    g_CreditTextState.textY = y;
+    g_CreditTextState.leftMargin = x;
 }
 
 void Credits_TextColorSet(s32 r, s32 g, s32 b) // 0x801E4310
 {
-    D_800AFE08.color = COLOR_RGBC(r, g, b, PRIM_RECT | RECT_TEXTURE);
+    g_CreditTextState.color = COLOR_RGBC(r, g, b, PRIM_RECT | RECT_TEXTURE);
 }
 
 void Credits_TextLineHeightSet(s8 arg0) // 0x801E4340
 {
-    D_800AFE08.lineHeight = arg0;
+    g_CreditTextState.lineHeight = arg0;
 }
 
 void Credits_TextBlendSet(bool semiTrans, u32 arg1) // 0x801E434C
@@ -942,12 +946,12 @@ void Credits_TextBlendSet(bool semiTrans, u32 arg1) // 0x801E434C
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE08.semiTrans = semiTrans != 0;
+    g_CreditTextState.semiTrans = semiTrans != 0;
 
     if (arg1 < 4)
     {
         // TODO: Might be a `getTPage` macro?
-        maskedField_18  = D_800AFE08.uv;
+        maskedField_18  = g_CreditTextState.uv;
         shiftedField_18 = (maskedField_18 << 4) & (1 << 8);
 
         maskedField_18   &= 0xF;
@@ -958,7 +962,7 @@ void Credits_TextBlendSet(bool semiTrans, u32 arg1) // 0x801E434C
         shiftedArg1  |= shiftedField_18;
         shiftedArg1  |= (u8)maskedField_18;
 
-        D_800AFE08.tpage = shiftedArg1;
+        g_CreditTextState.tpage = shiftedArg1;
     }
 }
 
@@ -988,17 +992,17 @@ void Credits_TextDraw(char* str) // 0x801E4394
     GsOT*     ot;
 
     strPtr     = str;
-    textX      = D_800AFE08.textX;
-    textY      = D_800AFE08.textY;
-    leftMargin    = D_800AFE08.leftMargin;
-    lineHeight      = D_800AFE08.lineHeight;
-    widthTable = D_800AFE08.widthTable;
-    colorTable = D_800AFE08.colorTable;
+    textX      = g_CreditTextState.textX;
+    textY      = g_CreditTextState.textY;
+    leftMargin    = g_CreditTextState.leftMargin;
+    lineHeight      = g_CreditTextState.lineHeight;
+    widthTable = g_CreditTextState.widthTable;
+    colorTable = g_CreditTextState.colorTable;
     packet     = GsOUT_PACKET_P;
-    blendFlag  = (u8)D_800AFE08.semiTrans;
+    blendFlag  = (u8)g_CreditTextState.semiTrans;
     charCode   = *strPtr;
-    colorCode  = D_800AFE08.color | (blendFlag << 25); // RBG + code + semi-transparency flag.
-    clut       = (u16)D_800AFE08.clut;               // Clut Y, clut Y.
+    colorCode  = g_CreditTextState.color | (blendFlag << 25); // RBG + code + semi-transparency flag.
+    clut       = (u16)g_CreditTextState.clut;               // Clut Y, clut Y.
     ot         = &g_OtTags0[g_ActiveBufferIdx][6];
 
     while (charCode != 0)
@@ -1056,7 +1060,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
             // Change font color.
             else if (charCode >= 1 && charCode < 8)
             {
-                colorCode = colorTable[charCode - 1] | ((u8)D_800AFE08.semiTrans << 25);
+                colorCode = colorTable[charCode - 1] | ((u8)g_CreditTextState.semiTrans << 25);
             }
             // Change font width table?
             else if (charCode >= 208 && charCode < 216)
@@ -1112,8 +1116,8 @@ void Credits_TextDraw(char* str) // 0x801E4394
 
             // Form feed.
             case '\f':
-                textX = D_800AFE08.textX;
-                textY = D_800AFE08.textY;
+                textX = g_CreditTextState.textX;
+                textY = g_CreditTextState.textY;
                 break;
 
             default:
@@ -1126,11 +1130,11 @@ void Credits_TextDraw(char* str) // 0x801E4394
     }
 
     tPage = (DR_TPAGE*)packet;
-    setDrawTPage(tPage, 0, 1, D_800AFE08.tpage);
+    setDrawTPage(tPage, 0, 1, g_CreditTextState.tpage);
     addPrim(ot, tPage);
 
-    D_800AFE08.textX = textX;
-    D_800AFE08.textY = textY;
+    g_CreditTextState.textX = textX;
+    g_CreditTextState.textY = textY;
     GsOUT_PACKET_P     = packet + sizeof(DR_TPAGE);
 }
 
@@ -1152,59 +1156,59 @@ void Credits_Text3dPositionSet(s32 arg0, s32 arg1) // 0x801E47E0
     s32  temp_v0_2;
     s32  temp_v0_3;
     s32  temp_v0_4;
-    bool check = D_800AFE24.sub_0.textX != arg0;
+    bool check = g_CreditText3dState.sub_0.textX != arg0;
 
-    if (D_800AFE24.sub_0.textY != arg1)
+    if (g_CreditText3dState.sub_0.textY != arg1)
     {
-        temp_lo   = arg1 * D_800AFE24.field_3C;
-        temp_t1   = D_800AFE24.field_24 << 0x16;
-        temp_lo_3 = (D_800AFE24.field_30 + (s32)Q12_MULT_PRECISE(D_800AFE24.field_1C, temp_lo)) >> 2;
+        temp_lo   = arg1 * g_CreditText3dState.field_3C;
+        temp_t1   = g_CreditText3dState.field_24 << 0x16;
+        temp_lo_3 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo)) >> 2;
         temp_lo_3 = temp_t1 / temp_lo_3;
 
         temp_t2   = arg1 + 0x18;
-        temp_lo_4 = temp_t2 * D_800AFE24.field_3C;
-        temp_lo_6 = (D_800AFE24.field_30 + (s32)Q12_MULT_PRECISE(D_800AFE24.field_1C, temp_lo_4)) >> 2;
+        temp_lo_4 = temp_t2 * g_CreditText3dState.field_3C;
+        temp_lo_6 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo_4)) >> 2;
         temp_lo_6 = temp_t1 / temp_lo_6;
 
-        temp_lo_7 = arg0 * D_800AFE24.field_34;
-        temp_v0   = D_800AFE24.field_28 + Q12_MULT_PRECISE(D_800AFE24.field_1C, temp_lo_7);
+        temp_lo_7 = arg0 * g_CreditText3dState.field_34;
+        temp_v0   = g_CreditText3dState.field_28 + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo_7);
         temp_t0   = Q12_MULT_PRECISE(temp_lo_3, temp_v0);
-        temp_v0_2 = D_800AFE24.field_28 + Q12_MULT_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34);
+        temp_v0_2 = g_CreditText3dState.field_28 + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, g_CreditText3dState.field_34);
 
-        D_800AFE24.sub_0.textX  = arg0;
-        D_800AFE24.sub_0.textY  = arg1;
-        D_800AFE24.sub_0.leftMargin  = arg0;
-        D_800AFE24.field_40 = temp_t0;
-        D_800AFE24.field_44 = Q12_MULT_PRECISE(temp_lo_6, temp_v0);
-        D_800AFE24.field_48 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_2) - Q12_MULT_PRECISE(temp_lo_3, D_800AFE24.field_28);
-        D_800AFE24.field_4C = Q12_MULT_PRECISE(temp_lo_6, temp_v0_2) - Q12_MULT_PRECISE(temp_lo_6, D_800AFE24.field_28);
-        temp_lo_11          = arg1 * D_800AFE24.field_38;
-        temp_v0_3           = D_800AFE24.field_2C + Q12_MULT_PRECISE(D_800AFE24.field_1C, temp_lo_11);
-        D_800AFE24.field_50 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_3);
+        g_CreditText3dState.sub_0.textX  = arg0;
+        g_CreditText3dState.sub_0.textY  = arg1;
+        g_CreditText3dState.sub_0.leftMargin  = arg0;
+        g_CreditText3dState.field_40 = temp_t0;
+        g_CreditText3dState.field_44 = Q12_MULT_PRECISE(temp_lo_6, temp_v0);
+        g_CreditText3dState.field_48 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_2) - Q12_MULT_PRECISE(temp_lo_3, g_CreditText3dState.field_28);
+        g_CreditText3dState.field_4C = Q12_MULT_PRECISE(temp_lo_6, temp_v0_2) - Q12_MULT_PRECISE(temp_lo_6, g_CreditText3dState.field_28);
+        temp_lo_11          = arg1 * g_CreditText3dState.field_38;
+        temp_v0_3           = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo_11);
+        g_CreditText3dState.field_50 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_3);
 
-        temp_lo_12          = temp_t2 * D_800AFE24.field_38;
-        temp_t0             = D_800AFE24.field_2C + Q12_MULT_PRECISE(D_800AFE24.field_1C, temp_lo_12);
-        D_800AFE24.field_54 = Q12_MULT_PRECISE(temp_lo_6, temp_t0);
+        temp_lo_12          = temp_t2 * g_CreditText3dState.field_38;
+        temp_t0             = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo_12);
+        g_CreditText3dState.field_54 = Q12_MULT_PRECISE(temp_lo_6, temp_t0);
     }
     else if (check)
     {
-        temp_v0_4            = arg0 - D_800AFE24.sub_0.textX;
-        temp_a2              = temp_v0_4 * D_800AFE24.field_48;
-        temp_lo_15           = temp_v0_4 * D_800AFE24.field_4C;
-        D_800AFE24.sub_0.textX   = arg0;
-        D_800AFE24.field_40 += temp_a2;
-        D_800AFE24.field_44 += temp_lo_15;
+        temp_v0_4            = arg0 - g_CreditText3dState.sub_0.textX;
+        temp_a2              = temp_v0_4 * g_CreditText3dState.field_48;
+        temp_lo_15           = temp_v0_4 * g_CreditText3dState.field_4C;
+        g_CreditText3dState.sub_0.textX   = arg0;
+        g_CreditText3dState.field_40 += temp_a2;
+        g_CreditText3dState.field_44 += temp_lo_15;
     }
 }
 
 void Credits_Text3dColorSet(s32 r, s32 g, s32 b) // 0x801E4B98
 {
-    D_800AFE24.sub_0.color = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
+    g_CreditText3dState.sub_0.color = (r & 0xFF) | ((g & 0xFF) << 8) | ((b & 0xFF) << 16) | (GPU_COM_TF4 << 24);
 }
 
 void Credits_Text3dLineHeightSet(s8 arg0) // 0x801E4BC8
 {
-    D_800AFE24.sub_0.lineHeight = arg0;
+    g_CreditText3dState.sub_0.lineHeight = arg0;
 }
 
 void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
@@ -1213,11 +1217,11 @@ void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    D_800AFE24.sub_0.semiTrans = (semiTrans != 0);
+    g_CreditText3dState.sub_0.semiTrans = (semiTrans != 0);
 
     if (arg1 < 4)
     {
-        maskedField_18  = D_800AFE24.sub_0.uv;
+        maskedField_18  = g_CreditText3dState.sub_0.uv;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
 
         maskedField_18 &= 0xF;
@@ -1228,7 +1232,7 @@ void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
         shiftedArg1 |= shiftedField_18;
         shiftedArg1 |= (u8)maskedField_18;
 
-        D_800AFE24.sub_0.tpage = shiftedArg1;
+        g_CreditText3dState.sub_0.tpage = shiftedArg1;
     }
 }
 
@@ -1237,24 +1241,24 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     PACKET* packet;
     GsOT*   ot;
 
-    s32 textX   = D_800AFE24.sub_0.textX;
-    s32 textY   = D_800AFE24.sub_0.textY;
-    s32 leftMargin = D_800AFE24.sub_0.leftMargin;
-    s32 lineHeight   = D_800AFE24.sub_0.lineHeight;
+    s32 textX   = g_CreditText3dState.sub_0.textX;
+    s32 textY   = g_CreditText3dState.sub_0.textY;
+    s32 leftMargin = g_CreditText3dState.sub_0.leftMargin;
+    s32 lineHeight   = g_CreditText3dState.sub_0.lineHeight;
     u32 colorCode;
 
-    s32 var_a3 = D_800AFE24.field_40;
-    s32 var_t3 = D_800AFE24.field_44;
-    s32 var_t7 = D_800AFE24.field_48;
-    s32 var_t6 = D_800AFE24.field_4C;
-    s32 var_t4 = D_800AFE24.field_50;
-    s32 var_t5 = D_800AFE24.field_54;
+    s32 var_a3 = g_CreditText3dState.field_40;
+    s32 var_t3 = g_CreditText3dState.field_44;
+    s32 var_t7 = g_CreditText3dState.field_48;
+    s32 var_t6 = g_CreditText3dState.field_4C;
+    s32 var_t4 = g_CreditText3dState.field_50;
+    s32 var_t5 = g_CreditText3dState.field_54;
 
-    u32       clut       = (u16)D_800AFE24.sub_0.clut;
-    u32       tPage      = D_800AFE24.sub_0.tpage;
-    s16*      widthTable = D_800AFE24.sub_0.widthTable;
-    s32*      colorTable = D_800AFE24.sub_0.colorTable;
-    u32       blendFlag  = (u8)D_800AFE24.sub_0.semiTrans << 25;
+    u32       clut       = (u16)g_CreditText3dState.sub_0.clut;
+    u32       tPage      = g_CreditText3dState.sub_0.tpage;
+    s16*      widthTable = g_CreditText3dState.sub_0.widthTable;
+    s32*      colorTable = g_CreditText3dState.sub_0.colorTable;
+    u32       blendFlag  = (u8)g_CreditText3dState.sub_0.semiTrans << 25;
     s32       charWidth;
     bool      textXChanged;
     bool      textYChanged;
@@ -1284,7 +1288,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     ot     = &g_OtTags0[g_ActiveBufferIdx][6];
 
     charCode  = *str;
-    colorCode = D_800AFE24.sub_0.color | blendFlag; // RGB + code + semi-transparency flag.
+    colorCode = g_CreditText3dState.sub_0.color | blendFlag; // RGB + code + semi-transparency flag.
 
     while (charCode != 0)
     {
@@ -1350,7 +1354,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
         // Change font color.
         else if (charCode >= 1 && charCode < 8)
         {
-            colorCode = colorTable[charCode - 1] | ((u8)D_800AFE24.sub_0.semiTrans << 25);
+            colorCode = colorTable[charCode - 1] | ((u8)g_CreditText3dState.sub_0.semiTrans << 25);
         }
         // Change font width table?
         else if (charCode >= 0xD0 && charCode < 0xD8)
@@ -1422,8 +1426,8 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
 
             // Form feed.
             case '\f':
-                textX        = D_800AFE24.sub_0.textX;
-                textY        = D_800AFE24.sub_0.textY;
+                textX        = g_CreditText3dState.sub_0.textX;
+                textY        = g_CreditText3dState.sub_0.textY;
                 textYChanged = true;
                 break;
 
@@ -1435,28 +1439,28 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
 
         if (textYChanged)
         {
-            temp_a1_2 = D_800AFE24.field_24 << 0x16;
+            temp_a1_2 = g_CreditText3dState.field_24 << 0x16;
 
-            temp_lo_3 = (D_800AFE24.field_30 + (s32)Q12_MULT_PRECISE(D_800AFE24.field_1C, textY * D_800AFE24.field_3C)) >> 2;
+            temp_lo_3 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textY * g_CreditText3dState.field_3C)) >> 2;
             temp_lo_3 = temp_a1_2 / temp_lo_3;
 
-            temp_lo_6 = (D_800AFE24.field_30 + (s32)Q12_MULT_PRECISE(D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_3C)) >> 2;
+            temp_lo_6 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 0x18) * g_CreditText3dState.field_3C)) >> 2;
             temp_lo_6 = temp_a1_2 / temp_lo_6;
 
-            temp_v0_5 = D_800AFE24.field_28 + Q12_MULT_PRECISE(D_800AFE24.field_1C, textX * D_800AFE24.field_34);
+            temp_v0_5 = g_CreditText3dState.field_28 + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textX * g_CreditText3dState.field_34);
 
             var_a3 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_5);
             var_t3 = Q12_MULT_PRECISE(temp_lo_6, temp_v0_5);
 
-            temp_v0_5 = D_800AFE24.field_28 + Q12_MULT_PRECISE(D_800AFE24.field_1C, D_800AFE24.field_34);
+            temp_v0_5 = g_CreditText3dState.field_28 + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, g_CreditText3dState.field_34);
 
-            var_t7 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_5) - Q12_MULT_PRECISE(temp_lo_3, D_800AFE24.field_28);
-            var_t6 = Q12_MULT_PRECISE(temp_lo_6, temp_v0_5) - Q12_MULT_PRECISE(temp_lo_6, D_800AFE24.field_28);
+            var_t7 = Q12_MULT_PRECISE(temp_lo_3, temp_v0_5) - Q12_MULT_PRECISE(temp_lo_3, g_CreditText3dState.field_28);
+            var_t6 = Q12_MULT_PRECISE(temp_lo_6, temp_v0_5) - Q12_MULT_PRECISE(temp_lo_6, g_CreditText3dState.field_28);
 
-            temp_v0_7 = D_800AFE24.field_2C + Q12_MULT_PRECISE(D_800AFE24.field_1C, textY * D_800AFE24.field_38);
+            temp_v0_7 = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textY * g_CreditText3dState.field_38);
             var_t4    = Q12_MULT_PRECISE(temp_lo_3, temp_v0_7);
 
-            temp_a0_4 = D_800AFE24.field_2C + Q12_MULT_PRECISE(D_800AFE24.field_1C, (textY + 0x18) * D_800AFE24.field_38);
+            temp_a0_4 = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 0x18) * g_CreditText3dState.field_38);
             var_t5    = Q12_MULT_PRECISE(temp_lo_6, temp_a0_4);
         }
         else if (textXChanged)
@@ -1470,12 +1474,12 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     }
 
     GsOUT_PACKET_P      = packet;
-    D_800AFE24.sub_0.textX  = textX;
-    D_800AFE24.sub_0.textY  = textY;
-    D_800AFE24.field_40 = var_a3;
-    D_800AFE24.field_44 = var_t3;
-    D_800AFE24.field_48 = var_t7;
-    D_800AFE24.field_4C = var_t6;
-    D_800AFE24.field_50 = var_t4;
-    D_800AFE24.field_54 = var_t5;
+    g_CreditText3dState.sub_0.textX  = textX;
+    g_CreditText3dState.sub_0.textY  = textY;
+    g_CreditText3dState.field_40 = var_a3;
+    g_CreditText3dState.field_44 = var_t3;
+    g_CreditText3dState.field_48 = var_t7;
+    g_CreditText3dState.field_4C = var_t6;
+    g_CreditText3dState.field_50 = var_t4;
+    g_CreditText3dState.field_54 = var_t5;
 }

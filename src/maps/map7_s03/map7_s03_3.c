@@ -79,7 +79,7 @@ void func_800E0B90(void) // 0x800E0B90
 
 void func_800E0C10(void) // 0x800E0C10
 {
-    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
@@ -1016,7 +1016,7 @@ void func_800E3390(void) // 0x800E3390
             break;
 
         case 3:
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 func_800E514C();
             }
@@ -1029,7 +1029,7 @@ void func_800E3390(void) // 0x800E3390
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(0.0f), false);
 
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 D_800F4805++;
                 SysWork_StateStepSet(0, 0);
@@ -1061,7 +1061,7 @@ void func_800E3390(void) // 0x800E3390
                 func_800E9490(&g_SysWork.npcs[i]);
             }
 
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 if (!D_800F4815)
                 {
@@ -1157,7 +1157,7 @@ void func_800E3390(void) // 0x800E3390
 
             D_800F4805 = NO_VALUE;
 
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 func_800E1788(-1);
             }
@@ -1173,7 +1173,7 @@ void func_800E3390(void) // 0x800E3390
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 func_800DD9D4(&g_SysWork.npcs[2]);
             }
@@ -1202,7 +1202,7 @@ void func_800E3390(void) // 0x800E3390
 
     Map_CutsceneObjectsUpdate();
 
-    if (g_Cutscene_UpdateMar && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_391))
+    if (g_Cutscene_UpdateMar && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
     {
         g_SysWork.npcs[4].rotation.vy += Q12_ANGLE(180.0f);
     }
@@ -1757,7 +1757,7 @@ void func_800E4714(void) // 0x800E4714
             g_Cutscene_UpdateArsia = false;
             func_800D9394();
 
-            if (Savegame_EventFlagGet(EventFlag_391))
+            if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
                 Fs_QueueStartRead(FILE_ANIM_LAST3_DMS, FS_BUFFER_18);
                 D_800F4815 = 1;
@@ -3001,7 +3001,7 @@ void func_800E787C(void) // 0x800E787C
                 func_800E941C();
                 func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs[5]);
                 Model_AnimFlagsClear(&g_SysWork.npcs[5].model, 2);
-                func_801E2E28(D_800F481C);
+                func_801E2E28(g_EndingIdx);
                 SysWork_StateStepIncrement(0);
             }
             else
@@ -3354,7 +3354,7 @@ void func_800E86BC(void) // 0x800E86BC
 
             Savegame_EventFlagSet(EventFlag_575);
 
-            func_801E2E28(D_800F481C);
+            func_801E2E28(g_EndingIdx);
             D_800F4838 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -3773,16 +3773,16 @@ void Map_WorldObjectsInit(void) // 0x800E9528
 
     if (Savegame_EventFlagGet(EventFlag_449))
     {
-        D_800F481C = 1;
+        g_EndingIdx = 1;
     }
     else
     {
-        D_800F481C = 2;
+        g_EndingIdx = 2;
     }
 
-    if (!Savegame_EventFlagGet(EventFlag_391))
+    if (!Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
     {
-        D_800F481C += 2;
+        g_EndingIdx += 2;
     }
 }
 
@@ -3807,7 +3807,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
 
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))
     {
-        if (Savegame_EventFlagGet(EventFlag_391))
+        if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
         {
             func_800E14DC(&g_SysWork.playerWork.player, &g_SysWork.npcs[2], false);
         }
@@ -3913,7 +3913,7 @@ void func_800E9AC8(void) // 0x800E9AC8
             Player_ControlFreeze();
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
 
-            if (D_800F481C >= 1 && D_800F481C < 3)
+            if (g_EndingIdx == 1 || g_EndingIdx == 2)
             {
                 g_SysWork.sysStateSteps[0] = 3;
                 break;
@@ -3925,7 +3925,7 @@ void func_800E9AC8(void) // 0x800E9AC8
         case 1:
             if (Fs_QueueGetLength() == 0)
             {
-                func_801E2E28(D_800F481C);
+                func_801E2E28(g_EndingIdx);
                 g_SysWork.sysStateSteps[0]++;
             }
             break;
@@ -3969,9 +3969,9 @@ void func_800E9C28(void) // 0x800E9C28
             g_SavegamePtr->clearGameCount++;
             g_SavegamePtr->clearGameCount = CLAMP(g_SavegamePtr->clearGameCount, 1, 99);
 
-            g_SavegamePtr->field_27A                     = 1 << (D_800F481C - 1);
-            g_SavegamePtr->clearGameEndings             |= 1 << (D_800F481C - 1);
-            g_GameWorkConst->config.extraOptionsEnabled |= 1 << (D_800F481C - 1);
+            g_SavegamePtr->field_27A                     = 1 << (g_EndingIdx - 1);
+            g_SavegamePtr->clearGameEndings             |= 1 << (g_EndingIdx - 1);
+            g_GameWorkConst->config.extraOptionsEnabled |= 1 << (g_EndingIdx - 1);
 
             g_SavegamePtr->locationId = SaveLocationId_NextFear;
 

@@ -61,7 +61,7 @@ void func_800D9864(void) // 0x800D9864
 
 void func_800D98E4(void) // 0x800D98E4
 {
-    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
 #include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924

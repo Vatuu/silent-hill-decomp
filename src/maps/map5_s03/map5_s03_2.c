@@ -513,7 +513,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             vcReturnPreAutoCamWork(true);
 
-            Savegame_EventFlagSet(EventFlag_391);
+            Savegame_EventFlagSet(EventFlag_M5S03_KaufmannHasMotorcycleVial);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
