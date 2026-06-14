@@ -638,7 +638,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
     {
         Gfx_Results_ItemsPosition(g_SavegamePtr->clearGameCount);
         Gfx_Results_ItemsDisplay(g_SavegamePtr->clearGameCount);
-        Results_DisplayInfo(selectedItemId); // TODO: Takes no args in `credits.c`?
+        Ranking_DisplayInfo(selectedItemId); // TODO: Takes no args in `credits.c`?
     }
 
     func_8004FB0C();

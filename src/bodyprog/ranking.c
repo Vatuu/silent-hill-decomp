@@ -64,7 +64,7 @@ u8 g_RankingContinueCount;
 
 s8 __pad_bss_800C48D2[14];
 
-s_800C48E0 D_800C48E0;
+s_RankingTextColors g_RankingTextColors;
 
 struct
 {
@@ -74,7 +74,7 @@ struct
     char f3[5];
 } g_Credits_Digits = { "0.00", "0.00", "0.00", "0.00" };
 
-void func_8008F94C() // 0x8008F94C
+void Ranking_EvaluateScore() // 0x8008F94C
 {
     s16 gameplayMinutes;
     s32 var_a0_3;
@@ -168,7 +168,7 @@ void func_8008F94C() // 0x8008F94C
         D_800C3E40 |= 0x20;
     }
 
-    D_800C48E0.field_0 = 7;
+    g_RankingTextColors.ending = StringColorId_White;
 
     switch (g_RankingCurrentEndingFlags)
     {
@@ -188,7 +188,7 @@ void func_8008F94C() // 0x8008F94C
             break;
 
         case GameEndingFlag_GoodPlus:
-            D_800C48E0.field_0 = 0;
+            g_RankingTextColors.ending = StringColorId_Gold;
             g_RankingScore += 10;
             break;
 
@@ -209,11 +209,11 @@ void func_8008F94C() // 0x8008F94C
             break;
     }
 
-    D_800C48E0.field_5 = 7;
+    g_RankingTextColors.pickedUpItemCount = StringColorId_White;
 
     if ((g_RankingPickedUpItemCount / 15) < 0 || (g_RankingPickedUpItemCount / 15) >= 10)
     {
-        D_800C48E0.field_5 = 0;
+        g_RankingTextColors.pickedUpItemCount = StringColorId_Gold;
         g_RankingScore += 10;
     }
     else
@@ -221,11 +221,11 @@ void func_8008F94C() // 0x8008F94C
         g_RankingScore += g_RankingPickedUpItemCount / 15;
     }
 
-    D_800C48E0.field_2 = 7;
+    g_RankingTextColors.savegameCount = StringColorId_White;
 
     if (g_RankingSavegameCount < 3)
     {
-        D_800C48E0.field_2 = 0;
+        g_RankingTextColors.savegameCount = StringColorId_Gold;
         g_RankingScore += 5;
     }
     else if (g_RankingSavegameCount < 6)
@@ -245,11 +245,11 @@ void func_8008F94C() // 0x8008F94C
         g_RankingScore += 1;
     }
 
-    D_800C48E0.field_3 = 7;
+    g_RankingTextColors.continueCount = StringColorId_White;
 
     if (g_RankingContinueCount < 2)
     {
-        D_800C48E0.field_3 = 0;
+        g_RankingTextColors.continueCount = StringColorId_Gold;
         g_RankingScore += 5;
     }
     else if (g_RankingContinueCount < 4)
@@ -269,11 +269,11 @@ void func_8008F94C() // 0x8008F94C
         g_RankingScore += 1;
     }
 
-    D_800C48E0.field_4 = 7;
+    g_RankingTextColors.gameplayTime = StringColorId_White;
 
     if (gameplayMinutes < 90)
     {
-        D_800C48E0.field_4 = 0;
+        g_RankingTextColors.gameplayTime = StringColorId_Gold;
         g_RankingScore += 10;
     }
     else if (gameplayMinutes < 180)
@@ -293,26 +293,27 @@ void func_8008F94C() // 0x8008F94C
         g_RankingScore += 1;
     }
 
-    D_800C48E0.field_1 = 7;
+    g_RankingTextColors.clearGameCount = StringColorId_White;
 
     temp = g_RankingClearGameCount;
 
     if (temp >= 5)
     {
-        D_800C48E0.field_1 = 0;
-        g_RankingScore        += 10;
+        g_RankingTextColors.clearGameCount = StringColorId_Gold;
+
+        g_RankingScore += 10;
     }
     else
     {
         g_RankingScore += temp * 2;
     }
 
-    D_800C48E0.field_6 = 7;
-    temp               = g_RankingPickedUpSpecialItemCount;
+    g_RankingTextColors.pickedUpSpecialItemCount = StringColorId_White;
 
+    temp = g_RankingPickedUpSpecialItemCount;
     if (temp >= 5)
     {
-        D_800C48E0.field_6 = 0;
+        g_RankingTextColors.pickedUpSpecialItemCount = StringColorId_Gold;
         g_RankingScore    += 10;
     }
     else
@@ -320,7 +321,7 @@ void func_8008F94C() // 0x8008F94C
         g_RankingScore += temp * 2;
     }
 
-    D_800C48E0.field_8 = 7;
+    g_RankingTextColors.killPercentages = StringColorId_White;
 
     if (g_RankingHasFiredShot)
     {
@@ -341,16 +342,16 @@ void func_8008F94C() // 0x8008F94C
 
         if (shootingScore == 10)
         {
-            D_800C48E0.field_8 = 0;
+            g_RankingTextColors.killPercentages = StringColorId_Gold;
         }
     }
     else
     {
-        D_800C48E0.field_8 = 0;
+        g_RankingTextColors.killPercentages = StringColorId_Gold;
         g_RankingScore    += 10;
     }
 
-    D_800C48E0.field_7 = 7;
+    g_RankingTextColors.enemyKills = StringColorId_White;
     var_a0_3           = g_SavegamePtr->field_278;
     var_a0_3           = var_a0_3 - 15;
     var_a0_3           = var_a0_3 - (g_RankingClearGameCount * 5);
@@ -397,7 +398,7 @@ void func_8008F94C() // 0x8008F94C
 
     if (var_v1 == 30)
     {
-        D_800C48E0.field_7 = 0;
+        g_RankingTextColors.enemyKills = StringColorId_Gold;
     }
 
     if (g_RankingGameDifficulty == GameDifficulty_Easy)
@@ -408,7 +409,7 @@ void func_8008F94C() // 0x8008F94C
     g_RankingScore = CLAMP(g_RankingScore, 0, 100);
 }
 
-void func_800904F4() // 0x800904F4
+void Ranking_PrepareSavegame() // 0x800904F4
 {
     u8 extraOptions;
 
@@ -454,7 +455,7 @@ void func_800904F4() // 0x800904F4
     }
 }
 
-void Results_DisplayInfo(u32* arg0) // 0x80090664
+void Ranking_DisplayInfo(u32* arg0) // 0x80090664
 {
     s32      temp_s1;
     s32      i;
@@ -531,41 +532,41 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
                 break;
         }
 
-        temp_s1 = func_8009134C(g_RankingSavegameCount);
+        temp_s1 = Ranking_DigitCount(g_RankingSavegameCount);
         Gfx_StringSetPosition(0x18, 7);
         Gfx_StringDraw(D_8002B4C0[5], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 7);
-        Gfx_StringSetColor(D_800C48E0.field_2);
+        Gfx_StringSetColor(g_RankingTextColors.savegameCount);
         Gfx_StringDrawInt(3, g_RankingSavegameCount);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = func_8009134C(g_RankingContinueCount);
+        temp_s1 = Ranking_DigitCount(g_RankingContinueCount);
         Gfx_StringSetPosition(0x18, 0x1C);
         Gfx_StringDraw(D_8002B4C0[6], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 0x1C);
-        Gfx_StringSetColor(D_800C48E0.field_3);
+        Gfx_StringSetColor(g_RankingTextColors.continueCount);
         Gfx_StringDrawInt(3, g_RankingContinueCount);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = func_8009134C(g_RankingGameplayHours);
+        temp_s1 = Ranking_DigitCount(g_RankingGameplayHours);
         Gfx_StringSetPosition(0x18, 0x31);
         Gfx_StringDraw(D_8002B4C0[7], 20);
         Gfx_StringSetPosition(0xDC - (temp_s1 * 0xA), 0x31);
-        Gfx_StringSetColor(D_800C48E0.field_4);
+        Gfx_StringSetColor(g_RankingTextColors.gameplayTime);
         Gfx_StringDrawInt(5, g_RankingGameplayHours);
         Gfx_StringSetPosition(0xDC, 0x31);
         Gfx_StringDraw(D_8002B4C0[8], 5);
-        Gfx_StringSetPosition(0xFE - (func_8009134C(g_RankingGameplayMinutes) * 0xA), 0x31);
+        Gfx_StringSetPosition(0xFE - (Ranking_DigitCount(g_RankingGameplayMinutes) * 0xA), 0x31);
         Gfx_StringDrawInt(2, g_RankingGameplayMinutes);
         Gfx_StringSetPosition(0xFE, 0x31);
         Gfx_StringDraw(D_8002B4C0[9], 5);
-        Gfx_StringSetPosition(0x120 - (func_8009134C(g_RankingGameplaySeconds) * 0xA), 0x31);
+        Gfx_StringSetPosition(0x120 - (Ranking_DigitCount(g_RankingGameplaySeconds) * 0xA), 0x31);
         Gfx_StringDrawInt(2, g_RankingGameplaySeconds);
         Gfx_StringSetPosition(0x120, 0x31);
         Gfx_StringDraw(D_8002B4C0[10], 5);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = func_8009134C(g_RankingWalkDistKm);
+        temp_s1 = Ranking_DigitCount(g_RankingWalkDistKm);
         Gfx_StringSetPosition(0x18, 0x46);
         Gfx_StringDraw(D_8002B4C0[13], 20);
         Gfx_StringSetPosition(0xE5 - ((temp_s1 - 1) * 0xA), 0x46);
@@ -585,7 +586,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDrawInt(3, g_RankingWalkDistM);
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
-        temp_s1 = func_8009134C(g_RankingRunDistKm);
+        temp_s1 = Ranking_DigitCount(g_RankingRunDistKm);
         Gfx_StringSetPosition(0x18, 0x5B);
         Gfx_StringDraw(D_8002B4C0[14], 0x14);
         Gfx_StringSetPosition(0xE5 - ((temp_s1 - 1) * 0xA), 0x5B);
@@ -605,15 +606,15 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDrawInt(3, g_RankingRunDistM);
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
-        temp_s1 = func_8009134C(g_RankingPickedUpItemCount);
+        temp_s1 = Ranking_DigitCount(g_RankingPickedUpItemCount);
         Gfx_StringSetPosition(0x18, 0x70);
         Gfx_StringDraw(D_8002B4C0[15], 0x14);
         Gfx_StringSetPosition(0xDA - ((temp_s1 - 1) * 0xA), 0x70);
-        Gfx_StringSetColor(D_800C48E0.field_5);
+        Gfx_StringSetColor(g_RankingTextColors.pickedUpItemCount);
         Gfx_StringDrawInt(3, (s32) g_RankingPickedUpItemCount);
         Gfx_StringDraw(D_8002B4C0[16], 5);
         Gfx_StringDrawInt(3, 0xCC);
-        Gfx_StringSetColor(D_800C48E0.field_6);
+        Gfx_StringSetColor(g_RankingTextColors.pickedUpSpecialItemCount);
         Gfx_StringDraw("(", 1);
 
         if (g_RankingPickedUpSpecialItemCount != 0)
@@ -626,16 +627,16 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDraw(")", 1);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = func_8009134C(g_RankingClearGameCount);
+        temp_s1 = Ranking_DigitCount(g_RankingClearGameCount);
         Gfx_StringSetPosition(0x18, -0x23);
         Gfx_StringDraw(D_8002B4C0[18], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 10), -0x23);
-        Gfx_StringSetColor(D_800C48E0.field_1);
+        Gfx_StringSetColor(g_RankingTextColors.clearGameCount);
         Gfx_StringDrawInt(3, g_RankingClearGameCount);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, -0xE);
         Gfx_StringDraw(D_8002B4C0[19], 20);
-        Gfx_StringSetColor(D_800C48E0.field_0);
+        Gfx_StringSetColor(g_RankingTextColors.ending);
 
         switch (g_RankingCurrentEndingFlags & 0x1F)
         {
@@ -671,14 +672,14 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x9A);
         Gfx_StringDraw(D_8002B4C0[27], 0x20);
-        Gfx_StringSetPosition(0x128 - (func_8009134C(g_RankingEnemyKillsShooting) * 10), 154);
-        Gfx_StringSetColor(D_800C48E0.field_7);
+        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_RankingEnemyKillsShooting) * 10), 154);
+        Gfx_StringSetColor(g_RankingTextColors.enemyKills);
         Gfx_StringDrawInt(4, g_RankingEnemyKillsShooting);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x85);
         Gfx_StringDraw(D_8002B4C0[28], 0x20);
-        Gfx_StringSetPosition(0x128 - (func_8009134C(g_RankingEnemyKillsMelee) * 10), 133);
-        Gfx_StringSetColor(D_800C48E0.field_7);
+        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_RankingEnemyKillsMelee) * 10), 133);
+        Gfx_StringSetColor(g_RankingTextColors.enemyKills);
         Gfx_StringDrawInt(4, g_RankingEnemyKillsMelee);
 
         if (g_RankingHasFiredShot)
@@ -689,25 +690,25 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringSetPosition(0x48, 0xC4);
             Gfx_StringDraw(D_8002B4C0[30], 0x20);
             Gfx_StringSetPosition(0x106, 0xC4);
-            Gfx_StringSetColor(D_800C48E0.field_8);
+            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f0, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
-            Gfx_StringSetColor(D_800C48E0.field_8);
+            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f1, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
-            Gfx_StringSetColor(D_800C48E0.field_8);
+            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f2, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
-            Gfx_StringSetColor(D_800C48E0.field_8);
+            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f3, 5);
         }
 
@@ -816,7 +817,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
     }
 }
 
-u32 func_8009134C(u32 n) // 0x8009134C
+u32 Ranking_DigitCount(u32 n) // 0x8009134C
 {
     u32 digits = 1;
 

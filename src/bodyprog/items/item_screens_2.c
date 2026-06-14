@@ -286,7 +286,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             g_Inventory_SelectionId            = InventorySelectionId_Item;
 
             Gfx_Items_DrawInit();
-            func_8008F94C();
+            Ranking_EvaluateScore();
 
             g_Inventory_GameDifficulty = g_SavegamePtr->gameDifficulty;
             if (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal)
@@ -295,7 +295,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
 
             GameBoot_SavegameInitialize(0, g_SavegamePtr->gameDifficulty);
-            func_800904F4();
+            Ranking_PrepareSavegame();
 
 #if VERSION_REGION_IS(NTSCJ)
             func_8004C870();

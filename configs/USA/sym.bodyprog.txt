@@ -1129,7 +1129,10 @@ Demo_GameRandSeedSet                         = 0x8008F8A8; // type:func
 //----------------------------------------------------------
 //--- PA: 0x06ADEC   VA: 0x8008F94C   subsegment: c, ranking
 //----------------------------------------------------------
-Results_DisplayInfo                          = 0x80090664; // type:func
+Ranking_EvaluateScore                        = 0x8008F94C; // type:func
+Ranking_PrepareSavegame                      = 0x800904F4; // type:func
+Ranking_DisplayInfo                          = 0x80090664; // type:func
+Ranking_DigitCount                           = 0x8009134C; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x06CC18   VA: 0x80091778   subsegment: c, credits_init
@@ -3257,7 +3260,7 @@ g_RankingLongRangeShotPercent                = 0x800C48C8;
 g_RankingNoAimingShotPercent                 = 0x800C48CC;
 g_RankingGameDifficulty                      = 0x800C48D0;
 g_RankingContinueCount                       = 0x800C48D1;
-D_800C48E0                                   = 0x800C48E0; // size:0x8
+g_RankingTextColors                          = 0x800C48E0; // size:0x8
 
 //---------------------------------------------------------------------
 //--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: o, libapi/first, .bss

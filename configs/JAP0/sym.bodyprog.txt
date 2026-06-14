@@ -1480,10 +1480,10 @@ func_8008F914                                = 0x80091300; // type:func
 //----------------------------------------------------------
 //--- PA: 0x06C7D8   VA: 0x80091338   subsegment: c, ranking
 //----------------------------------------------------------
-func_8008F94C                                = 0x80091338; // type:func
-func_800904F4                                = 0x80091EE0; // type:func
-Results_DisplayInfo                          = 0x80092050; // type:func
-func_8009134C                                = 0x80092D38; // type:func
+Ranking_EvaluateScore                        = 0x80091338; // type:func
+Ranking_PrepareSavegame                      = 0x80091EE0; // type:func
+Ranking_DisplayInfo                          = 0x80092050; // type:func
+Ranking_DigitCount                           = 0x80092D38; // type:func
 func_80091380                                = 0x80092D6C; // type:func
 func_80091388                                = 0x80092D74; // type:func
 func_80091464                                = 0x80092E50; // type:func
@@ -3664,7 +3664,7 @@ g_RankingLongRangeShotPercent                = 0x800C6DF8;
 g_RankingNoAimingShotPercent                 = 0x800C6DFC;
 g_RankingGameDifficulty                      = 0x800C6E00;
 g_RankingContinueCount                       = 0x800C6E01;
-D_800C48E0                                   = 0x800C6E10;
+g_RankingTextColors                          = 0x800C6E10;
 D_800C48E7                                   = 0x800C6E17;
 D_800C48E8                                   = 0x800C6E18;
 

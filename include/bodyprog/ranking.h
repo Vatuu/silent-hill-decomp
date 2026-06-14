@@ -10,18 +10,18 @@
 // STRUCTS
 // ========
 
-typedef struct
+typedef struct _RankingTextColors
 {
-    u8 field_0;
-    u8 field_1;
-    u8 field_2;
-    u8 field_3;
-    u8 field_4;
-    u8 field_5;
-    u8 field_6;
-    u8 field_7;
-    u8 field_8;
-} s_800C48E0;
+    u8 ending;
+    u8 clearGameCount;
+    u8 savegameCount;
+    u8 continueCount;
+    u8 gameplayTime;
+    u8 pickedUpItemCount;
+    u8 pickedUpSpecialItemCount;
+    u8 enemyKills;
+    u8 killPercentages;
+} s_RankingTextColors;
 
 // ========
 // GLOBALS
@@ -97,22 +97,22 @@ extern u8 g_RankingContinueCount;
 
 extern s8 __pad_bss_800C48D2[14];
 
-extern s_800C48E0 D_800C48E0;
+extern s_RankingTextColors g_RankingTextColors;
 
 // ==========
 // FUNCTIONS
 // ==========
 
 /** Processes and collects results data. */
-void func_8008F94C(void);
+void Ranking_EvaluateScore(void);
 
-void func_800904F4(void);
+void Ranking_PrepareSavegame(void);
 
-void Results_DisplayInfo(u32* arg0); // 0x80090664
+void Ranking_DisplayInfo(u32* arg0); // 0x80090664
 
 void func_80090664(void);
 
-u32 func_8009134C(u32 n);
+u32 Ranking_DigitCount(u32 n);
 
 void func_80091380(void);
 

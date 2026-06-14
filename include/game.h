@@ -281,7 +281,7 @@ typedef enum _GameEndingFlags
     GameEndingFlag_Ufo      = 1 << 4, // 16
 
     // The following are only used in `currentEndingFlags`.
-    GameEndingFlag_5        = 1 << 5, // Unknown purpose, `func_800904F4` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
+    GameEndingFlag_5        = 1 << 5, // Unknown purpose, `Ranking_PrepareSavegame` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
     GameEndingFlag_6        = 1 << 6, // Set the first time ranking has been seen?
     GameEndingFlag_7        = 1 << 7, // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;
