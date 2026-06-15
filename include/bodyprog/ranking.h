@@ -12,15 +12,15 @@
 
 typedef struct _RankingTextColors
 {
-    u8 ending;
-    u8 clearGameCount;
-    u8 savegameCount;
-    u8 continueCount;
-    u8 gameplayTime;
-    u8 pickedUpItemCount;
-    u8 pickedUpSpecialItemCount;
-    u8 enemyKills;
-    u8 killPercentages;
+    /* 0x0 */ u8 ending;
+    /* 0x1 */ u8 clearGameCount;
+    /* 0x2 */ u8 savegameCount;
+    /* 0x3 */ u8 continueCount;
+    /* 0x4 */ u8 gameplayTime;
+    /* 0x5 */ u8 pickedUpItemCount;
+    /* 0x6 */ u8 pickedUpSpecialItemCount;
+    /* 0x7 */ u8 enemyKills;
+    /* 0x8 */ u8 killPercentages;
 } s_RankingTextColors;
 
 // ========
@@ -32,72 +32,72 @@ typedef struct _RankingTextColors
 //extern s_800AFDF4 D_800AFDF4;
 
 /** Savegame count. */
-extern s16 g_RankingSavegameCount;
+extern s16 g_Ranking_SavegameCount;
 
 /** Gameplay time. */
-extern u16 g_RankingGameplayHours;
+extern u16 g_Ranking_GameplayHours;
 
-extern u16 g_RankingWalkDistKm;
+extern u16 g_Ranking_WalkDistanceKm;
 
-extern u16 g_RankingWalkDistM;
+extern u16 g_Ranking_WalkDistanceM;
 
-extern u16 g_RankingRunDistKm;
+extern u16 g_Ranking_RunDistanceKm;
 
-extern u16 g_RankingRunDistM;
+extern u16 g_Ranking_RunDistanceM;
 
 /** Picked up item count. */
-extern u16 g_RankingPickedUpItemCount;
+extern u16 g_Ranking_PickedUpItemCount;
 
-extern u8 g_RankingGameplayMinutes;
+extern u8 g_Ranking_GameplayMinutes;
 
-extern u8 g_RankingGameplaySeconds;
+extern u8 g_Ranking_GameplaySeconds;
 
 /** Clear game count. */
-extern u8 g_RankingClearGameCount;
+extern u8 g_Ranking_ClearGameCount;
 
 /** Clear game endings. */
-extern u8 g_RankingClearGameEndings;
+extern u8 g_Ranking_ClearGameEndings;
 
-extern u8 g_RankingCurrentEndingFlags;
+extern u8 g_Ranking_CurrentEndingFlags;
 
 /** Location ID. */
-extern u8 g_RankingEndLocationId;
+extern u8 g_Ranking_EndLocationId;
 
-extern u8 g_RankingPickedUpSpecialItemCount;
+extern u8 g_Ranking_PickedUpSpecialItemCount;
 
-extern s8 g_RankingScore;
+extern s8 g_Ranking_Score;
 
-extern u8 g_RankingHasUsedGasolineOnChainsaw;
+extern u8 g_Ranking_HasUsedGasolineOnChainsaw;
 
-extern u8 g_RankingHasUsedGasolineOnRockDrill;
+extern u8 g_Ranking_HasUsedGasolineOnRockDrill;
 
-extern u16 g_RankingEnemyKillsShooting;
+extern u16 g_Ranking_EnemyKillsShooting;
 
-extern u16 g_RankingEnemyKillsMelee;
+extern u16 g_Ranking_EnemyKillsMelee;
 
 /** Has fired shots. */
-extern bool g_RankingHasFiredShot;
+extern bool g_Ranking_HasFiredShot;
 
 /** Close range shot count. */
-extern u32 g_RankingCloseRangeShotPercent;
+extern u32 g_Ranking_CloseRangeShotPercent;
 
 /** Mid range shot count. */
-extern u32 g_RankingMidRangeShotPercent;
+extern u32 g_Ranking_MidRangeShotPercent;
 
 /** Long range shot count. */
-extern u32 g_RankingLongRangeShotPercent;
+extern u32 g_Ranking_LongRangeShotPercent;
 
-extern u32 g_RankingNoAimingShotPercent;
+extern u32 g_Ranking_NoAimingShotPercent;
 
 /** Game difficulty. */
-extern s8 g_RankingGameDifficulty;
+extern s8 g_Ranking_GameDifficulty;
 
 /** Continue count. */
-extern u8 g_RankingContinueCount;
+extern u8 g_Ranking_ContinueCount;
 
 extern s8 __pad_bss_800C48D2[14];
 
-extern s_RankingTextColors g_RankingTextColors;
+extern s_RankingTextColors g_Ranking_TextColors;
 
 // ==========
 // FUNCTIONS

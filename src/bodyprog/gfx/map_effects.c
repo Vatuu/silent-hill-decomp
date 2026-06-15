@@ -760,7 +760,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         arg0->effectsInfo.field_4 = Math_WeightedAverageGet(arg1->effectsInfo.field_4, arg2->effectsInfo.field_4, weight);
     }
 
-    if (arg1->effectsInfo.tintLightOverlapEnable == false && arg2->effectsInfo.tintLightOverlapEnable != false)
+    if (arg1->effectsInfo.enableTintLightOverlap == false && arg2->effectsInfo.enableTintLightOverlap != false)
     {
         func_8003FE04(&arg0->effectsInfo, &arg1->effectsInfo, &arg2->effectsInfo, weight1);
     }
@@ -802,17 +802,17 @@ void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, c
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->lightPointTint.r, &arg2->lightPointTint.r, alphaFrom, alphaTo, &arg0->lightPointTint.r);
+    LoadAverageCol(&arg1->pointLightTint.r, &arg2->pointLightTint.r, alphaFrom, alphaTo, &arg0->pointLightTint.r);
     LoadAverageCol(&arg1->worldTint.r, &arg2->worldTint.r, alphaFrom, alphaTo, &arg0->worldTint.r);
 
-    if ((arg0->lightPointTint.r || arg0->lightPointTint.g || arg0->lightPointTint.b) ||
+    if ((arg0->pointLightTint.r || arg0->pointLightTint.g || arg0->pointLightTint.b) ||
         (arg0->worldTint.r || arg0->worldTint.g || arg0->worldTint.b))
     {
-        arg0->tintLightOverlapEnable = true;
+        arg0->enableTintLightOverlap = true;
     }
     else
     {
-        arg0->tintLightOverlapEnable = false;
+        arg0->enableTintLightOverlap = false;
     }
 }
 
@@ -854,5 +854,5 @@ void WorldEnv_FogLightingParamsUpdate(s_StructUnk3* arg0) // 0x8003FF2C
     fogDistCpy = arg0->effectsInfo.fogDistance;
 
     WorldEnv_FogDistanceSet(fogDistCpy, fogDistCpy + Q12(1.0f));
-    WorldEnv_WorldLightTintSet(arg0->effectsInfo.tintLightOverlapEnable, arg0->effectsInfo.lightPointTint.r, arg0->effectsInfo.lightPointTint.g, arg0->effectsInfo.lightPointTint.b, arg0->effectsInfo.worldTint.r, arg0->effectsInfo.worldTint.g, arg0->effectsInfo.worldTint.b);
+    WorldEnv_WorldLightTintSet(arg0->effectsInfo.enableTintLightOverlap, arg0->effectsInfo.pointLightTint.r, arg0->effectsInfo.pointLightTint.g, arg0->effectsInfo.pointLightTint.b, arg0->effectsInfo.worldTint.r, arg0->effectsInfo.worldTint.g, arg0->effectsInfo.worldTint.b);
 }

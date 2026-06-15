@@ -120,7 +120,7 @@ typedef enum _TriggerActivationType
     TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
     TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while the event is active. */
     TriggerActivationType_Button    = 2, /** Requires a button press. */
-    TriggerActivationType_Item      = 3, /** Requires an inventory item. */
+    TriggerActivationType_Item      = 3  /** Requires an inventory item. */
 } e_TriggerActivationType;
 
 /** @brief Event trigger types. */
@@ -131,16 +131,16 @@ typedef enum _TriggerType
     TriggerType_TouchAabb      = 1, /** Player has collided with an AABB. */
     TriggerType_TouchFacing    = 2, /** Player collided with a trigger is facing toward it. */
     TriggerType_TouchObbFacing = 3, /** Player collided with an OBB and is facing toward it. */
-    TriggerType_TouchObb       = 4, /** Player collided with an OBB. No facing requirement. */
+    TriggerType_TouchObb       = 4  /** Player collided with an OBB. No facing requirement. */
 } e_TriggerType;
 
-/** Some events indicate specific cutscenes behavior via flags. */
+/** @brief Area transition flags. Used by some events to indicate specific cutscene behavior. */
 typedef enum _AreaTransitionFlags
 {
     AreaTransitionFlag_None               = 0,
-    AreaTransitionFlag_UnfreezeWorld      = 1 << 0, /** Dual purpose: `SysState_ReadMessage` unfreezes world if set, while `GameBoot_WorldStartup` calls `Map_WorldClear`? */
+    AreaTransitionFlag_UnfreezeWorld      = 1 << 0, /** TODO: Dual purpose: `SysState_ReadMessage` unfreezes the world if set, while `GameBoot_WorldStartup` calls `Map_WorldClear`? */
     AreaTransitionFlag_SkipFadeIn         = 1 << 1, /** Skips fade-in when returning to `GameState_InGame`. */
-    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** Skips `Sd_AmbientSfxInit` call inside `GameBoot_WorldStartup`? */
+    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** TODO: Skips the `Sd_AmbientSfxInit` call in `GameBoot_WorldStartup`? */
 } e_AreaTransitionFlags;
 
 typedef enum _WorldModelLocation
@@ -348,8 +348,8 @@ STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 /** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
 typedef struct _EventData
 {
-    /* 0x0    */ s16 requiredEventFlag;  /** `e_EventFlag` that must be set for event to trigger (or `EventFlag_None`) */
-    /* 0x2    */ s16 completeEventFlag;  /** `e_EventFlag` set on event completion, event is skipped if flag is already set. */
+    /* 0x0    */ s16 requiredEventFlag;  /** `e_EventFlag` | Must be set for an event to trigger (or `EventFlag_None`). */
+    /* 0x2    */ s16 completeEventFlag;  /** `e_EventFlag` | Set on event completion. The event is skipped if this flag is already set. */
     /* 0x4+0  */ s8  triggerType    : 4; /** `e_TriggerType` */
     /* 0x4+4  */ u8  activationType : 4; /** `e_TriggerActivationType` */
     /* 0x5    */ u8  mapPointIdx;        /** Index into `g_MapOverlayHdr.mapPoints`. */

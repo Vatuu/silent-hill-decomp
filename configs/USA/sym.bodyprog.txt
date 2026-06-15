@@ -3235,33 +3235,33 @@ g_Demo_IsLoadingChunks                       = 0x800C489C;
 //-------------------------------------------------------------
 //--- PA: 0x09FD40   VA: 0x800C48A0   subsegment: .bss, ranking
 //-------------------------------------------------------------
-g_RankingSavegameCount                       = 0x800C48A0;
-g_RankingGameplayHours                       = 0x800C48A2;
-g_RankingWalkDistKm                          = 0x800C48A4;
-g_RankingWalkDistM                           = 0x800C48A6;
-g_RankingRunDistKm                           = 0x800C48A8;
-g_RankingRunDistM                            = 0x800C48AA;
-g_RankingPickedUpItemCount                   = 0x800C48AC;
-g_RankingGameplayMinutes                     = 0x800C48AE;
-g_RankingGameplaySeconds                     = 0x800C48AF;
-g_RankingClearGameCount                      = 0x800C48B0;
-g_RankingClearGameEndings                    = 0x800C48B1;
-g_RankingCurrentEndingFlags                  = 0x800C48B2;
-g_RankingEndLocationId                       = 0x800C48B3;
-g_RankingPickedUpSpecialItemCount            = 0x800C48B4;
-g_RankingScore                               = 0x800C48B5;
-g_RankingHasUsedGasolineOnChainsaw           = 0x800C48B6;
-g_RankingHasUsedGasolineOnRockDrill          = 0x800C48B7;
-g_RankingEnemyKillsShooting                  = 0x800C48B8;
-g_RankingEnemyKillsMelee                     = 0x800C48BA;
-g_RankingHasFiredShot                        = 0x800C48BC;
-g_RankingCloseRangeShotPercent               = 0x800C48C0;
-g_RankingMidRangeShotPercent                 = 0x800C48C4;
-g_RankingLongRangeShotPercent                = 0x800C48C8;
-g_RankingNoAimingShotPercent                 = 0x800C48CC;
-g_RankingGameDifficulty                      = 0x800C48D0;
-g_RankingContinueCount                       = 0x800C48D1;
-g_RankingTextColors                          = 0x800C48E0; // size:0x8
+g_Ranking_SavegameCount                      = 0x800C48A0;
+g_Ranking_GameplayHours                      = 0x800C48A2;
+g_Ranking_WalkDistanceKm                     = 0x800C48A4;
+g_Ranking_WalkDistanceM                      = 0x800C48A6;
+g_Ranking_RunDistanceKm                      = 0x800C48A8;
+g_Ranking_RunDistanceM                       = 0x800C48AA;
+g_Ranking_PickedUpItemCount                  = 0x800C48AC;
+g_Ranking_GameplayMinutes                    = 0x800C48AE;
+g_Ranking_GameplaySeconds                    = 0x800C48AF;
+g_Ranking_ClearGameCount                     = 0x800C48B0;
+g_Ranking_ClearGameEndings                   = 0x800C48B1;
+g_Ranking_CurrentEndingFlags                 = 0x800C48B2;
+g_Ranking_EndLocationId                      = 0x800C48B3;
+g_Ranking_PickedUpSpecialItemCount           = 0x800C48B4;
+g_Ranking_Score                              = 0x800C48B5;
+g_Ranking_HasUsedGasolineOnChainsaw          = 0x800C48B6;
+g_Ranking_HasUsedGasolineOnRockDrill         = 0x800C48B7;
+g_Ranking_EnemyKillsShooting                 = 0x800C48B8;
+g_Ranking_EnemyKillsMelee                    = 0x800C48BA;
+g_Ranking_HasFiredShot                       = 0x800C48BC;
+g_Ranking_CloseRangeShotPercent              = 0x800C48C0;
+g_Ranking_MidRangeShotPercent                = 0x800C48C4;
+g_Ranking_LongRangeShotPercent               = 0x800C48C8;
+g_Ranking_NoAimingShotPercent                = 0x800C48CC;
+g_Ranking_GameDifficulty                     = 0x800C48D0;
+g_Ranking_ContinueCount                      = 0x800C48D1;
+g_Ranking_TextColors                         = 0x800C48E0; // size:0x8
 
 //---------------------------------------------------------------------
 //--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: o, libapi/first, .bss

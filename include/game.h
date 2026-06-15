@@ -262,28 +262,30 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+/** @brief Game ending types. */
 typedef enum _GameEnding
 {
-    GameEnding_0        = 0, // Unknown, credits has parameters setup for it, but nothing sets this.
+    GameEnding_0        = 0, // @unused? Credits has parameters set up for it, but nothing sets this.
     GameEnding_GoodPlus = 1,
     GameEnding_Good     = 2,
     GameEnding_BadPlus  = 3,
     GameEnding_Bad      = 4,
-    GameEnding_Ufo      = 5,
+    GameEnding_Ufo      = 5
 } e_GameEnding;
 
+/** @brief Game ending flags. */
 typedef enum _GameEndingFlags
 {
-    GameEndingFlag_GoodPlus = 1 << 0, // 1
-    GameEndingFlag_Good     = 1 << 1, // 2
-    GameEndingFlag_BadPlus  = 1 << 2, // 4
-    GameEndingFlag_Bad      = 1 << 3, // 8
-    GameEndingFlag_Ufo      = 1 << 4, // 16
+    GameEndingFlag_GoodPlus = 1 << 0,
+    GameEndingFlag_Good     = 1 << 1,
+    GameEndingFlag_BadPlus  = 1 << 2,
+    GameEndingFlag_Bad      = 1 << 3,
+    GameEndingFlag_Ufo      = 1 << 4,
 
     // The following are only used in `currentEndingFlags`.
     GameEndingFlag_5        = 1 << 5, // Unknown purpose, `Ranking_PrepareSavegame` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
     GameEndingFlag_6        = 1 << 6, // Set the first time ranking has been seen?
-    GameEndingFlag_7        = 1 << 7, // Set if ranking has been seen and ending was UFO?
+    GameEndingFlag_7        = 1 << 7  // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;
 
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
@@ -372,10 +374,10 @@ typedef struct _MapEffectsInfo
                                 // Sets the transparent grey layer overlaid on characters and the enviroment.
     /* 0x10 */ q19_12  fogDistance;
     /* 0x14 */ CVECTOR fogColor;
-    /* 0x18 */ u8      tintLightOverlapEnable; // `bool`.
-    /* 0x19 */ CVECTOR lightPointTint; /** Volumetric light point color. */
-    /* 0x1D */ CVECTOR worldTint; /** `CMY` */
-    /* 0x21 */ CVECTOR field_21;  // Particle effect related. Only the first value affects snow transparency.
+    /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
+    /* 0x19 */ CVECTOR pointLightTint;         /** Volumetric point light color. */
+    /* 0x1D */ CVECTOR worldTint;              /** Subtractive. */
+    /* 0x21 */ CVECTOR field_21;               // Particle effect related. Only the first value affects snow transparency.
     /* 0x25 */ CVECTOR field_25;
                // 3 byte of padding.
 } s_MapEffectsInfo;

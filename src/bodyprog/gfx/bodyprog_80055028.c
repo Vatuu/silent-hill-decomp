@@ -57,7 +57,7 @@ void WorldEnv_Init(void) // 0x80055028
     g_WorldEnvWork.worldTintColor.b = 128;
 
     g_WorldEnvWork.isFogEnabled           = false;
-    g_WorldEnvWork.tintLightOverlapEnable = false;
+    g_WorldEnvWork.enableTintLightOverlap = false;
 
     g_WorldEnvWork.fog.color.r = 255;
     g_WorldEnvWork.fog.color.g = 255;
@@ -85,7 +85,7 @@ void Gfx_2dEffectsDraw(void) // 0x800550D0
 
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
-    if (g_WorldEnvWork.tintLightOverlapEnable != false)
+    if (g_WorldEnvWork.enableTintLightOverlap != false)
     {
         func_80041074(ot, g_WorldEnvWork.light.intensity, &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
     }
@@ -189,7 +189,7 @@ void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogCo
 
 void WorldEnv_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x800553E0
 {
-    g_WorldEnvWork.tintLightOverlapEnable = overlapLighting;
+    g_WorldEnvWork.enableTintLightOverlap = overlapLighting;
 
     if (overlapLighting != false)
     {

@@ -65,7 +65,7 @@ typedef enum _EventFlag
 
     EventFlag_M0S02_PickupKatana = 56,
 
-    EventFlag_M2S00_UnlockedKatanaRoom      = 57, // Unlocks Katana room inside Levin Street house.
+    EventFlag_M2S00_UnlockedKatanaRoom      = 57, // Unlocks thew Katana room inside the Levin Street house.
     EventFlag_M0S02_UnlockedChannelingStone = 58,
     EventFlag_59                            = 59,
     EventFlag_M0S02_PickupGasolineTank      = 60,
@@ -796,7 +796,7 @@ typedef enum _EventFlag
 
     EventFlag_MapMark_Begin = 867, // Used in `Event_Update` check. TODO: Does anything ever set this?
 
-    // Formerly `MapMarkFlag_` values, seems a lot of events make use of these as `requiredEventFlags` / `disableEventFlags`
+    // TODO: Formerly `MapMarkFlag_` values. It seems a many events make use of these as `requiredEventFlags`/`disableEventFlags`.
     // Maybe these are actually tied to progression instead of strictly being map marker related?
 
     EventFlag_MapMark_OldTown_BachmanRdTopCross = 868,

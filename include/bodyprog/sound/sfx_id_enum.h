@@ -418,7 +418,6 @@ typedef enum _SfxId
     Sfx_XaAudio725 = 4821,
     Sfx_XaAudio726 = 4822,
 
-
     Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_SfxId;
 

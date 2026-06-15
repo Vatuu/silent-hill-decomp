@@ -10,61 +10,61 @@
 
 static const s32 pad_rodata_8002B2F8 = 0;
 
-s16 g_RankingSavegameCount;
+s16 g_Ranking_SavegameCount;
 
-u16 g_RankingGameplayHours;
+u16 g_Ranking_GameplayHours;
 
-u16 g_RankingWalkDistKm;
+u16 g_Ranking_WalkDistanceKm;
 
-u16 g_RankingWalkDistM;
+u16 g_Ranking_WalkDistanceM;
 
-u16 g_RankingRunDistKm;
+u16 g_Ranking_RunDistanceKm;
 
-u16 g_RankingRunDistM;
+u16 g_Ranking_RunDistanceM;
 
-u16 g_RankingPickedUpItemCount;
+u16 g_Ranking_PickedUpItemCount;
 
-u8 g_RankingGameplayMinutes;
+u8 g_Ranking_GameplayMinutes;
 
-u8 g_RankingGameplaySeconds;
+u8 g_Ranking_GameplaySeconds;
 
-u8 g_RankingClearGameCount;
+u8 g_Ranking_ClearGameCount;
 
-u8 g_RankingClearGameEndings;
+u8 g_Ranking_ClearGameEndings;
 
-u8 g_RankingCurrentEndingFlags;
+u8 g_Ranking_CurrentEndingFlags;
 
-u8 g_RankingEndLocationId;
+u8 g_Ranking_EndLocationId;
 
-u8 g_RankingPickedUpSpecialItemCount;
+u8 g_Ranking_PickedUpSpecialItemCount;
 
-s8 g_RankingScore;
+s8 g_Ranking_Score;
 
-u8 g_RankingHasUsedGasolineOnChainsaw;
+u8 g_Ranking_HasUsedGasolineOnChainsaw;
 
-u8 g_RankingHasUsedGasolineOnRockDrill;
+u8 g_Ranking_HasUsedGasolineOnRockDrill;
 
-u16 g_RankingEnemyKillsShooting;
+u16 g_Ranking_EnemyKillsShooting;
 
-u16 g_RankingEnemyKillsMelee;
+u16 g_Ranking_EnemyKillsMelee;
 
-bool g_RankingHasFiredShot;
+bool g_Ranking_HasFiredShot;
 
-u32 g_RankingCloseRangeShotPercent;
+u32 g_Ranking_CloseRangeShotPercent;
 
-u32 g_RankingMidRangeShotPercent;
+u32 g_Ranking_MidRangeShotPercent;
 
-u32 g_RankingLongRangeShotPercent;
+u32 g_Ranking_LongRangeShotPercent;
 
-u32 g_RankingNoAimingShotPercent;
+u32 g_Ranking_NoAimingShotPercent;
 
-s8 g_RankingGameDifficulty;
+s8 g_Ranking_GameDifficulty;
 
-u8 g_RankingContinueCount;
+u8 g_Ranking_ContinueCount;
 
 s8 __pad_bss_800C48D2[14];
 
-s_RankingTextColors g_RankingTextColors;
+s_RankingTextColors g_Ranking_TextColors;
 
 struct
 {
@@ -85,71 +85,71 @@ void Ranking_EvaluateScore() // 0x8008F94C
     u8  temp;
     s8* temp3;
 
-    g_RankingScore = 0;
-    g_RankingGameDifficulty = g_SavegamePtr->gameDifficulty;
-    g_RankingSavegameCount = g_SavegamePtr->savegameCount;
-    g_RankingSavegameCount = CLAMP(g_RankingSavegameCount, 0, 999);
-    g_RankingContinueCount = g_SavegamePtr->continueCount;
-    g_RankingGameplayHours = g_SavegamePtr->add290Hours * 24 + FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 3600;
-    g_RankingWalkDistKm = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000;
-    g_RankingWalkDistM = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000) * 1000;
-    g_RankingRunDistKm = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000;
-    g_RankingRunDistM = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000) * 1000;
-    g_RankingPickedUpItemCount = g_SavegamePtr->pickedUpItemCount;
-    g_RankingGameplayMinutes = (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) % 60;
-    g_RankingGameplaySeconds = FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) * 60;
-    g_RankingClearGameCount = g_SavegamePtr->clearGameCount;
-    g_RankingClearGameEndings = g_SavegamePtr->clearGameEndings;
-    g_RankingCurrentEndingFlags = g_SavegamePtr->currentEndingFlags;
-    g_RankingHasUsedGasolineOnChainsaw = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnChainsaw);
-    g_RankingPickedUpSpecialItemCount = 0;
-    g_RankingHasUsedGasolineOnRockDrill = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnRockDrill);
-    g_RankingEnemyKillsShooting = func_8009146C(1);
-    g_RankingEnemyKillsMelee = func_8009146C(0);
+    g_Ranking_Score = 0;
+    g_Ranking_GameDifficulty = g_SavegamePtr->gameDifficulty;
+    g_Ranking_SavegameCount = g_SavegamePtr->savegameCount;
+    g_Ranking_SavegameCount = CLAMP(g_Ranking_SavegameCount, 0, 999);
+    g_Ranking_ContinueCount = g_SavegamePtr->continueCount;
+    g_Ranking_GameplayHours = g_SavegamePtr->add290Hours * 24 + FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 3600;
+    g_Ranking_WalkDistanceKm = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000;
+    g_Ranking_WalkDistanceM = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000) * 1000;
+    g_Ranking_RunDistanceKm = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000;
+    g_Ranking_RunDistanceM = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000) * 1000;
+    g_Ranking_PickedUpItemCount = g_SavegamePtr->pickedUpItemCount;
+    g_Ranking_GameplayMinutes = (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) % 60;
+    g_Ranking_GameplaySeconds = FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) * 60;
+    g_Ranking_ClearGameCount = g_SavegamePtr->clearGameCount;
+    g_Ranking_ClearGameEndings = g_SavegamePtr->clearGameEndings;
+    g_Ranking_CurrentEndingFlags = g_SavegamePtr->currentEndingFlags;
+    g_Ranking_HasUsedGasolineOnChainsaw = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnChainsaw);
+    g_Ranking_PickedUpSpecialItemCount = 0;
+    g_Ranking_HasUsedGasolineOnRockDrill = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnRockDrill);
+    g_Ranking_EnemyKillsShooting = func_8009146C(1);
+    g_Ranking_EnemyKillsMelee = func_8009146C(0);
 
     firedShotCount = g_SavegamePtr->firedShotCount;
-    g_RankingHasFiredShot = firedShotCount != 0;
+    g_Ranking_HasFiredShot = firedShotCount != 0;
 
-    if (g_RankingHasFiredShot)
+    if (g_Ranking_HasFiredShot)
     {
-        g_RankingCloseRangeShotPercent = g_SavegamePtr->closeRangeShotCount;
-        g_RankingMidRangeShotPercent = g_SavegamePtr->midRangeShotCount;
-        g_RankingLongRangeShotPercent = g_SavegamePtr->longRangeShotCount;
-        g_RankingMidRangeShotPercent = g_RankingMidRangeShotPercent + g_SavegamePtr->field_26C;
-        g_RankingCloseRangeShotPercent = g_RankingCloseRangeShotPercent * 100 / firedShotCount;
-        g_RankingMidRangeShotPercent = g_RankingMidRangeShotPercent * 100 / firedShotCount;
-        g_RankingLongRangeShotPercent = g_RankingLongRangeShotPercent * 100 / firedShotCount;
-        g_RankingNoAimingShotPercent = ((100 - g_RankingCloseRangeShotPercent) - g_RankingMidRangeShotPercent) - g_RankingLongRangeShotPercent;
+        g_Ranking_CloseRangeShotPercent = g_SavegamePtr->closeRangeShotCount;
+        g_Ranking_MidRangeShotPercent = g_SavegamePtr->midRangeShotCount;
+        g_Ranking_LongRangeShotPercent = g_SavegamePtr->longRangeShotCount;
+        g_Ranking_MidRangeShotPercent = g_Ranking_MidRangeShotPercent + g_SavegamePtr->field_26C;
+        g_Ranking_CloseRangeShotPercent = g_Ranking_CloseRangeShotPercent * 100 / firedShotCount;
+        g_Ranking_MidRangeShotPercent = g_Ranking_MidRangeShotPercent * 100 / firedShotCount;
+        g_Ranking_LongRangeShotPercent = g_Ranking_LongRangeShotPercent * 100 / firedShotCount;
+        g_Ranking_NoAimingShotPercent = ((100 - g_Ranking_CloseRangeShotPercent) - g_Ranking_MidRangeShotPercent) - g_Ranking_LongRangeShotPercent;
 
-        g_Credits_Digits.f0[0] = (((g_RankingCloseRangeShotPercent) / 100) % 10) + '0';
-        g_Credits_Digits.f0[2] = (((g_RankingCloseRangeShotPercent) / 10) - (((g_RankingCloseRangeShotPercent) / 100) * 10)) + '0';
-        g_Credits_Digits.f0[3] = ((g_RankingCloseRangeShotPercent) % 10) + '0';
+        g_Credits_Digits.f0[0] = (((g_Ranking_CloseRangeShotPercent) / 100) % 10) + '0';
+        g_Credits_Digits.f0[2] = (((g_Ranking_CloseRangeShotPercent) / 10) - (((g_Ranking_CloseRangeShotPercent) / 100) * 10)) + '0';
+        g_Credits_Digits.f0[3] = ((g_Ranking_CloseRangeShotPercent) % 10) + '0';
 
-        g_Credits_Digits.f1[0] = (((g_RankingMidRangeShotPercent) / 100) % 10) + '0';
-        g_Credits_Digits.f1[2] = (((g_RankingMidRangeShotPercent) / 10) - (((g_RankingMidRangeShotPercent) / 100) * 10)) + '0';
-        g_Credits_Digits.f1[3] = ((g_RankingMidRangeShotPercent) % 10) + '0';
+        g_Credits_Digits.f1[0] = (((g_Ranking_MidRangeShotPercent) / 100) % 10) + '0';
+        g_Credits_Digits.f1[2] = (((g_Ranking_MidRangeShotPercent) / 10) - (((g_Ranking_MidRangeShotPercent) / 100) * 10)) + '0';
+        g_Credits_Digits.f1[3] = ((g_Ranking_MidRangeShotPercent) % 10) + '0';
 
-        g_Credits_Digits.f2[0] = (((g_RankingLongRangeShotPercent) / 100) % 10) + '0';
-        g_Credits_Digits.f2[2] = (((g_RankingLongRangeShotPercent) / 10) - (((g_RankingLongRangeShotPercent) / 100) * 10)) + '0';
-        g_Credits_Digits.f2[3] = ((g_RankingLongRangeShotPercent) % 10) + '0';
+        g_Credits_Digits.f2[0] = (((g_Ranking_LongRangeShotPercent) / 100) % 10) + '0';
+        g_Credits_Digits.f2[2] = (((g_Ranking_LongRangeShotPercent) / 10) - (((g_Ranking_LongRangeShotPercent) / 100) * 10)) + '0';
+        g_Credits_Digits.f2[3] = ((g_Ranking_LongRangeShotPercent) % 10) + '0';
 
-        g_Credits_Digits.f3[0] = (((g_RankingNoAimingShotPercent) / 100) % 10) + '0';
-        g_Credits_Digits.f3[2] = (((g_RankingNoAimingShotPercent) / 10) - (((g_RankingNoAimingShotPercent) / 100) * 10)) + '0';
-        g_Credits_Digits.f3[3] = ((g_RankingNoAimingShotPercent) % 10) + '0';
+        g_Credits_Digits.f3[0] = (((g_Ranking_NoAimingShotPercent) / 100) % 10) + '0';
+        g_Credits_Digits.f3[2] = (((g_Ranking_NoAimingShotPercent) / 10) - (((g_Ranking_NoAimingShotPercent) / 100) * 10)) + '0';
+        g_Credits_Digits.f3[3] = ((g_Ranking_NoAimingShotPercent) % 10) + '0';
     }
 
-    gameplayMinutes    = g_RankingGameplayMinutes + (g_RankingGameplayHours * 60);
+    gameplayMinutes    = g_Ranking_GameplayMinutes + (g_Ranking_GameplayHours * 60);
 
     // @bugfix Pre-JAP1 accidentally included unlocked Hyper Blaster colors in the picked up item count.
     // JAP1 onwards fix this by ignoring the top-most bit.
     // See `pickedUpSpecialItemCount` field comment for more info.
 #if VERSION_EQUAL_OR_NEWER(JAP1)
-    g_RankingPickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount & 0x7;
+    g_Ranking_PickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount & 0x7;
 #else
-    g_RankingPickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount & 0xF;
+    g_Ranking_PickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount & 0xF;
 #endif
 
-    g_RankingEndLocationId = g_SavegamePtr->locationId;
+    g_Ranking_EndLocationId = g_SavegamePtr->locationId;
     D_800C3E40 = 7;
     temp_a0_2  = g_GameWork.config.extraOptionsEnabled;
 
@@ -163,14 +163,14 @@ void Ranking_EvaluateScore() // 0x8008F94C
         D_800C3E40 |= 0x10;
     }
 
-    if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (g_RankingCurrentEndingFlags & GameEndingFlag_Ufo))
+    if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (g_Ranking_CurrentEndingFlags & GameEndingFlag_Ufo))
     {
         D_800C3E40 |= 0x20;
     }
 
-    g_RankingTextColors.ending = StringColorId_White;
+    g_Ranking_TextColors.ending = StringColorId_White;
 
-    switch (g_RankingCurrentEndingFlags)
+    switch (g_Ranking_CurrentEndingFlags)
     {
         // @bug These cases could never be used? `currentEndingFlags` only holds the current ending that was triggered.
         // Maybe this was meant to check `clearGameEndings` instead?
@@ -188,145 +188,145 @@ void Ranking_EvaluateScore() // 0x8008F94C
             break;
 
         case GameEndingFlag_GoodPlus:
-            g_RankingTextColors.ending = StringColorId_Gold;
-            g_RankingScore += 10;
+            g_Ranking_TextColors.ending = StringColorId_Gold;
+            g_Ranking_Score += 10;
             break;
 
         case GameEndingFlag_Good:
-            g_RankingScore += 5;
+            g_Ranking_Score += 5;
             break;
 
         case GameEndingFlag_BadPlus:
-            g_RankingScore += 3;
+            g_Ranking_Score += 3;
             break;
 
         case GameEndingFlag_Bad:
-            g_RankingScore += 1;
+            g_Ranking_Score += 1;
             break;
 
         case GameEndingFlag_Ufo:
-            g_RankingScore += 0;
+            g_Ranking_Score += 0;
             break;
     }
 
-    g_RankingTextColors.pickedUpItemCount = StringColorId_White;
+    g_Ranking_TextColors.pickedUpItemCount = StringColorId_White;
 
-    if ((g_RankingPickedUpItemCount / 15) < 0 || (g_RankingPickedUpItemCount / 15) >= 10)
+    if ((g_Ranking_PickedUpItemCount / 15) < 0 || (g_Ranking_PickedUpItemCount / 15) >= 10)
     {
-        g_RankingTextColors.pickedUpItemCount = StringColorId_Gold;
-        g_RankingScore += 10;
+        g_Ranking_TextColors.pickedUpItemCount = StringColorId_Gold;
+        g_Ranking_Score += 10;
     }
     else
     {
-        g_RankingScore += g_RankingPickedUpItemCount / 15;
+        g_Ranking_Score += g_Ranking_PickedUpItemCount / 15;
     }
 
-    g_RankingTextColors.savegameCount = StringColorId_White;
+    g_Ranking_TextColors.savegameCount = StringColorId_White;
 
-    if (g_RankingSavegameCount < 3)
+    if (g_Ranking_SavegameCount < 3)
     {
-        g_RankingTextColors.savegameCount = StringColorId_Gold;
-        g_RankingScore += 5;
+        g_Ranking_TextColors.savegameCount = StringColorId_Gold;
+        g_Ranking_Score += 5;
     }
-    else if (g_RankingSavegameCount < 6)
+    else if (g_Ranking_SavegameCount < 6)
     {
-        g_RankingScore += 4;
+        g_Ranking_Score += 4;
     }
-    else if (g_RankingSavegameCount < 11)
+    else if (g_Ranking_SavegameCount < 11)
     {
-        g_RankingScore += 3;
+        g_Ranking_Score += 3;
     }
-    else if (g_RankingSavegameCount < 21)
+    else if (g_Ranking_SavegameCount < 21)
     {
-        g_RankingScore += 2;
+        g_Ranking_Score += 2;
     }
-    else if (g_RankingSavegameCount < 31)
+    else if (g_Ranking_SavegameCount < 31)
     {
-        g_RankingScore += 1;
-    }
-
-    g_RankingTextColors.continueCount = StringColorId_White;
-
-    if (g_RankingContinueCount < 2)
-    {
-        g_RankingTextColors.continueCount = StringColorId_Gold;
-        g_RankingScore += 5;
-    }
-    else if (g_RankingContinueCount < 4)
-    {
-        g_RankingScore += 4;
-    }
-    else if (g_RankingContinueCount < 6)
-    {
-        g_RankingScore += 3;
-    }
-    else if (g_RankingContinueCount < 8)
-    {
-        g_RankingScore += 2;
-    }
-    else if (g_RankingContinueCount < 10)
-    {
-        g_RankingScore += 1;
+        g_Ranking_Score += 1;
     }
 
-    g_RankingTextColors.gameplayTime = StringColorId_White;
+    g_Ranking_TextColors.continueCount = StringColorId_White;
+
+    if (g_Ranking_ContinueCount < 2)
+    {
+        g_Ranking_TextColors.continueCount = StringColorId_Gold;
+        g_Ranking_Score += 5;
+    }
+    else if (g_Ranking_ContinueCount < 4)
+    {
+        g_Ranking_Score += 4;
+    }
+    else if (g_Ranking_ContinueCount < 6)
+    {
+        g_Ranking_Score += 3;
+    }
+    else if (g_Ranking_ContinueCount < 8)
+    {
+        g_Ranking_Score += 2;
+    }
+    else if (g_Ranking_ContinueCount < 10)
+    {
+        g_Ranking_Score += 1;
+    }
+
+    g_Ranking_TextColors.gameplayTime = StringColorId_White;
 
     if (gameplayMinutes < 90)
     {
-        g_RankingTextColors.gameplayTime = StringColorId_Gold;
-        g_RankingScore += 10;
+        g_Ranking_TextColors.gameplayTime = StringColorId_Gold;
+        g_Ranking_Score += 10;
     }
     else if (gameplayMinutes < 180)
     {
-        g_RankingScore += 5;
+        g_Ranking_Score += 5;
     }
     else if (gameplayMinutes < 240)
     {
-        g_RankingScore += 3;
+        g_Ranking_Score += 3;
     }
     else if (gameplayMinutes < 360)
     {
-        g_RankingScore += 2;
+        g_Ranking_Score += 2;
     }
     else if (gameplayMinutes < 720)
     {
-        g_RankingScore += 1;
+        g_Ranking_Score += 1;
     }
 
-    g_RankingTextColors.clearGameCount = StringColorId_White;
+    g_Ranking_TextColors.clearGameCount = StringColorId_White;
 
-    temp = g_RankingClearGameCount;
+    temp = g_Ranking_ClearGameCount;
 
     if (temp >= 5)
     {
-        g_RankingTextColors.clearGameCount = StringColorId_Gold;
+        g_Ranking_TextColors.clearGameCount = StringColorId_Gold;
 
-        g_RankingScore += 10;
+        g_Ranking_Score += 10;
     }
     else
     {
-        g_RankingScore += temp * 2;
+        g_Ranking_Score += temp * 2;
     }
 
-    g_RankingTextColors.pickedUpSpecialItemCount = StringColorId_White;
+    g_Ranking_TextColors.pickedUpSpecialItemCount = StringColorId_White;
 
-    temp = g_RankingPickedUpSpecialItemCount;
+    temp = g_Ranking_PickedUpSpecialItemCount;
     if (temp >= 5)
     {
-        g_RankingTextColors.pickedUpSpecialItemCount = StringColorId_Gold;
-        g_RankingScore    += 10;
+        g_Ranking_TextColors.pickedUpSpecialItemCount = StringColorId_Gold;
+        g_Ranking_Score    += 10;
     }
     else
     {
-        g_RankingScore += temp * 2;
+        g_Ranking_Score += temp * 2;
     }
 
-    g_RankingTextColors.killPercentages = StringColorId_White;
+    g_Ranking_TextColors.killPercentages = StringColorId_White;
 
-    if (g_RankingHasFiredShot)
+    if (g_Ranking_HasFiredShot)
     {
         s32 shootingScore;
-        shootingScore = ((g_RankingCloseRangeShotPercent + g_RankingMidRangeShotPercent * 2) + (g_RankingLongRangeShotPercent * 3)) - (g_RankingNoAimingShotPercent * 4);
+        shootingScore = ((g_Ranking_CloseRangeShotPercent + g_Ranking_MidRangeShotPercent * 2) + (g_Ranking_LongRangeShotPercent * 3)) - (g_Ranking_NoAimingShotPercent * 4);
         shootingScore = shootingScore / 10;
 
         if (shootingScore < 0)
@@ -338,23 +338,23 @@ void Ranking_EvaluateScore() // 0x8008F94C
             shootingScore = 10;
         }
 
-        g_RankingScore += shootingScore;
+        g_Ranking_Score += shootingScore;
 
         if (shootingScore == 10)
         {
-            g_RankingTextColors.killPercentages = StringColorId_Gold;
+            g_Ranking_TextColors.killPercentages = StringColorId_Gold;
         }
     }
     else
     {
-        g_RankingTextColors.killPercentages = StringColorId_Gold;
-        g_RankingScore    += 10;
+        g_Ranking_TextColors.killPercentages = StringColorId_Gold;
+        g_Ranking_Score    += 10;
     }
 
-    g_RankingTextColors.enemyKills = StringColorId_White;
+    g_Ranking_TextColors.enemyKills = StringColorId_White;
     var_a0_3           = g_SavegamePtr->field_278;
     var_a0_3           = var_a0_3 - 15;
-    var_a0_3           = var_a0_3 - (g_RankingClearGameCount * 5);
+    var_a0_3           = var_a0_3 - (g_Ranking_ClearGameCount * 5);
 
     if (var_a0_3 < 0)
     {
@@ -363,10 +363,10 @@ void Ranking_EvaluateScore() // 0x8008F94C
 
     var_a0_3 += 5;
 
-    var_v0_5 = g_RankingHasFiredShot ? g_RankingEnemyKillsShooting : 100;
+    var_v0_5 = g_Ranking_HasFiredShot ? g_Ranking_EnemyKillsShooting : 100;
 
     var_v1   = var_v0_5 / var_a0_3;
-    var_a0_3 = g_RankingEnemyKillsMelee / var_a0_3;
+    var_a0_3 = g_Ranking_EnemyKillsMelee / var_a0_3;
 
     if (var_a0_3 < var_v1)
     {
@@ -388,44 +388,44 @@ void Ranking_EvaluateScore() // 0x8008F94C
         var_v1 = 0;
     }
 
-    temp3       = &g_RankingScore;
-    g_RankingScore += var_v1;
+    temp3       = &g_Ranking_Score;
+    g_Ranking_Score += var_v1;
 
     if (temp3 == NULL)
     {
-        g_RankingScore += 0;
+        g_Ranking_Score += 0;
     }
 
     if (var_v1 == 30)
     {
-        g_RankingTextColors.enemyKills = StringColorId_Gold;
+        g_Ranking_TextColors.enemyKills = StringColorId_Gold;
     }
 
-    if (g_RankingGameDifficulty == GameDifficulty_Easy)
+    if (g_Ranking_GameDifficulty == GameDifficulty_Easy)
     {
-        g_RankingScore += -5;
+        g_Ranking_Score += -5;
     }
 
-    g_RankingScore = CLAMP(g_RankingScore, 0, 100);
+    g_Ranking_Score = CLAMP(g_Ranking_Score, 0, 100);
 }
 
 void Ranking_PrepareSavegame() // 0x800904F4
 {
     u8 extraOptions;
 
-    g_SavegamePtr->locationId         = g_RankingEndLocationId;
-    g_SavegamePtr->clearGameCount     = g_RankingClearGameCount;
-    g_SavegamePtr->clearGameEndings   = g_RankingClearGameEndings;
-    g_SavegamePtr->currentEndingFlags = ((g_RankingCurrentEndingFlags & GameEndingFlag_Ufo) * 8) + GameEndingFlag_6; // Adds `GameEndingFlag_7` if `GameEndingFlag_Ufo` is set? TODO: Deoptimize.
+    g_SavegamePtr->locationId         = g_Ranking_EndLocationId;
+    g_SavegamePtr->clearGameCount     = g_Ranking_ClearGameCount;
+    g_SavegamePtr->clearGameEndings   = g_Ranking_ClearGameEndings;
+    g_SavegamePtr->currentEndingFlags = ((g_Ranking_CurrentEndingFlags & GameEndingFlag_Ufo) * 8) + GameEndingFlag_6; // Adds `GameEndingFlag_7` if `GameEndingFlag_Ufo` is set? TODO: Deoptimize.
     g_SavegamePtr->isNextFearMode     = 1;
     g_SavegamePtr->mapIdx             = MapIdx_MAP0_S01;
 
-    if (g_RankingHasUsedGasolineOnChainsaw)
+    if (g_Ranking_HasUsedGasolineOnChainsaw)
     {
         Savegame_EventFlagSet(EventFlag_M2S00_UsedGasolineOnChainsaw);
     }
 
-    if (g_RankingHasUsedGasolineOnRockDrill)
+    if (g_Ranking_HasUsedGasolineOnRockDrill)
     {
         Savegame_EventFlagSet(EventFlag_M2S00_UsedGasolineOnRockDrill);
     }
@@ -444,10 +444,10 @@ void Ranking_PrepareSavegame() // 0x800904F4
         Savegame_EventFlagSet(EventFlag_M0S02_UnlockedChannelingStone);
     }
 
-    if (g_RankingScore >= 80)
+    if (g_Ranking_Score >= 80)
     {
         g_SavegamePtr->pickedUpSpecialItemCount = 8;
-        if (g_RankingScore == 100)
+        if (g_Ranking_Score == 100)
         {
             g_SavegamePtr->currentEndingFlags      |= GameEndingFlag_5;
             g_SavegamePtr->pickedUpSpecialItemCount = 16;
@@ -511,7 +511,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x18, -0x38);
         Gfx_StringDraw(D_8002B4C0[1], 20);
 
-        switch (g_RankingGameDifficulty)
+        switch (g_Ranking_GameDifficulty)
         {
             case -1:
                 Gfx_StringSetPosition(0xFC, -0x38);
@@ -532,113 +532,113 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
                 break;
         }
 
-        temp_s1 = Ranking_DigitCount(g_RankingSavegameCount);
+        temp_s1 = Ranking_DigitCount(g_Ranking_SavegameCount);
         Gfx_StringSetPosition(0x18, 7);
         Gfx_StringDraw(D_8002B4C0[5], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 7);
-        Gfx_StringSetColor(g_RankingTextColors.savegameCount);
-        Gfx_StringDrawInt(3, g_RankingSavegameCount);
+        Gfx_StringSetColor(g_Ranking_TextColors.savegameCount);
+        Gfx_StringDrawInt(3, g_Ranking_SavegameCount);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = Ranking_DigitCount(g_RankingContinueCount);
+        temp_s1 = Ranking_DigitCount(g_Ranking_ContinueCount);
         Gfx_StringSetPosition(0x18, 0x1C);
         Gfx_StringDraw(D_8002B4C0[6], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 0xA), 0x1C);
-        Gfx_StringSetColor(g_RankingTextColors.continueCount);
-        Gfx_StringDrawInt(3, g_RankingContinueCount);
+        Gfx_StringSetColor(g_Ranking_TextColors.continueCount);
+        Gfx_StringDrawInt(3, g_Ranking_ContinueCount);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = Ranking_DigitCount(g_RankingGameplayHours);
+        temp_s1 = Ranking_DigitCount(g_Ranking_GameplayHours);
         Gfx_StringSetPosition(0x18, 0x31);
         Gfx_StringDraw(D_8002B4C0[7], 20);
         Gfx_StringSetPosition(0xDC - (temp_s1 * 0xA), 0x31);
-        Gfx_StringSetColor(g_RankingTextColors.gameplayTime);
-        Gfx_StringDrawInt(5, g_RankingGameplayHours);
+        Gfx_StringSetColor(g_Ranking_TextColors.gameplayTime);
+        Gfx_StringDrawInt(5, g_Ranking_GameplayHours);
         Gfx_StringSetPosition(0xDC, 0x31);
         Gfx_StringDraw(D_8002B4C0[8], 5);
-        Gfx_StringSetPosition(0xFE - (Ranking_DigitCount(g_RankingGameplayMinutes) * 0xA), 0x31);
-        Gfx_StringDrawInt(2, g_RankingGameplayMinutes);
+        Gfx_StringSetPosition(0xFE - (Ranking_DigitCount(g_Ranking_GameplayMinutes) * 0xA), 0x31);
+        Gfx_StringDrawInt(2, g_Ranking_GameplayMinutes);
         Gfx_StringSetPosition(0xFE, 0x31);
         Gfx_StringDraw(D_8002B4C0[9], 5);
-        Gfx_StringSetPosition(0x120 - (Ranking_DigitCount(g_RankingGameplaySeconds) * 0xA), 0x31);
-        Gfx_StringDrawInt(2, g_RankingGameplaySeconds);
+        Gfx_StringSetPosition(0x120 - (Ranking_DigitCount(g_Ranking_GameplaySeconds) * 0xA), 0x31);
+        Gfx_StringDrawInt(2, g_Ranking_GameplaySeconds);
         Gfx_StringSetPosition(0x120, 0x31);
         Gfx_StringDraw(D_8002B4C0[10], 5);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = Ranking_DigitCount(g_RankingWalkDistKm);
+        temp_s1 = Ranking_DigitCount(g_Ranking_WalkDistanceKm);
         Gfx_StringSetPosition(0x18, 0x46);
         Gfx_StringDraw(D_8002B4C0[13], 20);
         Gfx_StringSetPosition(0xE5 - ((temp_s1 - 1) * 0xA), 0x46);
-        Gfx_StringDrawInt(4, g_RankingWalkDistKm);
+        Gfx_StringDrawInt(4, g_Ranking_WalkDistanceKm);
         Gfx_StringDraw(D_8002B4C0[11], 5);
 
-        if (g_RankingWalkDistM < 0x64u)
+        if (g_Ranking_WalkDistanceM < 0x64u)
         {
             Gfx_StringDrawInt(1, 0);
         }
 
-        if (g_RankingWalkDistM < 0xAu)
+        if (g_Ranking_WalkDistanceM < 0xAu)
         {
             Gfx_StringDrawInt(1, 0);
         }
 
-        Gfx_StringDrawInt(3, g_RankingWalkDistM);
+        Gfx_StringDrawInt(3, g_Ranking_WalkDistanceM);
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
-        temp_s1 = Ranking_DigitCount(g_RankingRunDistKm);
+        temp_s1 = Ranking_DigitCount(g_Ranking_RunDistanceKm);
         Gfx_StringSetPosition(0x18, 0x5B);
         Gfx_StringDraw(D_8002B4C0[14], 0x14);
         Gfx_StringSetPosition(0xE5 - ((temp_s1 - 1) * 0xA), 0x5B);
-        Gfx_StringDrawInt(4, g_RankingRunDistKm);
+        Gfx_StringDrawInt(4, g_Ranking_RunDistanceKm);
         Gfx_StringDraw(D_8002B4C0[11], 5);
 
-        if (g_RankingRunDistM < 0x64u)
+        if (g_Ranking_RunDistanceM < 0x64u)
         {
             Gfx_StringDrawInt(1, 0);
         }
 
-        if (g_RankingRunDistM < 0xAu)
+        if (g_Ranking_RunDistanceM < 0xAu)
         {
             Gfx_StringDrawInt(1, 0);
         }
 
-        Gfx_StringDrawInt(3, g_RankingRunDistM);
+        Gfx_StringDrawInt(3, g_Ranking_RunDistanceM);
         Gfx_StringDraw(D_8002B4C0[12], 5);
 
-        temp_s1 = Ranking_DigitCount(g_RankingPickedUpItemCount);
+        temp_s1 = Ranking_DigitCount(g_Ranking_PickedUpItemCount);
         Gfx_StringSetPosition(0x18, 0x70);
         Gfx_StringDraw(D_8002B4C0[15], 0x14);
         Gfx_StringSetPosition(0xDA - ((temp_s1 - 1) * 0xA), 0x70);
-        Gfx_StringSetColor(g_RankingTextColors.pickedUpItemCount);
-        Gfx_StringDrawInt(3, (s32) g_RankingPickedUpItemCount);
+        Gfx_StringSetColor(g_Ranking_TextColors.pickedUpItemCount);
+        Gfx_StringDrawInt(3, (s32) g_Ranking_PickedUpItemCount);
         Gfx_StringDraw(D_8002B4C0[16], 5);
         Gfx_StringDrawInt(3, 0xCC);
-        Gfx_StringSetColor(g_RankingTextColors.pickedUpSpecialItemCount);
+        Gfx_StringSetColor(g_Ranking_TextColors.pickedUpSpecialItemCount);
         Gfx_StringDraw("(", 1);
 
-        if (g_RankingPickedUpSpecialItemCount != 0)
+        if (g_Ranking_PickedUpSpecialItemCount != 0)
         {
             Gfx_StringDraw(D_8002B4C0[17], 5);
-            Gfx_StringDrawInt(1, g_RankingPickedUpSpecialItemCount);
+            Gfx_StringDrawInt(1, g_Ranking_PickedUpSpecialItemCount);
         }
 
         Gfx_StringSetPosition(0x124, 0x70);
         Gfx_StringDraw(")", 1);
         Gfx_StringSetColor(StringColorId_White);
 
-        temp_s1 = Ranking_DigitCount(g_RankingClearGameCount);
+        temp_s1 = Ranking_DigitCount(g_Ranking_ClearGameCount);
         Gfx_StringSetPosition(0x18, -0x23);
         Gfx_StringDraw(D_8002B4C0[18], 20);
         Gfx_StringSetPosition(0x11E - ((temp_s1 - 1) * 10), -0x23);
-        Gfx_StringSetColor(g_RankingTextColors.clearGameCount);
-        Gfx_StringDrawInt(3, g_RankingClearGameCount);
+        Gfx_StringSetColor(g_Ranking_TextColors.clearGameCount);
+        Gfx_StringDrawInt(3, g_Ranking_ClearGameCount);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, -0xE);
         Gfx_StringDraw(D_8002B4C0[19], 20);
-        Gfx_StringSetColor(g_RankingTextColors.ending);
+        Gfx_StringSetColor(g_Ranking_TextColors.ending);
 
-        switch (g_RankingCurrentEndingFlags & 0x1F)
+        switch (g_Ranking_CurrentEndingFlags & 0x1F)
         {
             case GameEndingFlag_GoodPlus:
                 Gfx_StringSetPosition(0xEA, -0xE);
@@ -672,17 +672,17 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x9A);
         Gfx_StringDraw(D_8002B4C0[27], 0x20);
-        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_RankingEnemyKillsShooting) * 10), 154);
-        Gfx_StringSetColor(g_RankingTextColors.enemyKills);
-        Gfx_StringDrawInt(4, g_RankingEnemyKillsShooting);
+        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_Ranking_EnemyKillsShooting) * 10), 154);
+        Gfx_StringSetColor(g_Ranking_TextColors.enemyKills);
+        Gfx_StringDrawInt(4, g_Ranking_EnemyKillsShooting);
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x85);
         Gfx_StringDraw(D_8002B4C0[28], 0x20);
-        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_RankingEnemyKillsMelee) * 10), 133);
-        Gfx_StringSetColor(g_RankingTextColors.enemyKills);
-        Gfx_StringDrawInt(4, g_RankingEnemyKillsMelee);
+        Gfx_StringSetPosition(0x128 - (Ranking_DigitCount(g_Ranking_EnemyKillsMelee) * 10), 133);
+        Gfx_StringSetColor(g_Ranking_TextColors.enemyKills);
+        Gfx_StringDrawInt(4, g_Ranking_EnemyKillsMelee);
 
-        if (g_RankingHasFiredShot)
+        if (g_Ranking_HasFiredShot)
         {
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x18, 0xAF);
@@ -690,25 +690,25 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringSetPosition(0x48, 0xC4);
             Gfx_StringDraw(D_8002B4C0[30], 0x20);
             Gfx_StringSetPosition(0x106, 0xC4);
-            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
+            Gfx_StringSetColor(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f0, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xD9);
             Gfx_StringDraw(D_8002B4C0[31], 0x20);
             Gfx_StringSetPosition(0x106, 0xD9);
-            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
+            Gfx_StringSetColor(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f1, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0xEE);
             Gfx_StringDraw(D_8002B4C0[32], 0x20);
             Gfx_StringSetPosition(0x106, 0xEE);
-            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
+            Gfx_StringSetColor(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f2, 5);
             Gfx_StringSetColor(StringColorId_White);
             Gfx_StringSetPosition(0x48, 0x103);
             Gfx_StringDraw(D_8002B4C0[33], 0x20);
             Gfx_StringSetPosition(0x106, 0x103);
-            Gfx_StringSetColor(g_RankingTextColors.killPercentages);
+            Gfx_StringSetColor(g_Ranking_TextColors.killPercentages);
             Gfx_StringDraw(g_Credits_Digits.f3, 5);
         }
 
@@ -716,7 +716,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x18, 0x124);
         Gfx_StringDraw(D_8002B4C0[25], 0x14);
 
-        if (g_RankingScore >= 0x64)
+        if (g_Ranking_Score >= 0x64)
         {
             Gfx_StringSetColor(0);
         }
@@ -725,8 +725,8 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringSetColor(StringColorId_White);
         }
 
-        temp_v1 = g_RankingScore / 10;
-        temp_a0 = g_RankingScore % 10;
+        temp_v1 = g_Ranking_Score / 10;
+        temp_a0 = g_Ranking_Score % 10;
 
         if (temp_v1 != 0 && temp_a0 == 0)
         {
@@ -778,7 +778,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
             poly = (POLY_G4*)GsOUT_PACKET_P;
             setPolyG4(poly);
 
-            switch (g_RankingGameDifficulty)
+            switch (g_Ranking_GameDifficulty)
             {
                 case -1:
                     setRGB1(poly, -0x80 - (i << 7), -0x40 - i * 0xC0, 0);
