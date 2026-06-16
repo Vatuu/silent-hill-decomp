@@ -128,6 +128,6 @@ void GameFs_StfRollBinLoad(void);
 
 void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img);
 
-void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
+void func_8009185C(s16 arg0, s16 arg1, s32 arg2, q19_12 arg3, q19_12 arg4, q19_12 arg5, q19_12 arg6, q19_12 arg7, s32 arg8, s32 arg9);
 
 #endif

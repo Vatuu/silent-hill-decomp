@@ -560,12 +560,12 @@ bool func_801E3970(void) // 0x801E3970
     animateKcet = false;
     isFinished  = false;
 
-    vBlank = Q12_MULT_PRECISE(D_800C48F0, 0x1000);
+    vBlank = Q12_MULT_PRECISE(D_800C48F0, Q12(1.0f));
 
     temp_a2    = D_801E5E84;
     lineHeight = D_801E5E7C;
 
-    lineIdx = (vBlank - 0x198) * D_801E5E80;
+    lineIdx = (vBlank - 408) * D_801E5E80;
     lineIdx = lineIdx >> 16;
     if (lineIdx < 0)
     {
@@ -774,13 +774,15 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
 
     j       = 0;
     var_s4  = 0;
-    temp_t1 = arg0 + 0x1E0;
-    sp1C    = 0xffffff;
+    temp_t1 = arg0 + 480;
+    sp1C    = 0xFFFFFF;
     temp_t6 =
-    sp28    = temp_t1 << 0x10;
+    sp28    = temp_t1 << 16;
     sp2C    = temp_t6 + 0x200000;
 
-    for (; j < 16; j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 32)
+    for (;
+         j < 16;
+         j++, var_s4 -= 16, sp28 += 0xFFE00000, sp2C += 0xFFE00000, temp_t1 -= 32)
     {
         ptr2 = D_801E5FF8;
 
@@ -788,7 +790,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
         bufB = bufA;
         bufA = ptr;
 
-        ptr = D_801E5E90 + j * 20;
+        ptr = D_801E5E90 + (j * 20);
 
         var_a1_2 = (s32*)D_801E5FF8;
         var_a0   = (s32*)ptr;
@@ -810,7 +812,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
 
         for (i = 16; i > 0; i--)
         {
-            s16 var = 0x1000;
+            q3_12 var = Q12(1.0f);
 
             temp_v1_2 = var_a1;
 
@@ -845,7 +847,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
             var_a1_2[i * 5] = var_a0_2[i * 5];
         }
 
-        if (temp_t1 >= 0x1E0)
+        if (temp_t1 >= 480)
         {
             continue;
         }
@@ -1000,15 +1002,15 @@ void Credits_TextDraw(char* str) // 0x801E4394
     strPtr     = str;
     textX      = g_CreditTextState.textX;
     textY      = g_CreditTextState.textY;
-    leftMargin    = g_CreditTextState.leftMargin;
-    lineHeight      = g_CreditTextState.lineHeight;
+    leftMargin = g_CreditTextState.leftMargin;
+    lineHeight = g_CreditTextState.lineHeight;
     widthTable = g_CreditTextState.widthTable;
     colorTable = g_CreditTextState.colorTable;
     packet     = GsOUT_PACKET_P;
     blendFlag  = (u8)g_CreditTextState.semiTrans;
     charCode   = *strPtr;
-    colorCode  = g_CreditTextState.color | (blendFlag << 25); // RBG + code + semi-transparency flag.
-    clut       = (u16)g_CreditTextState.clut;               // Clut Y, clut Y.
+    colorCode  = g_CreditTextState.color | (blendFlag << 25);  // RBG + code + semi-transparency flag.
+    clut       = (u16)g_CreditTextState.clut;                  // Clut Y, clut Y.
     ot         = &g_OtTags0[g_ActiveBufferIdx][6];
 
     while (charCode != 0)
@@ -1054,7 +1056,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
             else if (charCode >= 184 && charCode < 191)
             {
                 addPrimFast(ot, sprite16, 3);
-                *(u32*)(&sprite16->r0) = colorCode ^ (0x18 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
+                *(u32*)(&sprite16->r0) = colorCode ^ (24 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
                 idx                     = charCode - 184;
@@ -1106,7 +1108,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
         {
             // Newline.
             case '\n':
-                textX = leftMargin;
+                textX  = leftMargin;
                 textY += lineHeight;
                 break;
 
@@ -1141,7 +1143,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
 
     g_CreditTextState.textX = textX;
     g_CreditTextState.textY = textY;
-    GsOUT_PACKET_P     = packet + sizeof(DR_TPAGE);
+    GsOUT_PACKET_P          = packet + sizeof(DR_TPAGE);
 }
 
 void Credits_Text3dPositionSet(s32 arg0, s32 arg1) // 0x801E47E0
@@ -1171,7 +1173,7 @@ void Credits_Text3dPositionSet(s32 arg0, s32 arg1) // 0x801E47E0
         temp_lo_3 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo)) >> 2;
         temp_lo_3 = temp_t1 / temp_lo_3;
 
-        temp_t2   = arg1 + 0x18;
+        temp_t2   = arg1 + 24;
         temp_lo_4 = temp_t2 * g_CreditText3dState.field_3C;
         temp_lo_6 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, temp_lo_4)) >> 2;
         temp_lo_6 = temp_t1 / temp_lo_6;
@@ -1230,13 +1232,13 @@ void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
         maskedField_18  = g_CreditText3dState.sub_0.uv;
         shiftedField_18 = (maskedField_18 << 4) & 0x100;
 
-        maskedField_18 &= 0xF;
+        maskedField_18   &= 0xF;
         shiftedField_18 >>= 4;
 
-        shiftedArg1 = arg1 & 3;
+        shiftedArg1   = arg1 & 0x3;
         shiftedArg1 <<= 5;
-        shiftedArg1 |= shiftedField_18;
-        shiftedArg1 |= (u8)maskedField_18;
+        shiftedArg1  |= shiftedField_18;
+        shiftedArg1  |= (u8)maskedField_18;
 
         g_CreditText3dState.sub_0.tpage = shiftedArg1;
     }
@@ -1247,18 +1249,18 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     PACKET* packet;
     GsOT*   ot;
 
-    s32 textX   = g_CreditText3dState.sub_0.textX;
-    s32 textY   = g_CreditText3dState.sub_0.textY;
+    s32 textX      = g_CreditText3dState.sub_0.textX;
+    s32 textY      = g_CreditText3dState.sub_0.textY;
     s32 leftMargin = g_CreditText3dState.sub_0.leftMargin;
-    s32 lineHeight   = g_CreditText3dState.sub_0.lineHeight;
+    s32 lineHeight = g_CreditText3dState.sub_0.lineHeight;
     u32 colorCode;
 
-    s32 var_a3 = g_CreditText3dState.field_40;
-    s32 var_t3 = g_CreditText3dState.field_44;
-    s32 var_t7 = g_CreditText3dState.field_48;
-    s32 var_t6 = g_CreditText3dState.field_4C;
-    s32 var_t4 = g_CreditText3dState.field_50;
-    s32 var_t5 = g_CreditText3dState.field_54;
+    q19_12 var_a3 = g_CreditText3dState.field_40;
+    q19_12 var_t3 = g_CreditText3dState.field_44;
+    q19_12 var_t7 = g_CreditText3dState.field_48;
+    q19_12 var_t6 = g_CreditText3dState.field_4C;
+    q19_12 var_t4 = g_CreditText3dState.field_50;
+    q19_12 var_t5 = g_CreditText3dState.field_54;
 
     u32       clut       = (u16)g_CreditText3dState.sub_0.clut;
     u32       tPage      = g_CreditText3dState.sub_0.tpage;
@@ -1300,28 +1302,28 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     {
         poly = (POLY_FT4*)packet;
 
-        var_t0 = (charCode - 0xA0) < 0x10u | (charCode - 0xB8 < 7u) << 1;
+        var_t0 = (charCode - 160) < 0x10u | ((charCode - 184) < 7u) << 1;
 
         // Map KCET font to normal.
         if (var_t0 != 0)
         {
             if (var_t0 == 1)
             {
-                charCode = D_801E5E5C[charCode - 0xA0];
+                charCode = D_801E5E5C[charCode - 160];
             }
             else
             {
-                charCode = D_801E5E6C[charCode - 0xB8];
+                charCode = D_801E5E6C[charCode - 184];
             }
         }
 
         charWidth = widthTable[charCode];
 
         // Normal font.
-        if (charCode >= 0x21 && charCode < 0x85)
+        if (charCode >= 33 && charCode < 133)
         {
             s32 offset         = 24 * 256;
-            idx                = charCode - 0x21;
+            idx                = charCode - 33;
             temp               = idx / 10;
             idx                = idx % 10;
             idx                = idx * 24;
@@ -1363,7 +1365,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             colorCode = colorTable[charCode - 1] | ((u8)g_CreditText3dState.sub_0.semiTrans << 25);
         }
         // Change font width table?
-        else if (charCode >= 0xD0 && charCode < 0xD8)
+        else if (charCode >= 208 && charCode < 216)
         {
             widthSum = 0;
             scanPtr  = str + 1;
@@ -1371,23 +1373,23 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             {
                 s32 var  = 8;
                 nextChar = *scanPtr++;
-                if (nextChar == (charCode + 8) || nextChar == charCode || nextChar == 0xA || nextChar == 0xD || nextChar == 0xC)
+                if (nextChar == (charCode + 8) || nextChar == charCode || nextChar == 10 || nextChar == 13 || nextChar == 12)
                 {
                     break;
                 }
 
-                if ((nextChar - 0xF0) >= var && (nextChar - 0xF8) >= 8u && (nextChar - 0xE0) >= 8u && (nextChar - 0xE8) >= 8u)
+                if ((nextChar - 240) >= var && (nextChar - 248) >= 8u && (nextChar - 224) >= 8u && (nextChar - 232) >= 8u)
                 {
-                    var_t0 = (nextChar >= 0xA0 && nextChar < 0xB0) | (nextChar >= 0xB8 && nextChar < 0xBF) << 1;
-                    if (var_t0 != 0) // map kcet font to normal
+                    var_t0 = (nextChar >= 160 && nextChar < 176) | (nextChar >= 184 && nextChar < 191) << 1;
+                    if (var_t0 != 0) // Map KCET font to normal.
                     {
                         if (var_t0 == 1)
                         {
-                            nextChar = D_801E5E5C[nextChar - 0xA0];
+                            nextChar = D_801E5E5C[nextChar - 160];
                         }
                         else
                         {
-                            nextChar = D_801E5E6C[nextChar - 0xB8];
+                            nextChar = D_801E5E6C[nextChar - 184];
                         }
                         widthSum += (widthTable[nextChar] * 2) / 3;
                     }
@@ -1412,14 +1414,14 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
         {
             // Newline.
             case '\n':
-                textX = leftMargin;
-                textY += lineHeight;
+                textX        = leftMargin;
+                textY       += lineHeight;
                 textYChanged = true;
                 break;
 
             // Vertical tab.
             case '\v':
-                textY += lineHeight;
+                textY       += lineHeight;
                 textYChanged = true;
                 break;
 
@@ -1438,19 +1440,19 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
                 break;
 
             default:
-                textX += charWidth;
+                textX       += charWidth;
                 textXChanged = true;
                 break;
         }
 
         if (textYChanged)
         {
-            temp_a1_2 = g_CreditText3dState.field_24 << 0x16;
+            temp_a1_2 = g_CreditText3dState.field_24 << 22;
 
             temp_lo_3 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textY * g_CreditText3dState.field_3C)) >> 2;
             temp_lo_3 = temp_a1_2 / temp_lo_3;
 
-            temp_lo_6 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 0x18) * g_CreditText3dState.field_3C)) >> 2;
+            temp_lo_6 = (g_CreditText3dState.field_30 + (s32)Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 24) * g_CreditText3dState.field_3C)) >> 2;
             temp_lo_6 = temp_a1_2 / temp_lo_6;
 
             temp_v0_5 = g_CreditText3dState.field_28 + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textX * g_CreditText3dState.field_34);
@@ -1466,7 +1468,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             temp_v0_7 = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, textY * g_CreditText3dState.field_38);
             var_t4    = Q12_MULT_PRECISE(temp_lo_3, temp_v0_7);
 
-            temp_a0_4 = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 0x18) * g_CreditText3dState.field_38);
+            temp_a0_4 = g_CreditText3dState.field_2C + Q12_MULT_PRECISE(g_CreditText3dState.field_1C, (textY + 24) * g_CreditText3dState.field_38);
             var_t5    = Q12_MULT_PRECISE(temp_lo_6, temp_a0_4);
         }
         else if (textXChanged)
@@ -1479,13 +1481,13 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
         charCode = *str;
     }
 
-    GsOUT_PACKET_P      = packet;
-    g_CreditText3dState.sub_0.textX  = textX;
-    g_CreditText3dState.sub_0.textY  = textY;
-    g_CreditText3dState.field_40 = var_a3;
-    g_CreditText3dState.field_44 = var_t3;
-    g_CreditText3dState.field_48 = var_t7;
-    g_CreditText3dState.field_4C = var_t6;
-    g_CreditText3dState.field_50 = var_t4;
-    g_CreditText3dState.field_54 = var_t5;
+    GsOUT_PACKET_P                  = packet;
+    g_CreditText3dState.sub_0.textX = textX;
+    g_CreditText3dState.sub_0.textY = textY;
+    g_CreditText3dState.field_40    = var_a3;
+    g_CreditText3dState.field_44    = var_t3;
+    g_CreditText3dState.field_48    = var_t7;
+    g_CreditText3dState.field_4C    = var_t6;
+    g_CreditText3dState.field_50    = var_t4;
+    g_CreditText3dState.field_54    = var_t5;
 }

@@ -31,15 +31,15 @@ typedef struct
     /* 0x28 */ s32        field_28;
     /* 0x2C */ s32        field_2C;
     /* 0x30 */ s32        field_30;
-    /* 0x34 */ s32        field_34;
-    /* 0x38 */ s32        field_38;
-    /* 0x3C */ s32        field_3C;
-    /* 0x40 */ s32        field_40;
-    /* 0x44 */ s32        field_44;
-    /* 0x48 */ s32        field_48;
-    /* 0x4C */ s32        field_4C;
-    /* 0x50 */ s32        field_50;
-    /* 0x54 */ s32        field_54;
+    /* 0x34 */ q19_12     field_34;
+    /* 0x38 */ q19_12     field_38;
+    /* 0x3C */ q19_12     field_3C;
+    /* 0x40 */ q19_12     field_40;
+    /* 0x44 */ q19_12     field_44;
+    /* 0x48 */ q19_12     field_48;
+    /* 0x4C */ q19_12     field_4C;
+    /* 0x50 */ q19_12     field_50;
+    /* 0x54 */ q19_12     field_54;
 } s_CreditText3dState;
 STATIC_ASSERT_SIZEOF(s_CreditText3dState, 0x58);
 
