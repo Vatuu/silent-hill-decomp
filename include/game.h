@@ -667,4 +667,50 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateSteps[0] = 0;
 }
 
+static inline s32 Game_StateStepSet(s32 stepIdx, s32 stateStep)
+{
+    s32 step;
+
+    if (stepIdx == 0)
+    {
+        step = g_GameWork.gameStateSteps[0] = stateStep;
+        g_SysWork.counters_1C[1]     = 0;
+        g_GameWork.gameStateSteps[1] = 0;
+        g_GameWork.gameStateSteps[2] = 0;
+    }
+    else if (stepIdx == 1)
+    {
+        step = g_GameWork.gameStateSteps[1] = stateStep;
+        g_GameWork.gameStateSteps[2] = 0;
+    }
+    else
+    {
+        step = g_GameWork.gameStateSteps[2] = stateStep;
+    }
+
+    return step;
+}
+
+static inline void Game_StateStepIncrement(s32 stepIdx)
+{    
+    if(stepIdx == 0)
+    {
+        s32 step = g_GameWork.gameStateSteps[0];
+
+        g_SysWork.counters_1C[1]     = 0;
+        g_GameWork.gameStateSteps[1] = 0;
+        g_GameWork.gameStateSteps[2] = 0;
+        g_GameWork.gameStateSteps[0] = step + 1;
+    }
+    else if(stepIdx == 1)
+    {
+        g_GameWork.gameStateSteps[1]++;
+        g_GameWork.gameStateSteps[2] = 0;
+    }
+    else
+    {
+        g_GameWork.gameStateSteps[2]++;
+    }
+}
+
 #endif

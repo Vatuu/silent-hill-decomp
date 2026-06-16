@@ -2457,8 +2457,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             {
                 if (Fs_QueueGetLength() == 0)
                 {
-                    g_GameWork.gameStateSteps[1] = 14;
-                    g_GameWork.gameStateSteps[2] = 0;
+                    Game_StateStepSet(1, 14);
                 }
             }
             break;
@@ -2474,9 +2473,8 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 {
                     g_Inventory_ScrollTransitionTimer = 0;
                     g_Inventory_SelectionBordersDraw  = 0;
-                    g_GameWork.gameStateSteps[1]      = 15;
-                    g_GameWork.gameStateSteps[2]      = 0;
-                    D_800AE190                        = 0;
+                    Game_StateStepSet(1, 15);
+                    D_800AE190 = 0;
                 }
             }
             break;

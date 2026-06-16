@@ -331,6 +331,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 MemCard_SysDisable();
 
+                // TODO: `Game_StateSetNext`? Doesn't match.
                 prevState                    = g_GameWork.gameState;
                 g_GameWork.gameStateSteps[0] = prevState;
                 g_GameWork.gameState         = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];

@@ -235,10 +235,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             g_IntervalVBlanks = 1;
             ScreenFade_Start(true, true, false);
 
-            g_GameWork.gameStateSteps[0] = 2;
-            g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(0, 2);
             break;
 
         case 2:
@@ -297,10 +294,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                     ScreenFade_Start(true, false, false);
                 }
 
-                g_GameWork.gameStateSteps[0] = 4;
-                g_SysWork.counters_1C[1]        = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, 4);
                 break;
             }
 
@@ -336,10 +330,8 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             ScreenFade_Start(true, false, false);
 
                             screenPosX                   = NO_VALUE;
-                            g_GameWork.gameStateSteps[0] = 3;
-                            g_SysWork.counters_1C[1]        = 0;
-                            g_GameWork.gameStateSteps[1] = 0;
-                            g_GameWork.gameStateSteps[2] = 0;
+                            
+                            Game_StateStepSet(0, 3);
                             break;
                         }
                     }
@@ -354,10 +346,8 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             ScreenFade_Start(true, false, false);
 
                             screenPosX                   = NO_VALUE;
-                            g_GameWork.gameStateSteps[0] = 3;
-                            g_SysWork.counters_1C[1]        = 0;
-                            g_GameWork.gameStateSteps[1] = 0;
-                            g_GameWork.gameStateSteps[2] = 0;
+
+                            Game_StateStepSet(0, 3);
                             break;
                         }
                     }
@@ -382,10 +372,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 
                 SD_Call(Sfx_MenuMap);
 
-                g_GameWork.gameStateSteps[0] = 1;
-                g_SysWork.counters_1C[1]        = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, 1);
                 break;
             }
 
@@ -407,10 +394,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             Fs_QueueWaitForEmpty();
             ScreenFade_Start(true, true, false);
 
-            g_GameWork.gameStateSteps[0] = 2;
-            g_SysWork.counters_1C[1]        = 0;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(0, 2);
             break;
 
         case 4:

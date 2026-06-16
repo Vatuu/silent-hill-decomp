@@ -155,10 +155,7 @@ void GameState_Credits_Update(void) // 0x801E3094
     D_800C48F0 += g_VBlanks;
     if (funcs[g_GameWork.gameStateSteps[0]]())
     {
-        g_SysWork.counters_1C[1]     = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
-        g_GameWork.gameStateSteps[0]++;
+        Game_StateStepIncrement(0);
     }
 }
 
@@ -217,12 +214,16 @@ bool func_801E3124(void) // 0x801E3124
         case 3:
             D_801E5E74--;
 
-            if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < AudioStreamingState_VabPlaying) // `== AudioStreamingState_None || == AudioStreamingState_XaPlaying`
+            if (D_801E5E74 <= 0)
             {
-                g_GameWork.background2dColor.r = 0;
-                g_GameWork.background2dColor.g = 0;
-                g_GameWork.background2dColor.b = 0;
-                return true;
+                u8 audioState = Sd_AudioStreamingCheck();
+                if (audioState == AudioStreamingState_None || audioState == AudioStreamingState_XaPlaying)
+                {
+                    g_GameWork.background2dColor.r = 0;
+                    g_GameWork.background2dColor.g = 0;
+                    g_GameWork.background2dColor.b = 0;
+                    return true;
+                }
             }
 
             break;

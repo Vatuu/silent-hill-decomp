@@ -443,22 +443,7 @@ void func_8003943C(void) // 0x8003943C
 
 void SysState_StatusMenu_Update(void) // 0x80039568
 {
-    e_GameState gameState;
-
-    gameState = g_GameWork.gameState;
-
-    g_GameWork.gameState = GameState_LoadStatusScreen;
-    g_SysWork.counters_1C[0] = 0;
-    g_SysWork.counters_1C[1] = 0;
-
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-
-    SysWork_StateSetNext(SysState_Gameplay);
-
-    g_GameWork.gameStateSteps[0] = gameState;
-    g_GameWork.gameStatePrev    = gameState;
-    g_GameWork.gameStateSteps[0] = 0;
+    Game_StateSetNext(GameState_LoadStatusScreen);
 }
 
 void GameState_LoadStatusScreen_Update(void) // 0x800395C0
@@ -791,8 +776,6 @@ void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 
 void SysState_SaveMenu_Update(void) // 0x8003A230
 {
-    s32 gameState;
-
     MemCard_ElementsUpdate();
 
     switch (g_SysWork.sysStateSteps[0])
@@ -826,21 +809,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 
                 func_8003943C();
 
-                gameState = g_GameWork.gameState;
-
-                g_GameWork.gameState = GameState_SaveScreen;
-
-                g_SysWork.counters_1C[0] = 0;
-                g_SysWork.counters_1C[1] = 0;
-
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
-
-                SysWork_StateSetNext(SysState_Gameplay);
-
-                g_GameWork.gameStateSteps[0] = gameState;
-                g_GameWork.gameStatePrev     = gameState;
-                g_GameWork.gameStateSteps[0] = 0;
+                Game_StateSetNext(GameState_SaveScreen);
             }
             break;
     }

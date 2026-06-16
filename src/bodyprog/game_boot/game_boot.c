@@ -29,16 +29,6 @@
 // WORLD/ROOM INITIALIZATION PROCESS
 // ========================================
 
-static inline void Game_StateStepIncrement(void) // TODO: Move to header?
-{
-    s32 gameStateSteps0 = g_GameWork.gameStateSteps[0];
-
-    g_SysWork.counters_1C[1]     = 0;
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-    g_GameWork.gameStateSteps[0] = gameStateSteps0 + 1;
-}
-
 void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 {
     bzero(&g_CharaModelAnimsData[1], 72);
@@ -110,10 +100,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 {
                     GameBoot_MapLoad(g_SavegamePtr->mapIdx);
 
-                    g_GameWork.gameStateSteps[0] = 2;
-                    g_SysWork.counters_1C[1]     = 0;
-                    g_GameWork.gameStateSteps[1] = 0;
-                    g_GameWork.gameStateSteps[2] = 0;
+                    Game_StateStepSet(0, 2);
                     break;
                 }
 
@@ -135,10 +122,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             {
                 Demo_PlayDataRead();
 
-                g_GameWork.gameStateSteps[0] = 3;
-                g_SysWork.counters_1C[1]     = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, 3);
             }
             break;
 
@@ -195,7 +179,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
         case 8:
             if (Ipd_ChunkInitCheck())
             {
-                Game_StateStepIncrement();
+                Game_StateStepIncrement(0);
             }
             break;
 
@@ -203,7 +187,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             if (!Bgm_Init())
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
-                Game_StateStepIncrement();
+                Game_StateStepIncrement(0);
             }
             break;
 
@@ -216,7 +200,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
 
             if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || !Sd_AmbientSfxInit())
             {
-                Game_StateStepIncrement();
+                Game_StateStepIncrement(0);
             }
             break;
 

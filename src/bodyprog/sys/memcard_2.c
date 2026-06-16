@@ -480,8 +480,7 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
             g_SelectedSaveSlotIdx = 0;
         }
 
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
+        Game_StateStepSet(1, 0);
     }
     
     switch (memCardStatus3)

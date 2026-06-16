@@ -53,7 +53,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 if (g_Controller0->heldBtnFlags != 0 || g_SysWork.counters_1C[0] > 180)
                 {
                     ScreenFade_Start(false, false, false);
-                    g_ScreenFadeTimestep            = Q12(0.2f);
+                    g_ScreenFadeTimestep         = Q12(0.2f);
                     g_GameWork.gameStateSteps[0] = KonamiLogoStateStep_FinishAfterFade;
                 }
                 break;
@@ -222,10 +222,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
-                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, KcetLogoStateStep_LogoDelay);
                 break;
 
             case KcetLogoStateStep_NoMemCardFreeSpace:
@@ -237,10 +234,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_StreamBinLoad();
                 nextGameState = GameState_MovieIntroFadeIn;
 
-                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, KcetLogoStateStep_LogoDelay);
                 break;
 
             case KcetLogoStateStep_NoSaveGame:
@@ -248,10 +242,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 GameFs_TitleGfxSeek();
                 nextGameState = GameState_MovieIntro;
 
-                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, KcetLogoStateStep_LogoDelay);
                 break;
 
             case KcetLogoStateStep_HasSavegame:
@@ -261,14 +252,12 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     {
                         case 0:
                             MemCard_ProcessSet(MemCardProcess_Load_Game, g_SelectedDeviceId, 0, 0);
-                            g_GameWork.gameStateSteps[2] = 0;
-                            g_GameWork.gameStateSteps[1]++;
+                            Game_StateStepIncrement(1);
 
                         case 1:
                             if (MemCard_LastMemCardResultGet() != MemCardResult_Success)
                             {
-                                g_GameWork.gameStateSteps[2] = 0;
-                                g_GameWork.gameStateSteps[1]++;
+                                Game_StateStepIncrement(1);
                             }
                             break;
 
@@ -286,8 +275,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                                 nextGameState = GameState_MovieIntro;
                             }
 
-                            g_GameWork.gameStateSteps[2] = 0;
-                            g_GameWork.gameStateSteps[1]++;
+                            Game_StateStepIncrement(1);
                             break;
                     }
 
@@ -296,10 +284,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     VSync(SyncMode_Wait);
                 }
 
-                g_GameWork.gameStateSteps[0] = KcetLogoStateStep_LogoDelay;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, KcetLogoStateStep_LogoDelay);
                 break;
 
             case KcetLogoStateStep_LogoDelay:
@@ -344,6 +329,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 #endif
                     Fs_QueueWaitForEmpty();
 
+                    // TODO: `Game_StateSetPrevious()`? Doesn't match.
                     g_SysWork.counters_1C[0] = 0;
                     g_SysWork.counters_1C[1] = 0;
 

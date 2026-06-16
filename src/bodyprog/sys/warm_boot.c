@@ -129,22 +129,8 @@ void Game_WarmBoot(void) // 0x80034264
     Fs_QueueWaitForEmpty();
     Joy_Update();
 
-    prevState                = g_GameWork.gameState;
-    g_GameWork.gameState = GameState_MainMenu;
-
-    g_SysWork.counters_1C[0] = 0;
-    g_SysWork.counters_1C[1] = 0;
-
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-
-    SysWork_StateSetNext(SysState_Gameplay);
+    Game_StateSetNext(GameState_MainMenu);
 
     ScreenFade_Start(true, true, false);
-
-    g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameStatePrev    = prevState;
-    g_GameWork.gameStateSteps[0] = 0;
-
     g_ScreenFadeTimestep = Q12(0.0f);
 }

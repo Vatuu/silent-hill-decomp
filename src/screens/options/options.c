@@ -119,28 +119,20 @@ void GameState_Options_Update(void) // 0x801E2D44
             }
 
             g_ExtraOptionsMenu_EntryCount = (g_GameWork.config.extraOptionsEnabled) ? 8 : 6;
-            g_GameWork.gameStateSteps[0]  = OptionsMenuState_MainOptions;
-            g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateSteps[1]  = 0;
-            g_GameWork.gameStateSteps[2]  = 0;
+
+            Game_StateStepSet(0, OptionsMenuState_MainOptions);
             break;
 
         case OptionsMenuState_LeaveScreenPos:
         case OptionsMenuState_LeaveBrightness:
         case OptionsMenuState_LeaveController:
-            g_GameWork.gameStateSteps[0] = OptionsMenuState_MainOptions;
-            g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(0, OptionsMenuState_MainOptions);
             break;
 
         case OptionsMenuState_EnterScreenPos:
             if (ScreenFade_IsFinished())
             {
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_ScreenPos;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_ScreenPos);
             }
             break;
 
@@ -153,11 +145,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             {
                 Fs_QueueWaitForEmpty();
 
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_Brightness;
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_Brightness;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_Brightness);
             }
             break;
 
@@ -169,11 +157,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             // Switch to controller binding menu.
             if (ScreenFade_IsFinished())
             {
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_Controller;
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_Controller;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_Controller);
             }
             break;
 
@@ -183,10 +167,8 @@ void GameState_Options_Update(void) // 0x801E2D44
 
         case OptionsMenuState_Leave:
             ScreenFade_Start(true, false, false);
-            g_GameWork.gameStateSteps[0] = OptionsMenuState_LeaveMainOptions;
-            g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+
+            Game_StateStepSet(0, OptionsMenuState_LeaveMainOptions);
             break;
 
         case OptionsMenuState_LeaveMainOptions:
@@ -215,11 +197,8 @@ void GameState_Options_Update(void) // 0x801E2D44
         case OptionsMenuState_EnterExtraOptions:
             if (ScreenFade_IsFinished())
             {
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_ExtraOptions;
-                g_SysWork.counters_1C[1]                = 0;
+                Game_StateStepSet(0, OptionsMenuState_ExtraOptions);
                 ScreenFade_Start(false, true, false);
-                g_GameWork.gameStateSteps[1]      = 0;
-                g_GameWork.gameStateSteps[2]      = 0;
                 g_Options_SelectionHighlightTimer = 0;
             }
             break;
@@ -227,10 +206,7 @@ void GameState_Options_Update(void) // 0x801E2D44
         case OptionsMenuState_LeaveExtraOptions:
             if (ScreenFade_IsFinished())
             {
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterMainOptions;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_EnterMainOptions);
                 ScreenFade_Start(false, true, false);
             }
             break;
@@ -290,10 +266,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         {
             Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
-            g_GameWork.gameStateSteps[0] = OptionsMenuState_Leave;
-            g_SysWork.counters_1C[1]              = 0;
-            g_GameWork.gameStateSteps[1] = 0;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(0, OptionsMenuState_Leave);
             return;
         }
 
@@ -452,10 +425,8 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         }
 
         ScreenFade_Start(true, false, false);
-        g_GameWork.gameStateSteps[0] = OptionsMenuState_LeaveExtraOptions;
-        g_SysWork.counters_1C[1]              = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
+        
+        Game_StateStepSet(0, OptionsMenuState_LeaveExtraOptions);
     }
 }
 
@@ -504,10 +475,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     {
         Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
-        g_GameWork.gameStateSteps[0] = OptionsMenuState_Leave;
-        g_SysWork.counters_1C[1]              = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
+        Game_StateStepSet(0, OptionsMenuState_Leave);
         return;
     }
 
@@ -537,10 +505,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             {
                 Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_Leave;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_Leave);
             }
             break;
 
@@ -552,10 +517,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
 
                 ScreenFade_Start(true, false, false);
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterController;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+
+                Game_StateStepSet(0, OptionsMenuState_EnterController);
             }
             break;
 
@@ -566,10 +529,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_PlaySfx(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
 
                 ScreenFade_Start(true, false, false);
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterScreenPos;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+
+                Game_StateStepSet(0, OptionsMenuState_EnterScreenPos);
             }
             break;
 
@@ -587,10 +548,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 }
 
                 ScreenFade_Start(true, false, false);
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterBrightness;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_EnterBrightness);
             }
             break;
 
@@ -702,10 +660,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         Sd_PlaySfx(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
 
         ScreenFade_Start(true, false, false);
-        g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterExtraOptions;
-        g_SysWork.counters_1C[1]              = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
+        Game_StateStepSet(0, OptionsMenuState_EnterExtraOptions);
     }
 
     // Reset selection cursor.
@@ -1447,12 +1402,10 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
         case ScreenPosMenuState_0:
             ScreenFade_Start(true, true, false);
             screenPosMenu_BackgroundFade  = 255;
-            g_GameWork.gameStateSteps[1] = ScreenPosMenuState_1;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(1, ScreenPosMenuState_1);
 
         case ScreenPosMenuState_1:
-            g_GameWork.gameStateSteps[2] = 0;
-            g_GameWork.gameStateSteps[1]++;
+            Game_StateStepIncrement(1);
             break;
 
         case ScreenPosMenuState_2:
@@ -1499,8 +1452,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
                 Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
                 ScreenFade_Start(true, false, false);
-                g_GameWork.gameStateSteps[2] = 0;
-                g_GameWork.gameStateSteps[1]++;
+                Game_StateStepIncrement(1);
             }
             break;
 
@@ -1509,10 +1461,9 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             if (ScreenFade_IsFinished())
             {
                 ScreenFade_Start(true, true, false);
-                g_GameWork.gameStateSteps[0]    = OptionsMenuState_LeaveScreenPos;
-                g_SysWork.counters_1C[1]                 = 0;
-                g_GameWork.gameStateSteps[1]    = 0;
-                g_GameWork.gameStateSteps[2]    = 0;
+
+                Game_StateStepSet(0, OptionsMenuState_LeaveScreenPos);
+
                 g_GameWork.background2dColor.r = 0;
                 g_GameWork.background2dColor.g = 0;
                 g_GameWork.background2dColor.b = 0;
@@ -1741,15 +1692,13 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
     {
         case BrightnessMenuState_0:
             // Entry.
-            g_GameWork.gameStateSteps[1] = BrightnessMenuState_1;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(1, BrightnessMenuState_1);
             break;
 
         case BrightnessMenuState_1:
             // Set fade.
             ScreenFade_Start(true, true, false);
-            g_GameWork.gameStateSteps[1] = BrightnessMenuState_2;
-            g_GameWork.gameStateSteps[2] = 0;
+            Game_StateStepSet(1, BrightnessMenuState_2);
             break;
 
         case BrightnessMenuState_2:
@@ -1785,8 +1734,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 }
 
                 ScreenFade_Start(true, false, false);
-                g_GameWork.gameStateSteps[1]++;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepIncrement(1);
             }
             break;
 
@@ -1798,10 +1746,8 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                  (g_Screen_FadeStatus & (1 << 0)))
             {
                 ScreenFade_Start(true, true, false);
-                g_GameWork.gameStateSteps[0]   = OptionsMenuState_LeaveBrightness;
-                g_SysWork.counters_1C[1]       = 0;
-                g_GameWork.gameStateSteps[1]   = 0;
-                g_GameWork.gameStateSteps[2]   = 0;
+                Game_StateStepSet(0, OptionsMenuState_LeaveBrightness);
+
                 g_GameWork.background2dColor.r = 0;
                 g_GameWork.background2dColor.g = 0;
                 g_GameWork.background2dColor.b = 0;
@@ -2137,27 +2083,23 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                 SD_Call(Sfx_MenuCancel);
 
                 ScreenFade_Start(false, false, false);
-                g_GameWork.gameStateSteps[1] = ControllerMenuState_Leave;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(1, ControllerMenuState_Leave);
                 break;
             }
 
             // Move selection cursor up/down.
             if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickUp)
             {
-                g_GameWork.gameStateSteps[1] = ControllerMenuState_Type3;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(1, ControllerMenuState_Type3);
             }
             else if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickDown)
             {
-                g_GameWork.gameStateSteps[1] = ControllerMenuState_Type1;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(1, ControllerMenuState_Type1);
             }
             // Move selection cursor left/right.
             else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
-                g_GameWork.gameStateSteps[1] = ControllerMenuState_Actions;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(1, ControllerMenuState_Actions);
             }
             break;
 
@@ -2176,8 +2118,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             else if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.cancel)
             {
                 SD_Call(Sfx_MenuCancel);
-                g_GameWork.gameStateSteps[1] = ControllerMenuState_Exit;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(1, ControllerMenuState_Exit);
             }
             // Move selection cursor.
             else
@@ -2185,19 +2126,16 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
                 // Move selection cursor up/down.
                 if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickUp)
                 {
-                    g_GameWork.gameStateSteps[1] = (g_GameWork.gameStateSteps[1] - 1) & 3;
-                    g_GameWork.gameStateSteps[2] = 0;
+                    Game_StateStepSet(1, (g_GameWork.gameStateSteps[1] - 1) & 3); // % 4
                 }
                 else if (g_Controller0->pulsedGuiBtnFlags & ControllerFlag_LStickDown)
                 {
-                    g_GameWork.gameStateSteps[1] = (g_GameWork.gameStateSteps[1] + 1) & 3;
-                    g_GameWork.gameStateSteps[2] = 0;
+                    Game_StateStepSet(1, (g_GameWork.gameStateSteps[1] + 1) & 3); // % 4
                 }
                 // Move selection cursor left/right.
                 else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
                 {
-                    g_GameWork.gameStateSteps[1] = ControllerMenuState_Actions;
-                    g_GameWork.gameStateSteps[2] = 0;
+                    Game_StateStepSet(1, ControllerMenuState_Actions);
                 }
             }
             break;
@@ -2231,8 +2169,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             // Move selection cursor left/right.
             else if (g_Controller0->pulsedGuiBtnFlags & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
-                g_GameWork.gameStateSteps[2] = 0;
-                g_GameWork.gameStateSteps[1] = selectedEntries.preset;
+                Game_StateStepSet(1, selectedEntries.preset);
             }
             // Bind button to input action.
             else
@@ -2246,10 +2183,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             if (ScreenFade_IsFinished())
             {
                 ScreenFade_Start(true, true, false);
-                g_GameWork.gameStateSteps[0] = OptionsMenuState_LeaveController;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
+                Game_StateStepSet(0, OptionsMenuState_LeaveController);
             }
             break;
     }
