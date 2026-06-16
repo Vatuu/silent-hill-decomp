@@ -420,9 +420,9 @@ typedef struct _SysWork
     /* 0x8      */ e_SysState       sysState;
     /* 0xC      */ s32              sysStateSteps[3];     /** Temp data used by current `sysState`. Can be another state ID or other data. */
     /* 0x10     */ bool             isMgsStringSet;       /** Indicates if string have been loaded and is going (or it is) being display. */
-    /* 0x1C     */ s32              gameStateCounter;     /** Temporary frame counter for `g_GameWork.gameState`. Counter is reset when `gameState` is changed. */
-    /* 0x1C     */ s32              gameStateStepCounter; /** Temporary frame counter for `g_GameWork.gameStateSteps[0]`. Counter is reset when `gameStateSteps[0]` is changed. */
-    /* 0x24     */ s32              sysStateCounter;      /** Temporary frame counter for `sysState`. Counter is reset when `sysState` is changed. */
+    /* 0x1C     */ s32              gameStateCounter;     /** Frame counter for the current `g_GameWork.gameState`. Reset when `gameState` is changed. */
+    /* 0x1C     */ s32              gameStateStepCounter; /** Frame counter for the current `g_GameWork.gameStateSteps[0]`. Reset when `gameStateSteps[0]` is changed. */
+    /* 0x24     */ s32              sysStateCounter;      /** Frame counter for the current `sysState`. Reset when `sysState` is changed. */
     /* 0x28     */ q19_12           sysStateStepData[2];  /** Temporary data for `sysStateSteps[0]` and `sysStateSteps[1]`. Data of an index is cleared when that step index is changed. Usually holds a timer but can be other kinds of data too. */
     /* 0x30     */ s32              cutsceneBorderState;  /** `e_CutsceneBorderState` */
     /* 0x34     */ s8               unused_34[4];         /** @unused */
