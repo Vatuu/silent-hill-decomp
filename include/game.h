@@ -416,15 +416,16 @@ STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 /** @brief Main system workspace. Stores key engine data. */
 typedef struct _SysWork
 {
-    /* 0x0      */ s8               unused_0[8]; /** @unused */
+    /* 0x0      */ s8               unused_0[8];          /** @unused */
     /* 0x8      */ e_SysState       sysState;
-    /* 0xC      */ s32              sysStateSteps[3]; /** Temp data used by current `sysState`. Can be another state ID or other data. */
-    /* 0x10     */ bool             isMgsStringSet;   /** Indicates if string have been loaded and is going (or it is) being display. */
-    /* 0x1C     */ s32              gameStateStepCounters[2]; /** Temporary frame counters for `g_GameWork.gameStateSteps[0]` and `g_GameWork.gameStateSteps[1]`. Counter for an index is reset when that step index is changed. */
-    /* 0x24     */ s32              sysStateCounter; /** Temporary frame counter for `sysState`. Counter is reset when `sysState` is changed. */
-    /* 0x28     */ q19_12           sysStateStepData[2]; /** Temporary data for `sysStateSteps[0]` and `sysStateSteps[1]`. Data of an index is cleared when that step index is changed. Usually holds a timer but can be other kinds of data too. */
-    /* 0x30     */ s32              cutsceneBorderState; /** `e_CutsceneBorderState` */
-    /* 0x34     */ s8               unused_34[4]; /** @unused */
+    /* 0xC      */ s32              sysStateSteps[3];     /** Temp data used by current `sysState`. Can be another state ID or other data. */
+    /* 0x10     */ bool             isMgsStringSet;       /** Indicates if string have been loaded and is going (or it is) being display. */
+    /* 0x1C     */ s32              gameStateCounter;     /** Temporary frame counter for `g_GameWork.gameState`. Counter is reset when `gameState` is changed. */
+    /* 0x1C     */ s32              gameStateStepCounter; /** Temporary frame counter for `g_GameWork.gameStateSteps[0]`. Counter is reset when `gameStateSteps[0]` is changed. */
+    /* 0x24     */ s32              sysStateCounter;      /** Temporary frame counter for `sysState`. Counter is reset when `sysState` is changed. */
+    /* 0x28     */ q19_12           sysStateStepData[2];  /** Temporary data for `sysStateSteps[0]` and `sysStateSteps[1]`. Data of an index is cleared when that step index is changed. Usually holds a timer but can be other kinds of data too. */
+    /* 0x30     */ s32              cutsceneBorderState;  /** `e_CutsceneBorderState` */
+    /* 0x34     */ s8               unused_34[4];         /** @unused */
     /* 0x38     */ s_PlayerCombat   playerCombat;
     /* 0x4C     */ s_PlayerWork     playerWork;
     /* 0x1A0    */ s_SubCharacter   npcs[NPC_COUNT_MAX];
@@ -520,16 +521,16 @@ static inline void SysWork_StateStepIncrement(s32 stepIdx)
 {
     if (stepIdx == 0)
     {
-        g_SysWork.sysStateStepData[0]         = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[1] = 0;
-        g_SysWork.sysStateStepData[1]         = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[2] = 0;
+        g_SysWork.sysStateStepData[0] = 0;
+        g_SysWork.sysStateSteps[1]    = 0;
+        g_SysWork.sysStateStepData[1] = 0;
+        g_SysWork.sysStateSteps[2]    = 0;
         g_SysWork.sysStateSteps[0]++;
     }
     else if (stepIdx == 1)
     {
-        g_SysWork.sysStateStepData[1]         = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[2] = 0;
+        g_SysWork.sysStateStepData[1] = 0;
+        g_SysWork.sysStateSteps[2]    = 0;
         g_SysWork.sysStateSteps[1]++;
     }
     else
@@ -550,23 +551,23 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
 
     if (stepIdx == 0)
     {
-        step                        =
-        g_SysWork.sysStateSteps[0] = sysStateStep;
-        g_SysWork.sysStateStepData[0]          = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[1] = 0;
-        g_SysWork.sysStateStepData[1]          = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[2] = 0;
+        step                          =
+        g_SysWork.sysStateSteps[0]    = sysStateStep;
+        g_SysWork.sysStateStepData[0] = 0;
+        g_SysWork.sysStateSteps[1]    = 0;
+        g_SysWork.sysStateStepData[1] = 0;
+        g_SysWork.sysStateSteps[2]    = 0;
     }
     else if (stepIdx == 1)
     {
-        step                        =
-        g_SysWork.sysStateSteps[1] = sysStateStep;
-        g_SysWork.sysStateStepData[1]          = 0;//Q12(0.0f);
-        g_SysWork.sysStateSteps[2] = 0;
+        step                          =
+        g_SysWork.sysStateSteps[1]    = sysStateStep;
+        g_SysWork.sysStateStepData[1] = 0;
+        g_SysWork.sysStateSteps[2]    = 0;
     }
     else
     {
-        step                        =
+        step                       =
         g_SysWork.sysStateSteps[2] = sysStateStep;
     }
 
@@ -576,11 +577,11 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
 /** @brief Resets `sysStateStep` in `g_SysWork` for the next tick. */
 static inline void SysWork_StateStepReset()
 {
-    g_SysWork.sysStateSteps[0] = NO_VALUE;
-    g_SysWork.sysStateStepData[0]          = 0;//Q12(0.0f);
-    g_SysWork.sysStateSteps[1] = 0;
-    g_SysWork.sysStateStepData[1]          = 0;//Q12(0.0f);
-    g_SysWork.sysStateSteps[2] = 0;
+    g_SysWork.sysStateSteps[0]    = NO_VALUE;
+    g_SysWork.sysStateStepData[0] = 0;
+    g_SysWork.sysStateSteps[1]    = 0;
+    g_SysWork.sysStateStepData[1] = 0;
+    g_SysWork.sysStateSteps[2]    = 0;
 }
 
 /** @brief Sets an NPC flag in the `g_SysWork.npcFlags` bitfield.
@@ -610,7 +611,7 @@ static inline void SysWork_NpcFlagClear(s32 flagIdx)
  * @note Writing a step cascades a reset downward: changing a higher 
  * level invalidates the steps nested beneath it, so all levels lower
  * than `stepIdx` are reset to 0.
- * Setting [0] additionally clears the `gameStateStepCounters[1]` frame counter.
+ * Setting [0] additionally clears the `gameStateStepCounter` frame counter.
  *
  * @param stepIdx    The step index to set: 0, 1, or 2.
  * @param stateStep  New value for that index.
@@ -622,10 +623,11 @@ static inline s32 Game_StateStepSet(s32 stepIdx, s32 stateStep)
 
     if (stepIdx == 0)
     {
-        step = g_GameWork.gameStateSteps[0] = stateStep;
-        g_SysWork.gameStateStepCounters[1]     = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
+        step                           = 
+        g_GameWork.gameStateSteps[0]   = stateStep;
+        g_SysWork.gameStateStepCounter = 0;
+        g_GameWork.gameStateSteps[1]   = 0;
+        g_GameWork.gameStateSteps[2]   = 0;
     }
     else if (stepIdx == 1)
     {
@@ -649,7 +651,7 @@ static inline s32 Game_StateStepSet(s32 stepIdx, s32 stateStep)
  * @note Incrementing a step cascades a reset downward: changing a higher 
  * level invalidates the steps nested beneath it, so all levels lower
  * than `stepIdx` are reset to 0.
- * Incrementing [0] additionally clears the `gameStateStepCounters[1]` frame counter.
+ * Incrementing [0] additionally clears the `gameStateStepCounter` frame counter.
  *
  * @param stepIdx    The step index to increment: 0, 1, or 2.
  */
@@ -659,10 +661,10 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
     {
         s32 step = g_GameWork.gameStateSteps[0];
 
-        g_SysWork.gameStateStepCounters[1]     = 0;
-        g_GameWork.gameStateSteps[1] = 0;
-        g_GameWork.gameStateSteps[2] = 0;
-        g_GameWork.gameStateSteps[0] = step + 1;
+        g_SysWork.gameStateStepCounter = 0;
+        g_GameWork.gameStateSteps[1]   = 0;
+        g_GameWork.gameStateSteps[2]   = 0;
+        g_GameWork.gameStateSteps[0]   = step + 1;
     }
     else if(stepIdx == 1)
     {
@@ -680,7 +682,7 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
  * Records the outgoing state as `gameStatePrev`, sets `gameState` as the new 
  * state, and clears all state-steps for the new state to have a clean slate.
  *
- * `gameStateStepCounters[0]` and `[1]` are also cleared, and SysState is changed to
+ * `gameStateCounter` and `gameStateStepCounter` are also cleared, and SysState is changed to
  * `SysState_Gameplay`
  *
  * @note Changed from inline to macro to fix some stubborn functions.
@@ -694,7 +696,7 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
     \
     g_GameWork.gameStateSteps[0] = prevState; \
     g_GameWork.gameState = newGameState; \
-    g_SysWork.gameStateStepCounters[0] = 0; \
+    g_SysWork.gameStateCounter = 0; \
     g_GameWork.gameStatePrev = prevState; \
     \
     Game_StateStepSet(0, 0); \
@@ -707,7 +709,7 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
  * `gameStatePrev` value, and clears all state-steps for the new state to have a 
  * clean slate.
  *
- * @note `gameStateStepCounters[0]` and `[1]` are also cleared, and SysState is changed to
+ * @note `gameStateCounter` and `gameStateStepCounter` are also cleared, and SysState is changed to
  * `SysState_Gameplay`
  */
 #define Game_StateSetPrevious() \
@@ -717,7 +719,7 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
     \
     g_GameWork.gameStateSteps[0] = prevState; \
     g_GameWork.gameState = g_GameWork.gameStatePrev; \
-    g_SysWork.gameStateStepCounters[0] = 0; \
+    g_SysWork.gameStateCounter = 0; \
     g_GameWork.gameStatePrev = prevState; \
     \
     Game_StateStepSet(0, 0); \
@@ -730,7 +732,7 @@ static inline void Game_StateSetPreviousA()
     
     g_GameWork.gameStateSteps[0] = curState;
     g_GameWork.gameState = g_GameWork.gameStatePrev;
-    g_SysWork.gameStateStepCounters[0] = 0;
+    g_SysWork.gameStateCounter = 0;
     g_GameWork.gameStatePrev = curState;
     
     Game_StateStepSet(0, 0);

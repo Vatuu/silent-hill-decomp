@@ -103,7 +103,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             {
                 GameBoot_WorldStartup();
 
-                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounters[1] == 0)
+                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounter == 0)
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -239,7 +239,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             {
                 GameBoot_WorldStartup();
 
-                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounters[1] == 0)
+                if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounter == 0)
                 {
                     g_Demo_ReproducedCount++;
                 }
@@ -338,7 +338,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     if (g_Controller0->heldBtnFlags != 0)
     {
-        g_SysWork.gameStateStepCounters[1] = 0;
+        g_SysWork.gameStateStepCounter = 0;
     }
 
     if (!playInGameDemo)
@@ -346,7 +346,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         switch (g_GameWork.gameStateSteps[0])
         {
             case 1:
-                if (g_SysWork.gameStateStepCounters[1] > 1740)
+                if (g_SysWork.gameStateStepCounter > 1740)
                 {
                     GameFs_StreamBinLoad();
                     g_GameWork.gameStateSteps[0]++;

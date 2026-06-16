@@ -726,7 +726,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     ot1 = &g_OrderingTable2[g_ActiveBufferIdx];
     ot0 = &g_OrderingTable0[g_ActiveBufferIdx];
 
-    temp_v1 = g_SysWork.gameStateStepCounters[0] & 0x7F;
+    temp_v1 = g_SysWork.gameStateCounter & 0x7F; // `% 128`
 
     if (temp_v1 < 0x40)
     {
