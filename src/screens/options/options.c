@@ -174,21 +174,9 @@ void GameState_Options_Update(void) // 0x801E2D44
         case OptionsMenuState_LeaveMainOptions:
             if (ScreenFade_IsFinished())
             {
-                // TODO: Likely `Game_StateSetPrevious` inline, but `gameState`/`gameStatePrev` loads inside are switched?
-
+                // TODO: `Game_StateSetPrevious` won't work here? (also tried macro version of it)
                 e_GameState prevGameState = g_GameWork.gameStatePrev;
-                e_GameState gameState     = g_GameWork.gameState;
-
-                g_SysWork.counters_1C[0]              = 0;
-                g_SysWork.counters_1C[1]              = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
-
-                SysWork_StateSetNext(SysState_Gameplay);
-
-                g_GameWork.gameStateSteps[0] = gameState;
-                g_GameWork.gameState         = prevGameState;
-                g_GameWork.gameStatePrev     = gameState;
+                Game_StateSetNext(prevGameState);
                 g_GameWork.gameStateSteps[0] = OptionsMenuState_EnterMainOptions;
             }
 

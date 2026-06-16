@@ -601,63 +601,6 @@ static inline void SysWork_NpcFlagClear(s32 flagIdx)
     CLEAR_FLAG(&g_SysWork.npcFlags, flagIdx);
 }
 
-/** @brief Sets the GameState to be used in the next tick & resets all stateSteps.
- *
- * Records the outgoing state as `gameStatePrev`, sets `gameState` as the new 
- * state, and clears all state-steps for the new state to have a clean slate.
- *
- * @note `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
- * `SysState_Gameplay`
- *
- * @param gameState  The new game state to enter.
- */
-static inline void Game_StateSetNext(e_GameState gameState)
-{
-    e_GameState prevState;
-
-    prevState = g_GameWork.gameState;
-
-    g_GameWork.gameState         = gameState;
-    g_SysWork.counters_1C[0]     = 0;
-    g_SysWork.counters_1C[1]     = 0;
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-
-    SysWork_StateSetNext(SysState_Gameplay);
-
-    g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameStatePrev     = prevState;
-    g_GameWork.gameStateSteps[0] = 0;
-}
-
- /** @brief Returns the GameState to the previously used state & resets all stateSteps.
- *
- * Records the outgoing state as `gameStatePrev`, sets `gameState` to the previous 
- * `gameStatePrev` value, and clears all state-steps for the new state to have a 
- * clean slate.
- *
- * @note `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
- * `SysState_Gameplay`
- */
-static inline void Game_StateSetPrevious()
-{
-    e_GameState prevState;
-
-    prevState = g_GameWork.gameState;
-
-    g_SysWork.counters_1C[0]     = 0;
-    g_SysWork.counters_1C[1]     = 0;
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-
-    SysWork_StateSetNext(SysState_Gameplay);
-
-    g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameState         = g_GameWork.gameStatePrev;
-    g_GameWork.gameStatePrev     = prevState;
-    g_GameWork.gameStateSteps[0] = 0;
-}
-
 /** @brief Sets one of the three game-state step counters.
  *
  * The steps form a hierarchy used by the games gameState state 
@@ -730,6 +673,55 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
     {
         g_GameWork.gameStateSteps[2]++;
     }
+}
+
+/** @brief Sets the GameState to be used in the next tick & resets all stateSteps.
+ *
+ * Records the outgoing state as `gameStatePrev`, sets `gameState` as the new 
+ * state, and clears all state-steps for the new state to have a clean slate.
+ *
+ * `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
+ * `SysState_Gameplay`
+ *
+ * @note Changed from inline to macro to fix some stubborn functions.
+ *
+ * @param gameState  The new game state to enter.
+ */
+#define Game_StateSetNext(newGameState) \
+{ \
+    e_GameState prevState; \
+    prevState = g_GameWork.gameState; \
+    \
+    g_GameWork.gameStateSteps[0] = prevState; \
+    g_GameWork.gameState = newGameState; \
+    g_SysWork.counters_1C[0] = 0; \
+    g_GameWork.gameStatePrev = prevState; \
+    \
+    Game_StateStepSet(0, 0); \
+    SysWork_StateSetNext(SysState_Gameplay); \
+}
+
+ /** @brief Returns the GameState to the previously used state & resets all stateSteps.
+ *
+ * Records the outgoing state as `gameStatePrev`, sets `gameState` to the previous 
+ * `gameStatePrev` value, and clears all state-steps for the new state to have a 
+ * clean slate.
+ *
+ * @note `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
+ * `SysState_Gameplay`
+ */
+static inline void Game_StateSetPrevious()
+{
+    e_GameState curState;
+    curState = g_GameWork.gameState;
+    
+    g_GameWork.gameStateSteps[0] = curState;
+    g_GameWork.gameState = g_GameWork.gameStatePrev;
+    g_SysWork.counters_1C[0] = 0;
+    g_GameWork.gameStatePrev = curState;
+    
+    Game_StateStepSet(0, 0);
+    SysWork_StateSetNext(SysState_Gameplay);
 }
 
 #endif

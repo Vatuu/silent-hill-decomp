@@ -112,20 +112,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             {
                 Fs_QueueWaitForEmpty();
 
-                gameState = g_GameWork.gameState;
-
-                g_SysWork.counters_1C[0] = 0;
-                g_SysWork.counters_1C[1] = 0;
-
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
-
-                SysWork_StateSetNext(SysState_Gameplay);
-
-                g_GameWork.gameStateSteps[0] = gameState;
-                g_GameWork.gameState         = gameState + 1;
-                g_GameWork.gameStatePrev     = gameState;
-                g_GameWork.gameStateSteps[0] = 0;
+                Game_StateSetNext(g_GameWork.gameState + 1);
             }
             break;
     }

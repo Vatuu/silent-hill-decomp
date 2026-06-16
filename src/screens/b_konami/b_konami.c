@@ -329,19 +329,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 #endif
                     Fs_QueueWaitForEmpty();
 
-                    // TODO: `Game_StateSetPrevious()`? Doesn't match.
-                    g_SysWork.counters_1C[0] = 0;
-                    g_SysWork.counters_1C[1] = 0;
-
-                    g_GameWork.gameStateSteps[1] = 0;
-                    g_GameWork.gameStateSteps[2] = 0;
-
-                    SysWork_StateSetNext(SysState_Gameplay);
-
-                    g_GameWork.gameStateSteps[0] = g_GameWork.gameState;
-                    g_GameWork.gameState        = nextGameState;
-                    g_GameWork.gameStatePrev    = g_GameWork.gameStateSteps[0];
-                    g_GameWork.gameStateSteps[0] = 0;
+                    Game_StateSetNext(nextGameState);
                 }
                 break;
         }

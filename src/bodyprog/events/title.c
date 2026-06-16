@@ -331,18 +331,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 MemCard_SysDisable();
 
-                // TODO: `Game_StateSetNext`? Doesn't match.
-                prevState                    = g_GameWork.gameState;
-                g_GameWork.gameStateSteps[0] = prevState;
-                g_GameWork.gameState         = NEXT_GAME_STATES[g_MainMenu_SelectedEntry];
-                g_SysWork.counters_1C[0]     = 0;
-                g_GameWork.gameStatePrev     = prevState;
-                g_GameWork.gameStateSteps[0] = 0;
-                g_SysWork.counters_1C[1]     = 0;
-                g_GameWork.gameStateSteps[1] = 0;
-                g_GameWork.gameStateSteps[2] = 0;
-
-                SysWork_StateSetNext(SysState_Gameplay);
+                Game_StateSetNext(NEXT_GAME_STATES[g_MainMenu_SelectedEntry]);
             }
             break;
     }
