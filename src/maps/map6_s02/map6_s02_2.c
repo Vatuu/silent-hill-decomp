@@ -665,7 +665,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 7:
-            if (Sd_AudioStreamingCheck() != 1)
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_XaPlaying)
             {
                 break;
             }
@@ -731,7 +731,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         case 16:
-            if (Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
             {
                 break;
             }
@@ -747,7 +747,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 18:
-            if (Sd_AudioStreamingCheck() != 1)
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_XaPlaying)
             {
                 break;
             }
@@ -906,7 +906,7 @@ void func_800D0500(void) // 0x800D0500
 
     if (g_SysWork.sysStateSteps[0] >= 25)
     {
-        if (Sd_AudioStreamingCheck() || var_s2 == 0)
+        if (Sd_AudioStreamingCheck() != AudioStreamingState_None || var_s2 == 0)
         {
             D_800D3C98 = 0;
             return;

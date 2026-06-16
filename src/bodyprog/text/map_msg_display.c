@@ -110,7 +110,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         case true:
             if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
             {
-                if (Sd_AudioStreamingCheck() == 4)
+                if (Sd_AudioStreamingCheck() == AudioStreamingState_XaLoadPending)
                 {
                     D_800BCD74 = 0;
                     break;

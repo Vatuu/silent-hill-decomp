@@ -28,7 +28,7 @@ void Bgm_PlayNewTrack(s32 bgmIdx) // 0x80087EA8
 
 void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
 {
-    if (Sd_AudioStreamingCheck() || !Fs_QueueChunksLoad())
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None || !Fs_QueueChunksLoad())
     {
         return;
     }
@@ -77,7 +77,7 @@ void Bgm_CrossfadeToSilence(void) // 0x80088028
 
 void func_80088048(void) // 0x80088048
 {
-    if (Sd_AudioStreamingCheck())
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         return;
     }
@@ -104,7 +104,7 @@ void func_80088048(void) // 0x80088048
 
 void func_800880F0(bool arg0) // 0x800880F0
 {
-    if (Sd_AudioStreamingCheck())
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         return;
     }

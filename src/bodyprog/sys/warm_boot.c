@@ -92,7 +92,7 @@ void Game_WarmBoot(void) // 0x80034264
     func_80089128();
     SD_Call(19);
 
-    while (Sd_AudioStreamingCheck())
+    while (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         Sd_TaskPoolExecute();
         VSync(SyncMode_Wait);
@@ -100,7 +100,7 @@ void Game_WarmBoot(void) // 0x80034264
 
     SD_Call(20);
 
-    while (Sd_AudioStreamingCheck())
+    while (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         Sd_TaskPoolExecute();
         VSync(SyncMode_Wait);
@@ -111,7 +111,7 @@ void Game_WarmBoot(void) // 0x80034264
     sd_work_init();
     Sd_AmbientSfxSet(1);
 
-    while (Sd_AudioStreamingCheck())
+    while (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         Sd_TaskPoolExecute();
         VSync(SyncMode_Wait);

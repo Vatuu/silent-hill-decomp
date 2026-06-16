@@ -140,12 +140,12 @@ void func_800CCA2C(void) // 0x800CCA2C
             }
 
             temp_s0 = D_800CD774;
-            if (temp_s0 == 1 && Sd_AudioStreamingCheck() != temp_s0)
+            if (temp_s0 == 1 && Sd_AudioStreamingCheck() != AudioStreamingState_XaPlaying)
             {
                 D_800CD774 = 2;
             }
 
-            if (D_800CD774 == 2 && Sd_AudioStreamingCheck() == 1)
+            if (D_800CD774 == 2 && Sd_AudioStreamingCheck() == AudioStreamingState_XaPlaying)
             {
                 D_800CD770 += g_DeltaTime;
 

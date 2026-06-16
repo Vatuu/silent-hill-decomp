@@ -1651,7 +1651,7 @@ void func_800E4714(void) // 0x800E4714
         case 17:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.5f), Q12(143.0f), Q12(207.0f), true, false);
 
-            if (Sd_AudioStreamingCheck() == 1)
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_XaPlaying)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1660,7 +1660,7 @@ void func_800E4714(void) // 0x800E4714
         case 18:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.5f), Q12(143.0f), Q12(207.0f), true, false);
 
-            if (Sd_AudioStreamingCheck() == 1)
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_XaPlaying)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1996,14 +1996,14 @@ void func_800E514C(void) // 0x800E514C
 
         case 31:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(281.0f), Q12(320.0f), true, false);
-            if (Sd_AudioStreamingCheck() != 1)
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_XaPlaying)
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 32:
-            if (Sd_AudioStreamingCheck() != 1)
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_XaPlaying)
             {
                 Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(281.0f), Q12(320.0f), true, false);
                 break;
@@ -2036,7 +2036,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 36:
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 func_800E9260(Chara_EndingDahlia, 3);
                 SysWork_StateStepIncrement(0);
@@ -2998,7 +2998,7 @@ void func_800E787C(void) // 0x800E787C
         case 13:
             Savegame_EventFlagSet(EventFlag_575);
 
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 func_800E941C();
                 func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs[5]);

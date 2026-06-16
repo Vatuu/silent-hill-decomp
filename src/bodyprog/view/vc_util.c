@@ -386,6 +386,6 @@ s8 Vc_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     return balance;
 }
 
-void func_80040B6C(void) {} // 0x80040B6C
+void nullsub_80040B6C(void) {} // 0x80040B6C
 
 #undef V_BLANKS_MULT

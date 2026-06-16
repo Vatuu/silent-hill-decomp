@@ -473,7 +473,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
         func_8003943C();
 
-        if (Sd_AudioStreamingCheck())
+        if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
         {
             SD_Call(19);
         }

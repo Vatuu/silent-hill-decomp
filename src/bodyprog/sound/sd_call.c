@@ -85,7 +85,7 @@ static u8 g_Sd_VabLoadAttemps;
 static s_AudioItemData* g_Sd_VabTargetLoad;
 
 static s_AudioItemData* g_Sd_KdtTargetLoad;
-static u8               D_800C37DC; // Boolean.
+static u8               g_Sd_XaTaskPending; // Boolean.
 static u8               g_Sd_CurrentTask;
 
 // ========================================
@@ -142,34 +142,34 @@ u8 Sd_AudioStreamingCheck(void) // 0x80045B28
 {
     u8 state;
 
-    state = 1;
+    state = AudioStreamingState_XaPlaying;
     if (g_Sd_AudioWork.xaAudioIdx_4 != 0)
     {
         return state;
     }
 
-    state = 2;
-    if (g_Sd_AudioWork.isAudioLoading_15 == 0)
+    state = AudioStreamingState_VabPlaying;
+    if (!g_Sd_AudioWork.isAudioLoading_15)
     {
         if (g_Sd_AudioStreamingStates.xaPreLoadState_3 != 0)
         {
             D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
-            return 3;
+            return AudioStreamingState_XaLoading;
         }
 
-        if (D_800C37DC == false)
+        if (!g_Sd_XaTaskPending)
         {
             if (g_Sd_CurrentTask == 0)
             {
                 return 0;
             }
 
-            state = 5;
+            state = AudioStreamingState_5;
             return state;
         }
 
-        state = 4;
+        state = AudioStreamingState_XaLoadPending;
         return state;
     }
 
@@ -354,7 +354,7 @@ void sd_work_init(void) // 0x80045E44
 
     SdSetMVol(127, 127);
 
-    D_800C37DC                                 = false;
+    g_Sd_XaTaskPending                         = false;
     g_Sd_AudioWork.field_E                     = 0;
     g_Sd_AudioWork.field_10                    = 0;
     g_Sd_AudioStreamingStates.audioLoadState_0 = AudioLoadState_Reset;
@@ -817,7 +817,7 @@ void Sd_XaAudioPlayTaskAdd(u16 sfx) // 0x80046D3C
 
     if (g_XaItemData[g_Sd_AudioWork.xaAudioIdxCheck_2].xaFileIdx_0 != 0)
     {
-        D_800C37DC         = true;
+        g_Sd_XaTaskPending = true;
         D_800C1688.field_8 = VSync(SyncMode_Count);
         D_800C1688.field_4 = 0;
 
@@ -945,7 +945,7 @@ void Sd_XaAudioPlay(void) // 0x80046E00
             if (!Sd_CdPrimitiveCmdTry(CdlReadN, NULL, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount_0           = 0;
-                D_800C37DC                              = false;
+                g_Sd_XaTaskPending                      = false;
                 g_Sd_AudioStreamingStates.xaLoadState_1 = XaLoadState_EnableAudio;
             }
             break;
@@ -973,7 +973,7 @@ void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx) // 0x8004729C
 void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx) // 0x800472BC
 {
     g_Sd_AudioWork.xaAudioIdxCheck_2 = xaIdx & 0xFFF;
-    D_800C37DC                       = true;
+    g_Sd_XaTaskPending                       = true;
 
     if (g_Sd_AudioWork.xaAudioIdx_4 != 0)
     {
@@ -1053,7 +1053,7 @@ void Sd_XaPreLoadAudio(void) // 0x80047308
             if (!Sd_CdPrimitiveCmdTry(CdlPause, NULL, NULL))
             {
                 g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
-                D_800C37DC                                 = false;
+                g_Sd_XaTaskPending                         = false;
                 Sd_TaskPoolUpdate();
                 g_Sd_AudioWork.cdErrorCount_0              = 0;
             }
@@ -1183,8 +1183,8 @@ void Sd_TaskPoolAdd(u8 task) // 0x800478DC
                     g_Sd_TaskPool[y] = g_Sd_TaskPool[y + 1];
                 }
 
-                g_Sd_TaskPool[31] = 0;
-                D_800C37DC        = false;
+                g_Sd_TaskPool[31]  = 0;
+                g_Sd_XaTaskPending = false;
             }
         }
     }

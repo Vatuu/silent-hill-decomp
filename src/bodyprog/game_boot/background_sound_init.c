@@ -46,7 +46,7 @@ static u16 g_AmbientVabTaskLoadCmds[40] = {
 
 bool Bgm_Init(void) // 0x80035780
 {
-    if (Sd_AudioStreamingCheck() != 0)
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
         return NO_VALUE;
     }
@@ -152,7 +152,7 @@ void func_8003596C(void) // 0x8003596C
 
 bool Sd_AmbientSfxInit(void) // 0x8003599C
 {
-    if (Sd_AudioStreamingCheck() || Fs_QueueGetLength() > 0)
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None || Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }

@@ -497,7 +497,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 14:
-            if (Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
             {
                 break;
             }

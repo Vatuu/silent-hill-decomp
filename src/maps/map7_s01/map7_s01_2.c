@@ -435,7 +435,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 14:
-            if (Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
             {
                 break;
             }
@@ -2144,7 +2144,6 @@ extern VECTOR3 D_800CC998;
 
 void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 {
-    s16              audioStream;
     s32              npcTimer;
     s32              cellZ0;
     s32              cellX0;
@@ -2211,8 +2210,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
                 npcTimer = 0;
 
-                audioStream = Sd_AudioStreamingCheck();
-                if (audioStream == 1)
+                if (Sd_AudioStreamingCheck() == AudioStreamingState_XaPlaying)
                 {
                     if (g_SysWork.npcs[0].position.vz < Q12(-24.0f))
                     {
@@ -2222,7 +2220,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                     }
                     else
                     {
-                        D_800E33A4 = audioStream;
+                        D_800E33A4 = 1;
                     }
                 }
                 else if (D_800E33A4 > 0)

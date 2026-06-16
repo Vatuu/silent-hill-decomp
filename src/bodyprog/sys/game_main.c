@@ -87,7 +87,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             break;
 
         case 1:
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 VabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateSteps[1]];
                 if (VabAudioTaskId != 0)
@@ -228,7 +228,7 @@ void MainLoop(void) // 0x80032EE0
         MemCard_Update();
         Sd_TaskPoolExecute();
 
-        if (!Sd_AudioStreamingCheck())
+        if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
         {
             Fs_QueueUpdate();
         }

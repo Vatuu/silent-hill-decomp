@@ -101,7 +101,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             break;
 
         case 1:
-            if (g_SysWork.counters_1C[1] > 1200 && Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
+            if (g_SysWork.counters_1C[1] > 1200 && Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_DemoFileSavegameUpdate();
                 GameBoot_PlayerInit();
@@ -131,7 +131,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             break;
 
         case 2:
-            if (Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
+            if (Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_PlayDataRead();
 
@@ -245,7 +245,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             break;
 
         case 12:
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Game_StateSetNext(GameState_InGame);
 

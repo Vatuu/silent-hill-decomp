@@ -95,10 +95,10 @@ bool func_801E2ED8(void) // 0x801E2ED8
         case 2:
             switch (Sd_AudioStreamingCheck())
             {
-                case 0:
+                case AudioStreamingState_None:
                     return false;
 
-                case 1:
+                case AudioStreamingState_XaPlaying:
                     D_800C48F0 = D_801E5558[D_801E5E8C].scrollDelay;
                     return true;
 
@@ -217,7 +217,7 @@ bool func_801E3124(void) // 0x801E3124
         case 3:
             D_801E5E74--;
 
-            if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < 2)
+            if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < AudioStreamingState_VabPlaying) // `== AudioStreamingState_None || == AudioStreamingState_XaPlaying`
             {
                 g_GameWork.background2dColor.r = 0;
                 g_GameWork.background2dColor.g = 0;
@@ -313,7 +313,7 @@ bool func_801E342C(void) // 0x801E342C
             }
 
             D_801E5E78--;
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 g_GameWork.gameStateSteps[1]++;
             }

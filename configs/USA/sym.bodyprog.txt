@@ -480,6 +480,7 @@ vcAddOfsToPos                                = 0x80040518; // type:func
 vcSetRefPosAndSysRef2CamParam                = 0x800405C4; // type:func
 vcSetRefPosAndCamPosAngByPad                 = 0x800406D4; // type:func
 Vc_StereoBalanceGet                          = 0x80040A64; // type:func
+nullsub_80040B6C                             = 0x80040B6C; // type:func
 
 //------------------------------------------------------------------------
 //--- PA: 0x01C014   VA: 0x80040B74   subsegment: c, gfx/bodyprog_80040B74
@@ -1121,6 +1122,7 @@ Demo_Stop                                    = 0x8008F3F0; // type:func
 Gfx_ScreenFadeIn_IsInProgress                = 0x8008F434; // type:func
 Demo_StateGet                                = 0x8008F470; // type:func
 Demo_ExitDemo                                = 0x8008F4E4; // type:func
+nullsub_8008F518                             = 0x8008F518; // type:func
 Demo_DemoRandSeedBackup                      = 0x8008F528; // type:func
 Demo_DemoRandSeedRestore                     = 0x8008F560; // type:func
 Demo_DemoRandSeedAdvance                     = 0x8008F598; // type:func
@@ -3086,6 +3088,7 @@ g_Sd_DataMoved                               = 0x800C37CC;
 g_Sd_VabLoadAttemps                          = 0x800C37D0;
 g_Sd_VabTargetLoad                           = 0x800C37D4;
 g_Sd_KdtTargetLoad                           = 0x800C37D8;
+g_Sd_XaTaskPending                           = 0x800C37DC; // type:u8
 g_Sd_CurrentTask                             = 0x800C37DD;
 
 //------------------------------------------------------------------

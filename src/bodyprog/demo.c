@@ -247,7 +247,7 @@ void Demo_ExitDemo(void) // 0x8008F4E4
     g_SysWork.sysFlags |= SysFlag_DoWarmReset;
 }
 
-void func_8008F518(void) {} // 0x8008F518
+void nullsub_8008F518(void) {} // 0x8008F518
 
 bool func_8008F520(void) // 0x8008F520
 {
@@ -317,7 +317,7 @@ bool Demo_Update(void) // 0x8008F5D8
 
     if (DEMO_WORK()->frameCount <= demoStep)
     {
-        func_8008F518();
+        nullsub_8008F518();
         Demo_ExitDemo();
         return false;
     }
@@ -351,11 +351,11 @@ bool Demo_Update(void) // 0x8008F5D8
             }
 
             g_Demo_DemoStep++;
-            func_8008F518();
+            nullsub_8008F518();
             return true;
 
         case DemoState_Exit:
-            func_8008F518();
+            nullsub_8008F518();
             Demo_ExitDemo();
             return false;
 

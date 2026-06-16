@@ -2942,7 +2942,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 43:
-            if (!Sd_AudioStreamingCheck())
+            if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 g_Cutscene_Timer = NO_VALUE;
 

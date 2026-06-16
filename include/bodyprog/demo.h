@@ -116,8 +116,6 @@ s32 Demo_StateGet(s32 gameState);
 
 void Demo_ExitDemo(void);
 
-void func_8008F518(void);
-
 bool func_8008F520(void);
 
 /** Generates the backup random demo seed and stores it in `Demo_RandSeedBackup`. */
