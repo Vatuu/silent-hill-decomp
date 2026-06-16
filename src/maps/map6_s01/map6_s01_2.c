@@ -713,7 +713,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &EMPTY_ROT, &UNK_POS);
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &EMPTY_ROT, &UNK_POS);
 
             for (i = 0; i < 5; i++)
             {

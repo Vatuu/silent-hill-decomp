@@ -467,7 +467,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 9:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &(SVECTOR) { 0, 0, 0, 0 }, &(VECTOR3) { Q12(5.39f), Q12(-19.0f), Q12(-16.34f) });
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &(SVECTOR) { 0, 0, 0, 0 }, &(VECTOR3) { Q12(5.39f), Q12(-19.0f), Q12(-16.34f) });
 
             for (i = 0; i < 15; i++)
             {

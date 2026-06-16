@@ -31,7 +31,19 @@ q19_12 Vc_LookAtPositionYGet(void);
 
 void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through_door_cam_f);
 
-void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos);
+/** @brief Builds the cutscene view matrix from a bone's orientation, anchored at an explicit camera position.
+ *
+ * - Uses `boneCoord`'s world orientation as the view direction (optionally tweaked by `rotOfs`).
+ * - Overwrites the translation with `camPos`, so the view tracks the animated bone while the
+ *   camera stays pinned to a scripted position.
+ * - Sets `updateLookAtMat` so `vcSetDataToVwSystem` applies the matrix directly, bypassing
+ *   normal camera logic.
+ *
+ * @param boneCoord Bone coord whose orientation drives the view direction.
+ * @param rotOfs    Extra rotation offset on the bone orientation (ZXY, negated); typically zero.
+ * @param camPos    World-space camera position (Q19.12); replaces the bone's translation.
+ */
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOfs, VECTOR3* camPos);
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 

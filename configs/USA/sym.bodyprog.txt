@@ -951,6 +951,7 @@ Vc_LensFlareTypeGet                          = 0x80080A10; // type:func
 Vc_LookAtPositionYSet                        = 0x80080A30; // type:func
 Vc_LookAtPositionYGet                        = 0x80080A3C; // type:func
 vcSetFirstCamWork                            = 0x80080A4C; // type:func
+Vc_SetLookAtMatFromBoneCoord                 = 0x80080B58; // type:func
 vcWorkSetFlags                               = 0x80080BF8; // type:func - Guessed name.
 Vc_LookAtOffsetYMaxSet                       = 0x80080C18; // type:func - An accurate guess might be `vcSetWatchTgtMaxY`.
 vcUserWatchTarget                            = 0x80080C2C; // type:func

@@ -12,7 +12,7 @@ Percentages show named symbols out of total (named + auto-generated).
 
 | Overlay | Overall | Functions | Data |
 | --- | --- | --- | --- |
-| [bodyprog](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/bodyprog.html) | 73.6% (1735/2356) | 78.0% (1181/1515) | 65.9% (554/841) |
+| [bodyprog](https://htmlpreview.github.io/?https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/naming_reports/bodyprog.html) | 73.9% (1742/2356) | 78.3% (1187/1515) | 66.0% (555/841) |
 
 ## Screens
 

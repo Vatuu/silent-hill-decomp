@@ -1359,7 +1359,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             Event_WaitTimer(0x2800, false);
             break;

@@ -508,7 +508,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-196.53f, -14.25f, -9.73f));
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-196.53f, -14.25f, -9.73f));
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
             Event_WaitTimer(Q12(2.5f), false);
             break;

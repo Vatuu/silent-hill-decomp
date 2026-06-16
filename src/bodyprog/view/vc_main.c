@@ -141,19 +141,19 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_END);
 }
 
-void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos) // 0x80080B58
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOfs, VECTOR3* camPos) // 0x80080B58
 {
     MATRIX rotMat;
 
     vcWork.updateLookAtMat = true;
 
-    Vw_CoordHierarchyMatrixCompute(arg0, &vcWork.lookAtMat);
-    Math_RotMatrixZxyNeg(rot, &rotMat);
+    Vw_CoordHierarchyMatrixCompute(boneCoord, &vcWork.lookAtMat);
+    Math_RotMatrixZxyNeg(rotOfs, &rotMat);
     MulMatrix(&vcWork.lookAtMat, &rotMat);
 
-    vcWork.lookAtMat.t[0] = Q12_TO_Q8(pos->vx);
-    vcWork.lookAtMat.t[1] = Q12_TO_Q8(pos->vy);
-    vcWork.lookAtMat.t[2] = Q12_TO_Q8(pos->vz);
+    vcWork.lookAtMat.t[0] = Q12_TO_Q8(camPos->vx);
+    vcWork.lookAtMat.t[1] = Q12_TO_Q8(camPos->vy);
+    vcWork.lookAtMat.t[2] = Q12_TO_Q8(camPos->vz);
 }
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
