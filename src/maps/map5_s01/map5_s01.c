@@ -514,9 +514,9 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 9:
-            g_SysWork.field_28 += g_DeltaTime;
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
 
-            switch (g_SysWork.field_28 / Q12(0.1f))
+            switch (g_SysWork.sysStateStepData[0] / Q12(0.1f))
             {
                 case 0:
                 case 1:

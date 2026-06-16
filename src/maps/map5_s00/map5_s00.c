@@ -754,8 +754,8 @@ void func_800D75FC(void) // 0x800D75FC
             Event_ScreenFadeCmd(ScreenFadeCmd_Wait, true, 0, Q12(0.0f), false);
             if (g_SysWork.sysStateSteps[0] == 2)
             {
-                g_SysWork.field_28 += g_DeltaTimeRaw;
-                if (g_SysWork.field_28 > Q12(1.0f))
+                g_SysWork.sysStateStepData[0] += g_DeltaTimeRaw;
+                if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
                 {
                     SysWork_StateStepSet(0, 3);
                 }
@@ -826,8 +826,8 @@ void func_800D7940(void) // 0x800D7940
 
             if (g_SysWork.sysStateSteps[0] == 2)
             {
-                g_SysWork.field_28 += g_DeltaTimeRaw;
-                if (g_SysWork.field_28 > Q12(1.0f))
+                g_SysWork.sysStateStepData[0] += g_DeltaTimeRaw;
+                if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
                 {
                     SysWork_StateStepSet(0, 3);
                 }

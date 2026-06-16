@@ -173,14 +173,14 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 2:
-            g_SysWork.field_28 += g_DeltaTime;
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) + Q12(60.0f);
-            g_SysWork.playerWork.player.position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f) - Q12(20.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f) - (g_SysWork.field_28 >> 2);
+            g_SysWork.playerWork.player.position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) + Q12(60.0f);
+            g_SysWork.playerWork.player.position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) - Q12(20.0f);
+            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f) - (g_SysWork.sysStateStepData[0] >> 2);
 
-            if ((g_SysWork.field_28 >> 2) > Q12_ANGLE(140.7f))
+            if ((g_SysWork.sysStateStepData[0] >> 2) > Q12_ANGLE(140.7f))
             {
                 SysWork_StateStepIncrement(0);
             }

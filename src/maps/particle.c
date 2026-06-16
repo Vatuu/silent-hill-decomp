@@ -1849,7 +1849,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
     }
     else
     {
-        switch (g_SysWork.counters_1C[0] & 0x7)
+        switch (g_SysWork.gameStateStepCounters[0] & 0x7)
         {
             case 0:
             case 1:
@@ -2091,7 +2091,7 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
     }
     else
     {
-        switch (g_SysWork.counters_1C[0] & 0x7)
+        switch (g_SysWork.gameStateStepCounters[0] & 0x7)
         {
             case 0:
             case 1:

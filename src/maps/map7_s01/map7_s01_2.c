@@ -869,7 +869,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 4:
-            if (g_SysWork.field_28 == Q12(0.0f))
+            if (g_SysWork.sysStateStepData[0] == Q12(0.0f))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1661, &D_800E1504, Q8(0.5f), SfxFlag_None);
 
@@ -880,15 +880,15 @@ void func_800D8FF8(void) // 0x800D8FF8
                 }
                 else
                 {
-                    g_SysWork.field_28++;
+                    g_SysWork.sysStateStepData[0]++;
                 }
                 break;
             }
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(1.4f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(1.4f))
             {
-                g_SysWork.field_28 = Q12(0.0f);
+                g_SysWork.sysStateStepData[0] = Q12(0.0f);
             }
             break;
 
@@ -1428,17 +1428,17 @@ void func_800D9C9C(void) // 0x800D9C9C
                     SysWork_StateStepIncrement(1);
 
                 case 1:
-                    g_SysWork.field_28 += g_DeltaTime;
-                    if (g_SysWork.field_28 > Q12(2.0f))
+                    g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                    if (g_SysWork.sysStateStepData[0] > Q12(2.0f))
                     {
-                        g_SysWork.field_28 = Q12(2.0f);
+                        g_SysWork.sysStateStepData[0] = Q12(2.0f);
 
                         WorldObject_ModelNameSet(&g_WorldObject_Stone0.object, "STONE3_H");
                         SysWork_StateStepIncrement(1);
                         Sd_SfxStop(Sfx_Unk1647);
                     }
 
-                    g_WorldObject_Stone0.position.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    g_WorldObject_Stone0.position.vz = ((g_SysWork.sysStateStepData[0] * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
@@ -1452,7 +1452,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                             g_WorldObject_Stone0.position.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
-                            g_SysWork.field_28 = Q12(0.0f);
+                            g_SysWork.sysStateStepData[0] = Q12(0.0f);
                             D_800E168E         = Q12(0.0f);
 
                             Sfx_WithFlagsPlay(Sfx_Unk1648, &g_WorldObject_Stone0.position, Q8(0.5f), SfxFlag_None);
@@ -1465,11 +1465,11 @@ void func_800D9C9C(void) // 0x800D9C9C
                     g_WorldObject_Stone0.position.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1);
                     g_WorldObject_Stone0.position.vz  = Q12_MULT(Math_Sin(g_WorldObject_Stone0.rotation.vz), Q12(-0.15f)) - Q12(140.5f);
 
-                    g_SysWork.field_28 += g_DeltaTime;
-                    if (g_SysWork.field_28 > Q12(0.5f))
+                    g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                    if (g_SysWork.sysStateStepData[0] > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
-                        g_SysWork.field_28 = Q12(0.0f);
+                        g_SysWork.sysStateStepData[0] = Q12(0.0f);
                     }
                     break;
 

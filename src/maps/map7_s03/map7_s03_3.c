@@ -2134,17 +2134,17 @@ void func_800E514C(void) // 0x800E514C
         case 49:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
-            g_SysWork.field_28             += g_DeltaTime;
+            g_SysWork.sysStateStepData[0]             += g_DeltaTime;
             g_SysWork.npcs[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.0625f, 12);
 
-            if (g_SysWork.field_28 > Q12(0.3f))
+            if (g_SysWork.sysStateStepData[0] > Q12(0.3f))
             {
                 localRand           = Rng_Rand16();
                 pos.vx              = g_SysWork.npcs[0].position.vx + Q12(0.2f);
                 pos.vy              = g_SysWork.npcs[0].position.vy + Q12(-0.9f);
                 pos.vz              = g_SysWork.npcs[0].position.vz + Q12(0.2f);
-                g_SysWork.field_28 -= Q12(0.2f);
-                g_SysWork.field_28 -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
+                g_SysWork.sysStateStepData[0] -= Q12(0.2f);
+                g_SysWork.sysStateStepData[0] -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
 
                 func_8005F6B0(g_SysWork.npcs, &pos, 8, 1);
             }

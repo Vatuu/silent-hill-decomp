@@ -724,9 +724,9 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 9:
-            if (g_SysWork.field_28 > Q12(0.8f))
+            if (g_SysWork.sysStateStepData[0] > Q12(0.8f))
             {
-                var_s4 = (g_SysWork.field_28 - Q12(0.8f)) >> 2;
+                var_s4 = (g_SysWork.sysStateStepData[0] - Q12(0.8f)) >> 2;
                 if (var_s4 > Q12(0.25f))
                 {
                     var_s4 = Q12(0.25f);
@@ -748,8 +748,8 @@ void func_800D2658(void) // 0x800D2658
                 sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(1.8f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(1.8f))
             {
                 SysWork_StateStepIncrement(0);
             }

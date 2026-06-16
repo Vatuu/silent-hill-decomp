@@ -177,10 +177,10 @@ void func_800D7B2C(void)
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.sysStateStepData[0]);
 
-            g_SysWork.field_28 += Q12(1.0f / 16.0f);
-            if (g_SysWork.field_28 > Q12(1.0f))
+            g_SysWork.sysStateStepData[0] += Q12(1.0f / 16.0f);
+            if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -274,10 +274,10 @@ void func_800D7EB0(void)
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.sysStateStepData[0]);
 
-            g_SysWork.field_28 += Q12(0.0625f);
-            if (g_SysWork.field_28 > Q12(1.0f))
+            g_SysWork.sysStateStepData[0] += Q12(0.0625f);
+            if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);
             }

@@ -374,8 +374,8 @@ void func_800D6BC0(void) // 0x800D6BC0
         case 9:
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(1.5f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(1.5f))
             {
                 if (D_800D7D95 != 0)
                 {
@@ -395,12 +395,12 @@ void func_800D6BC0(void) // 0x800D6BC0
                 }
             }
 
-            if (g_SysWork.field_28 > Q12(0.5f))
+            if (g_SysWork.sysStateStepData[0] > Q12(0.5f))
             {
                 D_800D7D88.vx -= Q12_MULT_PRECISE(g_DeltaTime, Q12(2.5f));
             }
 
-            if (g_SysWork.field_28 > Q12(6.0f))
+            if (g_SysWork.sysStateStepData[0] > Q12(6.0f))
             {
                 SysWork_StateStepIncrement(0);
             }

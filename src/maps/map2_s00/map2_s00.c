@@ -1273,10 +1273,10 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 9:
-            Screen_BackgroundImgTransition(D_800F22A0, D_800F22A4, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(D_800F22A0, D_800F22A4, g_SysWork.sysStateStepData[0]);
 
-            g_SysWork.field_28 += Q12(1.0f / 32.0f);
-            if (g_SysWork.field_28 > Q12(1.0f))
+            g_SysWork.sysStateStepData[0] += Q12(1.0f / 32.0f);
+            if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
             {
                 tmp0 = D_800F22A0;
                 D_800F22A8 = tmp0;
@@ -1343,11 +1343,11 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             SysWork_StateStepIncrement(0);
 
         case 1:
-            g_SysWork.field_28 += g_DeltaTime;
-            tmp = Q12(1.0f) - Math_Cos(g_SysWork.field_28/12);
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            tmp = Q12(1.0f) - Math_Cos(g_SysWork.sysStateStepData[0]/12);
             D_800F1A24 = Q12_MULT_PRECISE(tmp, Q12(60.0f)) + Q12(40.0f);
 
-            if (g_SysWork.field_28 > Q12(1.5f) && g_SysWork.field_28 < Q12(4.5f))
+            if (g_SysWork.sysStateStepData[0] > Q12(1.5f) && g_SysWork.sysStateStepData[0] < Q12(4.5f))
             {
                 Event_DisplayMapMsg(false, 35, 0, 0, 0, false); // "What? It's getting dark again?"
             }

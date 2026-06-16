@@ -252,13 +252,13 @@ void sharedFunc_800D15F0_3_s01(void)
 
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                g_SysWork.field_28 += g_DeltaTime;
-                if (g_SysWork.field_28 > Q12(1.0f))
+                g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
                 {
-                    g_SysWork.field_28 = Q12(1.0f);
+                    g_SysWork.sysStateStepData[0] = Q12(1.0f);
                 }
 
-                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
+                Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.sysStateStepData[0] >> 5, Q12(16.0f), 0);
                 Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, Q12(1.0f), false);
             }
             else
@@ -286,21 +286,21 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 11:
-            if (g_SysWork.field_28 > ((sharedData_800D4D18_3_s01 - 1) * Q12(0.75f)))
+            if (g_SysWork.sysStateStepData[0] > ((sharedData_800D4D18_3_s01 - 1) * Q12(0.75f)))
             {
                 SysWork_StateStepIncrement(0);
             }
             else
             {
-                g_SysWork.field_28 += g_DeltaTime;
+                g_SysWork.sysStateStepData[0] += g_DeltaTime;
             }
             break;
 
         case 12:
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.sysStateStepData[0] >> 5), Q12(16.0f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(0.5f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(0.5f))
             {
 #if defined(MAP7_S01) || defined(MAP7_S02)
                 Sfx_WithFlagsPlay(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), SfxFlag_None);
@@ -312,10 +312,10 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 13:
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.sysStateStepData[0] >> 5), Q12(16.0f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(0.5f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(0.5f))
             {
                 SD_Call(Sfx_Unk1502);
 #if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP7_S01) || defined(MAP7_S02)

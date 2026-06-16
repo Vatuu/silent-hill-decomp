@@ -302,14 +302,14 @@ void func_800D5FC4(void) // 0x800D5FC4
             break;
 
         case 4:
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(3.8f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(3.8f))
             {
                 SysWork_StateStepIncrement(0);
                 break;
             }
 
-            if (g_SysWork.field_28 < Q12(3.2f))
+            if (g_SysWork.sysStateStepData[0] < Q12(3.2f))
             {
                 if (D_800DACE8 > 0)
                 {

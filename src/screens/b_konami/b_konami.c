@@ -50,7 +50,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 break;
 
             case KonamiLogoStateStep_LogoDelay:
-                if (g_Controller0->heldBtnFlags != 0 || g_SysWork.counters_1C[0] > 180)
+                if (g_Controller0->heldBtnFlags != 0 || g_SysWork.gameStateStepCounters[0] > 180)
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep         = Q12(0.2f);
@@ -187,14 +187,14 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                     // Decrypt `S__SAFE2` and run `AntiModchip_Check`
                     Fs_DecryptOverlay((void*)0x801E7600, (void*)0x801E6600, 4096);
-                    curTime = g_SysWork.counters_1C[0];
+                    curTime = g_SysWork.gameStateStepCounters[0];
                     AntiModchip_Check();
 
                     // Decrypt `HP_SAFE1` and run `AntiModchip_Check`
                     Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
                     
                     // Only run `HP_SAFE1` if `S__SAFE2` took enough time to execute, cheap way of checking if the call above was skipped?
-                    if ((g_SysWork.counters_1C[0] - curTime) >= 100)
+                    if ((g_SysWork.gameStateStepCounters[0] - curTime) >= 100)
                     {
                         AntiModchip_Check();
                     }
@@ -288,7 +288,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
 
             case KcetLogoStateStep_LogoDelay:
-                if (g_Controller0->heldBtnFlags != 0 || g_SysWork.counters_1C[0] > 180)
+                if (g_Controller0->heldBtnFlags != 0 || g_SysWork.gameStateStepCounters[0] > 180)
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep = Q12(0.2f);

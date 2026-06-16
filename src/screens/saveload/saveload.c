@@ -744,7 +744,7 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
     };
 
     g_SaveScreen_DisplaySaveInfo = false;
-    time                         = (u8)g_SysWork.counters_1C[0] & 0x3F;
+    time                         = (u8)g_SysWork.gameStateStepCounters[0] % 64;
     ot                           = &g_OrderingTable2[g_ActiveBufferIdx];
 
     switch (g_SaveScreen_OverwriteActive)
@@ -959,7 +959,7 @@ void SaveScreen_SlotStatusMsgShineDraw(s32 slotIdx) // 0x801E43C8
     s8       color;
     POLY_F4* poly;
 
-    temp       = ((u8)g_SysWork.counters_1C[0]) & 0x3F;
+    temp       = (u8)g_SysWork.gameStateStepCounters[0] % 64;
     colorTimer = temp;
     ot         = &g_OrderingTable2[g_ActiveBufferIdx];
 
@@ -1013,7 +1013,7 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
     s32      i;
     s32      j;
 
-    u32 selectedSaveHighlightTimer = (u8)g_SysWork.counters_1C[0] & 0x3F;
+    u32 selectedSaveHighlightTimer = (u8)g_SysWork.gameStateStepCounters[0] % 64;
 
     const s_Quad2d SCROLL_BAR_TRACK_QUADS[] = {
         { { 0, 0 }, { 0, 96 }, { 4, 0 }, { 4, 96 } }, // Left half.

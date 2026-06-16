@@ -427,12 +427,8 @@ void func_800DAF18(void) // 0x800DAF18
 
             Savegame_EventFlagSet(EventFlag_MapMark_AltSchoolRF_ValveSign);
 
-            D_800E2101                  = 0;
-            g_SysWork.field_28          = Q12(0.0f);
-            g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = Q12(0.0f);
-            g_SysWork.sysStateSteps[2] = 0;
-            g_SysWork.sysStateSteps[0]++;
+            D_800E2101 = 0;
+            SysWork_StateStepIncrement(0);
 
         case 1:
             Event_WaitPlayerStop();
@@ -554,23 +550,15 @@ void func_800DAF18(void) // 0x800DAF18
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                              true);
 
-            g_SysWork.field_28          = Q12(0.0f);
-            g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = Q12(0.0f);
-            g_SysWork.sysStateSteps[2] = 0;
-            g_SysWork.sysStateSteps[0]++;
+            SysWork_StateStepIncrement(0);
 
         case 5:
             Event_WaitTimer(Q12(1.5f), false);
             break;
 
         case 6:
-            D_800E20FE                  = 0;
-            g_SysWork.field_28          = Q12(0.0f);
-            g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = Q12(0.0f);
-            g_SysWork.sysStateSteps[2] = 0;
-            g_SysWork.sysStateSteps[0]++;
+            D_800E20FE = 0;
+            SysWork_StateStepIncrement(0);
 
         case 7:
             D_800E20FE++;
@@ -599,12 +587,8 @@ void func_800DAF18(void) // 0x800DAF18
                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                              true);
 
-            D_800E20FA                  = 0;
-            g_SysWork.field_28          = Q12(0.0f);
-            g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = Q12(0.0f);
-            g_SysWork.sysStateSteps[2] = 0;
-            g_SysWork.sysStateSteps[0]++;
+            D_800E20FA = 0;
+            SysWork_StateStepIncrement(0);
 
         case 9:
             D_800E20FA += g_DeltaTime;
@@ -619,11 +603,7 @@ void func_800DAF18(void) // 0x800DAF18
 
             if (i == 6 || (!Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall) && i > 3))
             {
-                g_SysWork.field_28          = Q12(0.0f);
-                g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C          = Q12(0.0f);
-                g_SysWork.sysStateSteps[2] = 0;
-                g_SysWork.sysStateSteps[0]++;
+                SysWork_StateStepIncrement(0);
             }
             else
             {
@@ -682,11 +662,7 @@ void func_800DAF18(void) // 0x800DAF18
         case 10:
             if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
             {
-                g_SysWork.field_28          = Q12(0.0f);
-                g_SysWork.sysStateSteps[1] = 0;
-                g_SysWork.timer_2C          = Q12(0.0f);
-                g_SysWork.sysStateSteps[2] = 0;
-                g_SysWork.sysStateSteps[0]++;
+                SysWork_StateStepIncrement(0);
             }
             else
             {
@@ -717,13 +693,9 @@ void func_800DAF18(void) // 0x800DAF18
                 Savegame_EventFlagSet(EventFlag_M1S03_KeyDownTheDrain);
             }
 
-            D_800E2101                  = 0;
-            D_800E20FE                  = 0;
-            g_SysWork.field_28          = Q12(0.0f);
-            g_SysWork.sysStateSteps[1] = 0;
-            g_SysWork.timer_2C          = Q12(0.0f);
-            g_SysWork.sysStateSteps[2] = 0;
-            g_SysWork.sysStateSteps[0]++;
+            D_800E2101 = 0;
+            D_800E20FE = 0;
+            SysWork_StateStepIncrement(0);
 
         case 12:
             D_800E20FE++;
@@ -1367,14 +1339,14 @@ void func_800DCDDC(void) // 0x800DCDDC
         case 9:
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(4.0f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(4.0f))
             {
                 D_800E200C.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(-1.2f));
                 D_800E200C.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.4f));
             }
 
-            if (g_SysWork.field_28 > Q12(6.0f))
+            if (g_SysWork.sysStateStepData[0] > Q12(6.0f))
             {
                 SysWork_StateStepIncrement(0);
             }

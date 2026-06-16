@@ -80,7 +80,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             {
                 demoLoadAttempCount          = 0;
                 g_GameWork.gameStateSteps[0] = 1;
-                g_SysWork.counters_1C[1]     = 1;
+                g_SysWork.gameStateStepCounters[1]     = 1;
             }
             else
             {
@@ -91,7 +91,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             break;
 
         case 1:
-            if (g_SysWork.counters_1C[1] > 1200 && Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
+            if (g_SysWork.gameStateStepCounters[1] > 1200 && Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_DemoFileSavegameUpdate();
                 GameBoot_PlayerInit();
@@ -111,7 +111,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 if (demoLoadAttempCount >= 5)
                 {
                     demoLoadAttempCount      = 0;
-                    g_SysWork.counters_1C[1] = 0;
+                    g_SysWork.gameStateStepCounters[1] = 0;
                     break;
                 }
             }
@@ -205,7 +205,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             break;
 
         case 11:
-            if (g_SysWork.counters_1C[0] >= 60)
+            if (g_SysWork.gameStateStepCounters[0] >= 60)
             {
                 if (g_SysWork.processFlags == ProcessFlag_RoomTransition)
                 {

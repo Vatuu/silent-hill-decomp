@@ -7738,10 +7738,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
 
     if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
     {
-        g_SysWork.timer_2C++;
+        g_SysWork.sysStateStepData[1]++;
 
-        if (playerProps.moveSpeed >= Q12(3.1739f) ||
-            (g_SysWork.timer_2C & (1 << 0)))
+        if (playerProps.moveSpeed >= Q12(3.1739f) || (g_SysWork.sysStateStepData[1] % 2))
         {
             func_8006342C(g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife,
                           Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), boneCoords);

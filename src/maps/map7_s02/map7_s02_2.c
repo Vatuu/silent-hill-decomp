@@ -1135,10 +1135,10 @@ void func_800DC954(void) // 0x800DC954
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+            Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.sysStateStepData[0]);
 
-            g_SysWork.field_28 += Q12(0.0625f);
-            if (g_SysWork.field_28 > Q12(1.0f))
+            g_SysWork.sysStateStepData[0] += Q12(0.0625f);
+            if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1636,11 +1636,11 @@ void func_800DDEC8(void) // 0x800DDEC8
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1495, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1503, &D_800E9D00, (Q12(4.0f) - g_SysWork.field_28) >> 7, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1495, &D_800E9D00, (Q12(4.0f) - g_SysWork.sysStateStepData[0]) >> 7, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1503, &D_800E9D00, (Q12(4.0f) - g_SysWork.sysStateStepData[0]) >> 7, Q12(16.0f), 0);
 
-            g_SysWork.field_28 += g_DeltaTime;
-            if (g_SysWork.field_28 > Q12(3.0f))
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            if (g_SysWork.sysStateStepData[0] > Q12(3.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -2511,10 +2511,10 @@ void func_800DFDDC(void) // 0x800DFDDC
                     SD_Call(Sfx_Base);
 
                 case 1:
-                    g_SysWork.field_28 += g_DeltaTime;
-                    if (g_SysWork.field_28 > Q12(2.0f))
+                    g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                    if (g_SysWork.sysStateStepData[0] > Q12(2.0f))
                     {
-                        g_SysWork.field_28 = Q12(2.0f);
+                        g_SysWork.sysStateStepData[0] = Q12(2.0f);
 
                         WorldObject_ModelNameSet(&D_800EBB64.object, "STONE3_H");
                         Sd_SfxStop(Sfx_Base);
@@ -2522,7 +2522,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                         SysWork_StateStepIncrement(1);
                     }
 
-                    D_800EBB64.position.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    D_800EBB64.position.vz = ((g_SysWork.sysStateStepData[0] * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
@@ -2536,7 +2536,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                             D_800EBB64.position.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
-                            g_SysWork.field_28 = Q12(0.0f);
+                            g_SysWork.sysStateStepData[0] = Q12(0.0f);
                             D_800EA492         = 0;
 
                             SD_Call(Sfx_Base);
@@ -2549,11 +2549,11 @@ void func_800DFDDC(void) // 0x800DFDDC
                     D_800EBB64.position.vy  = Q12_MULT(Math_Cos(D_800EBB64.rotation.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
                     D_800EBB64.position.vz  = Q12_MULT(Math_Sin(D_800EBB64.rotation.vz), Q12(-0.15f)) - Q12(140.5f);
 
-                    g_SysWork.field_28 += g_DeltaTime;
-                    if (g_SysWork.field_28 > Q12(0.5f))
+                    g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                    if (g_SysWork.sysStateStepData[0] > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
-                        g_SysWork.field_28 = Q12(0.0f);
+                        g_SysWork.sysStateStepData[0] = Q12(0.0f);
                     }
                     break;
 

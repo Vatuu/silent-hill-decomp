@@ -88,7 +88,7 @@ void Event_WaitPlayerStop(void);
 
 /** @brief Waits for a specified delay before incrementing the event state step.
  *
- * @note `g_SysWork.timer_2C` must be cleared before the first call to this function.
+ * @note Uses `g_SysWork.sysStateStepData[1]` to store/increment timer.
  *
  * @param delay Duration to wait before advancing.
  * @param incSubStep If `true`, increments `sysStateSteps[1]`, otherwise increments `sysStateSteps[0]`.

@@ -78,8 +78,8 @@ void Event_SysStateStepSet(bool setSubStep, s32 sysStateStep) // 0x80085DC0
 
 void Event_WaitPlayerStop(void) // 0x80085DF0
 {
-    g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (g_MapOverlayHdr.playerMoveSpeedIsZero() || g_SysWork.timer_2C > Q12(1.0f))
+    g_SysWork.sysStateStepData[1] += g_DeltaTimeRaw;
+    if (g_MapOverlayHdr.playerMoveSpeedIsZero() || g_SysWork.sysStateStepData[1] > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
     }
@@ -87,8 +87,8 @@ void Event_WaitPlayerStop(void) // 0x80085DF0
 
 void Event_WaitTimer(q19_12 delay, bool incSubStep) // 0x80085E6C
 {
-    g_SysWork.timer_2C += g_DeltaTimeRaw;
-    if (delay < g_SysWork.timer_2C)
+    g_SysWork.sysStateStepData[1] += g_DeltaTimeRaw;
+    if (delay < g_SysWork.sysStateStepData[1])
     {
         Event_SysStateStepIncrement(incSubStep);
     }

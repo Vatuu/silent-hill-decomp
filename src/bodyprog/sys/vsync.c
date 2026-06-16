@@ -9,7 +9,7 @@ void Screen_VSyncCallback(void) // 0x80032B80
     g_Demo_FrameCount++;
     g_WarmBootTimer++;
 
-    g_SysWork.counters_1C[0]++;
-    g_SysWork.counters_1C[1]++;
-    g_SysWork.counters_1C[2]++;
+    g_SysWork.gameStateStepCounters[0]++;
+    g_SysWork.gameStateStepCounters[1]++;
+    g_SysWork.sysStateCounter++;
 }

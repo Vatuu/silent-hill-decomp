@@ -1889,7 +1889,7 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
         colorStart = 0;
     }
 
-    colorFade = g_SysWork.counters_1C[0] & 0x7F;
+    colorFade = (u32)g_SysWork.gameStateStepCounters[0] % 128;
 
     // Fade start color.
     if (colorFade >= 32)

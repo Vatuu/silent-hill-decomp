@@ -869,7 +869,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            g_SysWork.field_28 = Q12(0.0f);
+            g_SysWork.sysStateStepData[0] = Q12(0.0f);
 
             if (g_GameWork.autosave.continueCount < 99)
             {
@@ -954,11 +954,11 @@ void SysState_GameOver_Update(void) // 0x8003A52C
         case 3:
             Gfx_StringSetPosition(SCREEN_POSITION_X(32.5f), SCREEN_POSITION_Y(43.5f));
             Gfx_StringDraw("\aGAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
-            g_SysWork.field_28++;
+            g_SysWork.sysStateStepData[0]++;
 
             if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                   g_GameWorkPtr->config.controllerConfig.cancel)) ||
-                g_SysWork.field_28 > Q12(1.0f / 17.0f))
+                g_SysWork.sysStateStepData[0] > 240)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -985,18 +985,18 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 6:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(2.0f), false);
-            g_SysWork.field_28 = Q12(0.0f);
+            g_SysWork.sysStateStepData[0] = Q12(0.0f);
             Screen_BackgroundImgDraw(&g_DeathTipImg);
             break;
 
         case 7:
-            g_SysWork.field_28++;
+            g_SysWork.sysStateStepData[0]++;
             Screen_BackgroundImgDraw(&g_DeathTipImg);
 
             if (!(g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                     g_GameWorkPtr->config.controllerConfig.cancel)))
             {
-                if (g_SysWork.field_28 <= 480) // TODO: Make float.
+                if (g_SysWork.sysStateStepData[0] <= 480)
                 {
                     break;
                 }

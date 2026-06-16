@@ -158,14 +158,14 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (D_800D2738 != 2)
             {
-                g_SysWork.field_28 += g_DeltaTime;
+                g_SysWork.sysStateStepData[0] += g_DeltaTime;
 
-                if (D_800D2738 == 0 && !(g_SysWork.field_28 <= Q12(0.3f)))
+                if (D_800D2738 == 0 && !(g_SysWork.sysStateStepData[0] <= Q12(0.3f)))
                 {
                     Sfx_WithFlagsPlay(Sfx_DoorOpen0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
                 }
-                else if (D_800D2738 == 1 && !(g_SysWork.field_28 <= Q12(1.6f)))
+                else if (D_800D2738 == 1 && !(g_SysWork.sysStateStepData[0] <= Q12(1.6f)))
                 {
                     Sfx_WithFlagsPlay(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
@@ -287,8 +287,8 @@ void func_800D0C14(void) // 0x800D0C14
 
             if (D_800D2738 != 1)
             {
-                g_SysWork.field_28 += g_DeltaTime;
-                if (D_800D2738 == 0 && g_SysWork.field_28 > Q12(0.6f))
+                g_SysWork.sysStateStepData[0] += g_DeltaTime;
+                if (D_800D2738 == 0 && g_SysWork.sysStateStepData[0] > Q12(0.6f))
                 {
                     Sfx_WithFlagsPlay(Sfx_DoorClose0, &D_800D26F8, Q8(0.5f), SfxFlag_None);
                     D_800D2738++;
