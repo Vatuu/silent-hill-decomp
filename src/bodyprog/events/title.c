@@ -346,7 +346,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         switch (g_GameWork.gameStateSteps[0])
         {
             case 1:
-                if (g_SysWork.gameStateStepCounter > 1740)
+                if (g_SysWork.gameStateStepCounter > SECONDS_60_FPS(29))
                 {
                     GameFs_StreamBinLoad();
                     g_GameWork.gameStateSteps[0]++;

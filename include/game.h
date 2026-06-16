@@ -16,9 +16,10 @@
 #include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
 
-#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
-#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
-#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
+#define TICKS_PER_SECOND  60 /** Game has a variable timestep with 60 ticks max. */
+#define TIMESTEP_30_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
+#define TIMESTEP_60_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND))
+#define SECONDS_60_FPS(n) ((s32)((n) * TICKS_PER_SECOND)) /** @brief Converts seconds to frames at 60 FPS. */
 
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
