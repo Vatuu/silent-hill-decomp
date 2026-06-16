@@ -231,7 +231,8 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 D_800AE185 = NO_VALUE;
                 D_800AE186 = NO_VALUE;
 
-                Game_StateSetNext_ClearStateSteps(GameState_OptionScreen);
+                Game_StateSetNext(GameState_OptionScreen);
+                Game_StateStepSet(1, 0);
                 return;
             }
             break;
@@ -1202,7 +1203,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
             {
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_SelectionId          = InventorySelectionId_Item;
-                
+
                 Game_StateStepSet(1, 11);
 
                 Game_TurnFlashlightOn();

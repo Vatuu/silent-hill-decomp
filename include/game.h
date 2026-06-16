@@ -601,30 +601,15 @@ static inline void SysWork_NpcFlagClear(s32 flagIdx)
     CLEAR_FLAG(&g_SysWork.npcFlags, flagIdx);
 }
 
-/** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */
-static inline void Game_StateSetNext_ClearStateSteps(e_GameState gameState)
-{
-    e_GameState prevState;
-
-    prevState = g_GameWork.gameState;
-
-    g_GameWork.gameState         = gameState;
-    g_SysWork.counters_1C[0]        = 0;
-    g_SysWork.counters_1C[1]        = 0;
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-
-    SysWork_StateSetNext(SysState_Gameplay);
-
-    g_GameWork.gameStateSteps[1] = 0;
-    g_GameWork.gameStateSteps[2] = 0;
-    g_GameWork.gameStateSteps[0] = prevState;
-    g_GameWork.gameStatePrev     = prevState;
-    g_GameWork.gameStateSteps[0] = 0;
-}
-
-/** @brief Sets the GameState to be used in the next game update.
- * Inlined into `stream` and `b_konami`.
+/** @brief Sets the GameState to be used in the next tick & resets all stateSteps.
+ *
+ * Records the outgoing state as `gameStatePrev`, sets `gameState` as the new 
+ * state, and clears all state-steps for the new state to have a clean slate.
+ *
+ * @note `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
+ * `SysState_Gameplay`
+ *
+ * @param gameState  The new game state to enter.
  */
 static inline void Game_StateSetNext(e_GameState gameState)
 {
@@ -633,8 +618,8 @@ static inline void Game_StateSetNext(e_GameState gameState)
     prevState = g_GameWork.gameState;
 
     g_GameWork.gameState         = gameState;
-    g_SysWork.counters_1C[0]        = 0;
-    g_SysWork.counters_1C[1]        = 0;
+    g_SysWork.counters_1C[0]     = 0;
+    g_SysWork.counters_1C[1]     = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 
@@ -645,8 +630,14 @@ static inline void Game_StateSetNext(e_GameState gameState)
     g_GameWork.gameStateSteps[0] = 0;
 }
 
-/** @brief Returns the GameState to the previously used state.
- * Inlined into credits.
+ /** @brief Returns the GameState to the previously used state & resets all stateSteps.
+ *
+ * Records the outgoing state as `gameStatePrev`, sets `gameState` to the previous 
+ * `gameStatePrev` value, and clears all state-steps for the new state to have a 
+ * clean slate.
+ *
+ * @note `counters_1C[0]` and `[1]` are also cleared, and SysState is changed to
+ * `SysState_Gameplay`
  */
 static inline void Game_StateSetPrevious()
 {
@@ -654,8 +645,8 @@ static inline void Game_StateSetPrevious()
 
     prevState = g_GameWork.gameState;
 
-    g_SysWork.counters_1C[0]        = 0;
-    g_SysWork.counters_1C[1]        = 0;
+    g_SysWork.counters_1C[0]     = 0;
+    g_SysWork.counters_1C[1]     = 0;
     g_GameWork.gameStateSteps[1] = 0;
     g_GameWork.gameStateSteps[2] = 0;
 
@@ -667,6 +658,21 @@ static inline void Game_StateSetPrevious()
     g_GameWork.gameStateSteps[0] = 0;
 }
 
+/** @brief Sets one of the three game-state step counters.
+ *
+ * The steps form a hierarchy used by the games gameState state 
+ * machines:
+ *   [0] = state step, [1] = sub-step, [2] = sub-sub-step.
+ *
+ * @note Writing a step cascades a reset downward: changing a higher 
+ * level invalidates the steps nested beneath it, so all levels lower
+ * than `stepIdx` are reset to 0.
+ * Setting [0] additionally clears the `counters_1C[1]` frame counter.
+ *
+ * @param stepIdx    The step index to set: 0, 1, or 2.
+ * @param stateStep  New value for that index.
+ * @return           The value written (== stateStep).
+ */
 static inline s32 Game_StateStepSet(s32 stepIdx, s32 stateStep)
 {
     s32 step;
@@ -691,6 +697,19 @@ static inline s32 Game_StateStepSet(s32 stepIdx, s32 stateStep)
     return step;
 }
 
+/** @brief Increments one of the three game-state step counters.
+ *
+ * The steps form a hierarchy used by the games gameState state 
+ * machines:
+ *   [0] = state step, [1] = sub-step, [2] = sub-sub-step.
+ *
+ * @note Incrementing a step cascades a reset downward: changing a higher 
+ * level invalidates the steps nested beneath it, so all levels lower
+ * than `stepIdx` are reset to 0.
+ * Incrementing [0] additionally clears the `counters_1C[1]` frame counter.
+ *
+ * @param stepIdx    The step index to increment: 0, 1, or 2.
+ */
 static inline void Game_StateStepIncrement(s32 stepIdx)
 {    
     if(stepIdx == 0)
