@@ -965,6 +965,7 @@ vcExecCamera                                 = 0x80080FBC; // type:func
 vcSetAllNpcDeadTimer                         = 0x8008123C; // type:func
 vcRetSmoothCamMvF                            = 0x800812CC; // type:func
 vcRetCurCamMvType                            = 0x80081428; // type:func
+Vc_IsInSelfViewRestrictedZone                = 0x8008150C; // type:func
 vcRetThroughDoorCamEndF                      = 0x800815F0; // type:func
 vcRetFarWatchRate                            = 0x800816B0; // type:func
 vcRetSelfViewEffectRate                      = 0x800818D4; // type:func

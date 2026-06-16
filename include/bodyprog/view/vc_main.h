@@ -78,7 +78,17 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
 
-bool func_8008150C(q19_12 posX, q19_12 posZ);
+/** @brief Checks if the given `posX` & `posZ` land inside specific areas of `THR` and `SPR` maps.
+  *
+  * @note Only callers to this appear to use result to decide if self-view can be used or not.
+  * Likely these are zones where self-view is temporarily restricted.
+  *
+  * @param posX X position.
+  * @param posZ Z position.
+  * @returns `true` if the current map is `THR` or `SPR` and the position falls within
+  * that map's restricted zone. Always `false` for all other map types.
+  */
+bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ);
 
 bool vcRetThroughDoorCamEndF(VC_WORK* w_p);
 

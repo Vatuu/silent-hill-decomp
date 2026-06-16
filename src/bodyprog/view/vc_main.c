@@ -451,7 +451,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
             (!g_GameWorkConst->config.extraViewCtrl && hasViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
-                !func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
+                !Vc_IsInSelfViewRestrictedZone(w_p->chara_pos.vx, w_p->chara_pos.vz))
             {
                 return VC_MV_SELF_VIEW;
             }
@@ -471,12 +471,12 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
     return w_p->cur_near_road.road_p->cam_mv_type;
 }
 
-bool func_8008150C(q19_12 posX, q19_12 posZ)
+bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ)
 {
     switch (Map_TypeGet())
     {
         case MapType_THR:
-            if ((posX - Q12(201.8f)) > (u32)(Q12(28.2f) + 1))
+            if (posX < Q12(201.8f) || posX > Q12(230.0f))
             {
                 return false;
             }
@@ -491,7 +491,7 @@ bool func_8008150C(q19_12 posX, q19_12 posZ)
             break;
 
         case MapType_SPR:
-            if ((posX + Q12(230.0f)) > (q20_12)Q12(29.0f))
+            if (posX < Q12(-230.0f) || posX > Q12(-201.0f)) // Mirror of the `THR` check above?
             {
                 return false;
             }
@@ -631,7 +631,7 @@ q19_12 vcRetFarWatchRate(bool far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_
             (!g_GameWorkConst->config.extraViewCtrl && prsFViewFlag))
         {
             if (!(w_p->flags & (VC_USER_CAM_F | VC_USER_WATCH_F | VC_INHIBIT_FAR_WATCH_F)) &&
-                func_8008150C(w_p->chara_pos.vx, w_p->chara_pos.vz))
+                Vc_IsInSelfViewRestrictedZone(w_p->chara_pos.vx, w_p->chara_pos.vz))
             {
                 far_watch_rate = Q12(0.0f);
             }
