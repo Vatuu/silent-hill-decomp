@@ -557,7 +557,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     {
                         do
                         {
-                            if (temp_s1_2->model.charaId < Chara_LockerDeadBody)
+                            if (temp_s1_2->model.charaId <= CHARA_LAST_ENEMY_ID)
                             {
                                 temp_v0_4 = chara->position.vx - temp_s1_2->position.vx;
                                 temp_v0_5 = chara->position.vy - temp_s1_2->position.vy;

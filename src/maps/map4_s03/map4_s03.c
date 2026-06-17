@@ -84,7 +84,7 @@ void func_800D6704(void) // 0x800D6704
     for (i = 0; i < 6; i++)
     {
         if (g_SysWork.npcs[i].model.charaId >= Chara_Harry &&
-            g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil)
+            g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID)
         {
             break;
         }

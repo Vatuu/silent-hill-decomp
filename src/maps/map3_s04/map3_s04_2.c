@@ -69,7 +69,7 @@ const char* MAP_MESSAGES[] = {
     /* 54 */ "\tA_sound_is_heard ~N\n\tfrom_beyond_the_door. ~E "
 };
 
-const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
+const VECTOR3 D_800CB1E0 = { Q12(14.5f), Q12(-1.0f), Q12(139.9f) };
 
 void func_800D21C4(void) // 0x800D21C4
 {
@@ -80,7 +80,8 @@ void func_800D21C4(void) // 0x800D21C4
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if ((g_SysWork.npcs[i].model.charaId > Chara_None && g_SysWork.npcs[i].model.charaId < Chara_LockerDeadBody) &&
+            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry         &&
+                g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID &&
                 g_SysWork.npcs[i].health > Q12(0.0f))
             {
                 break;

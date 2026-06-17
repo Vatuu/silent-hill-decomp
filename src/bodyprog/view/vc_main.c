@@ -893,7 +893,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     for (sc_p = &g_SysWork.npcs[0]; sc_p < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; sc_p++)
     {
         if (sc_p->model.charaId >= Chara_AirScreamer &&
-            sc_p->model.charaId <= Chara_MonsterCybil &&
+            sc_p->model.charaId <= CHARA_LAST_ENEMY_ID &&
             (sc_p->deathTimer <= ENEMY_DEATH_TIME_MAX || sc_p->health >= Q12(0.0f)) &&
             !(sc_p->flags & CharaFlag_Unk5)) // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
         {

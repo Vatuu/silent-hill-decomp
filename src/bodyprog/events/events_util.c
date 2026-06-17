@@ -808,8 +808,8 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry &&
-                g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry         &&
+                g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID &&
                 g_SysWork.npcs[i].health > Q12(0.0f))
             {
                 break;
@@ -1040,8 +1040,8 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry        &&
-                g_SysWork.npcs[i].model.charaId <= Chara_MonsterCybil &&
+            if (g_SysWork.npcs[i].model.charaId >= Chara_Harry         &&
+                g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID &&
                 g_SysWork.npcs[i].health > Q12(0.0f))
             {
                 break;

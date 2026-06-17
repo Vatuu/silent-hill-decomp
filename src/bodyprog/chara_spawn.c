@@ -46,7 +46,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     s_SubCharacter*    chara;
 
     // TODO: Weird code, check.
-    if (charaId <= Chara_MonsterCybil && spawnFlags < (1 << 6))
+    if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
     {
         activeSpawnFlags = SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_3 | SpawnFlag_4;
         activeSpawnFlags = spawnFlags & activeSpawnFlags;
@@ -56,7 +56,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         activeSpawnFlags = SpawnFlag_None;
     }
 
-    if (charaId <= Chara_MonsterCybil)
+    if (charaId <= CHARA_LAST_ENEMY_ID)
     {
         if (HAS_FLAG(g_SysWork.field_228C, activeSpawnFlags))
         {
@@ -100,7 +100,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         g_SysWork.npcs[i].model.charaId = charaId;
         g_SysWork.npcs[i].field_40 = activeSpawnFlags;
 
-        if (charaId <= Chara_MonsterCybil && spawnFlags < 64)
+        if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < 64)
         {
             SET_FLAG(g_SysWork.field_228C, activeSpawnFlags);
         }
@@ -132,7 +132,7 @@ void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unuse1) // 
         return;
     }
 
-    if (chara->model.charaId <= Chara_MonsterCybil)
+    if (chara->model.charaId <= CHARA_LAST_ENEMY_ID)
     {
         CLEAR_FLAG(g_SysWork.field_228C, chara->field_40);
     }

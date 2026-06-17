@@ -239,7 +239,7 @@ void Game_NpcUpdate(void) // 0x80038354
         }
 
         // Only process enemy NPC for radio interference.
-        if (curNpc->model.charaId <= Chara_MonsterCybil)
+        if (curNpc->model.charaId <= CHARA_LAST_ENEMY_ID)
         {
             // Compute distance from player to NPC.
             curDistToNpc = Q12_SQUARE_PRECISE(Q12_TO_Q6(curNpc->position.vx) - posXShift6) +
@@ -292,11 +292,7 @@ void Game_NpcUpdate(void) // 0x80038354
                     closestNpcInfos[m].position.vz   = closestNpcInfos[m - 1].position.vz;
                 }
 
-                // TODO: Demangle this pointer math.
-                temp_t1 = (u32)curNpc - (u32)g_SysWork.npcs;
-                temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
-
-                closestNpcInfos[j].bitIdx        = temp2 >> 3;
+                closestNpcInfos[j].bitIdx        = curNpc - g_SysWork.npcs;
                 closestNpcInfos[j].distanceToNpc = curDistToNpc;
                 closestNpcInfos[j].position.vx   = curNpc->position.vx;
                 closestNpcInfos[j].position.vz   = curNpc->position.vz;
