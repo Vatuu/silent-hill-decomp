@@ -602,7 +602,7 @@ void func_800D6B00(void) // 0x800D6B00
                 Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 114, false);
             }
 
-            D_800DAB78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.6f, 12);
+            D_800DAB78 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.6f);
 
             if (D_800DAB78 > Q12(3.55f))
             {
@@ -780,13 +780,13 @@ void func_800D75FC(void) // 0x800D75FC
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             break;
 
         default:
@@ -852,13 +852,13 @@ void func_800D7940(void) // 0x800D7940
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:
@@ -915,13 +915,13 @@ void func_800D7C84(void) // 0x800D7C84
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             break;
 
         default:
@@ -978,13 +978,13 @@ void func_800D7F88(void) // 0x800D7F88
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.37f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.37f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.4f, 12);
+            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:

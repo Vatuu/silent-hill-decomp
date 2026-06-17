@@ -292,13 +292,13 @@ void func_800D84EC(void) // 0x800D84EC
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.415f, 12);
+            g_SysWork.playerWork.player.position.vy -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.415f);
             Event_WaitTimer(Q12(5.0f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.41f, 12);
+            g_SysWork.playerWork.player.position.vy -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.41f);
             break;
 
         default:

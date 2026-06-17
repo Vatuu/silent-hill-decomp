@@ -556,9 +556,9 @@ void func_800CFC34(void) // 0x800CFC34
 
                 if (D_800D3C8C > Q12(1.5f))
                 {
-                    D_800D3B78[i].vx += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 3.5f, 12);
-                    D_800D3B78[i].vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 1.2f, 12);
-                    D_800D3B78[i].vz += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, -0.2f, 12);
+                    D_800D3B78[i].vx += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 3.5f);
+                    D_800D3B78[i].vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.2f);
+                    D_800D3B78[i].vz += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.2f);
                 }
             }
         }

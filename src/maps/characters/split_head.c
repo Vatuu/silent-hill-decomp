@@ -1670,8 +1670,8 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             }
             else if (splitHead->model.anim.time < Q12(33.0f))
             {
-                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork.player.collision.cylinder.radius,
-                                               splitHead->model.anim.time + Q12(-31.0f), Q12_SHIFT) >> 1;
+                var_v1_3 = Q12_MULT_PRECISE(g_SysWork.playerWork.player.collision.cylinder.radius,
+                                               splitHead->model.anim.time + Q12(-31.0f)) >> 1;
             }
             else
             {

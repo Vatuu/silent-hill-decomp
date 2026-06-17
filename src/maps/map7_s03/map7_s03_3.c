@@ -2134,8 +2134,8 @@ void func_800E514C(void) // 0x800E514C
         case 49:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
-            g_SysWork.sysStateStepData[0]             += g_DeltaTime;
-            g_SysWork.npcs[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.0625f, 12);
+            g_SysWork.sysStateStepData[0] += g_DeltaTime;
+            g_SysWork.npcs[5].timer_C6    += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f / 16.0f);
 
             if (g_SysWork.sysStateStepData[0] > Q12(0.3f))
             {
@@ -2143,6 +2143,7 @@ void func_800E514C(void) // 0x800E514C
                 pos.vx              = g_SysWork.npcs[0].position.vx + Q12(0.2f);
                 pos.vy              = g_SysWork.npcs[0].position.vy + Q12(-0.9f);
                 pos.vz              = g_SysWork.npcs[0].position.vz + Q12(0.2f);
+
                 g_SysWork.sysStateStepData[0] -= Q12(0.2f);
                 g_SysWork.sysStateStepData[0] -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
 
@@ -2344,7 +2345,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 8:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(176.0f), Q12(253.0f), true, true);
 
-            g_SysWork.npcs[2].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.15f, 12);
+            g_SysWork.npcs[2].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.15f);
             if (g_SysWork.npcs[2].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs[2].timer_C6 = Q12(1.0f);

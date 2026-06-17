@@ -1105,9 +1105,8 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            groanerProps.field_FE = CLAMP_LOW(groanerProps.field_FE - FP_MULTIPLY_PRECISE(g_DeltaTime,
-                                                                                          Q12(1.0f / 3.0f),
-                                                                                          Q12_SHIFT),
+            groanerProps.field_FE = CLAMP_LOW(groanerProps.field_FE - Q12_MULT_PRECISE(g_DeltaTime,
+                                                                                          Q12(1.0f / 3.0f)),
                                               Q12(0.0f));
         }
         else if (groaner->moveSpeed < Q12(0.225f))

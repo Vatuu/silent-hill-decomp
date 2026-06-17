@@ -746,11 +746,11 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             D_800F229C -= 0x40;
 
             PaperMap_DrawScaled(0,
-                          116 - FP_MULTIPLY_PRECISE(D_800F229C, 116, 12),
+                          116 - Q12_MULT_PRECISE(D_800F229C, 116),
                           (D_800F229C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0, 0,
-                          116 - FP_MULTIPLY_PRECISE(D_800F229C, 116, 12),
+                          116 - Q12_MULT_PRECISE(D_800F229C, 116),
                           (D_800F229C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F229C, 12) / (D_800F229C + Q12(1.0f))) * -1;
@@ -1344,7 +1344,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
 
         case 1:
             g_SysWork.sysStateStepData[0] += g_DeltaTime;
-            tmp = Q12(1.0f) - Math_Cos(g_SysWork.sysStateStepData[0]/12);
+            tmp = Q12(1.0f) - Math_Cos(g_SysWork.sysStateStepData[0] / 12);
             D_800F1A24 = Q12_MULT_PRECISE(tmp, Q12(60.0f)) + Q12(40.0f);
 
             if (g_SysWork.sysStateStepData[0] > Q12(1.5f) && g_SysWork.sysStateStepData[0] < Q12(4.5f))

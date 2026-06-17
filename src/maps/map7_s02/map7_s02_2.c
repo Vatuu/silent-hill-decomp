@@ -1137,7 +1137,7 @@ void func_800DC954(void) // 0x800DC954
         case 8:
             Screen_BackgroundImgTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.sysStateStepData[0]);
 
-            g_SysWork.sysStateStepData[0] += Q12(0.0625f);
+            g_SysWork.sysStateStepData[0] += Q12(1.0f / 16.0f);
             if (g_SysWork.sysStateStepData[0] > Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);

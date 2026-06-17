@@ -211,7 +211,7 @@ void func_800D4D1C(void) // 0x800D4D1C
 
             Sd_SfxAttributesUpdate(Sfx_Unk1359, 0, MAX(0, (Q12_FRACT(g_SysWork.lightIntensity) >> 4) - (D_800D5D11 * 8)), 0);
 
-            g_SysWork.lightIntensity -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.15f, 12);
+            g_SysWork.lightIntensity -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.15f);
             if (g_SysWork.lightIntensity < (6 - D_800D5D11) * Q12(0.5f))
             {
                 D_800D5D11++;

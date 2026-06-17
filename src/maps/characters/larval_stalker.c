@@ -615,8 +615,8 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model.anim.time, 41, 49))
             {
-                temp = FP_MULTIPLY_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status].duration.constant,
-                                           g_DeltaTime, Q12_SHIFT) * Q12(0.3f) / Q12(9.0f);
+                temp = Q12_MULT_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status].duration.constant,
+                                           g_DeltaTime) * Q12(0.3f) / Q12(9.0f);
                 larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
                 larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
             }
@@ -695,9 +695,8 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         case LarvalStalkerControl_12:
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model.anim.time, 121, 127))
             {
-                temp = (FP_MULTIPLY_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status].duration.constant,
-                                            g_DeltaTime,
-                                            Q12_SHIFT) * Q12(0.15f)) / Q12(6.0f);
+                temp = (Q12_MULT_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model.anim.status].duration.constant,
+                                            g_DeltaTime) * Q12(0.15f)) / Q12(6.0f);
                 larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
                 larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation.vy + Q12_ANGLE(180.0f)), Q12_SHIFT);
             }

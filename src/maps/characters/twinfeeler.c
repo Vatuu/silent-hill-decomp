@@ -524,7 +524,7 @@ void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
             }
 
             func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->worldMat,
-                          FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
+                          Q12_MULT_PRECISE(temp_s4, iter->field_CC), 11, 9, 12, iter->field_3C);
             iter->field_8 -= g_DeltaTime;
         }
     }

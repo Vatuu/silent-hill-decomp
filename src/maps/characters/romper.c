@@ -1379,7 +1379,7 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
         unkAngle = -unkAngle;
     }
 
-    temp_v0_4 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.0625f);
+    temp_v0_4 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f / 16.0f);
     if (unkAngle < romperProps.field_EE)
     {
         romperProps.field_EE = MAX(unkAngle, romperProps.field_EE - temp_v0_4);

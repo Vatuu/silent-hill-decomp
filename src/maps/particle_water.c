@@ -168,12 +168,12 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         }
         else if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 < sharedData_800E30C8_1_s02.field_28[idx0])
         {
-            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += FP_MULTIPLY((sharedData_800E30C8_1_s02.field_28[idx0] -
+            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += Q12_MULT((sharedData_800E30C8_1_s02.field_28[idx0] -
                                                                         sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0),
-                                                                       ptr->field_0.field_DC[idx0], Q12_SHIFT);
-            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += FP_MULTIPLY((sharedData_800E30C8_1_s02.field_28[idx0] -
+                                                                       ptr->field_0.field_DC[idx0]);
+            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += Q12_MULT((sharedData_800E30C8_1_s02.field_28[idx0] -
                                                                         sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0),
-                                                                       ptr->field_0.field_E4[idx0], Q12_SHIFT);
+                                                                       ptr->field_0.field_E4[idx0]);
         }
 
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 += temp_s4;
@@ -284,13 +284,13 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
                 if ((sharedData_800E30C8_1_s02.field_5C[idx0 - 1] * Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0 - 1] - sharedData_800E30C8_1_s02.field_34[idx0])) < 0)
                 {
-                    var_s1 = var_s3 - FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[idx0 - 1],
-                                                  Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0 - 1] - sharedData_800E30C8_1_s02.field_34[idx0]), Q12_SHIFT);
+                    var_s1 = var_s3 - Q12_MULT(sharedData_800E30C8_1_s02.field_5C[idx0 - 1],
+                                                  Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0 - 1] - sharedData_800E30C8_1_s02.field_34[idx0]));
                 }
                 else
                 {
-                    var_s1 = var_s3 + FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[idx0 - 1],
-                                                  Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0 - 1] - sharedData_800E30C8_1_s02.field_34[idx0]), Q12_SHIFT);
+                    var_s1 = var_s3 + Q12_MULT(sharedData_800E30C8_1_s02.field_5C[idx0 - 1],
+                                                  Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0 - 1] - sharedData_800E30C8_1_s02.field_34[idx0]));
                 }
 
                 if (temp_s4 < var_s1)
@@ -594,8 +594,8 @@ void sharedFunc_800CCE60_1_s02(void)
                 {
                     if (sharedData_800E30C8_1_s02.field_30[i] == 0 && sharedData_800E30C8_1_s02.field_30[i - 1] == 0)
                     {
-                        var_s2 = FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[i - 1],
-                                             Math_Sin(sharedData_800E30C8_1_s02.field_34[i - 1] - sharedData_800E30C8_1_s02.field_34[i]), Q12_SHIFT);
+                        var_s2 = Q12_MULT(sharedData_800E30C8_1_s02.field_5C[i - 1],
+                                             Math_Sin(sharedData_800E30C8_1_s02.field_34[i - 1] - sharedData_800E30C8_1_s02.field_34[i]));
 
                         if (k == 0)
                         {

@@ -870,7 +870,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
     {
         case 0:
             g_MapOverlayHdr.playerControlFreeze();
-            g_SysWork.sysStateStepData[0] = Q12(0.0f);
+            g_SysWork.sysStateStepData[0] = 0;
 
             if (g_GameWork.autosave.continueCount < 99)
             {
@@ -959,7 +959,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
             if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                   g_GameWorkPtr->config.controllerConfig.cancel)) ||
-                g_SysWork.sysStateStepData[0] > 240)
+                g_SysWork.sysStateStepData[0] > SECONDS_60_FPS(4))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -986,7 +986,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 6:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(2.0f), false);
-            g_SysWork.sysStateStepData[0] = Q12(0.0f);
+            g_SysWork.sysStateStepData[0] = 0;
             Screen_BackgroundImgDraw(&g_DeathTipImg);
             break;
 
@@ -997,7 +997,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             if (!(g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
                                                     g_GameWorkPtr->config.controllerConfig.cancel)))
             {
-                if (g_SysWork.sysStateStepData[0] <= 480)
+                if (g_SysWork.sysStateStepData[0] <= SECONDS_60_FPS(8))
                 {
                     break;
                 }

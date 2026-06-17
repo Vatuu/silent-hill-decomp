@@ -111,7 +111,7 @@ void func_800D5614(void) // 0x800D5614
 
         case 5:
             Event_WaitTimer(Q12(1.5f), false);
-            D_800DAF78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime, 0.1f, 12);
+            D_800DAF78 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.1f);
             break;
 
         case 6:

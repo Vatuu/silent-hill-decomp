@@ -617,7 +617,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
     angle0 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[1];
 
     angle = Q12_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (airScreamer->rotation.vy + airScreamer->angleToTarget));
-    dist  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, 12) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, 12));
+    dist  = SquareRoot12(Q12_SQUARE_PRECISE(deltaX) + Q12_SQUARE_PRECISE(deltaZ));
 
     if (outDist != NULL)
     {

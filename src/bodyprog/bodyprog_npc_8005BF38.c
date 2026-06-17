@@ -246,8 +246,8 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
         }
         else
         {
-            curPos.vx = posX + FP_MULTIPLY(angleMin, Math_Sin(g_SysWork.playerWork.player.rotation.vy), Q12_SHIFT);
-            curPos.vz = posZ + FP_MULTIPLY(angleMin, Math_Cos(g_SysWork.playerWork.player.rotation.vy), Q12_SHIFT);
+            curPos.vx = posX + Q12_MULT(angleMin, Math_Sin(g_SysWork.playerWork.player.rotation.vy));
+            curPos.vz = posZ + Q12_MULT(angleMin, Math_Cos(g_SysWork.playerWork.player.rotation.vy));
             if (Math_SqrMagCalcToQ6(distMin) < (Math_SqrMagCalcToQ6(curPos.vx - boxPos.vx) +
                                                 Math_SqrMagCalcToQ6(curPos.vz - boxPos.vz)))
             {
