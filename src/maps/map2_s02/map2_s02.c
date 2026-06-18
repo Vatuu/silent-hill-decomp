@@ -244,7 +244,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -252,7 +252,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -260,7 +260,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_HandgunBullets0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 
@@ -268,7 +268,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_HandgunBullets1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
         }
     }
 
@@ -276,7 +276,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_HealthDrink2))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[4].position, &g_CommonWorldObjectPoses[4].rotation);
         }
     }
 }

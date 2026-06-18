@@ -170,7 +170,7 @@ void func_800D6774(void) // 0x800D6774
             g_SysWork.lightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();
 
-            Gfx_MapInitMapEffectsUpdate(6, 3);
+            Gfx_MapEnvSet(6, 3);
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {
@@ -549,7 +549,7 @@ void func_800D7718(void) // 0x800D7718
             }
         }
 
-        WorldGfx_ObjectAdd(&D_800E0698.objRef_238, &D_800DB7C8, (SVECTOR3*)&D_800DB924);
+        WorldObjects_Add(&D_800E0698.objRef_238, &D_800DB7C8, (SVECTOR3*)&D_800DB924);
     }
 
     for (i = 0; i < ARRAY_SIZE(D_800E0698.field_8); i++)
@@ -1684,7 +1684,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+        WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
@@ -1733,25 +1733,25 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             Collision_FlagBitsSet(2);
         }
 
-        WorldGfx_ObjectAdd(&g_WorldObject_Fence.object, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
+        WorldObjects_Add(&g_WorldObject_Fence.object, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
     }
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) || PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4)) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_PickupHuntingRifle))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Mal5_21.object, &g_WorldObject_Mal5_21.position, &g_WorldObject_Mal5_21.rotation);
+            WorldObjects_Add(&g_WorldObject_Mal5_21.object, &g_WorldObject_Mal5_21.position, &g_WorldObject_Mal5_21.rotation);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_327))
         {
             Collision_FlagBitsSet(2);
-            WorldGfx_ObjectAdd(&g_WorldObject_Mal6[0], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
+            WorldObjects_Add(&g_WorldObject_Mal6[0], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
         }
         else
         {
             Collision_FlagBitsClear(CollisionTriggerFlag_1);
-            WorldGfx_ObjectAdd(&g_WorldObject_Mal6[1], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
+            WorldObjects_Add(&g_WorldObject_Mal6[1], &g_WorldObject_UnkPos, &g_WorldObject_UnkRot);
         }
     }
 
@@ -1759,7 +1759,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_FirstAidKit))
         {
-            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_Add(g_CommonWorldObjects, &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -1767,7 +1767,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 
@@ -1775,7 +1775,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
         }
     }
 }
@@ -1831,11 +1831,11 @@ void func_800DA3E0(void) // 0x800DA3E0
         {
             if (D_800E05E2 != 0)
             {
-                Gfx_MapInitMapEffectsUpdate(6, 3);
+                Gfx_MapEnvSet(6, 3);
             }
             else
             {
-                Gfx_MapInitMapEffectsUpdate(6, 20);
+                Gfx_MapEnvSet(6, 20);
             }
 
             D_800E05E2 ^= 1;

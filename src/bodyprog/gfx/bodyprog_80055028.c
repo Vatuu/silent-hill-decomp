@@ -42,7 +42,7 @@ s32 D_800AE1C0[] = {
 // ENVIRONMENT AND SCREEN GFX 1
 // ========================================
 
-extern s_WorldEnvWork g_WorldEnvWork;
+s_WorldEnvWork g_WorldEnvWork;
 
 void WorldEnv_Init(void) // 0x80055028
 {
@@ -73,7 +73,7 @@ void WorldEnv_Init(void) // 0x80055028
     WorldEnv_FogDistanceSet(Q12(32.0f), Q12(34.0f));
 }
 
-void Gfx_2dEffectsDraw(void) // 0x800550D0
+void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 {
     s32      color0;
     s32      color2;

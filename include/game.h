@@ -400,7 +400,7 @@ typedef struct
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
-// Extra effects info?
+// Current enviroment effects information.
 typedef struct
 {
     /* 0x0   */ s32             primitiveType; /** `e_PrimitiveType` */

@@ -504,10 +504,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         case CELL_XZ(19, 18):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &D_800CB35C);
+                WorldObjects_Add(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &D_800CB35C);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
 
         case CELL_XZ(17, 18):
@@ -523,7 +523,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &D_800CB35C);
+                WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &D_800CB35C);
             }
             break;
     }
@@ -575,7 +575,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 
@@ -583,7 +583,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
         }
     }
 }

@@ -917,7 +917,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
     if (Savegame_EventFlagGet(EventFlag_159) && !Savegame_EventFlagGet(EventFlag_134))
     {
-        Gfx_MapInitMapEffectsUpdate(6, 3);
+        Gfx_MapEnvSet(6, 3);
     }
 
     g_Cutscene_Timer = Q12(0.0f);
@@ -943,22 +943,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Map.object, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
+        WorldObjects_Add(&g_WorldObject_Map.object, &g_WorldObject_Map.position, &g_WorldObject_Map.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupFlashlight))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Flashlight.object, &g_WorldObject_Flashlight.position, &g_WorldObject_Flashlight.rotation);
+        WorldObjects_Add(&g_WorldObject_Flashlight.object, &g_WorldObject_Flashlight.position, &g_WorldObject_Flashlight.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupPocketRadio))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_PocketRadio.object, &g_WorldObject_PocketRadio.position, &g_WorldObject_PocketRadio.rotation);
+        WorldObjects_Add(&g_WorldObject_PocketRadio.object, &g_WorldObject_PocketRadio.position, &g_WorldObject_PocketRadio.rotation);
     }
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_KitchenKnife.object, &g_WorldObject_KitchenKnife.position, &g_WorldObject_KitchenKnife.rotation);
+        WorldObjects_Add(&g_WorldObject_KitchenKnife.object, &g_WorldObject_KitchenKnife.position, &g_WorldObject_KitchenKnife.rotation);
     }
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1056,7 +1056,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE12C.position, &D_800DE12C.rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &D_800DE12C.position, &D_800DE12C.rotation);
         }
     }
 
@@ -1064,7 +1064,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DE140.position, &D_800DE140.rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &D_800DE140.position, &D_800DE140.rotation);
         }
     }
 
@@ -1082,12 +1082,12 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
         {
-            WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         for (i = 0; i < ARRAY_SIZE(D_800E23B0); i++)
         {
-            WorldGfx_ObjectAdd(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1097,7 +1097,7 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < ARRAY_SIZE(D_800E2450); i++)
         {
-            WorldGfx_ObjectAdd(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
         }
 
         return;
@@ -1105,11 +1105,11 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
     {
-        WorldGfx_ObjectAdd(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 
     for (i = 0; i < ARRAY_SIZE(D_800E23F0); i++)
     {
-        WorldGfx_ObjectAdd(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        WorldObjects_Add(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
     }
 }

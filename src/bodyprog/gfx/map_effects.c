@@ -240,7 +240,7 @@ void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
             break;
     }
 
-    Gfx_MapInitMapEffectsUpdate(presetIdxPtr->presetIdx0, presetIdxPtr->presetIdx1);
+    Gfx_MapEnvSet(presetIdxPtr->presetIdx0, presetIdxPtr->presetIdx1);
 }
 
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
@@ -274,7 +274,7 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
     return g_SysWork.field_2388.isFlashlightOn;
 }
 
-void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1) // 0x8003ED74
+void Gfx_MapEnvSet(s32 idx0, s32 idx1) // 0x8003ED74
 {
     Gfx_MapEnvUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
     Gfx_EffectsUpdate();

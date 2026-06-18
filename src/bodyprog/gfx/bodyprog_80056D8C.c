@@ -1483,7 +1483,7 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchDat
             break;
     }
 
-    temp_v1 = 0x79C << (arg3 + 2);
+    temp_v1 = Q8(7.61f) << (arg3 + 2);
     var_t9  = g_WorldEnvWork.isFogEnabled ? MIN(temp_v1, g_WorldEnvWork.fog.farDistance) : temp_v1;
 
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;

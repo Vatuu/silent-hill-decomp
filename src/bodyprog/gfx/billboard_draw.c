@@ -59,6 +59,8 @@ SVECTOR D_800AE500[4] = {
     SVECTOR(0.0f,    -255.65f, 255.65f)
 };
 
+static GsCOORDINATE2* D_800C42B8;
+
 void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
 {
     s_800AE204* curPtr;

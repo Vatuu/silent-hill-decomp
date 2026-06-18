@@ -575,7 +575,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             // Temporarily warp player to initialize required chunks.
             playerChara.position.vx = Q12(-40.0f);
             playerChara.position.vz = Q12(127.0f);
-            Ipd_CloseRangeChunksInit();
+            WorldGfx_CloseRangeChunksInit();
             playerChara.position.vx = prevPlayerPosX;
             playerChara.position.vz = prevPlayerPosZ;
 
@@ -615,7 +615,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 7:
-            if (Ipd_ChunkInitCheck())
+            if (WorldGfx_ChunkInitCheck())
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1213,7 +1213,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
         case EventState_Initialize:
             Player_ControlFreeze();
 
-            Map_ChunkPlace(FILE_BG_THRF908_IPD, -7, 6);
+            Ipd_ChunkSet(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, Q8(0.0f), Q8(13.0f / 16.0f));
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
@@ -1337,8 +1337,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
         {
             // Spin wheelchair wheel?
             D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime, (Q12_ANGLE(-90.0f) - (Rng_Rand16() & 0x1FF)));
-            WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
-            WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
+            WorldObjects_Add(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
+            WorldObjects_Add(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
 
             if (g_SysWork.bgmStatusFlags & BgmStatusFlag_6)
             {

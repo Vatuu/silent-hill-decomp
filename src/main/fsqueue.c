@@ -43,7 +43,7 @@ bool Fs_QueueChunksLoad(void)
     isFinished = false;
     if (Fs_QueueGetLength() == 0)
     {
-        isFinished = Ipd_ChunkInitCheck() != false;
+        isFinished = WorldGfx_ChunkInitCheck() != false;
     }
 
     return isFinished;

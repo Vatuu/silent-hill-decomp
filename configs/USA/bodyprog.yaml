@@ -518,7 +518,8 @@ segments:
       - [0x9EE00, .bss, items/item_utils]
       - [0x9EE08, .bss, items/item_screens_2]
       - [0x9EE48, .bss, items/item_screens_3]
-      - [0x9F608,  bss, worldgfx]
+      - [0x9F608, .bss, gfx/bodyprog_80055028]
+      - [0x9F758, .bss, gfx/billboard_draw]
       - [0x9F75C,  pad] # Garbage.
       - [0x9F760, .bss, sound/sfx]
       - [0x9F770,  bss] # Player related? - Dead code.

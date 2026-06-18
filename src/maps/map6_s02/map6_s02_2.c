@@ -1057,7 +1057,7 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     g_SysWork.lensFlareBoneCoord = NULL;
 
     func_8008D438();
-    Gfx_MapInitMapEffectsUpdate(4, 4);
+    Gfx_MapEnvSet(4, 4);
 
     Savegame_EventFlagSet(EventFlag_428);
 }
@@ -1073,7 +1073,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         flags = func_800D1D40();
-        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+        WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
     else
     {

@@ -67,7 +67,7 @@ void func_800D5614(void) // 0x800D5614
     {
         case 0:
             Player_ControlFreeze();
-            Gfx_MapInitMapEffectsUpdate(19, 4);
+            Gfx_MapEnvSet(19, 4);
 
             CutsceneBorder_ForceShow();
             D_800D7760         = 0;
@@ -184,7 +184,7 @@ void func_800D5614(void) // 0x800D5614
         default:
             Savegame_EventFlagSet(EventFlag_134);
 
-            Gfx_MapInitMapEffectsUpdate(7, 4);
+            Gfx_MapEnvSet(7, 4);
 
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -460,27 +460,27 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_PickupMap))
         {
-            WorldGfx_ObjectAdd(&D_800DB064.object, &D_800DB064.position, &D_800DB064.rotation);
+            WorldObjects_Add(&D_800DB064.object, &D_800DB064.position, &D_800DB064.rotation);
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-       WorldGfx_ObjectAdd(&D_800DAFF4.object, &D_800DAFF4.position, &D_800DAFF4.rotation);
+       WorldObjects_Add(&D_800DAFF4.object, &D_800DAFF4.position, &D_800DAFF4.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        WorldGfx_ObjectAdd(&D_800DAF84.object, &D_800DAF84.position, &SVECTOR3_Zero);
+        WorldObjects_Add(&D_800DAF84.object, &D_800DAF84.position, &SVECTOR3_Zero);
 
         if (!Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
         {
-            WorldGfx_ObjectAdd(&D_800DAFB4.object, &D_800DAFB4.position, &D_800DAFB4.rotation);
+            WorldObjects_Add(&D_800DAFB4.object, &D_800DAFB4.position, &D_800DAFB4.rotation);
         }
 
         if (D_800D7761 != 1)
         {
-            Gfx_MapInitMapEffectsUpdate(7, 4);
+            Gfx_MapEnvSet(7, 4);
             D_800D7761 = 1;
         }
 
@@ -493,7 +493,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     {
         if (D_800D7761 != 0)
         {
-            Gfx_MapInitMapEffectsUpdate(2, 2);
+            Gfx_MapEnvSet(2, 2);
             Game_TurnFlashlightOff();
             D_800D7761 = 0;
         }
@@ -532,7 +532,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        WorldGfx_ObjectAdd(&D_800DB024.object, &D_800DB024.position, &D_800DB024.rotation);
+        WorldObjects_Add(&D_800DB024.object, &D_800DB024.position, &D_800DB024.rotation);
     }
 
     if (!D_800DAFE4)

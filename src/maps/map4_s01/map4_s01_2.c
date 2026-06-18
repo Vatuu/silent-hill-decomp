@@ -751,7 +751,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.playerWork.player.position.vx = Q12(180.0f);
             g_SysWork.playerWork.player.position.vz = Q12(60.0f);
 
-            Ipd_CloseRangeChunksInit();
+            WorldGfx_CloseRangeChunksInit();
             SD_Call(Sfx_Unk1540);
 
             D_800D5B04 = Q12(0.2f);
@@ -833,7 +833,7 @@ void func_800D3420(void) // 0x800D3420
             D_800D5AF9 = false;
             Sd_SfxStop(Sfx_Unk1540);
             g_Cutscene_Timer3 = Q12(140.0f);
-            Gfx_MapInitMapEffectsUpdate(7, 4);
+            Gfx_MapEnvSet(7, 4);
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -1076,7 +1076,7 @@ void func_800D4410(void) // 0x800D4410
             g_SysWork.lightRotation.vz   = Q12_ANGLE(0.0f);
             g_SysWork.lightIntensity     = Q12(1.0f);
 
-            Gfx_MapInitMapEffectsUpdate(14, 14);
+            Gfx_MapEnvSet(14, 14);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
@@ -1154,7 +1154,7 @@ void func_800D4410(void) // 0x800D4410
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            Gfx_MapInitMapEffectsUpdate(7, 4);
+            Gfx_MapEnvSet(7, 4);
             func_8008D448();
             Game_FlashlightAttributesFix();
 
@@ -1223,15 +1223,15 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
             Collision_FlagBitsSet(CollisionTriggerFlag_1);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_Zero);
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
+        WorldObjects_Add(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_Zero);
+        WorldObjects_Add(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&WorldObject_D_800D80B0.object, &WorldObject_D_800D80B0.position, &SVECTOR3_Zero);
         }
 
-        WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &SVECTOR3_Zero);
+        WorldObjects_Add(&WorldObject_D_800D80E0[D_800D8018].object, &WorldObject_D_800D80E0[D_800D8018].position, &SVECTOR3_Zero);
     }
     else
     {
@@ -1242,12 +1242,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&WorldObject_D_800D8020.object, &WorldObject_D_800D8020.position, &SVECTOR3_Zero);
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
-        WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
+        WorldObjects_Add(&WorldObject_D_800D8050.object, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
     }
 }

@@ -3451,7 +3451,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             break;
 
         case CELL_XZ(15, 15):
-            WorldGfx_ObjectAdd(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
+            WorldObjects_Add(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
         default:
             if (!Savegame_EventFlagGet(EventFlag_452) &&
@@ -3473,7 +3473,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_454))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
+                WorldObjects_Add(&g_WorldObject_SFlauros.object, &g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
             }
 
             if (!D_800ED840)
@@ -3601,7 +3601,7 @@ void func_800E636C(void) // 0x800E636C
                 }
 
                 Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800EBAFC[i], Q12_ANGLE(0.0f));
-                WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &pos, &rot);
+                WorldObjects_Add(&g_WorldObject0[var_a0_2], &pos, &rot);
 
                 if (i == g_SysWork.npcs[0].properties.npc.field_FE)
                 {
@@ -3620,11 +3620,11 @@ void func_800E636C(void) // 0x800E636C
         if (Vw_AabbVisibleInScreenCheck(temp_s0 - Q12(4.5f), temp_s0 + Q12(4.5f), Q12(-2.0f), 0, temp_v0_6 - Q12(4.5f), temp_v0_6 + Q12(4.5f)))
         {
             Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800ED5B6, Q12_ANGLE(0.0f));
-            WorldGfx_ObjectAdd(g_WorldObject1, &pos, &rot);
+            WorldObjects_Add(g_WorldObject1, &pos, &rot);
 
             rot.vy += Q12_ANGLE(11.25f);
 
-            WorldGfx_ObjectAdd(&g_WorldObject1[1], &pos, &rot);
+            WorldObjects_Add(&g_WorldObject1[1], &pos, &rot);
         }
 
         Math_SetSVectorFastSum(&rot, 0, D_800ED5B6 + Q12_ANGLE(90.0f), 0);
@@ -3647,11 +3647,11 @@ void func_800E636C(void) // 0x800E636C
             {
                 if (i != 0)
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject2, &pos, &rot);
+                    WorldObjects_Add(&g_WorldObject2, &pos, &rot);
                 }
                 else
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject1[2], &pos, &rot);
+                    WorldObjects_Add(&g_WorldObject1[2], &pos, &rot);
                 }
             }
 
@@ -3675,8 +3675,8 @@ void func_800E636C(void) // 0x800E636C
                                             CLAMP_HIGH(sp50[i], sp50[(i + 1) & 0x3]) - Q12(0.4f),
                                             MAX(sp50[i], sp50[(i + 1) & 0x3]) + Q12(0.4f)))
             {
-                WorldGfx_ObjectAdd(g_WorldObject4, &D_800ED740, &rot);
-                WorldGfx_ObjectAdd(&g_WorldObject4[1], &D_800ED740, &rot);
+                WorldObjects_Add(g_WorldObject4, &D_800ED740, &rot);
+                WorldObjects_Add(&g_WorldObject4[1], &D_800ED740, &rot);
             }
 
             rot.vy += Q12_ANGLE(90.0f);
@@ -3690,7 +3690,7 @@ void func_800E636C(void) // 0x800E636C
 
         if (D_800ED5B8 == 0)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject5, &pos, &rot);
+            WorldObjects_Add(&g_WorldObject5, &pos, &rot);
         }
     }
 }
@@ -3786,7 +3786,7 @@ void func_800E6CB8(void) // 0x800E6CB8
 
         for (j = 0; j < 3; j++)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject6[j], &sp18, &sp28);
+            WorldObjects_Add(&g_WorldObject6[j], &sp18, &sp28);
         }
 
         sp30.vx = Q12(8.7f);
@@ -3801,7 +3801,7 @@ void func_800E6CB8(void) // 0x800E6CB8
                                         MIN_OFFSET(sp30.vz, Q12(1.0f), Q12(1.0f)),
                                         MAX_OFFSET(sp30.vz, Q12(1.0f), Q12(1.0f))))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject7[(D_800EBB34 + i) & 1], &sp30, &sp40);
+            WorldObjects_Add(&g_WorldObject7[(D_800EBB34 + i) & 1], &sp30, &sp40);
         }
 
         var_s3 += Q12(27.0f);
@@ -3833,7 +3833,7 @@ void func_800E7204(void) // 0x800E7204
         rot.vx = -angle;
         rot.vz = Q12_ANGLE(0.0f);
 
-        WorldGfx_ObjectAdd(&g_WorldObject8, &pos, &rot);
+        WorldObjects_Add(&g_WorldObject8, &pos, &rot);
     }
 }
 

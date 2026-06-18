@@ -957,22 +957,22 @@ s32 Map_TypeGet(void);
 
 void Collision_FlagsLocationUpdate(const s_SubCharacter* chara);
 
-void CharaModel_Free(s_CharaModel* model);
+void Chara_ModelFree(s_CharaModel* model);
 
-void Ipd_PlayerChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
+void Map_ChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** @brief Loads map chunks in view and checks if they are loaded.
  *
  * @param `true` if chunks in view are loaded, `false` otherwise.
  */
-bool Ipd_ChunkInitCheck(void);
+bool WorldGfx_ChunkInitCheck(void);
 
-void Gfx_InGameDraw(bool arg0);
+void WorldGfx_Draw(bool arg0);
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr);
 
 /** Submits a world object to draw. */
-void WorldGfx_ObjectAdd(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
+void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** @unused Returns held item ID. */
 s32 WorldGfx_HeldItemIdGet(void);
@@ -1052,7 +1052,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
  * @param queueIdx Index of the queue entry to check.
  * @return Queue entry load status (`e_ChunkLoadState`).
  */
-u32 Map_ChunkLoadStateGet(s32 queueIdx);
+u32 Ipd_ChunkLoadStateGet(s32 queueIdx);
 
 /** @brief Initializes map data and chunks.
  *
@@ -1060,18 +1060,18 @@ u32 Map_ChunkLoadStateGet(s32 queueIdx);
  * @param ipdBuf IPD chunk buffer.
  * @param ipdBufSize IPD chunk buffer size.
  */
-void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
+void Ipd_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
+void Ipd_LmInit(s_IpdLm* globalLm, s_LmHeader* lmHdr);
 
-void Lm_HeaderInit(s_LmHeader* lmHdr);
+void Ipd_LmHeaderInit(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx` in an array of chunks. */
-void Map_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount);
+void Ipd_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount);
 
 void Ipd_TexturesInit(void);
 
-void Map_CollisionDataInit(void);
+void Ipd_CollisionDataReset(void);
 
 /** @brief Places an chunk at given XZ chunk cell coordinates.
  *
@@ -1079,22 +1079,22 @@ void Map_CollisionDataInit(void);
  * @param cellX X cell coordinate.
  * @param cellZ Z cell coordinate.
  */
-void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ);
+void Ipd_ChunkSet(s16 ipdFileIdx, s32 cellX, s32 cellZ);
 
-void Ipd_ActiveMapChunksClear(void);
+void Ipd_ActiveChunksClear(void);
 
 void Ipd_TexturesRefClear(void);
 
-void Map_WorldClearReset(void);
+void Ipd_WorldReset(void);
 
-void Map_GlobalLmFree(void);
+void Ipd_LmReset(void);
 
-s_Texture* Texture_InfoGet(char* texName);
+s_Texture* Ipd_TextureInfoGet(char* texName);
 
 void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior,
                         e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
-void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1);
+void Ipd_ChunksClear(s_MapTerrain* terrain, s32 activeChunksCount);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -1102,7 +1102,7 @@ void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `chunkGridCenter[2][5] = 1100`.
  */
-void Map_MakeIpdGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart);
+void Ipd_MakeGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -1137,7 +1137,7 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
  * @param globalLm Global LM file to check.
  * @return LM file load state `(e_StaticModelLoadState`).
  */
-u32 Lm_LoadStateGet(s_GlobalLm* globalLm);
+u32 Ipd_LmLoadStateGet(s_IpdLm* globalLm);
 
 /** @brief Gets the load state of an IPD file.
  *
@@ -1219,7 +1219,7 @@ bool Ipd_ChunksLoadedCheck(void);
 bool Ipd_NextChunkLoadCheck(void);
 
 /** Checks if a position is within the current map chunk. */
-bool func_8004393C(q19_12 posX, q19_12 posZ);
+bool Ipd_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ);
 
 void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 
@@ -1230,7 +1230,7 @@ bool Ipd_IsTextureLoaded(s_IpdHeader* ipdHdr);
 
 s_IpdCollisionData* Ipd_HeaderCollisionDataGet(s_IpdHeader* ipdHdr);
 
-void Ipd_Init(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
+void Ipd_LoadedChunkInit(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
               s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
               e_FsFile fileIdx);
 
@@ -1414,7 +1414,7 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
 void WorldEnv_Init(void);
 
 /** @brief Draws 2D screen effects for the flashlight's lens flare and glow. */
-void Gfx_2dEffectsDraw(void);
+void WorldGfx_2dEffectsDraw(void);
 
 /** Sets visual world parameters. */
 void WorldEnv_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
@@ -2005,7 +2005,7 @@ void GameFs_BgEtcGfxLoad(void);
 
 void GameFs_BgItemLoad(void);
 
-void func_8003BED0(void);
+void GameFs_CommonItemsTextureLoad(void);
 
 /** @brief Gets the speed zone type at a given position.
  *
@@ -2018,20 +2018,20 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
  */
-void WorldGfx_MapInit(void);
+void WorldGfx_Init(void);
 
 /** Something related to player model loading. */
-void Item_HeldItemModelFree(void);
+void WorldGfx_HeldItemModelFree(void);
 
 /** Allocates player model? */
-void CharaModel_AllModelsFree(void);
+void WorldGfx_CharaModelsFree(void);
 
-void CharaModel_Free(s_CharaModel* model);
+void Chara_ModelFree(s_CharaModel* model);
 
 /** @unused */
-void Ipd_ActiveMapChunksClear0(void);
+void Map_ActiveChunksClear(void);
 
-void Map_WorldClear(void);
+void WorldGfx_MapReset(void);
 
 void WorldGfx_IpdSamplePointStore(void);
 
@@ -2042,27 +2042,29 @@ void WorldGfx_IpdSamplePointReset(void);
  * the world won't draw beyond what has been previously loaded. Some
  * circumstances can also cause the player to be unable to move.
  */
-void Ipd_CloseRangeChunksInit(void);
+void WorldGfx_CloseRangeChunksInit(void);
 
 /** @brief Clears the array containing world objects to draw by resetting its size variable.
  *
  * @param worldGfx World GFX workspace.
  */
-void Gfx_WorldObjectsClear(s_WorldGfxWork* worldGfxWork);
+void WorldObjects_Clear(s_WorldGfxWork* worldGfxWork);
 
 /** @brief Draws all world objects submitted for the current tick.
  *
  * @param worldGfxWork World GFX workspace.
  */
-void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork);
+void WorldObjects_DrawAllObjects(s_WorldGfxWork* worldGfxWork);
 
-/** @brief Draws a world object.
+/** @brief Initialize draw for a world object.
+ * Get values correspondent to perspective and then passes those values
+ * to `WorldObjects_DrawStep`.
  *
  * @param obj World object.
  */
-void Gfx_WorldObjectDraw(s_WorldObject* obj);
+void WorldObjects_Draw(s_WorldObject* obj);
 
-void func_8003CC7C(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat);
+void WorldObjects_DrawStep(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat);
 
 /** @brief Advanced a character model LM buffer.
  *
@@ -2101,7 +2103,7 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void func_8003DA9C(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
+void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 arg4);
 
 /** Something for Harry. `arg` is a packed value. */
 void func_8003DE60(s_Skeleton* skel, s32 modelBone);

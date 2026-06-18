@@ -170,7 +170,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (player->model.anim.flags & AnimFlag_Visible)
         {
-            func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords, 1, g_SysWork.playerWork.player.timer_C6, 0);
+            WorldGfx_CharaDraw(Chara_Harry, g_SysWork.playerBoneCoords, 1, g_SysWork.playerWork.player.timer_C6, 0);
             Chara_Flag8Clear(&g_SysWork.playerWork.player);
             Player_CombatUpdate(&g_SysWork.playerWork, g_SysWork.playerBoneCoords);
             func_8008A3AC(&g_SysWork.playerWork.player);
@@ -180,8 +180,8 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Game_NpcRoomInitSpawn(true);
         Game_NpcUpdate();
         func_8005E89C();
-        Ipd_CloseRangeChunksInit();
-        Gfx_InGameDraw(1);
+        WorldGfx_CloseRangeChunksInit();
+        WorldGfx_Draw(true);
         Demo_DemoRandSeedAdvance();
     }
 }
@@ -334,7 +334,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
-            if (Ipd_ChunkInitCheck())
+            if (WorldGfx_ChunkInitCheck())
             {
                 SD_Call(19);
                 GameFs_OptionBinLoad();
@@ -562,7 +562,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
-            if (Ipd_ChunkInitCheck())
+            if (WorldGfx_ChunkInitCheck())
             {
                 GameFs_StreamBinLoad();
                 g_SysWork.sysStateSteps[0]++;

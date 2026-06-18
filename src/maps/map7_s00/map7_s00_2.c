@@ -730,7 +730,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
             pos.vy = Q12(0.0f);
             pos.vz = D_800D4370[(i >= 2) ? (i - 2) : i];
 
-            WorldGfx_ObjectAdd(&g_WorldObject0[i], &pos, &D_800CB61C);
+            WorldObjects_Add(&g_WorldObject0[i], &pos, &D_800CB61C);
         }
 
         Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, Rng_GenerateUInt(-8, 7));
@@ -738,7 +738,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
+        WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_471))
         {

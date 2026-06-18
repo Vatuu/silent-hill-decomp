@@ -951,7 +951,7 @@ void func_800E3390(void) // 0x800E3390
             // Freeze player.
             Player_ControlFreeze();
             func_8003A16C();
-            Gfx_MapInitMapEffectsUpdate(18, 18);
+            Gfx_MapEnvSet(18, 18);
             func_8008D438();
 
             g_Cutscene_UpdateSibyl = false;
@@ -3107,7 +3107,7 @@ void func_800E787C(void) // 0x800E787C
 
             D_800F483C = Q12(100.0f);
 
-            Gfx_MapInitMapEffectsUpdate(9, 9);
+            Gfx_MapEnvSet(9, 9);
 
             D_800F4806           = false;
             g_Cutscene_Timer      = Q12(61.0f);
@@ -3182,7 +3182,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4818 = true;
 
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
-            Gfx_MapInitMapEffectsUpdate(9, 9);
+            Gfx_MapEnvSet(9, 9);
             Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(80.0f);
@@ -3392,7 +3392,7 @@ void func_800E86BC(void) // 0x800E86BC
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(70.0f);
-            Gfx_MapInitMapEffectsUpdate(9, 9);
+            Gfx_MapEnvSet(9, 9);
             Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrement(0);
 
@@ -3795,18 +3795,18 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
     if (g_Cutscene_UpdateBin)
     {
         Math_SetSVectorFast(&g_WorldObject_Bin.rotation, D_800F482C, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
-        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
+        WorldObjects_Add(&g_WorldObject_Bin.object, &g_WorldObject_Bin.position, &g_WorldObject_Bin.rotation);
         D_800F482C -= (FP_TO(g_DeltaTime, Q12_SHIFT) / Q12(3.6f));
     }
 
     if (g_Cutscene_UpdateNu)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object, &g_WorldObject_Nu.position, &g_WorldObject_Nu.rotation);
+        WorldObjects_Add(&g_WorldObject_Nu.object, &g_WorldObject_Nu.position, &g_WorldObject_Nu.rotation);
     }
 
     if (g_Cutscene_UpdateBaby)
     {
-        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object, &g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation);
+        WorldObjects_Add(&g_WorldObject_Baby.object, &g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation);
     }
 
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))
@@ -3884,15 +3884,15 @@ void func_800E98EC(void) // 0x800E98EC
 
         if (D_800F4818)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Real, &objPos, &DEFAULT_ROT);
         }
         if (D_800F4819)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Ura, &objPos, &DEFAULT_ROT);
         }
         if (D_800F481A)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Under, &objPos, &DEFAULT_ROT);
         }
     }
 

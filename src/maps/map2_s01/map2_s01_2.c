@@ -451,7 +451,7 @@ extern s_Pose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
-    Gfx_MapInitMapEffectsUpdate(1, 1);
+    Gfx_MapEnvSet(1, 1);
 
     WorldObject_PosePositionInit(&g_WorldObject_Item, "ITEM_HID", 19.8289f, -1.3633f, 24.0735f);
     WorldObject_Init(&g_WorldObject_Key, "KEY_HIDE", 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
@@ -475,12 +475,12 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
     {
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Item.object, &g_WorldObject_Item.position, &SVECTOR3_Zero);
+                WorldObjects_Add(&g_WorldObject_Item.object, &g_WorldObject_Item.position, &SVECTOR3_Zero);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S01_PickupDrawbridgeKey))
             {
-                WorldGfx_ObjectAdd(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
+                WorldObjects_Add(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &g_WorldObject_Key.rotation);
                 Savegame_EventFlagClear(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
             else
@@ -488,7 +488,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
                 Savegame_EventFlagSet(EventFlag_MapMark_OldTown_BalkanChurchCheck);
             }
 
-            WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
+            WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
     if (D_800D177C == 0)
@@ -518,7 +518,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
         }
     }
 }

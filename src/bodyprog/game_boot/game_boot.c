@@ -164,10 +164,10 @@ void GameBoot_WorldStartup(void) // 0x80034964
         case 7:
             if (AreaLoad_TransitionFlags() & AreaTransitionFlag_UnfreezeWorld)
             {
-                Map_WorldClear();
+                WorldGfx_MapReset();
             }
 
-            Ipd_PlayerChunkInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
+            Map_ChunkInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
             if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
@@ -176,7 +176,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
             g_GameWork.gameStateSteps[0]++;
 
         case 8:
-            if (Ipd_ChunkInitCheck())
+            if (WorldGfx_ChunkInitCheck())
             {
                 Game_StateStepIncrement(0);
             }
@@ -362,9 +362,9 @@ void GameBoot_PlayerInit(void) // 0x80035178
 {
     #define ANIMS_DATA_BUFFER_SIZE 0x2E630
 
-    WorldGfx_MapInit();
-    CharaModel_AllModelsFree();
-    Item_HeldItemModelFree();
+    WorldGfx_Init();
+    WorldGfx_CharaModelsFree();
+    WorldGfx_HeldItemModelFree();
     Anim_BoneInit((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords);
     WorldGfx_PlayerModelProcessLoad();
 

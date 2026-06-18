@@ -474,18 +474,18 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     {
         if (D_800DB9B0 == 0)
         {
-            Gfx_MapInitMapEffectsUpdate(6, 12);
+            Gfx_MapEnvSet(6, 12);
             D_800DB9B0++;
         }
 
         if (Savegame_EventFlagGet(EventFlag_348))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object, &g_WorldObject_Kidn05.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldObjects_Add(&g_WorldObject_Kidn05.object, &g_WorldObject_Kidn05.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(4);
         }
         else
         {
-            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
+            WorldObjects_Add(&g_WorldObject_Kidn04.object, &g_WorldObject_Kidn04.position, &(SVECTOR3){ Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) });
             Collision_FlagBitsSet(2);
         }
     }

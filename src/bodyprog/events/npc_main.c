@@ -344,7 +344,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
         if (curNpc->model.anim.flags & AnimFlag_Visible)
         {
-            func_8003DA9C(curNpc->model.charaId, boneCoords, 1, curNpc->timer_C6, (s8)curNpc->model.paletteIdx);
+            WorldGfx_CharaDraw(curNpc->model.charaId, boneCoords, 1, curNpc->timer_C6, (s8)curNpc->model.paletteIdx);
         }
     }
 

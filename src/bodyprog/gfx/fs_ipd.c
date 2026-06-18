@@ -11,7 +11,7 @@
 
 static s_MapTerrain g_MapTerrain;
 
-u32 Map_ChunkLoadStateGet(s32 queueIdx) // 0x80041ADC
+static u32 Ipd_ChunkLoadStateGet(s32 queueIdx) // 0x80041ADC
 {
     if (queueIdx == NO_VALUE)
     {
@@ -30,7 +30,7 @@ u32 Ipd_LoadStateGet(s_Chunk* chunk) // 0x80041B1C
     s32 loadState;
     s32 loadStateCpy;
 
-    loadState    = Map_ChunkLoadStateGet(chunk->queueIdx);
+    loadState    = Ipd_ChunkLoadStateGet(chunk->queueIdx);
     loadStateCpy = loadState;
 
     if (loadStateCpy == ChunkLoadState_Unloaded)
@@ -50,12 +50,12 @@ u32 Ipd_LoadStateGet(s_Chunk* chunk) // 0x80041B1C
     return StaticModelLoadState_Corrupted;
 }
 
-u32 Lm_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
+u32 Ipd_LmLoadStateGet(s_IpdLm* globalLm) // 0x80041BA0
 {
     s32 loadState;
     s32 loadStateCpy;
 
-    loadState    = Map_ChunkLoadStateGet(globalLm->queueIdx);
+    loadState    = Ipd_ChunkLoadStateGet(globalLm->queueIdx);
     loadStateCpy = loadState;
 
     if (loadStateCpy == ChunkLoadState_Unloaded)
@@ -75,31 +75,31 @@ u32 Lm_LoadStateGet(s_GlobalLm* globalLm) // 0x80041BA0
     return StaticModelLoadState_Corrupted;
 }
 
-void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
+void Ipd_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&g_MapTerrain, sizeof(s_MapTerrain));
-    Lm_Init(&g_MapTerrain.globalLm, lmHdr);
+    Ipd_LmInit(&g_MapTerrain.globalLm, lmHdr);
 
     g_MapTerrain.chunkBuffer      = ipdBuf;
     g_MapTerrain.chunkBufferSize  = ipdBufSize;
     g_MapTerrain.activeChunkCount = 0;
     g_MapTerrain.isExterior       = true;
 
-    Map_ChunkQueueIdxsClear(g_MapTerrain.activeChunks, 4);
+    Ipd_ChunkQueueIdxsClear(g_MapTerrain.activeChunks, 4);
     Ipd_TexturesInit();
-    Map_CollisionDataInit();
+    Ipd_CollisionDataReset();
 }
 
-void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
+void Ipd_LmInit(s_IpdLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
 {
     globalLm->lmHdr = lmHdr;
-    Lm_HeaderInit(lmHdr);
+    Ipd_LmHeaderInit(lmHdr);
 
     globalLm->queueIdx = 0;
     globalLm->fileIdx  = NO_VALUE;
 }
 
-void Lm_HeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
+void Ipd_LmHeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
 {
     lmHdr->magic         = LM_HEADER_MAGIC;
     lmHdr->version       = LM_VERSION;
@@ -108,7 +108,7 @@ void Lm_HeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
     lmHdr->modelCount    = 0;
 }
 
-void Map_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount) // 0x80041D10
+void Ipd_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount) // 0x80041D10
 {
     s_Chunk* curChunk;
 
@@ -155,13 +155,13 @@ void Ipd_TexturesInit(void) // 0x80041D48
     Textures_ActiveTex_PutTextures(&g_MapTerrain.chunkTextures.halfPage, g_MapTerrain.chunkTextures.halfPageTextures, 2);
 }
 
-void Map_CollisionDataInit(void) // 0x80041E98
+void Ipd_CollisionDataReset(void) // 0x80041E98
 {
     bzero(&g_MapTerrain.collisionData, sizeof(s_IpdCollisionData));
     g_MapTerrain.collisionData.subcellSize = Q8(2.0f);
 }
 
-void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
+void Ipd_ChunkSet(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
 {
     s_Chunk*     curChunk;
     s_IpdHeader* ipdHdr;
@@ -181,7 +181,7 @@ void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
         }
 
         // Check if chunk is loaded.
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
             ipdHdr = curChunk->ipdHdr;
             if (ipdHdr->isLoaded)
@@ -194,9 +194,9 @@ void Map_ChunkPlace(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
     }
 }
 
-void Ipd_ActiveMapChunksClear(void) // 0x80041FF0
+void Ipd_ActiveChunksClear(void) // 0x80041FF0
 {
-    Ipd_ActiveChunksClear(&g_MapTerrain, g_MapTerrain.activeChunkCount);
+    Ipd_ChunksClear(&g_MapTerrain, g_MapTerrain.activeChunkCount);
 }
 
 void Ipd_TexturesRefClear(void) // 0x8004201C
@@ -228,29 +228,29 @@ void Ipd_TexturesRefClear(void) // 0x8004201C
     }
 }
 
-void Map_WorldClearReset(void) // 0x800420C0
+void Ipd_WorldReset(void) // 0x800420C0
 {
-    Map_GlobalLmFree();
-    Ipd_ActiveChunksClear(&g_MapTerrain, g_MapTerrain.activeChunkCount);
+    Ipd_LmReset();
+    Ipd_ChunksClear(&g_MapTerrain, g_MapTerrain.activeChunkCount);
     Ipd_TexturesInit();
 }
 
-void Map_GlobalLmFree(void) // 0x800420FC
+void Ipd_LmReset(void) // 0x800420FC
 {
-    s_GlobalLm* globalLm;
+    s_IpdLm* globalLm;
 
     globalLm = &g_MapTerrain.globalLm;
 
-    if (Map_ChunkLoadStateGet(globalLm->queueIdx) >= ChunkLoadState_Loaded &&
+    if (Ipd_ChunkLoadStateGet(globalLm->queueIdx) >= ChunkLoadState_Loaded &&
         globalLm->lmHdr->isLoaded)
     {
         Lm_MaterialRefCountDec(g_MapTerrain.globalLm.lmHdr);
     }
 
-    Lm_Init(&g_MapTerrain.globalLm, g_MapTerrain.globalLm.lmHdr);
+    Ipd_LmInit(&g_MapTerrain.globalLm, g_MapTerrain.globalLm.lmHdr);
 }
 
-s_Texture* Texture_InfoGet(char* texName) // 0x80042178
+s_Texture* Ipd_TextureInfoGet(char* texName) // 0x80042178
 {
     s_Texture* tex;
 
@@ -279,7 +279,7 @@ void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool 
 
     if (plmIdx != NO_VALUE && plmIdx != g_MapTerrain.globalLm.fileIdx)
     {
-        if (Map_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx) >= ChunkLoadState_Loaded &&
+        if (Ipd_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx) >= ChunkLoadState_Loaded &&
             g_MapTerrain.globalLm.lmHdr->isLoaded)
         {
             Lm_MaterialRefCountDec(g_MapTerrain.globalLm.lmHdr);
@@ -291,33 +291,33 @@ void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool 
 
     if (g_MapTerrain.activeChunkCount != activeIpdCount || strcmp(mapTag, g_MapTerrain.mapTag) != 0)
     {
-        Ipd_ActiveChunksClear(&g_MapTerrain, activeIpdCount);
+        Ipd_ChunksClear(&g_MapTerrain, activeIpdCount);
 
         g_MapTerrain.activeChunkCount = activeIpdCount;
         g_MapTerrain.ipdFileIdx       = ipdFileIdx;
         strcpy(g_MapTerrain.mapTag, mapTag);
 
         g_MapTerrain.mapTagSize = strlen(mapTag);
-        Map_MakeIpdGrid(&g_MapTerrain, mapTag, ipdFileIdx);
+        Ipd_MakeGrid(&g_MapTerrain, mapTag, ipdFileIdx);
     }
 }
 
-void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1) // 0x80042300
+void Ipd_ChunksClear(s_MapTerrain* terrain, s32 activeChunksCount) // 0x80042300
 {
-    s32          step;
+    s32          chunkSize;
     s32          i;
     s_Chunk*     curChunk;
-    s_IpdHeader* ipdHdr0;
+    s_IpdHeader* chunkBuffer;
     s_IpdHeader* ipdHdr1;
 
-    ipdHdr0 = terrain->chunkBuffer;
-    step    = (terrain->chunkBufferSize / arg1) & ~0x3;
+    chunkBuffer = terrain->chunkBuffer;
+    chunkSize  = (terrain->chunkBufferSize / activeChunksCount) & ~0x3;
 
-    for (i = 0; i < 4; i++, *(u8**)&ipdHdr0 += step)
+    for (i = 0; i < ACTIVE_CHUNK_COUNT_MAX; i++, *(u8**)&chunkBuffer += chunkSize)
     {
         curChunk = &terrain->activeChunks[i];
 
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
             ipdHdr1 = curChunk->ipdHdr;
             if (ipdHdr1->isLoaded)
@@ -330,9 +330,9 @@ void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1) // 0x80042300
         curChunk->paddedDistanceToEdge1 = INT_MAX;
         curChunk->outsideCount          = 0;
 
-        if (i < arg1)
+        if (i < activeChunksCount)
         {
-            curChunk->ipdHdr = ipdHdr0;
+            curChunk->ipdHdr = chunkBuffer;
         }
         else
         {
@@ -341,7 +341,7 @@ void Ipd_ActiveChunksClear(s_MapTerrain* terrain, s32 arg1) // 0x80042300
     }
 }
 
-void Map_MakeIpdGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart) // 0x800423F4
+void Ipd_MakeGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart) // 0x800423F4
 {
     char           filename[256];
     s32            x;
@@ -440,7 +440,7 @@ s_IpdCollisionData** Ipd_ActiveChunksCollisionDataGet(s32* collDataIdx) // 0x800
     while (curChunk < &g_MapTerrain.activeChunks[g_MapTerrain.activeChunkCount])
     {
         // Check if chunk is loaded.
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
             ipdHdr = curChunk->ipdHdr;
             if (ipdHdr->isLoaded)
@@ -482,7 +482,7 @@ s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
          curChunk++)
     {
         // Check if chunk is loaded.
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded)
         {
             continue;
         }
@@ -521,7 +521,7 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
     s32         k;
     s32         chunkCount;
     s_Chunk*    curChunk;
-    s_GlobalLm* globalLm;
+    s_IpdLm* globalLm;
 
     globalLm = &g_MapTerrain.globalLm;
 
@@ -529,7 +529,7 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
     geomX = Q12_TO_Q8(posX);
     geomZ = Q12_TO_Q8(posZ);
 
-    if (Map_ChunkLoadStateGet(globalLm->queueIdx) >= ChunkLoadState_Loaded &&
+    if (Ipd_ChunkLoadStateGet(globalLm->queueIdx) >= ChunkLoadState_Loaded &&
         globalLm->lmHdr->isLoaded &&
         Lm_ModelFind(model, g_MapTerrain.globalLm.lmHdr, metadata))
     {
@@ -545,7 +545,7 @@ s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
          curChunk++)
     {
         // Check if chunk file is loaded.
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded)
         {
             continue;
         }
@@ -632,7 +632,7 @@ void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projP
 
     Map_ChunkLoad(&g_MapTerrain, curPosX, curPosZ, projPosX, projPosZ);
 
-    if (Map_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx) >= ChunkLoadState_Loaded &&
+    if (Ipd_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx) >= ChunkLoadState_Loaded &&
         !g_MapTerrain.globalLm.lmHdr->isLoaded)
     {
         fullPageTexCount                          = g_MapTerrain.chunkTextures.fullPage.count;
@@ -650,10 +650,10 @@ void Ipd_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projP
          curChunk < &g_MapTerrain.activeChunks[g_MapTerrain.activeChunkCount];
          curChunk++)
     {
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
-            Ipd_Init(curChunk->ipdHdr, &g_MapTerrain.globalLm.lmHdr, 1,
-                                 &g_MapTerrain.chunkTextures.fullPage, &g_MapTerrain.chunkTextures.halfPage, g_MapTerrain.textureFileIdx);
+            Ipd_LoadedChunkInit(curChunk->ipdHdr, &g_MapTerrain.globalLm.lmHdr, 1,
+                                &g_MapTerrain.chunkTextures.fullPage, &g_MapTerrain.chunkTextures.halfPage, g_MapTerrain.textureFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->cellX, curChunk->cellZ);
         }
     }
@@ -741,7 +741,7 @@ s32 Map_ChunkLoad(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX
                 {
                     freeChunk = Ipd_FreeChunkFind(terrain->activeChunks, terrain->isExterior);
 
-                    if (Map_ChunkLoadStateGet(freeChunk->queueIdx) >= ChunkLoadState_Loaded)
+                    if (Ipd_ChunkLoadStateGet(freeChunk->queueIdx) >= ChunkLoadState_Loaded)
                     {
                         ipdHdr = freeChunk->ipdHdr;
                         if (ipdHdr->isLoaded)
@@ -784,7 +784,7 @@ void Ipd_ActiveChunksSample(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q
             Ipd_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, isExterior);
         }
 
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded || !curChunk->ipdHdr->isLoaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) < ChunkLoadState_Loaded || !curChunk->ipdHdr->isLoaded)
         {
             curChunk->materialCount = 0;
         }
@@ -817,7 +817,7 @@ void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain) // 0x800433B8
     // Run through active chunks.
     for (curChunk = &terrain->activeChunks[0]; curChunk < &terrain->activeChunks[terrain->activeChunkCount]; curChunk++)
     {
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
                 curChunk->paddedDistanceToEdge0 > Q12(0.0f) && curChunk->paddedDistanceToEdge1 > Q12(0.0f))
@@ -830,7 +830,7 @@ void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain) // 0x800433B8
     // Run through active chunks.
     for (curChunk = &terrain->activeChunks[0]; curChunk < &terrain->activeChunks[terrain->activeChunkCount]; curChunk++)
     {
-        if (Map_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
+        if (Ipd_ChunkLoadStateGet(curChunk->queueIdx) >= ChunkLoadState_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
                 (curChunk->paddedDistanceToEdge0 <= Q12(0.0f) || curChunk->paddedDistanceToEdge1 <= Q12(0.0f)))
@@ -958,7 +958,7 @@ bool Ipd_ChunksLoadedCheck(void) // 0x80043740
     s32      i;
     s_Chunk* curChunk;
 
-    switch (Lm_LoadStateGet(&g_MapTerrain.globalLm))
+    switch (Ipd_LmLoadStateGet(&g_MapTerrain.globalLm))
     {
         case StaticModelLoadState_Invalid:
             break;
@@ -1027,7 +1027,7 @@ bool Ipd_NextChunkLoadCheck(void) // 0x80043830
     return false;
 }
 
-bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
+bool Ipd_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ) // 0x8004393C
 {
     s32 cellX;
     s32 cellZ;
@@ -1055,7 +1055,7 @@ void Ipd_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
     s32      loadState;
     s_Chunk* curChunk;
 
-    loadState = Map_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx);
+    loadState = Ipd_ChunkLoadStateGet(g_MapTerrain.globalLm.queueIdx);
 
     if (loadState == ChunkLoadState_Unloaded)
     {
@@ -1111,7 +1111,7 @@ s_IpdCollisionData* Ipd_HeaderCollisionDataGet(s_IpdHeader* ipdHdr) // 0x80043BA
     return NULL;
 }
 
-void Ipd_Init(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
+void Ipd_LoadedChunkInit(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
               s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
               e_FsFile fileIdx) // 0x80043BC4
 {

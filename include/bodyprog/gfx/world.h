@@ -8,14 +8,12 @@
 #include "bodyprog/map/map.h"
 #include "bodyprog/view/structs.h"
 
-/** @brief World GFX workspace.
- * TODO: Could be `s_WorldWork`? Contains more than GFX data.
- */
+/** @brief World GFX workspace. */
 typedef struct _WorldGfxWork
 {
     /* 0x0    */ s_MapInfo*          mapInfo;
     /* 0x4    */ u8                  useStoredPoint; /** `bool` */
-    /* 0x5    */ s8                  __pad_5[3];
+    /* 0x5    */ s8                  __pad[3];
     /* 0x8    */ VECTOR3             ipdSamplePoint; /** Used by IPD logic to sample which chunks to load or unload. */
     /* 0x14   */ u8*                 charaLmBuffer;
     /* 0x18   */ s_CharaModel*       registeredCharaModels[Chara_Count];

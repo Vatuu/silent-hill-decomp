@@ -261,7 +261,7 @@ void func_800D1910(void) // 0x800D1910
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 117, false);
             D_800D37C0 = 0;
 
-            Gfx_MapInitMapEffectsUpdate(15, 15);
+            Gfx_MapEnvSet(15, 15);
             SysWork_StateStepIncrement(0);
             g_WorldObject0.position.vz = Q12(141.0f);
             break;
@@ -613,14 +613,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D2DF4
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
+        WorldObjects_Add(&g_WorldObjectSavepad.object, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {
-            WorldGfx_ObjectAdd(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_Zero);
         }
     }
 }
