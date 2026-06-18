@@ -432,6 +432,7 @@ WorldGfx_CharaModelLoad                      = 0x8003D7D4; // type:func
 WorldGfx_PlayerModelProcessLoad              = 0x8003D938; // type:func
 WorldGfx_CharaModelProcessAllLoads           = 0x8003D95C; // type:func
 WorldGfx_CharaModelProcessLoad               = 0x8003D9C8; // type:func
+WorldGfx_CharaDraw                           = 0x8003DA9C;
 WorldGfx_HeldItemAttach                      = 0x8003DD80; // type:func
 
 //-----------------------------------------------------------------------------
@@ -458,6 +459,7 @@ Gfx_FogParametersSet                         = 0x8003F08C; // type:func
 Gfx_EffectsUpdate                            = 0x8003F170; // type:func
 Gfx_ProgressAlphaGet                         = 0x8003F6F0;
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
+WorldEnv_FogLightingParamsUpdate             = 0x8003FF2C;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, events/collision_trigger
