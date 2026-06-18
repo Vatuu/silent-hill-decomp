@@ -141,14 +141,14 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_END);
 }
 
-void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOfs, VECTOR3* camPos) // 0x80080B58
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOffset, VECTOR3* camPos) // 0x80080B58
 {
     MATRIX rotMat;
 
     vcWork.updateLookAtMat = true;
 
     Vw_CoordHierarchyMatrixCompute(boneCoord, &vcWork.lookAtMat);
-    Math_RotMatrixZxyNeg(rotOfs, &rotMat);
+    Math_RotMatrixZxyNeg(rotOffset, &rotMat);
     MulMatrix(&vcWork.lookAtMat, &rotMat);
 
     vcWork.lookAtMat.t[0] = Q12_TO_Q8(camPos->vx);
@@ -471,7 +471,7 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p) // 0x80081428
     return w_p->cur_near_road.road_p->cam_mv_type;
 }
 
-bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ)
+bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ) // 8008150C
 {
     switch (Map_TypeGet())
     {
@@ -890,9 +890,10 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
         return;
     }
 
+    // Run through NPCs.
     for (sc_p = &g_SysWork.npcs[0]; sc_p < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; sc_p++)
     {
-        if (sc_p->model.charaId >= Chara_AirScreamer &&
+        if (sc_p->model.charaId >= Chara_AirScreamer   &&
             sc_p->model.charaId <= CHARA_LAST_ENEMY_ID &&
             (sc_p->deathTimer <= ENEMY_DEATH_TIME_MAX || sc_p->health >= Q12(0.0f)) &&
             !(sc_p->flags & CharaFlag_Unk5)) // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
@@ -907,7 +908,9 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
             }
 
             xz_dist = Vc_VectorMagnitudeCalc(ofs_x, 0, ofs_z);
-            ratan2(ofs_x, ofs_z); // @unused Result unused?
+
+            // @unused Result unused?
+            ratan2(ofs_x, ofs_z);
 
             if (xz_dist < all_min_dist)
             {

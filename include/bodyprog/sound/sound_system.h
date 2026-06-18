@@ -70,7 +70,7 @@ typedef enum _AudioLoadState
     AudioLoadState_Finalize  = 9
 } e_AudioLoadState;
 
-/** @brief Audio streaming states returned by `Sd_AudioStreamingCheck`. */
+/** @brief Audio streaming states. Returned by `Sd_AudioStreamingCheck`. */
 typedef enum _AudioStreamingState
 {
     AudioStreamingState_None          = 0,

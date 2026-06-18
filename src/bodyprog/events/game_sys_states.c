@@ -795,9 +795,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
             {
                 Savegame_EventFlagSet(EventFlag_SeenSaveScreen);
-
                 GameFs_SaveLoadBinLoad();
-
                 ScreenFade_Start(true, false, false);
                 SysWork_StateStepIncrement(0);
             }
@@ -807,9 +805,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
             if (D_800A9A0C != 0)
             {
                 ScreenFade_Start(true, true, false);
-
                 func_8003943C();
-
                 Game_StateSetNext(GameState_SaveScreen);
             }
             break;

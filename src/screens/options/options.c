@@ -144,7 +144,6 @@ void GameState_Options_Update(void) // 0x801E2D44
             if (ScreenFade_IsFinished())
             {
                 Fs_QueueWaitForEmpty();
-
                 Game_StateStepSet(0, OptionsMenuState_Brightness);
             }
             break;
@@ -167,7 +166,6 @@ void GameState_Options_Update(void) // 0x801E2D44
 
         case OptionsMenuState_Leave:
             ScreenFade_Start(true, false, false);
-
             Game_StateStepSet(0, OptionsMenuState_LeaveMainOptions);
             break;
 
@@ -253,7 +251,6 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
             (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.option))
         {
             Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
-
             Game_StateStepSet(0, OptionsMenuState_Leave);
             return;
         }
@@ -413,7 +410,6 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         }
 
         ScreenFade_Start(true, false, false);
-        
         Game_StateStepSet(0, OptionsMenuState_LeaveExtraOptions);
     }
 }
@@ -462,7 +458,6 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.option))
     {
         Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
-
         Game_StateStepSet(0, OptionsMenuState_Leave);
         return;
     }
@@ -492,7 +487,6 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 Sd_PlaySfx(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
-
                 Game_StateStepSet(0, OptionsMenuState_Leave);
             }
             break;
@@ -503,9 +497,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
-
                 ScreenFade_Start(true, false, false);
-
                 Game_StateStepSet(0, OptionsMenuState_EnterController);
             }
             break;
@@ -515,9 +507,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_PlaySfx(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
-
                 ScreenFade_Start(true, false, false);
-
                 Game_StateStepSet(0, OptionsMenuState_EnterScreenPos);
             }
             break;

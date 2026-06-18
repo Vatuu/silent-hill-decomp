@@ -100,7 +100,6 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 if (Demo_PlayFileBufferSetup() != 0)
                 {
                     GameBoot_MapLoad(g_SavegamePtr->mapIdx);
-
                     Game_StateStepSet(0, 2);
                     break;
                 }
@@ -122,7 +121,6 @@ void GameBoot_WorldStartup(void) // 0x80034964
             if (Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_PlayDataRead();
-
                 Game_StateStepSet(0, 3);
             }
             break;

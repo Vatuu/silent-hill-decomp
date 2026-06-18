@@ -80,9 +80,10 @@ void func_800D6704(void) // 0x800D6704
 {
     s32 i;
 
-    // Breaks from loop if there are any characters with ID in range [1, 24].
-    for (i = 0; i < 6; i++)
+    // Run through NPCs.
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
+        // Break on the first enemy character.
         if (g_SysWork.npcs[i].model.charaId >= Chara_Harry &&
             g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID)
         {
@@ -90,7 +91,7 @@ void func_800D6704(void) // 0x800D6704
         }
     }
 
-    if (i != 6)
+    if (i != ARRAY_SIZE(g_SysWork.npcs))
     {
         g_DeltaTime = Q12(0.0f);
     }
@@ -104,6 +105,8 @@ void func_800D6774(void) // 0x800D6774
     VECTOR3            vec;
     s32                i;
 
+    #define playerChara g_SysWork.playerWork.player
+
     // Skip.
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 11)
@@ -116,8 +119,9 @@ void func_800D6774(void) // 0x800D6774
         case 0:
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(120.5f), Q12(-9.5f), Q12(137.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vy, g_SysWork.playerWork.player.position.vz,
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL,
+                                  playerChara.position.vx, playerChara.position.vy, playerChara.position.vz,
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             D_800DB9E0 = Q12(0.0f);
             break;
@@ -170,18 +174,18 @@ void func_800D6774(void) // 0x800D6774
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 129, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 129, false);
             }
             else
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 128, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 128, false);
             }
 
-            Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            Collision_SurfaceGet(&surface, playerChara.position.vx, playerChara.position.vz);
             CutsceneBorder_ForceShow();
             ScreenFade_ResetTimestep();
 
-            g_SysWork.playerWork.player.position.vy = surface.groundHeight;
+            playerChara.position.vy = surface.groundHeight;
 
             Sfx_WithFlagsPlay(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
             func_80089470();
@@ -190,7 +194,7 @@ void func_800D6774(void) // 0x800D6774
 
         case 1:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &playerChara, 0, false);
             break;
 
         case 2:
@@ -207,15 +211,15 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &playerChara, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &playerChara, 0, false);
             break;
 
         case 7:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 123, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 123, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -225,10 +229,10 @@ void func_800D6774(void) // 0x800D6774
         case 9:
             Player_ControlUnfreeze(true);
             Player_ControlFreeze();
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 52, false);
 
-            g_SysWork.playerWork.player.position.vx += Q12(0.5f);
-            g_SysWork.playerWork.player.rotation.vy += Q12_ANGLE(45.0f);
+            playerChara.position.vx += Q12(0.5f);
+            playerChara.rotation.vy += Q12_ANGLE(45.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -257,9 +261,9 @@ void func_800D6774(void) // 0x800D6774
 
         case 13:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(120.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(141.5f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
+            playerChara.position.vx = Q12(120.0f);
+            playerChara.position.vz = Q12(141.5f);
+            playerChara.rotation.vy = Q12_ANGLE(-45.0f);
 
             Savegame_EventFlagSet(EventFlag_329);
 
@@ -281,6 +285,8 @@ void func_800D6774(void) // 0x800D6774
             func_8003A16C();
             break;
     }
+
+    #undef playerChara
 }
 
 void func_800D6F24(void) // 0x800D6F24
@@ -290,6 +296,8 @@ void func_800D6F24(void) // 0x800D6F24
     s32   var_a2;
     s32   var_v0;
     void* var_s0;
+
+    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
@@ -314,9 +322,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 3:
-            g_SysWork.playerWork.player.position.vx = Q12(124.4f);
-            g_SysWork.playerWork.player.position.vz = Q12(140.9f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+            playerChara.position.vx = Q12(124.4f);
+            playerChara.position.vz = Q12(140.9f);
+            playerChara.rotation.vy = Q12_ANGLE(90.0f);
 
             Event_CameraPositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -349,8 +357,8 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 8:
-            g_SysWork.playerWork.player.position.vx = Q12(126.86f);
-            g_SysWork.playerWork.player.position.vz = Q12(140.36f);
+            playerChara.position.vx = Q12(126.86f);
+            playerChara.position.vz = Q12(140.36f);
 
             Event_CameraPositionSet(NULL, Q12(122.55f), Q12(-2.1f), Q12(138.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(126.39f), Q12(-1.73f), Q12(139.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -368,9 +376,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 10:
-            g_SysWork.playerWork.player.position.vx = Q12(126.86f);
-            g_SysWork.playerWork.player.position.vz = Q12(140.36f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+            playerChara.position.vx = Q12(126.86f);
+            playerChara.position.vz = Q12(140.36f);
+            playerChara.rotation.vy = Q12_ANGLE(90.0f);
 
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
@@ -391,6 +399,8 @@ void func_800D6F24(void) // 0x800D6F24
             func_8003A16C();
             break;
     }
+
+    #undef playerChara
 }
 
 s16 func_800D7394(void) // 0x800D7394
@@ -462,28 +472,28 @@ void func_800D7548(void) // 0x800D7548
 
     func_800D761C(&D_800E0698.field_8[9], &D_800DB7D4, 1, 0);
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800DB7E4); i++)
     {
-        for (j = 0; j < 3; j++)
+        for (j = 0; j < ARRAY_SIZE(D_800DB7E4[i]); j++)
         {
-            func_800D761C(&D_800E0698.field_8[(i * 3) + j], &D_800DB7E4[i][j], 0, 0);
+            func_800D761C(&D_800E0698.field_8[(i * ARRAY_SIZE(D_800DB7E4)) + j], &D_800DB7E4[i][j], 0, 0);
         }
     }
 }
 
 void func_800D761C(s_800E06A0* arg0, s_800DB7D4* arg1, s8 arg2, s32 arg3) // 0x800D761C
 {
-    arg0->field_20    = arg2;
-    arg0->field_22    = 0;
-    arg0->field_24    = 0;
-    arg0->field_23    = 0;
-    arg0->field_2C    = 0;
-    arg0->field_21    = 0;
+    arg0->field_20 = arg2;
+    arg0->field_22 = 0;
+    arg0->field_24 = 0;
+    arg0->field_23 = 0;
+    arg0->field_2C = 0;
+    arg0->field_21 = 0;
 
     arg0->field_0[0] = arg1->field_0;
     arg0->field_0[3] = arg1->field_8;
 
-    // Switches `vy` to the other arg1 field?
+    // Switches `vy` to the other `arg1` field?
     arg0->field_0[1].vx = arg1->field_8.vx;
     arg0->field_0[1].vy = arg1->field_0.vy;
     arg0->field_0[1].vz = arg1->field_8.vz;

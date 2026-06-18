@@ -33,17 +33,18 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through
 
 /** @brief Builds the cutscene view matrix from a bone's orientation, anchored at an explicit camera position.
  *
- * - Uses `boneCoord`'s world orientation as the view direction (optionally tweaked by `rotOfs`).
+ * @note
+ * - Uses `boneCoord`'s world orientation as the view direction (optionally tweaked by `rotOffset`).
  * - Overwrites the translation with `camPos`, so the view tracks the animated bone while the
  *   camera stays pinned to a scripted position.
  * - Sets `updateLookAtMat` so `vcSetDataToVwSystem` applies the matrix directly, bypassing
  *   normal camera logic.
  *
  * @param boneCoord Bone coord whose orientation drives the view direction.
- * @param rotOfs    Extra rotation offset on the bone orientation (ZXY, negated); typically zero.
- * @param camPos    World-space camera position (Q19.12); replaces the bone's translation.
+ * @param rotOffset Extra rotation offset on the bone orientation (ZXY, negated). Typically zero.
+ * @param camPos World-space camera position (Q19.12). Replaces the bone's translation.
  */
-void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOfs, VECTOR3* camPos);
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOffset, VECTOR3* camPos);
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 
@@ -90,15 +91,15 @@ s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVEC
 
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
 
-/** @brief Checks if the given `posX` & `posZ` land inside specific areas of `THR` and `SPR` maps.
+/** @brief Checks if a position is inside specific areas of `THR` and `SPR` maps.
   *
-  * @note Only callers to this appear to use result to decide if self-view can be used or not.
-  * Likely these are zones where self-view is temporarily restricted.
+  * @note Only callers to this appear to use the result to decide if first-person view can be used or not.
+  * Likely these are zones where first-person view is temporarily restricted.
   *
   * @param posX X position.
   * @param posZ Z position.
-  * @returns `true` if the current map is `THR` or `SPR` and the position falls within
-  * that map's restricted zone. Always `false` for all other map types.
+  * @returns `true` if the current map is `THR` or `SPR` and the position is within  the map's restricted zone,
+  * otherwise `false` for all other map types.
   */
 bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ);
 
