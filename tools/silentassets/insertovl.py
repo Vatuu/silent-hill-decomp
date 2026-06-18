@@ -201,7 +201,7 @@ def main():
     
     # Replace's exe file table
     EXE = open(args.executable, "rb")
-    newEXE = open(args.outputFolder+"/new_SLUS_007.07", "wb")
+    newEXE = open(args.outputFolder+"/USA/new_SLUS_007.07", "wb")
     EXENewData = bytearray()
     fileTableNewEcrypted = []
     sumPos = 0
@@ -245,7 +245,7 @@ def main():
     # Write new files on SILENT     |       HILL doesn't matter as it does not
     # contain any overlay and the new file table already adjusted the file positions
     SILENT = open(args.silentFile, "rb")
-    newSILENT = open(args.outputFolder+"/new_SILENT.", "wb")
+    newSILENT = open(args.outputFolder+"/USA/new_SILENT.", "wb")
     index = 0
     for x in fileTableNew:
         
@@ -271,7 +271,7 @@ def main():
         SILENT.seek((fileTableOrig[x[4] + 1][0] - 64 ) * 2048)
     
     with open(args.xmlFile, "r") as XML:
-        with open(os.path.dirname(args.xmlFile)+"/shgame.xml", "a+") as newXML:
+        with open(os.path.dirname(args.xmlFile)+"/rebuild.xml", "a+") as newXML:
             newXML.truncate(0)
             for fileLine in XML:
                 if "image_name=\"mkpsxiso.bin\"" in fileLine:
