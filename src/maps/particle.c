@@ -59,8 +59,8 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
     WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
     g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
-    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
-    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation);
 
     switch (arg3)
     {
@@ -128,8 +128,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
     WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
     g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
-    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
-    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation);
 
 #if defined(MAP5_S01)
     g_Particle_SpeedX = 0;
@@ -142,53 +142,53 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 #if defined(MAP0_S00)
             sharedData_800DD591_0_s00 = 1;
 
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
-            sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
+            g_ParticleBox.corners[0].vx = Q12(-5.0f);
+            g_ParticleBox.corners[0].vy = Q12(-4.5f);
+            g_ParticleBox.corners[0].vz = Q12(211.0f);
 
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
+            g_ParticleBox.corners[1].vx = Q12(15.0f);
+            g_ParticleBox.corners[1].vy = Q12(-4.5f);
+            g_ParticleBox.corners[1].vz = Q12(211.0f);
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
 
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-0.30f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(275.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-0.30f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(265.0f);
+            g_ParticleBox.corners[0].vx = Q12(-0.30f);
+            g_ParticleBox.corners[0].vz = Q12(275.0f);
+            g_ParticleBox.corners[1].vx = Q12(-0.30f);
+            g_ParticleBox.corners[1].vz = Q12(265.0f);
 #elif defined(MAP1_S06)
             switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 12:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(105.5f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(67.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(105.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(50.0f);
+                    g_ParticleBox.corners[0].vx = Q12(105.5f);
+                    g_ParticleBox.corners[0].vz = Q12(67.0f);
+                    g_ParticleBox.corners[1].vx = Q12(105.5f);
+                    g_ParticleBox.corners[1].vz = Q12(50.0f);
                     break;
 
                 case 13:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(145.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(24.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(132.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(24.0f);
+                    g_ParticleBox.corners[0].vx = Q12(145.0f);
+                    g_ParticleBox.corners[0].vz = Q12(24.0f);
+                    g_ParticleBox.corners[1].vx = Q12(132.0f);
+                    g_ParticleBox.corners[1].vz = Q12(24.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00             = 1;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(137.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(62.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(137.0f);
+                    g_ParticleBox.corners[0].vx = Q12(55.0f);
+                    g_ParticleBox.corners[0].vz = Q12(137.0f);
+                    g_ParticleBox.corners[1].vx = Q12(62.0f);
+                    g_ParticleBox.corners[1].vz = Q12(137.0f);
                     break;
 
                 case 14:
                     sharedData_800DD591_0_s00             = 2;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(96.5f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(103.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.0f);
+                    g_ParticleBox.corners[0].vx = Q12(96.5f);
+                    g_ParticleBox.corners[0].vz = Q12(15.0f);
+                    g_ParticleBox.corners[1].vx = Q12(103.5f);
+                    g_ParticleBox.corners[1].vz = Q12(15.0f);
                     break;
             }
 #elif defined(MAP2_S00)
@@ -196,58 +196,58 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             {
                 case 38:
                     sharedData_800DD591_0_s00                 = 10;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(120.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(303.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(110.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(303.5f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(295.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(305.0f);
-                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(111.3f);
-                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(298.0f);
-                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(111.3f);
-                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(295.0f);
+                    g_ParticleBox.corners[0].vx = Q12(120.0f);
+                    g_ParticleBox.corners[0].vz = Q12(303.5f);
+                    g_ParticleBox.corners[1].vx = Q12(110.0f);
+                    g_ParticleBox.corners[1].vz = Q12(303.5f);
+                    g_ParticleBox.corners[2].vx = Q12(128.3f);
+                    g_ParticleBox.corners[2].vz = Q12(295.0f);
+                    g_ParticleBox.corners[3].vx = Q12(128.3f);
+                    g_ParticleBox.corners[3].vz = Q12(305.0f);
+                    g_ParticleBox.corners[4].vx = Q12(111.3f);
+                    g_ParticleBox.corners[4].vz = Q12(298.0f);
+                    g_ParticleBox.corners[5].vx = Q12(111.3f);
+                    g_ParticleBox.corners[5].vz = Q12(295.0f);
                     break;
 
                 case 23:
                     sharedData_800DD591_0_s00                 = 1;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-186.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(301.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-188.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(301.0f);
+                    g_ParticleBox.corners[0].vx = Q12(-186.0f);
+                    g_ParticleBox.corners[0].vz = Q12(301.0f);
+                    g_ParticleBox.corners[1].vx = Q12(-188.0f);
+                    g_ParticleBox.corners[1].vz = Q12(301.0f);
                     break;
 
                 case 37:
                     sharedData_800DD591_0_s00                 = 9;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(121.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(223.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(114.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(223.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(215.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(220.0f);
+                    g_ParticleBox.corners[0].vx = Q12(121.0f);
+                    g_ParticleBox.corners[0].vz = Q12(223.0f);
+                    g_ParticleBox.corners[1].vx = Q12(114.0f);
+                    g_ParticleBox.corners[1].vz = Q12(223.0f);
+                    g_ParticleBox.corners[2].vx = Q12(128.3f);
+                    g_ParticleBox.corners[2].vz = Q12(215.0f);
+                    g_ParticleBox.corners[3].vx = Q12(128.3f);
+                    g_ParticleBox.corners[3].vz = Q12(220.0f);
                     break;
 
                 case 40:
                     sharedData_800DD591_0_s00                 = 11;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-48.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(349.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-48.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(343.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-39.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(343.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-39.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(349.0f);
-                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-39.0f);
-                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(349.0f);
-                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-48.0f);
-                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(349.0f);
-                    sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-48.0f);
-                    sharedData_800E326C_0_s00.corners_0[6].vz = Q12(343.0f);
-                    sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-39.0f);
-                    sharedData_800E326C_0_s00.corners_0[7].vz = Q12(343.0f);
+                    g_ParticleBox.corners[0].vx = Q12(-48.0f);
+                    g_ParticleBox.corners[0].vz = Q12(349.0f);
+                    g_ParticleBox.corners[1].vx = Q12(-48.0f);
+                    g_ParticleBox.corners[1].vz = Q12(343.0f);
+                    g_ParticleBox.corners[2].vx = Q12(-39.0f);
+                    g_ParticleBox.corners[2].vz = Q12(343.0f);
+                    g_ParticleBox.corners[3].vx = Q12(-39.0f);
+                    g_ParticleBox.corners[3].vz = Q12(349.0f);
+                    g_ParticleBox.corners[4].vx = Q12(-39.0f);
+                    g_ParticleBox.corners[4].vz = Q12(349.0f);
+                    g_ParticleBox.corners[5].vx = Q12(-48.0f);
+                    g_ParticleBox.corners[5].vz = Q12(349.0f);
+                    g_ParticleBox.corners[6].vx = Q12(-48.0f);
+                    g_ParticleBox.corners[6].vz = Q12(343.0f);
+                    g_ParticleBox.corners[7].vx = Q12(-39.0f);
+                    g_ParticleBox.corners[7].vz = Q12(343.0f);
                     break;
 
                 default:
@@ -256,63 +256,63 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             }
 #elif defined(MAP2_S02)
             sharedData_800DD591_0_s00                 = 0;
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-31.0f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-8.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-31.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-11.0f);
-            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-25.5f);
-            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-8.0f);
-            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-31.0f);
-            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-8.0f);
-            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-25.5f);
-            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.0f);
-            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-25.5f);
-            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-8.0f);
+            g_ParticleBox.corners[0].vx = Q12(-31.0f);
+            g_ParticleBox.corners[0].vz = Q12(-8.0f);
+            g_ParticleBox.corners[1].vx = Q12(-31.0f);
+            g_ParticleBox.corners[1].vz = Q12(-11.0f);
+            g_ParticleBox.corners[2].vx = Q12(-25.5f);
+            g_ParticleBox.corners[2].vz = Q12(-8.0f);
+            g_ParticleBox.corners[3].vx = Q12(-31.0f);
+            g_ParticleBox.corners[3].vz = Q12(-8.0f);
+            g_ParticleBox.corners[4].vx = Q12(-25.5f);
+            g_ParticleBox.corners[4].vz = Q12(-11.0f);
+            g_ParticleBox.corners[5].vx = Q12(-25.5f);
+            g_ParticleBox.corners[5].vz = Q12(-8.0f);
 #elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
             switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 3:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(101.5f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(100.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(101.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(105.0f);
+                    g_ParticleBox.corners[0].vx = Q12(101.5f);
+                    g_ParticleBox.corners[0].vz = Q12(100.0f);
+                    g_ParticleBox.corners[1].vx = Q12(101.5f);
+                    g_ParticleBox.corners[1].vz = Q12(105.0f);
                     break;
 
                 case 5:
                     sharedData_800DD591_0_s00                 = 1;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(17.7f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(30.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(17.7f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(17.5f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(15.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(15.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(15.0f);
+                    g_ParticleBox.corners[0].vx = Q12(17.7f);
+                    g_ParticleBox.corners[0].vz = Q12(30.0f);
+                    g_ParticleBox.corners[1].vx = Q12(17.7f);
+                    g_ParticleBox.corners[1].vz = Q12(17.0f);
+                    g_ParticleBox.corners[2].vx = Q12(17.5f);
+                    g_ParticleBox.corners[2].vz = Q12(15.0f);
+                    g_ParticleBox.corners[3].vx = Q12(15.0f);
+                    g_ParticleBox.corners[3].vz = Q12(15.0f);
                     break;
 
                 case 8:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(63.5f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(57.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(63.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(63.0f);
+                    g_ParticleBox.corners[0].vx = Q12(63.5f);
+                    g_ParticleBox.corners[0].vz = Q12(57.0f);
+                    g_ParticleBox.corners[1].vx = Q12(63.5f);
+                    g_ParticleBox.corners[1].vz = Q12(63.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(104.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(61.5f);
+                    g_ParticleBox.corners[0].vx = Q12(104.0f);
+                    g_ParticleBox.corners[0].vz = Q12(56.0f);
+                    g_ParticleBox.corners[1].vx = Q12(104.0f);
+                    g_ParticleBox.corners[1].vz = Q12(61.5f);
                     break;
 
                 case 11:
                     sharedData_800DD591_0_s00                 = 2;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(143.8f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(18.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(143.8f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(22.0f);
+                    g_ParticleBox.corners[0].vx = Q12(143.8f);
+                    g_ParticleBox.corners[0].vz = Q12(18.0f);
+                    g_ParticleBox.corners[1].vx = Q12(143.8f);
+                    g_ParticleBox.corners[1].vz = Q12(22.0f);
                     break;
 
                 default:
@@ -323,10 +323,10 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             if (g_SavegamePtr->mapRoomIdx == 20)
             {
                 sharedData_800DD591_0_s00                 = 1;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(133.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(130.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(133.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(150.0f);
+                g_ParticleBox.corners[0].vx = Q12(133.0f);
+                g_ParticleBox.corners[0].vz = Q12(130.0f);
+                g_ParticleBox.corners[1].vx = Q12(133.0f);
+                g_ParticleBox.corners[1].vz = Q12(150.0f);
             }
 
 #elif defined(MAP5_S03)
@@ -836,8 +836,8 @@ bool Particle_Update(s_Particle* partHead)
 
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
-    g_Particle_Position.vz = g_ParticleVectors0.viewPosition_C.vz + Q12_MULT(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
+    g_Particle_Position.vx = g_ParticleVectors0.viewPosition.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation.vy), Q12(3.0));
+    g_Particle_Position.vz = g_ParticleVectors0.viewPosition.vz + Q12_MULT(Math_Cos(g_ParticleVectors0.viewRotation.vy), Q12(3.0));
 #if defined(MAP1_S06)
     g_Particle_Position.vy = Q12(-10.0);
 #else
@@ -933,36 +933,36 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx)
     {
         case 2:
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-101.5f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.8f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-101.5f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
-            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-98.5f);
-            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(17.0f);
-            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-98.5f);
-            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(23.8f);
-            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-98.5f);
-            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(23.8f);
-            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-101.5f);
-            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(23.8f);
-            sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-101.5f);
-            sharedData_800E326C_0_s00.corners_0[6].vz = Q12(17.0f);
-            sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-98.5f);
-            sharedData_800E326C_0_s00.corners_0[7].vz = Q12(17.0f);
+            g_ParticleBox.corners[0].vx = Q12(-101.5f);
+            g_ParticleBox.corners[0].vz = Q12(23.8f);
+            g_ParticleBox.corners[1].vx = Q12(-101.5f);
+            g_ParticleBox.corners[1].vz = Q12(17.0f);
+            g_ParticleBox.corners[2].vx = Q12(-98.5f);
+            g_ParticleBox.corners[2].vz = Q12(17.0f);
+            g_ParticleBox.corners[3].vx = Q12(-98.5f);
+            g_ParticleBox.corners[3].vz = Q12(23.8f);
+            g_ParticleBox.corners[4].vx = Q12(-98.5f);
+            g_ParticleBox.corners[4].vz = Q12(23.8f);
+            g_ParticleBox.corners[5].vx = Q12(-101.5f);
+            g_ParticleBox.corners[5].vz = Q12(23.8f);
+            g_ParticleBox.corners[6].vx = Q12(-101.5f);
+            g_ParticleBox.corners[6].vz = Q12(17.0f);
+            g_ParticleBox.corners[7].vx = Q12(-98.5f);
+            g_ParticleBox.corners[7].vz = Q12(17.0f);
             break;
 
         case 3:
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-145.0f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.5f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-135.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.5f);
+            g_ParticleBox.corners[0].vx = Q12(-145.0f);
+            g_ParticleBox.corners[0].vz = Q12(15.5f);
+            g_ParticleBox.corners[1].vx = Q12(-135.0f);
+            g_ParticleBox.corners[1].vz = Q12(15.5f);
             break;
 
         case 4:
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-184.0f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-184.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(16.0f);
+            g_ParticleBox.corners[0].vx = Q12(-184.0f);
+            g_ParticleBox.corners[0].vz = Q12(23.0f);
+            g_ParticleBox.corners[1].vx = Q12(-184.0f);
+            g_ParticleBox.corners[1].vz = Q12(16.0f);
             break;
     }
 
@@ -986,12 +986,12 @@ bool Particle_Update(s_Particle* partHead)
             if (g_SysWork.playerWork.player.position.vz > Q12(200.0f))
             {
                 sharedData_800DD591_0_s00 = 1;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
+                g_ParticleBox.corners[0].vx = Q12(-5.0f);
+                g_ParticleBox.corners[0].vy = Q12(-4.5f);
+                g_ParticleBox.corners[0].vz = Q12(211.0f);
+                g_ParticleBox.corners[1].vx = Q12(15.0f);
+                g_ParticleBox.corners[1].vy = Q12(-4.5f);
+                g_ParticleBox.corners[1].vz = Q12(211.0f);
             }
             else
             {
@@ -1006,18 +1006,18 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.playerWork.player.position.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-44.5f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-11.2f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-44.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-43.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-43.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-11.2f);
-                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-43.0f);
-                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.2f);
-                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-44.5f);
-                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-11.2f);
+                    g_ParticleBox.corners[0].vx = Q12(-44.5f);
+                    g_ParticleBox.corners[0].vz = Q12(-11.2f);
+                    g_ParticleBox.corners[1].vx = Q12(-44.5f);
+                    g_ParticleBox.corners[1].vz = Q12(-13.0f);
+                    g_ParticleBox.corners[2].vx = Q12(-43.0f);
+                    g_ParticleBox.corners[2].vz = Q12(-13.0f);
+                    g_ParticleBox.corners[3].vx = Q12(-43.0f);
+                    g_ParticleBox.corners[3].vz = Q12(-11.2f);
+                    g_ParticleBox.corners[4].vx = Q12(-43.0f);
+                    g_ParticleBox.corners[4].vz = Q12(-11.2f);
+                    g_ParticleBox.corners[5].vx = Q12(-44.5f);
+                    g_ParticleBox.corners[5].vz = Q12(-11.2f);
             }
             else if (g_SysWork.playerWork.player.position.vx > Q12(-90.0f) &&
                      g_SysWork.playerWork.player.position.vx < Q12(-56.0f) &&
@@ -1025,18 +1025,18 @@ bool Particle_Update(s_Particle* partHead)
                      g_SysWork.playerWork.player.position.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-79.0f);
-                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-10.5f);
-                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-79.0f);
-                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
-                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-66.5f);
-                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
-                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-66.5f);
-                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-10.5f);
-                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-66.5f);
-                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-10.5f);
-                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-79.0f);
-                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-10.5f);
+                    g_ParticleBox.corners[0].vx = Q12(-79.0f);
+                    g_ParticleBox.corners[0].vz = Q12(-10.5f);
+                    g_ParticleBox.corners[1].vx = Q12(-79.0f);
+                    g_ParticleBox.corners[1].vz = Q12(-13.0f);
+                    g_ParticleBox.corners[2].vx = Q12(-66.5f);
+                    g_ParticleBox.corners[2].vz = Q12(-13.0f);
+                    g_ParticleBox.corners[3].vx = Q12(-66.5f);
+                    g_ParticleBox.corners[3].vz = Q12(-10.5f);
+                    g_ParticleBox.corners[4].vx = Q12(-66.5f);
+                    g_ParticleBox.corners[4].vz = Q12(-10.5f);
+                    g_ParticleBox.corners[5].vx = Q12(-79.0f);
+                    g_ParticleBox.corners[5].vz = Q12(-10.5f);
             }
             else
             {
@@ -1050,31 +1050,31 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.playerWork.player.position.vz > Q12(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-232.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(151.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-229.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(151.0f);
-                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-232.0f);
-                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(158.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-232.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(151.0f);
-                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-228.0f);
-                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(151.0f);
-                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-228.0f);
-                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(158.0f);
+                g_ParticleBox.corners[0].vx = Q12(-232.0f);
+                g_ParticleBox.corners[0].vz = Q12(151.0f);
+                g_ParticleBox.corners[1].vx = Q12(-229.0f);
+                g_ParticleBox.corners[1].vz = Q12(151.0f);
+                g_ParticleBox.corners[2].vx = Q12(-232.0f);
+                g_ParticleBox.corners[2].vz = Q12(158.0f);
+                g_ParticleBox.corners[3].vx = Q12(-232.0f);
+                g_ParticleBox.corners[3].vz = Q12(151.0f);
+                g_ParticleBox.corners[4].vx = Q12(-228.0f);
+                g_ParticleBox.corners[4].vz = Q12(151.0f);
+                g_ParticleBox.corners[5].vx = Q12(-228.0f);
+                g_ParticleBox.corners[5].vz = Q12(158.0f);
             }
             else if (g_SysWork.playerWork.player.position.vx <= Q12(-240.0f) &&
                      g_SysWork.playerWork.player.position.vz > Q12(133.0f))
             {
                 sharedData_800DD591_0_s00 = 9;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-251.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(142.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-248.2f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(142.0f);
-                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-248.2f);
-                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(142.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-248.2f);
-                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(147.0f);
+                g_ParticleBox.corners[0].vx = Q12(-251.0f);
+                g_ParticleBox.corners[0].vz = Q12(142.0f);
+                g_ParticleBox.corners[1].vx = Q12(-248.2f);
+                g_ParticleBox.corners[1].vz = Q12(142.0f);
+                g_ParticleBox.corners[2].vx = Q12(-248.2f);
+                g_ParticleBox.corners[2].vz = Q12(142.0f);
+                g_ParticleBox.corners[3].vx = Q12(-248.2f);
+                g_ParticleBox.corners[3].vz = Q12(147.0f);
             }
             else
             {
@@ -1089,18 +1089,18 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.playerWork.player.position.vz < Q12(-72.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-208.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-93.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-208.0f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-91.0f);
-                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-212.0f);
-                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-91.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-212.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-93.0f);
-                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-208.0f);
-                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-91.0f);
-                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-212.0f);
-                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-91.0f);
+                g_ParticleBox.corners[0].vx = Q12(-208.0f);
+                g_ParticleBox.corners[0].vz = Q12(-93.0f);
+                g_ParticleBox.corners[1].vx = Q12(-208.0f);
+                g_ParticleBox.corners[1].vz = Q12(-91.0f);
+                g_ParticleBox.corners[2].vx = Q12(-212.0f);
+                g_ParticleBox.corners[2].vz = Q12(-91.0f);
+                g_ParticleBox.corners[3].vx = Q12(-212.0f);
+                g_ParticleBox.corners[3].vz = Q12(-93.0f);
+                g_ParticleBox.corners[4].vx = Q12(-208.0f);
+                g_ParticleBox.corners[4].vz = Q12(-91.0f);
+                g_ParticleBox.corners[5].vx = Q12(-212.0f);
+                g_ParticleBox.corners[5].vz = Q12(-91.0f);
             }
             else
             {
@@ -1113,18 +1113,18 @@ bool Particle_Update(s_Particle* partHead)
                 g_SysWork.playerWork.player.position.vz < Q12(-175.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-287.0f);
-                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-182.5f);
-                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-285.5f);
-                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-182.5f);
-                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-285.5f);
-                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-177.5f);
-                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-287.0f);
-                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-177.5f);
-                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-285.5f);
-                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-181.5f);
-                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-285.5f);
-                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-178.4f);
+                g_ParticleBox.corners[0].vx = Q12(-287.0f);
+                g_ParticleBox.corners[0].vz = Q12(-182.5f);
+                g_ParticleBox.corners[1].vx = Q12(-285.5f);
+                g_ParticleBox.corners[1].vz = Q12(-182.5f);
+                g_ParticleBox.corners[2].vx = Q12(-285.5f);
+                g_ParticleBox.corners[2].vz = Q12(-177.5f);
+                g_ParticleBox.corners[3].vx = Q12(-287.0f);
+                g_ParticleBox.corners[3].vz = Q12(-177.5f);
+                g_ParticleBox.corners[4].vx = Q12(-285.5f);
+                g_ParticleBox.corners[4].vz = Q12(-181.5f);
+                g_ParticleBox.corners[5].vx = Q12(-285.5f);
+                g_ParticleBox.corners[5].vz = Q12(-178.4f);
             }
             else
             {
@@ -1203,36 +1203,36 @@ bool Particle_Update(s_Particle* partHead)
         g_SysWork.playerWork.player.position.vx > Q12(13.0f) &&
         g_SysWork.playerWork.player.position.vx < Q12(44.0f))
     {
-        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(24.0f);
-        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-19.0f);
-        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(24.0f);
-        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-21.5f);
-        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(31.5f);
-        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-21.5f);
-        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(31.5f);
-        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-19.0f);
-        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(24.0f);
-        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-21.5f);
-        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(31.5f);
-        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-21.5f);
+        g_ParticleBox.corners[0].vx = Q12(24.0f);
+        g_ParticleBox.corners[0].vz = Q12(-19.0f);
+        g_ParticleBox.corners[1].vx = Q12(24.0f);
+        g_ParticleBox.corners[1].vz = Q12(-21.5f);
+        g_ParticleBox.corners[2].vx = Q12(31.5f);
+        g_ParticleBox.corners[2].vz = Q12(-21.5f);
+        g_ParticleBox.corners[3].vx = Q12(31.5f);
+        g_ParticleBox.corners[3].vz = Q12(-19.0f);
+        g_ParticleBox.corners[4].vx = Q12(24.0f);
+        g_ParticleBox.corners[4].vz = Q12(-21.5f);
+        g_ParticleBox.corners[5].vx = Q12(31.5f);
+        g_ParticleBox.corners[5].vz = Q12(-21.5f);
     }
     else if (g_SysWork.playerWork.player.position.vz > Q12(-82.0f) &&
              g_SysWork.playerWork.player.position.vz < Q12(-56.0f) &&
              g_SysWork.playerWork.player.position.vx > Q12(43.0f) &&
              g_SysWork.playerWork.player.position.vx < Q12(70.0f))
     {
-        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(58.7f);
-        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-70.5f);
-        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(58.7f);
-        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-68.0f);
-        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(54.5f);
-        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-68.0f);
-        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(54.5f);
-        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-70.5f);
-        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(54.5f);
-        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-70.5f);
-        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(58.7f);
-        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-70.5f);
+        g_ParticleBox.corners[0].vx = Q12(58.7f);
+        g_ParticleBox.corners[0].vz = Q12(-70.5f);
+        g_ParticleBox.corners[1].vx = Q12(58.7f);
+        g_ParticleBox.corners[1].vz = Q12(-68.0f);
+        g_ParticleBox.corners[2].vx = Q12(54.5f);
+        g_ParticleBox.corners[2].vz = Q12(-68.0f);
+        g_ParticleBox.corners[3].vx = Q12(54.5f);
+        g_ParticleBox.corners[3].vz = Q12(-70.5f);
+        g_ParticleBox.corners[4].vx = Q12(54.5f);
+        g_ParticleBox.corners[4].vz = Q12(-70.5f);
+        g_ParticleBox.corners[5].vx = Q12(58.7f);
+        g_ParticleBox.corners[5].vz = Q12(-70.5f);
     }
     else
     {
@@ -1245,17 +1245,17 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx)
     {
         case 7:
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.5f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(63.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(55.5f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(58.0f);
+            g_ParticleBox.corners[0].vx = Q12(55.5f);
+            g_ParticleBox.corners[0].vz = Q12(63.0f);
+            g_ParticleBox.corners[1].vx = Q12(55.5f);
+            g_ParticleBox.corners[1].vz = Q12(58.0f);
             break;
 
         case 8:
-            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(100.0f);
-            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.5f);
-            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
-            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(56.5f);
+            g_ParticleBox.corners[0].vx = Q12(100.0f);
+            g_ParticleBox.corners[0].vz = Q12(56.5f);
+            g_ParticleBox.corners[1].vx = Q12(104.0f);
+            g_ParticleBox.corners[1].vz = Q12(56.5f);
             break;
 
         default:
@@ -2458,16 +2458,16 @@ void Particle_SnowDraw(s_Particle* part)
             {
 #ifdef HAS_PARTICLE_CASE_1
                 PARTICLE_CASE(1):
-                    if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
+                    if (part->position0_0.vy < g_ParticleBox.corners[0].vy)
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
                     }
                     else
                     {
                         s32 temp_v1;
-                        partCorners[0].vx = sharedData_800E326C_0_s00.corners_0[0].vx;
-                        partCorners[1].vx = sharedData_800E326C_0_s00.corners_0[1].vx;
-                        temp_v1           = sharedData_800E326C_0_s00.corners_0[0].vz + 0x1400;
+                        partCorners[0].vx = g_ParticleBox.corners[0].vx;
+                        partCorners[1].vx = g_ParticleBox.corners[1].vx;
+                        temp_v1           = g_ParticleBox.corners[0].vz + 0x1400;
                         temp_v1          += part->position0_0.vy >> 2;
                         partCorners[1].vz = temp_v1;
                         partCorners[0].vz = temp_v1;
@@ -2479,33 +2479,33 @@ void Particle_SnowDraw(s_Particle* part)
 
 #if defined(HAS_PARTICLE_CASE_2)
                 PARTICLE_CASE(2):
-                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
                     if (g_SavegamePtr->mapRoomIdx == 5)
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 0);
                     }
                     break;
 #endif
 
 #if defined(HAS_PARTICLE_CASE_9)
                 PARTICLE_CASE(9):
-                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 0);
                     }
                     break;
 #endif
 
 #ifdef HAS_PARTICLE_CASE_10
                 PARTICLE_CASE(10):
-                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
+                            Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[4], &g_ParticleBox.corners[5], 0);
                         }
                     }
                     break;
@@ -2516,20 +2516,20 @@ void Particle_SnowDraw(s_Particle* part)
 #if defined(MAP0_S02) // TODO: MAP0_S02 uses value 2 instead of 11, code used in MAP0_S02 should probably be merged to case 2 above.
                     if (g_SysWork.playerWork.player.position.vx < Q12(-120.0f))
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
                         break;
                     }
 #endif
-                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
+                            Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[4], &g_ParticleBox.corners[5], 1);
                             if (particlePos.vy == 0)
                             {
-                                Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
+                                Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[6], &g_ParticleBox.corners[7], 0);
                             }
                         }
                     }
@@ -2538,7 +2538,7 @@ void Particle_SnowDraw(s_Particle* part)
 
 #ifdef HAS_PARTICLE_FALLBACK_CASE
                 default:
-                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
                     break;
 #endif
             }
@@ -2735,7 +2735,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
         sp10    = localPart->position0_0;
         sp10.vy = -1;
 
-        Particle_BoundaryClamp(&sp10, sharedData_800E326C_0_s00.corners_0, &sharedData_800E326C_0_s00.corners_0[1], 0);
+        Particle_BoundaryClamp(&sp10, g_ParticleBox.corners, &g_ParticleBox.corners[1], 0);
 
         localPart->position0_0.vx = sp10.vx;
         localPart->position0_0.vz = sp10.vz;
@@ -3255,8 +3255,8 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
 #if !defined(MAP5_S00) && !defined(MAP6_S03)
-            deltaXCase1 = g_ParticleVectors1.viewPosition_C.vx - g_ParticleVectors0.viewPosition_C.vx;
-            deltaZCase1 = g_ParticleVectors1.viewPosition_C.vz - g_ParticleVectors0.viewPosition_C.vz;
+            deltaXCase1 = g_ParticleVectors1.viewPosition.vx - g_ParticleVectors0.viewPosition.vx;
+            deltaZCase1 = g_ParticleVectors1.viewPosition.vz - g_ParticleVectors0.viewPosition.vz;
 
             localPart->position1_C.vx = localPart->position0_0.vx;
             localPart->position1_C.vz = localPart->position0_0.vz;

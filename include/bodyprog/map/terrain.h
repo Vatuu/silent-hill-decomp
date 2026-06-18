@@ -62,7 +62,7 @@ typedef struct _ChunkTextures
 } s_ChunkTextures;
 STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 
-/** @brief Global LM model. */
+/** @brief Global IPD LM model. */
 typedef struct _IpdLm
 {
     /* 0x0 */ s_LmHeader* lmHdr;
@@ -80,16 +80,15 @@ typedef struct _MapTerrain
     /* 0x148 */ s32                mapTagSize;
     /* 0x14C */ s32                ipdFileIdx;
     /* 0x150 */ s_IpdHeader*       chunkBuffer;     // } Wrong term. These contain IPD header data, the game in theory
-                                                    // } is able to load up to 4 IPD files at the same time based in
-                                                    // } `Ipd_ChunksClear` behaviour as it clears up to 4 of these "chunks"
-                                                    // } and would fit as for example the player could stand at some edge
-                                                    // } in the open world where 4 IPD files are needed it would then load
-                                                    // } them.
+                                                    // } is able to load up to 4 IPD files at the same time based on
+                                                    // } `Ipd_ChunksClear` behaviour as it clears up to 4 of these "chunks".
+                                                    // } This fits because, for example, the player could stand at some edge
+                                                    // } of the world where 4 IPD files are required and load them.
     /* 0x154 */ s32                chunkBufferSize; // }
     /* 0x158 */ s32                activeChunkCount;
     /* 0x15C */ s_Chunk            activeChunks[ACTIVE_CHUNK_COUNT_MAX];
     /* 0x1CC */ s_ChunkColumn      chunkGrid[19];
-    /* 0x42C */ s_ChunkColumn*     chunkGridCenter; // TODO: All access to this variable relay on hacks.
+    /* 0x42C */ s_ChunkColumn*     chunkGridCenter; // TODO: All access to this variable relies on hacks.
     /* 0x430 */ s_ChunkTextures    chunkTextures;
     /* 0x578 */ q19_12             positionX;
     /* 0x57C */ q19_12             positionZ;

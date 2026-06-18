@@ -141,7 +141,7 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through
     vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(&vcWork, VC_TDSC_END);
 }
 
-void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOffset, VECTOR3* camPos) // 0x80080B58
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, const SVECTOR* rotOffset, const VECTOR3* camPos) // 0x80080B58
 {
     MATRIX rotMat;
 

@@ -8,6 +8,7 @@
 #include "bodyprog/math/fixed_point.h"
 
 #define SVECTOR3_Zero (SVECTOR3){ 0, 0, 0 }
+#define SVECTOR_Zero  (SVECTOR){ 0, 0, 0, 0}
 #define VECTOR_Zero   (VECTOR){ 0, 0, 0, 0 }
 
 /** @brief Constructs a `VECTOR3` in a fixed-point Q19.12 format.
@@ -314,9 +315,9 @@ inline static bool Math_CheckSignedRange(s32 val, s32 range)
     return (u32)(val + range) > (range * 2);
 }
 
-void Math_RotMatrixZxyNeg(SVECTOR* rot, MATRIX* mat); // Previous name: `Math_MatrixRotate0`
+void Math_RotMatrixZxyNeg(const SVECTOR* rot, MATRIX* mat);
 
-void Math_RotMatrixZxyNegGte(SVECTOR* rot, MATRIX* mat); // Previous name: `Math_MatrixRotate1`
+void Math_RotMatrixZxyNegGte(const SVECTOR* rot, MATRIX* mat);
 
 /** @brief Multiplies two integers in a fixed-point Q format.
  *

@@ -4,26 +4,29 @@
 #define SNOW_COUNT_LIGHT_MAX 300
 
 #if defined(MAP7_S03)
-#define PARTICLE_COUNT_MAX 450
+    #define PARTICLE_COUNT_MAX 450
 #else
-#define PARTICLE_COUNT_MAX 300
+    #define PARTICLE_COUNT_MAX 300
 #endif
 
-typedef enum
+/** @brief Particle states. */
+typedef enum _ParticleState
 {
     ParticleState_Spawn  = 0,
     ParticleState_Active = 1,
     ParticleState_Rest   = 2
 } e_ParticleState;
 
-typedef enum
+/** @brief Particle types. */
+typedef enum _ParticleType
 {
     ParticleType_Snow = 0,
     ParticleType_Unk1 = 1,
     ParticleType_Rain = 2
 } e_ParticleType;
 
-typedef enum
+/** @brief Snow types. */
+typedef enum _SnowType
 {
     SnowType_Light      = 0,
     SnowType_Heavy      = 1,
@@ -31,34 +34,31 @@ typedef enum
     SnowType_HeavyWindy = 3
 } e_SnowType;
 
-typedef struct
+/** @brief Particle effect. */
+typedef struct _Particle
 {
-    VECTOR3  position0_0;  // Snow: position, Rain: streak start (bottom)
-    VECTOR3  position1_C;  // Snow: unused, Rain: streak end (top)
-    SVECTOR3 movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
-    u8       stateStep_1E; /** `e_ParticleState` */
-    u8       type_1F;      /** `e_ParticleType` */
+    /* 0x0  */ VECTOR3  position0_0;  // Snow: position, Rain: streak start (bottom)
+    /* 0xC  */ VECTOR3  position1_C;  // Snow: unused, Rain: streak end (top)
+    /* 0x18 */ SVECTOR3 movement_18;  // Q19.12? | Snow: random accumulation, Rain: Y accumulation (affects streak length).
+    /* 0x1E */ u8       stateStep_1E; /** `e_ParticleState` */
+    /* 0x1F */ u8       type_1F;      /** `e_ParticleType` | TODO: Sometimes absurd values are checked for. */
 } s_Particle;
 
 typedef struct
 {
-    VECTOR3 vector_0;
-    VECTOR3 viewPosition_C; // Q19.12
-    SVECTOR svec_18;
-    SVECTOR viewRotation_20;
-    s32     field_28;
+    /* 0x0  */ VECTOR3 vector_0;
+    /* 0xC  */ VECTOR3 viewPosition; /** Q19.12 */
+    /* 0x18 */ SVECTOR svec_18;
+    /* 0x20 */ SVECTOR viewRotation; /** Q19.12 */
+    /* 0x28 */ s32     field_28;
 } s_ParticleVectors;
 
-/** Seems to be custom boundaries for snow/rain particle systems.
- * Only used in a small handful of maps, and not all fields are populated.
- *
- * Maybe 8 `VECTOR3`s holding positions in Q19.12? Se4ms to be an inefficient AABB.
- */
-typedef struct
+/** @brief Box volume used for snow and rain particle systems. */
+typedef struct _ParticleBox
 {
-    VECTOR3 corners_0[8];
-} s_func_800CB560;
-STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
+    /* 0x0 */ VECTOR3 corners[8]; /** Q19.12 */
+} s_ParticleBox;
+STATIC_ASSERT_SIZEOF(s_ParticleBox, 96);
 
 typedef struct
 {
@@ -97,7 +97,7 @@ extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 
-extern s_func_800CB560 sharedData_800E326C_0_s00;
+extern s_ParticleBox g_ParticleBox;
 
 extern s32 sharedData_800E32D0_0_s00;
 

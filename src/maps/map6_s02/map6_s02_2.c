@@ -467,7 +467,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 9:
-            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &(SVECTOR) { 0, 0, 0, 0 }, &(VECTOR3) { Q12(5.39f), Q12(-19.0f), Q12(-16.34f) });
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(5.39f, -19.0f, -16.34f));
 
             for (i = 0; i < 15; i++)
             {
@@ -524,6 +524,7 @@ void func_800CFC34(void) // 0x800CFC34
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
+
             g_Cutscene_Timer = NO_VALUE;
 
             if (Savegame_EventFlagGet(EventFlag_469))
@@ -544,7 +545,9 @@ void func_800CFC34(void) // 0x800CFC34
             break;
     }
 
-    if (g_SysWork.sysStateSteps[0] == 10 || g_SysWork.sysStateSteps[0] == 12 || g_SysWork.sysStateSteps[0] == 13)
+    if (g_SysWork.sysStateSteps[0] == 10 ||
+        g_SysWork.sysStateSteps[0] == 12 ||
+        g_SysWork.sysStateSteps[0] == 13)
     {
         D_800D3C8C += g_DeltaTime;
 

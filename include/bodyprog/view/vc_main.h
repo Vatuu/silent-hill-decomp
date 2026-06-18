@@ -41,10 +41,10 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, q3_12 chara_eye_ang_y, bool use_through
  *   normal camera logic.
  *
  * @param boneCoord Bone coord whose orientation drives the view direction.
- * @param rotOffset Extra rotation offset on the bone orientation (ZXY, negated). Typically zero.
+ * @param rotOffset Extra rotation offset on the bone orientation (ZXY, negated). Typically `SVECTOR_Zero`.
  * @param camPos World-space camera position (Q19.12). Replaces the bone's translation.
  */
-void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, SVECTOR* rotOffset, VECTOR3* camPos);
+void Vc_SetLookAtMatFromBoneCoord(GsCOORDINATE2* boneCoord, const SVECTOR* rotOffset, const VECTOR3* camPos);
 
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 
