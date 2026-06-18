@@ -593,7 +593,7 @@ void func_800D6B00(void) // 0x800D6B00
 
             SysWork_StateStepIncrement(0);
 
-            vec = QVECTOR3(-91.3f, 0.3f, 8.5f);
+            vec = Q12_VECTOR3(-91.3f, 0.3f, 8.5f);
             func_800D6490(&vec);
 
         case 14:

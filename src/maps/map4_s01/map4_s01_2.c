@@ -237,7 +237,7 @@ void func_800D1FF0(void) // 0x800D1FF0
 
 void func_800D2408(void) // 0x800D2408
 {
-    #define soundPos QVECTOR3(182.0f, -1.2f, 58.9f)
+    #define soundPos Q12_VECTOR3(182.0f, -1.2f, 58.9f)
 
     typedef enum _EventState
     {
@@ -971,7 +971,7 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AF9)
     {
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1540, &QVECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D7F30, 128), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1540, &Q12_VECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D7F30, 128), Q12(16.0f), 0);
     }
 
     if (g_Cutscene_Timer3 >= Q12(0.0f))

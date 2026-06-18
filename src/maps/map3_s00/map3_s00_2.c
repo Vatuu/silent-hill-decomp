@@ -103,7 +103,7 @@ void func_800D0CF8(void) // 0x800D0CF8
     {
         case 0:
             Player_ControlFreeze();
-            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(94.6f, -1.2f, 101.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &Q12_VECTOR3(94.6f, -1.2f, 101.5f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_MapMark_FogHospital1F_StairsLocked);
 
             Fs_QueueStartRead(FILE_ANIM_HP1F03_DMS, FS_BUFFER_15);
@@ -117,9 +117,9 @@ void func_800D0CF8(void) // 0x800D0CF8
             D_800D256C = 0;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            func_800625F4(&QVECTOR3(95.8f, 0.0f, 101.27f), 0x48, 2, 1);
-            func_800625F4(&QVECTOR3(96.05f, 0.0f, 101.07f), 0x48, 2, 1);
-            func_800625F4(&QVECTOR3(96.1f, 0.0f, 100.68f), 0x48, 2, 1);
+            func_800625F4(&Q12_VECTOR3(95.8f, 0.0f, 101.27f), 0x48, 2, 1);
+            func_800625F4(&Q12_VECTOR3(96.05f, 0.0f, 101.07f), 0x48, 2, 1);
+            func_800625F4(&Q12_VECTOR3(96.1f, 0.0f, 100.68f), 0x48, 2, 1);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);

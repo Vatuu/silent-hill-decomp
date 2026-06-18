@@ -201,7 +201,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         *(u16*)&(*poly)->u2 = 0x7F00;
         *(u16*)&(*poly)->u3 = 0x7F07;
 
-        setRGBC0(*poly, 0x78, 0x80, 0x80, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
+        setRGBC0(*poly, 120, 128, 128, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
     }
 
     sharedData_800DFB7C_0_s00[idx].vy_8 = sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_0.field_C4;

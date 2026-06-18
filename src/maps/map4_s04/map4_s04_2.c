@@ -143,23 +143,23 @@ void func_800D1910(void) // 0x800D1910
                 switch (layer)
                 {
                     case 0:
-                        colorVal = 0x20;
+                        colorVal = 32;
                         tpageAbr = 1;
                         break;
 
                     case 1:
-                        colorVal = 0x40;
+                        colorVal = 64;
                         tpageAbr = 0;
                         break;
 
                     default:
-                        colorVal = 0x80;
+                        colorVal = 128;
                         tpageAbr = 0;
                 }
 
                 if (layer == 3)
                 {
-                    setRGBC0(scratch->sprt_0, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+                    setRGBC0(scratch->sprt_0, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
                 }
                 else
                 {
@@ -413,7 +413,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             D_800D37C1            = 0;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
-            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &Q12_VECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -531,7 +531,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 22:
-            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &Q12_VECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             SysWork_StateStepIncrement(0);
 
@@ -540,7 +540,7 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 24:
-            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &Q12_VECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 25:

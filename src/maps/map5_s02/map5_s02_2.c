@@ -142,7 +142,7 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1593, &QVECTOR3(134.6f, -1.5f, 62.45f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1593, &Q12_VECTOR3(134.6f, -1.5f, 62.45f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -204,7 +204,7 @@ void func_800D4E64(void) // 0x800D4E64
             break;
 
         case 3:
-            Sfx_WithFlagsPlay(Sfx_Unk1592, &QVECTOR3(134.9f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1592, &Q12_VECTOR3(134.9f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -217,7 +217,7 @@ void func_800D4E64(void) // 0x800D4E64
 
         case 6:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
-            Sfx_WithFlagsPlay(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1591, &Q12_VECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -292,7 +292,7 @@ void func_800D519C(void) // 0x800D519C
 
         case 4:
             Savegame_EventFlagSet(EventFlag_M5S02_UsedSafeKey);
-            Sfx_WithFlagsPlay(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1591, &Q12_VECTOR3(134.7f, -0.5f, 59.5f), Q8(0.5f), SfxFlag_None);
             Event_CameraPositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -580,7 +580,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 21:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
-            func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
+            func_800625F4(&Q12_VECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
 
             D_800D94F4 = 2;
             g_Cutscene_Timer = Q12(207.0f);
@@ -660,7 +660,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 37:
-            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &Q12_VECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 38:
@@ -668,7 +668,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 39:
-            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &Q12_VECTOR3(134.5f, -1.2f, 17.9f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 40:
@@ -711,7 +711,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             if (D_800D94F4 == 1)
             {
                 g_SysWork.npcs[1].model.stateStep = 3;
-                func_800625F4(&QVECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
+                func_800625F4(&Q12_VECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
             }
 
             Fs_QueueWaitForEmpty();

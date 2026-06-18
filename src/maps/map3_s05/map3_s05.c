@@ -317,7 +317,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 < 0)
                     {
                         D_800DACE8 = ((u16)D_800DACE8 - Q12(0.3f)) - (Rng_Rand16() % Q12(0.1f));
-                        Sfx_WithFlagsPlay(Sfx_Unk1536, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1536, &Q12_VECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
                         break;
                     }
                 }
@@ -327,7 +327,7 @@ void func_800D5FC4(void) // 0x800D5FC4
                     if (D_800DACE8 >= 0)
                     {
                         D_800DACE8 += Q12(0.05f) + (Rng_Rand16() % Q12(0.05f));
-                        Sfx_WithFlagsPlay(Sfx_Unk1531, &QVECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_Unk1531, &Q12_VECTOR3(21.6f, 0.0f, -20.0f), Q8(0.5f), SfxFlag_None);
                         break;
                     }
                 }

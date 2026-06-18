@@ -743,7 +743,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     GsCOORDINATE2    sp50;
     MATRIX           spA0;
     SVECTOR          spC0; // Q3.8 | Rotation?
-    s32              spC8;
+    s32              packedXy;
     s32              spCC;
     s16              angle1;
     q3_12            curAngle;
@@ -787,7 +787,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     spC0.vx = Q8(0.0f);
     spC0.vy = Q8(0.0f);
     spC0.vz = Q8(0.7f);
-    RotTransPers(&spC0.vx, &spC8, &spCC, &spCC);
+    RotTransPers(&spC0.vx, &packedXy, &spCC, &spCC);
 
     packet     = GsOUT_PACKET_P;
     sp28[1].vy = 0;
@@ -816,23 +816,23 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 
         temp = 0;
 
-        *(s32*)&poly->g4[0].r0 = COLOR_RGBC(20, 18, 12, 0x0);
-        *(s32*)&poly->g4[0].r1 = COLOR_RGBC(20, 18, 12, 0x0);
-        *(s32*)&poly->g4[0].r3 = COLOR_RGBC(4, 4, 4, 0x0);
-        *(s32*)&poly->g4[0].r2 = COLOR_RGBC(4, 4, 4, 0x0);
+        setRGBC0(&poly->g4[0], 20, 18, 12, 0x0);
+        setRGBC1(&poly->g4[0], 20, 18, 12, 0x0);
+        setRGBC3(&poly->g4[0], 4, 4, 4, 0x0);
+        setRGBC2(&poly->g4[0], 4, 4, 4, 0x0);
 
-        *(s32*)&poly->g3[0].r0 = COLOR_RGBC(24, 22, 12, 0x0);
-        *(s32*)&poly->g3[0].r2 = COLOR_RGBC(20, 18, 12, 0x0);
-        *(s32*)&poly->g3[0].r1 = COLOR_RGBC(20, 18, 12, 0x0);
+        setRGBC0(&poly->g3[0], 24, 22, 12, 0x0);
+        setRGBC2(&poly->g3[0], 20, 18, 12, 0x0);
+        setRGBC1(&poly->g3[0], 20, 18, 12, 0x0);
 
-        *(s32*)&poly->g4[1].r0 = COLOR_RGBC(4, 8, 4, 0x0);
-        *(s32*)&poly->g4[1].r1 = COLOR_RGBC(4, 8, 4, 0x0);
-        *(s32*)&poly->g4[1].r3 = COLOR_RGBC(0, 0, 0, 0x0);
-        *(s32*)&poly->g4[1].r2 = COLOR_RGBC(0, 0, 0, 0x0);
+        setRGBC0(&poly->g4[1], 4, 8, 4, 0x0);
+        setRGBC1(&poly->g4[1], 4, 8, 4, 0x0);
+        setRGBC3(&poly->g4[1], 0, 0, 0, 0x0);
+        setRGBC2(&poly->g4[1], 0, 0, 0, 0x0);
 
-        *(s32*)&poly->g3[1].r0 = COLOR_RGBC(8, 8, 4, 0x0);
-        *(s32*)&poly->g3[1].r2 = COLOR_RGBC(4, 8, 4, 0x0);
-        *(s32*)&poly->g3[1].r1 = COLOR_RGBC(4, 8, 4, 0x0);
+        setRGBC0(&poly->g3[1], 8, 8, 4, 0x0);
+        setRGBC2(&poly->g3[1], 4, 8, 4, 0x0);
+        setRGBC1(&poly->g3[1], 4, 8, 4, 0x0);
 
         setPolyG4(&poly->g4[0]);
         setPolyG3(&poly->g3[0]);
@@ -841,8 +841,8 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
         setPolyG3(&poly->g3[1]);
         setSemiTrans(&poly->g3[1], true);
 
-        *(s32*)&poly->g3[1].x0 = *(s32*)&spC8;
-        *(s32*)&poly->g3[0].x0 = *(s32*)&spC8;
+        *(s32*)&poly->g3[1].x0 = *(s32*)&packedXy;
+        *(s32*)&poly->g3[0].x0 = *(s32*)&packedXy;
 
         RotTransPers4(&sp28[0], &sp28[1], &sp28[2], &sp28[3], &poly->g4[0].x0, &poly->g4[0].x1, &poly->g4[0].x2, &poly->g4[0].x3, &spCC, &spCC);
 

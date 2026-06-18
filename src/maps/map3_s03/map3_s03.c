@@ -167,7 +167,7 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
         }
         else
         {
-            setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+            setRGBC0(sprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
         }
 
         idx = (i < 4) ? i : arg0;
@@ -624,7 +624,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 4:
-            Sfx_WithFlagsPlay(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &Q12_VECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -675,7 +675,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 14:
-            Sfx_WithFlagsPlay(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1526, &Q12_VECTOR3(-62.6f, -0.5f, -59.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -778,8 +778,8 @@ void func_800D2CDC(void) // 0x800D2CDC
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
 
-            func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
-            func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
+            func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
+            func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
             func_8003D03C();
             WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
 
@@ -1060,13 +1060,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             {
                 D_800D8428++;
 
-                func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.4f), 0x48, 15, 1);
-                func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.35f), 0x28, 15, 1);
+                func_800625F4(&Q12_VECTOR3(-141.5f, 0.0f, 61.4f), 0x48, 15, 1);
+                func_800625F4(&Q12_VECTOR3(-141.5f, 0.0f, 61.35f), 0x28, 15, 1);
 
                 if (Savegame_EventFlagGet(EventFlag_250))
                 {
-                    func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x6E, 15, 1);
-                    func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x64, 15, 1);
+                    func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 0x6E, 15, 1);
+                    func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 0x64, 15, 1);
                 }
             }
             break;
@@ -1088,7 +1088,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
                 Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
                 g_SysWork.playerWork.player.position.vz > Q12(-18.2f))
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1528, &Q12_VECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_239);
             }
             break;

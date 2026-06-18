@@ -1587,7 +1587,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs[0].model.charaId = Chara_None;
 
-            Sfx_WithFlagsPlay(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1354, &Q12_VECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
         }
     }
 

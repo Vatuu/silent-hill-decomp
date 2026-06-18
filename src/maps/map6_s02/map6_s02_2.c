@@ -467,7 +467,7 @@ void func_800CFC34(void) // 0x800CFC34
             break;
 
         case 9:
-            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(5.39f, -19.0f, -16.34f));
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &Q12_VECTOR3(5.39f, -19.0f, -16.34f));
 
             for (i = 0; i < 15; i++)
             {
@@ -1540,8 +1540,8 @@ void func_800D2364(void) // 0x800D2364
 
     for (i = 0; i < 2; i++)
     {
-        setRGBC0(ptr->field_0, 0x70, 0x70, 0x70, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
-        setXY0Fast(ptr->field_0, (i << 8) - 0xA0, 0xFF90);
+        setRGBC0(ptr->field_0, 112, 112, 112, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
+        setXY0Fast(ptr->field_0, (i << 8) - 160, -112);
         setUV0(ptr->field_0, 0, (ptr->field_68 == 0) << 5);
         setWH(ptr->field_0, i ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
 

@@ -187,7 +187,7 @@ void func_800D6774(void) // 0x800D6774
 
             playerChara.position.vy = surface.groundHeight;
 
-            Sfx_WithFlagsPlay(Sfx_Unk1556, &QVECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1556, &Q12_VECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
             func_80089470();
             SysWork_StateStepIncrement(0);
             break;
@@ -348,7 +348,7 @@ void func_800D6F24(void) // 0x800D6F24
             Event_CameraPositionSet(NULL, Q12(128.82f), Q12(-0.26f), Q12(139.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(125.24f), Q12(-0.8f), Q12(140.79f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Sfx_WithFlagsPlay(Sfx_Unk1554, &QVECTOR3(132.0f, -0.75f, 140.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1554, &Q12_VECTOR3(132.0f, -0.75f, 140.0f), Q8(0.5f), SfxFlag_None);
 
             SysWork_StateStepIncrement(0);
 
@@ -1693,7 +1693,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         {
             if (D_800E05A8 == Q12(0.0f))
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1555, &Q12_VECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), SfxFlag_None);
 
                 g_SysWork.playerWork.player.fallSpeed += Q12(1.0f);
                 D_800E05AE += Q12(1.0f);
@@ -1807,8 +1807,8 @@ void func_800DA3E0(void) // 0x800DA3E0
                 D_800E05E1++;
             }
 
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1563, &QVECTOR3(162.5f, -1.125f, 51.45f), Q8(0.5f), Q12(48.0f), 0);
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1564, &QVECTOR3(166.421f, -2.0f, 52.578f), Q8(0.5f), Q12(48.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1563, &Q12_VECTOR3(162.5f, -1.125f, 51.45f), Q8(0.5f), Q12(48.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1564, &Q12_VECTOR3(166.421f, -2.0f, 52.578f), Q8(0.5f), Q12(48.0f), 0);
         }
     }
     else

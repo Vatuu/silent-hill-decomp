@@ -353,7 +353,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 47:
             D_800DE250 = 0;
 
-            Sfx_WithFlagsPlay(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1357, &Q12_VECTOR3(0.8f, -1.2f, 269.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 48:

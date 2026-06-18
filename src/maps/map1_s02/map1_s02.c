@@ -548,7 +548,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 4:
-            Sfx_WithFlagsPlay(Sfx_Unk1454, &QVECTOR3(55.85f, -1.1f, 19.3f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1454, &Q12_VECTOR3(55.85f, -1.1f, 19.3f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -556,7 +556,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1343, &QVECTOR3(56.0f, -1.2f, 19.3f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1343, &Q12_VECTOR3(56.0f, -1.2f, 19.3f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:

@@ -1794,7 +1794,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx) // 0x8004F57C
 
     setSprt(sprt);
 
-    setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+    setRGBC0(sprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
     setXY0Fast(sprt, -120, 116);
 
     if (strIdx)

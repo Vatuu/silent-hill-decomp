@@ -608,7 +608,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 3:
-            Sfx_WithFlagsPlay(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1420, &Q12_VECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_83);
             SysWork_StateStepIncrement(0);
 
@@ -630,7 +630,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1422, &QVECTOR3(18.8f, 4.0f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1422, &Q12_VECTOR3(18.8f, 4.0f, -17.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -677,7 +677,7 @@ void MapEvent_Boiler1(void)
             break;
 
         case 3:
-            Sfx_WithFlagsPlay(Sfx_Unk1420, &QVECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1420, &Q12_VECTOR3(20.5f, -1.2f, -17.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -846,7 +846,7 @@ void Map_WorldObjectsUpdate(void)
         if (Savegame_EventFlagGet(EventFlag_72))
         {
             WorldObjects_Add(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &SVECTOR3_Zero);
-            func_80064F04(&QVECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385);
+            func_80064F04(&Q12_VECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385);
         }
         else
         {
@@ -885,7 +885,7 @@ void Map_WorldObjectsUpdate(void)
                 D_800E1182 = Q12(1.0f);
             }
 
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &QVECTOR3(18.8f, -1.0f, -17.5f), D_800E1182 >> 5, Q12(24.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &Q12_VECTOR3(18.8f, -1.0f, -17.5f), D_800E1182 >> 5, Q12(24.0f), 0);
         }
     }
 
@@ -899,7 +899,7 @@ void Map_WorldObjectsUpdate(void)
             }
 
             D_800E1182 = Q12(0.2f);
-            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &QVECTOR3(52.0f, -1.0f, -16.0f), 25, Q12(16.0f), 0);
+            Sfx_WithFalloffAndPitchPlay(Sfx_Unk1430, &Q12_VECTOR3(52.0f, -1.0f, -16.0f), 25, Q12(16.0f), 0);
         }
     }
     else

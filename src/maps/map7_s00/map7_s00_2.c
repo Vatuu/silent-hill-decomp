@@ -255,7 +255,7 @@ void func_800D0B64(void) // 0x800D0B64
             *(s32*)&g_SysWork.lightRotation.vx = 0x02E3FF34;
             (&g_SysWork.lightRotation)->vz = 0;
 
-            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpen0, &Q12_VECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -264,7 +264,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 20:
-            Sfx_WithFlagsPlay(Sfx_DoorClose0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorClose0, &Q12_VECTOR3(14.6f, -1.2f, -138.5f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -361,7 +361,7 @@ void func_800D0B64(void) // 0x800D0B64
             }
         }
 
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1640, &QVECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), Rng_GenerateUInt(-8, 7));
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1640, &Q12_VECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), Rng_GenerateUInt(-8, 7));
     }
 }
 
@@ -427,7 +427,7 @@ void func_800D1604(void) // 0x800D1604
 
     for (j = 0; j < 2; j++)
     {
-        setRGBC0(ptr->field_0, 0x80, 0x80, 0x80, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
+        setRGBC0(ptr->field_0, 128, 128, 128, PRIM_RECT | RECT_BLEND | RECT_TEXTURE);
         setXY0Fast(ptr->field_0, ((j) << 8) - 160, -112);
         setUV0(ptr->field_0, 0, (ptr->field_18 == 0) << 5);
         setWH(ptr->field_0, (j != 0) ? 64 : 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);

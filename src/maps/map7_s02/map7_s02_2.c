@@ -986,7 +986,7 @@ void func_800DC14C(void) // 0x800DC14C
         case 13:
             D_800E9ED4 = Q12(-1.294f);
             D_800E9ED0 = 0;
-            Sfx_WithFlagsPlay(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1662, &Q12_VECTOR3(62.3f, -1.45f, -61.07f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -1016,7 +1016,7 @@ void func_800DC14C(void) // 0x800DC14C
                 D_800E9ED4 += Q12_MULT_PRECISE(g_DeltaTime, D_800E9ED0);
                 if (D_800E9ED4 > 0)
                 {
-                    Sfx_WithFlagsPlay(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1651, &Q12_VECTOR3(62.3f, 0.0f, -61.07f), Q8(0.5f), SfxFlag_None);
                 }
             }
 
@@ -1352,7 +1352,7 @@ void func_800DD2D4(void) // 0x800DD2D4
     {
         case 0:
             Player_ControlFreeze();
-            Sfx_WithFlagsPlay(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1667, &Q12_VECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
             Fs_QueueStartRead(FILE_ANIM_KITCHEN1_DMS, FS_BUFFER_11);
             Savegame_EventFlagSet(EventFlag_557);
 
@@ -1494,7 +1494,7 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         if (D_800E9EDA == 0)
         {
-            Sfx_WithFlagsPlay(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1666, &Q12_VECTOR3(21.1f, -1.5f, -60.75f), Q8(0.5f), SfxFlag_None);
 
             if (g_SysWork.sysStateSteps[0] == 6)
             {
@@ -3058,7 +3058,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 4:
-            Sfx_WithFlagsPlay(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1663, &Q12_VECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
 
             if (!Savegame_EventFlagGet(EventFlag_545))
             {
@@ -3077,13 +3077,13 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1343, &Q12_VECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
         case 7:
-            Sfx_WithFlagsPlay(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorLocked, &Q12_VECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 8:

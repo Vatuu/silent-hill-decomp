@@ -201,7 +201,7 @@ void func_800D7308(void)
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1433, &Q12_VECTOR3(-59.2f, -1.0f, 99.5f), Q8(0.5f), SfxFlag_None);
 
             sharedData_800DEE50_1_s01.field_0  = 0;
             sharedData_800DEE50_1_s01.field_4  = 0x96;
@@ -833,8 +833,8 @@ void func_800D87C0(void) // 0x800D87C0
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 122, false);
             func_800892DC(18, 96);
-            Sfx_WithFlagsPlay(Sfx_Unk1437, &QVECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
-            Sfx_WithFlagsPlay(Sfx_Unk1436, &QVECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1437, &Q12_VECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1436, &Q12_VECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -881,7 +881,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 14:
-            Sfx_WithFlagsPlay(Sfx_Unk1448, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1448, &Q12_VECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), SfxFlag_None);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             SysWork_StateStepIncrement(0);
 
@@ -890,7 +890,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 16:
-            Sfx_WithFlagsPlay(Sfx_Unk1449, &QVECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1449, &Q12_VECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -898,8 +898,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 18:
-            Sfx_WithFlagsPlay(Sfx_Unk1446, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.5f), SfxFlag_None);
-            Sfx_WithFlagsPlay(Sfx_Unk1364, &QVECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.25f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1446, &Q12_VECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1364, &Q12_VECTOR3(-57.6f, 0.0f, 16.0f), Q8(0.25f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -1059,7 +1059,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
             {
                 if (vcRetCamMvSmoothF() == VC_MV_CHASE)
                 {
-                    Sfx_WithFlagsPlay(Sfx_Unk1450, &QVECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                    Sfx_WithFlagsPlay(Sfx_Unk1450, &Q12_VECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                     Savegame_EventFlagSet(EventFlag_240);
                 }
             }

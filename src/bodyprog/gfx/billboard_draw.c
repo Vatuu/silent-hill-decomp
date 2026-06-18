@@ -45,18 +45,18 @@ s_800AE204 D_800AE204[26] = {
     { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } }
 };
 
-s_800AE4DC D_800AE4DC[3] = // Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/2BvV1)
-{
+// Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/2BvV1)
+s_800AE4DC D_800AE4DC[3] = {
     { &D_800AE204[1],  3,  0, 0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[0],  12, 0, 0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[12], 5,  0, 0xFF67, 0, 0x80, 0x3F, 0xBF },
 };
 
 SVECTOR D_800AE500[4] = {
-    SVECTOR(0.0f,     255.65f, 255.65f),
+    SVECTOR( 0.0f,    255.65f, 255.65f),
     SVECTOR(-255.65f, 0.0f,    255.65f),
-    SVECTOR(255.65f,  0.0f,    255.65f),
-    SVECTOR(0.0f,    -255.65f, 255.65f)
+    SVECTOR( 255.65f, 0.0f,    255.65f),
+    SVECTOR( 0.0f,   -255.65f, 255.65f)
 };
 
 static GsCOORDINATE2* D_800C42B8;

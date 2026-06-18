@@ -1106,7 +1106,7 @@ void func_800DC780(void) // 0x800DC780
             break;
 
         case 3:
-            Sfx_WithFlagsPlay(Sfx_Unk1466, &QVECTOR3(-60.3f, 0.0f, 20.2f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1466, &Q12_VECTOR3(-60.3f, 0.0f, 20.2f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case EventState_Flag106False:
@@ -1197,7 +1197,7 @@ void func_800DCB54(void) // 0x800DCB54
             break;
 
         case 4:
-            Sfx_WithFlagsPlay(Sfx_Unk1461, &QVECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1461, &Q12_VECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
             SysWork_StateStepIncrement(0);
 
@@ -1331,7 +1331,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 8:
-            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &QVECTOR3(-13.91f, -11.5f, 22.11f));
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &Q12_VECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
             Event_WaitTimer(0x2800, false);
             break;
@@ -1537,7 +1537,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
             (D_800E6388 == 4 && D_800E638C > Q12(8.6f)) ||
             (D_800E6388 == 5 && D_800E638C > Q12(9.3f)))
         {
-            Sfx_WithFlagsPlay(Sfx_Unk1468, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1468, &Q12_VECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, SfxFlag_NoDistAtten);
             D_800E6388++;
         }
     }

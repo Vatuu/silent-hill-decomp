@@ -17,7 +17,7 @@ s_CreditTextState g_CreditTextState = {
     .widthTable = D_801E5C24,
     .colorTable = g_CreditsColorTable
 #elif VERSION_IS(JAP0)
-    // TODO: Symbolise these pointers, so version check can be removed.
+    // TODO: Symbolise these pointers so that version check can be removed.
     .widthTable = (s16*)0x801E5C1C,
     .colorTable = (s32*)0x801E5E1C
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)

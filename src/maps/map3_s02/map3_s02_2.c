@@ -364,7 +364,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
         if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork.player.position.vx < Q12(67.0f))
         {
             Savegame_EventFlagSet(EventFlag_234);
-            Sfx_WithFlagsPlay(Sfx_Unk1523, &QVECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1523, &Q12_VECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), SfxFlag_None);
         }
     }
 }

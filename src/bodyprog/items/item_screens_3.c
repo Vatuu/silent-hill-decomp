@@ -1662,7 +1662,7 @@ void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
 
     setSprt(sprt);
 
-    setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+    setRGBC0(sprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
     *(u32*)&sprt->w = (arg0 * 12) + (16 << 16); // setWHFast(sprt, (arg0 * 12), 16);
     setXY0Fast(sprt, -92, 88);
 
@@ -1692,7 +1692,7 @@ void func_800539A0(s32 arg0, s32 arg1) // JPN0 0x800539A0
 
     setSprt(sprt);
 
-    setRGBC0(sprt, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
+    setRGBC0(sprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
 
     if (arg0 != 0)
     {

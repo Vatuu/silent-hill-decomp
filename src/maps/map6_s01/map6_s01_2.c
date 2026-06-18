@@ -261,7 +261,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 15:
-            Sfx_WithFlagsPlay(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1604, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -271,7 +271,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 17:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 70, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 17, false);
-            Sfx_WithFlagsPlay(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1605, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -369,7 +369,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 35:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            Sfx_WithFlagsPlay(Sfx_Unk1609, &QVECTOR3(-19.95f, -1.2f, 60.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1609, &Q12_VECTOR3(-19.95f, -1.2f, 60.7f), Q8(0.5f), SfxFlag_None);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 113, false);
             SysWork_StateStepIncrement(0);
 
@@ -378,7 +378,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             if (g_SysWork.sysStateSteps[0] != 36)
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1610, &QVECTOR3(-19.95f, -1.2f, 60.7f), Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1610, &Q12_VECTOR3(-19.95f, -1.2f, 60.7f), Q8(0.5f), SfxFlag_None);
             }
 
         case 37:
@@ -429,7 +429,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 46:
             Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
-            Sfx_WithFlagsPlay(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1604, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 47:
@@ -437,7 +437,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 48:
-            Sfx_WithFlagsPlay(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1605, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 49:
@@ -550,7 +550,7 @@ void func_800D236C(void) // 0x800D236C
             Event_CameraPositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Sfx_WithFlagsPlay(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1604, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
 
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
@@ -560,7 +560,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 2:
-            Sfx_WithFlagsPlay(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1605, &Q12_VECTOR3(-21.3f, -1.2f, 58.7f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 3:
