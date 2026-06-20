@@ -11,7 +11,7 @@ typedef struct _Savegame
     /* 0x0      */ s_InventoryItem items[INV_ITEM_COUNT_MAX];
     /* 0xA0     */ s8              field_A0;
     /* 0xA1     */ s8              unused_A1[3]; /** @unused */
-    /* 0xA4     */ s8              mapIdx;       /** `e_MapIdx` Index to overlay `.BIN` files. */
+    /* 0xA4     */ s8              mapIdx;       /** `e_MapIdx` | Index to map overlay `.BIN` files. */
     /* 0xA5     */ s8              mapRoomIdx;   /** Index to local map geometry `.IPD` files. */
     /* 0xA6     */ s16             savegameCount;
     /* 0xA8     */ s8              locationId;                  /** `e_SaveLocationId` */
@@ -19,7 +19,7 @@ typedef struct _Savegame
     /* 0xAA     */ u8              equippedWeapon;              /** `e_InvItemId` | Affects the visible player weapon model. */
     /* 0xAB     */ u8              inventorySlotCount;          /** Item slots. */
     /* 0xAC     */ u32             itemToggleFlags;             /** `e_ItemToggleFlags` */
-    /* 0xB0     */ s32             ovlEnemyStates[45];          /** Flags indicating the enemy states in a given overlay.
+    /* 0xB0     */ s32             mapEnemyStates[45];          /** Flags indicating the enemy states in a given map.
                                                                  * All set to 1 by default. As soon as they are killed (not just stunned),
                                                                  * set to 0 based on a currently unknown index value.
                                                                  */
@@ -30,7 +30,7 @@ typedef struct _Savegame
     /* 0x238    */ q19_12          healthSaturation;            /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     /* 0x23C    */ s16             pickedUpItemCount;
     /* 0x23E    */ s8              unused_23E;         /** @unused */
-    /* 0x23F    */ u8              inventoryItemFlags; /** `e_InventoryItemFlags` */
+    /* 0x23F    */ u8              inventoryItemFlags; /** `e_InvItemFlags` */
     /* 0x240    */ q19_12          playerHealth;       /** Default: `Q12(100.0f)` */
     /* 0x244    */ q19_12          playerPositionX;
     /* 0x248    */ q3_12           playerRotationY;  /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */

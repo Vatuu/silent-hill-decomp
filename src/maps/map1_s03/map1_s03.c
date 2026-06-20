@@ -220,7 +220,8 @@ void func_800DABC4(void) // 0x800DABC4
         case 0:
             Player_ControlFreeze();
 
-            if (g_MapEventData->mapPointIdx == 17 || g_MapEventData->mapPointIdx == 18)
+            if (g_MapEventData->mapPointIdx == 17 ||
+                g_MapEventData->mapPointIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                 {
@@ -232,9 +233,11 @@ void func_800DABC4(void) // 0x800DABC4
                     Savegame_EventFlagSet(EventFlag_112);
                 }
             }
-            else if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
+            else if (g_MapEventData->mapPointIdx == 19 ||
+                     g_MapEventData->mapPointIdx == 20)
             {
-                if (g_MapEventData->activationType == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                if (g_MapEventData->activationType == TriggerActivationType_Item ||
+                    Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
                     Event_BgTextureCmd(false, FILE_TIM_BALLHOLE_TIM, false);
                 }
@@ -273,7 +276,8 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
+            if (g_MapEventData->mapPointIdx == 19 ||
+                g_MapEventData->mapPointIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
@@ -326,25 +330,23 @@ void func_800DABC4(void) // 0x800DABC4
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-// TODO: Unpack.
-const VECTOR3 D_800CBAA4 = {
-    0xFFFF5800,
-    0xFFFFF800,
-    0xFFFF319A
+const VECTOR3 D_800CBAA4 = { /** Q19.12 */
+    Q12(-10.5f),
+    Q12(-0.5f),
+    Q12(-12.9f)
 };
 
-
-// TODO: Unpack.
-const VECTOR3 D_800CBAB0 = {
-    0xFFFF5CCD,
-    { 0, 0, 0 },
-    0xFFFF2A67
+const VECTOR3 D_800CBAB0 = { /** Q19.12 */
+    Q12(-10.2f),
+    Q12(0.0f),
+    Q12(-13.35f)
 };
 
 void func_800DAF18(void) // 0x800DAF18
@@ -360,14 +362,14 @@ void func_800DAF18(void) // 0x800DAF18
     s32     i;
     s32     var_v0;
     s32     vol;
-    s32     var_v1;
+    s32     lightPosIdx;
 
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Player_ControlFreeze();
 
-            D_800E20FC = 0;
+            D_800E20FC = Q12_ANGLE(0.0f);
             D_800E2100 = 0;
 
             Savegame_EventFlagSet(EventFlag_MapMark_AltSchoolRF_ValveSign);
@@ -487,13 +489,13 @@ void func_800DAF18(void) // 0x800DAF18
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
-                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                               true);
+                                    Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
             Event_CameraLookAtSet(NULL,
-                             Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                             true);
+                                  Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             SysWork_StateStepIncrement(0);
 
@@ -524,13 +526,13 @@ void func_800DAF18(void) // 0x800DAF18
 
             func_8008D438();
             Event_CameraPositionSet(NULL,
-                               D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz,
-                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                               true);
+                                    D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz,
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
             Event_CameraLookAtSet(NULL,
-                             D_800E1FC4[0].vx, D_800E1FC4[0].vy, D_800E1FC4[0].vz,
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                             true);
+                                  D_800E1FC4[0].vx, D_800E1FC4[0].vy, D_800E1FC4[0].vz,
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             D_800E20FA = 0;
             SysWork_StateStepIncrement(0);
@@ -552,52 +554,52 @@ void func_800DAF18(void) // 0x800DAF18
             }
             else
             {
-                var_v1 = i >> 1;
+                lightPosIdx = i >> 1;
 
                 if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
-                    var_v1 += 2;
+                    lightPosIdx += 2;
                 }
 
                 if (i & 0x1)
                 {
-                    lightPos.vx = D_800E1F88[var_v1].vx;
-                    lightPos.vy = D_800E1F88[var_v1].vy;
-                    lightPos.vz = D_800E1F88[var_v1].vz;
+                    lightPos.vx = D_800E1F88[lightPosIdx].vx;
+                    lightPos.vy = D_800E1F88[lightPosIdx].vy;
+                    lightPos.vz = D_800E1F88[lightPosIdx].vz;
 
-                    lookAtPos.vx = D_800E1FC4[var_v1].vx;
-                    lookAtPos.vy = D_800E1FC4[var_v1].vy;
-                    lookAtPos.vz = D_800E1FC4[var_v1].vz;
+                    lookAtPos.vx = D_800E1FC4[lightPosIdx].vx;
+                    lookAtPos.vy = D_800E1FC4[lightPosIdx].vy;
+                    lookAtPos.vz = D_800E1FC4[lightPosIdx].vz;
                 }
                 else
                 {
-                    lightPos.vx = D_800E1F88[var_v1 - 1].vx + (((D_800E1F88[var_v1].vx - D_800E1F88[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    lightPos.vy = D_800E1F88[var_v1 - 1].vy + (((D_800E1F88[var_v1].vy - D_800E1F88[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    lightPos.vz = D_800E1F88[var_v1 - 1].vz + (((D_800E1F88[var_v1].vz - D_800E1F88[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vx = D_800E1F88[lightPosIdx - 1].vx + (((D_800E1F88[lightPosIdx].vx - D_800E1F88[lightPosIdx - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vy = D_800E1F88[lightPosIdx - 1].vy + (((D_800E1F88[lightPosIdx].vy - D_800E1F88[lightPosIdx - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lightPos.vz = D_800E1F88[lightPosIdx - 1].vz + (((D_800E1F88[lightPosIdx].vz - D_800E1F88[lightPosIdx - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
 
-                    lookAtPos.vx = D_800E1FC4[var_v1 - 1].vx + (((D_800E1FC4[var_v1].vx - D_800E1FC4[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    lookAtPos.vy = D_800E1FC4[var_v1 - 1].vy + (((D_800E1FC4[var_v1].vy - D_800E1FC4[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
-                    lookAtPos.vz = D_800E1FC4[var_v1 - 1].vz + (((D_800E1FC4[var_v1].vz - D_800E1FC4[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vx = D_800E1FC4[lightPosIdx - 1].vx + (((D_800E1FC4[lightPosIdx].vx - D_800E1FC4[lightPosIdx - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vy = D_800E1FC4[lightPosIdx - 1].vy + (((D_800E1FC4[lightPosIdx].vy - D_800E1FC4[lightPosIdx - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    lookAtPos.vz = D_800E1FC4[lightPosIdx - 1].vz + (((D_800E1FC4[lightPosIdx].vz - D_800E1FC4[lightPosIdx - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
                 }
 
                 // Warp camera.
                 Event_CameraPositionSet(&lightPos,
-                                   Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                                   true);
+                                        Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                        Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                        true);
                 Event_CameraLookAtSet(&lookAtPos,
-                                 Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                                 Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                                 true);
+                                      Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                      Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                      true);
 
-                g_SysWork.lensFlareBoneCoord               = NULL;
-                g_SysWork.lightRotation.vx = -ratan2(lookAtPos.vy - lightPos.vy,
-                                                          Math_Vector2MagCalcSafeQ6(lookAtPos.vx - lightPos.vx,
-                                                                                  lookAtPos.vz - lightPos.vz));
+                g_SysWork.lensFlareBoneCoord = NULL;
+                g_SysWork.lightRotation.vx   = -ratan2(lookAtPos.vy - lightPos.vy,
+                                                       Math_Vector2MagCalcSafeQ6(lookAtPos.vx - lightPos.vx,
+                                                                                 lookAtPos.vz - lightPos.vz));
 
                 g_SysWork.lightRotation.vy = ratan2(lookAtPos.vx - lightPos.vx, lookAtPos.vz - lightPos.vz);
                 g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
-                g_SysWork.lightBoneCoord               = NULL;
+                g_SysWork.lightBoneCoord   = NULL;
                 g_SysWork.lightPosition.vx = lightPos.vx;
                 g_SysWork.lightPosition.vy = MAX(Q12(-1.5f), lightPos.vy);
                 g_SysWork.lightPosition.vz = lightPos.vz;
@@ -623,13 +625,13 @@ void func_800DAF18(void) // 0x800DAF18
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                               Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
-                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                               true);
+                                    Q12(-12.38f), Q12(-1.2f), Q12(-14.07f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
             Event_CameraLookAtSet(NULL,
-                             Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
-                             true);
+                                  Q12(-9.24f), Q12(-0.76f), Q12(-11.63f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             sharedFunc_800CBD58_1_s02();
 
@@ -648,8 +650,10 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
             sharedFunc_800D2EF4_0_s00();
@@ -678,7 +682,7 @@ void func_800DAF18(void) // 0x800DAF18
 
         if (var_v0 >= 6 && var_v0 < 37)
         {
-            if ((g_SysWork.sysStateSteps[0] == 7 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) < Q12_ANGLE(0.0f)) ||
+            if ((g_SysWork.sysStateSteps[0] == 7  && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) < Q12_ANGLE(0.0f)) ||
                 (g_SysWork.sysStateSteps[0] == 12 && Math_AngleNormalizeSigned(D_800E20F8 - temp_s2) > Q12_ANGLE(0.0f)))
             {
                 if (D_800E2101 == 0)
@@ -712,15 +716,13 @@ void func_800DAF18(void) // 0x800DAF18
                 if (D_800E2100 != 0)
                 {
                     D_800E20FC -= Math_AngleNormalizeSigned(D_800E20F8 - temp_s2);
-
-                    if (D_800E20FC < 0)
+                    if (D_800E20FC < Q12_ANGLE(0.0f))
                     {
-                        D_800E20FC = 0;
+                        D_800E20FC = Q12_ANGLE(0.0f);
                     }
-
-                    if (D_800E20FC > 0xFF0)
+                    if (D_800E20FC > Q12_ANGLE(358.6f))
                     {
-                        D_800E20FC = 0xFF0;
+                        D_800E20FC = Q12_ANGLE(358.6f);
                     }
                 }
             }
@@ -827,8 +829,10 @@ void func_800DBEC8(void) // 0x800DBEC8
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_M1S03_MonsterLurksBookRead);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, false, false, false);
             break;
@@ -892,8 +896,10 @@ void func_800DC0F8(void) // 0x800DC0F8
             break;
 
         default: // `EventState_Flag117True`
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_117);
             break;
     }
@@ -938,12 +944,18 @@ void func_800DC310(void) // 0x800DC310
             // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-59.36f);
             g_SysWork.playerWork.player.position.vz = Q12(18.37f);
-            g_SysWork.playerWork.player.moveSpeed = Q12(0.0f);
+            g_SysWork.playerWork.player.moveSpeed   = Q12(0.0f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(-60.16f), Q12(-2.7f), Q12(19.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-58.13f), Q12(-0.04f), Q12(17.57f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(-60.16f), Q12(-2.7f), Q12(19.76f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-58.13f), Q12(-0.04f), Q12(17.57f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -996,8 +1008,14 @@ void func_800DC310(void) // 0x800DC310
             Savegame_EventFlagSet(EventFlag_104);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-60.0f), Q12(0.0f), Q12(18.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(-60.63f), Q12(-4.14f), Q12(17.42f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-60.0f), Q12(0.0f), Q12(18.5f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
             SysWork_StateStepIncrement(0);
@@ -1040,7 +1058,7 @@ void func_800DC780(void) // 0x800DC780
 
             // Warp player.
             g_SysWork.playerWork.player.rotation.vy = ratan2(Q12(-61.4f) - g_SysWork.playerWork.player.position.vx,
-                                                                Q12(20.8f)  - g_SysWork.playerWork.player.position.vz);
+                                                             Q12(20.8f)  - g_SysWork.playerWork.player.position.vz);
 
             func_8008D438();
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
@@ -1063,8 +1081,10 @@ void func_800DC780(void) // 0x800DC780
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_107);
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D448();
@@ -1276,9 +1296,10 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         case 8:
-            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &Q12_VECTOR3(-13.91f, -11.5f, 22.11f));
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head],
+                                         &SVECTOR3_Zero, &Q12_VECTOR3(-13.91f, -11.5f, 22.11f));
             sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
-            Event_WaitTimer(0x2800, false);
+            Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 9:
@@ -1384,7 +1405,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                 WorldObjects_Add(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
             }
 
-            if ((g_SysWork.playerWork.player.position.vx < Q12(-57.5f)) && (g_SysWork.playerWork.player.position.vz < Q12(21.6f)))
+            if (g_SysWork.playerWork.player.position.vx < Q12(-57.5f) &&
+                g_SysWork.playerWork.player.position.vz < Q12(21.6f))
             {
                 if (!Savegame_EventFlagGet(EventFlag_100))
                 {
@@ -1397,16 +1419,25 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
 
                         // Warp camera.
                         Event_CameraPositionSet(NULL, Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork.player.position.vz + Q12(0.49f),
-                                           Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
-                        Event_CameraLookAtSet(NULL, Q12(-58.48f), Q12(-0.31f), g_SysWork.playerWork.player.position.vz - Q12(0.72f),
-                                         Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
+                                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                                D_800E62D0 == 0);
+                        Event_CameraLookAtSet(NULL,
+                                              Q12(-58.48f), Q12(-0.31f), g_SysWork.playerWork.player.position.vz - Q12(0.72f),
+                                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                              D_800E62D0 == 0);
 
                         D_800E62D0 = 1;
                     }
                     else
                     {
-                        Event_CameraPositionSet(NULL, Q12(-58.48f), Q12(-1.88f), Q12(22.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-                        Event_CameraLookAtSet(NULL, Q12(-60.88f), Q12(-1.23f), Q12(19.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                        Event_CameraPositionSet(NULL,
+                                                Q12(-58.48f), Q12(-1.88f), Q12(22.3f),
+                                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                                true);
+                        Event_CameraLookAtSet(NULL,
+                                              Q12(-60.88f), Q12(-1.23f), Q12(19.16f),
+                                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                              true);
                         D_800E62D0 = 2;
                     }
                 }
@@ -1415,10 +1446,14 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                     if (g_SysWork.playerWork.player.position.vz > Q12(18.6f))
                     {
                         // Warp camera.
-                        Event_CameraPositionSet(NULL, Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork.player.position.vz - Q12(2.25f),
-                                           Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
-                        Event_CameraLookAtSet(NULL, Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork.player.position.vz + Q12(1.65f),
-                                         Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
+                        Event_CameraPositionSet(NULL,
+                                               Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork.player.position.vz - Q12(2.25f),
+                                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                               D_800E62D0 == 0);
+                        Event_CameraLookAtSet(NULL,
+                                              Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork.player.position.vz + Q12(1.65f),
+                                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                              D_800E62D0 == 0);
 
                         D_800E62D0 = 1;
                     }
@@ -1427,8 +1462,14 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                         D_800E62D0 = 0;
 
                         // Warp camera.
-                        Event_CameraPositionSet(NULL, Q12(-60.15f), Q12(-3.3f), Q12(20.52f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-                        Event_CameraLookAtSet(NULL, Q12(-59.98f), Q12(-0.85f), Q12(17.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+                        Event_CameraPositionSet(NULL,
+                                                Q12(-60.15f), Q12(-3.3f), Q12(20.52f),
+                                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                                true);
+                        Event_CameraLookAtSet(NULL,
+                                              Q12(-59.98f), Q12(-0.85f), Q12(17.36f),
+                                              Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                              true);
                     }
                 }
             }
@@ -1444,19 +1485,24 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
             }
     }
 
-    if (Savegame_EventFlagGet(EventFlag_104) && !Savegame_EventFlagGet(EventFlag_105))
+    if ( Savegame_EventFlagGet(EventFlag_104) &&
+        !Savegame_EventFlagGet(EventFlag_105))
     {
         // Warp camera.
         Event_CameraPositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
         if (g_SysWork.playerWork.player.position.vz < Q12(18.5f))
         {
-            Event_CameraLookAtSet(NULL, Q12(-60.0f), Q12(0.0f), Q12(18.5f),
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-60.0f), Q12(0.0f), Q12(18.5f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  false);
         }
         else
         {
-            Event_CameraLookAtSet(NULL, Q12(-60.0f), Q12(0.0f), g_SysWork.playerWork.player.position.vz,
-                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-60.0f), Q12(0.0f), g_SysWork.playerWork.player.position.vz,
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  false);
         }
 
         D_800E62D0 = 0;
@@ -1667,7 +1713,8 @@ void func_800DE828(void) // 0x800DE828
     }
     else
     {
-        if (Savegame_EventFlagGet(EventFlag_105) && !Savegame_EventFlagGet(EventFlag_106))
+        if ( Savegame_EventFlagGet(EventFlag_105) &&
+            !Savegame_EventFlagGet(EventFlag_106))
         {
             if (D_800E20EE == 6)
             {
@@ -1828,7 +1875,7 @@ void func_800DE828(void) // 0x800DE828
                     {
                         if (g_WorldObject1.rotation.vy < Q12_ANGLE(-5.7f))
                         {
-                            Sfx_WithFlagsPlay(Sfx_Unk1436, &g_WorldObject1.position, 0x80, SfxFlag_None);
+                            Sfx_WithFlagsPlay(Sfx_Unk1436, &g_WorldObject1.position, Q8(0.5f), SfxFlag_None);
                             D_800E20EE = 5;
                         }
                     }
@@ -1838,7 +1885,8 @@ void func_800DE828(void) // 0x800DE828
                         Savegame_EventFlagSet(EventFlag_M1S03_LockerOpened);
                     }
 
-                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() || g_WorldObject1.rotation.vy < -0x300)
+                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() ||
+                        g_WorldObject1.rotation.vy < Q12_ANGLE(-67.5f))
                     {
                         g_WorldObject1.rotation.vy = Q12_ANGLE(-67.5f);
                         D_800E20EE = 6;

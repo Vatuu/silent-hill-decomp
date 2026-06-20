@@ -10,7 +10,7 @@ typedef enum _LockerDeadBodyAnim
     LockerDeadBodyAnim_3     = 3
 } e_LockerDeadBodyAnim;
 
-extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8]; // 0x800E1410
+extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 
 void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

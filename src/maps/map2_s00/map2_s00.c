@@ -1980,7 +1980,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
     if (Savegame_EventFlagGet(EventFlag_132) && !Savegame_EventFlagGet(EventFlag_M2S00_KGordonDoorOpen))
     {
         // TODO: Should be `~((1 << 8) | (1 << 6) | (1 << 7));`.
-        g_SavegamePtr->ovlEnemyStates[10] &= 0xF3FFFEFF;
+        g_SavegamePtr->mapEnemyStates[10] &= 0xF3FFFEFF;
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
@@ -2686,7 +2686,7 @@ void func_800EE5D0(void) // 0x800EE5D0
 
     idx = func_800EE518();
     memcpy(g_MapOverlayHdr.charaSpawnInfos, D_800F1CAC[idx], sizeof(D_800F1CAC[idx]));
-    g_SavegamePtr->ovlEnemyStates[10] = g_SavegamePtr->ovlEnemyStates[idx];
+    g_SavegamePtr->mapEnemyStates[10] = g_SavegamePtr->mapEnemyStates[idx];
 }
 
 void func_800EE660(void) // 0x800EE660
@@ -2695,6 +2695,6 @@ void func_800EE660(void) // 0x800EE660
     s32 idx;
 
     idx = func_800EE518();
-    val = g_SavegamePtr->ovlEnemyStates[10];
-    g_SavegamePtr->ovlEnemyStates[func_800EE5A8(idx)] = val;
+    val = g_SavegamePtr->mapEnemyStates[10];
+    g_SavegamePtr->mapEnemyStates[func_800EE5A8(idx)] = val;
 }

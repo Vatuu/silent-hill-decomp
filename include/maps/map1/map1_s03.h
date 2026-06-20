@@ -43,7 +43,7 @@ extern u8 D_800E20EE;
 
 extern u16 D_800E20F8;
 extern u16 D_800E20FA;
-extern s16 D_800E20FC;
+extern q3_12 D_800E20FC; // Angle.
 extern s16 D_800E20FE;
 extern u8  D_800E2100;
 extern u8  D_800E2101;
@@ -98,6 +98,7 @@ void func_800DA950(void);
 
 void func_800DAA28(void);
 
+// Key in drain and rubber ball puzzle event.
 void func_800DABC4(void);
 
 void func_800DAF18(void);
@@ -105,16 +106,20 @@ void func_800DAF18(void);
 // `MapEvent_TheMonsterLurksBookRead`
 void func_800DBEC8(void);
 
+// Split Head defeat hint read event.
 void func_800DC0F8(void);
 
 void func_800DC2E4(void);
 
 void func_800DC310(void);
 
+// Locker Dead Body event.
 void func_800DC780(void);
 
+// Library Reserve Key event.
 void func_800DC9A0(void);
 
+// Rubber Ball event.
 void func_800DCB54(void);
 
 void func_800DCDDC(void);

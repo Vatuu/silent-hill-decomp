@@ -110,8 +110,8 @@ typedef enum _EventFlag
     EventFlag_102                              = 102,
     EventFlag_M1S03_LockerOpened               = 103,
     EventFlag_104                              = 104,
-    EventFlag_105                              = 105,
-    EventFlag_106                              = 106,
+    EventFlag_105                              = 105, // Locker Dead Body triggered?
+    EventFlag_106                              = 106, // Locker Dead Body finished animating?
     EventFlag_107                              = 107,
     EventFlag_M1S03_PickupLibraryReserveKey    = 108,
 
@@ -122,7 +122,7 @@ typedef enum _EventFlag
     EventFlag_M1S02_PickupClassroomKey   = 114,
     EventFlag_115                        = 115,
     EventFlag_M1S03_MonsterLurksBookRead = 116,
-    EventFlag_117                        = 117,
+    EventFlag_117                        = 117, // Split Head defeat hint has been read.
     EventFlag_118                        = 118,
     EventFlag_119                        = 119,
 

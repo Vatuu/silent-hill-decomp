@@ -17,30 +17,32 @@
 // ENUMS
 // ======
 
-typedef enum _InventoryItemFlags
+/** @brief Inventory item flags. */
+typedef enum _InvItemFlags
 {
-    InventoryItemFlag_PlateOfTurtle   = 1 << 0,
-    InventoryItemFlag_PlateOfHatter   = 1 << 1,
-    InventoryItemFlag_PlateOfCat      = 1 << 2,
-    InventoryItemFlag_PlateOfQueen    = 1 << 3,
-    InventoryItemFlag_Lighter         = 1 << 4,
-    InventoryItemFlag_Camera          = 1 << 5,
-    InventoryItemFlag_VideoTape       = 1 << 6,
-    InventoryItemFlag_ChannelingStone = 1 << 7
-} e_InventoryItemFlags;
+    InvItemFlag_PlateOfTurtle   = 1 << 0,
+    InvItemFlag_PlateOfHatter   = 1 << 1,
+    InvItemFlag_PlateOfCat      = 1 << 2,
+    InvItemFlag_PlateOfQueen    = 1 << 3,
+    InvItemFlag_Lighter         = 1 << 4,
+    InvItemFlag_Camera          = 1 << 5,
+    InvItemFlag_VideoTape       = 1 << 6,
+    InvItemFlag_ChannelingStone = 1 << 7
+} e_InvItemFlags;
 
-typedef enum _InventorySelectionId
+/** @brief Inventory selection ID. */
+typedef enum _InvSelectionId
 {
-    InventorySelectionId_Item            = 0,
-    InventorySelectionId_EquippedItem    = 1,
-    InventorySelectionId_Exit            = 2,
-    InventorySelectionId_Settings        = 3,
-    InventorySelectionId_Map             = 4,
-    InventorySelectionId_ItemCmd         = 5,
-    InventorySelectionId_EquippedItemCmd = 6,
-    InventorySelectionId_Health          = 7, // Used for animation when user selects health item.
-    InventorySelectionId_Examine         = 8
-} e_InventorySelectionId;
+    InvSelectionId_Item            = 0,
+    InvSelectionId_EquippedItem    = 1,
+    InvSelectionId_Exit            = 2,
+    InvSelectionId_Settings        = 3,
+    InvSelectionId_Map             = 4,
+    InvSelectionId_ItemCmd         = 5,
+    InvSelectionId_EquippedItemCmd = 6,
+    InvSelectionId_Health          = 7, // Used for animation when user selects health item.
+    InvSelectionId_Examine         = 8
+} e_InvSelectionId;
 
 // ========
 // STRUCTS
@@ -83,7 +85,7 @@ typedef struct
 extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
 
 /** @brief Defines what the user has selected in the inventory.
- * `e_InventorySelectionId`
+ * `e_InvSelectionId`
  *
  * @note
  * `g_Inventory_PrevSelectionId` has the same behaviour, with
@@ -91,7 +93,7 @@ extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
  * while `g_Inventory_PrevSelectionId` is constantly updated to the same value
  * as this variable.
  */
-extern u32 g_Inventory_SelectionId; /** `e_InventorySelectionId` */ // 0x800ADB5C
+extern u32 g_Inventory_SelectionId; /** `e_InvSelectionId` */ // 0x800ADB5C
 
 /** @brief Has user started scrolling. Dead code?
  * Only used when the user starts to scrolling through the inventory, but as soon
@@ -203,7 +205,7 @@ extern s32 g_Inventory_SelectionBordersDraw;
 /** @brief Used for drawing the transition of the corner borders' position when changing
  * the selected option in the inventory. Indicates where the box is moving to.
  *
- * `e_InventorySelectionId`
+ * `e_InvSelectionId`
  *
  * Difficult to notice, but this shares the same value as
  * `g_Inventory_SelectionId`, with the difference of a minor delay.

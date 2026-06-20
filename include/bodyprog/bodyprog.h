@@ -125,27 +125,27 @@ typedef struct _GteScratchData
     /* 0x252 */ u8      field_252[102];
     /* 0x2B8 */ u8      field_2B8[200]; // Size likely incorrect.
 
-               union
-               {
-                   MATRIX field_0;
-                   struct
-                   {
-                       /* 0x0  */ s32     field_0;
-                       /* 0x4  */ s32     field_4;
-                       /* 0x8  */ CVECTOR field_8;
-                       /* 0xC  */ CVECTOR field_C;
-                       /* 0x10 */ u8      field_10;
-                       /* 0x11 */ u8      field_11;
-                       /* 0x12 */ u8      field_12;
-                       /* 0x13 */ u8      field_13;
-                       /* 0x14 */ u8      field_14;
-                       /* 0x15 */ u8      field_15;
-                       /* 0x16 */ u8      field_16;
-                       /* 0x17 */ u8      field_17;
-                       /* 0x18 */ s32     field_18;
-                       /* 0x1C */ s32     field_1C;
-                   } s_0;
-    /* 0x380 */} field_380;
+                union
+                {
+                    MATRIX field_0;
+                    struct
+                    {
+                        /* 0x0  */ s32     field_0;
+                        /* 0x4  */ s32     field_4;
+                        /* 0x8  */ CVECTOR field_8;
+                        /* 0xC  */ CVECTOR field_C;
+                        /* 0x10 */ u8      field_10;
+                        /* 0x11 */ u8      field_11;
+                        /* 0x12 */ u8      field_12;
+                        /* 0x13 */ u8      field_13;
+                        /* 0x14 */ u8      field_14;
+                        /* 0x15 */ u8      field_15;
+                        /* 0x16 */ u8      field_16;
+                        /* 0x17 */ u8      field_17;
+                        /* 0x18 */ s32     field_18;
+                        /* 0x1C */ s32     field_1C;
+                    } s_0;
+    /* 0x380 */ } field_380;
 
     /* 0x3A0 */ s_Normal field_3A0;
     /* 0x3A4 */ DVECTOR  screenPos_3A4;

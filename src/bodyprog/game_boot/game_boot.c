@@ -334,7 +334,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
     s32  i;
-    s32* ovlEnemyStatesPtr;
+    s32* mapEnemyStatesPtr;
 
     bzero(g_SavegamePtr, sizeof(s_Savegame));
 
@@ -342,7 +342,7 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    ovlEnemyStatesPtr = g_SavegamePtr->ovlEnemyStates;
+    mapEnemyStatesPtr = g_SavegamePtr->mapEnemyStates;
 
     g_SavegamePtr->gameDifficulty = difficulty;
     g_SavegamePtr->paperMapIdx    = PaperMapIdx_OldTown;
@@ -351,8 +351,8 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     // Odd code. Possibly a hack.
     for (i = 0; i < Chara_Count; i++)
     {
-        ovlEnemyStatesPtr[44] = NO_VALUE;
-        ovlEnemyStatesPtr--;
+        mapEnemyStatesPtr[44] = NO_VALUE;
+        mapEnemyStatesPtr--;
     }
 
     Game_SavegameResetPlayer();

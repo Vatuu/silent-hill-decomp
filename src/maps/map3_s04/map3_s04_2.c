@@ -536,9 +536,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
                 Sfx_WithFlagsPlay(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_300);
 
-                if (g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx] & (1 << 2))
+                if (g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx] & (1 << 2))
                 {
-                    g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapIdx] &= ~(1 << 3);
+                    g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx] &= ~(1 << 3);
                 }
             }
         }

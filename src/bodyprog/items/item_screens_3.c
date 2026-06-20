@@ -3097,7 +3097,7 @@ void Gfx_Items_Draw(void) // 0x80054200
     s32  temp_s5;
     s32  i;
     s32  saveItemsIdx;
-    s32  inventoryItemsIdx;
+    s32  invItemsIdx;
 
     func_8004BFE8();
 
@@ -3127,21 +3127,21 @@ void Gfx_Items_Draw(void) // 0x80054200
 
     if (g_GameWork.gameStateSteps[1] < 21) // If screen is inventory
     {
-        for (inventoryItemsIdx = 0; inventoryItemsIdx < 7; inventoryItemsIdx++)
+        for (invItemsIdx = 0; invItemsIdx < 7; invItemsIdx++)
         {
-            D_800C3E18[inventoryItemsIdx] = (temp_s5 + inventoryItemsIdx) % g_SavegamePtr->inventorySlotCount;
+            D_800C3E18[invItemsIdx] = (temp_s5 + invItemsIdx) % g_SavegamePtr->inventorySlotCount;
 
-            if (g_SavegamePtr->items[D_800C3E18[inventoryItemsIdx]].id_0 == (u8)InvItemId_Empty)
+            if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id_0 == (u8)InvItemId_Empty)
             {
                 continue;
             }
 
             for (saveItemsIdx = 0; saveItemsIdx < INV_ITEM_COUNT_MAX; saveItemsIdx++)
             {
-                if (g_SavegamePtr->items[D_800C3E18[inventoryItemsIdx]].id_0 == g_Item_MapLoadableItems[saveItemsIdx])
+                if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id_0 == g_Item_MapLoadableItems[saveItemsIdx])
                 {
-                    Gfx_Items_Display(FS_BUFFER_8, inventoryItemsIdx, saveItemsIdx);
-                    func_8005487C(inventoryItemsIdx);
+                    Gfx_Items_Display(FS_BUFFER_8, invItemsIdx, saveItemsIdx);
+                    func_8005487C(invItemsIdx);
 
                     saveItemsIdx = INV_ITEM_COUNT_MAX;
                 }
@@ -3196,16 +3196,16 @@ void Gfx_Items_Draw(void) // 0x80054200
             g_SavegamePtr->clearGameCount = 1;
         }
 
-        for (inventoryItemsIdx = 0; inventoryItemsIdx < 6; inventoryItemsIdx++)
+        for (invItemsIdx = 0; invItemsIdx < 6; invItemsIdx++)
         {
-            D_800C3E18[inventoryItemsIdx] = inventoryItemsIdx;
+            D_800C3E18[invItemsIdx] = invItemsIdx;
 
             for (saveItemsIdx = 0; saveItemsIdx < INV_ITEM_COUNT_MAX; saveItemsIdx++)
             {
-                if (ITEM_IDS[inventoryItemsIdx] == g_Item_MapLoadableItems[saveItemsIdx])
+                if (ITEM_IDS[invItemsIdx] == g_Item_MapLoadableItems[saveItemsIdx])
                 {
-                    Gfx_Items_Display(FS_BUFFER_8, inventoryItemsIdx, saveItemsIdx);
-                    func_8005487C(inventoryItemsIdx);
+                    Gfx_Items_Display(FS_BUFFER_8, invItemsIdx, saveItemsIdx);
+                    func_8005487C(invItemsIdx);
 
                     saveItemsIdx = INV_ITEM_COUNT_MAX;
                 }
@@ -3508,66 +3508,66 @@ void Inventory_AddSpecialItem(u8 itemId, u8 itemCount) // 0x80054CAC
             break;
 
         case InvItemId_ChannelingStone:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_ChannelingStone))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_ChannelingStone))
             {
                 g_SavegamePtr->pickedUpSpecialItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_ChannelingStone; // `specialItemFlags`?
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_ChannelingStone; // `specialItemFlags`?
             }
             break;
 
         case InvItemId_PlateOfTurtle:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_PlateOfTurtle))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_PlateOfTurtle))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_PlateOfTurtle;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_PlateOfTurtle;
             }
             break;
 
         case InvItemId_PlateOfHatter:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_PlateOfHatter))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_PlateOfHatter))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_PlateOfHatter;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_PlateOfHatter;
             }
             break;
 
         case InvItemId_PlateOfCat:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_PlateOfCat))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_PlateOfCat))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_PlateOfCat;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_PlateOfCat;
             }
             break;
 
         case InvItemId_PlateOfQueen:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_PlateOfQueen))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_PlateOfQueen))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_PlateOfQueen;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_PlateOfQueen;
             }
             break;
 
         case InvItemId_Lighter:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_Lighter))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_Lighter))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_Lighter;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_Lighter;
             }
             break;
 
         case InvItemId_VideoTape:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_VideoTape))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_VideoTape))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_VideoTape;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_VideoTape;
             }
             break;
 
         case InvItemId_Camera:
-            if (!(g_SavegamePtr->inventoryItemFlags & InventoryItemFlag_Camera))
+            if (!(g_SavegamePtr->inventoryItemFlags & InvItemFlag_Camera))
             {
                 g_SavegamePtr->pickedUpItemCount++;
-                g_SavegamePtr->inventoryItemFlags |= InventoryItemFlag_Camera;
+                g_SavegamePtr->inventoryItemFlags |= InvItemFlag_Camera;
             }
             break;
 

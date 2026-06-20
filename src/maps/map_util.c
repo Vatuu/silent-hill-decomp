@@ -102,24 +102,24 @@ static inline s32 GetYIdx(q19_12 posX, q19_12 posY)
     return 0;
 }
 
-u8 Map_RoomIdxGet(s32 x, s32 z)
+u8 Map_RoomIdxGet(q19_12 posX, q19_12 posZ)
 {
 #if defined(MAP6_S04) || defined(MAP6_S05)
     s32 result;
 
-    if (z > Q12(80.0f))
+    if (posZ > Q12(80.0f))
     {
         result = 5;
     }
-    else if (Q12_SQUARE_PRECISE(x + Q12(16.0f)) + Q12_SQUARE_PRECISE(z + Q12(64.0f)) < Q12(SQUARE(18)))
+    else if (Q12_SQUARE_PRECISE(posX + Q12(16.0f)) + Q12_SQUARE_PRECISE(posZ + Q12(64.0f)) < Q12(SQUARE(18)))
     {
         result = 3;
     }
-    else if (Q12_SQUARE_PRECISE(x + Q12(-14.0f)) + Q12_SQUARE_PRECISE(z + Q12(28.0f)) < Q12(SQUARE(18)))
+    else if (Q12_SQUARE_PRECISE(posX + Q12(-14.0f)) + Q12_SQUARE_PRECISE(posZ + Q12(28.0f)) < Q12(SQUARE(18)))
     {
         result = 2;
     }
-    else if (Q12_SQUARE_PRECISE(x + Q12(14.0f)) + Q12_SQUARE_PRECISE(z + Q12(28.0f)) < Q12(SQUARE(5)))
+    else if (Q12_SQUARE_PRECISE(posX + Q12(14.0f)) + Q12_SQUARE_PRECISE(posZ + Q12(28.0f)) < Q12(SQUARE(5)))
     {
         result = 4;
     }
@@ -132,25 +132,25 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
 #elif defined(MAP6_S03)
     s32 ret;
 
-    if (x < Q12(27.0f))
+    if (posX < Q12(27.0f))
     {
         ret = 17;
-        if (x <= Q12(13.0f))
+        if (posX <= Q12(13.0f))
         {
             ret = 15;
-            if (x > Q12(-13.0f))
+            if (posX > Q12(-13.0f))
             {
                 ret = 16;
             }
         }
     }
-    else if (x < Q12(56.0f))
+    else if (posX < Q12(56.0f))
     {
         ret = 18;
     }
     else
     {
-        if (x < Q12(72.0f))
+        if (posX < Q12(72.0f))
         {
             ret = 19;
         }
@@ -173,30 +173,30 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     extern u8 sharedData_800DF2DC_0_s00[];
 
     // Check if coordinates are within primary grid bounds.
-    if (x < Q12(-320.0f) || x >= Q12(240.0f) ||
-        z < Q12(-240.0f) || z >= Q12(200.0f))
+    if (posX < Q12(-320.0f) || posX >= Q12(240.0f) ||
+        posZ < Q12(-240.0f) || posZ >= Q12(200.0f))
     {
         res = 0;
     }
     else
     {
         // Determine XY indices in primary grid.
-        xIdx = GetXIdx(x);
-        yIdx = GetYIdx(x, z);
+        xIdx = GetXIdx(posX);
+        yIdx = GetYIdx(posX, posZ);
         res  = sharedData_800DF2DC_0_s00[(xIdx * 5) + yIdx];
     }
 #elif defined(MAP2_S02) || defined(MAP4_S00) || defined(MAP4_S02) || defined(MAP4_S03) || \
       defined(MAP4_S05) || defined(MAP4_S06)
-    if (CheckRange(x + Q12(120.0f), Q12(-14.0f), Q12(14.0f)) && z < Q12(40.0f))
+    if (CheckRange(posX + Q12(120.0f), Q12(-14.0f), Q12(14.0f)) && posZ < Q12(40.0f))
     {
         xIdx = 1;
     }
-    else if (CheckRange(x + Q12(60.0f), Q12(-9.0f), Q12(9.0f)) &&
-             CheckRange(z + Q12(40.0f), Q12(-34.0f), Q12(34.0f)))
+    else if (CheckRange(posX + Q12(60.0f), Q12(-9.0f), Q12(9.0f)) &&
+             CheckRange(posZ + Q12(40.0f), Q12(-34.0f), Q12(34.0f)))
     {
         xIdx = 2;
     }
-    else if (CheckRange(x + Q12(0.0f), Q12(-14.0f), Q12(14.0f)) && z > Q12(-80.0f))
+    else if (CheckRange(posX + Q12(0.0f), Q12(-14.0f), Q12(14.0f)) && posZ > Q12(-80.0f))
     {
         xIdx = 3;
     }
@@ -205,15 +205,15 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         xIdx = 0;
     }
 
-    if (CheckNotInRange(x + Q12(40.0f), Q12(-120.0f), Q12(120.0f)))
+    if (CheckNotInRange(posX + Q12(40.0f), Q12(-120.0f), Q12(120.0f)))
     {
         yIdx = 0;
     }
-    else if (CheckRange(z + Q12(80.0f), Q12(-14.0f), Q12(14.0f)))
+    else if (CheckRange(posZ + Q12(80.0f), Q12(-14.0f), Q12(14.0f)))
     {
         yIdx = 1;
     }
-    else if (CheckRange(z + Q12(0.0f), Q12(-14.0f), Q12(14.0f)))
+    else if (CheckRange(posZ + Q12(0.0f), Q12(-14.0f), Q12(14.0f)))
     {
         yIdx = 2;
     }
@@ -226,63 +226,63 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
 #elif defined(MAP5_S00)
     res = 0;
 
-    if (x >= Q12(-40.0f))
+    if (posX >= Q12(-40.0f))
     {
-        if (CheckRange(x, Q12(16.0), Q12(24.0)) && z > Q12(-8.0))
+        if (CheckRange(posX, Q12(16.0), Q12(24.0)) && posZ > Q12(-8.0))
         {
-            res = (z < Q12(48.0)) ? 2 : 1;
+            res = (posZ < Q12(48.0)) ? 2 : 1;
         }
-        else if (CheckRange(z + Q12(12.0), Q12(-4.0), Q12(4.0)) && CheckRange(x - Q12(40.0), Q12(-8.0), Q12(8.0)))
+        else if (CheckRange(posZ + Q12(12.0), Q12(-4.0), Q12(4.0)) && CheckRange(posX - Q12(40.0), Q12(-8.0), Q12(8.0)))
         {
             res = 3;
         }
-        else if (CheckRange(x, Q12(48.0), Q12(56.0)) && CheckRange(z + Q12(40.0), Q12(-8.0), Q12(8.0)))
+        else if (CheckRange(posX, Q12(48.0), Q12(56.0)) && CheckRange(posZ + Q12(40.0), Q12(-8.0), Q12(8.0)))
         {
             res = 4;
         }
     }
-    else if (CheckRange(x, Q12(-64.0f), Q12(-56.0f)))
+    else if (CheckRange(posX, Q12(-64.0f), Q12(-56.0f)))
     {
-        if (z > Q12(-8.0))
+        if (posZ > Q12(-8.0))
         {
             res = 9;
         }
-        else if (CheckRange(z + Q12(52.0), Q12(-36.0), Q12(36.0)))
+        else if (CheckRange(posZ + Q12(52.0), Q12(-36.0), Q12(36.0)))
         {
             res = 8;
         }
     }
-    else if (x > Q12(-64.0) && z < Q12(-88.0))
+    else if (posX > Q12(-64.0) && posZ < Q12(-88.0))
     {
         res = 10;
     }
-    else if (CheckRange(z, Q12(-94.0), Q12(-90.0)) && x > Q12(-89.0))
+    else if (CheckRange(posZ, Q12(-94.0), Q12(-90.0)) && posX > Q12(-89.0))
     {
         res = 11;
     }
-    else if (CheckRange(x, Q12(-96.0), Q12(-88.0)) && CheckRange(z + Q12(46.0), Q12(-30.0), Q12(30.0)))
+    else if (CheckRange(posX, Q12(-96.0), Q12(-88.0)) && CheckRange(posZ + Q12(46.0), Q12(-30.0), Q12(30.0)))
     {
         res = 13;
     }
 #elif defined(MAP5_S01)
-    xIdx = GetXIdx(x, z);
+    xIdx = GetXIdx(posX, posZ);
 
     // TODO: Could this be a `GetYIdx` inline like one above? No luck changing it yet.
     yIdx = 0;
-    if (CheckRange(z + Q12(163.0f), Q12(-18.0f), Q12(18.0f)))
+    if (CheckRange(posZ + Q12(163.0f), Q12(-18.0f), Q12(18.0f)))
     {
         yIdx = 1;
     }
-    else if (x > Q12(-40.0f))
+    else if (posX > Q12(-40.0f))
     {
-        if (x > Q12(40.0f))
+        if (posX > Q12(40.0f))
         {
-            if (CheckRange(z + Q12(36.0f), Q12(-16.0f), Q12(16.0f)))
+            if (CheckRange(posZ + Q12(36.0f), Q12(-16.0f), Q12(16.0f)))
             {
                 yIdx = 2;
             }
         }
-        else if (CheckRange(z + Q12(43.5f), Q12(-12.0f), Q12(12.0f)))
+        else if (CheckRange(posZ + Q12(43.5f), Q12(-12.0f), Q12(12.0f)))
         {
             yIdx = 2;
         }
@@ -294,25 +294,25 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
 
     // @hack Weird temp vars needed for match.
     yIdx = Q12(-127.0f);
-    if (CheckRange(z + yIdx, Q12(-17.0f), Q12(17.0f)) &&
-        ((yIdx = x + Q12(192.0f), xIdx = Q12(8.0f) - 1, (u32)yIdx > xIdx) || z < Q12(130.0f)) &&
-        (x < Q12(-166.0f) || z > Q12(112.0f)))
+    if (CheckRange(posZ + yIdx, Q12(-17.0f), Q12(17.0f)) &&
+        ((yIdx = posX + Q12(192.0f), xIdx = Q12(8.0f) - 1, (u32)yIdx > xIdx) || posZ < Q12(130.0f)) &&
+        (posX < Q12(-166.0f) || posZ > Q12(112.0f)))
     {
         res = 3;
     }
-    else if (CheckRange(z + Q12(-8.5f), Q12(-31.5f), Q12(31.5f)) && x < Q12(-159.5f))
+    else if (CheckRange(posZ + Q12(-8.5f), Q12(-31.5f), Q12(31.5f)) && posX < Q12(-159.5f))
     {
         res = 16;
     }
-    else if (z < Q12(0.0f) && x < Q12(-80.0f))
+    else if (posZ < Q12(0.0f) && posX < Q12(-80.0f))
     {
-        xIdx = Collision_GroundHeightGet(x, z);
+        xIdx = Collision_GroundHeightGet(posX, posZ);
 
-        if (x < Q12(-160.0f))
+        if (posX < Q12(-160.0f))
         {
             res = (xIdx > Q12(1.0f)) ? 17 : 18;
         }
-        else if (x >= Q12(-148.0f))
+        else if (posX >= Q12(-148.0f))
         {
             res = (xIdx > Q12(1.0f)) ? 18 : 19;
         }
@@ -328,8 +328,8 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     {
 #define MAP_ROOM_STRIDE_Z ((MAP_ROOM_MAX_Z - MAP_ROOM_MIN_Z) / Q12(CHUNK_CELL_SIZE))
 
-        if (x < MAP_ROOM_MIN_X || x >= MAP_ROOM_MAX_X ||
-            z < MAP_ROOM_MIN_Z || z >= MAP_ROOM_MAX_Z)
+        if (posX < MAP_ROOM_MIN_X || posX >= MAP_ROOM_MAX_X ||
+            posZ < MAP_ROOM_MIN_Z || posZ >= MAP_ROOM_MAX_Z)
         {
             // TODO: Not sure why these two maps need this.
             #if defined(MAP6_S00) || defined(MAP6_S02)
@@ -340,10 +340,10 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         }
         else
         {
-            x = (x - MAP_ROOM_MIN_X) / Q12(CHUNK_CELL_SIZE);
-            z = (z - MAP_ROOM_MIN_Z) / Q12(CHUNK_CELL_SIZE);
+            posX = (posX - MAP_ROOM_MIN_X) / Q12(CHUNK_CELL_SIZE);
+            posZ = (posZ - MAP_ROOM_MIN_Z) / Q12(CHUNK_CELL_SIZE);
 
-            res = MAP_ROOM_IDXS[(x * MAP_ROOM_STRIDE_Z) + z];
+            res = MAP_ROOM_IDXS[(posX * MAP_ROOM_STRIDE_Z) + posZ];
 #ifdef MAP_HAS_SECONDARY_GRID
             if (res == 0)
             {
