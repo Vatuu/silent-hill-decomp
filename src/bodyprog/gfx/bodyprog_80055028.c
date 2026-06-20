@@ -215,7 +215,7 @@ s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir) // 0x80055490
 }
 
 void Gfx_FlashlightPositionUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
-                             SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones) // 0x800554C4
+                                  SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones) // 0x800554C4
 {
     MATRIX   mat;
     SVECTOR  tempSvec;

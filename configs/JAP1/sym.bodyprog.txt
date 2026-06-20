@@ -571,7 +571,7 @@ WorldGfx_Init                                = 0x8003BE20; // type:func
 WorldGfx_HeldItemModelFree                   = 0x8003BE98; // type:func
 WorldGfx_CharaModelsFree                     = 0x8003BEE8; // type:func
 Chara_ModelFree                              = 0x8003BF84; // type:func
-Map_ChunkInit                                = 0x8003BFF8; // type:func
+WorldGfx_MapInit                             = 0x8003BFF8; // type:func
 Map_ActiveChunksClear                        = 0x8003C0C4; // type:func
 WorldGfx_MapReset                            = 0x8003C0E4; // type:func
 WorldGfx_IpdSamplePointStore                 = 0x8003C140; // type:func
@@ -686,12 +686,12 @@ func_800410D8                                = 0x80040EB0; // type:func
 Math_RelativeRotationGet                     = 0x80041004; // type:func
 func_8004137C                                = 0x80041154; // type:func
 func_800414E0                                = 0x800412B8; // type:func
-Ipd_ChunkLoadStateGet                        = 0x800418B4; // type:func
-Ipd_LoadStateGet                             = 0x800418F4; // type:func
-Ipd_LmLoadStateGet                           = 0x80041978; // type:func
+WorldMap_LoadStateGet                        = 0x800418B4; // type:func
+WorldMap_ChunkLoadStateGet                   = 0x800418F4; // type:func
+WorldMap_GlobalLmLoadStateGet                = 0x80041978; // type:func
 Ipd_Init                                     = 0x800419FC; // type:func
-Ipd_LmInit                                   = 0x80041A8C; // type:func
-Ipd_LmHeaderInit                             = 0x80041AC4; // type:func
+Ipd_GlobalLmInit                             = 0x80041A8C; // type:func
+Ipd_GlobalLmHeaderInit                       = 0x80041AC4; // type:func
 Ipd_ChunkQueueIdxsClear                      = 0x80041AE8; // type:func
 Ipd_TexturesInit                             = 0x80041B20; // type:func
 Ipd_CollisionDataReset                       = 0x80041C70; // type:func
@@ -701,7 +701,7 @@ Ipd_TexturesRefClear                         = 0x80041DF4; // type:func
 Ipd_WorldReset                               = 0x80041E98; // type:func
 Ipd_LmReset                                  = 0x80041ED4; // type:func
 Ipd_TextureInfoGet                           = 0x80041F50; // type:func
-Ipd_MapFileInfoSet                           = 0x80041FB0; // type:func
+Ipd_MapInfoSet                               = 0x80041FB0; // type:func
 Ipd_ChunksClear                              = 0x800420D8; // type:func
 Ipd_MakeGrid                                 = 0x800421CC; // type:func
 ConvertHexToS8                               = 0x80042334; // type:func
@@ -3370,7 +3370,7 @@ g_WorldGfxWork                               = 0x800BF470;
 //---------------------------------------------------------------------------
 g_Map_GfxPackets                             = 0x800C2248;
 activeChunksCollData.0                       = 0x800C3668;
-g_MapTerrain                                 = 0x800C3678;
+g_WorldMapWork                               = 0x800C3678;
 
 //--------------------------------------------------------------------------------
 //--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, gfx/bodyprog_bone_80044F14

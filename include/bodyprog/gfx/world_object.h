@@ -12,7 +12,7 @@ typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name;
     /* 0x8 */ s8         field_8;
-    /* 0x9 */ s8         lmIdx; /** Set to 2 when found in `g_MapTerrain.globalLm.lmHdr` and 3-6 if found in `g_MapTerrain.activeChunks[i] (i + 3)`. */
+    /* 0x9 */ s8         lmIdx; /** Set to 2 when found in `g_WorldMapWork.globalLm.lmHdr` and 3-6 if found in `g_WorldMapWork.activeChunks[i] (i + 3)`. */
 } s_WorldObjectMetadata;
 
 /** @brief World object model. TODO: Rename to "static object"? Conceptually it's what this is in modern terms. */

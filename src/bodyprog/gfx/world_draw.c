@@ -171,7 +171,7 @@ void Chara_ModelFree(s_CharaModel* model) // 0x8003C1AC
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
-void Map_ChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
+void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
     u8         flags;
@@ -194,7 +194,7 @@ void Map_ChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) // 0
     }
 
     mapInfo = mapHdr->mapInfo;
-    Ipd_MapFileInfoSet(mapInfo->tag, mapInfo->plmFileIdx, activeIpdCount, CHECK_FLAG(mapInfo->flags, MapFlag_Interior, false), 0, 0);
+    Ipd_MapInfoSet(mapInfo->tag, mapInfo->plmFileIdx, activeIpdCount, CHECK_FLAG(mapInfo->flags, MapFlag_Interior, false), 0, 0);
 
     if (mapHdr->mapInfo == &MAP_INFOS[MapType_THR])
     {

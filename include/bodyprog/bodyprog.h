@@ -111,14 +111,6 @@ typedef enum _LoadingScreenId
     LoadingScreenId_StageString       = 3
 } e_LoadingScreenId;
 
-typedef enum _StaticModelLoadState
-{
-    StaticModelLoadState_Invalid   = 0,
-    StaticModelLoadState_Unloaded  = 1,
-    StaticModelLoadState_Corrupted = 2, // Maybe wrong name for this.
-    StaticModelLoadState_Loaded    = 3
-} e_StaticModelLoadState;
-
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -959,7 +951,7 @@ void Collision_FlagsLocationUpdate(const s_SubCharacter* chara);
 
 void Chara_ModelFree(s_CharaModel* model);
 
-void Map_ChunkInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
+void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** @brief Loads map chunks in view and checks if they are loaded.
  *
@@ -1047,12 +1039,6 @@ void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1
 
 void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1);
 
-/** @brief Gets the load status of a queue entry by utilizing `Fs_QueueIsEntryLoaded`.
- *
- * @param queueIdx Index of the queue entry to check.
- * @return Queue entry load status (`e_ChunkLoadState`).
- */
-u32 Ipd_ChunkLoadStateGet(s32 queueIdx);
 
 /** @brief Initializes map data and chunks.
  *
@@ -1062,9 +1048,9 @@ u32 Ipd_ChunkLoadStateGet(s32 queueIdx);
  */
 void Ipd_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void Ipd_LmInit(s_IpdLm* globalLm, s_LmHeader* lmHdr);
+void Ipd_GlobalLmInit(s_IpdLm* globalLm, s_LmHeader* lmHdr);
 
-void Ipd_LmHeaderInit(s_LmHeader* lmHdr);
+void Ipd_GlobalLmHeaderInit(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx` in an array of chunks. */
 void Ipd_ChunkQueueIdxsClear(s_Chunk* chunks, s32 chunkCount);
@@ -1091,10 +1077,10 @@ void Ipd_LmReset(void);
 
 s_Texture* Ipd_TextureInfoGet(char* texName);
 
-void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior,
+void Ipd_MapInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior,
                         e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
-void Ipd_ChunksClear(s_MapTerrain* terrain, s32 activeChunksCount);
+void Ipd_ChunksClear(s_WorldMapWork* terrain, s32 activeChunksCount);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -1102,7 +1088,7 @@ void Ipd_ChunksClear(s_MapTerrain* terrain, s32 activeChunksCount);
  * Map type THR.
  * `file 1100` is `THR0205.IPD`, `chunkGridCenter[2][5] = 1100`.
  */
-void Ipd_MakeGrid(s_MapTerrain* terrain, char* mapTag, e_FsFile fileIdxStart);
+void Ipd_MakeGrid(s_WorldMapWork* terrain, char* mapTag, e_FsFile fileIdxStart);
 
 /** @brief Converts two hex `char`s to an integer hex value.
  *
@@ -1131,20 +1117,6 @@ s_IpdCollisionData* Ipd_CollisionDataGet(q19_12 posX, q19_12 posZ);
  * @return World object model location (`e_WorldModelLocation`).
  */
 s32 Map_WorldObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
-
-/** @brief Gets the load state of a global LM file.
- *
- * @param globalLm Global LM file to check.
- * @return LM file load state `(e_StaticModelLoadState`).
- */
-u32 Ipd_LmLoadStateGet(s_IpdLm* globalLm);
-
-/** @brief Gets the load state of an IPD file.
- *
- * @param
- * @return IPD file load state `(e_StaticModelLoadState`).
- */
-u32 Ipd_LoadStateGet(s_Chunk* chunk);
 
 /** @brief Checks if an IPD file is loaded.
  *
@@ -1181,9 +1153,9 @@ q19_12 Map_PaddedDistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32
 q19_12 Map_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
-s32 Map_ChunkLoad(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+s32 Map_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void Ipd_ActiveChunksSample(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void Ipd_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** @brief Computes the distance from a position to the nearest edge of a chunk.
  *
@@ -1193,7 +1165,7 @@ void Ipd_ActiveChunksSample(s_MapTerrain* terrain, q19_12 posX0, q19_12 posZ0, q
 void Ipd_DistanceToEdgeCalc(s_Chunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Sets materials for active chunks? */
-void Ipd_ChunkMaterialsApply(s_MapTerrain* terrain);
+void Ipd_ChunkMaterialsApply(s_WorldMapWork* terrain);
 
 /** @brief Gets the IPD chunk file index from cell coordinates.
  *
@@ -1223,7 +1195,7 @@ bool Ipd_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ);
 
 void Ipd_ChunksDraw(GsOT* ot, bool arg1);
 
-bool Ipd_CellPositionMatchCheck(s_Chunk* chunk, s_MapTerrain* terrain);
+bool Ipd_CellPositionMatchCheck(s_Chunk* chunk, s_WorldMapWork* terrain);
 
 /** Checks if PLM texture is loaded? */
 bool Ipd_IsTextureLoaded(s_IpdHeader* ipdHdr);

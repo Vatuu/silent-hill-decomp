@@ -13,16 +13,24 @@
 #define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
 #define FULL_PAGE_CHUNK_TEXTURE_COUNT_MAX 8
 
+typedef enum _MapModelLoadState
+{
+    MapModelLoadState_Invalid   = 0,
+    MapModelLoadState_Unloaded  = 1,
+    MapModelLoadState_Corrupted = 2, // Maybe wrong name for this.
+    MapModelLoadState_Loaded    = 3
+} e_MapModelLoadState;
+
 /** @brief Map terrain chunk IPD file load states.
  *
  * See `Map_ChunkLoadStateGet`.
  */
-typedef enum _ChunkLoadState
+typedef enum _WorldMapLoadState
 {
-    ChunkLoadState_Invalid  = 0, /** Entry index is `NO_VALUE`. */
-    ChunkLoadState_Unloaded = 1, /** Not currently loaded. */
-    ChunkLoadState_Loaded   = 2  /** Currently loaded. */
-} e_ChunkLoadState;
+    WorldMapLoadState_Invalid  = 0, /** Entry index is `NO_VALUE`. */
+    WorldMapLoadState_Unloaded = 1, /** Not currently loaded. */
+    WorldMapLoadState_Loaded   = 2  /** Currently loaded. */
+} e_WorldMapLoadState;
 
 /** @brief Map terrain chunk. */
 typedef struct _Chunk
@@ -70,8 +78,8 @@ typedef struct _IpdLm
     /* 0x8 */ s32         queueIdx;
 } s_IpdLm;
 
-/** @brief Map terrain layout. */
-typedef struct _MapTerrain
+/** @brief Map data and layout. */
+typedef struct _WorldMap
 {
     /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
     /* 0x134 */ s32                textureFileIdx;
@@ -79,12 +87,8 @@ typedef struct _MapTerrain
     /* 0x144 */ char               mapTag[4];
     /* 0x148 */ s32                mapTagSize;
     /* 0x14C */ s32                ipdFileIdx;
-    /* 0x150 */ s_IpdHeader*       chunkBuffer;     // } Wrong term. These contain IPD header data, the game in theory
-                                                    // } is able to load up to 4 IPD files at the same time based on
-                                                    // } `Ipd_ChunksClear` behaviour as it clears up to 4 of these "chunks".
-                                                    // } This fits because, for example, the player could stand at some edge
-                                                    // } of the world where 4 IPD files are required and load them.
-    /* 0x154 */ s32                chunkBufferSize; // }
+    /* 0x150 */ s_IpdHeader*       chunkBuffer;
+    /* 0x154 */ s32                chunkBufferSize;
     /* 0x158 */ s32                activeChunkCount;
     /* 0x15C */ s_Chunk            activeChunks[ACTIVE_CHUNK_COUNT_MAX];
     /* 0x1CC */ s_ChunkColumn      chunkGrid[19];
@@ -95,7 +99,7 @@ typedef struct _MapTerrain
     /* 0x580 */ s32                cellX;
     /* 0x584 */ s32                cellZ;
     /* 0x588 */ bool               isExterior;
-} s_MapTerrain;
-STATIC_ASSERT_SIZEOF(s_MapTerrain, 1420);
+} s_WorldMapWork;
+STATIC_ASSERT_SIZEOF(s_WorldMapWork, 1420);
 
 #endif

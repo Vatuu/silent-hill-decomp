@@ -78,9 +78,9 @@ void GameBoot_WorldStartup(void) // 0x80034964
             }
             else if (g_SysWork.processFlags == ProcessFlag_BootDemo)
             {
-                demoLoadAttempCount          = 0;
-                g_GameWork.gameStateSteps[0] = 1;
-                g_SysWork.gameStateStepCounter     = 1;
+                demoLoadAttempCount            = 0;
+                g_GameWork.gameStateSteps[0]   = 1;
+                g_SysWork.gameStateStepCounter = 1;
             }
             else
             {
@@ -110,7 +110,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 demoLoadAttempCount++;
                 if (demoLoadAttempCount >= 5)
                 {
-                    demoLoadAttempCount      = 0;
+                    demoLoadAttempCount            = 0;
                     g_SysWork.gameStateStepCounter = 0;
                     break;
                 }
@@ -167,7 +167,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 WorldGfx_MapReset();
             }
 
-            Map_ChunkInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
+            WorldGfx_MapInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
             if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
