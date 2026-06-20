@@ -17,9 +17,7 @@
 // TODO: Move floatstinger to separate split.
 #include "../src/maps/characters/floatstinger.c" // 0x800D16FC
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D5AFC
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D5B0C
+#include "../src/maps/map_util.c" // 0x800D5AFC
 
 #include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D5D08
 

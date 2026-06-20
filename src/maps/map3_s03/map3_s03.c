@@ -14,9 +14,7 @@
 // TODO: Move this line into separate Chara_Bloodsucker split.
 #include "../src/maps/characters/bloodsucker.c" // 0x800D09C4
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D1168
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D1178
+#include "../src/maps/map_util.c" // 0x800D1168
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1210
 

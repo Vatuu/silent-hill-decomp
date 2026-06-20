@@ -74,9 +74,7 @@ void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOOR
     Chara_CollisionShapeOffsetsUpdate(&deadBody->collision.shapeOffsets, deadBody);
 }
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA424
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800DA434
+#include "../src/maps/map_util.c" // 0x800DA424
 
 #include "maps/shared/Map_RoomBgmInit_1_s02.h" // 0x800DA4D4
 

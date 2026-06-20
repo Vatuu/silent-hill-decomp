@@ -158,6 +158,6 @@ void SaveScreen_WriteOptionsDraw(s32 stringIdx, bool optionSelected);
 /** @brief Updates the death load screen. */
 void GameState_AutoLoadSavegame_Update(void);
 
-void func_801E737C(void);
+void SaveScreen_AutoLoad_SelectSave(void);
 
 #endif

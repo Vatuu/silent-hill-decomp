@@ -368,7 +368,7 @@ extern s8 D_800A97D9;
 
 extern s32 D_800A97DC; // `e_SavegameEntryType`
 
-extern s8 D_800BCD39; // Boolean.
+extern s8 g_SaveScreen_IsLoadError; // Boolean.
 
 // ====================
 // GLOBALS (BSS; Hack; memcard.c)

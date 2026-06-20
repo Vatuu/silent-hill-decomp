@@ -37,9 +37,7 @@ void func_800E0A34(void) // 0x800E0A34
     Fs_QueueStartReadTim(FILE_TIM_BOSEF00_TIM, FS_BUFFER_1, &tex);
 }
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E0A80
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800E0A90
+#include "../src/maps/map_util.c" // 0x800E0A80
 
 void func_800E0B28(s32 arg0) // 0x800E0B28
 {

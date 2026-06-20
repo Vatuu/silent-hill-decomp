@@ -1552,9 +1552,7 @@ void func_800E10F8(void) // 0x800E10F8
     D_800ED58C = 0;
 }
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E1104
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800E1114
+#include "../src/maps/map_util.c" // 0x800E1104
 
 #include "maps/shared/Map_RoomBgmInit_6_s04.h" // 0x800E1258
 

@@ -15,42 +15,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7F14
-
-u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800D7F24
-{
-    s32 ret;
-
-    if (x < Q12(27.0f))
-    {
-        ret = 17;
-        if (x <= Q12(13.0f))
-        {
-            ret = 15;
-            if (x > Q12(-13.0f))
-            {
-                ret = 16;
-            }
-        }
-    }
-    else if (x < Q12(56.0f))
-    {
-        ret = 18;
-    }
-    else
-    {
-        if (x < Q12(72.0f))
-        {
-            ret = 19;
-        }
-        else
-        {
-            ret = 20;
-        }
-    }
-
-    return ret;
-}
+#include "../src/maps/map_util.c" // 0x800D7F14
 
 void func_800D7F98(void) // 0x800D7F98
 {

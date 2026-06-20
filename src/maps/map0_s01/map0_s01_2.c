@@ -7,9 +7,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800D9B0C
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800DA51C
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800DA52C
+#include "../src/maps/map_util.c" // 0x800DA51C
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800DA778
 

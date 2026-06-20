@@ -25,9 +25,7 @@
 // TODO: Move to separate `Chara_Twinfeeler` split.
 #include "../src/maps/characters/twinfeeler.c"     // 0x800D078C
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D606C
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D607C
+#include "../src/maps/map_util.c" // 0x800D606C
 
 #include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D6278
 

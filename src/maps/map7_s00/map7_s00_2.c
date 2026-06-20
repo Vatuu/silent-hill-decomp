@@ -11,9 +11,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800CF538
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CFF40
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800CFF50
+#include "../src/maps/map_util.c" // 0x800CFF40
 
 void func_800CFFE8(s32 arg0) // 0x800CFFE8
 {

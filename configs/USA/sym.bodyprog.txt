@@ -3012,6 +3012,7 @@ g_MemCard_ActiveMemCardSlotSaves             = 0x800BCD2C;
 g_Savegame_ElementCount0                     = 0x800BCD30;
 g_MemCard_AllMemCardsStatus                  = 0x800BCD34;
 g_SaveScreen_SaveScreenState                 = 0x800BCD38;
+g_SaveScreen_IsLoadError                     = 0x800BCD39;
 g_MemCard_TotalElementsCount                 = 0x800BCD3A;
 g_Savegame_ElementCount1                     = 0x800BCD3C;
 g_Savegame_SelectedElementIdx                = 0x800BCD3E;

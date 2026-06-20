@@ -143,7 +143,7 @@ bool g_SaveScreen_IsNewSaveSelected = false; // `false` - User has `New save` se
 // Only used in `GameState_AutoLoadSavegame_Update`.
 void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
     SaveScreen_Init,
-    func_801E737C,
+    SaveScreen_AutoLoad_SelectSave,
     SaveScreen_LoadSave,
     SaveScreen_Continue
 };
@@ -1714,7 +1714,7 @@ void SaveScreen_Init(void) // 0x801E63C0
     g_GameWork.background2dColor.g = 0;
     g_GameWork.background2dColor.b = 0;
 
-    D_800BCD39 = false;
+    g_SaveScreen_IsLoadError = false;
     if (g_GameWork.gameState == GameState_AutoLoadSavegame || g_GameWork.gameState == GameState_LoadSavegameScreen)
     {
         if (D_800A97D8 != 0)
@@ -2039,7 +2039,7 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
             {
                 if (memCardStateResult != MemCardResult_FileIoComplete)
                 {
-                    D_800BCD39 = true;
+                    g_SaveScreen_IsLoadError = true;
                     Game_StateStepSet(0, 1);
                     break;
                 }
@@ -2062,7 +2062,7 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
 
             if (memCardStateResult != MemCardResult_FileIoComplete)
             {
-                D_800BCD39 = true;
+                g_SaveScreen_IsLoadError = true;
                 Game_StateStepSet(0, 1);
                 break;
             }
@@ -2209,14 +2209,16 @@ void GameState_AutoLoadSavegame_Update(void) // 0x801E72FC
     SaveScreen_ScreenDraw();
 }
 
-void func_801E737C(void) // 0x801E737C
+void SaveScreen_AutoLoad_SelectSave(void) // 0x801E737C
 {
+    // Return if memory cards not ready yet, will rerun on next tick.
     if (MemCard_ElementsUpdate() == false)
     {
         return;
     }
 
-    if (g_MemCard_SavegameCount == 0 || D_800BCD39 || MemCard_ElementsUpdate() == false)
+    // No savegames or load error, switch to manual load screen.
+    if (g_MemCard_SavegameCount == 0 || g_SaveScreen_IsLoadError || MemCard_ElementsUpdate() == false)
     {
         g_GameWork.gameState = GameState_LoadSavegameScreen;
 
@@ -2233,11 +2235,13 @@ void func_801E737C(void) // 0x801E737C
         return;
     }
 
+    // Setup globals for `g_SelectedSaveSlotIdx`.
     g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(g_SelectedSaveSlotIdx);
     g_MemCard_ActiveMemCardSlotSaves = &g_MemCard_ActiveMemCardSlotSaves[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
     g_SelectedDeviceId               = g_MemCard_ActiveMemCardSlotSaves->deviceId;
     g_SelectedFileIdx                = g_MemCard_ActiveMemCardSlotSaves->fileIdx;
     g_Savegame_SelectedElementIdx    = g_MemCard_ActiveMemCardSlotSaves->elementIdx;
 
+    // Advance to next autoload state.
     Game_StateStepSet(0, g_GameWork.gameStateSteps[0] + 1);
 }

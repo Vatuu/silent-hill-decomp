@@ -10,9 +10,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800D3AFC
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D450C
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D451C
+#include "../src/maps/map_util.c" // 0x800D450C
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D45B4
 

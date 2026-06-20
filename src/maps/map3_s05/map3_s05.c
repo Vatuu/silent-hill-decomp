@@ -18,9 +18,7 @@
 
 #include "../src/maps/characters/puppet_nurse.c" // 0x800D2120
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D5434
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D5444
+#include "../src/maps/map_util.c" // 0x800D5434
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D54DC
 

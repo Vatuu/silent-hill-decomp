@@ -1,3 +1,22 @@
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+
+// TODO: 
+// - `Map_RoomIdxGet` uses defines from the `mapX_sXX.h` headers, the map .c that includes this file handles including that atm.
+//   To split this .c properly it'd need to handle including the right map header though.
+//
+// - `Map_RoomBgmInit` should probably be part of this file too.
+//   Right now it has tons of differences between maps though. Need to try and find a way to merge them.
+//
+// - `GameBoot_LoadScreen_StageString` could also be part of this as it seems to always come after `Map_RoomBgmInit`.
+//
+// - Might be a cleaner way to handle the `Map_RoomIdxGet` map differences?
+
+s32 sharedFunc_800D929C_0_s00(void)
+{
+    return D_800A999C;
+}
+
 #if !defined(M2CTX) // Inlines cause issues with M2C context.
 
 #define CheckRange(axis, low, high)    \
@@ -110,6 +129,38 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
     }
 
     return result;
+#elif defined(MAP6_S03)
+    s32 ret;
+
+    if (x < Q12(27.0f))
+    {
+        ret = 17;
+        if (x <= Q12(13.0f))
+        {
+            ret = 15;
+            if (x > Q12(-13.0f))
+            {
+                ret = 16;
+            }
+        }
+    }
+    else if (x < Q12(56.0f))
+    {
+        ret = 18;
+    }
+    else
+    {
+        if (x < Q12(72.0f))
+        {
+            ret = 19;
+        }
+        else
+        {
+            ret = 20;
+        }
+    }
+
+    return ret;
 #else
     extern u8 MAP_ROOM_IDXS[];
 

@@ -12,9 +12,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800CDDA0
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7B0
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800CE7C0
+#include "../src/maps/map_util.c" // 0x800CE7B0
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE858
 

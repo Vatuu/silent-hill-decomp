@@ -18,9 +18,7 @@
 
 #include "../src/maps/chara_util.c" // 0x800D88AC
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D929C
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D92AC
+#include "../src/maps/map_util.c" // 0x800D929C
 
 void Map_RoomBgmInit(bool arg0) // 0x800D94F8
 {

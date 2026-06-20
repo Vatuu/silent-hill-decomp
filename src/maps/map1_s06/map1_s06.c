@@ -16,9 +16,7 @@
 // TODO: Move this line into separate `Chara_SplitHead` split.
 #include "../src/maps/characters/split_head.c" // 0x800D02CC
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D5350
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D5360
+#include "../src/maps/map_util.c" // 0x800D5350
 
 void Map_RoomBgmInit(bool arg0) // 0x800D5400
 {

@@ -6,9 +6,7 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E9D28
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800E9D38
+#include "../src/maps/map_util.c" // 0x800E9D28
 
 #include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800E9F34
 

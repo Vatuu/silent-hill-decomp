@@ -14,9 +14,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7748
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D7758
+#include "../src/maps/map_util.c" // 0x800D7748
 
 void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {

@@ -16,9 +16,7 @@
 // TODO: Move this line into separate `Chara_Romper` split.
 #include "../src/maps/characters/romper.c" // 0x800E786C
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800EB460
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800EB470
+#include "../src/maps/map_util.c" // 0x800EB460
 
 void func_800EB6B0(void) // 0x800EB6B0
 {

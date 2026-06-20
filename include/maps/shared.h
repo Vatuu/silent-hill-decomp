@@ -7,6 +7,7 @@
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/background_draw.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "maps/map_util.h"
 
 /** @brief Heading angle quadrants. TODO: Order uncertain. North/South and East/West could be swapped. */
 typedef enum _Quadrant
@@ -535,9 +536,6 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
 
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* npc);
 
-/** Returns something related to controller data. */
-s32 sharedFunc_800D929C_0_s00(void);
-
 /** @brief Gets the playback state of a character's active animation.
  *
  * @param chara Character to check.
@@ -570,14 +568,6 @@ void sharedFunc_800D15F0_3_s01(void);
 
 /** @brief Handles the unlocked door event. */
 void MapEvent_DoorUnlocked(void);
-
-/** @brief Gets the room index corresponding to the current 2D position.
- *
- * @param x X position in Q19.12.
- * @param z Z position in Q19.12.
- * @return Room index.
- */
-u8 Map_RoomIdxGet(s32 x, s32 z);
 
 void GameBoot_LoadScreen_StageString(void);
 

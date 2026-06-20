@@ -377,9 +377,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
     func_800D5B00();
 }
 
-#include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D64F8
-
-#include "maps/shared/Map_RoomIdxGet.h" // 0x800D6508
+#include "../src/maps/map_util.c" // 0x800D64F8
 
 void func_800D6790(void) // 0x800D6790
 {

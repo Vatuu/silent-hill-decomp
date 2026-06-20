@@ -100,8 +100,6 @@ void func_800D6414(void);
 
 void func_800D6490(VECTOR3* arg0);
 
-u8 Map_RoomIdxGet(s32 x, s32 z);
-
 void func_800D6790(void);
 
 void func_800D67F4(void);
