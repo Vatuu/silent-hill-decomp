@@ -170,20 +170,20 @@ void func_800D8540(void);
 
 void func_800D85D4(void);
 
-/** @brief Key of Ophiel use event. */
+/** @brief Handles the Key of Ophiel item use event. */
 void MapEvent_KeyOfOphielUse(void);
 
-/** @brief Key of Hagith use event. */
+/** @brief Handles the Key of Hagith item use event. */
 void MapEvent_KeyOfHagithUse(void);
 
-/** @brief Key of Phaleg use event. */
+/** @brief Handles the Key of Phaleg item use event. */
 void MapEvent_KeyOfPhalegUse(void);
 
 void func_800D889C(void);
 
 void func_800D8958(void);
 
-/** @brief Bird Cage Key use event. */
+/** @brief Handles the Bird Cage Key item use event. */
 void MapEvent_BirdCageKeyUse(void);
 
 void func_800D89D8(void);

@@ -33,7 +33,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA760
 
-void func_800DA7F4(void) // 0x800DA7F4
+void MapEvent_LibraryReserveKeyUse(void) // 0x800DA7F4
 {
     VECTOR3 sfxPos = {
         MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
@@ -46,7 +46,7 @@ void func_800DA7F4(void) // 0x800DA7F4
     Savegame_EventFlagSet(EventFlag_MapMark_AltSchool2F_LibraryReserveArrows);
 }
 
-void func_800DA8B0(void) // 0x800DA8B0
+void MapEvent_ClassroomKeyUse(void) // 0x800DA8B0
 {
     VECTOR3 sfxPos = {
         MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
@@ -95,7 +95,7 @@ const char* MAP_MESSAGES[] = {
     /* 47 */ "~J0(2.5)\tThat_light!? ~E "
 };
 
-void func_800DA950(void) // 0x800DA950
+void MapEvent_CommonItemTake(void) // 0x800DA950
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -159,7 +159,7 @@ void func_800DA950(void) // 0x800DA950
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800DAA28(void) // 0x800DAA28
+void MapEvent_RoofDrainPuzzleInspect(void) // 0x800DAA28
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -176,7 +176,8 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 3:
-            if (g_MapEventData->mapPointIdx == 19 || g_MapEventData->mapPointIdx == 20)
+            if (g_MapEventData->mapPointIdx == 19 ||
+                g_MapEventData->mapPointIdx == 20)
             {
                 if (g_MapEventData->activationType == TriggerActivationType_Item)
                 {
@@ -188,7 +189,8 @@ void func_800DAA28(void) // 0x800DAA28
                     Event_DisplayMapMsg(false, 35, false, false, 0, false); // "Nothing special."
                 }
             }
-            else if (g_MapEventData->mapPointIdx == 17 || g_MapEventData->mapPointIdx == 18)
+            else if (g_MapEventData->mapPointIdx == 17 ||
+                     g_MapEventData->mapPointIdx == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
@@ -207,13 +209,14 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_800DABC4(void) // 0x800DABC4
+void MapEvent_RoofDrainPuzzleSolve(void) // 0x800DABC4
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -276,6 +279,8 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
+
+            // Rubber ball.
             if (g_MapEventData->mapPointIdx == 19 ||
                 g_MapEventData->mapPointIdx == 20)
             {
@@ -296,6 +301,7 @@ void func_800DABC4(void) // 0x800DABC4
                     }
                 }
             }
+            // Key in drain.
             else
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
@@ -349,7 +355,7 @@ const VECTOR3 D_800CBAB0 = { /** Q19.12 */
     Q12(-13.35f)
 };
 
-void func_800DAF18(void) // 0x800DAF18
+void MapEvent_DrainageValveInteract(void) // 0x800DAF18
 {
     VECTOR3 lightPos;  // Q19.12
     VECTOR3 lookAtPos; // Q19.12
@@ -382,10 +388,11 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 2:
-            Event_DisplayMapMsg(true, 40, 4, 3, 0, false);
+            Event_DisplayMapMsg(true, 40, 4, 3, 0, false); // "There is a drainage valve."
             break;
 
         case 3:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -613,7 +620,7 @@ void func_800DAF18(void) // 0x800DAF18
             }
             else
             {
-                Event_DisplayMapMsg(false, 41, false, false, 0, false);
+                Event_DisplayMapMsg(false, 41, false, false, 0, false); // "It draains into the wrong hole."
             }
             break;
 
@@ -766,7 +773,7 @@ void func_800DAF18(void) // 0x800DAF18
     }
 }
 
-void func_800DBEC8(void) // 0x800DBEC8
+void MapEvent_TheMonsterLurksBookRead(void) // 0x800DBEC8
 {
     typedef enum _EventState
     {
@@ -839,7 +846,7 @@ void func_800DBEC8(void) // 0x800DBEC8
     }
 }
 
-void func_800DC0F8(void) // 0x800DC0F8
+void MapEvent_SplitHeadFairyTaleBookRead(void) // 0x800DC0F8
 {
     typedef enum _EventState
     {
@@ -905,12 +912,12 @@ void func_800DC0F8(void) // 0x800DC0F8
     }
 }
 
-void func_800DC2E4(void) // 0x800DC2E4
+void MapEvent_OpenedLockerInspect(void) // 0x800DC2E4
 {
     Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
 }
 
-void func_800DC310(void) // 0x800DC310
+void MapEvent_UnopenedLockerInspect(void) // 0x800DC310
 {
     typedef enum _EventState
     {
@@ -933,6 +940,7 @@ void func_800DC310(void) // 0x800DC310
     {
         case 0:
             Player_ControlFreeze();
+
             Savegame_EventFlagSet(EventFlag_100);
             SysWork_StateStepIncrement(0);
 
@@ -1024,6 +1032,7 @@ void func_800DC310(void) // 0x800DC310
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -1035,7 +1044,7 @@ void func_800DC310(void) // 0x800DC310
     }
 }
 
-void func_800DC780(void) // 0x800DC780
+void MapEvent_LockerDeadBodyCutscene(void) // 0x800DC780
 {
     typedef enum _EventState
     {
@@ -1053,8 +1062,14 @@ void func_800DC780(void) // 0x800DC780
             Savegame_EventFlagSet(EventFlag_105);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(-59.93f), Q12(0.0f), Q12(20.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-62.99f), Q12(-2.29f), Q12(21.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraPositionSet(NULL,
+                                    Q12(-59.93f), Q12(0.0f), Q12(20.18f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-62.99f), Q12(-2.29f), Q12(21.37f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             // Warp player.
             g_SysWork.playerWork.player.rotation.vy = ratan2(Q12(-61.4f) - g_SysWork.playerWork.player.position.vx,
@@ -1092,7 +1107,7 @@ void func_800DC780(void) // 0x800DC780
     }
 }
 
-void func_800DC9A0(void) // 0x800DC9A0
+void MapEvent_LibraryReserveKeyItemTake(void) // 0x800DC9A0
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -1117,7 +1132,7 @@ void func_800DC9A0(void) // 0x800DC9A0
             Savegame_EventFlagSet(EventFlag_M1S03_PickupLibraryReserveKey);
             if (Gfx_PickupItemAnimate(InvItemId_LibraryReserveKey))
             {
-                Event_DisplayMapMsg(true, 44, 5, 6, 0, false);
+                Event_DisplayMapMsg(true, 44, 5, 6, 0, false); // "There is a Library Reserve Key. Take it?"
             }
             if (g_SysWork.sysStateSteps[0] == 6)
             {
@@ -1134,13 +1149,14 @@ void func_800DC9A0(void) // 0x800DC9A0
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_800DCB54(void) // 0x800DCB54
+void MapEvent_RubberBallUse(void) // 0x800DCB54
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -1323,8 +1339,10 @@ void func_800DCDDC(void) // 0x800DCDDC
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
 

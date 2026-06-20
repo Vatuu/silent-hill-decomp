@@ -90,38 +90,46 @@ void func_800CE0CC(s32 arg0);
 
 bool func_800CE164(POLY_FT4** poly, s32 idx);
 
-void func_800DA7F4(void);
+/** @brief Handles the Library Reserve Key item use event. */
+void MapEvent_LibraryReserveKeyUse(void);
 
-void func_800DA8B0(void);
+/** @brief Handles the Classroom Key item use event. */
+void MapEvent_ClassroomKeyUse(void);
 
-void func_800DA950(void);
+/** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
+void MapEvent_CommonItemTake(void);
 
-void func_800DAA28(void);
+/** @brief Roof drain puzzle inspection event used the Rubber Ball item isn't in the inventory. */
+void MapEvent_RoofDrainPuzzleInspect(void);
 
-// Key in drain and rubber ball puzzle event.
-void func_800DABC4(void);
+/** @brief Handles the Roof drain puzzle solve event used when the Rubber Ball item is in the inventory. */
+void MapEvent_RoofDrainPuzzleSolve(void);
 
-void func_800DAF18(void);
+/** @brief Handles the RRoof drainage valve interaction event. Handles logic and water effects. */
+void MapEvent_DrainageValveInteract(void);
 
-// `MapEvent_TheMonsterLurksBookRead`
-void func_800DBEC8(void);
+/** @brief Handles the "The Monster Lurks" book reading event. */
+void MapEvent_TheMonsterLurksBookRead(void);
 
-// Split Head defeat hint read event.
-void func_800DC0F8(void);
+/** @brief Handles the Split Heaad fairy tale book reading event. */
+void MapEvent_SplitHeadFairyTaleBookRead(void);
 
-void func_800DC2E4(void);
+/** @brief Handles the locker inspection event when the locker has been opened. */
+void MapEvent_OpenedLockerInspect(void);
 
-void func_800DC310(void);
+/** @brief Handles the locker inspection event when the locker hasn't been opened. */
+void MapEvent_UnopenedLockerInspect(void);
 
-// Locker Dead Body event.
-void func_800DC780(void);
+/** @brief Handles the Locker Dead Body cutscene event. */
+void MapEvent_LockerDeadBodyCutscene(void);
 
-// Library Reserve Key event.
-void func_800DC9A0(void);
+/** @brief Handles the Library Reserve item pickup event. */
+void MapEvent_LibraryReserveKeyItemTake(void);
 
-// Rubber Ball event.
-void func_800DCB54(void);
+/** @brief Handles the Rubber Ball item use event. */
+void MapEvent_RubberBallUse(void);
 
+// Some cutscene event.
 void func_800DCDDC(void);
 
 void Map_WorldObjectsInit(void);

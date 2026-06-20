@@ -978,8 +978,10 @@ s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
  */
 s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId);
 
+// Make a Harry bone invisible? TODO: What it bone 31? Light?
 void func_8003D01C(void);
 
+// Make Harry weapon bone visible? TODO: What it bone 31? Light?
 void func_8003D03C(void);
 
 /** Loads the model of an item held by the player? */

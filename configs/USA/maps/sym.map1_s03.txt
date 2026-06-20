@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------
 //--- PA: 0x001610   VA: 0x800CAB88   subsegment: .rodata, Chara_Stalker
 //----------------------------------------------------------------------
-sharedData_800CAB70_0_s00       = 0x800CAC18; // type:VECTOR
+sharedData_800CAB70_0_s00           = 0x800CAC18; // type:VECTOR
 
 
 
@@ -21,125 +21,138 @@ sharedData_800CAB70_0_s00       = 0x800CAC18; // type:VECTOR
 //-----------------------------------------------------------------
 //--- PA: 0x002768   VA: 0x800CBCE0   subsegment: c, particle_water
 //-----------------------------------------------------------------
-sharedFunc_800CBA4C_1_s02       = 0x800CBCE0; // type:func
-sharedFunc_800CBC98_1_s02       = 0x800CBF2C; // type:func
-sharedFunc_800CBD58_1_s02       = 0x800CBFEC; // type:func
-sharedFunc_800CBDA8_1_s02       = 0x800CC03C; // type:func
-sharedFunc_800CCE60_1_s02       = 0x800CD0F4; // type:func
+sharedFunc_800CBA4C_1_s02           = 0x800CBCE0; // type:func
+sharedFunc_800CBC98_1_s02           = 0x800CBF2C; // type:func
+sharedFunc_800CBD58_1_s02           = 0x800CBFEC; // type:func
+sharedFunc_800CBDA8_1_s02           = 0x800CC03C; // type:func
+sharedFunc_800CCE60_1_s02           = 0x800CD0F4; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x00505C   VA: 0x800CE5D4   subsegment: c, unk_draw_m1s03
 //-----------------------------------------------------------------
-sharedFunc_800CE5D4_1_s03       = 0x800CE5D4; // type:func
-sharedFunc_800CE688_1_s03       = 0x800CE688; // type:func
+sharedFunc_800CE5D4_1_s03           = 0x800CE5D4; // type:func
+sharedFunc_800CE688_1_s03           = 0x800CE688; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x0057D8   VA: 0x800CED50   subsegment: c, particle
 //-----------------------------------------------------------
-Particle_SystemUpdate           = 0x800CED50; // type:func
-Particle_CameraMovedCheck       = 0x800CF144; // type:func
-Particle_SnowInitialize         = 0x800CF21C; // type:func
-Particle_Update                 = 0x800CF538; // type:func
-Particle_RainDraw               = 0x800CFB60; // type:func
-Particle_SpawnMovementApply     = 0x800D0250; // type:func
-Particle_MovementUpdate         = 0x800D02EC; // type:func
-sharedFunc_800CFFF8_0_s00       = 0x800D05D0; // type:func
-sharedFunc_800D0690_1_s03       = 0x800D0690; // type:func
-sharedFunc_800CE954_7_s03       = 0x800D07DC; // type:func
-Particle_PositionRandomize      = 0x800D07E4; // type:func
-Particle_Spawn                  = 0x800D089C; // type:func
-sharedFunc_800D08B8_0_s00       = 0x800D095C; // type:func
-sharedFunc_800D0A60_0_s00       = 0x800D0B04; // type:func
-sharedFunc_800D0B18_0_s00       = 0x800D0BBC; // type:func
-Particle_SoundUpdate            = 0x800D0D5C; // type:func
-Particle_SoundStop              = 0x800D0EA8; // type:func
-Particle_HyperBlasterBeamDraw   = 0x800D0EC8; // type:func
-Particle_BeamDraw               = 0x800D1740; // type:func
+Particle_SystemUpdate               = 0x800CED50; // type:func
+Particle_CameraMovedCheck           = 0x800CF144; // type:func
+Particle_SnowInitialize             = 0x800CF21C; // type:func
+Particle_Update                     = 0x800CF538; // type:func
+Particle_RainDraw                   = 0x800CFB60; // type:func
+Particle_SpawnMovementApply         = 0x800D0250; // type:func
+Particle_MovementUpdate             = 0x800D02EC; // type:func
+sharedFunc_800CFFF8_0_s00           = 0x800D05D0; // type:func
+sharedFunc_800D0690_1_s03           = 0x800D0690; // type:func
+sharedFunc_800CE954_7_s03           = 0x800D07DC; // type:func
+Particle_PositionRandomize          = 0x800D07E4; // type:func
+Particle_Spawn                      = 0x800D089C; // type:func
+sharedFunc_800D08B8_0_s00           = 0x800D095C; // type:func
+sharedFunc_800D0A60_0_s00           = 0x800D0B04; // type:func
+sharedFunc_800D0B18_0_s00           = 0x800D0BBC; // type:func
+Particle_SoundUpdate                = 0x800D0D5C; // type:func
+Particle_SoundStop                  = 0x800D0EA8; // type:func
+Particle_HyperBlasterBeamDraw       = 0x800D0EC8; // type:func
+Particle_BeamDraw                   = 0x800D1740; // type:func
 
 //---------------------------------------------------------
 //--- PA: 0x0085B4   VA: 0x800D1B2C   subsegment: c, player
 //---------------------------------------------------------
-sharedFunc_800CDAA8_0_s02       = 0x800D1B2C; // type:func
-sharedFunc_800D1C38_0_s00       = 0x800D235C; // type:func
-sharedFunc_800D209C_0_s00       = 0x800D27AC; // type:func
-Player_MatchArmAnimDisable      = 0x800D27E8; // type:func
-Player_ControlFreeze            = 0x800D27F4; // type:func
-Player_ControlUnfreeze          = 0x800D2954; // type:func
-Player_PathWaypointExecute      = 0x800D2B2C; // type:func
-Player_AnimStateSet             = 0x800D2B34; // type:func
-Player_AnimReset                = 0x800D2BE4; // type:func
-Player_AnimLock                 = 0x800D2BFC; // type:func
-Player_AnimIsLocked             = 0x800D2C24; // type:func
-Player_AnimUnlock               = 0x800D2C3C; // type:func
-Player_AnimPlaybackStateGet     = 0x800D2C64; // type:func
-Player_MoveSpeedIsZero          = 0x800D2D08; // type:func
-Player_MoveSpeedClear           = 0x800D2D18; // type:func
-sharedFunc_800D2E6C_0_s00       = 0x800D2D24; // type:func
-Player_FallBackward             = 0x800D2D2C; // type:func
-Player_Stub_F8                  = 0x800D2D34; // type:func
-Player_DamageFeetFront          = 0x800D2D3C; // type:func
-sharedFunc_800D2E8C_0_s00       = 0x800D2D44; // type:func
-sharedFunc_800D2E94_0_s00       = 0x800D2D4C; // type:func
-sharedFunc_800D2E9C_0_s00       = 0x800D2D54; // type:func
-sharedFunc_800D2EA4_0_s00       = 0x800D2D5C; // type:func
-sharedFunc_800D2EB4_0_s00       = 0x800D2D6C; // type:func
-sharedFunc_800D2EF4_0_s00       = 0x800D2DAC; // type:func
+sharedFunc_800CDAA8_0_s02           = 0x800D1B2C; // type:func
+sharedFunc_800D1C38_0_s00           = 0x800D235C; // type:func
+sharedFunc_800D209C_0_s00           = 0x800D27AC; // type:func
+Player_MatchArmAnimDisable          = 0x800D27E8; // type:func
+Player_ControlFreeze                = 0x800D27F4; // type:func
+Player_ControlUnfreeze              = 0x800D2954; // type:func
+Player_PathWaypointExecute          = 0x800D2B2C; // type:func
+Player_AnimStateSet                 = 0x800D2B34; // type:func
+Player_AnimReset                    = 0x800D2BE4; // type:func
+Player_AnimLock                     = 0x800D2BFC; // type:func
+Player_AnimIsLocked                 = 0x800D2C24; // type:func
+Player_AnimUnlock                   = 0x800D2C3C; // type:func
+Player_AnimPlaybackStateGet         = 0x800D2C64; // type:func
+Player_MoveSpeedIsZero              = 0x800D2D08; // type:func
+Player_MoveSpeedClear               = 0x800D2D18; // type:func
+sharedFunc_800D2E6C_0_s00           = 0x800D2D24; // type:func
+Player_FallBackward                 = 0x800D2D2C; // type:func
+Player_Stub_F8                      = 0x800D2D34; // type:func
+Player_DamageFeetFront              = 0x800D2D3C; // type:func
+sharedFunc_800D2E8C_0_s00           = 0x800D2D44; // type:func
+sharedFunc_800D2E94_0_s00           = 0x800D2D4C; // type:func
+sharedFunc_800D2E9C_0_s00           = 0x800D2D54; // type:func
+sharedFunc_800D2EA4_0_s00           = 0x800D2D5C; // type:func
+sharedFunc_800D2EB4_0_s00           = 0x800D2D6C; // type:func
+sharedFunc_800D2EF4_0_s00           = 0x800D2DAC; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x009848   VA: 0x800D2DC0   subsegment: c, Chara_Stalker
 //----------------------------------------------------------------
-Stalker_Update                  = 0x800D2DC0; // type:func
-Stalker_Init                    = 0x800D2F54; // type:func
-sharedFunc_800D3308_0_s00       = 0x800D31C0; // type:func
-Stalker_ControlUpdate           = 0x800D39FC; // type:func
-Stalker_Control_2               = 0x800D3DAC; // type:func
-Stalker_Control_3               = 0x800D3DB4; // type:func
-Stalker_Control_4               = 0x800D4984; // type:func
-Stalker_Control_5               = 0x800D50F0; // type:func
-Stalker_Control_6               = 0x800D5500; // type:func
-Stalker_Control_7               = 0x800D5BA0; // type:func
-Stalker_Control_8               = 0x800D5CBC; // type:func
-Stalker_Control_9               = 0x800D6024; // type:func
-Stalker_Control_10              = 0x800D6428; // type:func
-Stalker_Control_11              = 0x800D65A4; // type:func
-Stalker_Control_12              = 0x800D65AC; // type:func
-Stalker_Control_13              = 0x800D6764; // type:func
-sharedFunc_800D67FC_0_s00       = 0x800D6854; // type:func
-sharedFunc_800D6970_0_s00       = 0x800D69C8; // type:func
-Stalker_CollisionUpdate         = 0x800D711C; // type:func
-sharedFunc_800D7BE8_0_s00       = 0x800D7C40; // type:func
-sharedFunc_800D7E04_0_s00       = 0x800D7E5C; // type:func
+Stalker_Update                      = 0x800D2DC0; // type:func
+Stalker_Init                        = 0x800D2F54; // type:func
+sharedFunc_800D3308_0_s00           = 0x800D31C0; // type:func
+Stalker_ControlUpdate               = 0x800D39FC; // type:func
+Stalker_Control_2                   = 0x800D3DAC; // type:func
+Stalker_Control_3                   = 0x800D3DB4; // type:func
+Stalker_Control_4                   = 0x800D4984; // type:func
+Stalker_Control_5                   = 0x800D50F0; // type:func
+Stalker_Control_6                   = 0x800D5500; // type:func
+Stalker_Control_7                   = 0x800D5BA0; // type:func
+Stalker_Control_8                   = 0x800D5CBC; // type:func
+Stalker_Control_9                   = 0x800D6024; // type:func
+Stalker_Control_10                  = 0x800D6428; // type:func
+Stalker_Control_11                  = 0x800D65A4; // type:func
+Stalker_Control_12                  = 0x800D65AC; // type:func
+Stalker_Control_13                  = 0x800D6764; // type:func
+sharedFunc_800D67FC_0_s00           = 0x800D6854; // type:func
+sharedFunc_800D6970_0_s00           = 0x800D69C8; // type:func
+Stalker_CollisionUpdate             = 0x800D711C; // type:func
+sharedFunc_800D7BE8_0_s00           = 0x800D7C40; // type:func
+sharedFunc_800D7E04_0_s00           = 0x800D7E5C; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x00EA98   VA: 0x800D8010   subsegment: c, Chara_Creeper
 //----------------------------------------------------------------
-Creeper_Update                  = 0x800D8010; // type:func
-Creeper_Init                    = 0x800D80A0; // type:func
-sharedFunc_800D7EE8_1_s02       = 0x800D8360; // type:func
-Creeper_ControlUpdate           = 0x800D86BC; // type:func
-Creeper_ControlIdle             = 0x800D8768; // type:func
-Creeper_ControlWalkForward      = 0x800D8AFC; // type:func
-Creeper_ControlAttack           = 0x800D93A8; // type:func
-Creeper_ControlStun             = 0x800D99A0; // type:func
-Creeper_ControlDamage           = 0x800D9BEC; // type:func
-sharedFunc_800D983C_1_s02       = 0x800D9CB4; // type:func
-Creeper_AnimUpdate              = 0x800D9DD8; // type:func
-Creeper_CollisionUpdate         = 0x800D9E48; // type:func
+Creeper_Update                      = 0x800D8010; // type:func
+Creeper_Init                        = 0x800D80A0; // type:func
+sharedFunc_800D7EE8_1_s02           = 0x800D8360; // type:func
+Creeper_ControlUpdate               = 0x800D86BC; // type:func
+Creeper_ControlIdle                 = 0x800D8768; // type:func
+Creeper_ControlWalkForward          = 0x800D8AFC; // type:func
+Creeper_ControlAttack               = 0x800D93A8; // type:func
+Creeper_ControlStun                 = 0x800D99A0; // type:func
+Creeper_ControlDamage               = 0x800D9BEC; // type:func
+sharedFunc_800D983C_1_s02           = 0x800D9CB4; // type:func
+Creeper_AnimUpdate                  = 0x800D9DD8; // type:func
+Creeper_CollisionUpdate             = 0x800D9E48; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x010D0C   VA: 0x800DA284   subsegment: c, map1_s03
 //-----------------------------------------------------------
-LockerDeadBody_Update           = 0x800DA284; // type:func
-sharedFunc_800D929C_0_s00       = 0x800DA424; // type:func
-Map_RoomIdxGet                  = 0x800DA434; // type:func
-Map_RoomBgmInit                 = 0x800DA4D4; // type:func
-GameBoot_LoadScreen_StageString = 0x800DA630; // type:func
-MapEvent_DoorJammed             = 0x800DA638; // type:func
-MapEvent_DoorLocked             = 0x800DA6CC; // type:func
-MapEvent_DoorUnlocked           = 0x800DA760; // type:func
-Event_CutsceneTimerAdvance      = 0x800DCD44; // type:func
-Map_WorldObjectsInit            = 0x800DD3AC; // type:func
-Map_WorldObjectsUpdate          = 0x800DD688; // type:func
+LockerDeadBody_Update               = 0x800DA284; // type:func
+sharedFunc_800D929C_0_s00           = 0x800DA424; // type:func
+Map_RoomIdxGet                      = 0x800DA434; // type:func
+Map_RoomBgmInit                     = 0x800DA4D4; // type:func
+GameBoot_LoadScreen_StageString     = 0x800DA630; // type:func
+MapEvent_DoorJammed                 = 0x800DA638; // type:func
+MapEvent_DoorLocked                 = 0x800DA6CC; // type:func
+MapEvent_DoorUnlocked               = 0x800DA760; // type:func
+MapEvent_LibraryReserveKeyUse       = 0x800DA7F4; // type:func
+MapEvent_ClassroomKeyUse            = 0x800DA8B0; // type:func
+MapEvent_CommonItemTake             = 0x800DA950; // type:func
+MapEvent_RoofDrainPuzzleInspect     = 0x800DAA28; // type:func
+MapEvent_RoofDrainPuzzleSolve       = 0x800DABC4; // type:func
+MapEvent_DrainageValveInteract      = 0x800DAF18; // type:func
+MapEvent_TheMonsterLurksBookRead    = 0x800DBEC8; // type:func
+MapEvent_SplitHeadFairyTaleBookRead = 0x800DC0F8; // type:func
+MapEvent_OpenedLockerInspect        = 0x800DC2E4; // type:func
+MapEvent_UnopenedLockerInspect      = 0x800DC310; // type:func
+MapEvent_LockerDeadBodyCutscene     = 0x800DC780; // type:func
+MapEvent_LibraryReserveKeyItemTake  = 0x800DC9A0; // type:func
+MapEvent_RubberBallUse              = 0x800DCB54; // type:func
+Event_CutsceneTimerAdvance          = 0x800DCD44; // type:func
+Map_WorldObjectsInit                = 0x800DD3AC; // type:func
+Map_WorldObjectsUpdate              = 0x800DD688; // type:func
 
 
 
@@ -151,139 +164,139 @@ Map_WorldObjectsUpdate          = 0x800DD688; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x015A00   VA: 0x800DEF78   subsegment: .data, map1_s03_anim_info
 //-------------------------------------------------------------------------
-HARRY_M1S03_ANIM_INFOS          = 0x800DEF78;
+HARRY_M1S03_ANIM_INFOS              = 0x800DEF78;
 
 //----------------------------------------------------
 //--- PA: 0x015D30   VA: 0x800DF2A8   subsegment: data
 //----------------------------------------------------
-g_MapHeaderTable_38             = 0x800DF2A8;
-LOADABLE_INVENTORY_ITEMS        = 0x800DF378;
-sharedData_800DD584_0_s00       = 0x800DF397; // type:u8
-g_ParticlesAddedCount           = 0x800DF398; // type:s32
-sharedData_800DD58C_0_s00       = 0x800DF39C; // type:s32
-g_ParticleCameraMoved           = 0x800DF3A0; // type:u8
-sharedData_800DD598_0_s00       = 0x800DF3A4;
-sharedData_800DD59C_0_s00       = 0x800DF3A8; // type:u8
-sharedData_800DD5A6_0_s00       = 0x800DF3A9; // type:u8
-STALKER_ANIM_INFOS              = 0x800DF3AC; // type:s32 unknown type
-sharedData_800DDBA8_0_s00       = 0x800DF9AC;
-sharedData_800DDBBC_0_s00       = 0x800DF9C0;
-sharedData_800DDC70_0_s00       = 0x800DFA74;
-sharedData_800DDCFC_0_s00       = 0x800DFB00;
-sharedData_800DDD88_0_s00       = 0x800DFB8C;
-sharedData_800DDEC8_0_s00       = 0x800DFCCC;
-sharedData_800DDF2C_0_s00       = 0x800DFD30;
-sharedData_800DE008_0_s00       = 0x800DFE0C;
-sharedData_800DE0E4_0_s00       = 0x800DFEE8;
-sharedData_800DE1E8_0_s00       = 0x800DFFEC;
-sharedData_800DE2C4_0_s00       = 0x800E00C8;
-sharedData_800DE2D8_0_s00       = 0x800E00DC;
-sharedData_800DE2EC_0_s00       = 0x800E00F0;
-sharedData_800DE300_0_s00       = 0x800E0104;
-sharedData_800DE440_0_s00       = 0x800E0244;
-sharedData_800DE580_0_s00       = 0x800E0384;
-sharedData_800DE8C8_0_s00       = 0x800E06CC;
-sharedData_800DEB0C_0_s00       = 0x800E0910;
-sharedData_800DEC74_0_s00       = 0x800E0A78;
-sharedData_800DECB0_0_s00       = 0x800E0AB4;
-sharedData_800DEDA0_0_s00       = 0x800E0BA4;
-sharedData_800DEE04_0_s00       = 0x800E0C08;
-sharedData_800DEE40_0_s00       = 0x800E0C44;
-sharedData_800DEE68_0_s00       = 0x800E0C6C;
-sharedData_800DEF1C_0_s00       = 0x800E0D20;
-CREEPER_ANIM_INFOS              = 0x800E0F78; // type:s32 unknown type
-sharedData_800E0F78_1_s02       = 0x800E11B8;
-sharedData_800E0FC8_1_s02       = 0x800E1208;
-sharedData_800E0FDC_1_s02       = 0x800E121C;
-sharedData_800E0FF0_1_s02       = 0x800E1230;
-sharedData_800E1004_1_s02       = 0x800E1244;
-sharedData_800E10CC_1_s02       = 0x800E130C;
-sharedData_800E10E0_1_s02       = 0x800E1320;
-sharedData_800E1158_1_s02       = 0x800E1398;
-sharedData_800E116C_1_s02       = 0x800E13AC;
-sharedData_800E1180_1_s02       = 0x800E13C0;
-sharedData_800E1194_1_s02       = 0x800E13D4;
-sharedData_800E11A8_1_s02       = 0x800E13E8;
-sharedData_800E11BC_1_s02       = 0x800E13FC;
-LOCKER_DEAD_BODY_ANIM_INFOS     = 0x800E1410; // type:AnimInfo size:0x80
-MAP_ROOM_IDXS                   = 0x800E1490; // type:u8
-sharedData_800E1208_1_s02       = 0x800E14C8; // type:u8 size:8
-sharedData_800E1210_1_s02       = 0x800E14D0; // type:u16 size:0x54
+g_MapHeaderTable_38                 = 0x800DF2A8;
+LOADABLE_INVENTORY_ITEMS            = 0x800DF378;
+sharedData_800DD584_0_s00           = 0x800DF397; // type:u8
+g_ParticlesAddedCount               = 0x800DF398; // type:s32
+sharedData_800DD58C_0_s00           = 0x800DF39C; // type:s32
+g_ParticleCameraMoved               = 0x800DF3A0; // type:u8
+sharedData_800DD598_0_s00           = 0x800DF3A4;
+sharedData_800DD59C_0_s00           = 0x800DF3A8; // type:u8
+sharedData_800DD5A6_0_s00           = 0x800DF3A9; // type:u8
+STALKER_ANIM_INFOS                  = 0x800DF3AC; // type:s32 unknown type
+sharedData_800DDBA8_0_s00           = 0x800DF9AC;
+sharedData_800DDBBC_0_s00           = 0x800DF9C0;
+sharedData_800DDC70_0_s00           = 0x800DFA74;
+sharedData_800DDCFC_0_s00           = 0x800DFB00;
+sharedData_800DDD88_0_s00           = 0x800DFB8C;
+sharedData_800DDEC8_0_s00           = 0x800DFCCC;
+sharedData_800DDF2C_0_s00           = 0x800DFD30;
+sharedData_800DE008_0_s00           = 0x800DFE0C;
+sharedData_800DE0E4_0_s00           = 0x800DFEE8;
+sharedData_800DE1E8_0_s00           = 0x800DFFEC;
+sharedData_800DE2C4_0_s00           = 0x800E00C8;
+sharedData_800DE2D8_0_s00           = 0x800E00DC;
+sharedData_800DE2EC_0_s00           = 0x800E00F0;
+sharedData_800DE300_0_s00           = 0x800E0104;
+sharedData_800DE440_0_s00           = 0x800E0244;
+sharedData_800DE580_0_s00           = 0x800E0384;
+sharedData_800DE8C8_0_s00           = 0x800E06CC;
+sharedData_800DEB0C_0_s00           = 0x800E0910;
+sharedData_800DEC74_0_s00           = 0x800E0A78;
+sharedData_800DECB0_0_s00           = 0x800E0AB4;
+sharedData_800DEDA0_0_s00           = 0x800E0BA4;
+sharedData_800DEE04_0_s00           = 0x800E0C08;
+sharedData_800DEE40_0_s00           = 0x800E0C44;
+sharedData_800DEE68_0_s00           = 0x800E0C6C;
+sharedData_800DEF1C_0_s00           = 0x800E0D20;
+CREEPER_ANIM_INFOS                  = 0x800E0F78; // type:s32 unknown type
+sharedData_800E0F78_1_s02           = 0x800E11B8;
+sharedData_800E0FC8_1_s02           = 0x800E1208;
+sharedData_800E0FDC_1_s02           = 0x800E121C;
+sharedData_800E0FF0_1_s02           = 0x800E1230;
+sharedData_800E1004_1_s02           = 0x800E1244;
+sharedData_800E10CC_1_s02           = 0x800E130C;
+sharedData_800E10E0_1_s02           = 0x800E1320;
+sharedData_800E1158_1_s02           = 0x800E1398;
+sharedData_800E116C_1_s02           = 0x800E13AC;
+sharedData_800E1180_1_s02           = 0x800E13C0;
+sharedData_800E1194_1_s02           = 0x800E13D4;
+sharedData_800E11A8_1_s02           = 0x800E13E8;
+sharedData_800E11BC_1_s02           = 0x800E13FC;
+LOCKER_DEAD_BODY_ANIM_INFOS         = 0x800E1410; // type:AnimInfo size:0x80
+MAP_ROOM_IDXS                       = 0x800E1490; // type:u8
+sharedData_800E1208_1_s02           = 0x800E14C8; // type:u8 size:8
+sharedData_800E1210_1_s02           = 0x800E14D0; // type:u16 size:0x54
 
 //----------------------------------------------------------------------
 //--- PA: 0x017FAC   VA: 0x800E1524   subsegment: .data, map1_s03_header
 //----------------------------------------------------------------------
-g_LoadScreenFuncs               = 0x800E1524;
-MAP_POINTS                      = 0x800E1534; // type:MapPoint2d
-g_MapEventFuncs                 = 0x800E199C;
+g_LoadScreenFuncs                   = 0x800E1524;
+MAP_POINTS                          = 0x800E1534; // type:MapPoint2d
+g_MapEventFuncs                     = 0x800E199C;
 
 //---------------------------------------------------------------
 //--- PA: 0x018468   VA: 0x800E19E0   subsegment: .data, map1_s03
 //---------------------------------------------------------------
-MAP_MESSAGES                    = 0x800E19E0; // type:u32 size:0xC0
+MAP_MESSAGES                        = 0x800E19E0; // type:u32 size:0xC0
 
 //---------------------------------------------------------------------------
 //--- PA: 0x018528   VA: 0x800E1AA0   subsegment: .data, map1_s03_events_data
 //---------------------------------------------------------------------------
-MAP_EVENTS                      = 0x800E1AA0;
+MAP_EVENTS                          = 0x800E1AA0;
 
 //----------------------------------------------------
 //--- PA: 0x0189FC   VA: 0x800E1F74   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectPoses        = 0x800E2020; // type:WorldObject_0 size:0xC8
-g_ParticleMapIdx0               = 0x800E20F0;
-g_ParticleMapIdx1               = 0x800E20F4;
-D_800E20FA                      = 0x800E20FA;
-D_800E2101                      = 0x800E2101;
-g_Particle_SpeedX               = 0x800E2104; // type:s32
-g_Particle_SpeedZ               = 0x800E2108; // type:s32
-sharedData_800DFB6C_0_s00       = 0x800E210C; // type:s32
-sharedData_800DFB70_0_s00       = 0x800E2110; // type:s32
-sharedData_800DFB7C_0_s00       = 0x800E2120; // size:0x14
-g_Effect_BloodSplats            = 0x800E3890;
-sharedData_800E30C8_1_s02       = 0x800E39C0;
-g_ParticleVectors0              = 0x800E3AA0; // type:ParticleVectors
-g_Particle_RotationY            = 0x800E3AC2; // type:s16
-g_ParticleVectors1              = 0x800E3AD0; // type:ParticleVectors
-sharedData_800E0CA8_0_s00       = 0x800E3AFC; // type:s32
-sharedData_800E0CAC_0_s00       = 0x800E3B00; // type:s32
-sharedData_800E0CB0_0_s00       = 0x800E3B04; // type:u32
-sharedData_800E0CB4_0_s00       = 0x800E3B08; // type:u16
-sharedData_800E0CB6_0_s00       = 0x800E3B0A; // type:u16
-sharedData_800E0CB8_0_s00       = 0x800E3B0C; // type:u16
-sharedData_800E0CBA_0_s00       = 0x800E3B0E; // type:s8
-g_Particles                     = 0x800E3B10;
-g_Particle_Position             = 0x800E6090; // type:VECTOR3 size:0xC
-g_Particle_PrevPosition         = 0x800E60A0; // type:VECTOR3 size:0xC
-sharedData_800E3258_0_s00       = 0x800E60AC;
-sharedData_800E325C_0_s00       = 0x800E60B0;
-g_Particle_PrevRotationY        = 0x800E60B4; // type:s16
-g_ParticleSpawnCount            = 0x800E60B6; // type:u8
-sharedData_800E32CC_0_s00       = 0x800E60B8; // type:s32
-sharedData_800E32D0_0_s00       = 0x800E60BC; // type:s32
-sharedData_800E32D4_0_s00       = 0x800E60C0; // type:u16
-sharedData_800E39D8_0_s00       = 0x800E60C4; // type:s32
-g_Player_MoveSpeed              = 0x800E60C8; // type:s32
-sharedData_800E39E4_0_s00       = 0x800E60CC; // type:s32
-sharedData_800E39E8_0_s00       = 0x800E60D0; // type:s32
-sharedData_800E39EC_0_s00       = 0x800E60E0; // type:s32
-sharedData_800E3A0C_0_s00       = 0x800E6100; // type:u16
-sharedData_800E3A18_0_s00       = 0x800E610C; // type:s32
-sharedData_800E3A1C_0_s00       = 0x800E6110; // type:s32
-sharedData_800E3A20_0_s00       = 0x800E6114; // type:s32
-sharedData_800E3A24_0_s00       = 0x800E6118; // type:s32
-sharedData_800E3A28_0_s00       = 0x800E611C; // type:s32
-sharedData_800E3A2C_0_s00       = 0x800E6120; // type:s32
-sharedData_800E57CC_1_s02       = 0x800E6124; // type:s8
-g_WorldObject5                  = 0x800E6130; // type:WorldObjectDesc size:0x30
-g_Cutscene_CameraPositionTarget = 0x800E6160;
-g_Cutscene_CameraLookAtTarget   = 0x800E6170;
-g_Cutscene_Timer                = 0x800E617C;
-g_WorldObject0                  = 0x800E6180; // type:WorldObjectDesc size:0x30
-g_WorldObject1                  = 0x800E61B0; // type:WorldObjectDesc size:0x30
-g_WorldObject2                  = 0x800E61E0; // type:WorldObjectDesc size:0x30
-g_WorldObject3                  = 0x800E6210; // type:WorldObjectDescNoRot size:0x28
-g_WorldObject4                  = 0x800E6240; // type:WorldObjectDescNoRot size:0x28
-g_WorldObject6                  = 0x800E6270; // type:WorldObjectDescNoRot size:0x28
-g_WorldObject7                  = 0x800E62A0; // type:WorldObjectDesc size:0x30
-g_CommonWorldObjects            = 0x800E62E0; // type:WorldObject_0 size:0xA8
+g_CommonWorldObjectPoses            = 0x800E2020; // type:WorldObject_0 size:0xC8
+g_ParticleMapIdx0                   = 0x800E20F0;
+g_ParticleMapIdx1                   = 0x800E20F4;
+D_800E20FA                          = 0x800E20FA;
+D_800E2101                          = 0x800E2101;
+g_Particle_SpeedX                   = 0x800E2104; // type:s32
+g_Particle_SpeedZ                   = 0x800E2108; // type:s32
+sharedData_800DFB6C_0_s00           = 0x800E210C; // type:s32
+sharedData_800DFB70_0_s00           = 0x800E2110; // type:s32
+sharedData_800DFB7C_0_s00           = 0x800E2120; // size:0x14
+g_Effect_BloodSplats                = 0x800E3890;
+sharedData_800E30C8_1_s02           = 0x800E39C0;
+g_ParticleVectors0                  = 0x800E3AA0; // type:ParticleVectors
+g_Particle_RotationY                = 0x800E3AC2; // type:s16
+g_ParticleVectors1                  = 0x800E3AD0; // type:ParticleVectors
+sharedData_800E0CA8_0_s00           = 0x800E3AFC; // type:s32
+sharedData_800E0CAC_0_s00           = 0x800E3B00; // type:s32
+sharedData_800E0CB0_0_s00           = 0x800E3B04; // type:u32
+sharedData_800E0CB4_0_s00           = 0x800E3B08; // type:u16
+sharedData_800E0CB6_0_s00           = 0x800E3B0A; // type:u16
+sharedData_800E0CB8_0_s00           = 0x800E3B0C; // type:u16
+sharedData_800E0CBA_0_s00           = 0x800E3B0E; // type:s8
+g_Particles                         = 0x800E3B10;
+g_Particle_Position                 = 0x800E6090; // type:VECTOR3 size:0xC
+g_Particle_PrevPosition             = 0x800E60A0; // type:VECTOR3 size:0xC
+sharedData_800E3258_0_s00           = 0x800E60AC;
+sharedData_800E325C_0_s00           = 0x800E60B0;
+g_Particle_PrevRotationY            = 0x800E60B4; // type:s16
+g_ParticleSpawnCount                = 0x800E60B6; // type:u8
+sharedData_800E32CC_0_s00           = 0x800E60B8; // type:s32
+sharedData_800E32D0_0_s00           = 0x800E60BC; // type:s32
+sharedData_800E32D4_0_s00           = 0x800E60C0; // type:u16
+sharedData_800E39D8_0_s00           = 0x800E60C4; // type:s32
+g_Player_MoveSpeed                  = 0x800E60C8; // type:s32
+sharedData_800E39E4_0_s00           = 0x800E60CC; // type:s32
+sharedData_800E39E8_0_s00           = 0x800E60D0; // type:s32
+sharedData_800E39EC_0_s00           = 0x800E60E0; // type:s32
+sharedData_800E3A0C_0_s00           = 0x800E6100; // type:u16
+sharedData_800E3A18_0_s00           = 0x800E610C; // type:s32
+sharedData_800E3A1C_0_s00           = 0x800E6110; // type:s32
+sharedData_800E3A20_0_s00           = 0x800E6114; // type:s32
+sharedData_800E3A24_0_s00           = 0x800E6118; // type:s32
+sharedData_800E3A28_0_s00           = 0x800E611C; // type:s32
+sharedData_800E3A2C_0_s00           = 0x800E6120; // type:s32
+sharedData_800E57CC_1_s02           = 0x800E6124; // type:s8
+g_WorldObject5                      = 0x800E6130; // type:WorldObjectDesc size:0x30
+g_Cutscene_CameraPositionTarget     = 0x800E6160;
+g_Cutscene_CameraLookAtTarget       = 0x800E6170;
+g_Cutscene_Timer                    = 0x800E617C;
+g_WorldObject0                      = 0x800E6180; // type:WorldObjectDesc size:0x30
+g_WorldObject1                      = 0x800E61B0; // type:WorldObjectDesc size:0x30
+g_WorldObject2                      = 0x800E61E0; // type:WorldObjectDesc size:0x30
+g_WorldObject3                      = 0x800E6210; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject4                      = 0x800E6240; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject6                      = 0x800E6270; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject7                      = 0x800E62A0; // type:WorldObjectDesc size:0x30
+g_CommonWorldObjects                = 0x800E62E0; // type:WorldObject_0 size:0xA8

@@ -173,10 +173,10 @@ void func_800DB498(void);
 
 void func_800DB52C(void);
 
-/** @brief Key of Bethor use event. */
+/** @brief Handles the Key of Bethor item use event. */
 void MapEvent_KeyOfBethorUse(void);
 
-/** @brief Key of Aratron use event. */
+/** @brief Handles the Key of Aratron item use event. */
 void MapEvent_KeyOfAratronUse(void);
 
 void func_800DB738(void);

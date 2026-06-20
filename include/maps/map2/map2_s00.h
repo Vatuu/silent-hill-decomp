@@ -133,7 +133,7 @@ void func_800E9A74(void);
 
 void func_800E9CB4(void);
 
-/** @brief Handles the House Key use event. */
+/** @brief Handles the House Key item use event. */
 void MapEvent_HouseKeyUse(void);
 
 void func_800E9DD8(void);

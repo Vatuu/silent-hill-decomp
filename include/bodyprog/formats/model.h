@@ -57,7 +57,7 @@ STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 /** @brief Model info. */
 typedef struct _ModelInfo
 {
-    /* 0x0 */ s32            field_0; // Bone flags?
+    /* 0x0 */ s32            field_0; // Visible bone flags?
     /* 0x4 */ GsCOORDINATE2* coord;
     /* 0x8 */ s_ModelHeader* modelHdr;
     /* 0xC */ s32            modelIdx;

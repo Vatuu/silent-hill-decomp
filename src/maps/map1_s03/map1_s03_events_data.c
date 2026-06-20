@@ -8,7 +8,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 84,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [1]
     {
@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 85,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [2]
     {
@@ -26,7 +26,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 86,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [3]
     {
@@ -35,7 +35,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 87,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [4]
     {
@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 88,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [5]
     {
@@ -53,7 +53,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 89,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [6]
     {
@@ -62,7 +62,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 90,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [7]
     {
@@ -71,7 +71,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 91,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [8]
     {
@@ -80,7 +80,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 92,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [9]
     {
@@ -89,7 +89,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 93,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800DA950`
+        .eventParam        = 5, // `MapEvent_CommonItemTake`
     },
     // [10]
     {
@@ -98,7 +98,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 23,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 9, // `func_800DBEC8`
+        .eventParam        = 9, // `MapEvent_TheMonsterLurksBookRead`
     },
     // [11]
     {
@@ -115,7 +115,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 25,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 10, // `func_800DC0F8`
+        .eventParam     = 10, // `MapEvent_SplitHeadFairyTaleBookRead`
     },
     // [13]
     {
@@ -125,7 +125,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 17,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [14]
     {
@@ -135,7 +135,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 18,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [15]
     {
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 17,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [16]
     {
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 18,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [17]
     {
@@ -161,7 +161,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 17,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `func_800DABC4`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [18]
     {
@@ -169,7 +169,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 18,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `func_800DABC4`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [19]
     {
@@ -178,7 +178,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 19,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [20]
     {
@@ -187,7 +187,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 20,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800DABC4`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [21]
     {
@@ -197,7 +197,7 @@ s_EventData MAP_EVENTS[103] = {
         .mapPointIdx       = 19,
         .requiredItemId    = InvItemId_RubberBall,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 15, // `func_800DCB54`
+        .eventParam        = 15, // `MapEvent_RubberBallUse`
     },
     // [22]
     {
@@ -207,7 +207,7 @@ s_EventData MAP_EVENTS[103] = {
         .mapPointIdx       = 20,
         .requiredItemId    = InvItemId_RubberBall,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 15, // `func_800DCB54`
+        .eventParam        = 15, // `MapEvent_RubberBallUse`
     },
     // [23]
     {
@@ -215,7 +215,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 19,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `func_800DABC4`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [24]
     {
@@ -223,7 +223,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 20,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `func_800DABC4`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
     },
     // [25]
     {
@@ -233,7 +233,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 21,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 8, // `func_800DAF18`
+        .eventParam        = 8, // `MapEvent_DrainageValveInteract`
     },
     // [26]
     {
@@ -440,7 +440,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 46,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 4, // `func_800DA8B0`
+        .eventParam        = 4, // `MapEvent_ClassroomKeyUse`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [46]
@@ -452,7 +452,7 @@ s_EventData MAP_EVENTS[103] = {
         .mapPointIdx       = 46,
         .requiredItemId    = InvItemId_ClassroomKey,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 4, // `func_800DA8B0`
+        .eventParam        = 4, // `MapEvent_ClassroomKeyUse`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [47]
@@ -776,7 +776,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 34,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA7F4`
+        .eventParam        = 3, // `MapEvent_LibraryReserveKeyUse`
     },
     // [78]
     {
@@ -787,7 +787,7 @@ s_EventData MAP_EVENTS[103] = {
         .mapPointIdx       = 34,
         .requiredItemId    = InvItemId_LibraryReserveKey,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA7F4`
+        .eventParam        = 3, // `MapEvent_LibraryReserveKeyUse`
     },
     // [79]
     {
@@ -899,7 +899,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Exclusive,
         .mapPointIdx       = 77,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 13, // `func_800DC780`
+        .eventParam        = 13, // `MapEvent_LockerDeadBodyCutscene`
     },
     // [92]
     {
@@ -908,7 +908,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 76,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 11, // `func_800DC2E4`
+        .eventParam        = 11, // `MapEvent_OpenedLockerInspect`
     },
     // [93]
     {
@@ -917,7 +917,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 76,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 12, // `func_800DC310`
+        .eventParam        = 12, // `MapEvent_UnopenedLockerInspect`
     },
     // [94]
     {
@@ -927,7 +927,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 82,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 14, // `func_800DC9A0`
+        .eventParam        = 14, // `MapEvent_LibraryReserveKeyItemTake`
     },
     // [95]
     {

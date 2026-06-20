@@ -21,23 +21,23 @@ s_MapPoint2d MAP_POINTS[] = {
 };
 
 void (*g_MapEventFuncs[])() = {
-    MapEvent_DoorJammed,
-    MapEvent_DoorLocked,
-    MapEvent_DoorUnlocked,
-    func_800DA7F4,
-    func_800DA8B0,
-    func_800DA950,
-    func_800DAA28,
-    func_800DABC4,
-    func_800DAF18,
-    func_800DBEC8,
-    func_800DC0F8,
-    func_800DC2E4,
-    func_800DC310,
-    func_800DC780,
-    func_800DC9A0,
-    func_800DCB54,
-    func_800DCDDC
+    /* 0  */ MapEvent_DoorJammed,
+    /* 1  */ MapEvent_DoorLocked,
+    /* 2  */ MapEvent_DoorUnlocked,
+    /* 3  */ MapEvent_LibraryReserveKeyUse,
+    /* 4  */ MapEvent_ClassroomKeyUse,
+    /* 5  */ MapEvent_CommonItemTake,
+    /* 6  */ MapEvent_RoofDrainPuzzleInspect,
+    /* 7  */ MapEvent_RoofDrainPuzzleSolve,
+    /* 8  */ MapEvent_DrainageValveInteract,
+    /* 9  */ MapEvent_TheMonsterLurksBookRead,
+    /* 10 */ MapEvent_SplitHeadFairyTaleBookRead,
+    /* 11 */ MapEvent_OpenedLockerInspect,
+    /* 12 */ MapEvent_UnopenedLockerInspect,
+    /* 13 */ MapEvent_LockerDeadBodyCutscene,
+    /* 14 */ MapEvent_LibraryReserveKeyItemTake,
+    /* 15 */ MapEvent_RubberBallUse,
+    /* 16 */ func_800DCDDC
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {
