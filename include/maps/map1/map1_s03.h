@@ -25,8 +25,6 @@
 
 #include "maps/shared.h"
 
-extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8]; // 0x800E1410
-
 extern SVECTOR D_800E1F74;
 extern u16     D_800E1F7C[];
 
@@ -91,8 +89,6 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
 void func_800CE0CC(s32 arg0);
 
 bool func_800CE164(POLY_FT4** poly, s32 idx);
-
-void LockerDeadBody_Update(s_SubCharacter* deadBody, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void func_800DA7F4(void);
 
