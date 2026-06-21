@@ -67,7 +67,7 @@ void MapEvent_DoorLocked(void);
 
 void MapEvent_DoorUnlocked(void);
 
-void MapEvent_CommonItemPickup(void);
+void MapEvent_CommonItemTake(void);
 
 void MapEvent_HandStatueInspect(void);
 

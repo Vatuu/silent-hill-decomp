@@ -963,7 +963,7 @@ void WorldGfx_Draw(bool arg0);
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr);
 
-/** Submits a world object to draw. */
+/** Submits a world object model to draw. */
 void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** @unused Returns held item ID. */

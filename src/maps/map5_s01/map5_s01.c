@@ -691,12 +691,12 @@ void Map_WorldObjectsInit(void) // 0x800ECB58
         g_SysWork.npcFlagsId = 5;
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800ECC8C

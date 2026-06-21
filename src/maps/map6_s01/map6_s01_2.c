@@ -786,7 +786,7 @@ void Map_WorldObjectsInit(void) // 0x800D2E6C
 {
     D_800D5345 = false;
 
-    WorldObject_Init(&D_800D5374, D_800A99E4[1], -19.237060546875f, -0.90576171875f, 60.533f, 0.0f, 78.93f, 0.0f);
+    WorldObject_Init(&D_800D5374, g_CommonWorldObjectNames[1], -19.237060546875f, -0.90576171875f, 60.533f, 0.0f, 78.93f, 0.0f);
     WorldObject_Init(&D_800D53A4[0], "DOOR2_HI", -21.38f, -0.95f, 58.7f, 0.0, 180.0f, 0.0f);
     WorldObject_Init(&D_800D53A4[1], "BRI3_HID", -21.29f, -1.434814453125f, 60.31f, 0.0, 180.0f, 0.0f);
     WorldObject_Init(&D_800D53A4[2], "BAR1_HID", -21.31f, -1.71f, 59.87f, 0.0, 180.0f, 0.0f);
@@ -795,12 +795,12 @@ void Map_WorldObjectsInit(void) // 0x800D2E6C
     WorldObject_Init(&D_800D53A4[5], "GLAS2_HI", -21.4f, -1.4208984375f, 58.77f, 0.0, 180.0f, 0.0f);
     WorldObject_Init(&D_800D53A4[6], "RIGHT_HI", -19.6f, -0.825f, 59.4f, 0.0, 180.0f, 0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 const s16 D_800CBB5C = 0x1440;

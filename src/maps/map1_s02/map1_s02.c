@@ -26,6 +26,8 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
 
+#define playerChara g_SysWork.playerWork.player.position
+
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
     /* 15 */ "~J0(1.2)\tWhere_am_I? ~E ",
@@ -70,7 +72,7 @@ const char* MAP_MESSAGES[] = {
     /* 54 */ "\tA_headless_doll_is_stuck ~N\n\tto_the_wall. ~E "
 };
 
-void func_800DA200(void) // 0x800DA200
+void MapEvent_CommonItemTake(void) // 0x800DA200
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -208,11 +210,12 @@ void func_800DA384(void) // 0x800DA384
         case 0:
             Player_ControlFreeze();
             Game_TurnFlashlightOn();
+
             sharedFunc_800D08B8_0_s00(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
-            g_SysWork.playerWork.player.position.vx = Q12(-13.3f);
-            g_SysWork.playerWork.player.position.vz = Q12(-68.1f);
+            playerChara.vx = Q12(-13.3f);
+            playerChara.vz = Q12(-68.1f);
 
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
@@ -265,19 +268,26 @@ void func_800DA384(void) // 0x800DA384
         default:
             if (isSkipped)
             {
-                g_SysWork.playerWork.player.position.vx = Q12(-18.18f);
-                g_SysWork.playerWork.player.position.vy = Q12(0.0f);
-                g_SysWork.playerWork.player.position.vz = Q12(-62.24f);
+                // Warp player.
+                playerChara.vx = Q12(-18.18f);
+                playerChara.vy = Q12(0.0f);
+                playerChara.vz = Q12(-62.24f);
                 g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
 
+                // Restore player control.
                 Player_ControlUnfreeze(true);
                 SysWork_StateSetNext(SysState_Gameplay);
+
+                // Restore camera control.
                 vcReturnPreAutoCamWork(true);
             }
             else
             {
+                // Restore player control.
                 Player_ControlUnfreeze(false);
                 SysWork_StateSetNext(SysState_Gameplay);
+
+                // Restore camera control.
                 vcReturnPreAutoCamWork(false);
             }
 
@@ -304,10 +314,11 @@ void func_800DA8F8(void) // 0x800DA8F8
             break;
 
         case 2:
-            Event_DisplayMapMsg(false, 0x12, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 18, 0, 0, 0, false); // "The tower door is locked."
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -351,7 +362,9 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -380,7 +393,8 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
         case 9:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -411,7 +425,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
 extern s16 D_800E1FD0;
 
-void func_800DAD2C(void) // 0x800DAD2C
+void MapEvent_DoorWithHorizontalSlotInteract(void) // 0x800DAD2C
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -489,7 +503,7 @@ void func_800DAD2C(void) // 0x800DAD2C
 
         case 9:
             Event_BgTextureCmd(BgTextureCmd_DrawSecondary, 0, false);
-            Event_DisplayMapMsg(false, 27, false, false, 0, false); // "In the center of the door is a horizontal slot.
+            Event_DisplayMapMsg(false, 27, false, false, 0, false); // "In the center of the door is a horizontal slot."
             break;
 
         case 10:
@@ -521,13 +535,13 @@ void func_800DB058(void) // 0x800DB058
             CutsceneBorder_ForceShow();
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(56.5f);
-            g_SysWork.playerWork.player.position.vz = Q12(19.3f);
+            playerChara.vx = Q12(56.5f);
+            playerChara.vz = Q12(19.3f);
             g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), 0, 0, 0, 0, true);
-            Event_CameraLookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(60.59f), Q12(-0.83f), Q12(18.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(56.7698f), Q12(-1.45f), Q12(19.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -566,8 +580,10 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
@@ -590,7 +606,7 @@ void func_800DB33C(void) // 0x800DB33C
     Event_ItemTake(InvItemId_RubberBall, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupRubberBall, 37);
 }
 
-void func_800DB368(void) // 0x800DB368
+void MapEvent_CutscenePhoneCall(void) // 0x800DB368
 {
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 26)
@@ -607,6 +623,7 @@ void func_800DB368(void) // 0x800DB368
     {
         case 0:
             Player_ControlFreeze();
+
             Savegame_EventFlagSet(EventFlag_122);
             SD_Call(Sfx_XaAudio53);
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
@@ -638,8 +655,17 @@ void func_800DB368(void) // 0x800DB368
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
-            Event_CameraPositionSet(NULL, Q12(18.06f), Q12(-1.99f), Q12(142.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(20.95f), Q12(0.27f), Q12(144.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(18.06f), Q12(-1.99f), Q12(142.77f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(20.95f), Q12(0.27f), Q12(144.37f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
+
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -655,8 +681,15 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 9:
-            Event_CameraPositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.5f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, g_SysWork.playerWork.player.position.vx, Q12(-1.0f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    playerChara.vx + Q12(4.0f), Q12(-1.5f), playerChara.vz,
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  playerChara.vx, Q12(-1.0f), playerChara.vz,
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
             SysWork_StateStepIncrement(0);
 
@@ -690,11 +723,11 @@ void func_800DB368(void) // 0x800DB368
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_DisplayMapMsg(false, 31, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 31, 0, 0, 0, false); // Pause.
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, g_SysWork.playerWork.player.position.vx + Q12(4.0f) + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-            Event_CameraLookAtSet(NULL, g_SysWork.playerWork.player.position.vx + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), g_SysWork.playerWork.player.position.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Event_CameraPositionSet(NULL, playerChara.vx + Q12(4.0f) + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), playerChara.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+            Event_CameraLookAtSet(NULL, playerChara.vx + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), playerChara.vz, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
 
         case 16:
@@ -718,7 +751,7 @@ void func_800DB368(void) // 0x800DB368
 
         case 20:
             Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
-            Event_DisplayMapMsg(false, 35, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, 35, 0, 0, 0, false); // "That was Cheryl's voice. I know it."
             break;
 
         case 21:
@@ -775,8 +808,8 @@ void func_800DB368(void) // 0x800DB368
             Event_CameraLookAtSet(NULL, Q12(20.28f), Q12(-0.42f), Q12(143.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(20.3f);
-            g_SysWork.playerWork.player.position.vz = Q12(143.5f);
+            playerChara.vx = Q12(20.3f);
+            playerChara.vz = Q12(143.5f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
 
             Fs_QueueWaitForEmpty();
@@ -833,8 +866,16 @@ void func_800DBB7C(void) // 0x800DBB7C
             // Warp camera.
             if (D_800E1EE8 > Q12(1.0f))
             {
-                Event_CameraPositionSet(NULL, Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(21.0f), Q12(-0.5f), Q12(60.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
-                Event_CameraLookAtSet(NULL, Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(17.0f), Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 1) - Q12(0.5f), Q12(60.0f), Q12(3.0f), Q12(0.0f), Q12(0.3f), Q12(0.0f), false);
+                Event_CameraPositionSet(NULL,
+                                        Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(21.0f), Q12(-0.5f), Q12(60.0f),
+                                        Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                        false);
+                Event_CameraLookAtSet(NULL,
+                                      Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 0) + Q12(17.0f),
+                                      Event_TweenLinear(Q12(-1.5f), Q12(5.0f), 1) - Q12(0.5f),
+                                      Q12(60.0f),
+                                      Q12(3.0f), Q12(0.0f), Q12(0.3f), Q12(0.0f),
+                                      false);
             }
 
             D_800E1EE8 += g_DeltaTime;
@@ -867,20 +908,20 @@ void func_800DBB7C(void) // 0x800DBB7C
                 SysWork_StateStepIncrement(0);
             }
 
-            g_WorldObject1.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, angleAdd);
-            if (g_WorldObject1.rotation.vy < Q12_ANGLE(-112.5f))
+            g_WorldObject_DoorHid.rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, angleAdd);
+            if (g_WorldObject_DoorHid.rotation.vy < Q12_ANGLE(-112.5f))
             {
-                g_WorldObject1.rotation.vy = Q12_ANGLE(-112.5f);
+                g_WorldObject_DoorHid.rotation.vy = Q12_ANGLE(-112.5f);
             }
 
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
-
             func_8008D448();
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -945,6 +986,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -966,9 +1008,7 @@ void func_800DC1E0(void) // 0x800DC1E0
     {
         case 0:
             Player_ControlFreeze();
-
             D_800E1FE2 = 0;
-            
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1133,16 +1173,16 @@ void func_800DC1E0(void) // 0x800DC1E0
                 }
             }
 
-            g_WorldObject6.rotation.vy += rotY0;
-            g_WorldObject7.rotation.vy += rotY1;
+            g_WorldObject_Door2Hi.rotation.vy += rotY0;
+            g_WorldObject_Door1Hi.rotation.vy += rotY1;
 
             Sfx_WithFalloffAndPitchPlay(Sfx_Unk1453, &D_800CB94C, D_800E1FE0 >> 3, Q12(18.0f), 0);
 
             if (D_800E1FDC.vx == Q12_ANGLE(180.0f) && D_800E1FDC.vy == Q12_ANGLE(90.0f))
             {
                 // TODO: What are these angles?
-                g_WorldObject6.rotation.vy = (g_WorldObject6.rotation.vy + 0x1040) & 0xC00;
-                g_WorldObject7.rotation.vy = (g_WorldObject7.rotation.vy + 0x1040) & 0xC00;
+                g_WorldObject_Door2Hi.rotation.vy = (g_WorldObject_Door2Hi.rotation.vy + 0x1040) & 0xC00;
+                g_WorldObject_Door1Hi.rotation.vy = (g_WorldObject_Door1Hi.rotation.vy + 0x1040) & 0xC00;
 
                 Sd_SfxStop(Sfx_Unk1453);
 
@@ -1151,8 +1191,8 @@ void func_800DC1E0(void) // 0x800DC1E0
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
-
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagClear(EventFlag_119);
@@ -1202,8 +1242,10 @@ void func_800DCF00(void) // 0x800DCF00
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_120);
             Sd_SfxStop(Sfx_Unk1451);
             break;
@@ -1218,18 +1260,18 @@ void func_800DCF00(void) // 0x800DCF00
             SD_Call(Sfx_Unk1451);
         }
 
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1451, &g_WorldObject0.position, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1451, &g_WorldObject_BoxHide.position, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
 
         var_t0     = D_800E1FE4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f);
         var_t0     = MIN(var_t0, Q12(0.4f));
         D_800E1FE4 = var_t0;
 
-        g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
-        g_WorldObject0.position.vy                   += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
+        playerChara.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
+        g_WorldObject_BoxHide.position.vy              += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
     }
 }
 
-void func_800DD208(void) // 0x800DD208
+void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -1257,7 +1299,7 @@ void func_800DD208(void) // 0x800DD208
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_ClassroomKey))
             {
-                Event_DisplayMapMsg(true, 51, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, 51, 6, 7, 0, false); // "There is a CLassroom key. Take it?"
             }
 
             Savegame_EventFlagSet(EventFlag_M1S02_PickupClassroomKey);
@@ -1285,11 +1327,8 @@ void func_800DD208(void) // 0x800DD208
 void func_800DD420(void) // 0x800DD420
 {
     sharedFunc_800D08B8_0_s00(6, 127);
-
     Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
-
     Savegame_EventFlagClear(EventFlag_225);
-
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
@@ -1305,19 +1344,19 @@ void Map_WorldObjectsInit(void) // 0x800DD494
     Math_SetSVectorFast(&g_ObjRotC[1], 0, 0, 0);
     Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again?
 
-    WorldObject_Init(&g_WorldObject1, "DOOR_HID", 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject3, "GUN_HIDE", 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
-    WorldObject_Init(&g_WorldObject4, "RING1_HI", 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject5, "RING2_HI", 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject6, "DOOR2_HI", 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject7, "DOOR1_HI", 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
-    WorldObject_PlacementInit(&g_WorldObject0, "BOX_HIDE", 54.47f, 0.0f, -60.0f);
-    WorldObject_Init(&g_WorldObject8, "KEY_HIDE", 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
-    WorldObject_Init(&g_WorldObject9, "PHONE3_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-    WorldObject_Init(&g_WorldObjectA, "PHONE2_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-    WorldObject_Init(&g_WorldObject2, "KEY_HIDE", -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
-    WorldObject_PlacementInit(&g_WorldObjectD, "BOLL_HID", 100.124f, -1.08f, 101.166f);
-    WorldObject_Init(&g_WorldObjectB, D_800A99E4[1], 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
+    WorldObject_Init(&g_WorldObject_DoorHid, "DOOR_HID", 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_GunHide, "GUN_HIDE", 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Ring1Hi, "RING1_HI", 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Ring2Hi, "RING2_HI", 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Door2Hi, "DOOR2_HI", 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Door1Hi, "DOOR1_HI", 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject_BoxHide, "BOX_HIDE", 54.47f, 0.0f, -60.0f);
+    WorldObject_Init(&g_WorldObject_KeyHide, "KEY_HIDE", 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Phone3H, "PHONE3_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Phone2H, "PHONE2_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObject_Init(&g_WorldObject_KeyHide1, "KEY_HIDE", -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
+    WorldObject_PlacementInit(&g_WorldObject_BollHid, "BOLL_HID", 100.124f, -1.08f, 101.166f);
+    WorldObject_Init(&g_WorldObjectB, g_CommonWorldObjectNames[1], 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
@@ -1377,12 +1416,12 @@ void Map_WorldObjectsInit(void) // 0x800DD494
     D_800E5A98 = 0;
     D_800E5A99 = 0;
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800DDA84
@@ -1404,7 +1443,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
 
         if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain) && !Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
         {
-            WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
+            WorldObjects_Add(&g_WorldObject_KeyHide1.object, &g_WorldObject_KeyHide1.position, &g_WorldObject_KeyHide1.rotation);
         }
     }
     else
@@ -1449,7 +1488,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupRubberBall))
         {
-            WorldObjects_Add(&g_WorldObjectD.object, &g_WorldObjectD.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_BollHid.object, &g_WorldObject_BollHid.position, &SVECTOR3_Zero);
         }
     }
 
@@ -1457,12 +1496,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
-            WorldObjects_Add(&g_WorldObject3.object, &g_WorldObject3.position, &g_WorldObject3.rotation);
+            WorldObjects_Add(&g_WorldObject_GunHide.object, &g_WorldObject_GunHide.position, &g_WorldObject_GunHide.rotation);
         }
 
         if (Savegame_EventFlagGet(EventFlag_96))
         {
-            g_WorldObject1.rotation.vy = Q12_ANGLE(-112.5f);
+            g_WorldObject_DoorHid.rotation.vy = Q12_ANGLE(-112.5f);
         }
         // Activate collisions for door blocking corpse in bathroom with shotgun.
         else
@@ -1470,20 +1509,20 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
             collFlags = CollisionTriggerFlag_1;
         }
 
-        WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
+        WorldObjects_Add(&g_WorldObject_DoorHid.object, &g_WorldObject_DoorHid.position, &g_WorldObject_DoorHid.rotation);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
-        WorldObjects_Add(&g_WorldObject4.object, &g_WorldObject4.position, &g_WorldObject4.rotation);
-        WorldObjects_Add(&g_WorldObject5.object, &g_WorldObject5.position, &g_WorldObject5.rotation);
-        WorldObjects_Add(&g_WorldObject6.object, &g_WorldObject6.position, &g_WorldObject6.rotation);
-        WorldObjects_Add(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
-        WorldObjects_Add(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_Zero);
+        WorldObjects_Add(&g_WorldObject_Ring1Hi.object, &g_WorldObject_Ring1Hi.position, &g_WorldObject_Ring1Hi.rotation);
+        WorldObjects_Add(&g_WorldObject_Ring2Hi.object, &g_WorldObject_Ring2Hi.position, &g_WorldObject_Ring2Hi.rotation);
+        WorldObjects_Add(&g_WorldObject_Door2Hi.object, &g_WorldObject_Door2Hi.position, &g_WorldObject_Door2Hi.rotation);
+        WorldObjects_Add(&g_WorldObject_Door1Hi.object, &g_WorldObject_Door1Hi.position, &g_WorldObject_Door1Hi.rotation);
+        WorldObjects_Add(&g_WorldObject_BoxHide.object, &g_WorldObject_BoxHide.position, &SVECTOR3_Zero);
 
         // Activate collisions for door locking boss entrance.
-        if (g_WorldObject6.rotation.vy != Q12_ANGLE(180.0f) ||
-            g_WorldObject7.rotation.vy != g_WorldObject6.rotation.vy)
+        if (g_WorldObject_Door2Hi.rotation.vy != Q12_ANGLE(180.0f) ||
+            g_WorldObject_Door1Hi.rotation.vy != g_WorldObject_Door2Hi.rotation.vy)
         {
             collFlags |= CollisionTriggerFlag_2;
             Savegame_EventFlagClear(EventFlag_362);
@@ -1499,21 +1538,21 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (Savegame_EventFlagGet(EventFlag_362))
         {
-            g_WorldObject7.rotation.vy = Q12_ANGLE(180.0f);
+            g_WorldObject_Door1Hi.rotation.vy = Q12_ANGLE(180.0f);
         }
         else
         {
-            g_WorldObject7.rotation.vy = Q12_ANGLE(90.0f);
+            g_WorldObject_Door1Hi.rotation.vy = Q12_ANGLE(90.0f);
         }
 
-        g_WorldObject6.rotation.vy = Q12_ANGLE(180.0f);
+        g_WorldObject_Door2Hi.rotation.vy = Q12_ANGLE(180.0f);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupPictureCard))
         {
-            WorldObjects_Add(&g_WorldObject8.object, &g_WorldObject8.position, &g_WorldObject8.rotation);
+            WorldObjects_Add(&g_WorldObject_KeyHide.object, &g_WorldObject_KeyHide.position, &g_WorldObject_KeyHide.rotation);
         }
     }
 
@@ -1521,8 +1560,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_99))
         {
-            WorldObjects_Add(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
-            WorldObjects_Add(&g_WorldObjectA.object, &g_WorldObjectA.position, &g_WorldObjectA.rotation);
+            WorldObjects_Add(&g_WorldObject_Phone3H.object, &g_WorldObject_Phone3H.position, &g_WorldObject_Phone3H.rotation);
+            WorldObjects_Add(&g_WorldObject_Phone2H.object, &g_WorldObject_Phone2H.position, &g_WorldObject_Phone2H.rotation);
         }
     }
 

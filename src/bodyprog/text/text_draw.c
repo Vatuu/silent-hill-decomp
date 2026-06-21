@@ -7,7 +7,7 @@
 #include "bodyprog/math/math.h"
 
 #ifndef PAD_HACK_IGNORE
-    const s32 pad_rodata_80025D68 = 0;
+    const s32 __pad_rodata_80025D68 = 0;
     s8 __pad_bss_800C38B2[2];
     s32 __pad_bss_800C38B8[4];
     s16 __pad_bss_800C391E;

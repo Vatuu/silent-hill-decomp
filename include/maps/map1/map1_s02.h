@@ -52,31 +52,37 @@ extern u8 D_800E1FE3;
 
 extern q3_12 D_800E1FE4;
 
-extern s_WorldObjectPose            g_WorldObject1; // 0x800E57D8 "DOOR_HID", TODO: `g_WorldObject_Door`
-extern s_WorldObjectPose            g_WorldObject4; // 0x800E5808
-extern s_WorldObjectPose            g_WorldObject5; // 0x800E5838
-extern s_WorldObjectPose            g_WorldObject6; // 0x800E5868
-extern s_WorldObjectPose            g_WorldObject7; // 0x800E5898
-extern s_WorldObjectPlacement       g_WorldObject0; // 0x800E58C8 "BOX_HIDE", TODO: `g_WorldObject_Box`
-extern s_WorldObjectModel              g_WorldObjectC; // 0x800E58F8
-extern VECTOR3                      g_ObjPosC[2]; // 0x800E5918
-extern SVECTOR                      g_ObjRotC[2]; // 0x800E5938
-extern s_WorldObjectPose            g_WorldObject3; // 0x800E5948
-extern s_WorldObjectPlacement       g_WorldObjectD; // 0x800E5978
-extern s_WorldObjectPose            g_WorldObject8; // 0x800E59A8
-extern s_WorldObjectPose            g_WorldObject9; // 0x800E59D8
-extern s_WorldObjectPose            g_WorldObjectA; // 0x800E5A08
-extern s_WorldObjectPose            g_WorldObjectB; // 0x800E5A38
-extern s_WorldObjectPose            g_WorldObject2; // 0x800E5A68
+extern s_WorldObjectPose g_WorldObject_DoorHid;
+extern s_WorldObjectPose g_WorldObject_Ring1Hi;
+extern s_WorldObjectPose g_WorldObject_Ring2Hi;
+extern s_WorldObjectPose g_WorldObject_Door2Hi;
+extern s_WorldObjectPose g_WorldObject_Door1Hi;
+
+extern s_WorldObjectPlacement g_WorldObject_BoxHide; // "BOX_HIDE", TODO: `g_WorldObject_Box`
+
+extern s_WorldObjectModel g_WorldObjectC;
+
+extern VECTOR3 g_ObjPosC[2];
+extern SVECTOR g_ObjRotC[2];
+
+extern s_WorldObjectPose g_WorldObject_GunHide;
+
+extern s_WorldObjectPlacement  g_WorldObject_BollHid;
+
+extern s_WorldObjectPose g_WorldObject_KeyHide;
+extern s_WorldObjectPose g_WorldObject_Phone3H;
+extern s_WorldObjectPose g_WorldObject_Phone2H;
+extern s_WorldObjectPose g_WorldObjectB;
+extern s_WorldObjectPose g_WorldObject_KeyHide1;
 
 extern u8 D_800E5A98;
 extern u8 D_800E5A99;
 
-extern s_WorldObjectModel              g_CommonWorldObjects[6]; // 0x800E5AA8
+extern s_WorldObjectModel g_CommonWorldObjects[6];
 
-void func_800DA200(void);
+void MapEvent_CommonItemTake(void);
 
-/** @brief Lobby key use event. */
+/** @brief Handles the Lobby Key use event. */
 void MapEvent_LobbyKeyUse(void);
 
 void func_800DA384(void);
@@ -90,7 +96,7 @@ void func_800DAA00(void);
 /** @brief Game demo/trial end event. Shows "COMING SOON" image. */
 void MapEvent_GameTrialOver(void);
 
-void func_800DAD2C(void);
+void MapEvent_DoorWithHorizontalSlotInteract(void);
 
 void func_800DB058(void);
 
@@ -98,7 +104,7 @@ void func_800DB310(void);
 
 void func_800DB33C(void);
 
-void func_800DB368(void);
+void MapEvent_CutscenePhoneCall(void);
 
 void func_800DBB7C(void);
 
@@ -110,7 +116,7 @@ void func_800DC1E0(void);
 
 void func_800DCF00(void);
 
-void func_800DD208(void);
+void MapEvent_ClassroomKeyItemTake(void);
 
 void func_800DD420(void);
 

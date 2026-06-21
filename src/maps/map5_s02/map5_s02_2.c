@@ -785,7 +785,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
 void Map_WorldObjectsInit(void) // 0x800D6598
 {
-    WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad, g_CommonWorldObjectNames[1]);
 
     WorldObject_PoseInit(&g_WorldObject_UnkPose0, 135.5022f, -1.3f, 21.71f, 0.0f, 11.4f, 0.0f);
     WorldObject_Init(&g_WorldObject_BDoor1, "BDOOR1_H", 134.5318f, 0.0f, 59.471f, 0.0f, 0.0f, 0.0f);
@@ -816,12 +816,12 @@ void Map_WorldObjectsInit(void) // 0x800D6598
         g_WorldObject_BDoor1.rotation.vy = Q12_ANGLE(-7.5f);
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D68FC

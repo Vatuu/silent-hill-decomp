@@ -24,7 +24,7 @@ void (*g_MapEventFuncs[])() = {
     /* 0  */ MapEvent_DoorJammed,
     /* 1  */ MapEvent_DoorLocked,
     /* 2  */ MapEvent_DoorUnlocked,
-    /* 3  */ MapEvent_CommonItemPickup,
+    /* 3  */ MapEvent_CommonItemTake,
     /* 4  */ MapEvent_HandStatueInspect,
     /* 5  */ MapEvent_ChemicalItemTake,
     /* 6  */ func_800D7308,

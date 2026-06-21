@@ -14,7 +14,7 @@
 #include "bodyprog/player.h"
 #include "bodyprog/math/math.h"
 
-static const s32 pad_rodata_80025EAC = 0;
+static const s32 __pad_rodata_80025EAC = 0;
 
 bool g_Inventory_IsUpClicked;
 bool g_Inventory_IsDownClicked;

@@ -8,7 +8,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 107,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [1]
     {
@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 108,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [2]
     {
@@ -26,7 +26,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 109,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [3]
     {
@@ -35,7 +35,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 110,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [4]
     {
@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 111,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [5]
     {
@@ -53,7 +53,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 112,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [6]
     {
@@ -62,7 +62,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 113,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [7]
     {
@@ -71,7 +71,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 114,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [8]
     {
@@ -80,7 +80,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 115,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [9]
     {
@@ -89,7 +89,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 116,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [10]
     {
@@ -98,7 +98,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 117,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800DA200`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [11]
     {
@@ -124,7 +124,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 103,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 20, // `func_800DD208`
+        .eventParam        = 20, // `MapEvent_ClassroomKeyItemTake`
     },
     // [14]
     {
@@ -239,7 +239,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Exclusive,
         .mapPointIdx       = 91,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 14, // `func_800DB368`
+        .eventParam        = 14, // `MapEvent_CutscenePhoneCall`
     },
     // [27]
     {
@@ -314,7 +314,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 26,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 10, // `func_800DAD2C`
+        .eventParam        = 10, // `MapEvent_DoorWithHorizontalSlotInteract`
     },
     // [35]
     {

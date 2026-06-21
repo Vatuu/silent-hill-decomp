@@ -648,17 +648,17 @@ void func_800D2674(void) // 0x800D2674
 void Map_WorldObjectsInit(void) // 0x800D2A04
 {
     WorldObject_PlacementInit(&g_WorldObject_Movaches, "MOVACHES", 104.2225f, -0.1683f, 60.0667f);
-    WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad, g_CommonWorldObjectNames[1]);
     WorldObject_PoseInit(&g_WorldObjectPose_SavePad[0], 58.1048f, -0.9f, 62.5574f, 0.0f, 17.41f, 0.0f);
     WorldObject_PoseInit(&g_WorldObjectPose_SavePad[1], 57.905f, -0.9f, 22.5574f, 0.0f, 17.41f, 0.0f);
     WorldObject_Init(&g_WorldObject_Mag, "MAG_HIDE", 61.1727f, 0.43f, 18.6243f, 0.0f, 60.3f, 0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D2B68

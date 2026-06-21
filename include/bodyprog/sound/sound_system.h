@@ -216,23 +216,23 @@ typedef struct
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
 typedef struct
 {
-    u8  xaFileIdx_0;
-    s8  __pad_1[3];
-    u32 sector_4      : 24;
-    u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
-    u32 audioLength_8 : 24;
-    u8  field_8_24    : 8; // Index. Indicate some sort of group.
+    /* 0x0    */ u8  xaFileIdx_0;
+    /* 0x1    */ s8  __pad_1[3];
+    /* 0x4+0  */ u32 sector_4      : 24;
+    /* 0x4+24 */ u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
+    /* 0x8+0  */ u32 audioLength_8 : 24;
+    /* 0x8+24 */ u8  field_8_24    : 8; // Index. Indicate some sort of group.
 } s_XaItemData;
 STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 // Used to store KDT and VAB data access.
 typedef struct
 {
-    s8  typeIdx_0;       /** See `e_AudioType`. */
-    s8  pad_1;
-    u16 vagDataOffset_2; /** Offset of VAG data in VAB files. */
-    u32 fileSize_4;      /** VAB file size. */
-    s32 fileOffset_8;    /** VAB audio offset in the file container. */
+    /* 0x0 */ s8  typeIdx_0;       /** See `e_AudioType`. */
+    /* 0x1 */ s8  __pad_1;
+    /* 0x0 */ u16 vagDataOffset_2; /** Offset of VAG data in VAB files. */
+    /* 0x4 */ u32 fileSize_4;      /** VAB file size. */
+    /* 0x8 */ s32 fileOffset_8;    /** VAB audio offset in the file container. */
 } s_AudioItemData;
 
 // ========

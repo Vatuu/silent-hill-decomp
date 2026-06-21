@@ -2,7 +2,7 @@
 
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
 
-const s32 pad_rodata_800252B8 = 0;
+const s32 __pad_rodata_800252B8 = 0;
 
 /** @brief SFX pairs.
  *
@@ -50,9 +50,16 @@ s8 g_PaperMapMarkingFileIdxs[] = {
     3, 3, 3, 3, 3, 3, 3, 3
 };
 
-char* D_800A99E4[8] = {
-    NULL,       "PAD_NEAR", "AIDKIT_N", "DRINK_NE",
-    "AMPULE_N", "BULLET_N", "SHELL_NE", "SHOT_NEA"
+// TODO: Make enum for access?
+char* g_CommonWorldObjectNames[8] = {
+    NULL,
+    "PAD_NEAR",
+    "AIDKIT_N",
+    "DRINK_NE",
+    "AMPULE_N",
+    "BULLET_N",
+    "SHELL_NE",
+    "SHOT_NEA"
 };
 
 /** @note Related to images display. */
@@ -63,4 +70,4 @@ u32           g_MapEventParam        = 0;
 s32           g_MapEventLastUsedItem = 0;
 s32           g_RadioPitchState      = 0;
 
-const s32 pad_rodata_80025374 = 0;
+const s32 __pad_rodata_80025374 = 0;

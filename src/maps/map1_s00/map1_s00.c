@@ -801,7 +801,7 @@ void Map_WorldObjectsInit(void)
     WorldObject_PlacementInit(&g_WorldObject6[0], "REDX_HID", 20.4568f, -0.8345f, -17.97f);
     WorldObject_PlacementInit(&g_WorldObject6[1], "R_HIDE_I", 19.5799f, 0.0f, -18.3f);
     WorldObject_PlacementInit(&g_WorldObject0, "G_HIDE_I", 19.5799f, 0.0f, -18.3f);
-    WorldObject_Init(&g_WorldObject7, D_800A99E4[1], 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
+    WorldObject_Init(&g_WorldObject7, g_CommonWorldObjectNames[1], 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
     WorldObject_Init(&g_WorldObject8, "MAP_HIDE", 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
 
     Player_ItemRemove(InvItemId_NoteToSchool, 1);
@@ -821,12 +821,12 @@ void Map_WorldObjectsInit(void)
         Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void)

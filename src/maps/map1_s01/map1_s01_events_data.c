@@ -8,7 +8,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 96,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `MapEvent_CommonItemPickup`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [1]
     {
@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 97,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `MapEvent_CommonItemPickup`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [2]
     {
@@ -26,7 +26,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 98,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `MapEvent_CommonItemPickup`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [3]
     {
@@ -35,7 +35,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 99,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `MapEvent_CommonItemPickup`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [4]
     {
@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 100,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `MapEvent_CommonItemPickup`
+        .eventParam        = 3, // `MapEvent_CommonItemTake`
     },
     // [5]
     {

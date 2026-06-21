@@ -63,7 +63,7 @@ static const u32 STRING_COLORS[StringColorId_Count] = {
     COLOR_RGBC(128, 128, 128, PRIM_RECT | RECT_TEXTURE)
 };
 
-const u32 pad_rodata_80025DCC[2] = { 0, 0 };
+const u32 __pad_rodata_80025DCC[2] = { 0, 0 };
 
 void Gfx_StringSetPosition(s32 x, s32 y) // 0x8004A5B0
 {

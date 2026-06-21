@@ -2527,7 +2527,7 @@ g_MapMsg_SelectFlashTimer                    = 0x800A99B0; // type:s16
 //------------------------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800A99B4;
 g_PaperMapMarkingFileIdxs                    = 0x800A99CC; // size:0x18
-D_800A99E4                                   = 0x800A99E4; // size:0x20
+g_CommonWorldObjectNames                     = 0x800A99E4; // size:0x20
 g_MapEventSysState                           = 0x800A9A10; // type:s32
 g_MapEventParam                              = 0x800A9A14; // type:u32
 g_MapEventLastUsedItem                       = 0x800A9A18; // type:s32

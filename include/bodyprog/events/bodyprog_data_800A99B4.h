@@ -14,7 +14,7 @@ extern s8 g_PaperMapFileIdxs[];
 
 extern s8 g_PaperMapMarkingFileIdxs[];
 
-extern char* D_800A99E4[8];
+extern char* g_CommonWorldObjectNames[8];
 
 extern s_FsImageDesc D_800A9A04;
 

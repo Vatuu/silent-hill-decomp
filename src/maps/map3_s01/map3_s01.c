@@ -330,17 +330,17 @@ void Map_WorldObjectsInit(void) // 0x800D2AF4
     WorldObject_PlacementInit(&g_WorldObject_Dr[3], "DR3R_HID", 59.1f, 0.0f, 19.1f);
     WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 59.1f, 0.0f, 19.1f);
     WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 59.1f, 0.0f, 19.1f);
-    WorldObject_Init(&g_WorldObject6, D_800A99E4[1], 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
+    WorldObject_Init(&g_WorldObject6, g_CommonWorldObjectNames[1], 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
     WorldObject_Init(&g_WorldObject7, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
     WorldObject_Init(&g_WorldObject8, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject9, D_800A99E4[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject9, g_CommonWorldObjectNames[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D2E54

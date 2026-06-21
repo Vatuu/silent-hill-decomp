@@ -855,16 +855,16 @@ void Map_WorldObjectsInit(void) // 0x800D3EAC
     WorldObject_Init(&g_WorldObject_Lighter, "LIGHTER_", -100.7f, 0.0f, 57.95f, 0.0f, 180.0f, 0.0f);
     WorldObject_PlacementInit(&g_WorldObject_Alcohol, "ALCOHOL_", -60.8f, 0.0f, 21.6f);
     WorldObject_PlacementInit(&g_WorldObject_Key, "KEY_HIDE", -99.2f, 0.0f, 22.55f);
-    WorldObject_Init(&g_WorldObject_SavePad, D_800A99E4[1], -58.6104f, -1.0f, -59.1241f, 0.0f, 9.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_SavePad, g_CommonWorldObjectNames[1], -58.6104f, -1.0f, -59.1241f, 0.0f, 9.0f, 0.0f);
     WorldObject_Init(&g_WorldObject_Blood1, "BLOOD_HI", -141.5f, 0.0f, 61.4f, 0.0f, -41.0f, 0.0f);
     WorldObject_PlacementInit(&g_WorldObject_Blood2, "BLOOD_HI", -141.7f, -0.05f, 60.2f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D429C

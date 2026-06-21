@@ -16,7 +16,7 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-const s32 pad_rodata_80025524 = 0;
+const s32 __pad_rodata_80025524 = 0;
 
 s_WorldGfxWork g_WorldGfxWork;
 

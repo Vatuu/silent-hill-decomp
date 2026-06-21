@@ -3283,7 +3283,7 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     D_800EBB94 = 0;
 
     WorldObject_Init(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4[1]);
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad, g_CommonWorldObjectNames[1]);
     WorldObject_PoseInit(&g_WorldObject_UnkPose0, -16.6226f, -1.2396f, -59.0691f, 0.0f, 105.21f, 0.0f);
     WorldObject_PoseInit(&g_WorldObject_UnkPose1, 58.9993f, -0.82f, -99.0521f, 0.0f, -86.1f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_KaigaR[0], "KAIGAR_H");
@@ -3372,12 +3372,12 @@ void Map_WorldObjectsInit(void) // 0x800E3804
         Chara_SpawnFlagsSet(Chara_Stalker, 14, SpawnFlag_0 | SpawnFlag_1);
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4[7]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
 }
 
 static const VECTOR3 D_800CDC4C = { Q12(-63.3f), Q12(-1.6f), Q12(-139.2f) };

@@ -12,7 +12,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "main/rng.h"
 
-const s32 pad_rodata_800262F8 = 0;
+const s32 __pad_rodata_800262F8 = 0;
 
 GsF_LIGHT g_Items_Lights[7][2];
 

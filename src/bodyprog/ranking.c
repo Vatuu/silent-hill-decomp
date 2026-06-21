@@ -8,59 +8,34 @@
 #include "bodyprog/ranking.h"
 #include "main/fsqueue.h"
 
-static const s32 pad_rodata_8002B2F8 = 0;
+static const s32 __pad_rodata_8002B2F8 = 0;
 
-s16 g_Ranking_SavegameCount;
-
-u16 g_Ranking_GameplayHours;
-
-u16 g_Ranking_WalkDistanceKm;
-
-u16 g_Ranking_WalkDistanceM;
-
-u16 g_Ranking_RunDistanceKm;
-
-u16 g_Ranking_RunDistanceM;
-
-u16 g_Ranking_PickedUpItemCount;
-
-u8 g_Ranking_GameplayMinutes;
-
-u8 g_Ranking_GameplaySeconds;
-
-u8 g_Ranking_ClearGameCount;
-
-u8 g_Ranking_ClearGameEndings;
-
-u8 g_Ranking_CurrentEndingFlags;
-
-u8 g_Ranking_EndLocationId;
-
-u8 g_Ranking_PickedUpSpecialItemCount;
-
-s8 g_Ranking_Score;
-
-u8 g_Ranking_HasUsedGasolineOnChainsaw;
-
-u8 g_Ranking_HasUsedGasolineOnRockDrill;
-
-u16 g_Ranking_EnemyKillsShooting;
-
-u16 g_Ranking_EnemyKillsMelee;
-
+s16  g_Ranking_SavegameCount;
+u16  g_Ranking_GameplayHours;
+u16  g_Ranking_WalkDistanceKm;
+u16  g_Ranking_WalkDistanceM;
+u16  g_Ranking_RunDistanceKm;
+u16  g_Ranking_RunDistanceM;
+u16  g_Ranking_PickedUpItemCount;
+u8   g_Ranking_GameplayMinutes;
+u8   g_Ranking_GameplaySeconds;
+u8   g_Ranking_ClearGameCount;
+u8   g_Ranking_ClearGameEndings;
+u8   g_Ranking_CurrentEndingFlags;
+u8   g_Ranking_EndLocationId;
+u8   g_Ranking_PickedUpSpecialItemCount;
+s8   g_Ranking_Score;
+u8   g_Ranking_HasUsedGasolineOnChainsaw;
+u8   g_Ranking_HasUsedGasolineOnRockDrill;
+u16  g_Ranking_EnemyKillsShooting;
+u16  g_Ranking_EnemyKillsMelee;
 bool g_Ranking_HasFiredShot;
-
-u32 g_Ranking_CloseRangeShotPercent;
-
-u32 g_Ranking_MidRangeShotPercent;
-
-u32 g_Ranking_LongRangeShotPercent;
-
-u32 g_Ranking_NoAimingShotPercent;
-
-s8 g_Ranking_GameDifficulty;
-
-u8 g_Ranking_ContinueCount;
+u32  g_Ranking_CloseRangeShotPercent;
+u32  g_Ranking_MidRangeShotPercent;
+u32  g_Ranking_LongRangeShotPercent;
+u32  g_Ranking_NoAimingShotPercent;
+s8   g_Ranking_GameDifficulty;
+u8   g_Ranking_ContinueCount;
 
 s8 __pad_bss_800C48D2[14];
 
@@ -85,27 +60,27 @@ void Ranking_EvaluateScore() // 0x8008F94C
     u8  temp;
     s8* temp3;
 
-    g_Ranking_Score = 0;
-    g_Ranking_GameDifficulty = g_SavegamePtr->gameDifficulty;
-    g_Ranking_SavegameCount = g_SavegamePtr->savegameCount;
-    g_Ranking_SavegameCount = CLAMP(g_Ranking_SavegameCount, 0, 999);
-    g_Ranking_ContinueCount = g_SavegamePtr->continueCount;
-    g_Ranking_GameplayHours = g_SavegamePtr->add290Hours * 24 + FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 3600;
-    g_Ranking_WalkDistanceKm = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000;
-    g_Ranking_WalkDistanceM = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000) * 1000;
-    g_Ranking_RunDistanceKm = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000;
-    g_Ranking_RunDistanceM = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000) * 1000;
-    g_Ranking_PickedUpItemCount = g_SavegamePtr->pickedUpItemCount;
-    g_Ranking_GameplayMinutes = (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) % 60;
-    g_Ranking_GameplaySeconds = FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) * 60;
-    g_Ranking_ClearGameCount = g_SavegamePtr->clearGameCount;
-    g_Ranking_ClearGameEndings = g_SavegamePtr->clearGameEndings;
-    g_Ranking_CurrentEndingFlags = g_SavegamePtr->currentEndingFlags;
-    g_Ranking_HasUsedGasolineOnChainsaw = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnChainsaw);
-    g_Ranking_PickedUpSpecialItemCount = 0;
+    g_Ranking_Score                      = 0;
+    g_Ranking_GameDifficulty             = g_SavegamePtr->gameDifficulty;
+    g_Ranking_SavegameCount              = g_SavegamePtr->savegameCount;
+    g_Ranking_SavegameCount              = CLAMP(g_Ranking_SavegameCount, 0, 999);
+    g_Ranking_ContinueCount              = g_SavegamePtr->continueCount;
+    g_Ranking_GameplayHours              = g_SavegamePtr->add290Hours * 24 + FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 3600;
+    g_Ranking_WalkDistanceKm             = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000;
+    g_Ranking_WalkDistanceM              = FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->walkDistance, Q12_SHIFT) / 1000) * 1000;
+    g_Ranking_RunDistanceKm              = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000;
+    g_Ranking_RunDistanceM               = FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->runDistance, Q12_SHIFT) / 1000) * 1000;
+    g_Ranking_PickedUpItemCount          = g_SavegamePtr->pickedUpItemCount;
+    g_Ranking_GameplayMinutes            = (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) % 60;
+    g_Ranking_GameplaySeconds            = FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) - (FP_FROM(g_SavegamePtr->gameplayTimer, Q12_SHIFT) / 60) * 60;
+    g_Ranking_ClearGameCount             = g_SavegamePtr->clearGameCount;
+    g_Ranking_ClearGameEndings           = g_SavegamePtr->clearGameEndings;
+    g_Ranking_CurrentEndingFlags         = g_SavegamePtr->currentEndingFlags;
+    g_Ranking_HasUsedGasolineOnChainsaw  = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnChainsaw);
+    g_Ranking_PickedUpSpecialItemCount   = 0;
     g_Ranking_HasUsedGasolineOnRockDrill = Savegame_EventFlagGetAlt(EventFlag_M2S00_UsedGasolineOnRockDrill);
-    g_Ranking_EnemyKillsShooting = func_8009146C(1);
-    g_Ranking_EnemyKillsMelee = func_8009146C(0);
+    g_Ranking_EnemyKillsShooting         = func_8009146C(1);
+    g_Ranking_EnemyKillsMelee            = func_8009146C(0);
 
     firedShotCount = g_SavegamePtr->firedShotCount;
     g_Ranking_HasFiredShot = firedShotCount != 0;
@@ -113,13 +88,13 @@ void Ranking_EvaluateScore() // 0x8008F94C
     if (g_Ranking_HasFiredShot)
     {
         g_Ranking_CloseRangeShotPercent = g_SavegamePtr->closeRangeShotCount;
-        g_Ranking_MidRangeShotPercent = g_SavegamePtr->midRangeShotCount;
-        g_Ranking_LongRangeShotPercent = g_SavegamePtr->longRangeShotCount;
-        g_Ranking_MidRangeShotPercent = g_Ranking_MidRangeShotPercent + g_SavegamePtr->field_26C;
+        g_Ranking_MidRangeShotPercent   = g_SavegamePtr->midRangeShotCount;
+        g_Ranking_LongRangeShotPercent  = g_SavegamePtr->longRangeShotCount;
+        g_Ranking_MidRangeShotPercent   = g_Ranking_MidRangeShotPercent + g_SavegamePtr->field_26C;
         g_Ranking_CloseRangeShotPercent = g_Ranking_CloseRangeShotPercent * 100 / firedShotCount;
-        g_Ranking_MidRangeShotPercent = g_Ranking_MidRangeShotPercent * 100 / firedShotCount;
-        g_Ranking_LongRangeShotPercent = g_Ranking_LongRangeShotPercent * 100 / firedShotCount;
-        g_Ranking_NoAimingShotPercent = ((100 - g_Ranking_CloseRangeShotPercent) - g_Ranking_MidRangeShotPercent) - g_Ranking_LongRangeShotPercent;
+        g_Ranking_MidRangeShotPercent   = g_Ranking_MidRangeShotPercent * 100 / firedShotCount;
+        g_Ranking_LongRangeShotPercent  = g_Ranking_LongRangeShotPercent * 100 / firedShotCount;
+        g_Ranking_NoAimingShotPercent   = ((100 - g_Ranking_CloseRangeShotPercent) - g_Ranking_MidRangeShotPercent) - g_Ranking_LongRangeShotPercent;
 
         g_Credits_Digits.f0[0] = (((g_Ranking_CloseRangeShotPercent) / 100) % 10) + '0';
         g_Credits_Digits.f0[2] = (((g_Ranking_CloseRangeShotPercent) / 10) - (((g_Ranking_CloseRangeShotPercent) / 100) * 10)) + '0';
@@ -326,7 +301,8 @@ void Ranking_EvaluateScore() // 0x8008F94C
     if (g_Ranking_HasFiredShot)
     {
         s32 shootingScore;
-        shootingScore = ((g_Ranking_CloseRangeShotPercent + g_Ranking_MidRangeShotPercent * 2) + (g_Ranking_LongRangeShotPercent * 3)) - (g_Ranking_NoAimingShotPercent * 4);
+        shootingScore = ((g_Ranking_CloseRangeShotPercent + g_Ranking_MidRangeShotPercent * 2) +
+                         (g_Ranking_LongRangeShotPercent * 3)) - (g_Ranking_NoAimingShotPercent * 4);
         shootingScore = shootingScore / 10;
 
         if (shootingScore < 0)

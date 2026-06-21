@@ -986,7 +986,7 @@ void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx) // 0x800472BC
 void Sd_XaPreLoadAudio(void) // 0x80047308
 {
     static u16 xaAudioIdx;
-    static u16 pad_800C15D2;
+    static u16 __pad_800C15D2;
     static u32 xaFileOffset;
     u32*       xaFileOffsetsPtr;
     u32*       xaFileOffsetTargetPtr;
@@ -1219,7 +1219,8 @@ void Sd_TaskPoolAdd(u8 task) // 0x800478DC
 void Sd_TaskPoolUpdate(void) // 0x80047A70
 {
     static s32 i;
-    static s32 pad_800C15E4;
+    static s32 __pad_800C15E4;
+
     if (g_Sd_TaskPool[0] != 0)
     {
         for (i = 0; i < (ARRAY_SIZE(g_Sd_TaskPool) - 1); i++)
