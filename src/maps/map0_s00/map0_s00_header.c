@@ -20,23 +20,23 @@ s_MapPoint2d MAP_POINTS[] = {
 };
 
 void (*g_MapEventFuncs[])() = {
-    func_800D9610,
-    NULL,
-    MapEvent_CutsceneOpening,
-    MapEvent_CutsceneCherylFootsteps0,
-    MapEvent_CutsceneCherylFootsteps1,
-    MapEvent_CutsceneCherylFootsteps2,
-    MapEvent_CutsceneCherylSpotted,
-    MapEvent_CutsceneCherylRedirect0,
-    MapEvent_CutsceneCherylRedirect1,
-    MapEvent_CutsceneCherylRedirect2,
-    MapEvent_CutsceneCherylRedirect3,
-    MapEvent_CutsceneCherylIntoTheAlley,
-    func_800DB26C,
-    MapEven_CutsceneAlleyGetsDarker,
-    func_800DB870,
-    MapEvent_CutsceneAlleyNightmare,
-    func_800DBE00
+    /* 0  */ func_800D9610,
+    /* 1  */ NULL,
+    /* 2  */ MapEvent_CutsceneOpening,
+    /* 3  */ MapEvent_CutsceneCherylFootsteps0,
+    /* 4  */ MapEvent_CutsceneCherylFootsteps1,
+    /* 5  */ MapEvent_CutsceneCherylFootsteps2,
+    /* 6  */ MapEvent_CutsceneCherylSpotted,
+    /* 7  */ MapEvent_CutsceneCherylRedirect0,
+    /* 8  */ MapEvent_CutsceneCherylRedirect1,
+    /* 9  */ MapEvent_CutsceneCherylRedirect2,
+    /* 10 */ MapEvent_CutsceneCherylRedirect3,
+    /* 11 */ MapEvent_CutsceneCherylIntoTheAlley,
+    /* 12 */ func_800DB26C,
+    /* 13 */ MapEven_CutsceneAlleyGetsDarker,
+    /* 14 */ func_800DB870,
+    /* 15 */ MapEvent_CutsceneAlleyNightmare,
+    /* 16 */ func_800DBE00
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {

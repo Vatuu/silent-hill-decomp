@@ -21,20 +21,20 @@ s_MapPoint2d MAP_POINTS[] = {
 };
 
 void (*g_MapEventFuncs[])() = {
-    MapEvent_DoorJammed,
-    MapEvent_DoorLocked,
-    MapEvent_DoorUnlocked,
-    func_800D7214,
-    func_800D72B0,
-    func_800D72DC,
-    func_800D7308,
-    func_800D76F4,
-    func_800D7830,
-    func_800D7864,
-    func_800D7EEC,
-    func_800D857C,
-    func_800D8794,
-    func_800D87C0
+    /* 0  */ MapEvent_DoorJammed,
+    /* 1  */ MapEvent_DoorLocked,
+    /* 2  */ MapEvent_DoorUnlocked,
+    /* 3  */ MapEvent_CommonItemPickup,
+    /* 4  */ MapEvent_HandStatueInspect,
+    /* 5  */ MapEvent_ChemicalItemTake,
+    /* 6  */ func_800D7308,
+    /* 7  */ MapEvent_GoldMedallionItemPickup,
+    /* 8  */ func_800D7830,
+    /* 9  */ MapEvent_PianoPuzzleInteract,
+    /* 10 */ func_800D7EEC,
+    /* 11 */ func_800D857C,
+    /* 12 */ func_800D8794,
+    /* 13 */ func_800D87C0
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {

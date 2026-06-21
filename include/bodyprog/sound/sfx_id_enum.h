@@ -124,7 +124,7 @@ typedef enum _SfxId
     Sfx_GroanerFootstep = 1413,
     Sfx_Unk1414 = 1414, // Groaner.
 
-    Sfx_Unk1416 = 1416,
+    Sfx_Unk1416 = 1416, // Place item in receptable?
     Sfx_Unk1417 = 1417,
 
     Sfx_Unk1418 = 1418,

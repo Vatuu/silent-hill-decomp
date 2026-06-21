@@ -18,13 +18,13 @@ s_MapPoint2d MAP_POINTS[] = {
 };
 
 void (*g_MapEventFuncs[])() = {
-    NULL,
-    NULL,
-    MapEvent_CommonItemTake,
-    MapEvent_EmptyFunction,
-    MapEvent_GasolineTankItemTake,
-    MapEvent_KatanaItemTake,
-    MapEvent_ChannelingStoneItemTake
+    /* 0 */ NULL,
+    /* 1 */ NULL,
+    /* 2 */ MapEvent_CommonItemTake,
+    /* 3 */ MapEvent_EmptyFunction,
+    /* 4 */ MapEvent_GasolineTankItemTake,
+    /* 5 */ MapEvent_KatanaItemTake,
+    /* 6 */ MapEvent_ChannelingStoneItemTake
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {

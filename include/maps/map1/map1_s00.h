@@ -53,19 +53,19 @@ extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E11C0
 
 void MapEvent_CommonItemTake(void);
 
-void func_800D7AC4(void);
+void MapEvent_GoldenSunEmptyReceptableInspect(void);
 
-void func_800D7AF8(void);
+void MapEvent_GoldenSunFilledReceptacleInspect(void);
 
-void func_800D7B2C(void);
+void MapEvent_GoldenSunItemUse(void);
 
-void func_800D7E48(void);
+void MapEvent_SilverMoonEmptyReceptableInspect(void);
 
-void func_800D7E7C(void);
+void MapEvent_SilverMoonFilledReceptacleInspect(void);
 
-void func_800D7EB0(void);
+void MapEvent_SilverMoonItemUse(void);
 
-void func_800D81CC(void);
+void MapEvent_ClockTowerInspect(void);
 
 void func_800D8354(void);
 

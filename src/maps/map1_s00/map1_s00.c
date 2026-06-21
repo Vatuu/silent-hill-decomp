@@ -16,6 +16,8 @@
 
 #include "../src/maps/map_util.c" // 0x800D7748
 
+#define playerChara g_SysWork.playerWork.player
+
 void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {
     u16 bgmFlags;
@@ -119,19 +121,19 @@ void MapEvent_CommonItemTake(void) // 0x800D7A28
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800D7AC4(void) // 0x800D7AC4
+void MapEvent_GoldenSunEmptyReceptableInspect(void) // 0x800D7AC4
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD1_TIM, Q12(2.5f), Q12(2.0f), 19); // "A Golden Sun"
 }
 
-void func_800D7AF8(void) // 0x800D7AF8
+void MapEvent_GoldenSunFilledReceptacleInspect(void) // 0x800D7AF8
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19);
+    Event_DisplayMapMsgWithBg(FILE_TIM_GOLD2_TIM, Q12(2.5f), Q12(2.0f), 19); // "A Golden Sun"
 }
 
-void func_800D7B2C(void)
+void MapEvent_GoldenSunItemUse(void)
 {
     g_DeltaTime = Q12(0.0f);
 
@@ -139,6 +141,7 @@ void func_800D7B2C(void)
     {
         case 0:
             Player_ControlFreeze();
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
@@ -195,7 +198,7 @@ void func_800D7B2C(void)
 
         case 11:
             Event_BgTextureCmd(BgTextureCmd_DrawSecondary, 0, false);
-            Event_DisplayMapMsg(false, 19, 0, 0, 0, false); // "A golden sun."
+            Event_DisplayMapMsg(false, 19, 0, 0, 0, false); // "A Golden Sun"
             break;
 
         case 12:
@@ -210,25 +213,26 @@ void func_800D7B2C(void)
             Savegame_EventFlagSet(EventFlag_71);
             Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
 
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_800D7E48(void) // 0x800D7E48
+void MapEvent_SilverMoonEmptyReceptableInspect(void) // 0x800D7E48
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER1_TIM, Q12(2.5f), Q12(2.0f), 20); // "A Silver Moon"
 }
 
-void func_800D7E7C(void) // 0x800D7E7C
+void MapEvent_SilverMoonFilledReceptacleInspect(void) // 0x800D7E7C
 {
     g_DeltaTime = Q12(0.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20);
+    Event_DisplayMapMsgWithBg(FILE_TIM_SILVER2_TIM, Q12(2.5f), Q12(2.0f), 20); // "A Silver Moon"
 }
 
-void func_800D7EB0(void)
+void MapEvent_SilverMoonItemUse(void)
 {
     g_DeltaTime = Q12(0.0f);
 
@@ -236,6 +240,7 @@ void func_800D7EB0(void)
     {
         case 0:
             Player_ControlFreeze();
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
@@ -268,7 +273,7 @@ void func_800D7EB0(void)
             break;
 
         case 7:
-            SD_Call(0x588u);
+            SD_Call(Sfx_Unk1416);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -307,13 +312,14 @@ void func_800D7EB0(void)
             Savegame_EventFlagSet(EventFlag_72);
             Savegame_EventFlagSet(EventFlag_MapMark_FogSchool1F_ClockTowerCircle);
 
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
 }
 
-void func_800D81CC(void) // 0x800D81CC
+void MapEvent_ClockTowerInspect(void) // 0x800D81CC
 {
     g_DeltaTime = Q12(0.0f);
 
@@ -334,7 +340,7 @@ void func_800D81CC(void) // 0x800D81CC
         case 3:
             if (Savegame_EventFlagGet(EventFlag_72))
             {
-                 Event_BgTextureFadeIn(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
+                Event_BgTextureFadeIn(FILE_TIM_CLOCK5_TIM, Q12(3.0f), Q12(2.0f));
             }
             else
             {
@@ -354,7 +360,7 @@ void func_800D81CC(void) // 0x800D81CC
 
             if (Savegame_EventFlagGet(EventFlag_72))
             {
-                 Event_DisplayMapMsg(false, 18, false, false, 0, false); // "Hands are stopped at 5:00."
+                Event_DisplayMapMsg(false, 18, false, false, 0, false); // "Hands are stopped at 5:00."
             }
             else
             {
@@ -374,6 +380,7 @@ void func_800D81CC(void) // 0x800D81CC
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -382,7 +389,11 @@ void func_800D81CC(void) // 0x800D81CC
 
 void func_800D8354(void) // 0x800D8354
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
+    VECTOR3 sfxPos = {
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionX,
+        Q12(-1.2f),
+        MAP_POINTS[g_MapEventData->mapPointIdx].positionZ
+    };
 
     g_DeltaTime = Q12(0.0f);
 
@@ -390,6 +401,7 @@ void func_800D8354(void) // 0x800D8354
     {
         case 0:
             Player_ControlFreeze();
+
             Sfx_WithFlagsPlay(Sfx_DoorLocked, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
@@ -408,7 +420,8 @@ void func_800D8354(void) // 0x800D8354
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter | g_GameWorkPtr->config.controllerConfig.cancel))
+            if (g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
+                                                  g_GameWorkPtr->config.controllerConfig.cancel))
             {
                 SysWork_StateStepIncrement(0);
                 break;
@@ -420,6 +433,7 @@ void func_800D8354(void) // 0x800D8354
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -462,51 +476,64 @@ void func_800D85D8(void) // 0x800D85D8
             break;
 
         case 2:
-            Event_CameraPositionSet(NULL, Q12(-56.41f), Q12(-5.67f), Q12(-55.39f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-56.4f), Q12(-1.8699f), Q12(-54.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-56.41f), Q12(-5.67f), Q12(-55.39f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-56.4f), Q12(-1.8699f), Q12(-54.16f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
-            g_SysWork.playerWork.player.position.vy = Q12(-2.3f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+            // Warp player.
+            playerChara.position.vy = Q12(-2.3f);
+            playerChara.rotation.vy = Q12_ANGLE(0.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 88, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
             Event_WaitTimer(Q12(3.5f), false);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
 
         default:
             if (Savegame_EventFlagGet(EventFlag_78))
             {
-                g_SysWork.playerWork.player.position.vx = Q12(-60.0f);
-                g_SysWork.playerWork.player.position.vy = Q12(0.0f);
-                g_SysWork.playerWork.player.position.vz = Q12(-63.7f);
-                g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+                // Warp player.
+                playerChara.position.vx = Q12(-60.0f);
+                playerChara.position.vy = Q12(0.0f);
+                playerChara.position.vz = Q12(-63.7f);
+                playerChara.rotation.vy = Q12_ANGLE(0.0f);
 
                 Savegame_EventFlagClear(EventFlag_184);
                 Savegame_EventFlagClear(EventFlag_78);
             }
             else if (Savegame_EventFlagGet(EventFlag_81))
             {
-                g_SysWork.playerWork.player.position.vx = Q12(-60.0f);
-                g_SysWork.playerWork.player.position.vy = Q12(0.6f);
-                g_SysWork.playerWork.player.position.vz = Q12(-56.3f);
-                g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
+                // Warp player.
+                playerChara.position.vx = Q12(-60.0f);
+                playerChara.position.vy = Q12(0.6f);
+                playerChara.position.vz = Q12(-56.3f);
+                playerChara.rotation.vy = Q12_ANGLE(180.0f);
 
                 Savegame_EventFlagClear(EventFlag_185);
                 Savegame_EventFlagClear(EventFlag_81);
             }
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
+
+            // Restore player control.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -514,6 +541,7 @@ void func_800D85D8(void) // 0x800D85D8
 
 void func_800D8948(void) // 0x800D8948
 {
+    // Skip.
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 6)
     {
@@ -525,6 +553,7 @@ void func_800D8948(void) // 0x800D8948
     {
         case 0:
             Player_ControlFreeze();
+
             Savegame_EventFlagClear(EventFlag_82);
             Savegame_EventFlagClear(EventFlag_79);
             Savegame_EventFlagClear(EventFlag_80);
@@ -541,16 +570,24 @@ void func_800D8948(void) // 0x800D8948
             break;
 
         case 3:
-            Event_CameraPositionSet(NULL, Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-55.43f), Q12(-5.5f), Q12(-54.56f),Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),  true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-56.74f), Q12(-1.7698f), Q12(-55.13f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-55.43f), Q12(-5.5f), Q12(-54.56f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
 
-            g_SysWork.playerWork.player.position.vx = Q12(-56.34f);
-            g_SysWork.playerWork.player.position.vy = Q12(-2.276f);
-            g_SysWork.playerWork.player.position.vz = Q12(-55.1f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+            // Warp player.
+            playerChara.position.vx = Q12(-56.34f);
+            playerChara.position.vy = Q12(-2.276f);
+            playerChara.position.vz = Q12(-55.1f);
+            playerChara.rotation.vy = Q12_ANGLE(0.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 87, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 87, false);
 
             if (g_MapEventData->mapPointIdx == 16)
             {
@@ -566,19 +603,25 @@ void func_800D8948(void) // 0x800D8948
         case 4:
             Event_WaitTimer(Q12(3.5f), false);
 
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            // Warp player.
+            playerChara.rotation.vy = Q12_ANGLE(0.0f);
+            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             break;
 
         case 5:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            // Warp player.
+            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
+
         default:
+            // Restore player control.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            g_SysWork.playerWork.player.position.vy = Q12(0.0f);
+            // Warp player.
+            playerChara.position.vy = Q12(0.0f);
             break;
         }
 }
@@ -642,6 +685,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -687,6 +731,7 @@ void MapEvent_Boiler1(void)
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -706,10 +751,11 @@ void MapEvent_Boiler2(void) // 0x800D9148
             break;
 
         case 2:
-            Event_DisplayMapMsg(false, 31, 0, 0, 0, false); // The boiler is working.
+            Event_DisplayMapMsg(false, 31, 0, 0, 0, false); // "The boiler is working."
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -844,7 +890,7 @@ void Map_WorldObjectsUpdate(void)
         if (Savegame_EventFlagGet(EventFlag_72))
         {
             WorldObjects_Add(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &SVECTOR3_Zero);
-            func_80064F04(&Q12_VECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385);
+            func_80064F04(&Q12_VECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385); // TODO: Demagic angle.
         }
         else
         {

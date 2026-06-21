@@ -159,7 +159,7 @@ void MapEvent_CommonItemTake(void) // 0x800DA950
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void MapEvent_RoofDrainPuzzleInspect(void) // 0x800DAA28
+void MapEvent_RoofDrainPuzzleInteract0(void) // 0x800DAA28
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -216,7 +216,7 @@ void MapEvent_RoofDrainPuzzleInspect(void) // 0x800DAA28
     }
 }
 
-void MapEvent_RoofDrainPuzzleSolve(void) // 0x800DABC4
+void MapEvent_RoofDrainPuzzleInteract1(void) // 0x800DABC4
 {
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -912,12 +912,12 @@ void MapEvent_SplitHeadFairyTaleBookRead(void) // 0x800DC0F8
     }
 }
 
-void MapEvent_OpenedLockerInspect(void) // 0x800DC2E4
+void MapEvent_OpenedCatLockerInspect(void) // 0x800DC2E4
 {
     Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
 }
 
-void MapEvent_UnopenedLockerInspect(void) // 0x800DC310
+void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
 {
     typedef enum _EventState
     {

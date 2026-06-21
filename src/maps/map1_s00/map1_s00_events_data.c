@@ -174,7 +174,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 13,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 10, // `func_800D81CC`
+        .eventParam        = 10, // `MapEvent_ClockTowerInspect`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [19]
@@ -288,7 +288,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 14,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800D7AF8`
+        .eventParam        = 5, // `MapEvent_GoldenSunFilledReceptacleInspect`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [32]
@@ -298,7 +298,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 14,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 4, // `func_800D7AC4`
+        .eventParam        = 4, // `MapEvent_GoldenSunEmptyReceptableInspect`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [33]
@@ -309,7 +309,7 @@ s_EventData MAP_EVENTS[101] = {
         .mapPointIdx       = 14,
         .requiredItemId    = InvItemId_GoldMedallion,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 6, // `func_800D7B2C`
+        .eventParam        = 6, // `MapEvent_GoldenSunItemUse`
     },
     // [34]
     {
@@ -319,7 +319,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 15,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 8, // `func_800D7E7C`
+        .eventParam        = 8, // `MapEvent_SilverMoonFilledReceptacleInspect`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [35]
@@ -329,7 +329,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 15,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800D7E48`
+        .eventParam        = 7, // `MapEvent_SilverMoonEmptyReceptableInspect`
         .transitionFlags   = AreaTransitionFlag_UnfreezeWorld,
     },
     // [36]
@@ -340,7 +340,7 @@ s_EventData MAP_EVENTS[101] = {
         .mapPointIdx       = 15,
         .requiredItemId    = InvItemId_SilverMedallion,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 9, // `func_800D7EB0`
+        .eventParam        = 9, // `MapEvent_SilverMoonItemUse`
     },
     // [37]
     {

@@ -978,10 +978,10 @@ s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
  */
 s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId);
 
-// Make a Harry bone invisible? TODO: What it bone 31? Light?
+// Make a Harry bone invisible? TODO: Is bone 32 the light?
 void func_8003D01C(void);
 
-// Make Harry weapon bone visible? TODO: What it bone 31? Light?
+// Make a Harry bone visible? TODO: Is bone 32 the light?
 void func_8003D03C(void);
 
 /** Loads the model of an item held by the player? */
@@ -1846,7 +1846,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx);
 /** Spawns blood effect? */
 void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
-void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
+void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 arg2);
 
 bool func_80064FC0(POLY_FT4** polys, s32 idx);
 

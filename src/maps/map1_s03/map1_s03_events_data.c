@@ -125,7 +125,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 17,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [14]
     {
@@ -135,7 +135,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 18,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [15]
     {
@@ -144,7 +144,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 17,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [16]
     {
@@ -153,7 +153,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 18,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [17]
     {
@@ -161,7 +161,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 17,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [18]
     {
@@ -169,7 +169,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 18,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [19]
     {
@@ -178,7 +178,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 19,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [20]
     {
@@ -187,7 +187,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 20,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam        = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [21]
     {
@@ -215,7 +215,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 19,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [24]
     {
@@ -223,7 +223,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 20,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleSolve`
+        .eventParam     = 7, // `MapEvent_RoofDrainPuzzleInteract1`
     },
     // [25]
     {
@@ -908,7 +908,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 76,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 11, // `MapEvent_OpenedLockerInspect`
+        .eventParam        = 11, // `MapEvent_OpenedCatLockerInspect`
     },
     // [93]
     {
@@ -917,7 +917,7 @@ s_EventData MAP_EVENTS[103] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 76,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 12, // `MapEvent_UnopenedLockerInspect`
+        .eventParam        = 12, // `MapEvent_UnopenedCatLockerInspect`
     },
     // [94]
     {

@@ -21,18 +21,18 @@ s_MapPoint2d MAP_POINTS[] = {
 };
 
 void (*g_MapEventFuncs[])() = {
-    NULL,
-    NULL,
-    MapEvent_CommonItemTake,
-    MapEvent_CafeCutscene,
-    MapEvent_ToBeContinued, // @unused Demo event.
-    MapEvent_AirScreamerIntroCutscene,
-    MapEvent_KitchenKnifeItemTake,
-    MapEvent_FlashlightItemTake,
-    MapEvent_MapItemTake,
-    MapEvent_PocketRadioItemTake,
-    MapEvent_EmptyFunction,
-    MapEvent_AirScreamerDeath
+    /* 0  */ NULL,
+    /* 1  */ NULL,
+    /* 2  */ MapEvent_CommonItemTake,
+    /* 3  */ MapEvent_CafeCutscene,
+    /* 4  */ MapEvent_ToBeContinued, // @unused Demo event.
+    /* 5  */ MapEvent_AirScreamerIntroCutscene,
+    /* 6  */ MapEvent_KitchenKnifeItemTake,
+    /* 7  */ MapEvent_FlashlightItemTake,
+    /* 8  */ MapEvent_MapItemTake,
+    /* 9  */ MapEvent_PocketRadioItemTake,
+    /* 10 */ MapEvent_EmptyFunction,
+    /* 11 */ MapEvent_AirScreamerDeath
 };
 
 const s_MapOverlayHdr g_MapOverlayHdr = {

@@ -17,6 +17,8 @@
 
 #include "../src/maps/map_util.c" // 0x800D6F34
 
+#define playerChara g_SysWork.playerWork.player
+
 void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
 {
     u16 bgmFlags;
@@ -99,7 +101,7 @@ const char* MAP_MESSAGES[] = {
     /* 47 */ "\tThere's_some_blood ~N\n\ton_some_of_the_keys..... ~E "
 };
 
-void func_800D7214(void) // 0x800D7214
+void MapEvent_CommonItemPickup(void) // 0x800D7214
 {
     u32 pickupType;
     s32 eventFlagIdx;
@@ -138,14 +140,14 @@ void func_800D7214(void) // 0x800D7214
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800D72B0(void) // 0x800D72B0
+void MapEvent_HandStatueInspect(void) // 0x800D72B0
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15);
+    Event_DisplayMapMsgWithBg(FILE_TIM_HAND_TIM, Q12(2.0f), Q12(1.5f), 15); // "Statue of an old man's hand."
 }
 
-void func_800D72DC(void) // 0x800D72DC
+void MapEvent_ChemicalItemTake(void) // 0x800D72DC
 {
-    Event_ItemTake(InvItemId_Chemical, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S01_PickupChemical, 18);
+    Event_ItemTake(InvItemId_Chemical, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M1S01_PickupChemical, 18); // "There is a Chemical. Take it?"
 }
 
 void func_800D7308(void)
@@ -182,16 +184,25 @@ void func_800D7308(void)
             break;
 
         case 3:
-            g_SysWork.playerWork.player.position.vx = Q12(-59.2f);
-            g_SysWork.playerWork.player.position.vz = Q12(98.9f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+            // Warp player.
+            playerChara.position.vx = Q12(-59.2f);
+            playerChara.position.vz = Q12(98.9f);
+            playerChara.rotation.vy = Q12_ANGLE(0.0f);
 
-            Event_CameraPositionSet(NULL, Q12(-59.61f), Q12(-0.41f), Q12(97.48f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-58.6f), Q12(-2.29f), Q12(100.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL, 
+                                    Q12(-59.61f), Q12(-0.41f), Q12(97.48f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-58.6f), Q12(-2.29f), Q12(100.87f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
+
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 83, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 83, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -230,7 +241,8 @@ void func_800D7308(void)
         case 9:
             for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
             {
-                if (sharedData_800DFB7C_0_s00[i].field_A == 13 || sharedData_800DFB7C_0_s00[i].field_A == 14)
+                if (sharedData_800DFB7C_0_s00[i].field_A == 13 ||
+                    sharedData_800DFB7C_0_s00[i].field_A == 14)
                 {
                     sharedData_800DFB7C_0_s00[i].field_A = 0;
                 }
@@ -239,8 +251,10 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
@@ -254,10 +268,13 @@ void func_800D7308(void)
     }
 }
 
-void func_800D76F4(void) // 0x800D76F4
+void MapEvent_GoldMedallionItemPickup(void) // 0x800D76F4
 {
-    #define PICK_UP_MEDALLION_STATE      4
-    #define DONT_PICK_UP_MEDALLION_STATE 5
+    typedef enum _EventState
+    {
+        EventState_PickUpMedallion     = 4,
+        EventState_DontPickUpMedallion = 5
+    } e_EventState;
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -276,23 +293,25 @@ void func_800D76F4(void) // 0x800D76F4
         case 3:
             if (Gfx_PickupItemAnimate(InvItemId_GoldMedallion))
             {
-                Event_DisplayMapMsg(true, 17,
-                    PICK_UP_MEDALLION_STATE, DONT_PICK_UP_MEDALLION_STATE, 0, false); // Gold medalion. Take it ?
+                Event_DisplayMapMsg(true, 17, EventState_PickUpMedallion, EventState_DontPickUpMedallion, 0, false); // "There is a Gold medalion. Take it?"
             }
 
             Savegame_EventFlagSet(EventFlag_M1S01_PickupGoldMedallion);
             break;
 
-        case PICK_UP_MEDALLION_STATE:
+        case EventState_PickUpMedallion:
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_GoldMedallion, 1, false);
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
-        case DONT_PICK_UP_MEDALLION_STATE:
+        case EventState_DontPickUpMedallion:
             Savegame_EventFlagClear(EventFlag_M1S01_PickupGoldMedallion);
+
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -303,28 +322,31 @@ void func_800D7830(void) // 0x800D7830
     Event_DisplayMapMsgWithDimmedBg(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
-void func_800D7864(void) // 0x800D7864
+void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
 {
-    // TODO: Mode these to an enum and fill out the rest.
-    #define CHECK_PIANO_STATE        5
-    #define MEDALLION_CUTSCENE_START 10
-    #define SKIP_CUTSCENE_STATE      17
-    #define MEDALLION_CUTSCENE_END   19
-    #define DONT_CHECK_PIANO_STATE   21
+    typedef enum _EventState
+    {
+        EventState_CheckPiano             = 5,
+        EventState_MedallionCutsceneStart = 10,
+        EventState_Skip                   = 17,
+        EventState_MedallionCutsceneEnd   = 19,
+        EventState_DontCheckPiano         = 21
+    } e_EventState;
 
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
 
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
-        g_SysWork.sysStateSteps[0] >= MEDALLION_CUTSCENE_START && g_SysWork.sysStateSteps[0] < MEDALLION_CUTSCENE_END)
+        g_SysWork.sysStateSteps[0] >= EventState_MedallionCutsceneStart && g_SysWork.sysStateSteps[0] < EventState_MedallionCutsceneEnd)
     {
         ScreenFade_ResetTimestep();
-        SysWork_StateStepSet(0, SKIP_CUTSCENE_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
 
-        g_WorldObject0.rotation.vx = Q12_ANGLE(-90.0f);
-        g_WorldObject0.position.vx = Q12(-98.8f);
-        g_WorldObject0.position.vy = Q12(0.0f);
-        g_WorldObject0.position.vz = Q12(22.8f);
-        g_WorldObject0.rotation.vy = Q12_ANGLE(28.5f);
+        // Warp Silver Medallion pickup.
+        g_WorldObject_SilverH.rotation.vx = Q12_ANGLE(-90.0f);
+        g_WorldObject_SilverH.position.vx = Q12(-98.8f);
+        g_WorldObject_SilverH.position.vy = Q12(0.0f);
+        g_WorldObject_SilverH.position.vz = Q12(22.8f);
+        g_WorldObject_SilverH.rotation.vy = Q12_ANGLE(28.5f);
     }
 
     switch (g_SysWork.sysStateSteps[0])
@@ -348,10 +370,10 @@ void func_800D7864(void) // 0x800D7864
 
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(true, 29, CHECK_PIANO_STATE, DONT_CHECK_PIANO_STATE, 0, false); // "Check the piano?"
+            Event_DisplayMapMsg(true, 29, EventState_CheckPiano, EventState_DontCheckPiano, 0, false); // "Check the piano?"
             break;
 
-        case CHECK_PIANO_STATE:
+        case EventState_CheckPiano:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
@@ -362,48 +384,49 @@ void func_800D7864(void) // 0x800D7864
 
         case 7:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            MapEvent_PianoPuzzle(false);
+            PianoPuzzle_Control(false);
             SysWork_StateStepIncrement(0);
 
         case 8:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            MapEvent_PianoPuzzle(true);
+            PianoPuzzle_Control(true);
             break;
 
         case 9:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_SysStateBranchOnFlag(EventFlag_M1S01_PianoPuzzleSolved, MEDALLION_CUTSCENE_START, MEDALLION_CUTSCENE_END, false);
+            Event_SysStateBranchOnFlag(EventFlag_M1S01_PianoPuzzleSolved, EventState_MedallionCutsceneStart, EventState_MedallionCutsceneEnd, false);
             break;
 
-        case MEDALLION_CUTSCENE_START:
+        case EventState_MedallionCutsceneStart:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 11:
-            g_SysWork.playerWork.player.position.vx = Q12(-100.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(20.1f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-22.5f);
+            // Warp player.
+            playerChara.position.vx = Q12(-100.0f);
+            playerChara.position.vz = Q12(20.1f);
+            playerChara.rotation.vy = Q12_ANGLE(-22.5f);
 
             Event_WaitTimer(Q12(1.5f), false);
-            Event_CameraPositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), 0, 0, 0, 0, true);
-            Event_CameraLookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(-97.3f), Q12(-2.3699f), Q12(21.97f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Event_CameraLookAtSet(NULL, Q12(-100.37f), Q12(-2.2f), Q12(24.53f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 12:
             Event_WaitTimer(Q12(0.5f), false);
 
-            g_WorldObject0.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.0555f));
-            g_WorldObject0.position.vy = FP_FROM((Math_Cos(g_WorldObject0.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
-            g_WorldObject0.position.vz = FP_FROM((Math_Sin(g_WorldObject0.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
+            g_WorldObject_SilverH.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.0555f));
+            g_WorldObject_SilverH.position.vy  = FP_FROM((Math_Cos(g_WorldObject_SilverH.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) - Q12(2.5601f);
+            g_WorldObject_SilverH.position.vz  = FP_FROM((Math_Sin(g_WorldObject_SilverH.rotation.vx) * Q12_ANGLE(-43.2f)), Q12_SHIFT) + Q12(23.73f);
             break;
 
         case 13:
-            D_800DD4FC                    += g_GravitySpeed;
-            g_WorldObject0.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.75f));
-            g_WorldObject0.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800DD4FC);
-            g_WorldObject0.position.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.5f));
+            D_800DD4FC                 += g_GravitySpeed;
+            g_WorldObject_SilverH.rotation.vx += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.75f));
+            g_WorldObject_SilverH.position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800DD4FC);
+            g_WorldObject_SilverH.position.vz += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.5f));
 
-            if (g_WorldObject0.position.vy >= Q12(0.0f))
+            if (g_WorldObject_SilverH.position.vy >= Q12(0.0f))
             {
                 SD_Call(Sfx_Unk1417);
                 SysWork_StateStepIncrement(0);
@@ -417,17 +440,25 @@ void func_800D7864(void) // 0x800D7864
         case 15:
             Event_WaitTimer(Q12(2.0f), false);
 
-            g_WorldObject0.position.vx = Q12(-98.8f);
-            g_WorldObject0.rotation.vx = Q12_ANGLE(-90.0f);
-            g_WorldObject0.position.vy = Q12(0.0f);
-            g_WorldObject0.position.vz = Q12(22.8f);
-            g_WorldObject0.rotation.vy = Q12_ANGLE(28.5f);
+            // Warp Silver Medallion pickup.
+            g_WorldObject_SilverH.position.vx = Q12(-98.8f);
+            g_WorldObject_SilverH.rotation.vx = Q12_ANGLE(-90.0f);
+            g_WorldObject_SilverH.position.vy = Q12(0.0f);
+            g_WorldObject_SilverH.position.vz = Q12(22.8f);
+            g_WorldObject_SilverH.rotation.vy = Q12_ANGLE(28.5f);
 
-            Event_CameraPositionSet(NULL, Q12(-101.39f), Q12(-2.6099f), Q12(22.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-98.4f), Q12(-0.14f), Q12(23.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-101.39f), Q12(-2.6099f), Q12(22.13f),
+                                    Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-98.4f), Q12(-0.14f), Q12(23.1f),
+                                  Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
+                                  true);
             break;
 
-        case SKIP_CUTSCENE_STATE:
+        case EventState_Skip:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 2, Q12(0.0f), false);
             break;
 
@@ -436,8 +467,8 @@ void func_800D7864(void) // 0x800D7864
             SysWork_StateStepReset();
             break;
 
-        case MEDALLION_CUTSCENE_END:
-        case DONT_CHECK_PIANO_STATE:
+        case EventState_MedallionCutsceneEnd:
+        case EventState_DontCheckPiano:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
         case 16:
@@ -446,8 +477,11 @@ void func_800D7864(void) // 0x800D7864
 
         default:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(2.5f), false);
+
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -458,7 +492,7 @@ void func_800D7EEC(void) // 0x800D7EEC
     Event_DisplayMapMsgWithBg(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
 }
 
-void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
+void PianoPuzzle_Control(bool playNote) // 0x800D7F18
 {
     s16    cursorX;
     s16    cursorY;
@@ -693,7 +727,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 59, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -701,7 +735,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &playerChara, 0, false);
             break;
 
         case 5:
@@ -723,10 +757,11 @@ void func_800D857C(void) // 0x800D857C
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&playerChara, 60);
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -738,7 +773,7 @@ void func_800D8794(void) // 0x800D8794
     Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
-extern q19_12 g_Cutscene_Timer; // Cutscene timer.
+extern q19_12 g_Cutscene_Timer;
 extern u8 D_800DD598;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
@@ -751,7 +786,7 @@ void func_800D87C0(void) // 0x800D87C0
     } e_EventState;
 
     s32                tmp0;
-    s_WorldObjectPose* obj;
+    s_WorldObjectPose* objTobira00;
 
     // Skip.
     if ((g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.skip) &&
@@ -801,7 +836,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 85, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 85, false);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
@@ -829,7 +864,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             Savegame_EventFlagSet(EventFlag_76);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 122, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 122, false);
             func_800892DC(18, 96);
             Sfx_WithFlagsPlay(Sfx_Unk1437, &Q12_VECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
             Sfx_WithFlagsPlay(Sfx_Unk1436, &Q12_VECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);
@@ -909,17 +944,20 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         default:
-            g_Cutscene_Timer = NO_VALUE;
-            g_SysWork.playerWork.player.position.vx += FP_FROM((Math_Sin(g_SysWork.playerWork.player.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
-            g_SysWork.playerWork.player.position.vz += FP_FROM((Math_Cos(g_SysWork.playerWork.player.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            g_Cutscene_Timer                         = NO_VALUE;
+            playerChara.position.vx += FP_FROM((Math_Sin(playerChara.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            playerChara.position.vz += FP_FROM((Math_Cos(playerChara.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_77);
+
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Chara_BonesInit(0);
 
             Savegame_EventFlagSet(EventFlag_76);
@@ -935,7 +973,7 @@ void func_800D87C0(void) // 0x800D87C0
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
 
         if (g_Cutscene_Timer >= Q12(16.0f))
         {
@@ -949,43 +987,43 @@ void func_800D87C0(void) // 0x800D87C0
 
     if (Savegame_EventFlagGet(EventFlag_76) && !Savegame_EventFlagGet(EventFlag_77))
     {
-        obj = &g_WorldObject1;
+        objTobira00 = &g_WorldObject_Tobira00;
         tmp0 = MIN((g_Cutscene_Timer - Q12(16.0f)), Q12(2.0f));
 
-        obj->rotation.vy = Q12_MULT_PRECISE(tmp0, Q12_ANGLE(-4.1f)) - Q12_ANGLE(42.05f);
+        objTobira00->rotation.vy = Q12_MULT_PRECISE(tmp0, Q12_ANGLE(-4.1f)) - Q12_ANGLE(42.05f);
     }
 }
 
 void Map_WorldObjectsInit(void) // 0x800D91EC
 {
-    WorldObject_Init(&g_WorldObject1, "TOBIRA00", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject2, "TOBIRA01", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
-    WorldObject_PosePositionInit(&g_WorldObject3, "HAKO_HID", -58.81f, -1.4f, 18.0198f);
+    WorldObject_Init(&g_WorldObject_Tobira00, "TOBIRA00", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject_Tobira01, "TOBIRA01", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
+    WorldObject_PosePositionInit(&g_WorldObject_HakoHid, "HAKO_HID", -58.81f, -1.4f, 18.0198f);
 
-    WorldObject_ModelNameSet(&g_WorldObject4, "HAND_HID");
-    WorldObject_ModelNameSet(&g_WorldObject5, "HAND2_HI");
-    WorldObject_ModelNameSet(&g_WorldObject6, "PANELG_H");
+    WorldObject_ModelNameSet(&g_WorldObject_HandHid, "HAND_HID");
+    WorldObject_ModelNameSet(&g_WorldObject_Hand2Hi, "HAND2_HI");
+    WorldObject_ModelNameSet(&g_WorldObject_PanelgH, "PANELG_H");
 
     Math_Vector3Set(&D_800DF080, Q12(-59.2f), Q12(-1.0f), Q12(99.5f));
 
-    WorldObject_PosePositionInit(&g_WorldObject7, "ACID_HID", -101.2f, -1.3f, 100.3f);
-    WorldObject_PosePositionInit(&g_WorldObject8, "FUTA1_HI", -98.2798f, -0.58f, 19.93f);
-    WorldObject_PosePositionInit(&g_WorldObject9, "FUTA2_HI", -99.44f, -0.85f, 19.93f);
+    WorldObject_PosePositionInit(&g_WorldObject_AcidHid, "ACID_HID", -101.2f, -1.3f, 100.3f);
+    WorldObject_PosePositionInit(&g_WorldObject_Futa1Hi, "FUTA1_HI", -98.2798f, -0.58f, 19.93f);
+    WorldObject_PosePositionInit(&g_WorldObject_Futa2Hi, "FUTA2_HI", -99.44f, -0.85f, 19.93f);
 
     if (!Savegame_EventFlagGet(EventFlag_M1S01_PianoPuzzleSolved))
     {
-        WorldObject_Init(&g_WorldObject0, "SILVER_H", -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
+        WorldObject_Init(&g_WorldObject_SilverH, "SILVER_H", -99.0f, -2.68f, 23.73f, 0.0f, 0.0f, 0.0f);
     }
     else
     {
-        WorldObject_Init(&g_WorldObject0, "SILVER_H", -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
+        WorldObject_Init(&g_WorldObject_SilverH, "SILVER_H", -98.8f, 0.0f, 22.8f, -90.0f, 28.5f, 0);
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_None);
     }
-    else if (g_SavegamePtr->gameDifficulty == 1)
+    else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
         Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
         Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
@@ -1009,13 +1047,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
         {
             if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
             {
-                WorldObjects_Add(&g_WorldObject6, &D_800DF080, &SVECTOR3_Zero);
+                WorldObjects_Add(&g_WorldObject_PanelgH, &D_800DF080, &SVECTOR3_Zero);
             }
-            WorldObjects_Add(&g_WorldObject5, &D_800DF080, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_Hand2Hi, &D_800DF080, &SVECTOR3_Zero);
         }
         else
         {
-            WorldObjects_Add(&g_WorldObject4, &D_800DF080, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_HandHid, &D_800DF080, &SVECTOR3_Zero);
         }
     }
 
@@ -1023,7 +1061,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            WorldObjects_Add(&g_WorldObject7.object, &g_WorldObject7.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_AcidHid.object, &g_WorldObject_AcidHid.position, &SVECTOR3_Zero);
         }
     }
 
@@ -1036,16 +1074,16 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            WorldObjects_Add(&g_WorldObject8.object, &g_WorldObject8.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_Futa1Hi.object, &g_WorldObject_Futa1Hi.position, &SVECTOR3_Zero);
         }
         else
         {
-            WorldObjects_Add(&g_WorldObject9.object, &g_WorldObject9.position, &SVECTOR3_Zero);
+            WorldObjects_Add(&g_WorldObject_Futa2Hi.object, &g_WorldObject_Futa2Hi.position, &SVECTOR3_Zero);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
         {
-            WorldObjects_Add(&g_WorldObject0.object, &g_WorldObject0.position, &g_WorldObject0.rotation);
+            WorldObjects_Add(&g_WorldObject_SilverH.object, &g_WorldObject_SilverH.position, &g_WorldObject_SilverH.rotation);
         }
     }
 
@@ -1053,7 +1091,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
         {
-            if (g_SysWork.playerWork.player.position.vx < Q12(-138.5999f))
+            if (playerChara.position.vx < Q12(-138.5999f))
             {
                 if (vcRetCamMvSmoothF() == VC_MV_CHASE)
                 {
@@ -1155,16 +1193,16 @@ void func_800D9EC4(void) // 0x800D9EC4
         {
             if (ABS(D_800DD57C) == 1)
             {
-                g_WorldObject1.rotation.vy += D_800DD57C;
+                g_WorldObject_Tobira00.rotation.vy += D_800DD57C;
             }
-            g_WorldObject1.rotation.vy += D_800DD57C;
+            g_WorldObject_Tobira00.rotation.vy += D_800DD57C;
 
             if (D_800DD57C > 0)
             {
-                if (g_WorldObject1.rotation.vy > 0)
+                if (g_WorldObject_Tobira00.rotation.vy > 0)
                 {
                     Sfx_WithFlagsPlay(Sfx_Unk1435, &soundPos, Q8(0.5f), SfxFlag_None);
-                    g_WorldObject1.rotation.vy = 0;
+                    g_WorldObject_Tobira00.rotation.vy = 0;
 
                     if (D_800DD57C >= 8 && Rng_GenerateUInt(0, 3) == 0) // 1 in 4 chance.
                     {
@@ -1177,7 +1215,7 @@ void func_800D9EC4(void) // 0x800D9EC4
                     D_800DD57C = MIN(D_800DD57C, 0);
                 }
             }
-            else if (g_WorldObject1.rotation.vy < Q12_ANGLE(-1.8f))
+            else if (g_WorldObject_Tobira00.rotation.vy < Q12_ANGLE(-1.8f))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1435, &soundPos, Q8(0.5f), SfxFlag_None);
 
@@ -1188,14 +1226,14 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else if (!Savegame_EventFlagGet(EventFlag_77))
     {
-        WorldObjects_Add(&g_WorldObject3.object, &g_WorldObject3.position, &SVECTOR3_Zero);
+        WorldObjects_Add(&g_WorldObject_HakoHid.object, &g_WorldObject_HakoHid.position, &SVECTOR3_Zero);
     }
     else
     {
-        g_WorldObject1.rotation.vy = Q12_ANGLE(-2.9f);
+        g_WorldObject_Tobira00.rotation.vy = Q12_ANGLE(-2.9f);
     }
 
-    WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
-    g_WorldObject2.rotation.vy = g_WorldObject1.rotation.vy;
-    WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
+    WorldObjects_Add(&g_WorldObject_Tobira00.object, &g_WorldObject_Tobira00.position, &g_WorldObject_Tobira00.rotation);
+    g_WorldObject_Tobira01.rotation.vy = g_WorldObject_Tobira00.rotation.vy;
+    WorldObjects_Add(&g_WorldObject_Tobira01.object, &g_WorldObject_Tobira01.position, &g_WorldObject_Tobira01.rotation);
 }

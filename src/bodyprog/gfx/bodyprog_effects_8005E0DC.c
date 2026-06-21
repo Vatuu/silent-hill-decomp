@@ -2547,7 +2547,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
     return true;
 }
 
-void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
+void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
 {
     s32 idx;
 
@@ -2558,7 +2558,7 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
         g_MapOverlayHdr.unkTable1_4C[idx].vy_8                = Q12_TO_Q8(arg0->vy);
         g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4        = Q12_TO_Q8(arg0->vz);
         g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = arg1;
-        g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 = arg2;
+        g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 = angle;
     }
 }
 

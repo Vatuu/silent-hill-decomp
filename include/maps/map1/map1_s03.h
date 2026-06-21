@@ -99,26 +99,26 @@ void MapEvent_ClassroomKeyUse(void);
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
-/** @brief Roof drain puzzle inspection event used the Rubber Ball item isn't in the inventory. */
-void MapEvent_RoofDrainPuzzleInspect(void);
+/** @brief Handles the roof drain puzzle interaction event. TODO: How are the two variants used? */
+void MapEvent_RoofDrainPuzzleInteract0(void);
 
-/** @brief Handles the Roof drain puzzle solve event used when the Rubber Ball item is in the inventory. */
-void MapEvent_RoofDrainPuzzleSolve(void);
+/** @brief Handles the Roof drain puzzle interaction event. TODO: How are the two variants used? */
+void MapEvent_RoofDrainPuzzleInteract1(void);
 
-/** @brief Handles the RRoof drainage valve interaction event. Handles logic and water effects. */
+/** @brief Handles the roof drainage valve interaction event. Handles logic and water effects. */
 void MapEvent_DrainageValveInteract(void);
 
 /** @brief Handles the "The Monster Lurks" book reading event. */
 void MapEvent_TheMonsterLurksBookRead(void);
 
-/** @brief Handles the Split Heaad fairy tale book reading event. */
+/** @brief Handles the Split Head fairy tale book reading event. */
 void MapEvent_SplitHeadFairyTaleBookRead(void);
 
-/** @brief Handles the locker inspection event when the locker has been opened. */
-void MapEvent_OpenedLockerInspect(void);
+/** @brief Handles the locker inspection event when the cat is no longer inside. */
+void MapEvent_OpenedCatLockerInspect(void);
 
-/** @brief Handles the locker inspection event when the locker hasn't been opened. */
-void MapEvent_UnopenedLockerInspect(void);
+/** @brief Handles the locker inspection event when the cat is still inside. */
+void MapEvent_UnopenedCatLockerInspect(void);
 
 /** @brief Handles the Locker Dead Body cutscene event. */
 void MapEvent_LockerDeadBodyCutscene(void);

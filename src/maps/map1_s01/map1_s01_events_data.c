@@ -8,7 +8,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 96,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800D7214`
+        .eventParam        = 3, // `MapEvent_CommonItemPickup`
     },
     // [1]
     {
@@ -17,7 +17,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 97,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800D7214`
+        .eventParam        = 3, // `MapEvent_CommonItemPickup`
     },
     // [2]
     {
@@ -26,7 +26,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 98,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800D7214`
+        .eventParam        = 3, // `MapEvent_CommonItemPickup`
     },
     // [3]
     {
@@ -35,7 +35,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 99,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800D7214`
+        .eventParam        = 3, // `MapEvent_CommonItemPickup`
     },
     // [4]
     {
@@ -44,7 +44,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 100,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 3, // `func_800D7214`
+        .eventParam        = 3, // `MapEvent_CommonItemPickup`
     },
     // [5]
     {
@@ -73,7 +73,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 16,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 9, // `func_800D7864`
+        .eventParam        = 9, // `MapEvent_PianoPuzzleInteract`
     },
     // [8]
     {
@@ -100,7 +100,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 12,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 7, // `func_800D76F4`
+        .eventParam        = 7, // `MapEvent_GoldMedallionItemPickup`
     },
     // [11]
     {
@@ -118,7 +118,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 12,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 4, // `func_800D72B0`
+        .eventParam     = 4, // `MapEvent_HandStatueInspect`
     },
     // [13]
     {
@@ -147,7 +147,7 @@ s_EventData MAP_EVENTS[104] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 13,
         .sysState          = SysState_EventCallback,
-        .eventParam        = 5, // `func_800D72DC`
+        .eventParam        = 5, // `MapEvent_ChemicalItemTake`
     },
     // [16]
     {
