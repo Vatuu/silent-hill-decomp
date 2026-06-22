@@ -13,4 +13,6 @@
 
 #include "../src/maps/characters/player.c"
 
-#include "../src/maps/characters/puppet_nurse.c" // 0x800D16A4
+#include "../src/maps/unk_m3s03.c" // 0x800D16A4
+
+#include "../src/maps/characters/puppet_nurse.c"

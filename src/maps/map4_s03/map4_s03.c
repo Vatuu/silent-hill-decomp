@@ -14,13 +14,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800D04BC
-
-#include "maps/shared/sharedFunc_800CD7F8_3_s03.h" // 0x800D0604
-
-#include "maps/shared/sharedFunc_800CD920_3_s03.h" // 0x800D072C
-
-#include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800D074C
+#include "../src/maps/unk_m3s03.c" // 0x800D04BC
 
 // TODO: Move to separate `Chara_Twinfeeler` split.
 #include "../src/maps/characters/twinfeeler.c"     // 0x800D078C

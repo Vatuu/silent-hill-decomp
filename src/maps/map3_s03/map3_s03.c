@@ -9,7 +9,9 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/characters/puppet_nurse.c" // 0x800CD6B0
+#include "../src/maps/unk_m3s03.c" // 0x800CD6B0
+
+#include "../src/maps/characters/puppet_nurse.c"
 
 // TODO: Move this line into separate Chara_Bloodsucker split.
 #include "../src/maps/characters/bloodsucker.c" // 0x800D09C4

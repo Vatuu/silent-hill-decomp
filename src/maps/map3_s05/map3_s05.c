@@ -16,7 +16,9 @@
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800CFEAC
 
-#include "../src/maps/characters/puppet_nurse.c" // 0x800D2120
+#include "../src/maps/unk_m3s03.c" // 0x800D2120
+
+#include "../src/maps/characters/puppet_nurse.c"
 
 #include "../src/maps/map_util.c" // 0x800D5434
 

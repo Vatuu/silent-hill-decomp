@@ -2876,13 +2876,7 @@ void func_800DB288(void) // 0x800DB288
     }
 }
 
-#include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800DB338
-
-#include "maps/shared/sharedFunc_800CD7F8_3_s03.h" // 0x800DB480
-
-#include "maps/shared/sharedFunc_800CD920_3_s03.h" // 0x800DB5A8
-
-#include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800DB5C8
+#include "../src/maps/unk_m3s03.c" // 0x800DB338
 
 void func_800DB608(void) // 0x800DB608
 {

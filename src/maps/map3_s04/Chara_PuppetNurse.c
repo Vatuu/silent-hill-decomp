@@ -7,4 +7,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/characters/puppet_nurse.c" // 0x800CD574
+// TODO: Move out of this split.
+#include "../src/maps/unk_m3s03.c" // 0x800CD574
+
+#include "../src/maps/characters/puppet_nurse.c"
