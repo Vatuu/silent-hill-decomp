@@ -3,6 +3,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/characters/twinfeeler.h"
+#include "maps/unk_m3s03.h"
 
 #define twinfeelerProps twinfeeler->properties.twinfeeler
 

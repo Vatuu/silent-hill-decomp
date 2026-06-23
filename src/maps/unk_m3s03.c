@@ -1,7 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "maps/unk_m3s03.h"
 
-// Utility functions used by PuppetNurse/Twinfeeler, and M7S03?
+// Utility functions used by PuppetNurse/Twinfeeler/Incubus.
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center)
 {

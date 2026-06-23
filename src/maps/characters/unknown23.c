@@ -3,6 +3,7 @@
 #include "main/rng.h"
 #include "maps/characters/unknown23.h"
 #include "maps/map7/map7_s03.h"
+#include "maps/unk_m3s03.h"
 
 // Unknown23: Incubator transforms into this based on `map7_s03::func_800E9498`?
 // Seems to include parts of Incubus code here exactly, maybe some half-way chara before Incubus spawns?

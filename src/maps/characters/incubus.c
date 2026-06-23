@@ -3,6 +3,7 @@
 #include "main/rng.h"
 #include "maps/map7/map7_s03.h"
 #include "maps/characters/incubus.h"
+#include "maps/unk_m3s03.h"
 
 #define incubusProps      incubus->properties.incubus
 #define localIncubusProps localIncubus->properties.incubus

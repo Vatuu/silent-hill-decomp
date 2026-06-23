@@ -5,6 +5,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/characters/puppet_nurse.h"
+#include "maps/unk_m3s03.h"
 
 // TODO:
 // - Make this separate split in each map that uses it, instead of `#include`
