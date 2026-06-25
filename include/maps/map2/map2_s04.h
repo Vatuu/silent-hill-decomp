@@ -22,7 +22,7 @@ void func_800CCF9C(void);
 
 void func_800CD050(void);
 
-void func_800CD088(void);
+void MapEvent_PoliceChalkboardInspect(void);
 
 /** @brief Handles the ? map pickup event. */
 void MapEvent_PaperMapTake(void);
