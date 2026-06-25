@@ -155,7 +155,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 8,
         .sysState       = SysState_EventCallback,
-        .eventParam     = 4, // `func_800CD088`
+        .eventParam     = 4, // `MapEvent_PoliceChalkboardInspect`
     },
     // [18]
     {
