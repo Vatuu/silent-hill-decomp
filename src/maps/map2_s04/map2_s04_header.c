@@ -22,7 +22,7 @@ void (*g_MapEventFuncs[])() = {
     MapEvent_DoorLocked,
     func_800CCF9C,
     func_800CD050,
-    func_800CD088,
+    MapEvent_PoliceChalkboardInspect,
     MapEvent_PaperMapTake,
     MapEvent_ShotgunTake
 };
