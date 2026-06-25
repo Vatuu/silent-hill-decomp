@@ -124,7 +124,7 @@ s_EventData MAP_EVENTS[25] = {
     },
     // [14]
     {
-        .completeEventFlag = EventFlag_307,
+        .completeEventFlag = EventFlag_M4S01_InspectedChalice,
         .triggerType       = TriggerType_TouchObbFacing,
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 7,
