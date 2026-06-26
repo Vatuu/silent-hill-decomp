@@ -707,9 +707,9 @@ void Map_WorldObjectsInit(void) // 0x800D2700
 
     Savegame_EventFlagClear(EventFlag_219);
 
-    if (Savegame_EventFlagGet(EventFlag_145) && Savegame_EventFlagGet(EventFlag_307))
+    if (Savegame_EventFlagGet(EventFlag_M2S04_SeenPoliceChalkboard) && Savegame_EventFlagGet(EventFlag_M4S01_InspectedChalice))
     {
-        Savegame_EventFlagSet(EventFlag_477);
+        Savegame_EventFlagSet(EventFlag_M7S00_BotanyBookReadable);
     }
 }
 
