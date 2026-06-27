@@ -1415,7 +1415,7 @@ s_EventData MAP_EVENTS[251] = {
     },
     // [150]
     {
-        .requiredEventFlag = EventFlag_477,
+        .requiredEventFlag = EventFlag_M7S00_BotanyBookReadable,
         .triggerType       = TriggerType_TouchObbFacing,
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 110,
