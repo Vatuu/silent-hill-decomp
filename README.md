@@ -12,9 +12,9 @@ An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the 
 This project itself **is not**, and **will not**, produce a port, to PC or any other platform. It is a **decompilation** of the original game code which can be compiled back into a binary identical to the original. This codebase is **not** port-ready, though preliminary efforts and **sensible, slow progress** is being made which can be followed in the Discord server. There is no rush.
 
 > [!IMPORTANT]
-**AI notice:** this decompilation project is human-driven. **No AI-generated code has been inserted into the decomp**, instead being manually worked out by a team over the past few years.  
+The decompilation project is human-driven. **No AI-generated code has knowingly been added into the decomp**, instead being manually worked out by several contributors over the past few years.  
 (At most some throwaway decompilation-helper scripts were made with AI, but the actual game code is being studied/reversed by humans).  
-Forks of the project may use AI for porting/fixes/adding features, but this decompilation remains human led.
+Forks of the project may use AI for porting/fixes/adding features, but this decompilation remains human-led.
 
 ## Progress
 
