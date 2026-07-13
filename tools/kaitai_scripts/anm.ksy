@@ -67,11 +67,13 @@ types:
     params:
       - id: frame_index
         type: u2
+
     seq:
       - id: translations
         type: translation
         repeat: expr
         repeat-expr: _root.translation_count
+
       - id: rotations
         type: rotation
         repeat: expr
@@ -95,13 +97,16 @@ types:
     seq:
       - id: x
         type: s1
+
       - id: y
         type: s1
+
       - id: z
         type: s1
 
   rotation:
     doc: 3x3 matrix, signed fixed-point with 7 fractional bits.
+
     seq:
       - id: value
         type: s1

@@ -8,10 +8,10 @@ meta:
 doc: |
   ILM is the skeletal 3D model format used in Silent Hill (PSX).
 
-  The header contains a table of objects, each with a name, ID, and offset to
+  The header contains a table of meshes, each with a name, ID, and offset to
   its body. Each body contains vertex and primitive data.
 
-  Note that the vertices are stored untransformed and the ANM format is necessary
+  The bone meshes are stored untransformed and the ANM format is necessary
   to render the model correctly.
 
 seq:
@@ -21,184 +21,217 @@ seq:
   - id: is_initialized
     type: u1
 
-  - size: 1
+  - type: u1
 
-  - id: name_ofs
+  - id: name_offset
     type: u4
     valid: 0x14
 
-  - id: obj_count
+  - id: mesh_count
     type: u4
 
-  - id: objs_offset
+  - id: meshes_offset
     type: u4
 
-  - id: id_table_offset
+  - id: mesh_ids_offset
     type: u4
 
   - id: name
     type: strz
 
 instances:
-  objs:
-    pos: objs_offset
-    type: obj
+  meshes:
+    pos: meshes_offset
+    type: mesh
     repeat: expr
-    repeat-expr: obj_count
+    repeat-expr: mesh_count
 
-  id_table:
-    pos: id_table_offset
+  mesh_ids:
+    pos: mesh_ids_offset
     type: u1
     repeat: expr
-    repeat-expr: obj_count
+    repeat-expr: mesh_count
 
 types:
-  obj:
+  mesh:
     seq:
-      - id: bone_index_ascii
+      - id: bone_idx_str
         type: str
         size: 2
 
-      - id: name
+      - id: bone_name
         type: strz
         size: 6
 
-      - size: 1
+      - type: u1
 
-      - id: base_index
+      - id: position_base_idx
         type: u1
-        doc: all quad/triangle indices for the object are offset by this value
+        doc: All primitive position indices for the mesh are offset by this value.
 
-      - id: normal_base_index
+      - id: normal_base_idx
         type: u1
+        doc: All primitive normal indices for the mesh are offset by this value.
 
-      - size: 1
+      - type: u1
 
-      - id: ofs
+      - id: body_offset
         type: u4
 
     instances:
-      bone_index:
-        value: bone_index_ascii.to_i
+      bone_idx:
+        value: bone_idx_str.to_i
 
       body:
-        pos: ofs
-        type: obj_body
+        pos: body_offset
+        type: mesh_body
 
-  obj_body:
+  mesh_body:
     seq:
-      - id: prim_count
+      - id: primitive_count
         type: u1
-      - id: vertex_count
+
+      - id: position_count
         type: u1
+
       - id: normal_count
         type: u1
-      - size: 1
-      - id: prims_offset
+
+      - type: u1
+      - id: primitives_offset
         type: u4
-      - id: vertex_xy_offset
+
+      - id: positions_xy_offset
         type: u4
-      - id: vertex_z_offset
+
+      - id: positions_z_offset
         type: u4
+
       - id: normals_offset
         type: u4
-      - id: next_offset
+
+      - id: next_body_offset
         type: u4
 
     instances:
-      prims:
-        pos: prims_offset
-        type: index_packet
+      primitives:
+        pos: primitives_offset
+        type: primitive
         repeat: expr
-        repeat-expr: prim_count
+        repeat-expr: primitive_count
+
       vertex_xy:
-        pos: vertex_xy_offset
-        type: s2
+        pos: positions_xy_offset
+        type: xy_pair
         repeat: expr
-        repeat-expr: vertex_count * 2
+        repeat-expr: position_count
+        doc: Q8.7.
+
       vertex_z:
-        pos: vertex_z_offset
+        pos: positions_z_offset
         type: s2
         repeat: expr
-        repeat-expr: vertex_count
+        repeat-expr: position_count
+        doc: Q8.7.
+
       normals:
         pos: normals_offset
         type: svector
         repeat: expr
         repeat-expr: normal_count
+        doc: Q0.7.
 
-  index_packet:
+  primitive:
     seq:
-      - id: uv0
+      - id: uv_0
         type: uv
 
-      - id: clut_index
-        type: clut_index
+      - id: clut_position
+        type: clut_position
 
-      - id: uv1
+      - id: uv_1
         type: uv
 
-      - id: tpage_info
+      - id: t_page
         type: s2
 
-      - id: uv2
+      - id: uv_2
         type: uv
 
-      - id: uv3
+      - id: uv_3
         type: uv
 
-      - id: indices
-        type: prim_indices
+      - id: position_idxs
+        type: primitive_idxs
 
-      - id: normal_indices
-        type: prim_indices
+      - id: normal_idxs
+        type: primitive_idxs
 
   uv:
     seq:
       - id: u
         type: u1
+        doc: Q0.8.
+
       - id: v
         type: u1
+        doc: Q0.8.
 
-  prim_indices:
+  primitive_idxs:
     seq:
-      - id: v0
+      - id: idx_0
         type: u1
-      - id: v1
+
+      - id: idx_1
         type: u1
-      - id: v2
+
+      - id: idx_2
         type: u1
-      - id: v3
+
+      - id: idx_3
         type: u1
 
   xy_pair:
     seq:
       - id: x
         type: s2
+        doc: Q8.7.
+
       - id: y
         type: s2
+        doc: Q8.7.
 
   svector:
     seq:
       - id: x_int
         type: s1
+        doc: Q0.7.
+
       - id: y_int
         type: s1
+        doc: Q0.7.
+
       - id: z_int
         type: s1
+        doc: Q0.7.
+
       - id: count
         type: u1
+
     instances:
       x:
         value: x_int.as<f4> / 128.0
+
       y:
         value: y_int.as<f4> / 128.0
+
       z:
         value: z_int.as<f4> / 128.0
-      length_sq:
+
+      length_sqr:
         value: (x * x) + (y * y) + (z * z)
 
-  clut_index:
+  clut_position:
     seq:
       - id: value
         type: s2
@@ -206,5 +239,6 @@ types:
     instances:
       x:
         value: (value & 0x3F) * 0x10
+
       y:
         value: (value >> 6) & 0x1FF
