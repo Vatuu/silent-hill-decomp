@@ -171,6 +171,8 @@ typedef struct _func_8009ECCC
     u16                    field_1E;
 } s_func_8009ECCC;
 
+s32 func_8009E198(s_SysWork_2514* work, u32 flags);
+
 s32 func_8009E230(s_SysWork_2514* arg0);
 
 s32 func_8009E268(s_SysWork_2514* arg0);

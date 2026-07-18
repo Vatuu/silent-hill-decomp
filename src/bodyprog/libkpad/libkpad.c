@@ -50,7 +50,44 @@ s_SysWork_2510 D_800B142C = {
     .func_C  = func_8009E9D0,
 };
 
-INCLUDE_ASM("bodyprog/nonmatchings/libkpad/libkpad", func_8009E198);
+s32 func_8009E198(s_SysWork_2514* work, u32 flags) // 0x8009E198
+{
+    // @hack `register` binding is required: 2.7.2's allocator otherwise assigns $v0
+    // to `status` (highest priority) and parks the return value in $a3 across the
+    // block. Only a call or an explicit binding keeps $v0 live through the bitfield
+    // chain, and this function makes no calls, so the original allocation is not
+    // reachable from plain C under this compiler.
+    register bool ret __asm__("$2");
+
+    ret = work != NULL;
+
+    if (ret)
+    {
+        s32 scale = 0x80;
+        s_SysWork_2514_0 status = {
+            .field_0_8   = scale,
+            .field_0_16  = 1,
+            .field_0_17  = 1,
+            .field_0_18  = 1,
+            .field_0_19  = 0,
+            .field_0_22  = 0,
+            .field_0_23  = 0,
+            .field_0_24  = 0,
+            .padPort_0_0 = 0,
+        };
+        flags = flags & 0x13;
+        status.padPort_0_0 = flags;
+
+        work->actuatorData_4 = 0;
+        // @hack Single-word store; `field_8`/`field_A`/`unk_B` written as one `s32`.
+        *(s32*)&work->field_8 = 0;
+        work->field_C  = NULL;
+        work->field_10 = NULL;
+        work->field_0  = status;
+    }
+
+    return ret;
+}
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
