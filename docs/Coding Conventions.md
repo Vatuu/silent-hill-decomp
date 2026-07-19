@@ -24,7 +24,7 @@ s32 func_XXXXXXXX(s32 arg0)
 ### Alignment
 
 #### Structs and enums
-When adding fields an entries to structs and enums, vertical alignment is applied.
+When adding fields and entries to structs and enums, vertical alignment is applied.
 
 Structs:
 ```C
