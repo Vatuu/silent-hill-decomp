@@ -204,9 +204,10 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
     {
         response = true;
 
-        if (chara == &g_SysWork.playerWork && chara->health > Q12(0.0f))
+        // Push player away from drop.
+        if (chara == &g_SysWork.playerWork.player && chara->health > Q12(0.0f))
         {
-            Collision_GroundProbeRadial(collResult, &chara->position, chara->position.vy, chara->rotation.vy);
+            Collision_WallPush(collResult, &chara->position, chara->position.vy, chara->rotation.vy);
         }
     }
 
@@ -295,70 +296,77 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
     #undef WALL_HEIGHT
 }
 
-void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
-                                 q19_12 startGroundHeight, q19_12 startHeadingAngle) // 0x80069DF0
+void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 groundHeight, q19_12 headingAngle) // 0x80069DF0
 {
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
 
     q19_12             groundHeights[POINT_COUNT];
     s_CollisionSurface surface;
-    q19_12             angle;
-    s32                var_a0;
-    q19_12             groundHeight;
-    s32                var_s0;
+    q19_12             pushAngle;
+    q19_12             baseGroundHeight;
+    s32                rightLowestGroundHeightIdx;
+    s32                leftLowestGroundHeightIdx;
     s32                i;
     q19_12             groundHeightMax;
     q19_12             groundHeightMin;
     s32                lowestGroundHeightIdx;
 
+    // Set base parameters.
     groundHeightMin       = Q12(-30.0f);
     groundHeightMax       = Q12(30.0f);
     lowestGroundHeightIdx = 0;
 
-    // Collect ground heights around position?
+    // Run through ground heights around position.
     for (i = 0; i < POINT_COUNT; i++)
     {
+        // Collect height.
         Collision_SurfaceGet(&surface,
-                             pos->vx + Math_Sin((startHeadingAngle & 0xF) + (i * ANGLE_STEP)),
-                             pos->vz + Math_Cos((startHeadingAngle & 0xF) + (i * ANGLE_STEP)));
+                             pos->vx + Math_Sin((headingAngle & 0xF) + (i * ANGLE_STEP)),
+                             pos->vz + Math_Cos((headingAngle & 0xF) + (i * ANGLE_STEP)));
         groundHeights[i] = surface.groundHeight;
 
+        // Track min height.
         if (groundHeightMin < surface.groundHeight)
         {
             groundHeightMin       = surface.groundHeight;
             lowestGroundHeightIdx = i;
         }
 
+        // Track max height.
         if (surface.groundHeight < groundHeightMax)
         {
             groundHeightMax = surface.groundHeight;
         }
     }
 
-    groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
-    if (groundHeight < (startGroundHeight - INTERSECTION_BUFFER))
+    // Cap base ground height.
+    baseGroundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
+    if (baseGroundHeight < (groundHeight - INTERSECTION_BUFFER))
     {
-        groundHeight = startGroundHeight - INTERSECTION_BUFFER;
+        baseGroundHeight = groundHeight - INTERSECTION_BUFFER;
     }
 
-    for (i = lowestGroundHeightIdx + 1, var_a0 = lowestGroundHeightIdx;
-         i < (lowestGroundHeightIdx + POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+    // Search clockwise from lowest point for wall start.
+    for (i = lowestGroundHeightIdx + 1, rightLowestGroundHeightIdx = lowestGroundHeightIdx;
+         i < (lowestGroundHeightIdx + POINT_COUNT) && baseGroundHeight < groundHeights[i & 0xF];
          i++)
     {
-        var_a0 = i;
+        rightLowestGroundHeightIdx = i;
     }
 
-    for (i = lowestGroundHeightIdx - 1, var_s0 = lowestGroundHeightIdx;
-         i < (lowestGroundHeightIdx - POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+    // Search counter-clockwise from lowest point for wall start.
+    for (i = lowestGroundHeightIdx - 1, leftLowestGroundHeightIdx = lowestGroundHeightIdx;
+         i < (lowestGroundHeightIdx - POINT_COUNT) && baseGroundHeight < groundHeights[i & 0xF];
          i--)
     {
-        var_s0 = i;
+        leftLowestGroundHeightIdx = i;
     }
 
-    angle = ((var_s0 + var_a0) << 8) >> 1;
-    collResult->offset.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
-    collResult->offset.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
+    // Compute offset away from wall.
+    pushAngle             = Q8(leftLowestGroundHeightIdx + rightLowestGroundHeightIdx) >> 1; // `/ 2`.
+    collResult->offset.vx = Q12_MULT_PRECISE(Math_Sin(pushAngle), Q12(1.0f / 16.0f));
+    collResult->offset.vz = Q12_MULT_PRECISE(Math_Cos(pushAngle), Q12(1.0f / 16.0f));
 
     #undef POINT_COUNT
     #undef ANGLE_STEP
@@ -377,6 +385,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
     cylinder.position.vy = chara->position.vy - Q12(0.02f);
     cylinder.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
 
+    // Check if collision data at current position is valid.
     if (Ipd_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
     {
         Collision_DefaultResultSet(collResult, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));

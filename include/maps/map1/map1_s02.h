@@ -58,7 +58,7 @@ extern s_WorldObjectPose g_WorldObject_Ring2Hi;
 extern s_WorldObjectPose g_WorldObject_Door2Hi;
 extern s_WorldObjectPose g_WorldObject_Door1Hi;
 
-extern s_WorldObjectPlacement g_WorldObject_BoxHide; // "BOX_HIDE", TODO: `g_WorldObject_Box`
+extern s_WorldObjectPlacement g_WorldObject_BoxHide;
 
 extern s_WorldObjectModel g_WorldObjectC;
 

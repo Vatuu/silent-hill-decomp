@@ -1567,7 +1567,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     {
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(66, 178);
-        Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 0x32);
+        Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 50);
     }
     else if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
     {
@@ -2118,8 +2118,8 @@ void SaveScreen_BackgroundAndInfoDraw(void) // 0x801E709C
 
 void SaveScreen_ScreenDraw(void) // 0x801E70C8
 {
-    s32              i;
-    s32              j;
+    s32                  i;
+    s32                  j;
     s_SaveScreenElement* nextSaveEntry;
 
     // Run through save slots.

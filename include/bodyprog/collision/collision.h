@@ -288,16 +288,17 @@ s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffse
  */
 s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara, s32 response);
 
-/** @brief Probes ground heights at 16 radial points to determine the terrain slope direction.
- * Creates a terrain avoidance force to push away from illegal positions.
+/** @brief Probes ground heights at 16 radial points to push away from a wall.
+ * Called in `Collision_WallResponse` and used exclusively for the player.
  *
- * @param collResult Output collision result with XZ offset vector pointing away from the highest terrain.
+ * @note Since Y+ is down, the meanings of min/max and lowest/highest are inverted.
+ *
+ * @param collResult Output collision result with the XZ offset vector adjusted to push away from a wall.
  * @param pos Center position.
- * @param startGroundHeight Starting character Y position.
- * @param startHeadingAngle Starting heading angle on the XZ plane for the probe circle.
+ * @param groundHeight Base ground height.
+ * @param headingAngle Starting heading angle on the XZ plane for the probe circle.
  */
-void Collision_GroundProbeRadial(s_CollisionResult* collResult, const VECTOR3* pos,
-                                 q19_12 startGroundHeight, q19_12 startHeadingAngle);
+void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 groundHeight, q19_12 headingAngle);
 
 /** @brief Applies collision detection for a character's movement offset.
  *

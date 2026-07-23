@@ -80,7 +80,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     {
         case 0:
             ScreenFade_Start(true, true, false);
-            g_ScreenFadeTimestep            = Q12(3.0f);
+            g_ScreenFadeTimestep         = Q12(3.0f);
             g_GameWork.gameStateSteps[0] = 1;
 
         case 1:
@@ -299,13 +299,13 @@ void SysState_GamePaused_Update(void) // 0x800391E8
 
     // Debug button combo to bring up save screen from pause screen.
     // DPad-Left + L2 + L1 + LS-Left + RS-Left + L3
-    if ((g_Controller0->heldBtnFlags == (ControllerFlag_L3 |
-                                       ControllerFlag_DpadLeft |
-                                       ControllerFlag_L2 |
-                                       ControllerFlag_L1 |
-                                       ControllerFlag_LStickLeft2 |
-                                       ControllerFlag_RStickLeft |
-                                       ControllerFlag_LStickLeft)) &&
+    if ((g_Controller0->heldBtnFlags == (ControllerFlag_L3          |
+                                         ControllerFlag_DpadLeft    |
+                                         ControllerFlag_L2          |
+                                         ControllerFlag_L1          |
+                                         ControllerFlag_LStickLeft2 |
+                                         ControllerFlag_RStickLeft  |
+                                         ControllerFlag_LStickLeft)) &&
         (g_Controller0->clickedBtnFlags & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
@@ -330,7 +330,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
     {
         case 0:
             ScreenFade_Start(true, false, false);
-            g_ScreenFadeTimestep        = Q12(0.0f);
+            g_ScreenFadeTimestep       = Q12(0.0f);
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:
@@ -612,10 +612,10 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     u32           offsetZ;
     s_MapPoint2d* mapPoint;
 
-    g_SysWork.unused_229C       = 0;
-    g_SysWork.loadingScreenIdx = D_800BCDB0.loadingScreenId;
-    g_SysWork.sfxPairIdx  = g_MapEventData->sfxPairIdx_8_19;
-    g_SysWork.areaTransitionFlags       = g_MapEventData->transitionFlags;
+    g_SysWork.unused_229C         = 0;
+    g_SysWork.loadingScreenIdx    = D_800BCDB0.loadingScreenId;
+    g_SysWork.sfxPairIdx          = g_MapEventData->sfxPairIdx_8_19;
+    g_SysWork.areaTransitionFlags = g_MapEventData->transitionFlags;
 
     SD_Call(SFX_PAIRS[g_SysWork.sfxPairIdx].sfx_0);
 
@@ -954,7 +954,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_SysWork.sysStateStepData[0]++;
 
             if ((g_Controller0->clickedBtnFlags & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                  g_GameWorkPtr->config.controllerConfig.cancel)) ||
+                                                   g_GameWorkPtr->config.controllerConfig.cancel)) ||
                 g_SysWork.sysStateStepData[0] > SECONDS_60_FPS(4))
             {
                 SysWork_StateStepIncrement(0);
@@ -1039,8 +1039,6 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
 
     Savegame_EventFlagSetAlt(g_MapEventData->completeEventFlag);
-
     g_MapOverlayHdr.mapEventFuncs[g_MapEventParam]();
-
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }
