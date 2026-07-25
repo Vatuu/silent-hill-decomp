@@ -419,7 +419,8 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
                          Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
 
-void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight) // 0x8006A178
+void Collision_DefaultResultSet(s_CollisionResult* collResult,
+                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight) // 0x8006A178
 {
     collResult->offset.vx            = offsetX;
     collResult->offset.vy            = offsetY;
@@ -431,7 +432,8 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
     collResult->surface.groundHeight = groundHeight;
 }
 
-s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer) // 0x8006A1A4
+s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara,
+                                               bool includePlayer) // 0x8006A1A4
 {
     s_SubCharacter*         curChara;
     static s_SubCharacter*  collCharas[NPC_COUNT_MAX + 1]; /** Enough for all NPCs and player. */
@@ -676,7 +678,8 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
     return state.field_0_0 != false;
 }
 
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder,
+                                            s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
     q19_12          headingAngle;
     q19_12          cylinderOffsetZ;

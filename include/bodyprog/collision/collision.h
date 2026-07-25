@@ -135,8 +135,8 @@ STATIC_ASSERT_SIZEOF(s_CollisionCellPoint, 56);
 typedef struct _CollisionCharaState
 {
     /* 0x0  */ s32        collisionState; /** `e_CharaCollisionState` */
-    /* 0x4  */ bool       field_4;        // Flag set when the character collisions being check is any of the ones being
-                                          // in the of `Collision_CharaCollisionSetup`.
+    /* 0x4  */ bool       field_4;        // `allowDefaultCeilHeight`? Set when the character collision being checked is any of the ones in
+                                          // `Collision_CharaCollisionSetup`.
     /* 0x8  */ q19_12     distance;
     /* 0xC  */ SVECTOR    offset; /** Q23.8 | Character movement offset. */
     /* 0x14 */ DVECTOR_XZ direction;
@@ -317,7 +317,8 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
  * @param offsetZ Z offset.
  * @param groundHeight Ground height.
  */
-void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight);
+void Collision_DefaultResultSet(s_CollisionResult* collResult,
+                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight);
 
 /** @brief Gets an array of collidable characters for collision testing.
  *
@@ -326,7 +327,8 @@ void Collision_DefaultResultSet(s_CollisionResult* collResult, q19_12 offsetX, q
  * @param includePlayer Filter out the player.
  * @return Collidable characters.
  */
-s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara, bool includePlayer);
+s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara,
+                                               bool includePlayer);
 
 /** @brief Checks a movement offset against a collision result.
  *
@@ -344,7 +346,8 @@ bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_C
                    s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Slows down colliding characters according to relational cylinder collision. */
-void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder, s_SubCharacter** charas, s32 charaCount);
+void Collision_TargetCharaCollidingSlowDown(VECTOR3* offset, const s_CollisionCylinder* cylinder,
+                                            s_SubCharacter** charas, s32 charaCount);
 
 /** @brief Initializes a collision state for a new pass.
  *
