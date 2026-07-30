@@ -83,7 +83,9 @@ typedef enum _MapIdx
 
 /** @brief Used as index into `MAP_INFOS` array. 
  *
- * @note R: "Real", U: "Underworld".
+ * @note
+ * R: "Real"
+ * U: "Underworld"
  */
 typedef enum _MapType
 {

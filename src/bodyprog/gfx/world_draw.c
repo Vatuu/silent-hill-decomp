@@ -681,7 +681,7 @@ s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId) // 0x8003CDA0
         heldItem->queueIdx = Fs_QueueStartReadTim(fileIdx, FS_BUFFER_10, &heldItem->imageDesc);
     }
 
-    // Define index of model file to lead.
+    // Define index of model file to load.
     switch (itemId)
     {
         case NO_VALUE:

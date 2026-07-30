@@ -4,6 +4,8 @@ meta:
   file-extension: ipd
   endian: le
   encoding: ASCII
+  imports:
+    - lm
 
 doc: |
   IPD is the 3D model format containing instanced map models and collision data
@@ -11,14 +13,27 @@ doc: |
 
 seq:
   - id: header
-    type: ipd_header
+    type: header
+
+instances:
+  lm_header:
+    pos: header.lm_header_offset
+    type: ::lm
+
+  model_infos:
+    pos: header.model_info_offset
+    type: model_info
+    repeat: expr
+    repeat-expr: header.model_count
+
+  model_buffers:
+    pos: header.model_buffers_offset
+    type: model_buffer
+    repeat: expr
+    repeat-expr: header.model_buffer_count
 
 types:
-  # ===
-  # IPD
-  # ===
-
-  ipd_header:
+  header:
     seq:
       - id: magic
         contents: [0x14]
@@ -62,26 +77,9 @@ types:
         type: u4
 
       - id: collision_data
-        type: ipd_collision_data
+        type: collision_data
 
-    instances:
-      lm_header:
-        pos: lm_header_offset
-        type: lm_header(lm_header_offset)
-
-      model_infos:
-        pos: model_info_offset
-        type: ipd_model_info
-        repeat: expr
-        repeat-expr: model_count
-
-      model_buffers:
-        pos: model_buffers_offset
-        type: ipd_model_buffer
-        repeat: expr
-        repeat-expr: model_buffer_count
-
-  ipd_model_info:
+  model_info:
     seq:
       - id: is_global_plm
         type: u1
@@ -95,7 +93,7 @@ types:
       - id: model_header_offset
         type: u4
 
-  ipd_model_buffer:
+  model_buffer:
     seq:
       - id: model_instance_count
         type: u1
@@ -125,13 +123,13 @@ types:
 
       - id: field_10_offset
         type: u4
-        doc: Q7.8
+        doc: Q.8
 
       - id: subcell_positions_offset
         type: u4
         doc: Q7.8
 
-  ipd_collision_data:
+  collision_data:
     seq:
       - id: position_x
         type: s4
@@ -207,28 +205,28 @@ types:
 
       surfaces:
         pos: surfaces_offset
-        type: ipd_coll_surface
+        type: collision_surface
         repeat: expr
         repeat-expr: surface_count
         doc: Q7.8. TODO Wrong offset.
 
       subcells:
         pos: subcells_offset
-        type: ipd_subcell
+        type: collision_subcell
         repeat: expr
         repeat-expr: subcell_count
         doc: TODO Wrong offset.
 
       ptrs_18:
         pos: ptrs_18_offset
-        type: ipd_coll_data_18
+        type: collision_data_18
         repeat: expr
         repeat-expr: ptr_18_count
         doc: TODO Wrong offset.
 
       subcell_ranges:
         pos: subcell_ranges_offset
-        type: ipd_coll_subcell_range
+        type: collision_subcell_range
         repeat: expr
         repeat-expr: subcell_size
         doc: TODO Wrong offset. Also which field has the count??
@@ -237,7 +235,7 @@ types:
   # COLLISION
   # =========
 
-  ipd_coll_surface:
+  collision_surface:
     seq:
       - id: field_0
         type: s2
@@ -271,7 +269,7 @@ types:
         type: s2
         doc: Q7.8.
 
-  ipd_subcell:
+  collision_subcell:
     seq:
       - id: field_0_0
         type: b14
@@ -303,7 +301,7 @@ types:
       - id: surface_idx_1
         type: u1
 
-  ipd_coll_data_18:
+  collision_data_18:
     seq:
       - id: ground_type
         type: b5
@@ -328,68 +326,13 @@ types:
         type: u2
         doc: Q7.8.
 
-  ipd_coll_subcell_range:
+  collision_subcell_range:
     seq:
       - id: field_0
         type: s2
 
       - id: field_2
         type: s2
-  
-  # ========
-  # PLM (LM)
-  # ========
-
-  lm_header:
-    params:
-      - id: base_offset
-        type: u4
-
-    seq:
-      - id: magic
-        contents: [0x30]
-
-      - id: version
-        type: u1
-
-      - id: is_loaded
-        type: u1
-
-      - id: material_count
-        type: u1
-
-      - id: materials_offset
-        type: u4
-
-      - id: model_count
-        type: u1
-
-      - size: 3
-
-      - id: model_headers_offset
-        type: u4
-
-      - id: model_order_offset
-        type: u4
-
-    instances:
-      materials:
-        pos: base_offset + materials_offset
-        type: material
-        repeat: expr
-        repeat-expr: material_count
-
-      models:
-        pos: base_offset + model_headers_offset
-        type: model_header(base_offset)
-        repeat: expr
-        repeat-expr: model_count
-
-      model_order:
-        pos: base_offset + model_order_offset
-        type: u1
-        repeat: expr
-        repeat-expr: model_count
 
   material:
     seq:
