@@ -1141,7 +1141,7 @@ void Ipd_LoadedChunkInit(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCoun
     Ipd_MaterialsLoad(ipdHdr, fullPageActiveTexs, halfPageActiveTexs, fileIdx);
     Lm_MaterialFlagsApply(ipdHdr->lmHdr);
     Ipd_HeaderModelLinkObjectLists(ipdHdr, lmHdrs, lmHdrCount);
-    Ipd_HeaderModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfo);
+    Ipd_HeaderModelBufferLinkObjectLists(ipdHdr, ipdHdr->modelInfos);
 }
 
 void Ipd_MaterialsLoad(s_IpdHeader* ipdHdr,
@@ -1204,7 +1204,7 @@ void Ipd_HeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
     s_IpdModelBuffer* curModelBuf;
 
     ipdHdr->lmHdr          = (u8*)ipdHdr->lmHdr          + (u32)ipdHdr;
-    ipdHdr->modelInfo      = (u8*)ipdHdr->modelInfo      + (u32)ipdHdr;
+    ipdHdr->modelInfos      = (u8*)ipdHdr->modelInfos      + (u32)ipdHdr;
     ipdHdr->modelBuffers   = (u8*)ipdHdr->modelBuffers   + (u32)ipdHdr;
     ipdHdr->modelOrderList = (u8*)ipdHdr->modelOrderList + (u32)ipdHdr;
 
@@ -1226,7 +1226,7 @@ void Ipd_HeaderModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s3
 
     for (i = 0; i < ipdHdr->modelCount; i++)
     {
-        curModelInfo = &ipdHdr->modelInfo[i];
+        curModelInfo = &ipdHdr->modelInfos[i];
 
         if (!curModelInfo->isGlobalPlm)
         {
