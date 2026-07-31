@@ -1264,7 +1264,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
     return NULL;
 }
 
-void Ipd_HeaderModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels) // 0x80043F88
+void Ipd_HeaderModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModelInfos) // 0x80043F88
 {
     s_IpdModelBuffer*   curModelBuffer;
     s_IpdModelInstance* curModelInst;
@@ -1279,7 +1279,7 @@ void Ipd_HeaderModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
         {
             // TODO: `curModelInst` originally stores model idx. Replace that with pointer to the model's `modelHdr`.
             s32 modelIdx           = (s32)curModelInst->modelHdr;
-            curModelInst->modelHdr = ipdModels[modelIdx].modelHdr;
+            curModelInst->modelHdr = ipdModelInfos[modelIdx].modelHdr;
         }
     }
 }

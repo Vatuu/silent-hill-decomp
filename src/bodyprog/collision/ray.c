@@ -438,9 +438,9 @@ void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_Ip
     {
         idx = collData->ptr_28[i];
 
-        if (collData->subcellCheckCount >= collData->subcellCheckIdx[idx])
+        if (collData->subcellCheckCount >= collData->subcellCheckIdxs[idx])
         {
-            collData->subcellCheckIdx[idx] = collData->subcellCheckCount + 1;
+            collData->subcellCheckIdxs[idx] = collData->subcellCheckCount + 1;
 
             if (idx < collData->subcellCount)
             {

@@ -99,14 +99,13 @@ typedef struct _IpdCollisionData
     /* 0x20   */ s_IpdCollSubcellRange* subcellRanges;
     /* 0x24   */ u16                    field_24; // `ptr_24` size. `field_24`/`field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
     /* 0x26   */ u16                    field_26; // `ptr_26` size.
-    /* 0x28   */ u8*                    ptr_28;   // Accessed as array of indices into `subcellCheckIdx` by `func_8006E53C`.
+    /* 0x28   */ u8*                    ptr_28;   // Accessed as array of indices into `subcellCheckIdxs` by `func_8006E53C`.
     /* 0x2C   */ u8*                    ptr_2C;         
-    /* 0x30   */ u8                     subcellCheckCount; // Directly related to `subcellCheckIdx`.
+    /* 0x30   */ u8                     subcellCheckCount;
     /* 0x31   */ s8                     __pad[3];
-    /* 0x34   */ u8                     subcellCheckIdx[256]; // Index container.
-                                                              // This should be the same size as of the value assigned to
-                                                              // `s_IpdCollisionData::subcellCount`, but instead is assigned the
-                                                              // the max number that variable handles, which is 256 (same as a `char`).
+    /* 0x34   */ u8                     subcellCheckIdxs[256]; // This should be the same size as of the value assigned to
+                                                               // `s_IpdCollisionData::subcellCount`, but instead is assigned the
+                                                               // the max number that variable handles, which is 256 (same as a `char`).
 } s_IpdCollisionData;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData, 308);
 
@@ -123,8 +122,8 @@ STATIC_ASSERT_SIZEOF(s_IpdModelInfo, 16);
 /** @brief IPD file transformed model instance. TODO: Unsure. */
 typedef struct _IpdModelInstance
 {
-    /* 0x0 */ s_ModelHeader* modelHdr;
-    /* 0x4 */ MATRIX         mat; // TODO: Base transform matrix?
+    /* 0x0 */ s_ModelHeader* modelHdr; // TODO: Stores index at first before being updated to functional pointer.
+    /* 0x4 */ MATRIX         mat;      // TODO: Base transform matrix?
 } s_IpdModelInstance;
 STATIC_ASSERT_SIZEOF(s_IpdModelInstance, 36);
 
@@ -157,7 +156,7 @@ typedef struct _IpdHeader
     /* 0x9  */ u8                 modelBufferCount;
     /* 0xA  */ u8                 modelOrderCount;
     /* 0xB  */ s8                 __pad_B[9];
-    /* 0x14 */ s_IpdModelInfo*    modelInfo;
+    /* 0x14 */ s_IpdModelInfo*    modelInfos;
     /* 0x18 */ s_IpdModelBuffer*  modelBuffers;
     /* 0x1C */ u8                 textureCount; // Should it be `u32`?
                                                 // "`u8` - Relative pointer to textures list"
