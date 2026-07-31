@@ -10,6 +10,12 @@ meta:
 doc: |
   IPD is the 3D model format containing instanced map models and collision data
   used in Silent Hill (PSX).
+  
+  Local map prop models are stored in an embedded PLM (LM) block, while global
+  props reference models in a separate `***_GLB.PLM` file.
+
+  TODO First few meshes of the embedded PLM contain only names and are currently
+  unreferenced. What are these?
 
 seq:
   - id: header
@@ -17,11 +23,12 @@ seq:
 
 instances:
   collision:
+    pos: 0x54
     type: collision
 
   lm:
-    pos: header.lm_offset
-    type: lm
+    pos: header.lm_header_offset
+    type: lm(header.lm_header_offset)
 
   model_infos:
     pos: header.model_infos_offset
@@ -50,7 +57,7 @@ types:
       - id: level_grid_y
         type: s1
 
-      - id: lm_offset
+      - id: lm_header_offset
         type: u4
 
       - id: model_count
@@ -135,6 +142,7 @@ types:
         type: model_instance
         repeat: expr
         repeat-expr: model_instance_count
+        doc: TODO Offset is wrong?
 
   model_instance:
     seq:

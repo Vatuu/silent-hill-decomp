@@ -3,7 +3,6 @@ meta:
   title: Silent Hill 1 Model Format
   file-extension:
     - ilm
-    - plm
   endian: le
   encoding: ASCII
 
@@ -18,57 +17,62 @@ doc: |
   For an ILM, the bone meshes are stored untransformed and the ANM format is necessary
   to render the model correctly.
 
+params:
+  - id: base_offset
+    type: u4
+
 seq:
-  - id: magic
-    contents: [0x30]
-
-  - id: version
-    type: u1
-
-  - id: is_initialized
-    type: u1
-
-  - type: u1
-
-  - id: name_offset
-    type: u4
-    valid: 0x14
-
-  - id: mesh_count
-    type: u4
-
-  - id: meshes_offset
-    type: u4
-
-  - id: mesh_ids_offset
-    type: u4
-
-  - id: name
-    type: strz
+  - id: header
+    type: header
 
 instances:
   meshes:
-    pos: meshes_offset
+    pos: base_offset + header.meshes_offset
     type: mesh
     repeat: expr
-    repeat-expr: mesh_count
+    repeat-expr: header.mesh_count
 
   mesh_ids:
-    pos: mesh_ids_offset
+    pos: base_offset + header.mesh_ids_offset
     type: u1
     repeat: expr
-    repeat-expr: mesh_count
+    repeat-expr: header.mesh_count
 
 types:
+  header:
+    seq:
+      - id: magic
+        contents: [0x30]
+
+      - id: version
+        type: u1
+
+      - id: is_initialized
+        type: u1
+
+      - type: u1
+
+      - id: name_offset
+        type: u4
+        valid: 0x14
+
+      - id: mesh_count
+        type: u4
+
+      - id: meshes_offset
+        type: u4
+
+      - id: mesh_ids_offset
+        type: u4
+
+      - id: name
+        type: strz
+
   mesh:
     seq:
-      - id: bone_idx_str
-        type: str
-        size: 2
-
-      - id: bone_name
+      - id: name
         type: strz
-        size: 6
+        size: 8
 
       - type: u1
 
@@ -86,9 +90,6 @@ types:
         type: u4
 
     instances:
-      bone_idx:
-        value: bone_idx_str.to_i
-
       body:
         pos: body_offset
         type: mesh_body

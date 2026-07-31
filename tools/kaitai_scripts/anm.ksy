@@ -1,18 +1,22 @@
 meta:
   id: anm
-  title: Silent Hill 1 Animation Format
+  title: Silent Hill (PSX) Animation Format
   file-extension: anm
   endian: le
+  encoding: ASCII
 
 doc: |
-  ANM is the proprietary 3D animation format of Silent Hill (PSX).
+  ANM is the animation format used for 3D skeletal characters (ILM) in Silent
+  Hill.
 
-  The body is a list of frames, each frame containing a section of translations
-  for the first `translation_count` bones followed by a section of rotations
-  for the next `rotation_count` bones.
+  The body is a list of keyframes. Each keyframe contains section of
+  translations for the first `translation_count` bones, followed by a section of
+  rotations for the next `rotation_count` bones. The header contains base
+  translations for all bones as well as a magic value that is the offset to the
+  first keyframe.
 
-  The header contains base translations for all bones as well as a magic value
-  that is the offset to the first frame.
+  Some ANMs for the player character contain only a list of frames which are
+  appended to a base ANM.
 
 seq:
   - id: magic
@@ -24,7 +28,7 @@ seq:
   - id: translation_count
     type: u1
 
-  - id: frame_size
+  - id: keyframe_size
     type: s2
     valid:
       eq: (rotation_count * 9) + (translation_count * 3)
@@ -38,12 +42,12 @@ seq:
   - id: end_offset
     type: s4
 
-  - id: frame_count
+  - id: keyframe_count
     type: u2
 
-  - id: scale_log2
+  - id: translation_shift
     type: u1
-    doc: Translations are scaled by `1 << scale_log2`.
+    doc: Translations are scaled with `<< translation_shift`.
 
   - size: 1
 
@@ -53,19 +57,19 @@ seq:
     repeat-expr: bone_count
 
 instances:
-  frames:
-    type: frame(_index)
+  keyframes:
+    type: keyframe(_index)
     pos: magic
     repeat: expr
-    repeat-expr: frame_count
+    repeat-expr: keyframe_count
 
-  transforms_per_frame:
+  transforms_per_keyframe:
     value: rotation_count + translation_count
 
 types:
-  frame:
+  keyframe:
     params:
-      - id: frame_index
+      - id: keyframe_idx
         type: u2
 
     seq:
@@ -75,7 +79,7 @@ types:
         repeat-expr: _root.translation_count
 
       - id: rotations
-        type: rotation
+        type: matrix
         repeat: expr
         repeat-expr: _root.rotation_count
 
@@ -95,17 +99,30 @@ types:
 
   translation:
     seq:
-      - id: x
+      - id: x_int
         type: s1
+        doc: Q0.7.
 
-      - id: y
+      - id: y_int
         type: s1
+        doc: Q0.7.
 
-      - id: z
+      - id: z_int
         type: s1
+        doc: Q0.7.
 
-  rotation:
-    doc: 3x3 matrix, signed fixed-point with 7 fractional bits.
+    instances:
+      x:
+        value: (x_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+
+      y:
+        value: (y_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+
+      z:
+        value: (x_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+
+  matrix:
+    doc: Q0.7 3x3 matrix.
 
     seq:
       - id: value
