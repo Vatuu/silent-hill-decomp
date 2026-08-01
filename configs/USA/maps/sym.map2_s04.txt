@@ -49,18 +49,19 @@ sharedFunc_800D2EF4_0_s00       = 0x800CCA74; // type:func
 //-----------------------------------------------------------
 //--- PA: 0x003510   VA: 0x800CCA88   subsegment: c, map2_s04
 //-----------------------------------------------------------
-sharedFunc_800D929C_0_s00       = 0x800CCA88; // type:func
-Map_RoomIdxGet                  = 0x800CCA98; // type:func
-Map_RoomBgmInit                 = 0x800CCB30; // type:func
-Map_RoomBgmInit_CondTrue        = 0x800CCB64; // type:func
-Map_RoomBgmInit_CondFalse       = 0x800CCBE0; // type:func
-GameBoot_LoadScreen_StageString = 0x800CCE6C; // type:func
-MapEvent_DoorJammed             = 0x800CCE74; // type:func
-MapEvent_DoorLocked             = 0x800CCF08; // type:func
-MapEvent_PaperMapTake           = 0x800CD0D0; // type:func
-MapEvent_ShotgunTake            = 0x800CD0F8; // type:func
-Map_WorldObjectsInit            = 0x800CD124; // type:func
-Map_WorldObjectsUpdate          = 0x800CD2AC; // type:func
+sharedFunc_800D929C_0_s00        = 0x800CCA88; // type:func
+Map_RoomIdxGet                   = 0x800CCA98; // type:func
+Map_RoomBgmInit                  = 0x800CCB30; // type:func
+Map_RoomBgmInit_CondTrue         = 0x800CCB64; // type:func
+Map_RoomBgmInit_CondFalse        = 0x800CCBE0; // type:func
+GameBoot_LoadScreen_StageString  = 0x800CCE6C; // type:func
+MapEvent_DoorJammed              = 0x800CCE74; // type:func
+MapEvent_DoorLocked              = 0x800CCF08; // type:func
+MapEvent_PoliceChalkboardInspect = 0x800CD088; // type:func
+MapEvent_PaperMapTake            = 0x800CD0D0; // type:func
+MapEvent_ShotgunTake             = 0x800CD0F8; // type:func
+Map_WorldObjectsInit             = 0x800CD124; // type:func
+Map_WorldObjectsUpdate           = 0x800CD2AC; // type:func
 
 
 
