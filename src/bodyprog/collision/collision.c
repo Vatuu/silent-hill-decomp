@@ -89,7 +89,7 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* t
     #undef AABB_BUFFER
 }
 
-void Ipd_CollisionPtrsInit(s_IpdCollisionData* collData) // 0x8006993C
+void Collision_ChunkHeaderPtrsInit(s_IpdCollisionData* collData) // 0x8006993C
 {
     collData->splitVertices = (u8*)collData->splitVertices + (u32)collData;
     collData->surfaces      = (u8*)collData->surfaces      + (u32)collData;
@@ -136,7 +136,7 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     pos.vz = Q12(0.0f);
 
     // Get collision data at world position.
-    collData = Ipd_CollisionDataGet(posX, posZ);
+    collData = WorldMap_CollisionDataGet(posX, posZ);
     if (collData == NULL)
     {
         surface->groundHeight = Q12(8.0f);
@@ -388,7 +388,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
     cylinder.position.vz = chara->position.vz + chara->collision.shapeOffsets.cylinder.vz;
 
     // Check if collision data at current position is valid.
-    if (Ipd_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
+    if (WorldMap_CollisionDataGet(chara->position.vx, chara->position.vz) == NULL)
     {
         Collision_DefaultResultSet(collResult, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
         return true;
@@ -417,7 +417,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
     }
 
     return func_8006A4A8(collResult, &offsetCpy, &cylinder, cond,
-                         Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
+                         WorldMap_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0,
                          Collision_CollidableCharasGet(&charaCount, chara, true), charaCount);
 }
 
@@ -520,7 +520,7 @@ s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_
     offsetCpy = *offset;
 
     return func_8006A4A8(collResult, &offsetCpy, cylinder, false,
-                         Ipd_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
+                         WorldMap_ActiveChunksCollisionDataGet(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
 }
 
 bool func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CollisionCylinder* cylinder, bool arg3,

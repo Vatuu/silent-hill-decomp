@@ -443,7 +443,7 @@ bool func_8008F914(s32 posX, s32 posZ)
 {
     if (g_SysWork.sysFlags & SysFlag_DemoActive)
     {
-        return Ipd_CloseChunkEdgeCheck(posX, posZ);
+        return WorldMap_CloseChunkEdgeCheck(posX, posZ);
     }
 
     return true;

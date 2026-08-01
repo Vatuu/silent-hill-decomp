@@ -153,7 +153,8 @@ typedef enum _WorldModelLocation
     WorldModelLocation_Chunk1 = 2,
     WorldModelLocation_Chunk2 = 3,
     WorldModelLocation_Chunk3 = 4,
-    WorldModelLocation_Chunk4 = 5
+    WorldModelLocation_Chunk4 = 5,
+    WorldModelLocation_Unk6   = 6
 } e_WorldModelLocation;
 
 // Something related to enemies attacks.

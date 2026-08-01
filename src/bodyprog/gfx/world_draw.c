@@ -111,7 +111,7 @@ void WorldGfx_Init(void) // 0x8003C048
 
     g_WorldGfxWork.useStoredPoint = false;
 
-    Ipd_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
+    WorldMap_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
     Collision_Init();
 
     g_SysWork.lightIntensity = Q12(1.0f);
@@ -194,19 +194,19 @@ void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) /
     }
 
     mapInfo = mapHdr->mapInfo;
-    Ipd_MapInfoSet(mapInfo->tag, mapInfo->plmFileIdx, activeIpdCount, CHECK_FLAG(mapInfo->flags, MapFlag_Interior, false), 0, 0);
+    WorldMap_InfoSet(mapInfo->tag, mapInfo->plmFileIdx, activeIpdCount, CHECK_FLAG(mapInfo->flags, MapFlag_Interior, false), 0, 0);
 
     if (mapHdr->mapInfo == &MAP_INFOS[MapType_THR])
     {
-        Ipd_ChunkSet(FILE_BG_THR05FD_IPD, -1, 8);
+        WorldMap_ChunkSet(FILE_BG_THR05FD_IPD, -1, 8);
     }
 
-    Ipd_ChunkInit(playerPosX, playerPosZ, playerPosX, playerPosZ);
+    WorldMap_ChunkInit(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
 void Map_ActiveChunksClear(void) // 0x8003C2EC
 {
-    Ipd_ActiveChunksClear();
+    WorldMap_ActiveChunksClear();
 }
 
 void WorldGfx_MapReset(void) // 0x8003C30C
@@ -216,12 +216,12 @@ void WorldGfx_MapReset(void) // 0x8003C30C
     mapFlags = g_WorldGfxWork.mapInfo->flags;
     if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
-        Ipd_WorldReset();
+        WorldMap_Reset();
         return;
     }
 
-    Ipd_ActiveChunksClear();
-    Ipd_TexturesRefClear();
+    WorldMap_ActiveChunksClear();
+    WorldMap_TexturesRefClear();
 }
 
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
@@ -347,7 +347,7 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
         projPos.vz   = CLAMP(projPos.vz,   alignedPosZ + 1, alignedPosZ + (HALF_CELL_SIZE - 1));
     }
 
-    Ipd_ChunkInit(samplePos.vx, samplePos.vz, projPos.vx, projPos.vz);
+    WorldMap_ChunkInit(samplePos.vx, samplePos.vz, projPos.vx, projPos.vz);
 
     #undef HALF_CELL_SIZE
     #undef PROJ_DIST_NEAR
@@ -357,7 +357,7 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
 bool WorldGfx_ChunkInitCheck(void) // 0x8003C850
 {
     WorldGfx_CloseRangeChunksInit();
-    return Ipd_ChunksLoadedCheck();
+    return WorldMap_ActiveModelsLoadStateCheck();
 }
 
 void WorldGfx_Draw(bool arg0) // 0x8003C878
@@ -365,15 +365,15 @@ void WorldGfx_Draw(bool arg0) // 0x8003C878
     // Draw world objects.
     WorldObjects_DrawAllObjects(&g_WorldGfxWork);
 
-    // Load active chunks.
-    while (Ipd_NextChunkLoadCheck())
+    // Load active chunk.
+    while (WorldMap_NextChunkLoadCheck())
     {
         WorldGfx_CloseRangeChunksInit();
         Fs_QueueWaitForEmpty();
     }
 
     // Draw active chunks.
-    Ipd_ChunksDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
+    WorldMap_ChunksDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
 
     WorldGfx_2dEffectsDraw();
 }
@@ -384,8 +384,8 @@ void WorldGfx_Draw(bool arg0) // 0x8003C878
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    model->metadata.lmIdx = WorldModelLocation_None;
-    model->modelInfo.field_0  = 0;
+    model->metadata.lmIdx    = WorldModelLocation_None;
+    model->modelInfo.field_0 = 0;
 
     StringCopy(model->metadata.name.str, newStr);
 
@@ -411,16 +411,16 @@ void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECT
         {
             GameFs_CommonItemsTextureLoad();
 
-            modelLoc = Map_WorldObjectModelLocationGet(model, &model->metadata, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            modelLoc = WorldMap_ObjectModelLocationGet(model, &model->metadata, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
             if (modelLoc == WorldModelLocation_None)
             {
-                if (!Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata))
+                if (Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata))
                 {
-                    return;
+                    modelLoc = WorldModelLocation_Global;
                 }
                 else
                 {
-                    modelLoc = WorldModelLocation_Global;
+                    return;
                 }
             }
 
@@ -519,7 +519,7 @@ void WorldObjects_DrawStep(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* w
     s_ModelHeader*         modelHdr;
 
     lmIdx = model->metadata.lmIdx;
-    if (lmIdx == 0)
+    if (lmIdx == WorldModelLocation_None)
     {
         return;
     }
@@ -527,9 +527,9 @@ void WorldObjects_DrawStep(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* w
     modelHdr   = model->modelInfo.modelHdr;
     objMetaCpy = &model->metadata;
 
-    if (lmIdx >= 3 && lmIdx < 7)
+    if (lmIdx >= WorldModelLocation_Chunk2 && lmIdx <= WorldModelLocation_Unk6)
     {
-        if (!Ipd_IsLoaded(lmIdx - 3))
+        if (WorldMap_ActiveChunkLoadedCheck(lmIdx - 3) == WorldModelLocation_None)
         {
             model->metadata.lmIdx = WorldModelLocation_None;
         }

@@ -4,10 +4,7 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 
-// TODO: Need to decide on clearer terminology. Right now we have "chunk cells", "cells", and "subcells", which are
-// kind of confusing.
-
-#define CHUNK_CELL_SIZE                   40.0f
+#define CHUNK_SIZE                   40.0f
 #define ACTIVE_CHUNK_COUNT_MAX            4
 #define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
 #define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
@@ -21,7 +18,7 @@ typedef enum _MapModelLoadState
     MapModelLoadState_Loaded    = 3
 } e_MapModelLoadState;
 
-/** @brief Map terrain chunk IPD file load states.
+/** @brief Map terrain cell IPD file load states.
  *
  * See `Map_ChunkLoadStateGet`.
  */
@@ -32,22 +29,26 @@ typedef enum _WorldMapLoadState
     WorldMapLoadState_Loaded   = 2  /** Currently loaded. */
 } e_WorldMapLoadState;
 
-/** @brief Map terrain chunk. */
-typedef struct _Chunk
+/** @brief Map IPD chunk information. */
+typedef struct _MapChunk
 {
     /* 0x0  */ s_IpdHeader* ipdHdr;
     /* 0x4  */ s32          queueIdx;
-    /* 0x8  */ s16          cellX;
-    /* 0xA  */ s16          cellZ;
+    /* 0x8  */ s16          chunkX;
+    /* 0xA  */ s16          chunkZ;
     /* 0xC  */ q19_12       paddedDistanceToEdge0;
     /* 0x10 */ q19_12       paddedDistanceToEdge1;
     /* 0x14 */ u8           materialCount;
-    /* 0x15 */ s8           __pad_15[3];
+             // 3 bytes of padding.
     /* 0x18 */ s32          outsideCount;
-} s_Chunk;
-STATIC_ASSERT_SIZEOF(s_Chunk, 28);
+} s_MapChunk;
+STATIC_ASSERT_SIZEOF(s_MapChunk, 28);
 
-/** @brief Map terrain chunk column. TODO: Or row? */
+/** @brief Map terrain chunk column.
+ * TODO: Or row?
+ * Will: It's or should be a 2D array, also this may actually be cells, not chunks.
+         Based in `WorldMap_MakeGrid` the 2D array dimensions should be 19x16 and possibly some Q8 value.
+ */
 typedef struct _ChunkColumn
 {
     /* 0x0 */ s16 idx[16];
@@ -60,7 +61,7 @@ typedef struct _ActiveChunkTextures
     /* 0x4 */ s_Texture* textures[ACTIVE_CHUNK_TEXTURE_COUNT_MAX];
 } s_ActiveChunkTextures;
 
-/** @brief Texture data associated with map terrain chunks. */
+/** @brief Texture data associated with chunks. */
 typedef struct _ChunkTextures
 {
     /* 0x0   */ s_ActiveChunkTextures fullPage;
@@ -70,34 +71,34 @@ typedef struct _ChunkTextures
 } s_ChunkTextures;
 STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 
-/** @brief Global IPD LM model. */
-typedef struct _IpdLm
+/** @brief Global PLM model. */
+typedef struct _PlmLm
 {
     /* 0x0 */ s_LmHeader* lmHdr;
     /* 0x4 */ s32         fileIdx;
     /* 0x8 */ s32         queueIdx;
-} s_IpdLm;
+} s_PlmLm;
 
 /** @brief Map data and layout. */
-typedef struct _WorldMap
+typedef struct _WorldMapWork
 {
     /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
     /* 0x134 */ s32                textureFileIdx;
-    /* 0x138 */ s_IpdLm            globalLm;
+    /* 0x138 */ s_PlmLm            globalLm;
     /* 0x144 */ char               mapTag[4];
     /* 0x148 */ s32                mapTagSize;
     /* 0x14C */ s32                ipdFileIdx;
     /* 0x150 */ s_IpdHeader*       chunkBuffer;
     /* 0x154 */ s32                chunkBufferSize;
     /* 0x158 */ s32                activeChunkCount;
-    /* 0x15C */ s_Chunk            activeChunks[ACTIVE_CHUNK_COUNT_MAX];
-    /* 0x1CC */ s_ChunkColumn      chunkGrid[19];
-    /* 0x42C */ s_ChunkColumn*     chunkGridCenter; // TODO: All access to this variable relies on hacks.
+    /* 0x15C */ s_MapChunk         activeChunks[ACTIVE_CHUNK_COUNT_MAX];
+    /* 0x1CC */ s_ChunkColumn      chunksGrid[19];
+    /* 0x42C */ s_ChunkColumn*     chunksGridCenter; // TODO: All access to this variable relies on hacks.
     /* 0x430 */ s_ChunkTextures    chunkTextures;
     /* 0x578 */ q19_12             positionX;
     /* 0x57C */ q19_12             positionZ;
-    /* 0x580 */ s32                cellX;
-    /* 0x584 */ s32                cellZ;
+    /* 0x580 */ s32                chunkX;
+    /* 0x584 */ s32                chunkZ;
     /* 0x588 */ bool               isExterior;
 } s_WorldMapWork;
 STATIC_ASSERT_SIZEOF(s_WorldMapWork, 1420);

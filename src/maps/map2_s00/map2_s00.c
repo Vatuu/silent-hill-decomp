@@ -2026,8 +2026,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
 
     flags = 0;
 
-    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_CELL_SIZE);
-    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_CELL_SIZE);
+    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
+    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
 
     if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
     {
@@ -2190,8 +2190,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             break;
     }
 
-    cellZ1 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_CELL_SIZE);
-    cellX1 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_CELL_SIZE);
+    cellZ1 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
+    cellX1 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
 
     if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
     {
@@ -2268,8 +2268,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             break;
     }
 
-    cellZ2 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_CELL_SIZE);
-    cellX2 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_CELL_SIZE);
+    cellZ2 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
+    cellX2 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
 
     if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
     {

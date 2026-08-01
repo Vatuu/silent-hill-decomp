@@ -80,7 +80,7 @@ segments:
       - [0x920,  .rodata, events/title]
       - [0x9C3,   rodata] # Garbage padding
       - [0x9C8,  .rodata, gfx/world_draw]
-      - [0x1054, .rodata, gfx/map_effects]
+      - [0x1054, .rodata, gfx/world_effects]
       - [0x1084,  rodata] # Garbage padding
       - [0x1094, .rodata, sound/sd_call]
       - [0x1200,  rodata] # Garbage padding
@@ -178,12 +178,11 @@ segments:
       - [0x171E8,    c, events/collision_flags_update]
       - [0x172F0,    c, gfx/world_draw]
       - [0x19A88,    c, gfx/option_brightness_line]
-      - [0x19BB0,    c, gfx/map_effects]
+      - [0x19BB0,    c, gfx/world_effects]
       - [0x1B4A4,    c, events/collision_trigger]
       - [0x1B4EC,    c, view/vc_util]
       - [0x1C014,    c, gfx/bodyprog_80040B74] # lighting_overlap.c?
-      - [0x1CF7C,    c, gfx/fs_ipd]
-      - [0x1F530,    c, gfx/ipd_draw]
+      - [0x1CF7C,    c, gfx/world_map]
       - [0x1FA44,    c, gfx/bodyprog_anim_800445A4]
       - [0x203B4,    c, gfx/bodyprog_bone_80044F14]
       - [0x20F1C,    c, sound/sd_call]
@@ -414,7 +413,7 @@ segments:
       - [0x84ECC, .data, events/game_sys_states]
       - [0x84F14, .data, events/title]
       - [0x8534C, .data, gfx/world_draw]
-      - [0x85424, .data, gfx/map_effects]
+      - [0x85424, .data, gfx/world_effects]
       - [0x85468, .data, sound/sound_data]
       - [0x88920, .data, view/vw_calc]
       - [0x88938, .data, text/text_draw]
@@ -499,14 +498,14 @@ segments:
       - [0x9827C,  pad] # Garbage.
       - [0x98280, .bss, events/title]
       - [0x98284,  pad] # Garbage.
-      - [0x98288, .bss, gfx/map_effects]
+      - [0x98288, .bss, gfx/world_effects]
       - [0x98298, .bss, view/vc_util]
       - [0x982A4,  pad] # Unused
       - [0x982B4, .bss, events/collision_flags_update]
       - [0x982B8, .bss, gfx/world_draw]
       - [0x9B074,  pad] # Garbage.
       - [0x9B090, .bss, gfx/bodyprog_80040B74]
-      - [0x9C4B0, .bss, gfx/fs_ipd]
+      - [0x9C4B0, .bss, gfx/world_map]
       - [0x9CA4C,  pad] # Garbage.
       - [0x9CA50, .bss, gfx/bodyprog_bone_80044F14]
       - [0x9CA54,  pad] # Garbage.

@@ -1211,7 +1211,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
         case EventState_Initialize:
             Player_ControlFreeze();
 
-            Ipd_ChunkSet(FILE_BG_THRF908_IPD, -7, 6);
+            WorldMap_ChunkSet(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, Q8(0.0f), Q8(13.0f / 16.0f));
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));

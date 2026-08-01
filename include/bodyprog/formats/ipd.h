@@ -149,8 +149,8 @@ typedef struct _IpdHeader
 {
     /* 0x0  */ u8                 magic;
     /* 0x1  */ u8                 isLoaded; /** `bool` */
-    /* 0x3  */ s8                 cellX;
-    /* 0x3  */ s8                 cellZ;
+    /* 0x3  */ s8                 chunkX;
+    /* 0x3  */ s8                 chunkZ;
     /* 0x4  */ s_LmHeader*        lmHdr;
     /* 0x8  */ u8                 modelCount;
     /* 0x9  */ u8                 modelBufferCount;

@@ -477,19 +477,19 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     // Compute player cell.
     if (playerChara.position.vx <= Q12(0.0f))
     {
-        cellX = (playerChara.position.vx - Q12(CHUNK_CELL_SIZE)) / Q12(CHUNK_CELL_SIZE);
+        cellX = (playerChara.position.vx - Q12(CHUNK_SIZE)) / Q12(CHUNK_SIZE);
     }
     else
     {
-        cellX = (playerChara.position.vx / Q12(CHUNK_CELL_SIZE));
+        cellX = (playerChara.position.vx / Q12(CHUNK_SIZE));
     }
     if (playerChara.position.vz <= Q12(0.0f))
     {
-        cellZ = (playerChara.position.vz - Q12(CHUNK_CELL_SIZE)) / Q12(CHUNK_CELL_SIZE);
+        cellZ = (playerChara.position.vz - Q12(CHUNK_SIZE)) / Q12(CHUNK_SIZE);
     }
     else
     {
-        cellZ = playerChara.position.vz / Q12(CHUNK_CELL_SIZE);
+        cellZ = playerChara.position.vz / Q12(CHUNK_SIZE);
     }
 
     mapCoordIdxX = SHRT_MAX;
@@ -617,13 +617,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
             if (cellX == -2 && cellZ == 0)
             {
                 angle       += Q12_ANGLE(180.0f);
-                mapCoordIdxX = D_800AE774[2][2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / Q12(-0.2f));
-                mapCoordIdxZ = D_800AE774[2][2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / Q12(0.2f));
+                mapCoordIdxX = D_800AE774[2][2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
+                mapCoordIdxZ = D_800AE774[2][2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
             }
             else
             {
-                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / Q12(0.2f));
-                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / Q12(-0.2f));
+                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
+                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
             }
             break;
 
@@ -631,16 +631,16 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
         case PaperMapIdx_FogHospital1F:
         case PaperMapIdx_FogHospital2F:
         case PaperMapIdx_FogHospital3F:
-            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / 0x222); // TODO: Demagic into clean float.
-            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222); // TODO: Demagic into clean float.
+            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
             break;
 
         case PaperMapIdx_AltHospitalBF:
         case PaperMapIdx_AltHospital1F:
         case PaperMapIdx_AltHospital2F:
         case PaperMapIdx_AltHospital3F:
-            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((playerChara.position.vx -  (cellX * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) / 0x222);
-            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_CELL_SIZE))) - (Q12(CHUNK_CELL_SIZE) / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((playerChara.position.vx -  (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222);
+            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
             break;
 
         case PaperMapIdx_ResortTown:
@@ -650,7 +650,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     mapCoordIdxX = MapCoordIdxGet( playerChara.position.vx, Q12(2.0f) - 1, 13,  60);
                     mapCoordIdxZ = MapCoordIdxGet(-playerChara.position.vz, Q12(2.0f) - 1, 13, -85);
 
-                    mapChunkX = playerChara.position.vx / Q12(CHUNK_CELL_SIZE);
+                    mapChunkX = playerChara.position.vx / Q12(CHUNK_SIZE);
                     if ((playerChara.position.vx >  Q12(0.0f) && (mapChunkX + 1) == -4) ||
                         (playerChara.position.vx <= Q12(0.0f) && (mapChunkX - 1) == -4))
                     // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // TODO: Causing mismatch.

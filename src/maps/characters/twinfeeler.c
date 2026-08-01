@@ -17,7 +17,7 @@ void func_800D078C(void) // 0x800D078C
     u16               y;
     s_Texture*        tex;
 
-    tex    = Ipd_TextureInfoGet(D_800CA77C);
+    tex    = WorldMap_ActiveTextureInfoGet(D_800CA77C);
     tpage1 = tex->imageDesc.tPage[1];
     x      = tex->imageDesc.clutX;
     y      = tex->imageDesc.clutY;

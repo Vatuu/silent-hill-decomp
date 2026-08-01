@@ -205,7 +205,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
     s_RayState_8C*       curUnk;
 
     // Run through IPD collision data.
-    collDataPtrs = Ipd_ActiveChunksCollisionDataGet(&collDataIdx);
+    collDataPtrs = WorldMap_ActiveChunksCollisionDataGet(&collDataIdx);
     for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
     {
         collData = *curCollData;

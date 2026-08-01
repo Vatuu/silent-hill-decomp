@@ -349,7 +349,7 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 
 bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata) // 0x80056CB4
 {
-    u_Filename     sp10;
+    u_Filename     targetModelName;
     s32            modelHdrCount;
     bool           result;
     s32            i;
@@ -357,17 +357,17 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 
     result = false;
 
-    StringCopy(sp10.str, metadata->name.str);
+    StringCopy(targetModelName.str, metadata->name.str);
 
     modelHdrCount = lmHdr->modelCount;
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        for (i = 0, modelHdr = &lmHdr->modelHdrs[i]; i < modelHdrCount; i++, modelHdr++)
+        for (i = 0, modelHdr = &lmHdr->modelHdrs[0]; i < modelHdrCount; i++, modelHdr++)
         {
-            if (!COMPARE_FILENAMES(&modelHdr->name, &sp10))
+            if (!COMPARE_FILENAMES(&modelHdr->name.str, &targetModelName.str))
             {
-                result                       = true;
+                result                    = true;
                 model->modelInfo.modelIdx = i;
                 model->modelInfo.modelHdr = modelHdr;
             }
