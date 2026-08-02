@@ -4,7 +4,7 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 
-#define CHUNK_SIZE                   40.0f
+#define CHUNK_SIZE                        40.0f
 #define ACTIVE_CHUNK_COUNT_MAX            4
 #define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
 #define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
@@ -18,7 +18,7 @@ typedef enum _MapModelLoadState
     MapModelLoadState_Loaded    = 3
 } e_MapModelLoadState;
 
-/** @brief Map terrain cell IPD file load states.
+/** @brief IPD chunk file load states.
  *
  * See `Map_ChunkLoadStateGet`.
  */
@@ -29,7 +29,7 @@ typedef enum _WorldMapLoadState
     WorldMapLoadState_Loaded   = 2  /** Currently loaded. */
 } e_WorldMapLoadState;
 
-/** @brief Map IPD chunk information. */
+/** @brief Map chunk. */
 typedef struct _MapChunk
 {
     /* 0x0  */ s_IpdHeader* ipdHdr;
@@ -44,10 +44,10 @@ typedef struct _MapChunk
 } s_MapChunk;
 STATIC_ASSERT_SIZEOF(s_MapChunk, 28);
 
-/** @brief Map terrain chunk column.
+/** @brief Map chunk column.
  * TODO: Or row?
- * Will: It's or should be a 2D array, also this may actually be cells, not chunks.
-         Based in `WorldMap_MakeGrid` the 2D array dimensions should be 19x16 and possibly some Q8 value.
+ * Will: Or it should be a 2D array. Also this may actually be cells, not chunks.
+         Based in `WorldMap_MakeGrid`, the 2D array dimensions should be 19x16 and possibly some Q8 value.
  */
 typedef struct _ChunkColumn
 {
@@ -72,19 +72,19 @@ typedef struct _ChunkTextures
 STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 
 /** @brief Global PLM model. */
-typedef struct _PlmLm
+typedef struct _GlobalPlm
 {
     /* 0x0 */ s_LmHeader* lmHdr;
     /* 0x4 */ s32         fileIdx;
     /* 0x8 */ s32         queueIdx;
-} s_PlmLm;
+} s_GlobalPlm;
 
 /** @brief Map data and layout. */
 typedef struct _WorldMapWork
 {
     /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
     /* 0x134 */ s32                textureFileIdx;
-    /* 0x138 */ s_PlmLm            globalLm;
+    /* 0x138 */ s_GlobalPlm        globalPlm;
     /* 0x144 */ char               mapTag[4];
     /* 0x148 */ s32                mapTagSize;
     /* 0x14C */ s32                ipdFileIdx;

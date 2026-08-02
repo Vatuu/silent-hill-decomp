@@ -1050,7 +1050,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
  */
 void WorldMap_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void WorldMap_GlobalLmInit(s_PlmLm* globalLm, s_LmHeader* lmHdr);
+void WorldMap_GlobalLmInit(s_GlobalPlm* globalPlm, s_LmHeader* lmHdr);
 
 void WorldMap_GlobalLmHeaderInit(s_LmHeader* lmHdr);
 
@@ -1061,11 +1061,11 @@ void WorldMap_TexturesInit(void);
 
 void WorldMap_CollisionDataReset(void);
 
-/** @brief Places an chunk at given XZ chunk cell coordinates.
+/** @brief Places a chunk at given XZ chunk cell coordinates.
  *
  * @param ipdFileIdx Index of the IPD chunk file to place.
- * @param chunkX X cell coordinate.
- * @param chunkZ Z cell coordinate.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
  */
 void WorldMap_ChunkSet(s16 ipdFileIdx, s32 chunkX, s32 chunkZ);
 
@@ -1080,9 +1080,9 @@ void WorldMap_GlobalLmReset(void);
 s_Texture* WorldMap_ActiveTextureInfoGet(char* texName);
 
 void WorldMap_InfoSet(char* mapTag, e_FsFile plmIdx, s32 activeChunkCount, bool isExterior,
-                        e_FsFile ipdFileIdx, e_FsFile texFileIdx);
+                      e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
-void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeCellsCount);
+void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeCellCount);
 
 /** @brief Locates all IPD files for a given map type.
  *
@@ -1120,12 +1120,12 @@ s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ);
  */
 s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
 
-/** @brief Checks if an IPD file is loaded.
+/** @brief Checks if an IPD chunk file is loaded.
  *
- * @param ipdIdx IPD data index.
- * @return `true` if the IPD file is loaded, `false` otherwise.
+ * @param activeChunkIdx Active chunk index.
+ * @return `true` if the IPD chunk file is loaded, `false` otherwise.
  */
-bool WorldMap_ActiveChunkLoadedCheck(s32 ipdIdx);
+bool WorldMap_ActiveChunkLoadedCheck(s32 activeChunkIdx);
 
 /** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
 void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ);
@@ -1136,8 +1136,8 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
  *
  * @param posX X position.
  * @param posZ Z position.
- * @param chunkX X cell coordinate.
- * @param chunkZ Z cell coordinate.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
  * @param isExterior `true` for padded exterior, `false` for non-padded interior.
  * @return Padded distance from the XZ position to the XZ chunk cell.
  */
@@ -1148,8 +1148,8 @@ q19_12 WorldMap_PaddedDistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 chunk
  *
  * @param posX X position.
  * @param posZ Z position.
- * @param chunkX X cell coordinate.
- * @param chunkZ Z cell coordinate.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
  * @return Distance from the XZ position to the XZ chunk cell boundary.
  */
 q19_12 WorldMap_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 chunkX, s32 chunkZ);
@@ -1157,22 +1157,24 @@ q19_12 WorldMap_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 chunkX, s32
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
 s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+                                 bool isExterior);
 
 /** @brief Computes the distance from a position to the nearest edge of a chunk.
  *
  * @param chunk Chunk to check.
  * @param TODO
  */
-void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+                                 bool isExterior);
 
 /** Sets materials for active chunks? */
 void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain);
 
 /** @brief Gets the IPD chunk file index from cell coordinates.
  *
- * @param chunkX X cell coordinate.
- * @param chunkZ Z cell coordinate.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
  * @return IPD chunk file index.
  */
 s32 WorldMap_IpdChunkFileIdxGet(s32 chunkX, s32 chunkZ);
@@ -1183,7 +1185,7 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
 
 s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32 chunkZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-/** @brief Checks if all base map data (both IPD and the Global LM models) have been loaded properly. */
+/** @brief Checks if all base map data (IPD and global LM models) have been loaded properly. */
 bool WorldMap_ActiveModelsLoadStateCheck(void);
 
 /** @brief Checks if the player is in close proximity to an unloaded ahead which should be loaded.
@@ -1205,12 +1207,12 @@ bool WorldMap_TextureLoadedCheck(s_IpdHeader* ipdHdr);
 s_IpdCollisionData* WorldMap_HeaderCollisionDataGet(s_IpdHeader* ipdHdr);
 
 void WorldMap_ChunkPropertiesSet(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount,
-              s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
-              e_FsFile fileIdx);
+                                 s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+                                 e_FsFile fileIdx);
 
 void WorldMap_ChunkMaterialsLoad(s_IpdHeader* ipdHdr,
-                       s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
-                       e_FsFile fileIdx);
+                                 s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+                                 e_FsFile fileIdx);
 
 /** Checks if IPD is loaded before returning texture count? */
 s32 WorldMap_ChunkHalfPageMaterialCountGet(s_IpdHeader* ipdHdr);
@@ -1231,7 +1233,7 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
 void WorldMap_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModelInfos);
 
-/** Sets IPD collision data chunk cells? */
+/** Sets IPD collision data chunks? */
 void func_80044044(s_IpdHeader* ipd, s32 chunkX, s32 chunkZ);
 
 /** @brief Draws an IPD chunk.

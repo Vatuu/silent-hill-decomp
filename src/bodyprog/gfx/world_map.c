@@ -61,15 +61,15 @@ static u32 WorldMap_ChunkLoadStateGet(s_MapChunk* chunk) // 0x80041B1C
 
 /** @brief Gets the load state of a PLM file (Global LM) and their dependencies.
  *
- * @param globalLm PLM file to check.
+ * @param globalPlm PLM file to check.
  * @return PLM file load state `(e_MapModelLoadState`).
  */
-static u32 WorldMap_GlobalLmLoadStateGet(s_PlmLm* globalLm) // 0x80041BA0
+static u32 WorldMap_GlobalLmLoadStateGet(s_GlobalPlm* globalPlm) // 0x80041BA0
 {
     s32 loadState;
     s32 loadStateCpy;
 
-    loadStateCpy = loadState = WorldMap_LoadStateGet(globalLm->queueIdx);
+    loadStateCpy = loadState = WorldMap_LoadStateGet(globalPlm->queueIdx);
 
     if (loadStateCpy == WorldMapLoadState_Unloaded)
     {
@@ -80,7 +80,7 @@ static u32 WorldMap_GlobalLmLoadStateGet(s_PlmLm* globalLm) // 0x80041BA0
     {
         return MapModelLoadState_Invalid;
     }
-    else if (globalLm->lmHdr->isLoaded && Lm_IsTextureLoaded(globalLm->lmHdr))
+    else if (globalPlm->lmHdr->isLoaded && Lm_IsTextureLoaded(globalPlm->lmHdr))
     {
         return MapModelLoadState_Loaded;
     }
@@ -91,7 +91,7 @@ static u32 WorldMap_GlobalLmLoadStateGet(s_PlmLm* globalLm) // 0x80041BA0
 void WorldMap_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x80041C24
 {
     bzero(&g_WorldMapWork, sizeof(s_WorldMapWork));
-    WorldMap_GlobalLmInit(&g_WorldMapWork.globalLm, lmHdr);
+    WorldMap_GlobalLmInit(&g_WorldMapWork.globalPlm, lmHdr);
 
     g_WorldMapWork.chunkBuffer      = ipdBuf;
     g_WorldMapWork.chunkBufferSize  = ipdBufSize;
@@ -103,13 +103,13 @@ void WorldMap_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize) // 0x
     WorldMap_CollisionDataReset();
 }
 
-void WorldMap_GlobalLmInit(s_PlmLm* globalLm, s_LmHeader* lmHdr) // 0x80041CB4
+void WorldMap_GlobalLmInit(s_GlobalPlm* globalPlm, s_LmHeader* lmHdr) // 0x80041CB4
 {
-    globalLm->lmHdr = lmHdr;
+    globalPlm->lmHdr = lmHdr;
     WorldMap_GlobalLmHeaderInit(lmHdr);
 
-    globalLm->queueIdx = 0;
-    globalLm->fileIdx  = NO_VALUE;
+    globalPlm->queueIdx = 0;
+    globalPlm->fileIdx  = NO_VALUE;
 }
 
 void WorldMap_GlobalLmHeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
@@ -250,17 +250,17 @@ void WorldMap_Reset(void) // 0x800420C0
 
 void WorldMap_GlobalLmReset(void) // 0x800420FC
 {
-    s_PlmLm* globalLm;
+    s_GlobalPlm* globalPlm;
 
-    globalLm = &g_WorldMapWork.globalLm;
+    globalPlm = &g_WorldMapWork.globalPlm;
 
-    if (WorldMap_LoadStateGet(globalLm->queueIdx) >= WorldMapLoadState_Loaded &&
-        globalLm->lmHdr->isLoaded)
+    if (WorldMap_LoadStateGet(globalPlm->queueIdx) >= WorldMapLoadState_Loaded &&
+        globalPlm->lmHdr->isLoaded)
     {
-        Lm_MaterialRefCountDec(g_WorldMapWork.globalLm.lmHdr);
+        Lm_MaterialRefCountDec(g_WorldMapWork.globalPlm.lmHdr);
     }
 
-    WorldMap_GlobalLmInit(&g_WorldMapWork.globalLm, g_WorldMapWork.globalLm.lmHdr);
+    WorldMap_GlobalLmInit(&g_WorldMapWork.globalPlm, g_WorldMapWork.globalPlm.lmHdr);
 }
 
 s_Texture* WorldMap_ActiveTextureInfoGet(char* texName) // 0x80042178
@@ -290,16 +290,16 @@ void WorldMap_InfoSet(char* mapTag, e_FsFile plmIdx, s32 activeChunkCount, bool 
     g_WorldMapWork.isExterior     = isExterior;
     g_WorldMapWork.textureFileIdx = texFileIdx;
 
-    if (plmIdx != NO_VALUE && plmIdx != g_WorldMapWork.globalLm.fileIdx)
+    if (plmIdx != NO_VALUE && plmIdx != g_WorldMapWork.globalPlm.fileIdx)
     {
-        if (WorldMap_LoadStateGet(g_WorldMapWork.globalLm.queueIdx) >= WorldMapLoadState_Loaded &&
-            g_WorldMapWork.globalLm.lmHdr->isLoaded)
+        if (WorldMap_LoadStateGet(g_WorldMapWork.globalPlm.queueIdx) >= WorldMapLoadState_Loaded &&
+            g_WorldMapWork.globalPlm.lmHdr->isLoaded)
         {
-            Lm_MaterialRefCountDec(g_WorldMapWork.globalLm.lmHdr);
+            Lm_MaterialRefCountDec(g_WorldMapWork.globalPlm.lmHdr);
         }
 
-        g_WorldMapWork.globalLm.fileIdx  = plmIdx;
-        g_WorldMapWork.globalLm.queueIdx = NO_VALUE;
+        g_WorldMapWork.globalPlm.fileIdx  = plmIdx;
+        g_WorldMapWork.globalPlm.queueIdx = NO_VALUE;
     }
 
     if (g_WorldMapWork.activeChunkCount != activeChunkCount || strcmp(mapTag, g_WorldMapWork.mapTag) != 0)
@@ -315,7 +315,7 @@ void WorldMap_InfoSet(char* mapTag, e_FsFile plmIdx, s32 activeChunkCount, bool 
     }
 }
 
-void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunksCount) // 0x80042300
+void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunkCount) // 0x80042300
 {
     s32          chunkSize;
     s32          i;
@@ -324,9 +324,11 @@ void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunksCount) // 0x8
     s_IpdHeader* curIpdHdr;
 
     chunkBuffer = terrain->chunkBuffer;
-    chunkSize   = (terrain->chunkBufferSize / activeChunksCount) & ~0x3;
+    chunkSize   = (terrain->chunkBufferSize / activeChunkCount) & ~0x3;
 
-    for (i = 0; i < ACTIVE_CHUNK_COUNT_MAX; i++, *(u8**)&chunkBuffer += chunkSize)
+    for (i = 0;
+         i < ACTIVE_CHUNK_COUNT_MAX;
+         i++, *(u8**)&chunkBuffer += chunkSize)
     {
         curChunk = &terrain->activeChunks[i];
 
@@ -343,7 +345,7 @@ void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunksCount) // 0x8
         curChunk->paddedDistanceToEdge1 = INT_MAX;
         curChunk->outsideCount          = 0;
 
-        if (i < activeChunksCount)
+        if (i < activeChunkCount)
         {
             curChunk->ipdHdr = chunkBuffer;
         }
@@ -361,7 +363,7 @@ void WorldMap_MakeGrid(s_WorldMapWork* terrain, char* mapTag, e_FsFile fileIdxSt
     s32            z;
     s32            i;
     char*          filenameSuffix;
-    s_ChunkColumn* coll;
+    s_ChunkColumn* col;
 
     terrain->chunksGridCenter = (s_ChunkColumn*)(&terrain->chunksGrid[8].idx[8]);
 
@@ -386,8 +388,8 @@ void WorldMap_MakeGrid(s_WorldMapWork* terrain, char* mapTag, e_FsFile fileIdxSt
                 if (ConvertHexToS8(&x, filenameSuffix[0], filenameSuffix[1]) &&
                     ConvertHexToS8(&z, filenameSuffix[2], filenameSuffix[3]))
                 {
-                    coll         = &terrain->chunksGridCenter[z];
-                    coll->idx[x] = i;
+                    col         = &terrain->chunksGridCenter[z];
+                    col->idx[x] = i;
                 }
             }
         }
@@ -531,17 +533,17 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
     s32         k;
     s32         chunkCount;
     s_MapChunk* curChunk;
-    s_PlmLm*    globalLm;
+    s_GlobalPlm*    globalPlm;
 
-    globalLm = &g_WorldMapWork.globalLm;
+    globalPlm = &g_WorldMapWork.globalPlm;
 
     // Convert position to geometry space.
     geomX = Q12_TO_Q8(posX);
     geomZ = Q12_TO_Q8(posZ);
 
-    if (WorldMap_LoadStateGet(globalLm->queueIdx) >= WorldMapLoadState_Loaded &&
-        globalLm->lmHdr->isLoaded &&
-        Lm_ModelFind(model, g_WorldMapWork.globalLm.lmHdr, metadata))
+    if (WorldMap_LoadStateGet(globalPlm->queueIdx) >= WorldMapLoadState_Loaded &&
+        globalPlm->lmHdr->isLoaded &&
+        Lm_ModelFind(model, g_WorldMapWork.globalPlm.lmHdr, metadata))
     {
         return WorldModelLocation_Chunk1;
     }
@@ -622,9 +624,9 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
     return WorldModelLocation_None;
 }
 
-bool WorldMap_ActiveChunkLoadedCheck(s32 ipdIdx) // 0x80042C04
+bool WorldMap_ActiveChunkLoadedCheck(s32 activeChunkIdx) // 0x80042C04
 {
-    return WorldMap_ChunkLoadStateGet(&g_WorldMapWork.activeChunks[ipdIdx]) >= MapModelLoadState_Loaded;
+    return WorldMap_ChunkLoadStateGet(&g_WorldMapWork.activeChunks[activeChunkIdx]) >= MapModelLoadState_Loaded;
 }
 
 void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ) // 0x80042C3C
@@ -635,23 +637,23 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
     g_WorldMapWork.positionX = projPosX;
     g_WorldMapWork.positionZ = projPosZ;
 
-    if (g_WorldMapWork.globalLm.queueIdx == NO_VALUE)
+    if (g_WorldMapWork.globalPlm.queueIdx == NO_VALUE)
     {
-        g_WorldMapWork.globalLm.queueIdx = Fs_QueueStartRead(g_WorldMapWork.globalLm.fileIdx, g_WorldMapWork.globalLm.lmHdr);
+        g_WorldMapWork.globalPlm.queueIdx = Fs_QueueStartRead(g_WorldMapWork.globalPlm.fileIdx, g_WorldMapWork.globalPlm.lmHdr);
     }
 
     WorldMap_ChunkLoad(&g_WorldMapWork, curPosX, curPosZ, projPosX, projPosZ);
 
-    if (WorldMap_LoadStateGet(g_WorldMapWork.globalLm.queueIdx) >= WorldMapLoadState_Loaded &&
-        !g_WorldMapWork.globalLm.lmHdr->isLoaded)
+    if (WorldMap_LoadStateGet(g_WorldMapWork.globalPlm.queueIdx) >= WorldMapLoadState_Loaded &&
+        !g_WorldMapWork.globalPlm.lmHdr->isLoaded)
     {
         fullPageTexCount                            = g_WorldMapWork.chunkTextures.fullPage.count;
         g_WorldMapWork.chunkTextures.fullPage.count = 4;
 
-        Lm_HeaderPtrsInit(g_WorldMapWork.globalLm.lmHdr);
-        Lm_MaterialsLoadWithFilter(g_WorldMapWork.globalLm.lmHdr, &g_WorldMapWork.chunkTextures.fullPage,
+        Lm_HeaderPtrsInit(g_WorldMapWork.globalPlm.lmHdr);
+        Lm_MaterialsLoadWithFilter(g_WorldMapWork.globalPlm.lmHdr, &g_WorldMapWork.chunkTextures.fullPage,
                                    NULL, g_WorldMapWork.textureFileIdx, BlendMode_Additive);
-        Lm_MaterialFlagsApply(g_WorldMapWork.globalLm.lmHdr);
+        Lm_MaterialFlagsApply(g_WorldMapWork.globalPlm.lmHdr);
 
         g_WorldMapWork.chunkTextures.fullPage.count = fullPageTexCount;
     }
@@ -662,7 +664,7 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
     {
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
         {
-            WorldMap_ChunkPropertiesSet(curChunk->ipdHdr, &g_WorldMapWork.globalLm.lmHdr, 1,
+            WorldMap_ChunkPropertiesSet(curChunk->ipdHdr, &g_WorldMapWork.globalPlm.lmHdr, 1,
                                         &g_WorldMapWork.chunkTextures.fullPage, &g_WorldMapWork.chunkTextures.halfPage, g_WorldMapWork.textureFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->chunkX, curChunk->chunkZ);
         }
@@ -734,7 +736,7 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
     WorldMap_ActiveChunksSample(terrain, posX0, posZ0, posX1, posZ1, terrain->isExterior);
     WorldMap_ChunkMaterialsApply(terrain);
 
-    // Run through close chunk.
+    // Run through neighboring chunks.
     for (curChunkZ = -1; curChunkZ <= 1; curChunkZ++)
     {
         for (curChunkX = -1; curChunkX <= 1; curChunkX++)
@@ -761,7 +763,7 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
                     }
 
                     curQueueIdx = WorldMap_ChunkLoadStart(freeChunk, chunkIdx, projChunkX, projChunkZ,
-                                                posX0, posZ0, posX1, posZ1, terrain->isExterior);
+                                                          posX0, posZ0, posX1, posZ1, terrain->isExterior);
                     if (curQueueIdx != NO_VALUE)
                     {
                         queueIdx = curQueueIdx;
@@ -774,7 +776,8 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
     return queueIdx;
 }
 
-void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x800431E4
+void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+                                 bool isExterior) // 0x800431E4
 {
     s_MapChunk* curChunk;
 
@@ -800,7 +803,8 @@ void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 p
             curChunk->materialCount = WorldMap_ChunkHalfPageMaterialCountGet(curChunk->ipdHdr);
         }
 
-        if (curChunk->paddedDistanceToEdge0 > Q12(0.0f) && curChunk->paddedDistanceToEdge1 > Q12(0.0f))
+        if (curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
+            curChunk->paddedDistanceToEdge1 > Q12(0.0f))
         {
             curChunk->outsideCount++;
         }
@@ -811,30 +815,34 @@ void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 p
     }
 }
 
-void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x80043338
+void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+                                 bool isExterior) // 0x80043338
 {
-    chunk->paddedDistanceToEdge0 = WorldMap_PaddedDistanceToChunkEdgeGet(posX0, posZ0, chunk->chunkX, chunk->chunkZ, isExterior);
-    chunk->paddedDistanceToEdge1 = WorldMap_PaddedDistanceToChunkEdgeGet(posX1, posZ1, chunk->chunkX, chunk->chunkZ, isExterior);
+    chunk->paddedDistanceToEdge0 = WorldMap_PaddedDistanceToChunkEdgeGet(posX0, posZ0, chunk->chunkX, chunk->chunkZ,
+                                                                         isExterior);
+    chunk->paddedDistanceToEdge1 = WorldMap_PaddedDistanceToChunkEdgeGet(posX1, posZ1, chunk->chunkX, chunk->chunkZ,
+                                                                         isExterior);
 }
 
 void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain) // 0x800433B8
 {
     s_MapChunk* curChunk;
 
-    // Run through active chunk.
+    // Run through active chunks.
     for (curChunk = &terrain->activeChunks[0]; curChunk < &terrain->activeChunks[terrain->activeChunkCount]; curChunk++)
     {
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
-                curChunk->paddedDistanceToEdge0 > Q12(0.0f) && curChunk->paddedDistanceToEdge1 > Q12(0.0f))
+                curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
+                curChunk->paddedDistanceToEdge1 > Q12(0.0f))
             {
                 Lm_MaterialRefCountDec(curChunk->ipdHdr->lmHdr);
             }
         }
     }
 
-    // Run through active chunk.
+    // Run through active chunks.
     for (curChunk = &terrain->activeChunks[0]; curChunk < &terrain->activeChunks[terrain->activeChunkCount]; curChunk++)
     {
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
@@ -842,7 +850,9 @@ void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain) // 0x800433B8
             if (curChunk->ipdHdr->isLoaded &&
                 (curChunk->paddedDistanceToEdge0 <= Q12(0.0f) || curChunk->paddedDistanceToEdge1 <= Q12(0.0f)))
             {
-                WorldMap_ChunkMaterialsLoad(curChunk->ipdHdr, &terrain->chunkTextures.fullPage, &terrain->chunkTextures.halfPage, terrain->textureFileIdx);
+                WorldMap_ChunkMaterialsLoad(curChunk->ipdHdr,
+                                            &terrain->chunkTextures.fullPage, &terrain->chunkTextures.halfPage,
+                                            terrain->textureFileIdx);
                 Lm_MaterialFlagsApply(curChunk->ipdHdr->lmHdr);
             }
         }
@@ -965,7 +975,7 @@ bool WorldMap_ActiveModelsLoadStateCheck(void) // 0x80043740
     s32         i;
     s_MapChunk* curChunk;
 
-    switch (WorldMap_GlobalLmLoadStateGet(&g_WorldMapWork.globalLm))
+    switch (WorldMap_GlobalLmLoadStateGet(&g_WorldMapWork.globalPlm))
     {
         case MapModelLoadState_Invalid:
             break;
@@ -1012,7 +1022,8 @@ bool WorldMap_NextChunkLoadCheck(void) // 0x80043830
         loadState = WorldMap_ChunkLoadStateGet(curChunk);
         if (loadState == MapModelLoadState_Invalid ||
             loadState == MapModelLoadState_Loaded  ||
-            (curChunk->paddedDistanceToEdge0 > Q12(0.0f) && curChunk->paddedDistanceToEdge1 > Q12(0.0f)))
+            (curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
+             curChunk->paddedDistanceToEdge1 > Q12(0.0f)))
         {
             continue;
         }
@@ -1062,7 +1073,7 @@ void WorldMap_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
     s32         loadState;
     s_MapChunk* curChunk;
 
-    loadState = WorldMap_LoadStateGet(g_WorldMapWork.globalLm.queueIdx);
+    loadState = WorldMap_LoadStateGet(g_WorldMapWork.globalPlm.queueIdx);
 
     if (loadState == WorldMapLoadState_Unloaded)
     {
@@ -1070,7 +1081,7 @@ void WorldMap_ChunksDraw(GsOT* ot, bool arg1) // 0x80043A24
     }
 
     if (!(loadState == WorldMapLoadState_Invalid ||
-          (loadState == WorldMapLoadState_Loaded && g_WorldMapWork.globalLm.lmHdr->isLoaded)))
+          (loadState == WorldMapLoadState_Loaded && g_WorldMapWork.globalPlm.lmHdr->isLoaded)))
     {
         return;
     }
@@ -1368,11 +1379,19 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, bool
             switch ((s8)curUnk->pad) // TODO: Must be another field.
             {
                 case 0:
-                    Gfx_BillboardDraw(1, Q8_TO_Q12(curUnk->vx + chunkBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + chunkBoundZ), ot, arg4);
+                    Gfx_BillboardDraw(1,
+                                      Q8_TO_Q12(curUnk->vx + chunkBoundX),
+                                      Q8_TO_Q12(curUnk->vy),
+                                      Q8_TO_Q12(curUnk->vz + chunkBoundZ),
+                                      ot, arg4);
                     break;
 
                 case 1:
-                    Gfx_BillboardDraw(2, Q8_TO_Q12(curUnk->vx + chunkBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + chunkBoundZ), ot, arg4);
+                    Gfx_BillboardDraw(2,
+                                      Q8_TO_Q12(curUnk->vx + chunkBoundX),
+                                      Q8_TO_Q12(curUnk->vy),
+                                      Q8_TO_Q12(curUnk->vz + chunkBoundZ),
+                                      ot, arg4);
                     break;
             }
         }

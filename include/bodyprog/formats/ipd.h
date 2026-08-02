@@ -158,7 +158,7 @@ typedef struct _IpdHeader
     /* 0xB  */ s8                 __pad_B[9];
     /* 0x14 */ s_IpdModelInfo*    modelInfos;
     /* 0x18 */ s_IpdModelBuffer*  modelBuffers;
-    /* 0x1C */ u8                 textureCount; // Should it be `u32`?
+    /* 0x1C */ u8                 textureCount; // TODO: Should it be `u32`? Referenced once, likely not texture count.
                                                 // "`u8` - Relative pointer to textures list"
                                                 // "`u32` - Relative pointer to object order"
     /* 0x1D */ s8                 unk_1D[51];   // TODO: Actual texture data array?

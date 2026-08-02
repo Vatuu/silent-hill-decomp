@@ -363,7 +363,10 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        for (i = 0, modelHdr = &lmHdr->modelHdrs[0]; i < modelHdrCount; i++, modelHdr++)
+        // Run through model headers.
+        for (i = 0,
+             modelHdr = &lmHdr->modelHdrs[0];
+             i < modelHdrCount; i++, modelHdr++)
         {
             if (!COMPARE_FILENAMES(&modelHdr->name.str, &targetModelName.str))
             {

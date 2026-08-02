@@ -384,8 +384,8 @@ void WorldGfx_Draw(bool arg0) // 0x8003C878
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* newStr) // 0x8003C8F8
 {
-    model->metadata.lmIdx    = WorldModelLocation_None;
-    model->modelInfo.field_0 = 0;
+    model->metadata.modelLocation = WorldModelLocation_None;
+    model->modelInfo.field_0      = 0;
 
     StringCopy(model->metadata.name.str, newStr);
 
@@ -407,7 +407,7 @@ void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECT
     // Check if array of world objects to draw is full.
     if (g_WorldGfxWork.objectCount < ARRAY_SIZE(g_WorldGfxWork.objects))
     {
-        if (model->metadata.lmIdx == WorldModelLocation_None)
+        if (model->metadata.modelLocation == WorldModelLocation_None)
         {
             GameFs_CommonItemsTextureLoad();
 
@@ -424,7 +424,7 @@ void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECT
                 }
             }
 
-            model->metadata.lmIdx = modelLoc;
+            model->metadata.modelLocation = modelLoc;
         }
 
         // Compute geometry position and rotation.
@@ -514,12 +514,12 @@ void WorldObjects_Draw(s_WorldObject* obj) // 0x8003CBA4
 
 void WorldObjects_DrawStep(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* worldMat) // 0x8003CC7C
 {
-    s8                     lmIdx;
+    s8                     modelLoc;
     s_WorldObjectMetadata* objMetaCpy;
     s_ModelHeader*         modelHdr;
 
-    lmIdx = model->metadata.lmIdx;
-    if (lmIdx == WorldModelLocation_None)
+    modelLoc = model->metadata.modelLocation;
+    if (modelLoc == WorldModelLocation_None)
     {
         return;
     }
@@ -527,17 +527,17 @@ void WorldObjects_DrawStep(s_WorldObjectModel* model, MATRIX* viewMat, MATRIX* w
     modelHdr   = model->modelInfo.modelHdr;
     objMetaCpy = &model->metadata;
 
-    if (lmIdx >= WorldModelLocation_Chunk2 && lmIdx <= WorldModelLocation_Unk6)
+    if (modelLoc >= WorldModelLocation_Chunk2 && modelLoc <= WorldModelLocation_Unk6)
     {
-        if (WorldMap_ActiveChunkLoadedCheck(lmIdx - 3) == WorldModelLocation_None)
+        if (WorldMap_ActiveChunkLoadedCheck(modelLoc - 3) == WorldModelLocation_None)
         {
-            model->metadata.lmIdx = WorldModelLocation_None;
+            model->metadata.modelLocation = WorldModelLocation_None;
         }
     }
 
     if (COMPARE_FILENAMES(&objMetaCpy->name, &modelHdr->name))
     {
-        model->metadata.lmIdx = WorldModelLocation_None;
+        model->metadata.modelLocation = WorldModelLocation_None;
         return;
     }
 
