@@ -1,21 +1,19 @@
 meta:
   id: lm
   title: Silent Hill 1 Model Format
-  file-extension:
-    - ilm
   endian: le
   encoding: ASCII
 
 doc: |
   LM is the generic 3D model format used in Silent Hill (PSX).
-  It is used for ILM character skeletons, PLM map props, and embedded in IPD map data
-  to store local meshes.
+  It is used for ILM character skeletons, global PLM world map props, and
+  embedded in IPD world map chunks to store local props.
 
   The header contains a table of meshes, each with a name, ID, and offset to
   its body. Each body contains vertex and primitive data.
 
-  For an ILM, the bone meshes are stored untransformed and the ANM format is necessary
-  to render the model correctly.
+  For an ILM, the bone meshes are stored untransformed and the ANM format is
+  necessary to render the model correctly.
 
 params:
   - id: base_offset

@@ -14,8 +14,8 @@ doc: |
   Local map prop models are stored in an embedded PLM (LM) block, while global
   props reference models in a separate `***_GLB.PLM` file.
 
-  TODO First few meshes of the embedded PLM contain only names and are currently
-  unreferenced. What are these?
+  The first few meshes of the embedded PLM contain texture names and are
+  skipped.
 
 seq:
   - id: header
@@ -41,6 +41,12 @@ instances:
     type: model_buffer
     repeat: expr
     repeat-expr: header.model_buffer_count
+
+  model_order_list:
+    pos: header.model_order_list_offset
+    type: u1
+    repeat: expr
+    repeat-expr: header.model_order_count
 
 types:
   header:
@@ -142,7 +148,7 @@ types:
         type: model_instance
         repeat: expr
         repeat-expr: model_instance_count
-        doc: TODO Offset is wrong?
+        doc: TODO Offset is wrong? Add header.model_buffers_offset?
 
   model_instance:
     seq:
