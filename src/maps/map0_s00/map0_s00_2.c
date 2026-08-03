@@ -48,7 +48,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
         fadeSpeed = Q12(0.3f);
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, &D_800DF2F8);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800DF2F8);
 }
 
 void GameBoot_LoadScreen_StageString(void) // 0x800D95D4

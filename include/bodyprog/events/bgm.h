@@ -92,7 +92,12 @@ typedef struct _BgmLayerLimits
 // FUNCTIONS
 // ==========
 
-void Bgm_TrackUpdate(bool arg0);
+/** @brief Updates background music.
+ * Triggers map's background music handler.
+ *
+ * @param updateTrackOnly.
+ */
+void Bgm_Update(bool updateTrackOnly);
 
 void Bgm_AllLayersMute(void);
 
@@ -101,13 +106,13 @@ bool Bgm_LayerOnCheck(void);
 
 void Bgm_GlobalLayerVariablesUpdate(void);
 
-/** @brief Undates background music.
+/** @brief Updates background music layers.
  *
  * @param bgmFlags BGM layer flags.
  * @param fadeSpeed Volume fade speed.
  * @param layerLimits BGM layer limits.
  */
-void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
+void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 
 /** @brief Updates the track index and disables radio effects. */
 void func_800363D0(void);

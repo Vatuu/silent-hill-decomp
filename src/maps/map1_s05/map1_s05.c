@@ -30,7 +30,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
         }
     }
 
-    Bgm_Update(bgmFlags, Q12(0.1f), &D_800D5C3C);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800D5C3C);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

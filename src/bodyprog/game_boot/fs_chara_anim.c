@@ -56,7 +56,13 @@ s_AnimInfo D_800A998C = {
 // ANIMATION FILE STREAMING
 // ========================================
 
-bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1) // 0x8003528C
+/** @brief Checks if the raw file streaming memory allocations of two character animation data slots overlap.
+ *
+ * @param animDataIdx0 First animation data index.
+ * @param animDataIdx1 Second animation data index.
+ * @return `true` if the animation data overlaps, `false` otherwise.
+ */
+static bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1)
 {
     u32              animBufferAddr1;
     u32              animBufferAddr0;
@@ -77,7 +83,13 @@ bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1) // 0x80035
     return true;
 }
 
-s32 Fs_CharaAnimDataIdxGet(e_CharaId charaId) // 0x800352F8
+/** @brief Finds the character animation data slot index.
+ * If not found, it returns index 0.
+ *
+ * @param charaId ID of the character for which to find the animation data.
+ * @return Animation data index.
+ */
+static s32 Fs_CharaAnimDataIdxGet(e_CharaId charaId)
 {
     s32 i;
 
@@ -214,7 +226,7 @@ void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* ani
     g_CharaAnimDataIdxs[charaId] = animDataIdx;
 }
 
-void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
+void Fs_CharaAnimBoneInfoSet(void) // 0x8003569C
 {
     s32            i;
     GsCOORDINATE2* boneCoords;

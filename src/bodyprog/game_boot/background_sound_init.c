@@ -142,7 +142,7 @@ void func_8003596C(void) // 0x8003596C
 {
     if (g_MapOverlayHdr.bgmIdx == BgmTrackIdx_1)
     {
-        Bgm_TrackUpdate(true);
+        Bgm_Update(true);
     }
 }
 

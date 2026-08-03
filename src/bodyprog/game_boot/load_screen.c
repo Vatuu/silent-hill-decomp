@@ -19,7 +19,7 @@
  * @param rot Rotation to apply.
  * @param boneCoords Character model bone coords.
  */
-static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* boneCoords) // 0x80035B04
+static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* boneCoords)
 {
     boneCoords[0].flg        = false;
     boneCoords[0].coord.t[0] = Q12_TO_Q8(pos->vx);
@@ -29,13 +29,13 @@ static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2
     Math_RotMatrixZxyNegGte(rot, &boneCoords[0].coord);
 }
 
-void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
+void GameBoot_WolrdEnvInit(s32 unused) // 0x80035B58
 {
-    Gfx_MapEffectsAssign(&g_MapOverlayHdr);
+    WorldEnv_MapPresetSet(&g_MapOverlayHdr);
     g_MapOverlayHdr.enviromentSet(g_MapOverlayHdr.field_17, g_MapOverlayHdr.field_16);
 }
 
-void func_80035B98(void) // 0x80035B98
+void func_80035B98(void)
 {
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 }

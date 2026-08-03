@@ -4,6 +4,10 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/anm.h"
 
+// ========
+// STRUCTS
+// ========
+
 /** @brief Character model animation data. */
 typedef struct _CharaAnimData
 {
@@ -18,24 +22,16 @@ typedef struct _CharaAnimData
 } s_CharaAnimData;
 STATIC_ASSERT_SIZEOF(s_CharaAnimData, 24);
 
+// ========
+// GLOBALS
+// ========
+
 /** @brief Animation data for loaded character models. */
 extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
 
-/** @brief Checks if the raw file streaming memory allocations of two character animation data slots overlap.
- *
- * @param animDataIdx0 First animation data index.
- * @param animDataIdx1 Second animation data index.
- * @return `true` if the animation data overlaps, `false` otherwise.
- */
-bool Fs_CharaAnimDataOverlapCheck(s32 animDataIdx0, s32 animDataIdx1);
-
-/** @brief Finds the character animation data slot index.
- * If not found, it returns index 0.
- *
- * @param charaId ID of the character for which to find the animation data.
- * @return Animation data index.
- */
-s32 Fs_CharaAnimDataIdxGet(e_CharaId charaId);
+// ==========
+// FUNCTIONS
+// ==========
 
 /** @brief Allocates memory for character animation data and bone coords.
  *
@@ -66,6 +62,6 @@ void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anm
 
 /** @brief Dynamically allocates where the next character animation data bone coords should be stored  in
  * `g_SysWork.npcBoneCoordBuffer` based on the space consumed by the current character. */
-void Fs_CharaAnimBoneInfoUpdate(void);
+void Fs_CharaAnimBoneInfoSet(void);
 
 #endif

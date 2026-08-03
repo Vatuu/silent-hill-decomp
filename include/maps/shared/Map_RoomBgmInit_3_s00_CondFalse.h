@@ -82,5 +82,5 @@ void Map_RoomBgmInit_CondFalse(void)
             break;
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, NULL);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, NULL);
 }

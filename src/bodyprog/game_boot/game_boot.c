@@ -10,34 +10,18 @@
 #include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
-#include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/player.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
-#include "bodyprog/text/text_draw.h"
-#include "main/fsqueue.h"
-#include "main/mem.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
 
 // ========================================
-// WORLD/ROOM INITIALIZATION PROCESS
+// INGAME INITIALIZATION PROCESS
 // ========================================
 
-void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
-{
-    bzero(&g_CharaModelAnimsData[1], 72);
-}
-
-void GameState_LoadScreen_Update(void) // 0x800348E8
+void GameState_LoadScreen_Update(void)
 {
     GameBoot_LoadingScreen();
-    GameBoot_WorldStartup();
+    GameBoot_InGameStartup();
 
     if (g_SysWork.sysFlags & SysFlag_LoadActive)
     {
@@ -53,7 +37,7 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     }
 }
 
-void GameBoot_WorldStartup(void) // 0x80034964
+void GameBoot_InGameStartup(void)
 {
     // It makes up to 5 attemps. If the load fails, it restarts
     // the entire process by restarting the timer used to check if a demo
@@ -95,7 +79,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
                 Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_DemoFileSavegameUpdate();
-                GameBoot_PlayerInit();
+                GameBoot_WorldInit();
 
                 if (Demo_PlayFileBufferSetup() != 0)
                 {
@@ -247,7 +231,7 @@ void GameBoot_WorldStartup(void) // 0x80034964
     #undef playerChara
 }
 
-/** @brief Initalizes drawing of a loading screen. */
+/** @brief Initalizes drawing of the loading screen. */
 static void GameBoot_LoadingScreen(void) // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx != LoadingScreenId_None && g_GameWork.gameStateSteps[0] < 10)
@@ -307,7 +291,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
     World_CollisionTriggersSet(&g_MapOverlayHdr);
-    Gfx_MapEffectsSet(0);
+    GameBoot_WolrdEnvInit(0);
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
 
@@ -322,7 +306,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     func_8007E8C0();
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
-    Fs_CharaAnimBoneInfoUpdate();
+    Fs_CharaAnimBoneInfoSet();
     GameFs_WeaponInfoUpdate();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
@@ -358,11 +342,11 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
-void GameBoot_PlayerInit(void) // 0x80035178
+void GameBoot_WorldInit(void) // 0x80035178
 {
     #define ANIMS_DATA_BUFFER_SIZE 0x2E630
 
-    WorldGfx_Init();
+    World_Init();
     WorldGfx_CharaModelsFree();
     WorldGfx_HeldItemModelFree();
     Anim_BoneInit((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords);

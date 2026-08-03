@@ -408,13 +408,13 @@ func_8003483C                                = 0x800345B0; // type:func
 //----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x80034634; // type:func
 GameState_LoadScreen_Update                  = 0x8003465C; // type:func
-GameBoot_WorldStartup                        = 0x800346D8; // type:func
+GameBoot_InGameStartup                       = 0x800346D8; // type:func
 GameBoot_LoadingScreen                       = 0x80034BCC; // type:func
 GameBoot_NpcClear                            = 0x80034C3C; // type:func
 GameBoot_NpcInit                             = 0x80034C8C; // type:func
 GameBoot_InGameInit                          = 0x80034D2C; // type:func
 GameBoot_SavegameInitialize                  = 0x80034E30; // type:func
-GameBoot_PlayerInit                          = 0x80034EEC; // type:func
+GameBoot_WorldInit                           = 0x80034EEC; // type:func
 GameBoot_MapLoad                             = 0x80034F90; // type:func
 
 //--------------------------------------------------------------------------
@@ -424,7 +424,7 @@ Fs_CharaAnimDataOverlapCheck                 = 0x80035000; // type:func
 Fs_CharaAnimDataIdxGet                       = 0x8003506C; // type:func
 Fs_CharaAnimDataAlloc                        = 0x800350AC; // type:func
 Fs_CharaAnimDataUpdate                       = 0x800352D4; // type:func
-Fs_CharaAnimBoneInfoUpdate                   = 0x80035410; // type:func
+Fs_CharaAnimBoneInfoSet                      = 0x80035410; // type:func
 
 //----------------------------------------------------------------------------------
 //--- PA: 0x010994   VA: 0x800354F4   subsegment: c, game_boot/background_sound_init
@@ -442,7 +442,7 @@ Sd_AmbientSfxSet                             = 0x8003583C; // type:func
 //--- PA: 0x010D18   VA: 0x80035878   subsegment: c, game_boot/load_screen
 //------------------------------------------------------------------------
 Math_MatrixTransform                         = 0x80035878; // type:func
-Gfx_MapEffectsSet                            = 0x800358CC; // type:func
+GameBoot_WolrdEnvInit                        = 0x800358CC; // type:func
 func_80035B98                                = 0x8003590C; // type:func
 GameBoot_LoadScreen_BackgroundImg            = 0x80035930; // type:func
 GameBoot_LoadScreen_PlayerRun                = 0x80035954; // type:func
@@ -450,11 +450,11 @@ GameBoot_LoadScreen_PlayerRun                = 0x80035954; // type:func
 //-------------------------------------------------------------
 //--- PA: 0x010FC8   VA: 0x80035B28   subsegment: c, events/bgm
 //-------------------------------------------------------------
-Bgm_TrackUpdate                              = 0x80035B28; // type:func
+Bgm_Update                                   = 0x80035B28; // type:func
 Bgm_AllLayersMute                            = 0x80035B90; // type:func
 Bgm_LayerOnCheck                             = 0x80035BB8; // type:func
 Bgm_GlobalLayerVariablesUpdate               = 0x80035C44; // type:func
-Bgm_Update                                   = 0x80035CC0; // type:func
+Bgm_LayersUpdate                             = 0x80035CC0; // type:func
 func_800363D0                                = 0x80036144; // type:func
 Bgm_TrackChange                              = 0x80036180; // type:func
 Game_MapRoomIdxUpdate                        = 0x80036194; // type:func
@@ -567,7 +567,7 @@ GameFs_BgEtcGfxLoad                          = 0x8003BC44; // type:func
 GameFs_BgItemLoad                            = 0x8003BC74; // type:func
 GameFs_CommonItemsTextureLoad                = 0x8003BCA8; // type:func
 Map_SpeedZoneTypeGet                         = 0x8003BD38; // type:func
-WorldGfx_Init                                = 0x8003BE20; // type:func
+World_Init                                   = 0x8003BE20; // type:func
 WorldGfx_HeldItemModelFree                   = 0x8003BE98; // type:func
 WorldGfx_CharaModelsFree                     = 0x8003BEE8; // type:func
 Chara_ModelFree                              = 0x8003BF84; // type:func
@@ -627,7 +627,7 @@ GameFs_FlameGfxLoad                          = 0x8003E4E8; // type:func
 func_8003E740                                = 0x8003E518; // type:func
 Game_SpotlightLoadScreenAttribsFix           = 0x8003E92C; // type:func
 Game_FlashlightAttributesFix                 = 0x8003E978; // type:func
-Gfx_MapEffectsAssign                         = 0x8003E9CC; // type:func
+WorldEnv_MapPresetSet                        = 0x8003E9CC; // type:func
 Game_TurnFlashlightOn                        = 0x8003EA94; // type:func
 Game_TurnFlashlightOff                       = 0x8003EABC; // type:func
 Game_FlashlightToggle                        = 0x8003EAE0; // type:func
@@ -3328,7 +3328,7 @@ demoLoadAttempCount                          = 0x800BF3A0;
 //----------------------------------------------------------------
 bgmLayerVolumes                              = 0x800BF3A8;
 D_800BCD58                                   = 0x800BF3B0;
-D_800BCD5C                                   = 0x800BF3B4;
+g_Bgm_LayersUpdated                          = 0x800BF3B4;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09A858   VA: 0x800BF3B8   subsegment: .bss, events/map_msg_display

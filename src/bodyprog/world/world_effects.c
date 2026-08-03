@@ -14,7 +14,6 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
-#include "screens/stream/stream.h"
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
@@ -194,7 +193,7 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
     Math_SVectorSet(&g_SysWork.lightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
-void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
+void WorldEnv_MapPresetSet(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 {
     bool                hasActiveChunk;
     u8                  flags;

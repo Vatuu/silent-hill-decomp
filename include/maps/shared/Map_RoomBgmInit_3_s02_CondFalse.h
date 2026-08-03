@@ -164,5 +164,5 @@ void Map_RoomBgmInit_CondFalse(void)
         }
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, dataPtr);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, dataPtr);
 }

@@ -101,7 +101,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_Main:
             if (playInGameDemo)
             {
-                GameBoot_WorldStartup();
+                GameBoot_InGameStartup();
 
                 if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounter == 0)
                 {
@@ -206,7 +206,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                             GameFs_SaveLoadBinLoad();
                         }
 
-                        GameBoot_PlayerInit();
+                        GameBoot_WorldInit();
                         g_SysWork.processFlags = ProcessFlag_Continue;
                         GameBoot_MapLoad(g_SavegamePtr->mapIdx);
                         break;
@@ -237,7 +237,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         case MenuState_DifficultySelector:
             if (playInGameDemo)
             {
-                GameBoot_WorldStartup();
+                GameBoot_InGameStartup();
 
                 if (g_GameWork.gameStateSteps[0] == 1 && g_SysWork.gameStateStepCounter == 0)
                 {
@@ -293,7 +293,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_Controller0->clickedBtnFlags & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
-                GameBoot_PlayerInit();
+                GameBoot_WorldInit();
 
                 g_SysWork.processFlags = ProcessFlag_NewGame;
 

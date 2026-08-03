@@ -40,5 +40,5 @@ void Map_RoomBgmInit(bool arg0)
         sharedData_800F06D4_2_s00[3] = tmp;
     }
 
-    Bgm_Update(bgmFlags, Q12(0.1f), &sharedData_800F06D4_2_s00);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &sharedData_800F06D4_2_s00);
 }

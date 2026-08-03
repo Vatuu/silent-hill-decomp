@@ -388,7 +388,7 @@ void func_800D6790(void) // 0x800D6790
         bgmFlags |= BgmFlag_Layer5 | BgmFlag_Layer3 | BgmFlag_Layer1;
     }
 
-    Bgm_Update(bgmFlags, Q12(0.25f), &D_800DA570);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.25f), &D_800DA570);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

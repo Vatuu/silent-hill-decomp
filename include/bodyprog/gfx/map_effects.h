@@ -16,7 +16,7 @@ void Game_FlashlightAttributesFix(void);
 /** @brief Determines what enviroment effects data from `MAP_EFFECTS_INFOS` will use based on
  * `s_MapOverlayHdr::field_16`.
  */
-void Gfx_MapEffectsAssign(s_MapOverlayHdr* mapHdr);
+void WorldEnv_MapPresetSet(s_MapOverlayHdr* mapHdr);
 
 /** @brief Toggles the player's flashlight on. */
 void Game_TurnFlashlightOn(void);

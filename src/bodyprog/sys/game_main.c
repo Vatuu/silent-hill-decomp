@@ -5,7 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/events/events_main.h"
-#include "bodyprog/game_boot/game_load.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"

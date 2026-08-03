@@ -544,5 +544,5 @@ void sharedFunc_800D0110_7_s00(void)
             break;
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, bgmLayerLimit);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, bgmLayerLimit);
 }

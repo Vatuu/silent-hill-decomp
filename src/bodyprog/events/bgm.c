@@ -27,7 +27,7 @@ u32 D_800A999C = &D_80025234;
 // STATIC VARIABLES
 // ========================================
 
-static s32 D_800BCD5C;
+static s32 g_Bgm_LayersUpdated;
 static s32 D_800A99A0 = 0;
 static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
@@ -35,16 +35,16 @@ static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 // MUSIC UPDATE
 // ========================================
 
-void Bgm_TrackUpdate(bool arg0) // 0x80035DB4
+void Bgm_Update(bool updateTrackOnly) // 0x80035DB4
 {
-    D_800BCD5C = false;
+    g_Bgm_LayersUpdated = false;
 
     if (g_MapOverlayHdr.bgmEvent != NULL) // Checks if function exists.
     {
-        g_MapOverlayHdr.bgmEvent(arg0);
-        if (arg0 == false && D_800BCD5C == false)
+        g_MapOverlayHdr.bgmEvent(updateTrackOnly);
+        if (updateTrackOnly == false && g_Bgm_LayersUpdated == false)
         {
-            Bgm_Update(BgmFlag_Layer0, Q12(240.0f), 0);
+            Bgm_LayersUpdate(BgmFlag_Layer0, Q12(240.0f), 0);
         }
     }
 }
@@ -111,7 +111,7 @@ void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
     g_SysWork.bgmLayerVolumes[ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1] = Q12(0.0f);
 }
 
-void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
+void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
     s16       temp_v0;
     s32       ducking;
@@ -332,14 +332,14 @@ void Bgm_Update(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) /
         }
     }
 
-    D_800BCD5C = true;
+    g_Bgm_LayersUpdated = true;
 }
 
 void func_800363D0(void) // 0x800363D0
 {
     g_RadioPitchState         = 0;
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Duck;
-    Bgm_TrackUpdate(false);
+    Bgm_Update(false);
 }
 
 void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C

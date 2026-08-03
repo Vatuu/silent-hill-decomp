@@ -120,7 +120,7 @@ void func_800D7F98(void) // 0x800D7F98
         }
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, &D_800DBCDC);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800DBCDC);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

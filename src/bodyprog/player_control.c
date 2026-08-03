@@ -8164,7 +8164,7 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     func_8004C564(0, NO_VALUE);
 
-    player->angleToTarget    = Q12_ANGLE(90.0f);
+    player->angleToTarget   = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;

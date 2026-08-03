@@ -2085,7 +2085,7 @@ void SaveScreen_Continue(void) // 0x801E6F38
             D_800A97D7             = 1;
             g_GameWork.autosave = g_GameWork.savegame;
 
-            GameBoot_PlayerInit();
+            GameBoot_WorldInit();
 
             g_SysWork.processFlags = ProcessFlag_LoadSave;
 

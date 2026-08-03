@@ -828,7 +828,7 @@ extern u32 D_800A999C;
 
 extern u16 D_800BCCB2;
 
-extern s32 D_800BCD5C;
+extern s32 g_Bgm_LayersUpdated;
 
 extern s32 D_800BCD84;
 
@@ -1991,10 +1991,9 @@ void GameFs_CommonItemsTextureLoad(void);
  */
 s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 
-/** Used in map loading. Something related to screen.
- * Removing it causes the game to get stuck at the loading screen.
+/** @brief Initializes world and clear any previously loaded object placement.
  */
-void WorldGfx_Init(void);
+void World_Init(void);
 
 /** Something related to player model loading. */
 void WorldGfx_HeldItemModelFree(void);
@@ -2122,6 +2121,9 @@ void Game_PlayerInfoInit(void);
 void func_8007E860(void);
 
 void func_8007E8C0(void);
+
+/** @brief Clears NPC animation data from memory. */
+void Anim_CharaTypeAnimInfoClear(void);
 
 /** Loads player animations for a given map. Maybe for cutscenes?
  *

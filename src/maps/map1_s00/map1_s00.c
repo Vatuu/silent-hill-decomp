@@ -42,7 +42,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D77F8
         bgmFlags = D_800DCC54[g_SavegamePtr->mapRoomIdx];
     }
 
-    Bgm_Update(bgmFlags, Q12(0.1f), &D_800DCC4C);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800DCC4C);
 }
 
 void GameBoot_LoadScreen_StageString(void) {}

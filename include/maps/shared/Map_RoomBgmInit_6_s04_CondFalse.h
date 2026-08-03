@@ -143,5 +143,5 @@ void Map_RoomBgmInit_CondFalse(void)
         sharedData_800EB74A_6_s04 = dist;
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, dataPtr);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, dataPtr);
 }

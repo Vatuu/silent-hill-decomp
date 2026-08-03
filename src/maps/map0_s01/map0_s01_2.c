@@ -82,7 +82,7 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
         bgmFlags = BgmFlag_Layer0;
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, NULL);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, NULL);
 }
 
 void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4

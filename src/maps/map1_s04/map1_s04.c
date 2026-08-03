@@ -73,7 +73,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
             break;
     }
 
-    Bgm_Update(bgmFlags, fadeSpeed, &D_800CCF54);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800CCF54);
 }
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCA24

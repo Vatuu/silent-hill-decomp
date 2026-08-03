@@ -139,7 +139,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
 
     Screen_CutsceneCameraStateUpdate();
-    Bgm_TrackUpdate(false);
+    Bgm_Update(false);
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 

@@ -13,8 +13,6 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
-#include "main/rng.h"
-#include "screens/stream/stream.h"
 
 const s32 __pad_rodata_80025524 = 0;
 
@@ -24,7 +22,7 @@ s_WorldGfxWork g_WorldGfxWork;
 // WORLD INITALIZATION
 // ========================================
 
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId) // 0x8003BE50
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId)
 {
     return g_WorldGfxWork.registeredCharaModels[charaId]->skeleton.bones_C;
 }
@@ -41,7 +39,7 @@ void GameFs_BgItemLoad(void)
     g_WorldGfxWork.itemLmQueueIdx = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfxWork.itemLmHdr);
 }
 
-void GameFs_CommonItemsTextureLoad(void) // 0x8003BED0
+static void GameFs_CommonItemsTextureLoad(void)
 {
     static s_FsImageDesc IMAGE_TIM = {
         .tPage = { 0, 15 },
@@ -105,7 +103,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
     return zoneType;
 }
 
-void WorldGfx_Init(void) // 0x8003C048
+void World_Init(void) // 0x8003C048
 {
     WorldEnv_Init();
 
