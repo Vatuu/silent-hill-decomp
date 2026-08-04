@@ -19,6 +19,12 @@ instances:
     repeat: expr
     repeat-expr: header.mesh_count
 
+  header_size:
+    value: 12
+
+  mesh_size:
+    value: 28
+
 types:
   header:
     seq:
@@ -39,8 +45,7 @@ types:
           meshes block start.
 
       meshes_offset:
-        value: 12 + (_root.header.mesh_count * 28)
-        doc: '[`header` size] + (_root.header.mesh_count * [`mesh` size])'
+        value: _root.header_size + (_root.header.mesh_count * _root.mesh_size)
 
   mesh:
     seq:
@@ -64,7 +69,7 @@ types:
 
       - id: scale
         type: u4
-        doc: scale 0 = x * 1, scale 2 = x * 4, -1 = scale x * (1 / 2), etc.
+        doc: scale 0 = x * 1, scale 2 = x * 4, -1 scale = x * (1 / 2), etc.
 
     instances:
       positions:
@@ -95,7 +100,7 @@ types:
         type: u1
         doc: Word length of packet.
 
-      - id: flag
+      - id: flags
         type: u1
 
       - id: mode
@@ -106,14 +111,29 @@ types:
         type:
           switch-on: primitive_id
           cases:
-            primitive_type::polygon: polygon(is_textured, is_quad, is_gouraud)
-            primitive_type::line: line
-            primitive_type::sprite: sprite
+            primitive_type::polygon: polygon(is_graded,
+                                             is_textured,
+                                             is_quad,
+                                             is_gouraud)
+            primitive_type::line:    line
+            primitive_type::sprite:  sprite
 
     instances:
       is_lit:
+        value: flags & (1 << 0) != 0
+        doc: '`true` if lit, `false` if raw color.'
+
+      is_double_sided:
+        value: flags & (1 << 1) != 0
+        doc: '`true` if double-sided, `false` if single-sided.'
+
+      is_graded:
+        value: flags & (1 << 2) != 0
+        doc: 'Untextured only. `true` if graded color, `false` if solid color.'
+
+      is_bright:
         value: mode & (1 << 0) != 0
-        doc: '`true` if lit, `false` if textured as-is.'
+        doc: '`true` if brightly lit, `false` if textured as-is.'
 
       is_transparent:
         value: mode & (1 << 1) != 0
@@ -132,7 +152,7 @@ types:
         doc: '`true` if gouraud shading, `false` if flat shading.'
 
       primitive_id:
-        value: (mode & ((1 << 5) | (1 << 6) | (1 << 7))) >> 5
+        value: (mode & 0xE0) >> 5 # Bits 5-7.
         enum: primitive_type
 
   svector3:
@@ -164,9 +184,12 @@ types:
         value: (x * x) + (y * y) + (z * z)
 
   polygon:
-    doc: Textured or untextured, flat or gouraud, triangle or quad.
+    doc: Solid or graded, textured or untextured, flat or gouraud, triangle or quad.
 
     params:
+      - id: is_graded
+        type: bool
+
       - id: is_textured
         type: bool
 
@@ -177,50 +200,101 @@ types:
         type: bool
 
     seq:
+      - id: solid_flat_untextured_triangle
+        type: poly_sf3
+        if: not is_graded and
+            not is_textured and
+            not is_quad and
+            not is_gouraud
+
+      - id: solid_gouraud_untextured_triangle
+        type: poly_sg3
+        if: not is_graded and
+            not is_textured and
+            not is_quad and
+            is_gouraud
+
+      - id: graded_gouraud_untextured_triangle
+        type: poly_gg3
+        if: is_graded and
+            not is_textured and
+            not is_quad and
+            is_gouraud
+
+      - id: graded_flat_untextured_triangle
+        type: poly_gf3
+        if: is_graded and
+            not is_textured and
+            not is_quad and
+            not is_gouraud
+
       - id: flat_textured_triangle
         type: poly_ft3
-        if: is_textured and not is_quad and not is_gouraud
-
-      - id: flat_untextured_triangle
-        type: poly_ft3
-        if: not is_textured and not is_quad and not is_gouraud
-
-      - id: flat_textured_quad
-        type: poly_ft3
-        if: is_textured and is_quad and not is_gouraud
-
-      - id: flat_untextured_quad
-        type: poly_ft3
-        if: not is_textured and is_quad and not is_gouraud
+        if: is_textured and
+            not is_quad and
+            not is_gouraud
 
       - id: gouraud_textured_triangle
-        type: poly_ft3
-        if: is_textured and not is_quad and is_gouraud
+        type: poly_gt3
+        if: is_textured and
+            not is_quad and
+            is_gouraud
 
-      - id: gouraud_untextured_triangle
-        type: poly_ft3
-        if: not is_textured and not is_quad and is_gouraud
+      - id: solid_flat_untextured_quad
+        type: poly_sf4
+        if: not is_graded and
+            not is_textured and
+            is_quad and
+            not is_gouraud
+
+      - id: solid_gouraud_untextured_quad
+        type: poly_sg4
+        if: not is_graded and
+            not is_textured and
+            is_quad and
+            is_gouraud
+
+      - id: graded_flat_untextured_quad
+        type: poly_gf4
+        if: is_graded and
+            not is_textured and
+            is_quad and
+            not is_gouraud
+
+      - id: graded_gouraud_untextured_quad
+        type: poly_gg4
+        if: is_graded and
+            not is_textured and
+            is_quad and
+            is_gouraud
+
+      - id: flat_textured_quad
+        type: poly_ft4
+        if: is_textured and
+            is_quad and
+            not is_gouraud
 
       - id: gouraud_textured_quad
-        type: poly_ft3
-        if: is_textured and is_quad and is_gouraud
-
-      - id: gouraud_untextured_quad
-        type: poly_ft3
-        if: not is_textured and is_quad and is_gouraud
+        type: poly_gt4
+        if: is_textured and
+            is_quad and
+            is_gouraud
 
   line:
-    doc: TODO Unsupported.
+    doc: Unsupported.
 
   sprite:
-    doc: TODO Unsupported.
+    doc: Unsupported.
 
-  poly_f3:
-    doc: Flat untextured triangle.
+  poly_sf3:
+    doc: Solid flat untextured triangle.
 
     seq:
       - id: color
-        type: u4
+        type: color
+
+      - id: normal_idx
+        type: u2
 
       - id: position_idx_0
         type: u2
@@ -231,7 +305,85 @@ types:
       - id: position_idx_2
         type: u2
 
+  poly_sg3:
+    doc: Solid gouraud untextured triangle.
+
+    seq:
+      - id: color
+        type: color
+
+      - id: normal_idx_0
+        type: u2
+
+      - id: position_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: position_idx_2
+        type: u2
+
+  poly_gf3:
+    doc: Graded flat untextured triangle.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
       - id: normal_idx
+        type: u2
+
+      - id: position_idx_0
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+      - id: position_idx_2
+        type: u2
+
+  poly_gg3:
+    doc: Graded gouraud untextured triangle.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: normal_idx_0
+        type: u2
+
+      - id: position_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: position_idx_2
         type: u2
 
   poly_ft3:
@@ -264,6 +416,9 @@ types:
 
       - size: 2
 
+      - id: normal_idx
+        type: u2
+
       - id: position_idx_0
         type: u2
 
@@ -273,32 +428,181 @@ types:
       - id: position_idx_2
         type: u2
 
-      - id: normal_idx
+  poly_gt3:
+    doc: Gouraud textured triangle.
+
+    seq:
+      - id: u_0
+        type: u1
+
+      - id: v_0
+        type: u1
+
+      - id: cba
+        type: cba
+
+      - id: u_1
+        type: u1
+
+      - id: v_1
+        type: u1
+
+      - id: tsb
+        type: tsb
+
+      - id: u_2
+        type: u1
+
+      - id: v_2
+        type: u1
+
+      - size: 2
+
+      - id: normal_idx_0
         type: u2
 
-  poly_f4:
-    doc: Flat untextured quad.
+      - id: position_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: position_idx_2
+        type: u2
+
+  poly_sf4:
+    doc: Solid flat untextured quad.
 
     seq:
       - id: color
-        type: u4
+        type: color
 
-      - id: v0
+      - id: normal_idx
         type: u2
 
-      - id: v1
+      - id: position_idx_0
         type: u2
 
-      - id: v2
+      - id: position_idx_1
         type: u2
 
-      - id: v3
+      - id: position_idx_2
         type: u2
 
-      - id: n0
+      - id: position_idx_3
         type: u2
 
       - size: 2
+
+  poly_gf4:
+    doc: Graded flat untextured quad.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: color_3
+        type: color
+
+      - id: normal_idx
+        type: u2
+
+      - id: position_idx_0
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+      - id: position_idx_2
+        type: u2
+
+      - id: position_idx_3
+        type: u2
+
+      - size: 2
+
+  poly_sg4:
+    doc: Solid gouraud untextured quad.
+
+    seq:
+      - id: color
+        type: color
+
+      - id: normal_idx_0
+        type: u2
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: normal_idx_3
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
+
+  poly_gg4:
+    doc: Graded gouraud untextured quad.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: color_3
+        type: color
+
+      - id: normal_idx_0
+        type: u2
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: normal_idx_3
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
 
   poly_ft4:
     doc: Flat textured quad.
@@ -338,6 +642,9 @@ types:
 
       - size: 2
 
+      - id: normal_idx
+        type: u2
+
       - id: position_idx_0
         type: u2
 
@@ -350,142 +657,7 @@ types:
       - id: position_idx_3
         type: u2
 
-      - id: normal_idx
-        type: u2
-
       - size: 2
-
-  poly_g3:
-    doc: Gouraud untextured triangle.
-
-    seq:
-      - id: color_0
-        type: u4
-
-      - id: position_idx_0
-        type: u2
-
-      - id: position_idx_1
-        type: u2
-
-      - id: position_idx_2
-        type: u2
-
-      - id: normal_idx_0
-        type: u2
-
-      - id: color_1
-        type: u4
-
-      - id: normal_idx_1
-        type: u2
-
-      - id: normal_idx_2
-        type: u2
-
-      - id: color_2
-        type: u4
-
-  poly_gt3:
-    doc: Gouraud textured triangle.
-
-    seq:
-      - id: u_0
-        type: u1
-
-      - id: v_0
-        type: u1
-
-      - id: cba
-        type: cba
-
-      - id: u_1
-        type: u1
-
-      - id: v_1
-        type: u1
-
-      - id: tsb
-        type: tsb
-
-      - id: u_2
-        type: u1
-
-      - id: v_2
-        type: u1
-
-      - size: 2
-
-      - id: color_0
-        type: u4
-
-      - id: vertex_idx_0
-        type: u2
-
-      - id: vertex_idx_1
-        type: u2
-
-      - id: vertex_idx_2
-        type: u2
-
-      - id: normal_idx_0
-        type: u2
-
-      - id: color_1
-        type: u4
-
-      - id: normal_idx_1
-        type: u2
-
-      - id: normal_idx_2
-        type: u2
-
-      - id: color_2
-        type: u4
-
-  poly_g4:
-    doc: Gouraud untextured quad.
-
-    seq:
-      - id: color_0
-        type: u4
-
-      - id: vertex_idx_0
-        type: u2
-
-      - id: vertex_idx_1
-        type: u2
-
-      - id: vertex_idx_2
-        type: u2
-
-      - id: vertex_idx_3
-        type: u2
-
-      - id: normal_idx_0
-        type: u2
-
-      - size: 2
-
-      - id: color_1
-        type: u4
-
-      - id: normal_idx_1
-        type: u2
-
-      - id: normal_idx_2
-        type: u2
-
-      - id: color_2
-        type: u4
-
-      - id: normal_idx_3
-        type: u2
-
-      - size: 2
-
-      - id: color_3
-        type: u4
 
   poly_gt4:
     doc: Gouraud textured quad.
@@ -525,9 +697,46 @@ types:
 
       - size: 2
 
-      - id: color_0
+      - id: normal_idx_0
+        type: u2
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: normal_idx_1
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: normal_idx_2
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: normal_idx_3
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
+
+  color:
+    doc: Packed RGB color.
+
+    seq:
+      - id: rgb
         type: u4
-        doc: TODO Were there more? Made a bad copy.
+
+    instances:
+      r:
+        value: rgb & 0xFF
+
+      g:
+        value: (rgb >> 8) & 0xFF
+
+      b:
+        value: (rgb >> 16) & 0xFF
 
   tsb:
     doc: Texture or sprite pattern info.
@@ -538,32 +747,30 @@ types:
 
     instances:
       t_page:
-        value: bitfield & ((1 << 0) | (1 << 2) | (1 << 3) | (1 << 4))
-        doc: Index 0-31.
+        value: bitfield & 0x1F # Bits 0-4.
+        doc: Texture page index (0-31) in VRAM.
 
       blend_mode:
-        value: (bitfield & ((1 << 5) | (1 << 6))) >> 5
+        value: (bitfield & 0x60) >> 5 # Bits 5-6.
         enum: blend_mode
 
       color_mode:
-        value: (bitfield & ((1 << 7) | (1 << 8))) >> 7
+        value: (bitfield & 0x180) >> 7 # Bits 7-8.
         enum: color_mode
 
   cba:
-    doc: Indicates the position where the CLUT is stored in VRAM.
+    doc: CLUT position in VRAM.
 
     seq:
       - id: bitfield
         type: u2
 
     instances:
-      cbx:
-        value: bitfield & ((1 << 0) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5))
-        doc: Upper six bits of 10 bits of X coordinate value for CLUT on VRAM.
+      x:
+        value: bitfield & 0x3F # Bits 0-5.
 
-      cby:
-        value: (bitfield & ((1 << 6) | (1 << 7) | (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 12) | (1 << 13) | (1 << 14))) >> 6
-        doc: Nine bits of Y coordinate value for CLUT on VRAM.
+      y:
+        value: (bitfield & 0x7FC0) >> 6 # Bits 6-14.
 
 enums:
   primitive_type:
