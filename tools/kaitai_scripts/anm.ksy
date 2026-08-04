@@ -19,54 +19,59 @@ doc: |
   appended to a base ANM.
 
 seq:
-  - id: magic
-    type: s2
-
-  - id: rotation_count
-    type: u1
-
-  - id: translation_count
-    type: u1
-
-  - id: keyframe_size
-    type: s2
-    valid:
-      eq: (rotation_count * 9) + (translation_count * 3)
-
-  - id: bone_count
-    type: s2
-
-  - id: flags
-    type: s4
-
-  - id: end_offset
-    type: s4
-
-  - id: keyframe_count
-    type: u2
-
-  - id: translation_shift
-    type: u1
-    doc: Translations are scaled with `<< translation_shift`.
-
-  - size: 1
-
-  - id: bones
-    type: bone
-    repeat: expr
-    repeat-expr: bone_count
+  - id: header
+    type: header
 
 instances:
+  bones:
+    type: bone
+    repeat: expr
+    repeat-expr: header.bone_count
+
   keyframes:
     type: keyframe(_index)
-    pos: magic
+    pos: header.keyframes_offset
     repeat: expr
-    repeat-expr: keyframe_count
+    repeat-expr: header.keyframe_count
 
   transforms_per_keyframe:
-    value: rotation_count + translation_count
+    value: header.rotation_count + header.translation_count
 
 types:
+  header:
+    seq:
+      - id: keyframes_offset
+        type: s2
+    
+      - id: rotation_count
+        type: u1
+    
+      - id: translation_count
+        type: u1
+    
+      - id: keyframe_size
+        type: s2
+        valid:
+          eq: (rotation_count * 9) + (translation_count * 3)
+    
+      - id: bone_count
+        type: s2
+    
+      - id: flags
+        type: s4
+    
+      - id: end_offset
+        type: s4
+    
+      - id: keyframe_count
+        type: u2
+    
+      - id: translation_shift
+        type: u1
+        doc: Translations are scaled with `<< translation_shift`.
+    
+      - size: 1
+
   keyframe:
     params:
       - id: keyframe_idx
@@ -76,12 +81,12 @@ types:
       - id: translations
         type: translation
         repeat: expr
-        repeat-expr: _root.translation_count
+        repeat-expr: _root.header.translation_count
 
       - id: rotations
         type: matrix
         repeat: expr
-        repeat-expr: _root.rotation_count
+        repeat-expr: _root.header.rotation_count
 
   bone:
     seq:
@@ -98,28 +103,27 @@ types:
         type: translation
 
   translation:
+    doc: Q0.7.
+
     seq:
       - id: x_int
         type: s1
-        doc: Q0.7.
 
       - id: y_int
         type: s1
-        doc: Q0.7.
 
       - id: z_int
         type: s1
-        doc: Q0.7.
 
     instances:
       x:
-        value: (x_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+        value: (x_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
 
       y:
-        value: (y_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+        value: (y_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
 
       z:
-        value: (x_int << _root.translation_shift).as<f4> / ((1 << 7) << _root.translation_shift).as<f4>
+        value: (x_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
 
   matrix:
     doc: Q0.7 3x3 matrix.
