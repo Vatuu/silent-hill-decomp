@@ -11,7 +11,7 @@ jobs:
   build:
     if: github.repository == 'shdecompilations/silent-hill-decomp'
     
-    container: ghcr.io/vatuu/decomp-images-silent-hill:master
+    container: ghcr.io/shdecompilations/decomp-images-silent-hill:master
 
     strategy:
       fail-fast: true
