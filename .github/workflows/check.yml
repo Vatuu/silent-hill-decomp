@@ -1,6 +1,7 @@
 name: Check Executables Match
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
