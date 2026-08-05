@@ -29,7 +29,7 @@ void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent) // 0x80056244
         {
             for (prim = &curMeshHdr->primitives[0]; prim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; prim++)
             {
-                prim->field_6.bits.isTransparent = isTransparent;
+                prim->bits1.bits.isTransparent = isTransparent;
             }
         }
     }
@@ -277,30 +277,30 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Mater
         for (curPrim = curMeshHdr->primitives; curPrim < &curMeshHdr->primitives[curMeshHdr->primitiveCount]; curPrim++)
         {
             // No material.
-            if (curPrim->field_6.bits.materialIdx == NO_VALUE)
+            if (curPrim->bits1.bits.materialIdx == NO_VALUE)
             {
-                curPrim->field_6.bits.field_6_0 = 32;
+                curPrim->bits1.bits.field_6_0 = 32;
             }
 
             // Apply material flags.
-            if (curPrim->field_6.bits.materialIdx == matIdx)
+            if (curPrim->bits1.bits.materialIdx == matIdx)
             {
                 if (matFlags & MaterialFlag_0)
                 {
-                    curPrim->field_6.bits.field_6_0 = mat->field_E;
+                    curPrim->bits1.bits.field_6_0 = mat->field_E;
                 }
                 if (matFlags & MaterialFlag_1)
                 {
-                    curPrim->field_2 = mat->field_10 + (curPrim->field_2 - mat->field_12);
+                    curPrim->bits0 = mat->field_10 + (curPrim->bits0 - mat->field_12);
                 }
                 if (matFlags & MaterialFlag_2)
                 {
-                    field_16      = mat->field_16.u16;
-                    field_14      = mat->field_14.u16;
-                    curPrim->field_0 = field_14 + (curPrim->field_0 - field_16);
-                    curPrim->field_4 = field_14 + (curPrim->field_4 - field_16);
-                    curPrim->field_8 = field_14 + (curPrim->field_8 - field_16);
-                    curPrim->field_A = field_14 + (curPrim->field_A - field_16);
+                    field_16            = mat->field_16.u16;
+                    field_14            = mat->field_14.u16;
+                    *(u16*)&curPrim->u0 = field_14 + (*(u16*)&curPrim->u0 - field_16);
+                    *(u16*)&curPrim->u1 = field_14 + (*(u16*)&curPrim->u1 - field_16);
+                    *(u16*)&curPrim->u2 = field_14 + (*(u16*)&curPrim->u2 - field_16);
+                    *(u16*)&curPrim->u3 = field_14 + (*(u16*)&curPrim->u3 - field_16);
                 }
             }
         }

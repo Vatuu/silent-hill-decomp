@@ -4,9 +4,11 @@
 /** @brief Geometry primitive. */
 typedef struct _Primitive
 {
-    /* 0x0  */ u16 field_0;
-    /* 0x2  */ u16 field_2;
-    /* 0x4  */ u16 field_4;
+    /* 0x0  */ u8  u0;
+    /* 0x1  */ u8  v0;
+    /* 0x2  */ u16 bits0;
+    /* 0x4  */ u8  u1;
+    /* 0x5  */ u8  v1;
                union
                {
                          struct
@@ -16,11 +18,13 @@ typedef struct _Primitive
                              /* 0x6+17 */ u8 isTransparent : 1; /** `bool` */
                          } bits;
                /* 0x0 */ u16 flags; // @hack `func_8005AC50` accesses `isTransparent` above with some weird shifts, haven't found how to make it work with bitfield yet.
-    /* 0x6  */ } field_6;
-    /* 0x8  */ u16 field_8;
-    /* 0xA  */ u16 field_A;
-    /* 0xC  */ u8  field_C[4];  // } Unknown type. `func_8005AC50` reads these as `s32`, but that breaks other funcs which use this struct. `s32` reads might have just been `memcpy`?
-    /* 0x10 */ u8  field_10[4]; // }
+    /* 0x6  */ } bits1;
+    /* 0x8  */ u8 u2;
+    /* 0x9  */ u8 v2;
+    /* 0xA  */ u8 u3;
+    /* 0xB  */ u8 v3;
+    /* 0xC  */ u8 faceIdxs[4];
+    /* 0x10 */ u8 field_10[4]; // Unknown type. `func_8005AC50` reads these as `s32`, but that breaks other funcs which use this struct. `s32` reads might have just been `memcpy`?
 } s_Primitive;
 STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 
