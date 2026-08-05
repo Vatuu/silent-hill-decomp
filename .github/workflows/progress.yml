@@ -1,6 +1,7 @@
 name: Determine and Push Progress
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
