@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    if: github.repository == 'Vatuu/silent-hill-decomp'
+    if: github.repository == 'shdecompilations/silent-hill-decomp'
     
     container: ghcr.io/vatuu/decomp-images-silent-hill:master
 
