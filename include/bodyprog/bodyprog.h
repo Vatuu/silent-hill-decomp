@@ -1325,7 +1325,7 @@ void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
-void Skeleton_Init(s_Skeleton* skel, s_LinkedBone* bones, u8 boneCount);
+void Skeleton_Init(s_Skeleton* skel, s_BoneNode* boneHierarchy, u8 boneCount);
 
 /** Clears skeleton bone flags/mask. Called by `Skeleton_Init`. */
 void func_80045014(s_Skeleton* skel);
@@ -1334,13 +1334,13 @@ void func_80045014(s_Skeleton* skel);
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr);
 
 /** Anim func. */
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, bool cond);
 
 /** Anim func. */
 void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
-void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr);
+void func_80045258(s_BoneNode** boneOrd, s_BoneNode* boneHierarchy, s32 boneIdx, s_LmHeader* lmHdr);
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
@@ -1970,12 +1970,12 @@ void MainMenu_SelectedOptionIdxReset(void);
 
 // ====================
 
-/** @brief Gets the bones of a registered character model.
+/** @brief Gets the bone nodes of a registered character model.
  *
- * @param charaId ID of the character for which to get the skeleton bones (`e_CharaId`).
- * @return Character model bones or `NULL` if the character model is unregistered.
+ * @param charaId ID of the character for which to get the skeleton bone nodes (`e_CharaId`).
+ * @return Character model  bone nodes. `NULL` if the character model is unregistered.
  */
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId);
+s_BoneNode* WorldGfx_CharaModelBoneNodesGet(e_CharaId charaId);
 
 void GameFs_BgEtcGfxLoad(void);
 

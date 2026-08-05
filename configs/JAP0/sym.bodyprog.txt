@@ -504,7 +504,7 @@ Collision_FlagsUpdate                        = 0x8003BB5C; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x017024   VA: 0x8003BB84   subsegment: c, gfx/bodyprog_8003BE50
 //------------------------------------------------------------------------
-WorldGfx_CharaModelBonesGet                  = 0x8003BB84; // type:func
+WorldGfx_CharaModelBoneNodesGet              = 0x8003BB84; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003BBA0; // type:func
 GameFs_BgItemLoad                            = 0x8003BBD0; // type:func
 GameFs_CommonItemsTextureLoad                = 0x8003BC04; // type:func

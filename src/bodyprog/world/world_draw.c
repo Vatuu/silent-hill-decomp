@@ -22,9 +22,9 @@ s_WorldGfxWork g_WorldGfxWork;
 // WORLD INITALIZATION
 // ========================================
 
-s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharaId charaId)
+s_BoneNode* WorldGfx_CharaModelBoneNodesGet(e_CharaId charaId)
 {
-    return g_WorldGfxWork.registeredCharaModels[charaId]->skeleton.bones_C;
+    return g_WorldGfxWork.registeredCharaModels[charaId]->skeleton.boneNodes;
 }
 
 void GameFs_BgEtcGfxLoad(void)
@@ -1171,7 +1171,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
         skel = &model->skeleton;
 
         Lm_MaterialFlagsApply(model->lmHdr);
-        Skeleton_Init(skel, model->skeleton.bones_C, 56);
+        Skeleton_Init(skel, model->skeleton.boneNodes, BONE_NODE_COUNT_MAX);
         func_8004506C(skel, model->lmHdr);
         func_800452EC(skel);
         func_800453E8(skel, true);

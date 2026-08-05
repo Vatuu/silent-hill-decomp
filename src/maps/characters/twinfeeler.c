@@ -3002,35 +3002,34 @@ void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     twinfeeler->collision.shapeOffsets.box.vz = twinfeeler->collision.shapeOffsets.cylinder.vz;
 }
 
-void func_800D59C0(s_LinkedBone* bone) // 0x800D59C0
+void func_800D59C0(s_BoneNode* boneNodes) // 0x800D59C0
 {
     s32 i;
 
-    for (i = 0; i < 56; i++)
+    for (i = 0; i < BONE_NODE_COUNT_MAX; i++)
     {
-        bone[i].bone.modelInfo.field_0 &= ~(1 << 0);
+        boneNodes[i].bone.modelInfo.field_0 &= ~(1 << 0);
     }
 }
 
 void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D59EC
 {
-    u32           temp_v1;
-    s32           temp_v1_3;
-    s32           j;
-    s32           i;
-    s32           idx;
-    u32           temp_a0_3;
-    s8*           ptr;
-    s_LinkedBone* bones;
-    s_Bone*       bone;
+    u32         temp_v1;
+    s32         temp_v1_3;
+    s32         j;
+    s32         i;
+    s32         idx;
+    u32         temp_a0_3;
+    s8*         ptr;
+    s_BoneNode* boneNodes;
+    s_Bone*     bone;
 
-    bones = WorldGfx_CharaModelBonesGet(Chara_Twinfeeler);
-
-    func_800D59C0(bones);
+    boneNodes = WorldGfx_CharaModelBoneNodesGet(Chara_Twinfeeler);
+    func_800D59C0(boneNodes);
 
     temp_v1 = FP_FROM(twinfeeler->model.anim.time, Q12_SHIFT);
 
-    if (temp_v1 < 0x20)
+    if (temp_v1 < 32)
     {
         temp_v1_3 = D_800DB27C[temp_v1];
 
@@ -3047,14 +3046,14 @@ void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
                     break;
                 }
 
-                bone                     = &bones[idx - 1].bone;
+                bone                     = &boneNodes[idx - 1].bone;
                 bone->modelInfo.field_0 |= 1 << 0;
             }
         }
     }
     else
     {
-        temp_a0_3 = temp_v1 - 0x20;
+        temp_a0_3 = temp_v1 - 32;
         if (temp_a0_3 < 41)
         {
             temp_v1_3 = D_800DB2FC[temp_a0_3];
@@ -3072,7 +3071,7 @@ void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
                         break;
                     }
 
-                    bone                     = &bones[idx - 1].bone;
+                    bone                     = &boneNodes[idx - 1].bone;
                     bone->modelInfo.field_0 |= 1 << 0;
                 }
             }
@@ -3105,23 +3104,23 @@ void func_800D5BC8(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     }
 }
 
-bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
+bool func_800D5BF8(s32 bitIdx, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
 {
     bool prevBit;
     bool newBit;
     bool bitChanged;
 
-    prevBit    = (*arg3 >> arg0) & 0x1;
+    prevBit    = (*arg3 >> bitIdx) & 0x1;
     newBit     = (arg2 < arg1);
     bitChanged = prevBit ^ newBit;
 
     if (newBit)
     {
-        *arg3 |= 1 << arg0;
+        *arg3 |= 1 << bitIdx;
     }
     else
     {
-        *arg3 &= ~(1 << arg0);
+        *arg3 &= ~(1 << bitIdx);
     }
 
     return bitChanged;

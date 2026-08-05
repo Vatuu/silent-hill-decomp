@@ -5,7 +5,9 @@
 #include "bodyprog/formats/model.h"
 #include "main/fsqueue.h"
 
-/** @brief IPD skeleton model bone. */
+#define BONE_NODE_COUNT_MAX 56
+
+/** @brief IPD skeleton bone. */
 typedef struct _Bone
 {
     /* 0x0  */ s_ModelInfo modelInfo;
@@ -14,23 +16,24 @@ typedef struct _Bone
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 20);
 
-/** @brief IPD skeleton model bone node. */
-typedef struct _LinkedBone
+/** @brief IPD skeleton bone node. */
+typedef struct _BoneNode
 {
-    /* 0x0  */ s_Bone              bone;
-    /* 0x14 */ struct _LinkedBone* next;
-} s_LinkedBone;
-STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
+    /* 0x0  */ s_Bone            bone;
+    /* 0x14 */ struct _BoneNode* next;
+} s_BoneNode;
+STATIC_ASSERT_SIZEOF(s_BoneNode, 24);
 
+/** @brief Character skeleton. */
 typedef struct _Skeleton
 {
-    /* 0x0 */ u8            boneCount;
-    /* 0x1 */ u8            boneIdx;
-    /* 0x2 */ u8            field_2;
-    /* 0x3 */ s8            field_3;
-    /* 0x4 */ s_LinkedBone* bones_4;
-    /* 0x8 */ s_LinkedBone* bones_8;
-    /* 0xC */ s_LinkedBone  bones_C[56];
+    /* 0x0 */ u8          boneCount;
+    /* 0x1 */ u8          boneIdx;
+    /* 0x2 */ u8          field_2;
+    /* 0x3 */ s8          field_3;
+    /* 0x4 */ s_BoneNode* bones_4; // Secondary bone hierarchy? Visible bones?
+    /* 0x8 */ s_BoneNode* boneHierarchy;
+    /* 0xC */ s_BoneNode  boneNodes[BONE_NODE_COUNT_MAX];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 1356);
 

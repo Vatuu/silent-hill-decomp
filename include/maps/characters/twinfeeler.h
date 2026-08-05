@@ -330,7 +330,7 @@ void func_800D5888(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800D5904(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-void func_800D59C0(s_LinkedBone* bone);
+void func_800D59C0(s_BoneNode* boneNodes);
 
 void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
@@ -338,7 +338,7 @@ void func_800D5B6C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
 void func_800D5BC8(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
-bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3);
+bool func_800D5BF8(s32 bitIdx, s32 arg1, s32 arg2, u16* arg3);
 
 void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords);
 
