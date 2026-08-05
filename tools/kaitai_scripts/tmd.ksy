@@ -7,7 +7,8 @@ meta:
 
 doc: |
   TMD is the 3D model format used by the Sony PlayStation (PSX) SDK.
-  This spec is incompelte and doesn't support lines or sprites.
+  This spec is incomplete and doesn't support sprites. Additionally, vertex
+  positions and normals aren't read correctly from some files for some reason.
 
 seq:
   - id: header
@@ -111,12 +112,13 @@ types:
         type:
           switch-on: primitive_id
           cases:
-            primitive_type::polygon: polygon(is_graded,
+            primitive_type::polygon: polygon(is_lit, is_graded,
                                              is_textured,
                                              is_quad,
                                              is_gouraud)
-            primitive_type::line:    line
-            primitive_type::sprite:  sprite
+            primitive_type::line:    line(is_graded)
+            primitive_type::sprite:  sprite(sprite_size_id,
+                                            is_transparent)
 
     instances:
       is_lit:
@@ -146,47 +148,29 @@ types:
       is_quad:
         value: mode & (1 << 3) != 0
         doc: '`true` if quad, `false` if triangle.'
+        if: primitive_id != primitive_type::sprite
 
       is_gouraud:
         value: mode & (1 << 4) != 0
         doc: '`true` if gouraud shading, `false` if flat shading.'
+        if: primitive_id != primitive_type::sprite
+
+      sprite_size_id:
+        value: mode & ((1 << 3) | (1 << 4))
+        enum: sprite_size_type
+        if: primitive_id == primitive_type::sprite
 
       primitive_id:
         value: (mode & 0xE0) >> 5 # Bits 5-7.
         enum: primitive_type
 
-  svector3:
-    doc: Q3.12.
-
-    seq:
-      - id: x_int
-        type: s2
-
-      - id: y_int
-        type: s2
-
-      - id: z_int
-        type: s2
-
-      - size: 2
-
-    instances:
-      x:
-        value: x_int.as<f4> / (1 << 12).as<f4>
-
-      y:
-        value: y_int.as<f4> / (1 << 12).as<f4>
-
-      z:
-        value: z_int.as<f4> / (1 << 12).as<f4>
-
-      length_sqr:
-        value: (x * x) + (y * y) + (z * z)
-
   polygon:
-    doc: Solid or graded, textured or untextured, flat or gouraud, triangle or quad.
+    doc: Lit/unlit, solid/graded, textured/untextured, flat/gouraud, triangle/quad.
 
     params:
+      - id: is_lit
+        type: bool
+
       - id: is_graded
         type: bool
 
@@ -200,94 +184,292 @@ types:
         type: bool
 
     seq:
+      - id: unlit_flat_untextured_triangle
+        type: poly_uf3
+        if: not is_lit and
+            not is_graded and
+            not is_textured and
+            not is_quad
+
+      - id: unlit_graded_untextured_triangle
+        type: poly_ug3
+        if: not is_lit and
+            is_graded and
+            not is_textured and
+            not is_quad
+
+      - id: unlit_flat_textured_triangle
+        type: poly_uft3
+        if: not is_lit and
+            not is_graded and
+            is_textured and
+            not is_quad
+
+      - id: unlit_graded_textured_triangle
+        type: poly_ugt3
+        if: not is_lit and
+            is_graded and
+            is_textured and
+            not is_quad
+
       - id: solid_flat_untextured_triangle
         type: poly_sf3
-        if: not is_graded and
+        if: is_lit and
+            not is_graded and
             not is_textured and
             not is_quad and
             not is_gouraud
 
       - id: solid_gouraud_untextured_triangle
         type: poly_sg3
-        if: not is_graded and
+        if: is_lit and
+            not is_graded and
             not is_textured and
             not is_quad and
             is_gouraud
 
       - id: graded_gouraud_untextured_triangle
         type: poly_gg3
-        if: is_graded and
+        if: is_lit and
+            is_graded and
             not is_textured and
             not is_quad and
             is_gouraud
 
       - id: graded_flat_untextured_triangle
         type: poly_gf3
-        if: is_graded and
+        if: is_lit and
+            is_graded and
             not is_textured and
             not is_quad and
             not is_gouraud
 
       - id: flat_textured_triangle
         type: poly_ft3
-        if: is_textured and
+        if: is_lit and
+            is_textured and
             not is_quad and
             not is_gouraud
 
       - id: gouraud_textured_triangle
         type: poly_gt3
-        if: is_textured and
+        if: is_lit and
+            is_textured and
             not is_quad and
             is_gouraud
 
+      - id: unlit_flat_untextured_quad
+        type: poly_uf4
+        if: not is_lit and
+            not is_graded and
+            not is_textured and
+            is_quad
+
+      - id: unlit_graded_untextured_quad
+        type: poly_ug4
+        if: not is_lit and
+            is_graded and
+            not is_textured and
+            is_quad
+
+      - id: unlit_flat_textured_quad
+        type: poly_uft4
+        if: not is_lit and
+            not is_graded and
+            is_textured and
+            is_quad
+
+      - id: unlit_graded_textured_quad
+        type: poly_ugt4
+        if: not is_lit and
+            is_graded and
+            is_textured and
+            is_quad
+
       - id: solid_flat_untextured_quad
         type: poly_sf4
-        if: not is_graded and
+        if: is_lit and
+            not is_graded and
             not is_textured and
             is_quad and
             not is_gouraud
 
       - id: solid_gouraud_untextured_quad
         type: poly_sg4
-        if: not is_graded and
+        if: is_lit and
+            not is_graded and
             not is_textured and
             is_quad and
             is_gouraud
 
       - id: graded_flat_untextured_quad
         type: poly_gf4
-        if: is_graded and
+        if: is_lit and
+            is_graded and
             not is_textured and
             is_quad and
             not is_gouraud
 
       - id: graded_gouraud_untextured_quad
         type: poly_gg4
-        if: is_graded and
+        if: is_lit and
+            is_graded and
             not is_textured and
             is_quad and
             is_gouraud
 
       - id: flat_textured_quad
         type: poly_ft4
-        if: is_textured and
+        if: is_lit and
+            is_textured and
             is_quad and
             not is_gouraud
 
       - id: gouraud_textured_quad
         type: poly_gt4
-        if: is_textured and
+        if: is_lit and
+            is_textured and
             is_quad and
             is_gouraud
 
-  line:
-    doc: Unsupported.
+  poly_uf3:
+    doc: Unlit, flat, untextured triangle.
 
-  sprite:
-    doc: Unsupported.
+    seq:
+      - id: color
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - size: 2
+
+  poly_ug3:
+    doc: Unlit, graded, untextured triangle.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - size: 2
+
+  poly_uft3:
+    doc: Unlit, flat, textured triangle.
+
+    seq:
+      - id: u_0
+        type: u1
+
+      - id: v_0
+        type: u1
+
+      - id: cba
+        type: cba
+
+      - id: u_1
+        type: u1
+
+      - id: v_1
+        type: u1
+
+      - id: tsb
+        type: tsb
+
+      - id: u_2
+        type: u1
+
+      - id: v_2
+        type: u1
+
+      - size: 2
+
+      - id: color
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - size: 2
+
+  poly_ugt3:
+    doc: Unlit, graded, textured triangle.
+
+    seq:
+      - id: u_0
+        type: u1
+
+      - id: v_0
+        type: u1
+
+      - id: cba
+        type: cba
+
+      - id: u_1
+        type: u1
+
+      - id: v_1
+        type: u1
+
+      - id: tsb
+        type: tsb
+
+      - id: u_2
+        type: u1
+
+      - id: v_2
+        type: u1
+
+      - size: 2
+
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - size: 2
 
   poly_sf3:
-    doc: Solid flat untextured triangle.
+    doc: Lit, solid, flat, untextured triangle.
 
     seq:
       - id: color
@@ -306,7 +488,7 @@ types:
         type: u2
 
   poly_sg3:
-    doc: Solid gouraud untextured triangle.
+    doc: Lit, solid, gouraud, untextured triangle.
 
     seq:
       - id: color
@@ -474,6 +656,152 @@ types:
         type: u2
 
       - id: position_idx_2
+        type: u2
+
+  poly_uf4:
+    doc: Unlit, flat, untextured quad.
+
+    seq:
+      - id: color
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
+
+  poly_ug4:
+    doc: Unlit, graded, untextured quad.
+
+    seq:
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: color_3
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
+
+  poly_uft4:
+    doc: Unlit, flat, textured quad.
+
+    seq:
+      - id: u_0
+        type: u1
+
+      - id: v_0
+        type: u1
+
+      - id: cba
+        type: cba
+
+      - id: u_1
+        type: u1
+
+      - id: v_1
+        type: u1
+
+      - id: tsb
+        type: tsb
+
+      - id: u_2
+        type: u1
+
+      - id: v_2
+        type: u1
+
+      - size: 2
+
+      - id: color
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: vertex_idx_3
+        type: u2
+
+  poly_ugt4:
+    doc: Unlit, graded, textured quad.
+
+    seq:
+      - id: u_0
+        type: u1
+
+      - id: v_0
+        type: u1
+
+      - id: cba
+        type: cba
+
+      - id: u_1
+        type: u1
+
+      - id: v_1
+        type: u1
+
+      - id: tsb
+        type: tsb
+
+      - id: u_2
+        type: u1
+
+      - id: v_2
+        type: u1
+
+      - size: 2
+
+      - id: color_0
+        type: color
+
+      - id: color_1
+        type: color
+
+      - id: color_2
+        type: color
+
+      - id: color_3
+        type: color
+
+      - id: vertex_idx_0
+        type: u2
+
+      - id: vertex_idx_1
+        type: u2
+
+      - id: vertex_idx_2
+        type: u2
+
+      - id: vertex_idx_3
         type: u2
 
   poly_sf4:
@@ -721,22 +1049,96 @@ types:
       - id: vertex_idx_3
         type: u2
 
-  color:
-    doc: Packed RGB color.
+  line:
+    doc: Flat or graded line.
+
+    params:
+      - id: is_graded
+        type: bool
 
     seq:
-      - id: rgb
+      - id: flat_line
+        type: line_f
+        if: not is_graded
+
+      - id: graded_line
+        type: line_g
+        if: is_graded
+
+  line_f:
+    doc: Flat line.
+
+    seq:
+      - id: color
+        type: color
+
+      - id: position_idx_0
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+  line_g:
+    doc: Graded line.
+
+    seq:
+      - id: color
+        type: color
+
+      - id: position_idx_0
+        type: u2
+
+      - id: position_idx_1
+        type: u2
+
+  sprite:
+    doc: 3D sprite. Unsupported.
+
+    params:
+      - id: sprite_size_id
+        enum: sprite_size_type
+        type: u4
+
+      - id: is_transparent
+        type: bool
+
+    seq:
+      - id: color
+        type: color
+
+  color:
+    doc: Packed RGB+cmd color.
+
+    seq:
+      - id: rgbc
         type: u4
 
     instances:
       r:
-        value: rgb & 0xFF
+        value: rgbc & 0xFF
 
       g:
-        value: (rgb >> 8) & 0xFF
+        value: (rgbc >> 8) & 0xFF
 
       b:
-        value: (rgb >> 16) & 0xFF
+        value: (rgbc >> 16) & 0xFF
+
+      cmd:
+        value: (rgbc >> 24) & 0xFF
+
+  cba:
+    doc: CLUT position in VRAM.
+
+    seq:
+      - id: bitfield
+        type: u2
+
+    instances:
+      x:
+        value: bitfield & 0x3F # Bits 0-5.
+
+      y:
+        value: (bitfield & 0x7FC0) >> 6 # Bits 6-14.
 
   tsb:
     doc: Texture or sprite pattern info.
@@ -758,25 +1160,45 @@ types:
         value: (bitfield & 0x180) >> 7 # Bits 7-8.
         enum: color_mode
 
-  cba:
-    doc: CLUT position in VRAM.
+  svector3:
+    doc: Q3.12.
 
     seq:
-      - id: bitfield
-        type: u2
+      - id: x_int
+        type: s2
+
+      - id: y_int
+        type: s2
+
+      - id: z_int
+        type: s2
+
+      - size: 2
 
     instances:
       x:
-        value: bitfield & 0x3F # Bits 0-5.
+        value: x_int.as<f4> / (1 << 12).as<f4>
 
       y:
-        value: (bitfield & 0x7FC0) >> 6 # Bits 6-14.
+        value: y_int.as<f4> / (1 << 12).as<f4>
+
+      z:
+        value: z_int.as<f4> / (1 << 12).as<f4>
+
+      length_sqr:
+        value: (x * x) + (y * y) + (z * z)
 
 enums:
   primitive_type:
     1: polygon
     2: line
     3: sprite
+
+  sprite_size_type:
+    0: free
+    1: size_1x1
+    2: size_8x8
+    3: size_16x16
 
   blend_mode:
     0: alpha_half
