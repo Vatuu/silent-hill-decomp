@@ -181,7 +181,7 @@ void GameBoot_InGameStartup(void)
                 g_SysWork.sysFlags |= SysFlag_DemoActive;
             }
 
-            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || !Sd_AmbientSfxInit())
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || Sd_AmbientSfxInit() == false)
             {
                 Game_StateStepIncrement(0);
             }

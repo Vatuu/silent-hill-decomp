@@ -385,7 +385,7 @@ void func_800D6790(void) // 0x800D6790
 
     if (Savegame_EventFlagGet(EventFlag_354))
     {
-        bgmFlags |= BgmFlag_Layer5 | BgmFlag_Layer3 | BgmFlag_Layer1;
+        bgmFlags |= BgmFlag_Layer6 | BgmFlag_Layer4 | BgmFlag_Layer2;
     }
 
     Bgm_LayersUpdate(bgmFlags, Q12(0.25f), &D_800DA570);

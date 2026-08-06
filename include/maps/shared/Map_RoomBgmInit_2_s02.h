@@ -2,21 +2,21 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC99C
 {
     s32 bgmFlags;
 
-    bgmFlags = BgmFlag_Layer1;
+    bgmFlags = BgmFlag_Layer2;
 
     switch (g_SavegamePtr->mapRoomIdx)
     {
         case 17:
             if (Savegame_EventFlagGet(EventFlag_295) && !Savegame_EventFlagGet(EventFlag_352))
             {
-                bgmFlags = BgmFlag_Layer1 | BgmFlag_Layer2;
+                bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3;
             }
             break;
 
         case 12:
             if (!Savegame_EventFlagGet(EventFlag_295))
             {
-                bgmFlags = BgmFlag_Layer1 | BgmFlag_Layer4;
+                bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer5;
             }
             break;
     }
@@ -25,11 +25,11 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC99C
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S02_AntiqueShopOpen))
         {
-            bgmFlags |= BgmFlag_Layer3;
+            bgmFlags |= BgmFlag_Layer4;
         }
     }
 
-    if (bgmFlags & BgmFlag_Layer3)
+    if (bgmFlags & BgmFlag_Layer4)
     {
         s8 temp_v0 = func_800364BC();
         sharedData_800ED43C_2_s02[3] = temp_v0;

@@ -11,12 +11,12 @@ void Map_RoomBgmInit_CondFalse(void)
     dataPtr = sharedData_800D1D14_3_s02;
     roomIdx = g_SavegamePtr->mapRoomIdx;
 
-    if (g_GameWork.bgmIdx == BgmTrackIdx_8)
+    if (g_GameWork.bgmIdx == BgmCmd_Track8)
     {
         fadeSpeed = Q12(240.0f);
         bgmFlags = 0xFE;
     }
-    else if (g_GameWork.bgmIdx == BgmTrackIdx_32)
+    else if (g_GameWork.bgmIdx == BgmCmd_Track32)
     {
         fadeSpeed = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
@@ -80,7 +80,7 @@ void Map_RoomBgmInit_CondFalse(void)
             case 4:
                 if (!Player_ItemRemove(InvItemId_ExaminationRoomKey, 0))
                 {
-                    bgmFlags = BgmFlag_Layer0;
+                    bgmFlags = BgmFlag_Layer1;
                 }
 
             case 6:
@@ -115,7 +115,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 break;
 
             case 3:
-                if (g_GameWork.bgmIdx == BgmTrackIdx_31)
+                if (g_GameWork.bgmIdx == BgmCmd_Track31)
                 {
                     data    = D_800CA70C;
                     dataPtr = &data;
@@ -123,17 +123,17 @@ void Map_RoomBgmInit_CondFalse(void)
                     if (!Savegame_EventFlagGet(EventFlag_293))
                     {
                         fadeSpeed = Q12(240.0f);
-                        bgmFlags = BgmFlag_Layer2;
+                        bgmFlags = BgmFlag_Layer3;
                     }
                     else if (!Savegame_EventFlagGet(EventFlag_298))
                     {
                         fadeSpeed = Q12(0.25f);
-                        bgmFlags = BgmFlag_Layer1;
+                        bgmFlags = BgmFlag_Layer2;
                     }
                     else if (!Savegame_EventFlagGet(EventFlag_299))
                     {
                         fadeSpeed = Q12(0.125f);
-                        bgmFlags = BgmFlag_Layer3;
+                        bgmFlags = BgmFlag_Layer4;
                     }
                     else
                     {
@@ -141,24 +141,24 @@ void Map_RoomBgmInit_CondFalse(void)
                         if (!Savegame_EventFlagGet(EventFlag_294))
                         {
                             fadeSpeed = Q12(0.5f);
-                            bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                            bgmFlags = BgmFlag_Layer1 | BgmFlag_MuteAll;
                         }
                         else
                         {
-                            bgmFlags = BgmFlag_Layer0;
+                            bgmFlags = BgmFlag_Layer1;
                         }
                     }
                 }
                 else
                 {
-                    bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                    bgmFlags = BgmFlag_Layer1 | BgmFlag_MuteAll;
                 }
                 break;
 
             case 58:
                 if (!Savegame_EventFlagGet(EventFlag_260))
                 {
-                    bgmFlags = BgmFlag_Layer0;
+                    bgmFlags = BgmFlag_Layer1;
                 }
                 break;
         }

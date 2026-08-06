@@ -13,22 +13,22 @@
 
 void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 {
-    s32 bgmIdx; // `e_BgmTrackIdx`
+    s32 bgmIdx; // `e_BgmCmd`
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerDied))
     {
         if (!Savegame_EventFlagGet(EventFlag_49)) // If Cybil and Harry cutscene hasn't finished.
         {
-            bgmIdx = BgmTrackIdx_9;
+            bgmIdx = BgmCmd_Track9;
         }
         else
         {
-            bgmIdx = BgmTrackIdx_30;
+            bgmIdx = BgmCmd_Track30;
         }
     }
     else
     {
-        bgmIdx = BgmTrackIdx_6;
+        bgmIdx = BgmCmd_Track6;
     }
 
     Bgm_TrackChange(bgmIdx);
@@ -49,13 +49,13 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
 
             // FMV has just played and unknown.
             if (Savegame_EventFlagGet(EventFlag_M0S01_FmvStarted) &&
-                g_GameWork.bgmIdx == BgmTrackIdx_9)
+                g_GameWork.bgmIdx == BgmCmd_Track9)
             {
-                bgmFlags = BgmFlag_Layer1;
+                bgmFlags = BgmFlag_Layer2;
             }
             else
             {
-                bgmFlags = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                bgmFlags = BgmFlag_Layer1 | BgmFlag_MuteAll;
             }
         }
         // Air Screamer cutscene finished.
@@ -69,17 +69,17 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
             else
             {
                 fadeSpeed = Q12(0.125f);
-                bgmFlags  = BgmFlag_Layer0 | BgmFlag_MuteAll;
+                bgmFlags  = BgmFlag_Layer1 | BgmFlag_MuteAll;
             }
         }
         else
         {
-            bgmFlags = BgmFlag_Layer0;
+            bgmFlags = BgmFlag_Layer1;
         }
     }
     else
     {
-        bgmFlags = BgmFlag_Layer0;
+        bgmFlags = BgmFlag_Layer1;
     }
 
     Bgm_LayersUpdate(bgmFlags, fadeSpeed, NULL);

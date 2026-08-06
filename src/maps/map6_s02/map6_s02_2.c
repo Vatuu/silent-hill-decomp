@@ -591,7 +591,7 @@ void func_800D0500(void) // 0x800D0500
     {
         case 0:
             D_800D3CA0 = 0;
-            Bgm_CrossfadeToTrack(BgmTrackIdx_41);
+            Bgm_CrossfadeToTrack(BgmCmd_Track41);
             break;
 
         case 1:
@@ -1758,7 +1758,7 @@ void func_800D32D0(void) // 0x800D32D0
             break;
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_5);
+            Bgm_CrossfadeToTrack(BgmCmd_Track5);
             break;
 
         case 2:

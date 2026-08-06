@@ -14,7 +14,7 @@
 // HELPER MACROS
 // ==============
 
-/** * @brief Packs an audio type (VAB ID) and program index into a single 16-bit value.
+/** @brief Packs an audio type (VAB ID) and program index into a single 16-bit value.
  *
  * This macro replicates the encoding used in the third field of `s_VabInfo`. 
  * The resulting value is passed to `SdVoKeyOn` via the `vab_pro` argument, 
@@ -32,6 +32,9 @@
  */
 #define TYPE_AND_PROG_SFX(audioType, progIdx) \
     ((audioType << 8) + progIdx)
+
+#define SD_TASK_CHANNELSET(idx) \
+    (0x300 + idx)
 
 // ======
 // ENUMS
@@ -265,7 +268,7 @@ extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
 
-// Odd access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
+// Odd access. See `Sd_ChannelsVolumeSet` and `Sd_BgmLayerVolumeGet`.
 extern u8 D_800AA604[41][16];
 
 extern s_XaItemData g_XaItemData[];
@@ -440,7 +443,7 @@ void Sd_StopBgmStep(void);
 u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
 
 /** Manipulates the BGM audio layer volume. */
-void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol);
+void Sd_ChannelsVolumeSet(u8 layerIdx, u8 vol);
 
 /** @brief Loads and plays XA audio in `g_XaItemData`. */
 void Sd_XaAudioPlay(void);

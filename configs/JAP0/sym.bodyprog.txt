@@ -372,12 +372,12 @@ Fs_CharaAnimBoneInfoSet                      = 0x8003536C; // type:func
 //--- PA: 0x0108F0   VA: 0x80035450   subsegment: c, game_boot/background_sound_init
 //----------------------------------------------------------------------------------
 Bgm_Init                                     = 0x80035450; // type:func
-Bgm_ActiveBgmTrackCheck                      = 0x80035578; // type:func
+Bgm_ActiveTrackCheck                         = 0x80035578; // type:func
 Bgm_TrackSet                                 = 0x800355AC; // type:func
 Bgm_ChannelSet                               = 0x800355F4; // type:func
-func_8003596C                                = 0x8003563C; // type:func
+Bgm_UpdateTrack                              = 0x8003563C; // type:func
 Sd_AmbientSfxInit                            = 0x8003566C; // type:func
-Sd_IsCurrentAmbientTargetCheck               = 0x80035780; // type:func
+Sd_ActiveAmbientCheck                        = 0x80035780; // type:func
 Sd_AmbientSfxSet                             = 0x80035798; // type:func
 
 //------------------------------------------------------------------------
@@ -397,7 +397,7 @@ Bgm_AllLayersMute                            = 0x80035AEC; // type:func
 Bgm_LayerOnCheck                             = 0x80035B14; // type:func
 Bgm_GlobalLayerVariablesUpdate               = 0x80035BA0; // type:func
 Bgm_LayersUpdate                             = 0x80035C1C; // type:func
-func_800363D0                                = 0x800360A0; // type:func
+Bgm_MenuUpdate                               = 0x800360A0; // type:func
 Bgm_TrackChange                              = 0x800360DC; // type:func
 Game_MapRoomIdxUpdate                        = 0x800360F0; // type:func
 func_8003647C                                = 0x8003614C; // type:func
@@ -737,7 +737,7 @@ Sd_StopBgmTaskAdd                            = 0x8004680C; // type:func
 Sd_StopBgm                                   = 0x80046838; // type:func
 Sd_StopBgmStep                               = 0x800468AC; // type:func
 Sd_BgmLayerVolumeGet                         = 0x800468E8; // type:func
-Sd_BgmLayerVolumeSet                         = 0x80046988; // type:func
+Sd_ChannelsVolumeSet                         = 0x80046988; // type:func
 Sd_XaAudioPlayTaskAdd                        = 0x80046A70; // type:func
 Sd_XaAudioLengthGet                          = 0x80046B00; // type:func
 Sd_XaAudioPlay                               = 0x80046B34; // type:func
@@ -2803,7 +2803,7 @@ D_800A998C                                   = 0x800ABD28;
 //--- PA: 0x0871D8   VA: 0x800ABD38   subsegment: .data, events/bgm
 //-----------------------------------------------------------------
 D_800A999C                                   = 0x800ABD38;
-D_800A99A0                                   = 0x800ABD3C;
+g_Bgm_ChannelSetProcessState                 = 0x800ABD3C;
 g_Bgm_LayerLimits                            = 0x800ABD40;
 
 //------------------------------------------------------------------------------------
@@ -3308,7 +3308,7 @@ demoLoadAttempCount                          = 0x800BF278;
 //----------------------------------------------------------------
 //--- PA: 0x09A720   VA: 0x800BF280   subsegment: .bss, events/bgm
 //----------------------------------------------------------------
-bgmLayerVolumes                              = 0x800BF280;
+bgmChannelsVol.0                             = 0x800BF280;
 D_800BCD58                                   = 0x800BF288;
 g_Bgm_LayersUpdated                          = 0x800BF28C;
 

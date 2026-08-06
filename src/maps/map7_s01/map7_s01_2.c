@@ -29,27 +29,27 @@ void func_800D6844(s32 arg0) // 0x800D6844
 
 void func_800D6878(void) // 0x800D6878
 {
-    s32 bgmIdx; // `e_BgmTrackIdx`
+    s32 bgmIdx; // `e_BgmCmd`
 
     if (g_SavegamePtr->mapRoomIdx == 3)
     {
-        bgmIdx = BgmTrackIdx_15;
+        bgmIdx = BgmCmd_Track15;
     }
     else if (Savegame_EventFlagGet(EventFlag_481))
     {
         if (!Savegame_EventFlagGet(EventFlag_574))
         {
             Savegame_EventFlagSet(EventFlag_574);
-            bgmIdx = BgmTrackIdx_1;
+            bgmIdx = BgmCmd_UpdateTrack;
         }
         else
         {
-            bgmIdx = BgmTrackIdx_22;
+            bgmIdx = BgmCmd_Track22;
         }
     }
     else
     {
-        bgmIdx = BgmTrackIdx_14;
+        bgmIdx = BgmCmd_Track14;
     }
 
     Bgm_TrackChange(bgmIdx);
@@ -190,11 +190,11 @@ void func_800D725C(void) // 0x800D725C
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
-            Bgm_TrackChange(BgmTrackIdx_4);
+            Bgm_TrackChange(BgmCmd_Track4);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_4);
+            Bgm_CrossfadeToTrack(BgmCmd_Track4);
             break;
 
         case 2:

@@ -18,7 +18,7 @@
 
 void Bgm_PlayNewTrack(s32 bgmIdx) // 0x80087EA8
 {
-    if (!Bgm_ActiveBgmTrackCheck(bgmIdx))
+    if (Bgm_ActiveTrackCheck(bgmIdx) == false)
     {
         return;
     }
@@ -36,7 +36,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            if (!Bgm_ActiveBgmTrackCheck(bgmIdx))
+            if (Bgm_ActiveTrackCheck(bgmIdx) == false)
             {
                 SysWork_StateStepSet(1, 3);
                 break;
@@ -56,7 +56,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
         case 2:
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_RequestMute;
 
-            if (!func_80045BC8())
+            if (func_80045BC8() == 0)
             {
                 Bgm_TrackSet(bgmIdx);
 
@@ -72,7 +72,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
 
 void Bgm_CrossfadeToSilence(void) // 0x80088028
 {
-    Bgm_CrossfadeToTrack(BgmTrackIdx_None);
+    Bgm_CrossfadeToTrack(BgmCmd_UpdateLayers);
 }
 
 void func_80088048(void) // 0x80088048
@@ -91,7 +91,7 @@ void func_80088048(void) // 0x80088048
             break;
 
         case 1:
-            if (!func_80045BC8())
+            if (func_80045BC8() == 0)
             {
                 SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             }
@@ -127,7 +127,7 @@ void func_800880F0(bool arg0) // 0x800880F0
             break;
 
         case 1:
-            if (!func_80045BC8())
+            if (func_80045BC8() == 0)
             {
                 SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             }

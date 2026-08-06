@@ -28,23 +28,23 @@ u32 D_800A999C = &D_80025234;
 // ========================================
 
 static s32 g_Bgm_LayersUpdated;
-static s32 D_800A99A0 = 0;
+static s32 g_Bgm_ChannelSetProcessState = 0;
 static u8  g_Bgm_LayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
 // ========================================
 // MUSIC UPDATE
 // ========================================
 
-void Bgm_Update(bool updateTrackOnly) // 0x80035DB4
+void Bgm_Update(bool updateTrack) // 0x80035DB4
 {
     g_Bgm_LayersUpdated = false;
 
     if (g_MapOverlayHdr.bgmEvent != NULL) // Checks if function exists.
     {
-        g_MapOverlayHdr.bgmEvent(updateTrackOnly);
-        if (updateTrackOnly == false && g_Bgm_LayersUpdated == false)
+        g_MapOverlayHdr.bgmEvent(updateTrack);
+        if (updateTrack == false && g_Bgm_LayersUpdated == false)
         {
-            Bgm_LayersUpdate(BgmFlag_Layer0, Q12(240.0f), 0);
+            Bgm_LayersUpdate(BgmFlag_Layer1, Q12(240.0f), 0);
         }
     }
 }
@@ -115,25 +115,25 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
 {
     s16       temp_v0;
     s32       ducking;
-    s32       var_a2;
+    s32       targetVol;
     q19_12    curLayerVol;
     q19_12    curLayerVol1;
-    s32       temp_s2;
+    s32       activeSetChannelTask;
     s32       i;
     s32       flagsCpy;
     bool      isBgmLayerActive;
-    bool      isMusicPlayer;
-    q19_12    var_t0;
-    bool      cond0;
-    s32       endLayerIdx;
-    q3_12*    layerVols;
+    bool      isMusicPlaying;
+    q19_12    adjustLayerValue;
+    bool      areChannelsActive;
+    s32       lastLayerIdx;
+    q3_12*    layersVol;
     u8*       layerLimitsCpy;
-    static s8 bgmLayerVols[8];
+    static s8 bgmChannelsVol[8];
 
     // Setup.
     flagsCpy       = bgmFlags;
     layerLimitsCpy = layerLimits;
-    layerVols      = g_SysWork.bgmLayerVolumes;
+    layersVol      = g_SysWork.bgmLayerVolumes;
 
     // Ensure layer limits are valid.
     if (layerLimitsCpy == NULL)
@@ -145,12 +145,13 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
     if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState == SysState_GameOver)
     {
         flagsCpy &= BgmFlag_KeepAlive;
-        flagsCpy |= BgmFlag_Layer0;
+        flagsCpy |= BgmFlag_Layer1;
         fadeSpeed = Q12(0.2f);
     }
 
-    if (!(flagsCpy & BgmFlag_KeepAlive) &&
-        g_RadioPitchState > 0 &&
+    // If player is not dead and the radio is active this set the
+    // BGM status flag for radio active.
+    if (!(flagsCpy & BgmFlag_KeepAlive) && g_RadioPitchState > 0 &&
         (g_SavegamePtr->itemToggleFlags & ItemToggleFlag_RadioOn))
     {
         g_SysWork.bgmStatusFlags |= BgmStatusFlag_RadioActive;
@@ -159,28 +160,29 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
     // Mute layers.
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_RequestMute)
     {
-        flagsCpy                 = BgmFlag_Layer0 | BgmFlag_MuteAll;
+        flagsCpy                  = BgmFlag_Layer1 | BgmFlag_MuteAll;
         g_SysWork.bgmStatusFlags |= BgmStatusFlag_ApplyMute;
     }
 
-    if (flagsCpy & BgmFlag_Layer0)
+    if (flagsCpy & BgmFlag_Layer1)
     {
         flagsCpy &= BgmFlag_KeepAlive | BgmFlag_MuteAll;
     }
     else
     {
-        flagsCpy ^= BgmFlag_Layer0;
+        flagsCpy ^= BgmFlag_Layer1;
     }
 
-    for (i = 0, endLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1);
+    // Updates music layers volume.
+    for (i = 0, lastLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1);
          i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes);
          i++)
     {
-        curLayerVol = layerVols[i];
+        curLayerVol = layersVol[i];
 
-        if (i == endLayerIdx)
+        if (i == lastLayerIdx)
         {
-            var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTimeRaw, 0.25f);
+            adjustLayerValue = Q12_MULT_FLOAT_PRECISE(g_DeltaTimeRaw, 0.25f);
             if (g_SysWork.bgmStatusFlags & BgmStatusFlag_ApplyMute)
             {
                 ducking = Q12(1.0f);
@@ -196,44 +198,51 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
         }
         else
         {
-            if ((flagsCpy >> i) & BgmFlag_Layer0)
+            if ((flagsCpy >> i) & 1) // Turn on music layer.
             {
-                var_t0 = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
-                ducking = Q12(1.0f);
+                adjustLayerValue = FP_MULTIPLY(g_DeltaTimeRaw, fadeSpeed, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
+                ducking          = Q12(1.0f);
             }
-            else
+            else // Turn off music larper.
             {
-                var_t0 = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
-                ducking = Q12(0.0f);
+                adjustLayerValue = Q12_MULT(g_DeltaTimeRaw, fadeSpeed);
+                ducking          = Q12(0.0f);
             }
         }
 
-        var_a2 = ducking - curLayerVol;
+        targetVol = ducking - curLayerVol;
         if (curLayerVol != ducking)
         {
-            if (var_t0 < var_a2)
+            if (adjustLayerValue < targetVol)
             {
-                curLayerVol += var_t0;
+                curLayerVol += adjustLayerValue;
             }
-            else if (var_a2 >= -var_t0)
+            else if (targetVol >= -adjustLayerValue)
             {
                 curLayerVol = ducking;
             }
             else
             {
-                curLayerVol -= var_t0;
+                curLayerVol -= adjustLayerValue;
             }
         }
 
-        layerVols[i] = curLayerVol;
+        layersVol[i] = curLayerVol;
     }
 
     isBgmLayerActive = false;
-    temp_v0          = Q12(1.0f) - layerVols[8];
-
+    temp_v0          = Q12(1.0f) - layersVol[8];
+    
+    /* @todo Figure out this weird FP math.
+       @note This extremely small values are likely related to delta timer as `layersVol[8]` is set
+       by doing some stuff with the delta timer and as the previous variable shows it is used to
+       define a variable which is used for adjusting the first channel volume on certain circumstances
+       (for example during the inventory).
+    */
+    // Updates console's music channel volume.
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
     {
-        curLayerVol1        = layerVols[i];
+        curLayerVol1      = layersVol[i];
         isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
 
         if (i == 0)
@@ -242,51 +251,51 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
         }
 
         curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, Q12(0.0312f));
+        
         if (curLayerVol1 > Q12(0.0312f))
         {
             curLayerVol1 = Q12(0.0312f);
         }
 
-        curLayerVol1 = (curLayerVol1 * layerLimitsCpy[i]) >> 7;
+        curLayerVol1 = (curLayerVol1 * layerLimitsCpy[i]) >> 7; // This is the equivalent of `/ Q12(0.0312f)` but causes missmatch.
         if (curLayerVol1 > Q12(0.0312f))
         {
             curLayerVol1 = Q12(0.0312f);
         }
 
-        bgmLayerVols[i] = curLayerVol1;
+        bgmChannelsVol[i] = curLayerVol1;
     }
 
-    isMusicPlayer = false;
-    temp_s2        = func_80045BC8();
+    isMusicPlaying    = false;
+    areChannelsActive = activeSetChannelTask = func_80045BC8();
 
-    cond0 = temp_s2;
-    cond0 = temp_s2 != 0 && cond0 != 0xFFFF;
+    areChannelsActive = activeSetChannelTask != 0 && areChannelsActive != 0xFFFF;
 
     if (isBgmLayerActive)
     {
-        switch (D_800A99A0)
+        switch (g_Bgm_ChannelSetProcessState)
         {
             case 3:
                 Bgm_AllLayersMute();
 
-                if (cond0)
+                if (areChannelsActive)
                 {
-                    D_800A99A0 = 0;
+                    g_Bgm_ChannelSetProcessState = 0;
                 }
                 else
                 {
                     Bgm_ChannelSet();
-                    D_800A99A0 = 2;
+                    g_Bgm_ChannelSetProcessState = 2;
                 }
                 break;
 
             case 2:
                 Bgm_AllLayersMute();
-                D_800A99A0 = 1;
+                g_Bgm_ChannelSetProcessState = 1;
                 break;
 
             case 1:
-                if (cond0)
+                if (areChannelsActive)
                 {
                     Bgm_GlobalLayerVariablesUpdate();
                 }
@@ -295,47 +304,47 @@ void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLim
                     Bgm_AllLayersMute();
                 }
 
-                D_800A99A0 = 0;
+                g_Bgm_ChannelSetProcessState = 0;
                 break;
 
             case 0:
-                isMusicPlayer = true;
+                isMusicPlaying = true;
                 break;
         }
     }
     else if (flagsCpy & BgmFlag_MuteAll)
     {
-        if (D_800A99A0 != 3)
+        if (g_Bgm_ChannelSetProcessState != 3)
         {
-            D_800A99A0 = 3;
+            g_Bgm_ChannelSetProcessState = 3;
             SD_Call(18);
         }
     }
-    else if (D_800A99A0 == 0)
+    else if (g_Bgm_ChannelSetProcessState == 0)
     {
-        isMusicPlayer = true;
+        isMusicPlaying = true;
     }
 
-    if (isMusicPlayer)
+    if (isMusicPlaying)
     {
-        if (cond0)
+        if (areChannelsActive)
         {
             for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes) - 1); i++)
             {
-                Sd_BgmLayerVolumeSet(i, bgmLayerVols[i]);
+                Sd_ChannelsVolumeSet(i, bgmChannelsVol[i]);
             }
         }
         else
         {
             Bgm_AllLayersMute();
-            D_800A99A0 = 3;
+            g_Bgm_ChannelSetProcessState = 3;
         }
     }
 
     g_Bgm_LayersUpdated = true;
 }
 
-void func_800363D0(void) // 0x800363D0
+void Bgm_MenuUpdate(void) // 0x800363D0
 {
     g_RadioPitchState         = 0;
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Duck;
@@ -344,11 +353,15 @@ void func_800363D0(void) // 0x800363D0
 
 void Bgm_TrackChange(s32 bgmIdx) // 0x8003640C
 {
-    if (bgmIdx != BgmTrackIdx_None)
+    if (bgmIdx != BgmCmd_UpdateLayers)
     {
-        g_MapOverlayHdr.bgmIdx = bgmIdx;
+        g_MapOverlayHdr.bgmCmd = bgmIdx;
     }
 }
+
+// ========================================
+// PLAYER ROOM INFORMATION
+// ========================================
 
 void Game_MapRoomIdxUpdate(void) // 0x80036420
 {
@@ -385,6 +398,10 @@ s32 func_80036498(void) // 80036498
     return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.unused_8);
 }
 
+// ========================================
+// UNKNOWN UNUSED MATH
+// ========================================
+
 u32 func_800364BC(void) // 0x800364BC
 {
     u32        var0;
@@ -398,15 +415,3 @@ u32 func_800364BC(void) // 0x800364BC
     var1  = Math_Sin((D_800BCD58 & 0xFFFF) / 16) * 32;
     return FP_FROM(var0 + var1, Q12_SHIFT);
 }
-
-// TODO: Garbage data. Could indicate file split nearby.
-// For some reason `D_800A999C` points to this buffer, but bytes change in each release?
-#if VERSION_IS(USA)
-    const s8 D_80025234[] = { 0x00, 0xB1, 0x3A, 0xCC, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP0)
-    const s8 D_80025234[] = { 0x00, 0x20, 0x32, 0x33, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP1)
-    const s8 D_80025234[] = { 0x00, 0x72, 0x20, 0x20, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP2)
-    const s8 D_80025234[] = { 0x00, 0x00, 0x02, 0xAD, 0x00, 0x00, 0x00, 0x00 };
-#endif

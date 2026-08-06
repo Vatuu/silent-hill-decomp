@@ -117,7 +117,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_9);
+            Bgm_CrossfadeToTrack(BgmCmd_Track9);
             break;
 
         case 2:
@@ -542,7 +542,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_30);
+            Bgm_CrossfadeToTrack(BgmCmd_Track30);
             break;
 
         case 2:

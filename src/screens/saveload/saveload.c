@@ -1696,7 +1696,7 @@ void GameState_LoadSavegameScreen_Update(void) // 0x801E6320
 
     if (g_GameWork.gameState == GameState_SaveScreen)
     {
-        func_800363D0();
+        Bgm_MenuUpdate();
     }
 }
 

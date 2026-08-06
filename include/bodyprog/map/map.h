@@ -412,7 +412,7 @@ typedef struct _MapOverlayHdr
     /* 0xC   */ s32                    (*func_C)();
                 // 3 bytes of padding.
     /* 0x10  */ void                   (*bgmEvent)(bool);
-    /* 0x14  */ s8                     bgmIdx;
+    /* 0x14  */ s8                     bgmCmd;
     /* 0x15  */ u8                     ambientAudioIdx; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
     /* 0x16  */ s8                     field_16;        // Set ambient tint and draw distance.
                                                         // A value of 3 sets the map to night.

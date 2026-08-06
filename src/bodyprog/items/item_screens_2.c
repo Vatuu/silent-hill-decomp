@@ -70,7 +70,7 @@ static const s8 D_80025EB0[] = {
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringSetColor(StringColorId_White);
-    func_800363D0();
+    Bgm_MenuUpdate();
 
     // Update timer if current screen is inventory.
     if (g_GameWork.gameStateSteps[1] < 21)

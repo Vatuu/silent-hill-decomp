@@ -51,27 +51,27 @@ void func_800E0B5C(s32 arg0) // 0x800E0B5C
 
 void func_800E0B90(void) // 0x800E0B90
 {
-    s32 bgmIdx; // `e_BgmTrackIdx`
+    s32 bgmIdx; // `e_BgmCmd`
 
     if (g_SavegamePtr->mapRoomIdx == 3)
     {
-        bgmIdx = BgmTrackIdx_15;
+        bgmIdx = BgmCmd_Track15;
     }
     else if (Savegame_EventFlagGet(EventFlag_481))
     {
         if (!Savegame_EventFlagGet(EventFlag_574))
         {
             Savegame_EventFlagSet(EventFlag_574);
-            bgmIdx = BgmTrackIdx_1;
+            bgmIdx = BgmCmd_UpdateTrack;
         }
         else
         {
-            bgmIdx = BgmTrackIdx_22;
+            bgmIdx = BgmCmd_Track22;
         }
     }
     else
     {
-        bgmIdx = BgmTrackIdx_14;
+        bgmIdx = BgmCmd_Track14;
     }
 
     Bgm_TrackChange(bgmIdx);
@@ -1040,7 +1040,7 @@ void func_800E3390(void) // 0x800E3390
             }
 
         case 6:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_40);
+            Bgm_CrossfadeToTrack(BgmCmd_Track40);
 
             if (g_SysWork.sysStateSteps[0] != 0)
             {
@@ -1823,7 +1823,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_29);
+            Bgm_CrossfadeToTrack(BgmCmd_Track29);
             break;
 
         case 2:
@@ -1937,7 +1937,7 @@ void func_800E514C(void) // 0x800E514C
                 Savegame_EventFlagClear(EventFlag_576);
             }
 
-            Bgm_PlayNewTrack(BgmTrackIdx_40);
+            Bgm_PlayNewTrack(BgmCmd_Track40);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -2907,7 +2907,7 @@ void func_800E787C(void) // 0x800E787C
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_35);
+            Bgm_CrossfadeToTrack(BgmCmd_Track35);
             break;
 
         case 1:
@@ -3301,7 +3301,7 @@ void func_800E86BC(void) // 0x800E86BC
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_35);
+            Bgm_CrossfadeToTrack(BgmCmd_Track35);
             break;
 
         case 1:
@@ -3962,7 +3962,7 @@ void func_800E9C28(void) // 0x800E9C28
             break;
 
         case 1:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_5);
+            Bgm_CrossfadeToTrack(BgmCmd_Track5);
             break;
 
         case 2:

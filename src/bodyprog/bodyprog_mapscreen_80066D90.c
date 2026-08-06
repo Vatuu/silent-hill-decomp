@@ -212,7 +212,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
     static q19_12 screenPosX;
     static q19_12 screenPosY;
 
-    func_800363D0();
+    Bgm_MenuUpdate();
     Game_TimerUpdate();
 
     switch (g_GameWork.gameStateSteps[0])

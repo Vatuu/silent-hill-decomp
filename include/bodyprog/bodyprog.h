@@ -659,9 +659,6 @@ extern s_AnimInfo D_800A998C;
 /** Current player anim index store? */
 extern u8 D_800A9990;
 
-// Likely declared as static inside the function that uses it.
-extern s32 D_800A99A0;
-
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
@@ -1655,6 +1652,17 @@ void func_80088048(void);
 void func_800880F0(bool bool);
 
 // ========================
+
+void Game_MapRoomIdxUpdate(void);
+
+/** @unused */
+s32 func_8003647C(void);
+
+/** @unused */
+s32 func_80036498(void);
+
+// Used in some RoomBgmInit funcs.
+u32 func_800364BC(void);
 
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 

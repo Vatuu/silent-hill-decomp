@@ -20,64 +20,64 @@ typedef enum _BgmStatusFlags
 /** @brief Background music flags. */
 typedef enum _BgmFlags
 {
-    BgmFlag_Layer0    = 1 << 0,
-    BgmFlag_Layer1    = 1 << 1,
-    BgmFlag_Layer2    = 1 << 2,
-    BgmFlag_Layer3    = 1 << 3,
-    BgmFlag_Layer4    = 1 << 4,
-    BgmFlag_Layer5    = 1 << 5,
-    BgmFlag_Layer6    = 1 << 6,
-    BgmFlag_Layer7    = 1 << 7,
+    BgmFlag_Layer1    = 1 << 0,
+    BgmFlag_Layer2    = 1 << 1,
+    BgmFlag_Layer3    = 1 << 2,
+    BgmFlag_Layer4    = 1 << 3,
+    BgmFlag_Layer5    = 1 << 4,
+    BgmFlag_Layer6    = 1 << 5,
+    BgmFlag_Layer7    = 1 << 6,
+    BgmFlag_Layer8    = 1 << 7,
     BgmFlag_KeepAlive = 1 << 8,
     BgmFlag_MuteAll   = 1 << 9
 } e_BgmFlags;
 
 /** @brief Background music track indices. */
-typedef enum _BgmTrackIdx
+typedef enum _BgmCmd
 {
-    BgmTrackIdx_None = 0,
-    BgmTrackIdx_1    = 1,
-    BgmTrackIdx_2    = 2,
-    BgmTrackIdx_3    = 3,
-    BgmTrackIdx_4    = 4,
-    BgmTrackIdx_5    = 5,
-    BgmTrackIdx_6    = 6,
-    BgmTrackIdx_7    = 7,
-    BgmTrackIdx_8    = 8,
-    BgmTrackIdx_9    = 9,
-    BgmTrackIdx_10   = 10,
-    BgmTrackIdx_11   = 11,
-    BgmTrackIdx_12   = 12,
-    BgmTrackIdx_13   = 13,
-    BgmTrackIdx_14   = 14,
-    BgmTrackIdx_15   = 15,
-    BgmTrackIdx_16   = 16,
-    BgmTrackIdx_17   = 17,
-    BgmTrackIdx_18   = 18,
-    BgmTrackIdx_19   = 19,
-    BgmTrackIdx_20   = 20,
-    BgmTrackIdx_21   = 21,
-    BgmTrackIdx_22   = 22,
-    BgmTrackIdx_23   = 23,
-    BgmTrackIdx_24   = 24,
-    BgmTrackIdx_25   = 25,
-    BgmTrackIdx_26   = 26,
-    BgmTrackIdx_27   = 27,
-    BgmTrackIdx_28   = 28,
-    BgmTrackIdx_29   = 29,
-    BgmTrackIdx_30   = 30,
-    BgmTrackIdx_31   = 31,
-    BgmTrackIdx_32   = 32,
-    BgmTrackIdx_33   = 33,
-    BgmTrackIdx_34   = 34,
-    BgmTrackIdx_35   = 35,
-    BgmTrackIdx_36   = 36,
-    BgmTrackIdx_37   = 37,
-    BgmTrackIdx_38   = 38,
-    BgmTrackIdx_39   = 39,
-    BgmTrackIdx_40   = 40,
-    BgmTrackIdx_41   = 41
-} e_BgmTrackIds;
+    BgmCmd_UpdateLayers = 0,
+    BgmCmd_UpdateTrack  = 1,
+    BgmCmd_Track2       = 2,
+    BgmCmd_Track3       = 3,
+    BgmCmd_Track4       = 4,
+    BgmCmd_Track5       = 5,
+    BgmCmd_Track6       = 6,
+    BgmCmd_Track7       = 7,
+    BgmCmd_Track8       = 8,
+    BgmCmd_Track9       = 9,
+    BgmCmd_Track10      = 10,
+    BgmCmd_Track11      = 11,
+    BgmCmd_Track12      = 12,
+    BgmCmd_Track13      = 13,
+    BgmCmd_Track14      = 14,
+    BgmCmd_Track15      = 15,
+    BgmCmd_Track16      = 16,
+    BgmCmd_Track17      = 17,
+    BgmCmd_Track18      = 18,
+    BgmCmd_Track19      = 19,
+    BgmCmd_Track20      = 20,
+    BgmCmd_Track21      = 21,
+    BgmCmd_Track22      = 22,
+    BgmCmd_Track23      = 23,
+    BgmCmd_Track24      = 24,
+    BgmCmd_Track25      = 25,
+    BgmCmd_Track26      = 26,
+    BgmCmd_Track27      = 27,
+    BgmCmd_Track28      = 28,
+    BgmCmd_Track29      = 29,
+    BgmCmd_Track30      = 30,
+    BgmCmd_Track31      = 31,
+    BgmCmd_Track32      = 32,
+    BgmCmd_Track33      = 33,
+    BgmCmd_Track34      = 34,
+    BgmCmd_Track35      = 35,
+    BgmCmd_Track36      = 36,
+    BgmCmd_Track37      = 37,
+    BgmCmd_Track38      = 38,
+    BgmCmd_Track39      = 39,
+    BgmCmd_Track40      = 40,
+    BgmCmd_Track41      = 41
+} e_BgmCmd;
 
 // ========
 // STRUCTS
@@ -92,12 +92,16 @@ typedef struct _BgmLayerLimits
 // FUNCTIONS
 // ==========
 
-/** @brief Updates background music.
+/** @brief Updates background music in-game.
  * Triggers map's background music handler.
  *
- * @param updateTrackOnly.
+ * @param updateTrack In case the overlay feature multiple songs
+ * setting this value to true triggers the state where it will update
+ * the current playing track to another. Most overlays and in the cases
+ * where overlays have true/false options setting this to false only
+ * updates song's layers.
  */
-void Bgm_Update(bool updateTrackOnly);
+void Bgm_Update(bool updateTrack);
 
 void Bgm_AllLayersMute(void);
 
@@ -114,20 +118,12 @@ void Bgm_GlobalLayerVariablesUpdate(void);
  */
 void Bgm_LayersUpdate(s32 bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits);
 
-/** @brief Updates the track index and disables radio effects. */
-void func_800363D0(void);
-
-void Bgm_TrackChange(s32 bgmIdx);
-
-void Game_MapRoomIdxUpdate(void);
-
-/** @unused */
-s32 func_8003647C(void);
-
-/** @unused */
-s32 func_80036498(void);
-
-// Used in some RoomBgmInit funcs.
-u32 func_800364BC(void);
+/** @brief Updates background music in menus.
+ * Triggers map's background music handler.
+ *
+ * This share the same behaviour as `Bgm_Update`,
+ * however, this also disable radio static.
+ */
+void Bgm_MenuUpdate(void);
 
 #endif

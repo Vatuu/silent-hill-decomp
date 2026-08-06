@@ -337,7 +337,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 10:
-            Bgm_CrossfadeToTrack(BgmTrackIdx_34);
+            Bgm_CrossfadeToTrack(BgmCmd_Track34);
             break;
 
         case 11:

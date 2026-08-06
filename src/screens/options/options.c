@@ -50,7 +50,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
     if (g_GameWork.gameStatePrev == GameState_InGame)
     {
-        func_800363D0();
+        Bgm_MenuUpdate();
     }
 
     if (g_GameWork.gameStatePrev != GameState_MainMenu)

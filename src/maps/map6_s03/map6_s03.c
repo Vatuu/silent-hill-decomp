@@ -31,7 +31,7 @@ void func_800D7F98(void) // 0x800D7F98
 
     if (Savegame_EventFlagGet(EventFlag_435))
     {
-        bgmFlags = BgmFlag_Layer0;
+        bgmFlags = BgmFlag_Layer1;
         if (Savegame_EventFlagGet(EventFlag_437))
         {
             fadeSpeed = 0x547;
@@ -116,7 +116,7 @@ void func_800D7F98(void) // 0x800D7F98
         if (!Savegame_EventFlagGet(EventFlag_431))
         {
             fadeSpeed = 0x547;
-            bgmFlags = BgmFlag_Layer1;
+            bgmFlags = BgmFlag_Layer2;
         }
     }
 

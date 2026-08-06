@@ -759,7 +759,7 @@ u8 Sd_BgmLayerVolumeGet(u8 layerIdx) // 0x80046BB4
         return 0;
     }
 
-    if (g_Sd_AudioWork.field_E >= 809)
+    if (g_Sd_AudioWork.field_E > SD_TASK_CHANNELSET(40))
     {
         return 0;
     }
@@ -778,7 +778,7 @@ u8 Sd_BgmLayerVolumeGet(u8 layerIdx) // 0x80046BB4
     return vol;
 }
 
-void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
+void Sd_ChannelsVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
 {
     u32 i;
     s16 volCpy;
@@ -789,10 +789,10 @@ void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
     {
         gSDVolConfig.volumeBgm_6 = (vol * 40) / 127;
     }
-    else if (g_Sd_AudioWork.field_E < 809)
+    else if (g_Sd_AudioWork.field_E <= SD_TASK_CHANNELSET(40))
     {
 
-        idx = g_Sd_AudioWork.field_E;
+        idx = (u8)g_Sd_AudioWork.field_E;
 
         for (i = 0; i < 15; i++)
         {
