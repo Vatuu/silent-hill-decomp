@@ -61,7 +61,7 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
         // If funcptr is set, return whether demo is eligible to play, possibly based on game progress or other conditions.
         // In retail demos this pointer is always `NULL`.
         if (DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo   == NULL ||
-            DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo() == 1)
+            DEMO_FILE_INFOS[g_Demo_DemoId].canPlayDemo() == true)
         {
             break;
         }

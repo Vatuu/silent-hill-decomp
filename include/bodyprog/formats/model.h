@@ -13,7 +13,7 @@ typedef struct _Primitive
                {
                          struct
                          {
-                             /* 0x6+0  */ u8 field_6_0     : 8; // Set to `s_Material::field_E`.
+                             /* 0x6    */ u8 field_6;           // Set to `s_Material::field_E`.
                              /* 0x6+8  */ s8 materialIdx   : 7;
                              /* 0x6+17 */ u8 isTransparent : 1; /** `bool` */
                          } bits;
@@ -24,7 +24,7 @@ typedef struct _Primitive
     /* 0xA  */ u8 u3;
     /* 0xB  */ u8 v3;
     /* 0xC  */ u8 faceIdxs[4];
-    /* 0x10 */ u8 field_10[4]; // Unknown type. `func_8005AC50` reads these as `s32`, but that breaks other funcs which use this struct. `s32` reads might have just been `memcpy`?
+    /* 0x10 */ u8 field_10[4]; // Normal indices?
 } s_Primitive;
 STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 

@@ -45,9 +45,9 @@ STATIC_ASSERT_SIZEOF(s_DemoFrameData, 16);
 /** @brief Associates a demo number/ID with `PLAY****.DAT/DEMO****.DAT` file IDs. */
 typedef struct _DemoFileInfo
 {
-    /* 0x0 */ s16 demoFileId;           /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
-    /* 0x2 */ s16 playFileId;           /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
-    /* 0x4 */ s32 (*canPlayDemo)(void); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+    /* 0x0 */ s16  demoFileId;           /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
+    /* 0x2 */ s16  playFileId;           /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
+    /* 0x4 */ bool (*canPlayDemo)(void); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 

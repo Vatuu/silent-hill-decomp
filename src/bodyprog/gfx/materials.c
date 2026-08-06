@@ -279,7 +279,7 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Mater
             // No material.
             if (curPrim->bits1.bits.materialIdx == NO_VALUE)
             {
-                curPrim->bits1.bits.field_6_0 = 32;
+                curPrim->bits1.bits.field_6 = 32;
             }
 
             // Apply material flags.
@@ -287,7 +287,7 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Mater
             {
                 if (matFlags & MaterialFlag_0)
                 {
-                    curPrim->bits1.bits.field_6_0 = mat->field_E;
+                    curPrim->bits1.bits.field_6 = mat->field_E;
                 }
                 if (matFlags & MaterialFlag_1)
                 {
@@ -338,7 +338,7 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
 {
     s_ModelHeader* modelHdr;
 
-    modelHdr = lmHdr->modelHdrs;
+    modelHdr                 = lmHdr->modelHdrs;
     bone->modelInfo.modelIdx = modelHdrIdx;
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
