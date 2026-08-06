@@ -9,24 +9,37 @@ doc: |
   DAT is the demo playback format used in Silent Hill. This spec covers all
   `MISC/PLAY****.DAT` files.
 
-seq:
-  - id: analog_controller
-    type: analog_controller
+instances:
+  frames:
+    type: frame
+    repeat: expr
+    repeat-expr: frame_count
+    
+  frame_count:
+    value: _io.size / frame_size
 
-  - id: game_state_expected
-    type: s1
-
-  - id: video_present_interval
-    type: s1
-
-  - id: unk_a
-    size: 2
-
-  - id: rand_seed
-    type: u4
+  frame_size:
+    value: 16
 
 types:
-  analog_controller:
+  frame:
+    seq:
+      - id: controller_state
+        type: controller_state
+    
+      - id: expected_game_state
+        type: s1
+    
+      - id: video_present_interval
+        type: s1
+    
+      - id: unk_a
+        size: 2
+    
+      - id: rand_seed
+        type: u4
+
+  controller_state:
     seq:
       - id: status
         type: u1
