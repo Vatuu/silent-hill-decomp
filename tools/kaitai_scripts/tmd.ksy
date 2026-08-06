@@ -112,7 +112,8 @@ types:
         type:
           switch-on: primitive_id
           cases:
-            primitive_type::polygon: polygon(is_lit, is_graded,
+            primitive_type::polygon: polygon(is_lit,
+                                             is_graded,
                                              is_textured,
                                              is_quad,
                                              is_gouraud)
