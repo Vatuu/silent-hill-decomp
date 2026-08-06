@@ -9,42 +9,42 @@ typedef enum _DmsSegmentState
     DmsSegmentState_Ending        = 2
 } e_DmsSegmentState;
 
-/** @brief DMS cutscene camera keyframe. */
-typedef struct _DmsKeyframeCamera
-{
-    /* 0x0 */ SVECTOR3 positionTarget; /** Q7.8 */
-    /* 0x6 */ SVECTOR3 lookAtTarget;   /** Q7.8 */
-    /* 0xC */ q3_12    cameraUnkAngle; // @unused Unknown angle, lerped between keyframes.
-    /* 0xE */ q3_12    projectionDist; // Projection distance. passed to `vcChangeProjectionValue`. Might be FOV related?
-} s_DmsKeyframeCamera;
-STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
-
 /** @brief DMS cutscene character transform keyframe. */
 typedef struct _DmsKeyframeCharacter
 {
     /* 0x0 */ SVECTOR3 position; /** Q7.8 */
-    /* 0x6 */ SVECTOR3 rotation; /** Q7.8 */
+    /* 0x6 */ SVECTOR3 rotation; /** Q3.12 */
 } s_DmsKeyframeCharacter;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCharacter, 12);
 
-/** @brief Maps the inclusive frame range `[startFrameIdx, endFrameIdx]` to a single keyframe.
- * Likely used for frames where a character or camera has no movement and can remain set to a single keyframe.
+/** @brief DMS cutscene camera keyframe. */
+typedef struct _DmsKeyframeCamera
+{
+    /* 0x0 */ SVECTOR3 positionTarget;     /** Q7.8 */
+    /* 0x6 */ SVECTOR3 lookAtTarget;       /** Q7.8 */
+    /* 0xC */ q3_12    unusedAngle;        /** @unused Unknown angle, lerped between keyframes. */
+    /* 0xE */ q3_12    projectionDistance; // Passed to `vcChangeProjectionValue`. Might be FOV related?
+} s_DmsKeyframeCamera;
+STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
+
+/** @brief Maps the inclusive keyframe range `[startKeyframeIdx, endKeyframeIdx]` to a single keyframe.
+ * Likely used for keyframes where a character or camera has no movement and can remain set to a single keyframe.
  */
 typedef struct _DmsHoldRange
 {
-    /* 0x0 */ s16 startFrameIdx;
-    /* 0x2 */ s16 endFrameIdx;
+    /* 0x0 */ s16 startKeyframeIdx;
+    /* 0x2 */ s16 endKeyframeIdx;
     /* 0x4 */ s16 keyframeIdx;
 } s_DmsHoldRange;
 STATIC_ASSERT_SIZEOF(s_DmsHoldRange, 6);
 
-/** @brief DMS cutscene entry. */
+/** @brief DMS cutscene character or camera entry. */
 typedef struct _DmsEntry
 {
     /* 0x0 */ s16             keyframeCount;
     /* 0x2 */ u8              holdRangeCount; /** `holdRanges` array size. */
     /* 0x3 */ u8              field_3;        // Usually 0, but sometimes filled in. Possibly junk data left in padding byte.
-    /* 0x4 */ char            name[4];        // First 4 `char`s of the name. E.g. If code checks for "DAHLIA", file is "DAHL".
+    /* 0x4 */ char            name[4];        // First 4 `char`s of the name. E.g. if code checks for "DAHLIA", file is "DAHL".
     /* 0x8 */ s_DmsHoldRange* holdRanges;     /** Ranges of frames that map to a single keyframe, compressing repeated data. */
               union
               {
@@ -57,7 +57,7 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 /** @brief DMS cutscene segment. */
 typedef struct _DmsSegment
 {
-    /* 0x0 */ s16 startFrameIdx;
+    /* 0x0 */ s16 startKeyframeIdx;
     /* 0x2 */ s16 frameCount; /** Frame duration at 30 FPS. */
 } s_DmsSegment;
 STATIC_ASSERT_SIZEOF(s_DmsSegment, 4);
@@ -99,8 +99,8 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
  */
 q3_12 Dms_FovScaleGet(q3_12 fovAngle);
 
-/** @brief Gets the camera position and look-at targets */
-s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* curCameraUnkAngle, q19_12 time, s_DmsHeader* dmsHdr);
+/** @brief Gets the camera position and look-at targets. */
+s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time, s_DmsHeader* dmsHdr);
 
 /** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16 of a full rotation).
  *

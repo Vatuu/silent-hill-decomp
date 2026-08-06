@@ -134,7 +134,7 @@ q3_12 Dms_FovScaleGet(q3_12 fovAngle) // 0x8008CDBC
     return (96 * Math_Cos(fovAngle / 2)) / Math_Sin(fovAngle / 2);
 }
 
-s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* curCameraUnkAngle, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CE1C
+s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time, s_DmsHeader* dmsHdr) // 0x8008CE1C
 {
     s32                 prevKeyframeIdx;
     s32                 nextKeyframeIdx;
@@ -146,7 +146,9 @@ s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* curCamer
     camEntry = &dmsHdr->camera;
 
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, camEntry, dmsHdr);
-    camProjVal = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes.camera[prevKeyframeIdx], &camEntry->keyframes.camera[nextKeyframeIdx], alpha);
+    camProjVal = Dms_CameraKeyframeInterpolate(&curFrame, &camEntry->keyframes.camera[prevKeyframeIdx],
+                                               &camEntry->keyframes.camera[nextKeyframeIdx],
+                                               alpha);
 
     posTarget->vx = Q8_TO_Q12(curFrame.positionTarget.vx + dmsHdr->origin.vx);
     posTarget->vy = Q8_TO_Q12(curFrame.positionTarget.vy + dmsHdr->origin.vy);
@@ -156,13 +158,14 @@ s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, u16* curCamer
     lookAtTarget->vy = Q8_TO_Q12(curFrame.lookAtTarget.vy + dmsHdr->origin.vy);
     lookAtTarget->vz = Q8_TO_Q12(curFrame.lookAtTarget.vz + dmsHdr->origin.vz);
 
-    // @unused - all callers have this set to NULL?
-    if (curCameraUnkAngle != NULL)
+    // @unused Always passed as `NULL`.
+    if (unusedAngle != NULL)
     {
-        *curCameraUnkAngle = curFrame.cameraUnkAngle;
+        *unusedAngle = curFrame.unusedAngle;
     }
 
-    // `camProjVal` comes from `curFrame.projectionDist`, return value is passed to `vcChangeProjectionValue` - might be FOV related?
+    // `camProjVal` comes from `curFrame.projectionDistance`, return value is passed to `vcChangeProjectionValue`.
+    // Might be related to FOV?
     return camProjVal;
 }
 
@@ -190,10 +193,10 @@ s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyfra
     result->lookAtTarget.vy = frame0->lookAtTarget.vy + Q12_MULT_PRECISE(frame1->lookAtTarget.vy - frame0->lookAtTarget.vy, alpha);
     result->lookAtTarget.vz = frame0->lookAtTarget.vz + Q12_MULT_PRECISE(frame1->lookAtTarget.vz - frame0->lookAtTarget.vz, alpha);
 
-    result->cameraUnkAngle = Dms_AngleLerp(frame0->cameraUnkAngle, frame1->cameraUnkAngle, alpha);
-    result->projectionDist = frame0->projectionDist + Q12_MULT_PRECISE(frame1->projectionDist - frame0->projectionDist, alpha);
+    result->unusedAngle        = Dms_AngleLerp(frame0->unusedAngle, frame1->unusedAngle, alpha);
+    result->projectionDistance = frame0->projectionDistance + Q12_MULT_PRECISE(frame1->projectionDistance - frame0->projectionDistance, alpha);
 
-    return result->projectionDist;
+    return result->projectionDistance;
 }
 
 void Dms_KeyframeInterpGet(s32* prevKeyframeIdx, s32* nextKeyframeIdx, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr) // 0x8008D1D0
@@ -240,7 +243,7 @@ u32 Dms_SegmentStateGet(q19_12 time, s_DmsHeader* dmsHdr)
          curSegment < &dmsHdr->segments[dmsHdr->segmentCount];
          curSegment++)
     {
-        if (frameTime != ((curSegment->startFrameIdx + curSegment->frameCount) - 1))
+        if (frameTime != ((curSegment->startKeyframeIdx + curSegment->frameCount) - 1))
         {
             continue;
         }
@@ -268,18 +271,18 @@ s32 Dms_KeyframeIdxGet(s32 frameIdx, s_DmsEntry* entry) // 0x8008D330
          curRange < &entry->holdRanges[entry->holdRangeCount]; 
          curRange++)
     {
-        if (frameIdx < curRange->startFrameIdx)
+        if (frameIdx < curRange->startKeyframeIdx)
         {
             break;
         }
 
-        if (frameIdx <= curRange->endFrameIdx)
+        if (frameIdx <= curRange->endKeyframeIdx)
         {
             keyframeIdx0 = curRange->keyframeIdx;
             break;
         }
 
-        keyframeIdx0 -= curRange->endFrameIdx - curRange->startFrameIdx;
+        keyframeIdx0 -= curRange->endKeyframeIdx - curRange->startKeyframeIdx;
     }
 
     if (keyframeIdx0 >= 0)

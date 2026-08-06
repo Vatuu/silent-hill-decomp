@@ -137,7 +137,7 @@ types:
       - id: look_at_target
         type: svector_3(vector_type::position)
 
-      - id: camera_unk_angle
+      - id: unused_angle
         type: s2
         doc: Q3.12.
 
