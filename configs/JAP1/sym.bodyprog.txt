@@ -3112,7 +3112,7 @@ svec0.264                                    = 0x800B2294;
 //-----------------------------------------------------------
 g_Demo_DemoId                                = 0x800B229C;
 g_Demo_RandSeed                              = 0x800B22A0;
-g_Demo_PlayFileBufferPtr                     = 0x800B22A4;
+g_Demo_PlaybackFrames                        = 0x800B22A4;
 DEMO_FILE_INFOS.30                           = 0x800B22A8;
 g_Demo_Play                                  = 0x800B22D0;
 prevScreenFade.69                            = 0x800B22D4;
@@ -3649,7 +3649,7 @@ g_Demo_PlayFileIdx                           = 0x800C6E9C;
 g_Demo_OptionsConfigBackup                   = 0x800C6EA8;
 g_Demo_PrevRandSeed                          = 0x800C6EE0;
 g_Demo_RandSeedBackup                        = 0x800C6EE4;
-g_Demo_CurFrameData                          = 0x800C6EE8;
+g_Demo_ActivePlaybackFrame                   = 0x800C6EE8;
 g_Demo_DemoStep                              = 0x800C6EEC;
 g_Demo_VideoPresentInterval                  = 0x800C6EF0;
 g_Demo_IsLoadingChunks                       = 0x800C6EF4;

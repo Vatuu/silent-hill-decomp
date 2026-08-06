@@ -81,7 +81,7 @@ void GameBoot_InGameStartup(void)
                 Demo_DemoFileSavegameUpdate();
                 GameBoot_WorldInit();
 
-                if (Demo_PlayFileBufferSetup() != 0)
+                if (Demo_PlayFileBufferSetup())
                 {
                     GameBoot_MapLoad(g_SavegamePtr->mapIdx);
                     Game_StateStepSet(0, 2);

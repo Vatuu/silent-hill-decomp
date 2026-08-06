@@ -13,14 +13,12 @@ seq:
   - id: options_config
     type: options_config
 
-  - id: unk_38
-    size: 200
+  - size: 200
 
   - id: savegame
     type: savegame
   
-  - id: unk_37c
-    size: 1148
+  - size: 1148
 
   - id: frame_count
     type: u4

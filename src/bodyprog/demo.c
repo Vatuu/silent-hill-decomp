@@ -7,22 +7,22 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
-s32              g_Demo_DemoFileIdx;
-s32              g_Demo_PlayFileIdx;
-s32              __pad_bss_800C4848[2];
-s_OptionsConfig  g_Demo_OptionsConfigBackup;
-u32              g_Demo_PrevRandSeed;
-u32              g_Demo_RandSeedBackup;
-s_DemoFrameData* g_Demo_CurFrameData;
-s32              g_Demo_DemoStep;
-s32              g_Demo_VideoPresentInterval;
-bool             g_Demo_IsLoadingChunks;
-s32              g_Demo_DemoId   = 0;
-u16              g_Demo_RandSeed = 0;
+s32                  g_Demo_DemoFileIdx;
+s32                  g_Demo_PlayFileIdx;
+s32                  __pad_bss_800C4848[2];
+s_OptionsConfig      g_Demo_OptionsConfigBackup;
+u32                  g_Demo_PrevRandSeed;
+u32                  g_Demo_RandSeedBackup;
+s_DemoPlaybackFrame* g_Demo_ActivePlaybackFrame;
+s32                  g_Demo_DemoStep;
+s32                  g_Demo_VideoPresentInterval;
+bool                 g_Demo_IsLoadingChunks;
+s32                  g_Demo_DemoId   = 0;
+u16                  g_Demo_RandSeed = 0;
 // 2 bytes of padding.
-s_DemoFrameData* g_Demo_PlayFileBufferPtr = (s_DemoFrameData*)0x800F5E00;
+s_DemoPlaybackFrame* g_Demo_PlaybackFrames = (s_DemoPlaybackFrame*)0x800F5E00;
 
-bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
+bool Demo_SequenceAdvance(s32 incAmount) // 0x8008EF20
 {
     #define DEMO_FILE_COUNT_MAX 5
 
@@ -43,7 +43,7 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
 #endif
     };
 
-    g_Demo_DemoId += incrementAmount;
+    g_Demo_DemoId += incAmount;
 
     while (true)
     {
@@ -68,7 +68,7 @@ bool Demo_SequenceAdvance(s32 incrementAmount) // 0x8008EF20
 
         // If funcptr is set and returned false, skip to next demo.
         // Direction to skip depends on sign of `incrementAmount` (forward or backward).
-        if (incrementAmount >= 0)
+        if (incAmount >= 0)
         {
             g_Demo_DemoId++;
         }
@@ -89,7 +89,7 @@ void Demo_DemoDataRead(void) // 0x8008F048
 {
     if (g_Demo_DemoFileIdx != NO_VALUE)
     {
-        Fs_QueueStartRead(g_Demo_DemoFileIdx, DEMO_WORK());
+        Fs_QueueStartRead(g_Demo_DemoFileIdx, g_Demo_ActiveState);
     }
 }
 
@@ -99,52 +99,52 @@ void Demo_PlayDataRead(void) // 0x8008F07C
 
     if (g_Demo_PlayFileIdx != NO_VALUE)
     {
-        Fs_QueueStartRead(g_Demo_PlayFileIdx, g_Demo_PlayFileBufferPtr);
+        Fs_QueueStartRead(g_Demo_PlayFileIdx, g_Demo_PlaybackFrames);
     }
 }
 
-s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
+bool Demo_PlayFileBufferSetup(void) // 0x8008F0BC
 {
     s32 mapOverlaySize;
     s32 playFileSize;
 
     // Get map overlay size used in demo.
-    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + DEMO_WORK()->savegame.mapIdx);
+    mapOverlaySize = Fs_GetFileSize(FILE_VIN_MAP0_S00_BIN + g_Demo_ActiveState->savegame.mapIdx);
 
-    // Get play file size, rounded up to next 0x800-byte boundary.
+    // Get play file size rounded up to next 0x800-byte boundary.
     playFileSize = ALIGN(Fs_GetFileSize(g_Demo_PlayFileIdx), 0x800);
 
-    // Try placing play file buffer just before `DEMO_WORK` in memory.
-    g_Demo_PlayFileBufferPtr = (void*)((s32)DEMO_WORK() - playFileSize);
+    // Try placing play file buffer just before `g_Demo_ActiveState` in memory.
+    g_Demo_PlaybackFrames = (void*)((s32)g_Demo_ActiveState - playFileSize);
 
-    // If play file or map overlay is too large, buffer ptr may overlap with map.
-    // Return 1 if buffer fits (no overlap with map overlay); otherwise, return 0.
-    return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
+    // If play file or map overlay is too large, buffer pointer may overlap with map.
+    // Return `true` if buffer fits (no overlap with map overlay), otherwise, return `false`.
+    return (u32)g_Demo_PlaybackFrames >= (u32)(g_OvlDynamic + mapOverlaySize);
 }
 
 void Demo_DemoFileSavegameUpdate(void) // 0x8008F13C
 {
-    g_GameWork.savegame = DEMO_WORK()->savegame;
+    g_GameWork.savegame = g_Demo_ActiveState->savegame;
 }
 
 void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
 {
-    // Backup current user config.
+    // Backup current options config.
     g_Demo_OptionsConfigBackup = g_GameWork.config;
 
     // Update `Demo_RandSeed`.
-    g_Demo_RandSeed = DEMO_WORK()->randSeed;
+    g_Demo_RandSeed = g_Demo_ActiveState->randSeed;
 
-    // Replace user config with config from demo file.
-    g_GameWork.config = DEMO_WORK()->config;
+    // Replace options config with config from demo file.
+    g_GameWork.config = g_Demo_ActiveState->config;
 
-    // Restore user system settings over demo values.
+    // Restore user options config over demo values.
     g_GameWork.config.screenPositionX  = g_Demo_OptionsConfigBackup.screenPositionX;
     g_GameWork.config.screenPositionY  = g_Demo_OptionsConfigBackup.screenPositionY;
     g_GameWork.config.soundType        = g_Demo_OptionsConfigBackup.soundType;
-    g_GameWork.config.volumeBgm        = OPT_SOUND_VOLUME_MIN; // Disable BGM during demo.
+    g_GameWork.config.volumeBgm        = OPT_SOUND_VOLUME_MIN;
     g_GameWork.config.volumeSe         = g_Demo_OptionsConfigBackup.volumeSe;
-    g_GameWork.config.vibrationEnabled = OPT_VIBRATION_DISABLED; // Disable vibration during demo.
+    g_GameWork.config.vibrationEnabled = OPT_VIBRATION_DISABLED;
     g_GameWork.config.brightness       = g_Demo_OptionsConfigBackup.brightness;
 
     Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config.volumeSe);
@@ -241,10 +241,10 @@ s32 Demo_StateGet(s32 gameState)
 
 void Demo_ExitDemo(void) // 0x8008F4E4
 {
-    g_Demo_FrameCount   = 999 * TICKS_PER_SECOND;
-    g_Demo_CurFrameData = NULL;
-    g_Demo_DemoStep     = 0;
-    g_SysWork.sysFlags |= SysFlag_DoWarmReset;
+    g_Demo_FrameCount          = 999 * TICKS_PER_SECOND;
+    g_Demo_ActivePlaybackFrame = NULL;
+    g_Demo_DemoStep            = 0;
+    g_SysWork.sysFlags        |= SysFlag_DoWarmReset;
 }
 
 void nullsub_8008F518(void) {} // 0x8008F518
@@ -302,20 +302,20 @@ bool Demo_Update(void) // 0x8008F5D8
 
     if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
-        g_Demo_CurFrameData = NULL;
-        g_Demo_DemoStep     = 0;
+        g_Demo_ActivePlaybackFrame = NULL;
+        g_Demo_DemoStep            = 0;
         return true;
     }
 
-    if (g_Demo_PlayFileBufferPtr == NULL)
+    if (g_Demo_PlaybackFrames == NULL)
     {
-        g_Demo_CurFrameData = NULL;
+        g_Demo_ActivePlaybackFrame = NULL;
         return false;
     }
 
     demoStep = g_Demo_DemoStep;
 
-    if (DEMO_WORK()->frameCount <= demoStep)
+    if (g_Demo_ActiveState->frameCount <= demoStep)
     {
         nullsub_8008F518();
         Demo_ExitDemo();
@@ -326,7 +326,7 @@ bool Demo_Update(void) // 0x8008F5D8
         !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) ||
         isLoadingChunks)
     {
-        g_Demo_CurFrameData = NULL;
+        g_Demo_ActivePlaybackFrame = NULL;
         return true;
     }
 
@@ -336,18 +336,18 @@ bool Demo_Update(void) // 0x8008F5D8
     switch (Demo_StateGet(gameWork->gameState))
     {
         case DemoState_Step:
-            g_Demo_CurFrameData = &g_Demo_PlayFileBufferPtr[g_Demo_DemoStep];
+            g_Demo_ActivePlaybackFrame = &g_Demo_PlaybackFrames[g_Demo_DemoStep];
 
-            if (g_Demo_CurFrameData->gameStateExpected != gameWork->gameState)
+            if (g_Demo_ActivePlaybackFrame->expectedGameState != gameWork->gameState)
             {
                 Text_Debug_PositionSet(8, 80);
                 Text_Debug_Draw("STEP ERROR:[H:");
-                Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_CurFrameData->gameStateExpected));
+                Text_Debug_Draw(Text_Debug_IntToString(2, g_Demo_ActivePlaybackFrame->expectedGameState));
                 Text_Debug_Draw("]/[M:");
                 Text_Debug_Draw(Text_Debug_IntToString(2, gameWork->gameState));
                 Text_Debug_Draw("]");
 
-                g_Demo_CurFrameData = NULL;
+                g_Demo_ActivePlaybackFrame = NULL;
             }
 
             g_Demo_DemoStep++;
@@ -363,7 +363,7 @@ bool Demo_Update(void) // 0x8008F5D8
             break;
     }
 
-    g_Demo_CurFrameData = NULL;
+    g_Demo_ActivePlaybackFrame = NULL;
     return true;
 }
 
@@ -396,9 +396,9 @@ bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 
     g_Demo_FrameCount = 0;
 
-    if (g_Demo_CurFrameData != NULL)
+    if (g_Demo_ActivePlaybackFrame != NULL)
     {
-        g_Controller0->analogController = g_Demo_CurFrameData->analogController;
+        g_Controller0->analogController = g_Demo_ActivePlaybackFrame->analogController;
         return true;
     }
 
@@ -412,12 +412,12 @@ bool Demo_PresentIntervalUpdate(void) // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
 
-    if (g_Demo_CurFrameData == NULL)
+    if (g_Demo_ActivePlaybackFrame == NULL)
     {
         return false;
     }
 
-    g_Demo_VideoPresentInterval = g_Demo_CurFrameData->videoPresentInterval;
+    g_Demo_VideoPresentInterval = g_Demo_ActivePlaybackFrame->videoPresentInterval;
     return true;
 }
 
@@ -427,14 +427,14 @@ bool Demo_GameRandSeedSet(void) // 0x8008F8A8
     {
         return true;
     }
-    else if (g_Demo_CurFrameData == NULL)
+    else if (g_Demo_ActivePlaybackFrame == NULL)
     {
         Rng_SetSeed(g_Demo_RandSeed);
         return false;
     }
     else
     {
-        Rng_SetSeed(g_Demo_CurFrameData->randSeed);
+        Rng_SetSeed(g_Demo_ActivePlaybackFrame->randSeed);
         return true;
     }
 }
