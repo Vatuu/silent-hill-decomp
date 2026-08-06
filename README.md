@@ -8,11 +8,11 @@
 An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the PlayStation 1.
 </div>
 
-> [!IMPORTANT (PORT CONCERN)]
-This project itself **is not**, and **will not**, produce a port, to PC or any other platform. This is a **decompilation** of the original PlayStation 1 game code which can be compiled back into a binary identical to the original. This codebase is **not** port-ready due missing documentation and constant reorganization. This project is led by volunteered hand, so there is no rush.
+> [!IMPORTANT]
+**PORT CONCERN** — This project itself **is not**, and **will not**, produce a port, to PC or any other platform. This is a **decompilation** of the original PlayStation 1 game code which can be compiled back into a binary identical to the original. This codebase is **not** port-ready due missing documentation and constant reorganization. This project is led by volunteered hand, so there is no rush.
 
-> [!IMPORTANT (AI CONCERN)]
-The decompilation project is human-driven. **No AI-generated code has knowingly been added into the decompilation**, instead being manually worked out by several contributors over the past few years.
+> [!IMPORTANT]
+**AI CONCERN** — The decompilation project is human-driven. **No AI-generated code has knowingly been added into the decompilation**, instead being manually worked out by several contributors over the past few years.
 (At most some throwaway decompilation-helper scripts were made with AI, but the actual game code is being studied/reversed by humans).  
 Forks of the project may use AI for porting/fixes/adding features, but this decompilation remains human-led.
 
