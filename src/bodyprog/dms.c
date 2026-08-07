@@ -312,21 +312,7 @@ s32 Dms_KeyframeIdxGet(s32 frameIdx, const s_DmsEntry* entry) // 0x8008D330
     }
 
     // Clamp keyframe index.
-    if (keyframeIdx >= 0)
-    {
-        if ((entry->keyframeCount - 1) >= keyframeIdx)
-        {
-            clampedKeyframeIdx = keyframeIdx;
-        }
-        else
-        {
-            clampedKeyframeIdx = entry->keyframeCount - 1;
-        }
-    }
-    else
-    {
-        clampedKeyframeIdx = 0;
-    }
+    clampedKeyframeIdx = CLAMP(keyframeIdx, 0, entry->keyframeCount - 1);
     return clampedKeyframeIdx;
 }
 
