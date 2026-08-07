@@ -76,8 +76,7 @@ types:
       - id: hold_range_count
         type: u1
 
-      - id: field_3
-        type: u1
+      - size: 1
 
       - id: name
         type: strz
