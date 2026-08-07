@@ -400,7 +400,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
         Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
@@ -691,7 +691,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             airScreamerChara.position.vz += Q12_MULT(Math_Cos(airScreamerChara.rotation.vy), Q12(0.2f));
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
     }
@@ -791,7 +791,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             Dms_CharacterTransformGet(&airScreamerChara.position, &airScreamerChara.rotation, "BIRD", 0, FS_BUFFER_11);
 
             // Set camera.
-            vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, 0, FS_BUFFER_11));
+            vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, 0, FS_BUFFER_11));
             vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
             vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 

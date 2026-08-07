@@ -337,7 +337,7 @@ void func_800D0B64(void) // 0x800D0B64
             Dms_CharacterTransformGet(&lisaChara.position, &lisaChara.rotation, "LISA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPosition, &g_Cutscene_CameraLookAt, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPosition, &g_Cutscene_CameraLookAt, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPosition, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAt, NULL, true);
 

@@ -911,7 +911,7 @@ void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
             Dms_CharacterTransformGet(&g_WorldObject_Baby.position, &g_WorldObject_Baby.rotation, "BABY", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, D_800ED230[D_800F4806]));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, D_800ED230[D_800F4806]));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 

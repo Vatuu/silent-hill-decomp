@@ -663,7 +663,7 @@ void func_800EC42C(void) // 0x800EC42C
 
         g_SysWork.playerWork.player.position.vx -= Q12(20.0f);
 
-        vcChangeProjectionValue(Dms_CameraTargetGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13));
 
         g_Cutscene_CameraPositionTarget.vx -= Q12(20.0f);
         g_Cutscene_CameraLookAtTarget.vx -= Q12(20.0f);

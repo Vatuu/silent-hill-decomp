@@ -16,19 +16,21 @@ void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
     s_DmsEntry* curCharaEntry;
 
+    // Check if header was already initialized.
     if (dmsHdr->isLoaded)
     {
         return;
     }
-
     dmsHdr->isLoaded = true;
 
-    // Add memory address of DMS header to offsets in `dmsHdr`.
+    // Initialize segments and character entries pointers.
     dmsHdr->segments         = (u8*)dmsHdr->segments         + (u32)dmsHdr;
     dmsHdr->characterEntries = (u8*)dmsHdr->characterEntries + (u32)dmsHdr;
 
+    // Initialize camera entry pointers.
     Dms_EntryFixOffsets(&dmsHdr->cameraEntry, dmsHdr);
 
+    // Initialize character entry pointers.
     for (curCharaEntry = dmsHdr->characterEntries;
          curCharaEntry < &dmsHdr->characterEntries[dmsHdr->characterEntryCount];
          curCharaEntry++)
@@ -52,7 +54,7 @@ void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaNam
 {
     s32 charaEntryIdx;
 
-    charaEntryIdx = Dms_CharacterFindIdxByName(charaName, dmsHdr);
+    charaEntryIdx = Dms_CharacterGetIdxByName(charaName, dmsHdr);
     if (charaEntryIdx == NO_VALUE)
     {
         // Character not found in DMS.
@@ -73,10 +75,11 @@ void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaNam
     }
 }
 
-s32 Dms_CharacterFindIdxByName(char* charaName, s_DmsHeader* dmsHdr) // 0x8008CB10
+s32 Dms_CharacterGetIdxByName(char* charaName, s_DmsHeader* dmsHdr) // 0x8008CB10
 {
     s32 i;
 
+    // Find matching name.
     for (i = 0; i < dmsHdr->characterEntryCount; i++)
     {
         if (!strncmp(charaName, dmsHdr->characterEntries[i].name, 4))
@@ -97,7 +100,7 @@ void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q
     s_DmsEntry*             charaEntry;
     s_DmsKeyframeCharacter* charaKeyframes;
 
-    // Get keyframe interpolation. 
+    // Get keyframe interpolation data. 
     charaEntry = &dmsHdr->characterEntries[charaIdx];
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, charaEntry, dmsHdr);
 
@@ -138,8 +141,8 @@ q3_12 Dms_FovScaleGet(q3_12 fovAngle) // 0x8008CDBC
     return (96 * Math_Cos(fovAngle / 2)) / Math_Sin(fovAngle / 2);
 }
 
-s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
-                        const s_DmsHeader* dmsHdr) // 0x8008CE1C
+s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
+                         const s_DmsHeader* dmsHdr) // 0x8008CE1C
 {
     s32                 prevKeyframeIdx;
     s32                 nextKeyframeIdx;
@@ -150,15 +153,18 @@ s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unused
 
     camEntry = &dmsHdr->cameraEntry;
 
+    // Interpolate current keyframe.
     Dms_KeyframeInterpGet(&prevKeyframeIdx, &nextKeyframeIdx, &alpha, time, camEntry, dmsHdr);
-    camProjVal = Dms_CameraKeyframeInterpolate(&curCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
-                                               &camEntry->keyframes.camera[nextKeyframeIdx],
-                                               alpha);
+    camProjVal = Dms_CameraKeyframeLerp(&curCamKeyframe, &camEntry->keyframes.camera[prevKeyframeIdx],
+                                        &camEntry->keyframes.camera[nextKeyframeIdx],
+                                        alpha);
 
+    // Set position target.
     posTarget->vx = Q8_TO_Q12(curCamKeyframe.positionTarget.vx + dmsHdr->origin.vx);
     posTarget->vy = Q8_TO_Q12(curCamKeyframe.positionTarget.vy + dmsHdr->origin.vy);
     posTarget->vz = Q8_TO_Q12(curCamKeyframe.positionTarget.vz + dmsHdr->origin.vz);
 
+    // Set look-at target.
     lookAtTarget->vx = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vx + dmsHdr->origin.vx);
     lookAtTarget->vy = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vy + dmsHdr->origin.vy);
     lookAtTarget->vz = Q8_TO_Q12(curCamKeyframe.lookAtTarget.vz + dmsHdr->origin.vz);
@@ -178,6 +184,7 @@ bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008C
 {
     #define ANGLE_EPSILON Q12_ANGLE(360.0f / 16.0f) // 22.5 degrees
 
+    // Check each axis.
     if (ABS(rot0->vx - rot1->vx) > ANGLE_EPSILON ||
         ABS(rot0->vy - rot1->vy) > ANGLE_EPSILON ||
         ABS(rot0->vz - rot1->vz) > ANGLE_EPSILON)
@@ -188,18 +195,21 @@ bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1) // 0x8008C
     return false;
 }
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result,
-                                  const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
-                                  q19_12 alpha) // 0x8008CFEC
+s32 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
+                           const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
+                           q19_12 alpha) // 0x8008CFEC
 {
+    // Set position target.
     result->positionTarget.vx = prevKeyframe->positionTarget.vx + Q12_MULT_PRECISE(nextKeyframe->positionTarget.vx - prevKeyframe->positionTarget.vx, alpha);
     result->positionTarget.vy = prevKeyframe->positionTarget.vy + Q12_MULT_PRECISE(nextKeyframe->positionTarget.vy - prevKeyframe->positionTarget.vy, alpha);
     result->positionTarget.vz = prevKeyframe->positionTarget.vz + Q12_MULT_PRECISE(nextKeyframe->positionTarget.vz - prevKeyframe->positionTarget.vz, alpha);
 
+    // Set look-at target.
     result->lookAtTarget.vx = prevKeyframe->lookAtTarget.vx + Q12_MULT_PRECISE(nextKeyframe->lookAtTarget.vx - prevKeyframe->lookAtTarget.vx, alpha);
     result->lookAtTarget.vy = prevKeyframe->lookAtTarget.vy + Q12_MULT_PRECISE(nextKeyframe->lookAtTarget.vy - prevKeyframe->lookAtTarget.vy, alpha);
     result->lookAtTarget.vz = prevKeyframe->lookAtTarget.vz + Q12_MULT_PRECISE(nextKeyframe->lookAtTarget.vz - prevKeyframe->lookAtTarget.vz, alpha);
 
+    // Set unused angle and projection distance.
     result->unusedAngle        = Dms_AngleLerp(prevKeyframe->unusedAngle, nextKeyframe->unusedAngle, alpha);
     result->projectionDistance = prevKeyframe->projectionDistance + Q12_MULT_PRECISE(nextKeyframe->projectionDistance - prevKeyframe->projectionDistance, alpha);
 
@@ -215,6 +225,7 @@ void Dms_KeyframeInterpGet(s32* prevKeyframeIdx, s32* nextKeyframeIdx, q19_12* a
     prevFrameIdx = 0;
     nextFrameIdx = 0;
 
+    // Define playback frames and set interpolation alpha.
     switch (Dms_SegmentStateGet(time, dmsHdr))
     {
         case DmsSegmentState_Interpolating:
@@ -236,23 +247,25 @@ void Dms_KeyframeInterpGet(s32* prevKeyframeIdx, s32* nextKeyframeIdx, q19_12* a
             break;
     }
 
+    // Set previous and next keyframe indices.
     *prevKeyframeIdx = Dms_KeyframeIdxGet(prevFrameIdx, camEntry);
     *nextKeyframeIdx = Dms_KeyframeIdxGet(nextFrameIdx, camEntry);
 }
 
 u32 Dms_SegmentStateGet(q19_12 time, const s_DmsHeader* dmsHdr)
 {
-    s32                 frameTime;
+    s32                 frameIdx;
     const s_DmsSegment* curSegment;
 
-    frameTime = FP_FROM(time, Q12_SHIFT);
+    frameIdx = FP_FROM(time, Q12_SHIFT);
 
     // Run through segments.
     for (curSegment = dmsHdr->segments;
          curSegment < &dmsHdr->segments[dmsHdr->segmentCount];
          curSegment++)
     {
-        if (frameTime != ((curSegment->startFrameIdx + curSegment->frameCount) - 1))
+        // Check if at end playback frame.
+        if (frameIdx != ((curSegment->startFrameIdx + curSegment->frameCount) - 1))
         {
             continue;
         }
@@ -276,10 +289,12 @@ s32 Dms_KeyframeIdxGet(s32 frameIdx, const s_DmsEntry* entry) // 0x8008D330
 
     keyframeIdx0 = frameIdx;
 
+    // Run through ranges.
     for (curRange = entry->holdRanges; 
          curRange < &entry->holdRanges[entry->holdRangeCount]; 
          curRange++)
     {
+        // Check if start playback frame is within range.
         if (frameIdx < curRange->startFrameIdx)
         {
             break;

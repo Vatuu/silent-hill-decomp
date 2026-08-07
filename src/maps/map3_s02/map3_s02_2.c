@@ -313,7 +313,7 @@ void func_800D0608(void) // 0x800D0608
     if (D_800D1FEC >= 0)
     {
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
-        vcChangeProjectionValue(Dms_CameraTargetGet(&camPosTarget, &camLookAtTarget, NULL, D_800D1FEC, FS_BUFFER_24));
+        vcChangeProjectionValue(Dms_CameraTargetsGet(&camPosTarget, &camLookAtTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&camPosTarget, NULL, true);
         vcUserWatchTarget(&camLookAtTarget, NULL, true);
         Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);

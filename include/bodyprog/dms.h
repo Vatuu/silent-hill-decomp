@@ -77,13 +77,13 @@ typedef struct _DmsHeader
 } s_DmsHeader;
 STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
-/** @brief Adjusts fixed pointer addresses in a DMS header.
+/** @brief Adjusts pointer addresses in a DMS header.
  *
  * @param dmsHdr DMS header to adjust.
  */
 void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr);
 
-/** @brief Adjusts fixes pointer addresses in a DMS entry.
+/** @brief Adjusts pointer addresses in a DMS entry.
  *
  * @param entry DMS entry to adjust.
  * @param dmsHdr DMS header for the base address.
@@ -111,13 +111,13 @@ s_DmsSegment* Dms_SegmentGet(volatile s32 unused, s32 segmentIdx, s_DmsHeader* d
  */
 void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaName, q19_12 time, s_DmsHeader* dmsHdr);
 
-/** @brief Finds a DMS character entry index by name.
+/** @brief Gets a DMS character entry index by name.
  *
  * @param charaName Name of the DMS character entry to find.
  * @param dmsHdr DMS header.
  * @return DMS character entry index.
  */
-s32 Dms_CharacterFindIdxByName(char* charaName, s_DmsHeader* dmsHdr);
+s32 Dms_CharacterGetIdxByName(char* charaName, s_DmsHeader* dmsHdr);
 
 /** @brief Gets a character transformation at a given playback time from a DMS header by entry index.
  *
@@ -155,8 +155,8 @@ q3_12 Dms_FovScaleGet(q3_12 fovAngle);
  * @param time Playback time.
  * @param dmsHdr DMS header.
  */
-s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
-                        const s_DmsHeader* dmsHdr);
+s32 Dms_CameraTargetsGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
+                         const s_DmsHeader* dmsHdr);
 
 /** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16th of a full
  * rotation).
@@ -174,9 +174,9 @@ bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1);
  * @param nextKeyframe Next camera keyframe.
  * @param alpha Interpolation alpha.
  */
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result,
-                                  const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
-                                  q19_12 alpha);
+s32 Dms_CameraKeyframeLerp(s_DmsKeyframeCamera* result,
+                           const s_DmsKeyframeCamera* prevKeyframe, const s_DmsKeyframeCamera* nextKeyframe,
+                           q19_12 alpha);
 
 /** @brief Gets keyframe interpolation data at a given playback time from a given DMS camera entry.
  *
