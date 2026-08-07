@@ -283,49 +283,51 @@ u32 Dms_SegmentStateGet(q19_12 time, const s_DmsHeader* dmsHdr)
 
 s32 Dms_KeyframeIdxGet(s32 frameIdx, const s_DmsEntry* entry) // 0x8008D330
 {
-    s32                   keyframeIdx0;
-    s32                   keyframeIdx1;
-    const s_DmsHoldRange* curRange;
+    s32                   keyframeIdx;
+    s32                   clampedKeyframeIdx;
+    const s_DmsHoldRange* curHoldRange;
 
-    keyframeIdx0 = frameIdx;
+    keyframeIdx = frameIdx;
 
-    // Run through ranges.
-    for (curRange = entry->holdRanges; 
-         curRange < &entry->holdRanges[entry->holdRangeCount]; 
-         curRange++)
+    // Run through ranges to freeze or offset keyframe.
+    for (curHoldRange = entry->holdRanges; 
+         curHoldRange < &entry->holdRanges[entry->holdRangeCount]; 
+         curHoldRange++)
     {
-        // Check if start playback frame is within range.
-        if (frameIdx < curRange->startFrameIdx)
+        // Check if target playback frame falls before hold range.
+        if (frameIdx < curHoldRange->startFrameIdx)
         {
             break;
         }
 
-        if (frameIdx <= curRange->endFrameIdx)
+        // If target playback frame is within hold range, freeze at mapped keyframe.
+        if (frameIdx <= curHoldRange->endFrameIdx)
         {
-            keyframeIdx0 = curRange->keyframeIdx;
+            keyframeIdx = curHoldRange->keyframeIdx;
             break;
         }
 
-        keyframeIdx0 -= curRange->endFrameIdx - curRange->startFrameIdx;
+        // Align keyframe index.
+        keyframeIdx -= curHoldRange->endFrameIdx - curHoldRange->startFrameIdx;
     }
 
-    if (keyframeIdx0 >= 0)
+    // Clamp keyframe index.
+    if (keyframeIdx >= 0)
     {
-        if ((entry->keyframeCount - 1) >= keyframeIdx0)
+        if ((entry->keyframeCount - 1) >= keyframeIdx)
         {
-            keyframeIdx1 = keyframeIdx0;
+            clampedKeyframeIdx = keyframeIdx;
         }
         else
         {
-            keyframeIdx1 = entry->keyframeCount - 1;
+            clampedKeyframeIdx = entry->keyframeCount - 1;
         }
     }
     else
     {
-        keyframeIdx1 = 0;
+        clampedKeyframeIdx = 0;
     }
-
-    return keyframeIdx1;
+    return clampedKeyframeIdx;
 }
 
 q19_12 Dms_AngleLerp(q3_12 angleFrom, q3_12 angleTo, q19_12 alpha) // 0x8008D3D4
