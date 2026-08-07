@@ -27,13 +27,13 @@ typedef struct _DmsKeyframeCamera
 } s_DmsKeyframeCamera;
 STATIC_ASSERT_SIZEOF(s_DmsKeyframeCamera, 16);
 
-/** @brief Maps the inclusive keyframe range `[startKeyframeIdx, endKeyframeIdx]` to a single keyframe.
- * Likely used for keyframes where a character or camera has no movement and can remain set to a single keyframe.
+/** @brief Maps the inclusive playback frame range `[startFrameIdx, endFrameIdx]` to a single keyframe.
+ * Likely used for playback frames where a character or camera has no movement and can remain set to a single keyframe.
  */
 typedef struct _DmsHoldRange
 {
-    /* 0x0 */ s16 startKeyframeIdx;
-    /* 0x2 */ s16 endKeyframeIdx;
+    /* 0x0 */ s16 startFrameIdx;
+    /* 0x2 */ s16 endFrameIdx;
     /* 0x4 */ s16 keyframeIdx;
 } s_DmsHoldRange;
 STATIC_ASSERT_SIZEOF(s_DmsHoldRange, 6);
@@ -45,7 +45,7 @@ typedef struct _DmsEntry
     /* 0x2 */ u8              holdRangeCount; /** `holdRanges` array size. */
     /* 0x3 */ u8              field_3;        // Usually 0, but sometimes filled in. Possibly junk data left in padding byte.
     /* 0x4 */ char            name[4];        // First 4 `char`s of the name. E.g. if code checks for "DAHLIA", file is "DAHL".
-    /* 0x8 */ s_DmsHoldRange* holdRanges;     /** Ranges of frames that map to a single keyframe, compressing repeated data. */
+    /* 0x8 */ s_DmsHoldRange* holdRanges;     /** Ranges of playback frames that map to a single keyframe, compressing repeated data. */
               union
               {
                   s_DmsKeyframeCharacter* character;
@@ -57,8 +57,8 @@ STATIC_ASSERT_SIZEOF(s_DmsEntry, 16);
 /** @brief DMS cutscene segment. */
 typedef struct _DmsSegment
 {
-    /* 0x0 */ s16 startKeyframeIdx;
-    /* 0x2 */ s16 frameCount; /** Frame duration at 30 FPS. */
+    /* 0x0 */ s16 startFrameIdx;
+    /* 0x2 */ s16 frameCount; /** Playback frame duration at 30 FPS. */
 } s_DmsSegment;
 STATIC_ASSERT_SIZEOF(s_DmsSegment, 4);
 
@@ -79,7 +79,7 @@ STATIC_ASSERT_SIZEOF(s_DmsHeader, 44);
 
 void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr);
 
-void Dms_EntryFixOffsets(s_DmsEntry* entry, s_DmsHeader* dmsHdr);
+void Dms_EntryFixOffsets(s_DmsEntry* entry, const s_DmsHeader* dmsHdr);
 
 /** @unused `volatile` needed for match. */
 s_DmsSegment* Dms_SegmentGet(volatile s32 unused, s32 segmentIdx, s_DmsHeader* dmsHdr);
@@ -88,9 +88,11 @@ void Dms_CharacterTransformGet(VECTOR3* pos, SVECTOR3* rot, const char* charaNam
 
 s32 Dms_CharacterFindIdxByName(char* name, s_DmsHeader* dmsHdr);
 
-void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, s_DmsHeader* dmsHdr);
+void Dms_CharacterTransformGetByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_12 time, const s_DmsHeader* dmsHdr);
 
-void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha);
+void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result,
+                                      const s_DmsKeyframeCharacter* keyframe0, const s_DmsKeyframeCharacter* keyframe1,
+                                      q19_12 alpha);
 
 /** @brief Computes an FOV scale.
  *
@@ -100,9 +102,11 @@ void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyfr
 q3_12 Dms_FovScaleGet(q3_12 fovAngle);
 
 /** @brief Gets the camera position and look-at targets. */
-s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time, s_DmsHeader* dmsHdr);
+s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unusedAngle, q19_12 time,
+                        const s_DmsHeader* dmsHdr);
 
-/** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16 of a full rotation).
+/** @brief @unused Checks if any axis between two rotations differs by more than 22.5 degrees (1/16th of a full
+ * rotation).
  *
  * @param rot0 First rotation.
  * @param rot1 Second rotation.
@@ -110,13 +114,16 @@ s32 Dms_CameraTargetGet(VECTOR3* posTarget, VECTOR3* lookAtTarget, q3_12* unused
  */
 bool Dms_RotationsCompare(const SVECTOR3* rot0, const SVECTOR3* rot1);
 
-s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha);
+s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result,
+                                  const s_DmsKeyframeCamera* keyframe0, const s_DmsKeyframeCamera* keyframe1,
+                                  q19_12 alpha);
 
-void Dms_KeyframeInterpGet(s32* prevKeyframeIdx, s32* nextKeyframeIdx, q19_12* alpha, q19_12 time, s_DmsEntry* camEntry, s_DmsHeader* dmsHdr);
+void Dms_KeyframeInterpGet(s32* prevKeyframeIdx, s32* nextKeyframeIdx, q19_12* alpha, q19_12 time,
+                           const s_DmsEntry* camEntry, const s_DmsHeader* dmsHdr);
 
-u32 Dms_SegmentStateGet(q19_12 time, s_DmsHeader* dmsHdr);
+u32 Dms_SegmentStateGet(q19_12 time, const s_DmsHeader* dmsHdr);
 
-s32 Dms_KeyframeIdxGet(s32 absKeyframeIdx, s_DmsEntry* entry);
+s32 Dms_KeyframeIdxGet(s32 frameIdx, const s_DmsEntry* entry);
 
 s32 Dms_AngleLerp(q3_12 angleFrom, q3_12 angleTo, q19_12 alpha);
 

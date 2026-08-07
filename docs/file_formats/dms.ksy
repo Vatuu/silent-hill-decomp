@@ -57,7 +57,7 @@ types:
 
   segment:
     seq:
-      - id: start_keyframe_idx
+      - id: start_frame_idx
         type: s2
 
       - id: frame_count
@@ -112,10 +112,10 @@ types:
 
   hold_range:
     seq:
-      - id: start_keyframe_idx
+      - id: start_frame_idx
         type: s2
 
-      - id: end_keyframe_idx
+      - id: end_frame_idx
         type: s2
 
       - id: keyframe_idx
@@ -164,27 +164,27 @@ types:
         type: s2
 
     instances:
-      x_position:
+      position_x:
         value: x.as<f4> / (1 << 8).as<f4>
         if: vector_type == vector_type::position
 
-      y_position:
+      position_y:
         value: y.as<f4> / (1 << 8).as<f4>
         if: vector_type == vector_type::position
 
-      z_position:
+      position_z:
         value: z.as<f4> / (1 << 8).as<f4>
         if: vector_type == vector_type::position
 
-      x_rotation:
+      rotation_x:
         value: (x.as<f4> / (1 << 8).as<f4>) * 360
         if: vector_type == vector_type::rotation
 
-      y_rotation:
+      rotation_y:
         value: (y.as<f4> / (1 << 12).as<f4>) * 360
         if: vector_type == vector_type::rotation
 
-      z_rotation:
+      rotation_z:
         value: (z.as<f4> / (1 << 8).as<f4>) * 360
         if: vector_type == vector_type::rotation
 
