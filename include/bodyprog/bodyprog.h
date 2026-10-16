@@ -2,6 +2,7 @@
 #define _BODYPROG_BODYPROG_H
 
 #include "game.h"
+#include "bodyprog/anim.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
@@ -1287,13 +1288,26 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
  */
 bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ);
 
-void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+// TODO: Move to `bodyprog/anim.h`.
+// ========================================
 
-void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
+void Anim_BonesInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-s_AnimInfo* func_80044918(s_ModelAnim* anim);
+void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+/** @brief Gets the active animation info of a model, accounting for overflow map animations.
+ *
+ * @param anim Model animation data.
+ */
+s_AnimInfo* Anim_InfoGet(s_ModelAnim* anim);
+
+/** @brief Plays a character's animation using the callback function of its active animation.
+ *
+ * @param chara Character to update.
+ * @param anmHdr Character animation data.
+ * @param boneCoords Character model bone coords.
+ */
+void Anim_CharaUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Gets the duration of an animation. A duration can be constant or variable.
  *
@@ -1303,7 +1317,7 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
  */
 q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
 
-/** * @brief Plays an animation once and clamps to the end keyframe, triggering a status transition to the linked
+/** @brief Plays an animation once and clamps to the end keyframe, triggering a status transition to the linked
  * animation upon completion.
  *
  * @note Used for one-shot actions such as stopping and attacking.
@@ -1313,9 +1327,9 @@ q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
  * @param boneCoords Character model bone coords.
  * @param animInfo Active character animation info.
  */
-void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
+void Anim_PlayOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** * @brief Loops an animation continuously, wrapping the time around to the start and end keyframes without
+/** @brief Loops an animation continuously, wrapping the time around to the start and end keyframes without
  * triggering a status transition.
  *
  * @note Used for looped actions such as running and walking.
@@ -1325,9 +1339,9 @@ void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
  * @param boneCoords Character model bone coords.
  * @param animInfo Character animation info.
  */
-void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
+void Anim_PlayLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** * @brief Linearly interpolates between the current pose into a new target animation, triggering a status transition
+/** @brief Linearly interpolates between the current pose into a new target animation, triggering a status transition
  * to the linked animation when complete.
  *
  * @note Used as the entry transition for almost every new animation status.
@@ -1339,7 +1353,7 @@ void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
  */
 void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** * @brief Smoothly blends between the current pose into a new target animation using a sine-based ease-out
+/** @brief Smoothly blends between the current pose into a new target animation using a sine-based ease-out
  * without triggering a status transition.
  *
  * @unused?
@@ -1350,6 +1364,8 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
  * @param animInfo Character animation info.
  */
 void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
+
+// ========================================
 
 /** Something related to player weapon position. Takes coords to arm bones. */
 void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);

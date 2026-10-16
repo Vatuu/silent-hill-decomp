@@ -351,7 +351,7 @@ void GameBoot_WorldInit(void) // 0x80035178
     World_Init();
     WorldGfx_CharaModelsFree();
     WorldGfx_HeldItemModelFree();
-    Anim_BoneInit((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords);
+    Anim_BonesInit((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords);
     WorldGfx_PlayerModelProcessLoad();
 
     g_SysWork.unused_229C = NO_VALUE;

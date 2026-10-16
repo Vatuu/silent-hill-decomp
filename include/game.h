@@ -403,22 +403,21 @@ typedef struct _MapEffectsInfo
     /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
     /* 0x19 */ CVECTOR pointLightTint;         /** Volumetric point light color. */
     /* 0x1D */ CVECTOR worldTint;              /** Subtractive. */
-    
-                                /** Odd use. (Particle related)
-                                 * This variables are only ever used in the maps' particle system. At `Particle_SystemUpdate`
-                                 * these variables values are retrieved to two different global variables by using  `func_8003EDB8`
-                                 *
-                                 * The values from `field_21` are only used in the code that handles the snow effect to define the color of the particles.
-                                 * The values from `field_26` are used in the code that handles the snow and rain effect from the first
-                                 * overlay, to define the color of the particles.
-                                 *
-                                 * The first variable shouldn't do any real impact as by default the game uses only the red value
-                                 * to represent all of the other three values, despite the existance of code that handle each of the
-                                 * variables from the struct, that code is never used. That code is also exclusive of the first overlay
-                                 * other overlays doesn't have the function that uses this value.
-                                 * The second variable seems to be either broken or doesn't do any real impact neither in rain the
-                                 * effect or the snow effect.
-                                 */
+                                               /** Odd use. (Particle related)
+                                                * This variables are only ever used in the maps' particle system. At `Particle_SystemUpdate`
+                                                * these variables values are retrieved to two different global variables by using  `func_8003EDB8`
+                                                *
+                                                * The values from `field_21` are only used in the code that handles the snow effect to define the color of the particles.
+                                                * The values from `field_26` are used in the code that handles the snow and rain effect from the first
+                                                * overlay, to define the color of the particles.
+                                                *
+                                                * The first variable shouldn't do any real impact as by default the game uses only the red value
+                                                * to represent all of the other three values, despite the existance of code that handle each of the
+                                                * variables from the struct, that code is never used. That code is also exclusive of the first overlay
+                                                * other overlays doesn't have the function that uses this value.
+                                                * The second variable seems to be either broken or doesn't do any real impact neither in rain the
+                                                * effect or the snow effect.
+                                                */
     /* 0x21 */ CVECTOR field_21;               // } Particle effect related. Only the first value affects snow transparency.
     /* 0x25 */ CVECTOR field_25;               // }
                // 3 bytes of padding.

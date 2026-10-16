@@ -9,21 +9,19 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-/** @note This code (except the first and possibly the second functions) is
- * used to handle an overlapping lighting system.
+/** @note This code (except the first and possibly second functions) is used to handle an overlapping lighting system.
  *
- * This system appears to be used only at one specific moment in the game. The
+ * This system is used only at one specific moment in the game. The
  * only time this system is active is when an environment preset from 
  * `MAP_EFFECTS_INFOS` has `enableTintLightOverlap` enabled, or when both 
  * `pointLightTint` and `worldTint` have defined values. The code does not 
- * redefine these variables at any other point.
+ * redefine these variables again.
  *
- * This system replaces or overlaps the ambient lighting and the volumetric 
- * lighting of the point light (flashlight), but it does not affect the color 
+ * This system replaces or overlaps the ambient and volumetric 
+ * lighting of the flashlight, but does not affect the color 
  * of the light applied to surfaces.
  *
- * The second function appears to be used for an initialization process 
- * for 2D graphics, which is likely related to this same system.
+ * The second function is used as an initialization process for 2D graphics, likely related to this same system.
  */
 
 // ========================================

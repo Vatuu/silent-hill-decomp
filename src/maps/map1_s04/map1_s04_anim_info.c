@@ -3,9 +3,9 @@
 
 s_AnimInfo HARRY_M1S04_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10.0f) }, NO_VALUE, 676},
-    { Anim_PlaybackOnce, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10.0f) }, 676, 677},
+    { Anim_PlayOnce, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10.0f) }, 676, 677},
     { Anim_BlendLinear, ANIM_STATUS(54, false), false, ANIM_STATUS(54, true), { Q12(10.0f) }, NO_VALUE, 485},
-    { Anim_PlaybackOnce, ANIM_STATUS(54, true), false, ANIM_STATUS(54, true), { Q12(20.0f) }, 485, 502},
+    { Anim_PlayOnce, ANIM_STATUS(54, true), false, ANIM_STATUS(54, true), { Q12(20.0f) }, 485, 502},
     {}
 };
 

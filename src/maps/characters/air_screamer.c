@@ -465,7 +465,7 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
     coords = sharedData_800E21D0_0_s01.coords_8;
 
     g_DeltaTime = Q12(0.0f);
-    func_80044950(airScreamer, anmHdr, coords);
+    Anim_CharaUpdate(airScreamer, anmHdr, coords);
     g_DeltaTime = deltaTime;
 
     sharedFunc_800D7560_0_s01(airScreamer);
@@ -1005,7 +1005,7 @@ void func_800D39F4(s_SubCharacter* airScreamer) // 0x800D39F4
 
     // TODO: `Chara_AnimSet` doesn't match?
     airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverVariable, true);
-    animTime = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
+    animTime = Anim_InfoGet(&airScreamer->model.anim)->startKeyframeIdx;
     airScreamer->model.stateStep = 7;
     airScreamer->model.anim.keyframeIdx = animTime;
     airScreamer->model.anim.time = FP_TO(animTime, Q12_SHIFT);
@@ -1020,7 +1020,7 @@ void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
     AirScreamer_Update(airScreamer, (&g_CharaModelAnimsData[animMetadataIdx])->activeAnmHdr, (&g_CharaModelAnimsData[animMetadataIdx])->boneCoords);
 
     airScreamer->model.anim.status      = ANIM_STATUS(AirScreamerAnim_Glide, true);
-    animTime                            = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
+    animTime                            = Anim_InfoGet(&airScreamer->model.anim)->startKeyframeIdx;
     airScreamer->model.stateStep        = 3;
     airScreamer->model.anim.keyframeIdx = animTime;
     airScreamer->model.anim.time        = FP_TO(animTime, Q12_SHIFT);
@@ -1218,7 +1218,7 @@ void AirScreamer_Control_0(s_SubCharacter* airScreamer)
     if (animStatus != NO_VALUE && animStatus != airScreamer->model.anim.status)
     {
         airScreamer->model.anim.status      = animStatus;
-        keyframeIdx                               = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
+        keyframeIdx                               = Anim_InfoGet(&airScreamer->model.anim)->startKeyframeIdx;
         airScreamer->model.anim.alpha       = Q12(0.0f);
         airScreamer->model.anim.keyframeIdx = keyframeIdx;
         airScreamer->model.anim.time        = FP_TO(keyframeIdx, Q12_SHIFT);
@@ -1281,7 +1281,7 @@ void AirScreamer_Control_1(s_SubCharacter* airScreamer)
 
     if (setAnim)
     {
-        keyframeIdx                               = func_80044918(&airScreamer->model.anim)->startKeyframeIdx;
+        keyframeIdx                               = Anim_InfoGet(&airScreamer->model.anim)->startKeyframeIdx;
         airScreamer->model.anim.keyframeIdx = keyframeIdx;
         airScreamer->model.anim.time        = Q12(keyframeIdx);
     }
@@ -12943,7 +12943,7 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer)
     coords  = sharedData_800E21D0_0_s01.coords_8;
 
     sharedFunc_800D76A0_0_s01(airScreamer);
-    func_80044950(airScreamer, animHdr, coords);
+    Anim_CharaUpdate(airScreamer, animHdr, coords);
     sharedFunc_800D7B14_0_s01(airScreamer, coords);
 
     return true;
@@ -13044,7 +13044,7 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
 #ifdef MAP0_S01
 q19_12 Model_AnimDurationGet(s_Model* model) // 0x800D7E88
 {
-    return Anim_DurationGet(model, func_80044918(&model->anim));
+    return Anim_DurationGet(model, Anim_InfoGet(&model->anim));
 }
 #endif
 

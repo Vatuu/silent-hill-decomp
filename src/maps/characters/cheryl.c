@@ -213,7 +213,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
         }
     }
 
-    cheryl->rotation.vy  = Q12_ANGLE_ABS(cheryl->rotation.vy + Q8_TO_Q4(D_800E3A30));
+    cheryl->rotation.vy  = Q12_ANGLE_ABS(cheryl->rotation.vy + (D_800E3A30 >> 4));
     cheryl->headingAngle = cheryl->rotation.vy;
     cheryl->moveSpeed    = cherylProps.moveDistance_124;
     cheryl->fallSpeed   += g_GravitySpeed;

@@ -685,13 +685,13 @@ WorldMap_SubcellVisibleCheck                 = 0x80044154; // type:func
 //-----------------------------------------------------------------------------
 //--- PA: 0x01F778   VA: 0x800442D8   subsegment: c, gfx/bodyprog_anim_800445A4
 //-----------------------------------------------------------------------------
-Anim_BoneInit                                = 0x800442D8; // type:func
-Anim_BoneUpdate                              = 0x8004440C; // type:func
-func_80044918                                = 0x8004464C; // type:func
-func_80044950                                = 0x80044684; // type:func
+Anim_BonesInit                               = 0x800442D8; // type:func
+Anim_BonesUpdate                             = 0x8004440C; // type:func
+Anim_InfoGet                                 = 0x8004464C; // type:func
+Anim_CharaUpdate                             = 0x80044684; // type:func
 Anim_DurationGet                             = 0x800446E0; // type:func
-Anim_PlaybackOnce                            = 0x80044724; // type:func
-Anim_PlaybackLoop                            = 0x8004486C; // type:func
+Anim_PlayOnce                                = 0x80044724; // type:func
+Anim_PlayLoop                                = 0x8004486C; // type:func
 Anim_BlendLinear                             = 0x800449D8; // type:func
 Anim_BlendEaseOut                            = 0x80044B24; // type:func
 

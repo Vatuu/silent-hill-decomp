@@ -56,8 +56,8 @@ void Ranking_EvaluateScore() // 0x8008F94C
     s32 var_v1;
     u16 firedShotCount;
     u16 var_v0_5;
-    u8  temp_a0_2;
-    u8  temp;
+    u8  extraOptionsEnabled;
+    u8  tempCount;
     s8* temp3;
 
     g_Ranking_Score                      = 0;
@@ -125,22 +125,23 @@ void Ranking_EvaluateScore() // 0x8008F94C
 #endif
 
     g_Ranking_EndLocationId = g_SavegamePtr->locationId;
-    D_800C3E40 = 7;
-    temp_a0_2  = g_GameWork.config.extraOptionsEnabled;
+    D_800C3E40              = (1 << 0) | (1 << 1) | (1 << 2);
+    extraOptionsEnabled     = g_GameWork.config.extraOptionsEnabled;
 
-    if ((temp_a0_2 & 0x3) && (temp_a0_2 & 0xC))
+    if ((extraOptionsEnabled & ((1 << 0) | (1 << 1))) &&
+        (extraOptionsEnabled & ((1 << 2) | (1 << 3))))
     {
         D_800C3E40 = 0xF;
     }
 
-    if (g_GameWork.config.extraOptionsEnabled & 1)
+    if (g_GameWork.config.extraOptionsEnabled & (1 << 0))
     {
-        D_800C3E40 |= 0x10;
+        D_800C3E40 |= 1 << 4;
     }
 
     if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (g_Ranking_CurrentEndingFlags & GameEndingFlag_Ufo))
     {
-        D_800C3E40 |= 0x20;
+        D_800C3E40 |= 1 << 5;
     }
 
     g_Ranking_TextColors.ending = StringColorId_White;
@@ -270,9 +271,8 @@ void Ranking_EvaluateScore() // 0x8008F94C
 
     g_Ranking_TextColors.clearGameCount = StringColorId_White;
 
-    temp = g_Ranking_ClearGameCount;
-
-    if (temp >= 5)
+    tempCount = g_Ranking_ClearGameCount;
+    if (tempCount >= 5)
     {
         g_Ranking_TextColors.clearGameCount = StringColorId_Gold;
 
@@ -280,20 +280,20 @@ void Ranking_EvaluateScore() // 0x8008F94C
     }
     else
     {
-        g_Ranking_Score += temp * 2;
+        g_Ranking_Score += tempCount * 2;
     }
 
     g_Ranking_TextColors.pickedUpSpecialItemCount = StringColorId_White;
 
-    temp = g_Ranking_PickedUpSpecialItemCount;
-    if (temp >= 5)
+    tempCount = g_Ranking_PickedUpSpecialItemCount;
+    if (tempCount >= 5)
     {
         g_Ranking_TextColors.pickedUpSpecialItemCount = StringColorId_Gold;
         g_Ranking_Score    += 10;
     }
     else
     {
-        g_Ranking_Score += temp * 2;
+        g_Ranking_Score += tempCount * 2;
     }
 
     g_Ranking_TextColors.killPercentages = StringColorId_White;
@@ -324,7 +324,7 @@ void Ranking_EvaluateScore() // 0x8008F94C
     else
     {
         g_Ranking_TextColors.killPercentages = StringColorId_Gold;
-        g_Ranking_Score    += 10;
+        g_Ranking_Score                     += 10;
     }
 
     g_Ranking_TextColors.enemyKills = StringColorId_White;

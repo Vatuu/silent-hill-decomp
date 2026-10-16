@@ -85,9 +85,9 @@ extern s_AnimInfo KAUFMANN_ANIM_INFOS[];
 // TODO: Not Kaufmann anims.
 /*s_AnimInfo KAUFMANN_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0.0f)  }, NO_VALUE, 0 },
-    { Anim_PlaybackLoop, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30.0f) }, NO_VALUE, 1 },
+    { Anim_PlayLoop, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30.0f) }, NO_VALUE, 1 },
     { Anim_BlendLinear, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(5.0f)  }, NO_VALUE, 0 },
-    { Anim_PlaybackLoop, ANIM_STATUS(1, true),  false, NO_VALUE,              { Q12(5.0f)  }, 0,        5 },
+    { Anim_PlayLoop, ANIM_STATUS(1, true),  false, NO_VALUE,              { Q12(5.0f)  }, 0,        5 },
     { Anim_BlendLinear, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5.0f)  }, NO_VALUE, 6 }
 };*/
 

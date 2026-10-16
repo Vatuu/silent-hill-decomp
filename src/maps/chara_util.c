@@ -191,7 +191,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 #endif
     }
 
-    if (animInfo->playbackFunc == Anim_PlaybackOnce)
+    if (animInfo->playbackFunc == Anim_PlayOnce)
     {
         if (Anim_DurationGet(chara, animInfo) > Q12(0.0f))
         {

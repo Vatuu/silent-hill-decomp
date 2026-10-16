@@ -25,9 +25,9 @@ extern s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[];
 
 /*s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
-    { Anim_PlaybackLoop, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
+    { Anim_PlayLoop, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
     { Anim_BlendLinear, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(5) }, NO_VALUE, 0 },
-    { Anim_PlaybackLoop, ANIM_STATUS(1, true), false, NO_VALUE, { Q12(15) }, 0, 15 }
+    { Anim_PlayLoop, ANIM_STATUS(1, true), false, NO_VALUE, { Q12(15) }, 0, 15 }
 };*/
 
 /** @brief Updates an active Ghost Doctor character.

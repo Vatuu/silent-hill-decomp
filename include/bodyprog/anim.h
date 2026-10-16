@@ -1,8 +1,6 @@
 #ifndef _BODYPROG_ANIM_H
 #define _BODYPROG_ANIM_H
 
-#include "bodyprog/formats/anm.h"
-
 /** @brief Character animation flags. */
 typedef enum _AnimFlags
 {
@@ -46,7 +44,7 @@ STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
  * @return Packed animation status containing the animation index and active flag.
  */
 #define ANIM_STATUS(animIdx, isActive) \
-    (((animIdx) << 1) | ((isActive) ? (1 << 0) : 0))
+    (((animIdx) << 1) | ((isActive) ? 1 : 0))
 
 /** @brief Retrieves the animation index from a packed animation status.
  *

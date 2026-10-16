@@ -614,7 +614,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
 
 void SysState_LoadArea_Update(void) // 0x80039C40
 {
-    u32           offsetZ;
+    q20_12        offsetZ;
     s_MapPoint2d* mapPoint;
 
     g_SysWork.unused_229C         = 0;

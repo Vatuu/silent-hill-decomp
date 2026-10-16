@@ -34,7 +34,7 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
 void Chara_BonesInit(s32 modelAnimsIdx) // 0x80088D34
 {
     modelAnimsIdx++;
-    Anim_BoneInit(g_CharaModelAnimsData[modelAnimsIdx].activeAnmHdr, g_CharaModelAnimsData[modelAnimsIdx].boneCoords);
+    Anim_BonesInit(g_CharaModelAnimsData[modelAnimsIdx].activeAnmHdr, g_CharaModelAnimsData[modelAnimsIdx].boneCoords);
 }
 
 s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78

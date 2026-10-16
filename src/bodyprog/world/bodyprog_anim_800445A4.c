@@ -28,32 +28,29 @@ static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
     return Q12(0.0f);
 }
 
-// ========================================
-// ANIMATION
-// ========================================
-
-void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
+void Anim_BonesInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
 {
     s32            boneIdx;
     s32            i;
     s32            j;
     s_AnmBindPose* curBindPose;
-    GsCOORDINATE2* curCoord;
+    GsCOORDINATE2* curBoneCoord;
 
     GsInitCoordinate2(NULL, boneCoords);
 
-    for (boneIdx = 1, curBindPose = &anmHdr->bindPoses[1], curCoord = &boneCoords[1];
+    // Run through bones.
+    for (boneIdx = 1, curBindPose = &anmHdr->bindPoses[1], curBoneCoord = &boneCoords[1];
          boneIdx < anmHdr->boneCount;
-         boneIdx++, curBindPose++, curCoord++)
+         boneIdx++, curBindPose++, curBoneCoord++)
     {
-        curCoord->super = &boneCoords[anmHdr->bindPoses[boneIdx].parentBone];
+        curBoneCoord->super = &boneCoords[anmHdr->bindPoses[boneIdx].parentBone];
 
         // If no translation for this bone, copy over `translationInitial`.
         if (curBindPose->translationDataIdx < 0)
         {
             for (i = 0; i < 3; i++)
             {
-                curCoord->coord.t[i] = anmHdr->bindPoses[boneIdx].translationInitial[i] << anmHdr->scaleLog2;
+                curBoneCoord->coord.t[i] = anmHdr->bindPoses[boneIdx].translationInitial[i] << anmHdr->scaleLog2;
             }
         }
 
@@ -64,14 +61,14 @@ void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800445A4
             {
                 for (j = 0; j < 3; j++)
                 {
-                    curCoord->coord.m[i][j] = ((j == i) ? Q12_ANGLE(360.0f) : Q12_ANGLE(0.0f));
+                    curBoneCoord->coord.m[i][j] = ((j == i) ? Q12_ANGLE(360.0f) : Q12_ANGLE(0.0f));
                 }
             }
         }
     }
 }
 
-void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
+void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha) // 0x800446D8
 {
     s32            boneCount;
     bool           isPlayer;
@@ -181,7 +178,7 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
     }
 }
 
-s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
+s_AnimInfo* Anim_InfoGet(s_ModelAnim* anim) // 0x80044918
 {
     // `field_C`/`field_10` usually points to data at `0x800AF228` which contains funcptrs and other stuff.
 
@@ -195,6 +192,7 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     animStatus         = anim->status;
     mapAnimStatusStart = anim->mapAnimStatusStart;
 
+    // Fetch from existing map anim infos if status overflows from base anim infos.
     if (mapAnimInfos != NULL && animStatus >= mapAnimStatusStart)
     {
         animInfos  = mapAnimInfos;
@@ -204,11 +202,11 @@ s_AnimInfo* func_80044918(s_ModelAnim* anim) // 0x80044918
     return &animInfos[animStatus];
 }
 
-void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80044950
+void Anim_CharaUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80044950
 {
     s_AnimInfo* animInfo;
 
-    animInfo = func_80044918(&chara->model.anim);
+    animInfo = Anim_InfoGet(&chara->model.anim);
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 }
 
@@ -222,7 +220,7 @@ q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo) // 0x800449AC
     return animInfo->duration.variableFunc();
 }
 
-void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x800449F0
+void Anim_PlayOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x800449F0
 {
     bool   setNewAnimStatus;
     q19_12 timestep;
@@ -268,7 +266,7 @@ void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
     alpha = Q12_FRACT(newTime);
     if ((model->anim.flags & AnimFlag_Unlocked) || (model->anim.flags & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, boneCoords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
+        Anim_BonesUpdate(anmHdr, boneCoords, newKeyframeIdx, newKeyframeIdx + 1, alpha);
     }
 
     // Update frame data.
@@ -283,7 +281,7 @@ void Anim_PlaybackOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
     }
 }
 
-void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044B38
+void Anim_PlayLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x80044B38
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
@@ -333,7 +331,7 @@ void Anim_PlaybackLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
     alpha = Q12_FRACT(newTime);
     if ((model->anim.flags & AnimFlag_Unlocked) || (model->anim.flags & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, boneCoords, newKeyframeIdx0, newKeyframeIdx1, alpha);
+        Anim_BonesUpdate(anmHdr, boneCoords, newKeyframeIdx0, newKeyframeIdx1, alpha);
     }
 
     // Update frame data.
@@ -378,7 +376,7 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
     // Update frame data.
     if (alpha >= Q12(1.0f))
     {
-        startKeyframeIdx            = endKeyframeIdx;
+        startKeyframeIdx        = endKeyframeIdx;
         model->anim.keyframeIdx = endKeyframeIdx;
 
         alpha            = Q12(0.0f);
@@ -388,7 +386,7 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
     // Update skeleton.
     if ((model->anim.flags & AnimFlag_Unlocked) || (model->anim.flags & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BonesUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update alpha.
@@ -405,7 +403,7 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 {
     s32    startKeyframeIdx;
     s32    endKeyframeIdx;
-    q19_12 timeDelta;
+    q19_12 duration;
     q19_12 timestep;
     q19_12 alpha;
     q19_12 sinVal;
@@ -418,8 +416,8 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
     // Compute timestep. TODO: Can't call `Anim_TimestepGet` inline due to register constraints.
     if (model->anim.flags & AnimFlag_Unlocked)
     {
-        timeDelta = Anim_DurationGet(model, animInfo);
-        timestep  = Q12_MULT_PRECISE(timeDelta, g_DeltaTime);
+        duration = Anim_DurationGet(model, animInfo);
+        timestep = Q12_MULT_PRECISE(duration, g_DeltaTime);
     }
     else
     {
@@ -452,7 +450,7 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
     // Update skeleton.
     if ((model->anim.flags & AnimFlag_Unlocked) || (model->anim.flags & AnimFlag_Visible))
     {
-        Anim_BoneUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
+        Anim_BonesUpdate(anmHdr, boneCoords, startKeyframeIdx, endKeyframeIdx, alpha);
     }
 
     // Update active keyframe.

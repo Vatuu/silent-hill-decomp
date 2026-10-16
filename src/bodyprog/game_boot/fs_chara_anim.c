@@ -43,7 +43,7 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
 };
 
 s_AnimInfo D_800A998C = {
-    .playbackFunc        = Anim_PlaybackLoop,
+    .playbackFunc        = Anim_PlayLoop,
     .status              = 0,
     .hasVariableDuration = false,
     .linkStatus          = ANIM_STATUS(0, false),
@@ -221,7 +221,7 @@ void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* ani
     animData->activeSize    = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
     animData->boneCoords    = localBoneCoords;
 
-    Anim_BoneInit(animFile, localBoneCoords);
+    Anim_BonesInit(animFile, localBoneCoords);
 
     g_CharaAnimDataIdxs[charaId] = animDataIdx;
 }
@@ -254,6 +254,6 @@ void Fs_CharaAnimBoneInfoSet(void) // 0x8003569C
         }
 
         g_CharaModelAnimsData[i + 1].boneCoords = boneCoords;
-        Anim_BoneInit(anmHdr, boneCoords);
+        Anim_BonesInit(anmHdr, boneCoords);
     }
 }

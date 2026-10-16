@@ -646,7 +646,7 @@ s32 Player_AnimPlaybackStateGet(void)
     model    = &g_SysWork.playerWork.player.model;
     animInfo = &g_MapOverlayHdr.harryMapAnimInfos[model->anim.status - ANIM_STATUS(38, false)];
 
-    if (animInfo->playbackFunc == Anim_PlaybackOnce)
+    if (animInfo->playbackFunc == Anim_PlayOnce)
     {
         // Check if anim is in progress or finished.
         if (Anim_DurationGet(model, animInfo) > Q12(0.0f))

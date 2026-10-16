@@ -22,9 +22,9 @@ typedef enum _BloodyLisaAnim
 
 /*s_AnimInfo BLOODY_LISA_ANIM_INFOS[] = {
     { Anim_BlendLinear, ANIM_STATUS(BloodyLisaAnim_Still, false), false, ANIM_STATUS(BloodyLisaAnim_Still, false), { Q12(0.0f)  }, NO_VALUE, 0   },
-    { Anim_PlaybackLoop, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q12(30.0f) }, NO_VALUE, 1   },
+    { Anim_PlayLoop, ANIM_STATUS(BloodyLisaAnim_Still, true),  false, NO_VALUE,                                 { Q12(30.0f) }, NO_VALUE, 1   },
     { Anim_BlendLinear, ANIM_STATUS(BloodyLisaAnim_Walk,  false), false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q12(10.0f) }, NO_VALUE, 0   },
-    { Anim_PlaybackOnce, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q12(10.0f) }, 0,        100 }
+    { Anim_PlayOnce, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  false, ANIM_STATUS(BloodyLisaAnim_Walk,  true),  { Q12(10.0f) }, 0,        100 }
 };*/
 
 /** @brief Bloody Lisa character anim infos. */

@@ -27,13 +27,13 @@ typedef enum _CatAnim
     { Anim_BlendLinear,  NO_VALUE,                               false, ANIM_STATUS(CatAnim_Still, false),     { Q12(0.0f)  }, NO_VALUE, 0  },
     { NULL,              ANIM_STATUS(CatAnim_Still, false),      false, ANIM_STATUS(CatAnim_Still, false),     { Q12(0.0f)  }, 0,        0  },
     { Anim_BlendLinear,  ANIM_STATUS(CatAnim_Jump, false),       false, ANIM_STATUS(CatAnim_Jump, true),       { Q12(64.0f) }, NO_VALUE, 7  },
-    { Anim_PlaybackOnce, ANIM_STATUS(CatAnim_Jump, true),        false, ANIM_STATUS(CatAnim_JumpToRun, false), { Q12(15.8f) }, 7,        22 },
+    { Anim_PlayOnce, ANIM_STATUS(CatAnim_Jump, true),        false, ANIM_STATUS(CatAnim_JumpToRun, false), { Q12(15.8f) }, 7,        22 },
     { Anim_BlendLinear,  ANIM_STATUS(CatAnim_Run, false),        false, ANIM_STATUS(CatAnim_Run, true),        { Q12(64.0f) }, NO_VALUE, 23 },
-    { Anim_PlaybackLoop, ANIM_STATUS(CatAnim_Run, true),         false, NO_VALUE,                              { Q12(35.0f) }, 23,       43 },
+    { Anim_PlayLoop, ANIM_STATUS(CatAnim_Run, true),         false, NO_VALUE,                              { Q12(35.0f) }, 23,       43 },
     { Anim_BlendLinear,  ANIM_STATUS(CatAnim_IdleToJump, false), false, ANIM_STATUS(CatAnim_IdleToJump, true), { Q12(0.0f)  }, NO_VALUE, 7  },
-    { Anim_PlaybackLoop, ANIM_STATUS(CatAnim_IdleToJump, true),  false, NO_VALUE,                              { Q12(0.0f)  }, 7,        8  },
+    { Anim_PlayLoop, ANIM_STATUS(CatAnim_IdleToJump, true),  false, NO_VALUE,                              { Q12(0.0f)  }, 7,        8  },
     { Anim_BlendLinear,  ANIM_STATUS(CatAnim_JumpToRun, false),  false, ANIM_STATUS(CatAnim_JumpToRun, true),  { Q12(0.0f)  }, NO_VALUE, 22 },
-    { Anim_PlaybackLoop, ANIM_STATUS(CatAnim_JumpToRun, true),   false, NO_VALUE,                              { Q12(0.0f)  }, 22,       23 }
+    { Anim_PlayLoop, ANIM_STATUS(CatAnim_JumpToRun, true),   false, NO_VALUE,                              { Q12(0.0f)  }, 22,       23 }
 };*/
 
 extern s_AnimInfo CAT_ANIM_INFOS[]; // 0x800DC924

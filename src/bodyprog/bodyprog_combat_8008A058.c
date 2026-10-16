@@ -415,7 +415,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         var_s0 = &chara->model.anim;
     }
 
-    anim  = func_80044918(var_s0);
+    anim  = Anim_InfoGet(var_s0);
     sp28  = var_s0->time;
     sp28 -= Q12(anim->startKeyframeIdx);
 
