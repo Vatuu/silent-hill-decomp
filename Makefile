@@ -610,6 +610,8 @@ objdiff-config-all:
 
 objdiff-generate:
 	$(MAKE) GAME_VERSION=$(GAME_VERSION) GEN_COMP_TU=1 regenerate
+# Hide jtbl symbols from the splat asm files, to improve data match % (see py script header)
+	$(PYTHON) $(TOOLS_DIR)/hide_jtbl_syms.py $(ASM_DIR)
 	$(MAKE) GAME_VERSION=$(GAME_VERSION) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
 	mv $(BUILD_DIR)/$(ASM_DIR) $(EXPECTED_DIR)
 
