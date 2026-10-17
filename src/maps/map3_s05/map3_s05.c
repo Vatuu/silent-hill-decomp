@@ -182,7 +182,7 @@ void func_800D5A98(void) // 0x800D5A98
     }
 }
 
-const VECTOR3 D_800CB35C = { 0x00015199, 0x00000000, 0xFFFEC000 };
+const VECTOR3 D_800CB35C = { Q12(21.1f), Q12(0.0f), Q12(-20.0f) };
 
 void func_800D5C98(void) // 0x800D5C98
 {
@@ -399,9 +399,9 @@ void func_800D63C4(void) // 0x800D63C4
     }
 }
 
-const VECTOR3 D_800CB3E0 = { 0x00015999, 0xFFFFFB34, 0xFFFEC000 };
+const VECTOR3 D_800CB3E0 = { Q12(21.6f), Q12(-0.3f), Q12(-20.0f) };
 
-const VECTOR3 D_800CB3EC = { 0x00015999, 0xFFFFF800, 0xFFFEC000 };
+const VECTOR3 D_800CB3EC = { Q12(21.6f), Q12(-0.5f), Q12(-20.0f) };
 
 void func_800D64E0(void) // 0x800D64E0
 {
@@ -885,9 +885,9 @@ void func_800D72AC(void) // 0x800D72AC
     }
 }
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", sharedData_800CB088_3_s01);
+const VECTOR3 sharedData_800CB088_3_s01 = { Q12(19.1f), Q12(-2.0f), Q12(59.1f) };
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", sharedData_800CB094_3_s01);
+const VECTOR3 sharedData_800CB094_3_s01 = { Q12(17.2f), Q12(-1.0f), Q12(59.1f) };
 
 #include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D76D8
 

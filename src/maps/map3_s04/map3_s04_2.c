@@ -436,9 +436,9 @@ void func_800D2E58(void) // 0x800D2E58
     Event_ItemTake(InvItemId_PlateOfQueen, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S04_PickupPlateOfQueen, 47);
 }
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", sharedData_800CB088_3_s01);
+const VECTOR3 sharedData_800CB088_3_s01 = { Q12(19.1f), Q12(-2.0f), Q12(59.1f) };
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", sharedData_800CB094_3_s01);
+const VECTOR3 sharedData_800CB094_3_s01 = { Q12(17.2f), Q12(-1.0f), Q12(59.1f) };
 
 #include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D2E84
 
@@ -595,8 +595,8 @@ void func_800D43B8(void) // 0x800D43B8
     }
 }
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB35C);
+const SVECTOR3 D_800CB35C = { 0, 0, 0 };
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB364);
+const VECTOR3 D_800CB364 = { Q12(96.0f), Q12(-1.2f), Q12(59.8f) };
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB370);
+const VECTOR3 D_800CB370 = { Q12(140.5f), Q12(-1.8f), Q12(98.0f) };

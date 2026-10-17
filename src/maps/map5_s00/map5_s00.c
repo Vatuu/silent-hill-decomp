@@ -1173,4 +1173,4 @@ void func_800D8DFC(void) // 0x800D8DFC
     }
 }
 
-INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800CB0CC);
+const VECTOR3 D_800CB0CC = { Q12(-91.95f), Q12(0.0f), Q12(-82.2f) };

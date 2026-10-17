@@ -745,4 +745,4 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
     }
 }
 
-INCLUDE_RODATA("maps/map7_s00/nonmatchings/map7_s00_2", D_800CB61C);
+const SVECTOR3 D_800CB61C = { 0, 0, 0 };

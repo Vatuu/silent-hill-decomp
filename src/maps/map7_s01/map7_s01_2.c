@@ -1929,7 +1929,7 @@ void func_800DC080(void) // 0x800DC080
     Event_ItemTake(InvItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
 }
 
-const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
+const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };
 
 #include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800DC0AC
 
@@ -2573,8 +2573,8 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
 }
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC984);
+const VECTOR3 D_800CC984 = { Q12(-180.8f), Q12(-1.0f), Q12(-20.0f) };
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC990);
+const SVECTOR3 D_800CC990 = { 0, 0, 0 };
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC998);
+const VECTOR3 D_800CC998 = { Q12(-63.3f), Q12(-1.6f), Q12(-139.2f) };

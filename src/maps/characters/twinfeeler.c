@@ -1432,7 +1432,7 @@ void func_800D3114(void) // 0x800D3114
     ptr->timer += g_DeltaTime;
 }
 
-INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CA788);
+const SVECTOR D_800CA788 = { Q8(0.0f), Q8(240.0f), Q8(0.0f), Q8(0.0f) };
 
 void func_800D326C(void) // 0x800D326C
 {

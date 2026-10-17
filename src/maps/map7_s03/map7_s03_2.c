@@ -3508,7 +3508,11 @@ bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) 
     return distMax < abs(SquareRoot12(offsetX + offsetZ + offsetY));
 }
 
-INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
+extern s_800F3D48_0 D_800EC224;
+extern s_800F3D48_0 D_800EC26C;
+extern s_800F3D48_0 D_800EC2B4;
+
+s_800F3D48_0* const D_800CAE30[3] = { &D_800EC224, &D_800EC26C, &D_800EC2B4 };
 
 static const SVECTOR D_800CAE3C = { 0, 0, 0x4000 };
 

@@ -484,7 +484,7 @@ extern s_800F3D48 D_800F2448;
 extern s32        D_800F3D90;
 
 extern s_800F3D48_0  D_800EC6EC;
-extern s_800F3D48_0* D_800CAE30[3];
+extern s_800F3D48_0* const D_800CAE30[3];
 extern s_800F3D48_0  D_800EC1B8;
 
 extern s32 D_800EC758[];

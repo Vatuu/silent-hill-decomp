@@ -2982,7 +2982,7 @@ void func_800E1FF4(void) // 0x800E1FF4
     Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
-const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
+const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };
 
 #include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800E204C
 

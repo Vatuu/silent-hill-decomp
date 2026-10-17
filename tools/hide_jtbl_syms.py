@@ -7,7 +7,7 @@ never emits symbols for any jump tables it creates.
 
 Unfortunately objdiff seems to try pairing data by symbol names, and
 counts the data as missing if it can't find the same name in both the
-`expected` and built code, even if the data itself matches.
+`expected` and built code, even if data itself matches.
 (additionally, any data section that isn't a 100% match gets treated as 0%, 
 so if we fully matched a section but it included 1 jtbl, the whole % for 
 that section would get treated as 0%...)

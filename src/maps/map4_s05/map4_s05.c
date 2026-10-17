@@ -39,7 +39,7 @@ const char* MAP_MESSAGES[] = {
     /* 18 */ "~C3\tAlchemilla_Hospital ~E "
 };
 
-const VECTOR3 D_800CABE4 = { 0xFFF8C800, 0x00002000, 0x0006E800 };
+const VECTOR3 D_800CABE4 = { Q12(-115.5f), Q12(2.0f), Q12(110.5f) };
 
 void func_800D61AC(void) // 0x800D61AC
 {
