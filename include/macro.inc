@@ -34,13 +34,15 @@
     \label:
 .endm
 
-
 # A label referenced by a jumptable.
-.macro jlabel label, visibility=global
+# (Changed to local instead of global to make sure the "expected" objects don't export them as global symbols
+# objdiff would try looking for that symbol name in our C-compiled obj, but compiler doesn't emit jtbl_* syms
+# and since it couldn't be matched up to our obj, it'd then treat the data itself as unmatched...)
+# TODO: Find how other projects handle this with their data comparisons too.
+.macro jlabel label, visibility=local
     .\visibility \label
     \label:
 .endm
-
 
 # A data symbol.
 .macro dlabel label, visibility=global
