@@ -16,20 +16,6 @@
 
 #include "../src/maps/characters/player.c"
 
-#if !VERSION_IS(USA)
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CA9F0_0_s01);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CAA00_0_s01);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CAA18_0_s01);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CAA30_0_s01);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CAA48_0_s01);
-
-INCLUDE_RODATA("maps/map4_s02/nonmatchings/characters", sharedData_800CAA98_0_s01);
-#endif
-
 #include "../src/maps/characters/air_screamer.c" // 0x800D0B24
 
 #include "../src/maps/characters/groaner.c" // 0x800E1B5C
