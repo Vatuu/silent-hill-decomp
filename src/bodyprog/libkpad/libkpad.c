@@ -54,14 +54,13 @@ bool func_8009E198(s_SysWork_2514* arg0, u32 port) // 0x8009E198
 {
     s_SysWork_2514_0 status;
     s32              ret;
-    u16              isValid;
-    s32              field_0_8 = 0x80;
+    const s32        field_0_8 = 0x80;
 
     ret = arg0 != NULL;
     if (ret)
     {
-        isValid = ret;
-        port   &= 0x13;
+        s16 result = ret;
+        port      &= 0x13;
 
         arg0->actuatorData_4 = 0;
         arg0->field_8        = (s_SysWork_2514_8){ 0 };
@@ -85,8 +84,9 @@ bool func_8009E198(s_SysWork_2514* arg0, u32 port) // 0x8009E198
 
         arg0->field_0 = status;
 
-        isValid = (u8)isValid;
-        return isValid;
+        result = (u8)result;
+        return result; // @hack This is close to the pattern used in other functions below, 
+                       // but doesn't match with the same `ret = result` line they use, strange.
     }
 
     return ret;
@@ -94,20 +94,23 @@ bool func_8009E198(s_SysWork_2514* arg0, u32 port) // 0x8009E198
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
-    u32 tmp;
-    s32 ret;
+    s_SysWork_2514_0 status;
+    s32              ret;
 
-    tmp = *(u32*)arg0;
-
-    ret = arg0->field_0.field_0_17;
-    if (ret != 0)
+    status = arg0->field_0;
+    ret    = status.field_0_17;
+    if (ret)
     {
-        // @hack bitfield struct assignments don't match here?
-        u32 mask    = ~(1 << 23);
-        tmp        &= mask;
-        mask        = ~(1 << 17);
-        tmp        &= mask;
-        *(u32*)arg0 = tmp;
+        s16 result = ret;
+
+        ret               = ret & 2;
+        status.field_0_23 = ret;
+        status.field_0_17 = 0;
+
+        arg0->field_0     = status;
+
+        result = (u8)result;
+        ret    = result;
     }
 
     return ret;
@@ -115,20 +118,23 @@ s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 
 s32 func_8009E268(s_SysWork_2514* arg0) // 0x8009E268
 {
-    u32 tmp;
-    s32 ret;
+    s_SysWork_2514_0 status;
+    s32              ret;
 
-    tmp = *(u32*)arg0;
-
-    ret = arg0->field_0.field_0_17 ^ 1;
-    if (ret != 0)
+    status = arg0->field_0;
+    ret    = status.field_0_17 ^ 1;
+    if (ret)
     {
-        // @hack bitfield struct assignments don't match here?
-        u32 mask    = ~(1 << 23);
-        tmp        &= mask;
-        mask        = 1 << 17;
-        tmp        |= mask;
-        *(u32*)arg0 = tmp;
+        s16 result = ret;
+
+        ret               = ret & 2;
+        status.field_0_23 = ret;
+        status.field_0_17 = 1;
+
+        arg0->field_0     = status;
+
+        result = (u8)result;
+        ret    = result;
     }
 
     return ret;
@@ -136,16 +142,23 @@ s32 func_8009E268(s_SysWork_2514* arg0) // 0x8009E268
 
 s32 func_8009E2A0(s_SysWork_2514* arg0)
 {
-    u32 tmp = *(u32*)arg0;
-    s32 ret = arg0->field_0.field_0_18 ^ 1;
-    if (ret != 0)
+    s_SysWork_2514_0 status;
+    s32              ret;
+
+    status = arg0->field_0;
+    ret    = status.field_0_18 ^ 1;
+    if (ret)
     {
-        // @hack bitfield struct assignments don't match here?
-        u32 mask    = ~(1 << 23);
-        tmp        &= mask;
-        mask        = 1 << 18;
-        tmp        |= mask;
-        *(u32*)arg0 = tmp;
+        s16 result = ret;
+
+        ret               = ret & 2;
+        status.field_0_23 = ret;
+        status.field_0_18 = 1;
+
+        arg0->field_0     = status;
+
+        result = (u8)result;
+        ret    = result;
     }
 
     return ret;
@@ -153,20 +166,23 @@ s32 func_8009E2A0(s_SysWork_2514* arg0)
 
 s32 func_8009E2D8(s_SysWork_2514* arg0) // 0x8009E2D8
 {
-    u32 tmp;
-    s32 ret;
+    s_SysWork_2514_0 status;
+    s32              ret;
 
-    tmp = *(u32*)arg0;
-
-    ret = arg0->field_0.field_0_18;
-    if (ret != 0)
+    status = arg0->field_0;
+    ret    = status.field_0_18;
+    if (ret)
     {
-        // @hack bitfield struct assignments don't match here?
-        u32 mask    = ~(1 << 23);
-        tmp        &= mask;
-        mask        = ~(1 << 18);
-        tmp        &= mask;
-        *(u32*)arg0 = tmp;
+        s16 result = ret;
+
+        ret               = ret & 2;
+        status.field_0_23 = ret;
+        status.field_0_18 = 0;
+
+        arg0->field_0     = status;
+
+        result = (u8)result;
+        ret    = result;
     }
 
     return ret;
@@ -344,7 +360,6 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node) // 0x8009E550
 bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8009E61C
 {
     s_SysWork_2514_0 status;
-    s_SysWork_2510*  node;
     u8*              pattern;
     u8*              act;
     s32              length;
@@ -368,20 +383,15 @@ bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8
 
     if (!status.field_0_22)
     {
-        node = func_8009E520(head, status.field_0_24);
-        act  = (node == NULL) ? NULL : node->field_8;
+        head = func_8009E520(head, status.field_0_24);
+        act  = (head == NULL) ? NULL : head->field_8;
         if (act == NULL)
         {
             status.field_0_22 = true;
         }
-        else
+        else if (state == 6)
         {
-            if (state == 6)
-            {
-                status.field_0_22 = PadSetActAlign(status.padPort_0_0, act);
-            }
-            // @hack keep node alive
-            act = (node == NULL) ? NULL : node->field_8;
+            status.field_0_22 = PadSetActAlign(status.padPort_0_0, act);
         }
     }
 
@@ -592,7 +602,7 @@ bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s
         status.field_0_23 = 0;
         status.field_0_22 = 0;
 
-        arg2          = work->field_C;
+        arg2                  = work->field_C;
         unk_B_0               = work->field_8.field_3;
         work->actuatorData_4  = 0;
         work->field_8.field_0 = 0;
@@ -730,23 +740,17 @@ bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
 
 bool func_8009EC64(s_SysWork_2514* work, s16 val) // 0x8009EC64
 {
-    s_SysWork_2514*     list = work;
-    s32                 val32;
-    s_SysWork_2514_18*  prev;
-    s_SysWork_2514_18*  head;
-    s_SysWork_2514_18** prevAddress;
-    s32*                prevUnk8;
-    s_SysWork_2514_18*  node;
-    s_SysWork_2514_18*  cur;
-    bool                unsorted;
+    s32                val32;
+    s_SysWork_2514_18* prev;
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* node;
+    s_SysWork_2514_18* cur;
+    bool               unsorted;
 
-    head    = &list->head_18;
-    node    = list->field_10;
+    head  = &work->head_18;
+    node  = work->field_10;
     val32 = val;
-
-    prevAddress = &head->prev_4;
-    prev        = *prevAddress;
-    prevUnk8    = &prev->key_8.value;
+    prev  = work->head_18.prev_4;
 
     unsorted = ((!node) & (prev == head) & (val32 >= prev->key_8.value)) != 0;
     if (!unsorted)
@@ -760,7 +764,7 @@ bool func_8009EC64(s_SysWork_2514* work, s16 val) // 0x8009EC64
     head->prev_4 = cur;
 
     // Insert in front of `node`.
-    list->field_10 = prev;
+    work->field_10 = prev;
     prev->next_0   = node;
 
     return true;
