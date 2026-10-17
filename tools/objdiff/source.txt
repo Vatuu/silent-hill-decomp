@@ -1,2 +1,1 @@
-Built from https://github.com/encounter/objdiff/commit/0a85f540f2d784c4be5513926740d0c5b7b17638
-With GCC suffix changes from https://github.com/encounter/objdiff/pull/278
+v3.8.2 from https://github.com/encounter/objdiff/releases/download/v3.8.2/objdiff-cli-linux-x86_64

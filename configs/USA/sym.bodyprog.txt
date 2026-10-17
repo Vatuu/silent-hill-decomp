@@ -49,6 +49,11 @@ LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 tileScreenEdgesX                             = 0x80028B2C;
 tileScreenEdgesY                             = 0x80028B34;
 
+//-------------------------------------------------------------------------
+//--- PA: 0x003FE4   VA: 0x80028B44   subsegment: .rodata, collision/collision
+//-------------------------------------------------------------------------
+hack_D_80028B8C_fix                          = 0x80028B8C; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
+
 //-------------------------------------------------------------------------------
 //--- PA: 0x004034   VA: 0x80028B94   subsegment: .rodata, bodyprog_data_80028B94
 //-------------------------------------------------------------------------------

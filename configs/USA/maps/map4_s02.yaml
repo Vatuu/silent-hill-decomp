@@ -61,9 +61,9 @@ segments:
       - [0x1204, rodata]
       - [0x1208, .rodata, Chara_AirScreamer]
       - [0x2C84, rodata]
-      - [0x2C8A, .rodata, Chara_Groaner]
-      - [0x2DF2, .rodata, Chara_Romper]
-      - [0x2F96, .rodata, map4_s02]
+      - [0x2C88, .rodata, Chara_Groaner]
+      - [0x2DF0, .rodata, Chara_Romper]
+      - [0x2F94, .rodata, map4_s02]
 
       - [0x3290, c, map4_s02_header]
       - [0x3290, c, map4_s02_events_data]
