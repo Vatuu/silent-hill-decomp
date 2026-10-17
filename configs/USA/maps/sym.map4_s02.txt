@@ -9,7 +9,12 @@
 //--------------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x800CA780   subsegment: .rodata, Chara_AirScreamer
 //--------------------------------------------------------------------------
-sharedData_800CAA98_0_s01        = 0x800CA824; // type:s32 size:0xD6C
+sharedData_800CA9F0_0_s01        = 0x800CA77C; // size:0x10
+sharedData_800CAA00_0_s01        = 0x800CA78C; // size:0x18
+sharedData_800CAA18_0_s01        = 0x800CA7A4; // size:0x18
+sharedData_800CAA30_0_s01        = 0x800CA7BC; // size:0x18
+sharedData_800CAA48_0_s01        = 0x800CA7D4; // size:0x50
+sharedData_800CAA98_0_s01        = 0x800CA824; // type:s32 size:0xD84
 
 
 

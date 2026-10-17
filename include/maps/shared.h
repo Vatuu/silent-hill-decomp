@@ -48,10 +48,10 @@ typedef struct
     /* 0xD24 */ u16         field_D24[2][3][2];
     /* 0xD3C */ u8          field_D3C[2][6];
     /* 0xD48 */ SVECTOR*    ptr_D48[5];
-    /* 0xD5C */ s16         field_D5C[4][2]; // Related to animations. Move offset distances?
-    /* 0xD6C */ s8          unk_D6C[4];
-    /* 0xD70 */ s16         field_D70[2][2];
+    /* 0xD5C */ s16         field_D5C[5][2]; // Related to animations. Move offset distances?
+    /* 0xD70 */ s16         field_D70[5][2];
 } s_func_800D2E04;
+STATIC_ASSERT_SIZEOF(s_func_800D2E04, 0xD84);
 
 typedef struct
 {

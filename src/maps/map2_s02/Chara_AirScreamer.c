@@ -8,16 +8,4 @@
 #include "maps/particle.h"
 #include "maps/characters/air_screamer.h"
 
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", D_800CA7F0);
-
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", D_800CA800);
-
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", D_800CA818);
-
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", D_800CA830);
-
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", D_800CA848);
-
-INCLUDE_RODATA("maps/map2_s02/nonmatchings/Chara_AirScreamer", sharedData_800CAA98_0_s01);
-
 #include "../src/maps/characters/air_screamer.c" // 0x800D0728

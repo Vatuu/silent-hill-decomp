@@ -9,7 +9,12 @@
 //--------------------------------------------------------------------------
 //--- PA: 0x001478   VA: 0x800CA9F0   subsegment: .rodata, Chara_AirScreamer
 //--------------------------------------------------------------------------
-sharedData_800CAA98_0_s01         = 0x800CAA98; // type:s32 size:0xD6C
+sharedData_800CA9F0_0_s01        = 0x800CA9F0; // size:0x10
+sharedData_800CAA00_0_s01        = 0x800CAA00; // size:0x18
+sharedData_800CAA18_0_s01        = 0x800CAA18; // size:0x18
+sharedData_800CAA30_0_s01        = 0x800CAA30; // size:0x18
+sharedData_800CAA48_0_s01        = 0x800CAA48; // size:0x50
+sharedData_800CAA98_0_s01         = 0x800CAA98; // type:s32 size:0xD84
 
 //------------------------------------------------------------------------
 //--- PA: 0x002568   VA: 0x800CBAE0   subsegment: .rodata, map0_s01_events
