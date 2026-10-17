@@ -877,4 +877,11 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 
 void func_8008EF18(void) {} // 0x8008EF18
 
+#if VERSION_IS(USA)
+// Padding with garbage data? DWAVE filename goes unused here.
+// @todo check other regions.
+const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
+const s32 D_8002B2D4 = 0;
+#else
 INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2CC);
+#endif

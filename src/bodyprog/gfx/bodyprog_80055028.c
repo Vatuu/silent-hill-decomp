@@ -14,7 +14,7 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-VECTOR3 D_800AE1B4[1] = { 0x00000000, 0x000000CC, 0xFFFFFEC9 };
+VECTOR3 D_800AE1B4[1] = { Q12(0.0f), Q12(0.05f), Q12(-0.076f) };
 
 // Referenced only by `func_80055648` (https://decomp.me/scratch/joGmE)
 // Doesn't look like `VECTOR3` tbh. Each word is larger than the previous.
