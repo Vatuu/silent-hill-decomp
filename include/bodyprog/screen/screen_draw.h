@@ -4,17 +4,6 @@
 #include "bodyprog/screen/screen_fade.h"
 #include "bodyprog/screen/cutscene_border.h"
 
-// ========
-// GLOBALS
-// ========
-
-/** @note This is defined in `screen_draw.c` because inbetween this and
- * the previous variable (`g_Screen_PrevFadeProgressState`) there is garbage
- * data. It suggests this variable was defined in a file separate from
- * `screen_fade.c`.
- */
-extern q19_12 g_ScreenFadeTimestep;
-
 // ==========
 // FUNCTIONS
 // ==========

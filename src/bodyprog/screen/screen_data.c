@@ -2,6 +2,7 @@
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/math/math.h"
 
+q19_12 g_ScreenFadeTimestep;
 s32 g_VBlanks;
 s32 g_UncappedVBlanks;
 s32 __pad_bss_800B5C3C;

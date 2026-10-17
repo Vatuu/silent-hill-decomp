@@ -5,7 +5,7 @@
 </picture>
 <div align="center">
 <br/>
-An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the PlayStation 1.
+An in-progress decompilation of <i>Silent Hill</i> on the PlayStation 1.
 </div>
 
 > [!IMPORTANT]
@@ -31,7 +31,7 @@ There's still a lot of work ahead:
 - **Shiftability**: making the build not rely on hardcoded memory addresses so that code and data can be modified without breaking everything.
 - **Documentation**: understanding and documenting how the game's systems work together to aid in mods and future projects.
 
-100% will be a milestone worth celebrating, but there's still plenty left to do!
+100% is a milestone worth celebrating, but there's still plenty left to do!
 
 ### *What are the multiple progress trackers for?*
 
@@ -43,7 +43,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <th colspan=3>Total Progress</th>
         </tr>
         <tr>
-            <td colspan=3 align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&measure=matched_code_percent"/></a><br/><a href="https://decomp.dev/shdecompilations/silent-hill-decomp"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&label=Silent+Hill+%28Matched%20Data%29&measure=matched_data_percent"/></a></td>
+            <td colspan=3 align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&measure=matched_code_percent&color=rgb(255,215,0)"/></a><br/><a href="https://decomp.dev/shdecompilations/silent-hill-decomp"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&label=Silent+Hill+%28Matched%20Data%29&measure=matched_data_percent"/></a></td>
         </tr>
         <tr>
             <th colspan=3>⚙ SLUS-00707 ⚙</th>
@@ -64,7 +64,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td colspan=2>Purpose</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp?category=engine"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&category=engine&measure=fuzzy_match_percent"/></a></td>
+            <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp?category=engine"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&category=engine&measure=fuzzy_match_percent&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Main game logic.</td>
         </tr>
         <tr>

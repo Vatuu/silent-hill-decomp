@@ -621,11 +621,11 @@ void func_800D0500(void) // 0x800D0500
             // TODO: Some kind of `Q12_ANGLE_ABS`?
             if ((D_800D3C98 - Q12_TRUNC(D_800D3C98)) > Q12_ANGLE(180.0f))
             {
-                Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
+                Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[1]);
             }
             else
             {
-                Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
+                Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[0]);
             }
 
             D_800D3C9C = MAX(0, D_800D3C9C - 3);
@@ -638,11 +638,11 @@ void func_800D0500(void) // 0x800D0500
             D_800D3C98 += g_DeltaTime;
             if ((D_800D3C98 - Q12_TRUNC(D_800D3C98)) > Q12_ANGLE(180.0f))
             {
-                Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
+                Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[1]);
             }
             else
             {
-                Screen_BackgroundImgDrawAlt(&D_800D3B44[0]);
+                Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[0]);
             }
 
             D_800D3C9C = MIN(D_800D3C9C + 3, 255);
@@ -693,7 +693,7 @@ void func_800D0500(void) // 0x800D0500
             }
 
             Gfx_MapMsg_Draw(18);
-            Screen_BackgroundImgDrawAlt(&D_800D3B44[2]);
+            Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[2]);
             break;
 
         case 12:
@@ -716,7 +716,7 @@ void func_800D0500(void) // 0x800D0500
                 Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(2.0f), false);
             }
 
-            Screen_BackgroundImgDrawAlt(&D_800D3B44[3]);
+            Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[3]);
 
             D_800D3C98 += g_DeltaTime;
             if (D_800D3C98 % Q12(0.2f) > Q12(0.1f))
@@ -769,7 +769,7 @@ void func_800D0500(void) // 0x800D0500
             {
                 Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(2.0f), false);
             }
-            Screen_BackgroundImgDrawAlt(D_800D3B44);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800D3B44);
             break;
 
         case 22:
@@ -782,7 +782,7 @@ void func_800D0500(void) // 0x800D0500
             SysWork_StateStepIncrement(0);
 
         case 24:
-            Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
+            Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[1]);
             switch (FP_FROM(D_800D3C98, Q12_SHIFT))
             {
                 case 0:
@@ -837,7 +837,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         default:
-            Screen_BackgroundImgDrawAlt(&D_800D3B44[1]);
+            Screen_BackgroundImgDrawBlackFadeIn(&D_800D3B44[1]);
 
             if (D_800D3C9E >= 0)
             {

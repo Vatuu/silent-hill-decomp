@@ -35,6 +35,17 @@
 #define MemCard_FileStatusStore(status, deviceIdx) \
     status << (deviceIdx * 2)
 
+/** @brief Memory card access macros. */
+
+#define MemCard_Port(x) \
+    ((x) & 4) * 4
+
+#define MemCard_CardNumber(x) \
+    (x & 3)
+
+#define MemCard_Chan(x) \
+    MemCard_Port(x) + MemCard_CardNumber(x)
+
 // ============
 // ENUMERATORS
 // ============
@@ -222,7 +233,7 @@ typedef struct _MemCardWork
     /* 0x70 */ bool                hasNewDevice;
     /* 0x74 */ s32                 fileHandle;
     /* 0x78 */ s32                 retryCount;
-    /* 0x7C */ s32                 field_7C; /** @unused Dead code. Only ever set to 0. */
+    /* 0x7C */ s32                 field_7C; /** Dead code. Only ever set to 0. */
 } s_MemCardWork;
 
 /** @brief Savegame metadata for displaying in the save screen. */
@@ -369,13 +380,13 @@ extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
-/** @brief @unused Dead code. Defined as 0 and whenever `SaveScreen_Continue` is triggered it turns 1. */
+/** @brief Dead code. Defined as 0 and whenever `SaveScreen_Continue` is triggered it turns 1. */
 extern u8 D_800A97D7;
 
 /** @brief Defines if the player is or not in the save screen under the save game mode or in the load game mode. */
 extern s8 g_SaveScreen_IsInSaveScreen;
 
-/** @brief @unused Dead code. Only used for a check which ask if this is 0. */
+/** @brief Dead code. Only used for a check which ask if this is 0. */
 extern s8 D_800A97D9;
 
 // ====================
@@ -571,10 +582,11 @@ void MemCard_Update(void);
 
 /** @brief Updates the footer with the checksum of the given data.
  *
+ * Scratch: https://decomp.me/scratch/Gj9Ox
+ *
  * @param saveFooter Savegame data footer with the checksum.
  * @param saveData Savegame data.
  * @param saveDataLength Size of save data.
- * Scratch: https://decomp.me/scratch/Gj9Ox
  */
 void MemCard_ChecksumUpdate(s_Savegame_Footer* saveFooter, s8* saveData, s32 saveDataLength);
 
@@ -600,105 +612,47 @@ bool MemCard_ChecksumValidate(s_Savegame_Footer* saveFooter, s8* saveData, s32 s
  */
 u8 MemCard_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
-/** @unused @brief Writes `0xFF` to the first 128 bytes of a memory card and checks if an event is triggered.
- *
- * Scratch 1: https://decomp.me/scratch/fi1GL
- * Scratch 2: https://decomp.me/scratch/fKUIm
- */
-s32 MemCard_DeviceTest(s32 deviceId);
-
-/** @brief
- *
- * Scratch 1: https://decomp.me/scratch/Ir3Z4
- * Scratch 2: https://decomp.me/scratch/RuxhB
- * Scratch 3: https://decomp.me/scratch/VSZEp
- */
-s32 MemCard_DeviceFormat(s32 deviceId);
-
-/** @brief
- *
- * Scratch 1: https://decomp.me/scratch/BL03h
- * Scratch 2: https://decomp.me/scratch/pkwrp
- */
-s32 MemCard_FileClear(s32 deviceId, char* fileName);
-
-/** @brief
- *
- * Scratch: https://decomp.me/scratch/HEQn8
- */
-s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName);
-
-/** @brief
+/** @brief Initializes memory card BIOS system.
  *
  * Scratch: https://decomp.me/scratch/4Bd9c
  */
 void MemCard_WorkInit(void);
 
-/** @brief
+/** @brief Initializes memory card processes system.
  *
  * Scratch: https://decomp.me/scratch/dQ9Mh
  */
 void MemCard_EventsInit(void);
 
-/** @brief
- *
- * Scratch: https://decomp.me/scratch/GfCpR
- */
-void MemCard_StateInit(void);
-
-/** @brief
- *
- * Scratch 1: https://decomp.me/scratch/yKRru
- * Scratch 2: https://decomp.me/scratch/lxBDY
- */
-void MemCard_SwEventsInit(void);
-
-/** @brief
- *
- * Scratch 1: https://decomp.me/scratch/hCYR6
- * Scratch 2: https://decomp.me/scratch/2epbu
- */
-void MemCard_HwEventsInit(void);
-
-/** @brief
+/** @brief Finalize memory card processes system.
  *
  * Scratch: https://decomp.me/scratch/9iYwp
  */
 void MemCard_EventsClose(void);
 
-/** @brief
- *
- * Scratch: https://decomp.me/scratch/IFjjm
- */
-void MemCard_SwEventsClose(void);
-
-/** @brief
- *
- * Scratch 1: https://decomp.me/scratch/eu76G
- * Scratch 2: https://decomp.me/scratch/GRwPV
- */
-void MemCard_HwEventsClose(void);
-
-/** @brief
+/** @brief Return state from any active memory card event.
  *
  * Scratch: https://decomp.me/scratch/r0KzP
+ * @return EvSpERROR, EvSpTIMOUT, EvSpNEW, EvSpIOE or NULL.
  */
 s32 MemCard_SwEventsTest(void);
 
-/** @brief
+/** @brief Reset memory card event system (Software level).
  *
  * Scratch 1: https://decomp.me/scratch/bAN2R
  * Scratch 2: https://decomp.me/scratch/D9ZX8
  */
 void MemCard_SwEventsReset(void);
 
-/** @brief
+/** @brief Returns last memory card event registered (Hardware level).
  *
  * Scratch: https://decomp.me/scratch/xxLr7
+ *
+ * @return Event registered in `g_MemCardWork.lastEventHw`.
  */
-s32 MemCard_HwEventsTest(void);
+s32 MemCard_HwLastEvent(void);
 
-/** @brief
+/** @brief Reset memory card event system (Hardware level).
  *
  * Scratch 1: https://decomp.me/scratch/BzLTs
  * Scratch 2: https://decomp.me/scratch/ZvY0z
@@ -738,13 +692,25 @@ void MemCard_HwEventSpUNKNOWN(void);
 /** @brief
  *
  * Scratch: https://decomp.me/scratch/ta76s
+ *
  * @return `e_MemCardWorkResult`
  */
 s32 MemCard_StateResult(void);
 
-/** @brief
+/** @brief Set basic processes related to data transfer.
+ * See `e_MemCardWorkIoMode` to see what kind of processes this function can handle.
  *
  * Scratch: https://decomp.me/scratch/ta76s
+ *
+ * @param mode `e_MemCardWorkIoMode`.
+ * @param deviceId Memory card index.
+ * @param outDir Memory card directories information.
+ * @param filename PS1 Filename directory identifier.
+ * @param createBlockCount Memory card files count.
+ * @param fileOffset Memory card data pointer.
+ * @param outBuf Extracted data buffer.
+ * @param bufSize Size of data to be extracted.
+ * @return `true` if the work has been set, in case the memory card is in idle state then it return `false`.
  */
 bool MemCard_WorkSet(e_MemCardWorkIoMode mode, s32 deviceId, s_MemCardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
@@ -753,7 +719,7 @@ bool MemCard_WorkSet(e_MemCardWorkIoMode mode, s32 deviceId, s_MemCardDirectory*
  * Scratch (USA): https://decomp.me/scratch/xgVSr 
  * Scratch (JAP): https://decomp.me/scratch/j3Uvz
  *
- * @return Memory cards statu.
+ * @return Memory cards status.
  */
 bool MemCard_ElementsUpdate(void);
 

@@ -11,13 +11,13 @@
 // ========================================
 
 q0_8 g_Screen_BackgroundImgGamma = Q8(0.5f);
-s16  D_800A8E5A                  = 3; // @unused.
+s16  D_800A8E5A                  = 3; // Unused.
 
 // ========================================
 // 2D BACKGROUND IMAGE DRAWING
 // ========================================
 
-void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
+void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 {
     s32       baseYOffset;
     s32       tileX;
@@ -51,25 +51,25 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
             if (y == 0)
             {
                 setWH(sprt, 256, 256 - texOffsetY);
-                *((u32*)&sprt->u0) = (texOffsetY << 8) + (getClut(image->clutX, image->clutY) << 16);
+                setUV0AndClutSum(sprt, 0, texOffsetY, getClut(image->clutX, image->clutY));
             }
             else
             {
                 setWH(sprt, 256, 256);
-                *((u32*)&sprt->u0) = getClut(image->clutX, image->clutY) << 16;
+                setUV0AndClutSum(sprt, 0, 0, getClut(image->clutX, image->clutY));
             }
 
-            tileX = x << 8;
+            tileX = x * 256;
 
             setXY0Fast(sprt,
-                       (tileX - (g_GameWork.gsScreenWidth >> 1)) - (image->u << (2 - texShift)),
+                       (tileX - (g_GameWork.gsScreenWidth / 2)) - (image->u << (2 - texShift)),
                        baseYOffset + ((256 - texOffsetY) * y));
 
             packet += sizeof(SPRT);
             tPage   = (DR_TPAGE*)packet;
 
             tileIdxX = x << texShift;
-            setDrawTPage(tPage, 0, 1, getTPage(texShift, 0, (texPageX + tileIdxX) << 6, ((texPageX << 4) & 0x100) + (y << 8)));
+            setDrawTPage(tPage, 0, 1, getTPage(texShift, 0, (texPageX + tileIdxX) * 64, ((texPageX * 16) & 0x100) + y * 256));
 
             AddPrim(ot, tPage);
             packet = (PACKET*)tPage + sizeof(DR_TPAGE);
@@ -81,9 +81,9 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image) // 0x800314EC
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
-void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha) // 0x800317CC
+void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* imageOut, q3_12 alpha)
 {
-    volatile int   pad;
+    volatile s32   pad; // Hack
     s32            i;
     s32            j;
     u32            color;
@@ -96,8 +96,8 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
 
     for (i = 0; i < 3; i++)
     {
-        image = (i > 0) ? image0 : image1;
-        color = (i < 2) ? Q12_MULT_PRECISE(alpha, 128) : 128;
+        image = (i > 0) ? imageIn : imageOut;
+        color = (i < 2) ? Q12_MULT_PRECISE(alpha, Q12(0.0313f)) : Q12(0.0313f);
 
         for (j = 0; j < 3; j++)
         {
@@ -110,21 +110,19 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
 
             setXY2Fast(poly, -160 + offsetX, 120);
             setXY3Fast(poly, offsetX + ((j != 2) ? -32 : -96), 120);
-
-            *((u32*)&poly->u0) = (image->v << 8) + (getClut(image->clutX, image->clutY) << 16);
+            setUV0AndClutSum(poly, 0, image->v, getClut(image->clutX, image->clutY));
 
             tPageY = image->tPage[1];
 
-            *((u32*)&poly->u1) = (image->v << 8) + ((j != 2) ? 128 : 64) +
-                                 (getTPage(image->tPage[0], i + 1, (image->tPage[1] + j) << 6, (tPageY << 4) & 0x100) << 16);
+            setUV1AndTPageSum(poly, ((j != 2) ? 128 : 64), image->v,
+                              getTPage(image->tPage[0], i + 1, (image->tPage[1] + j) * 64, (tPageY * 16) & 0x100));
 
-            *((u16*)&poly->u2) = (image->v + 239) << 8;
-            *((u16*)&poly->u3) = ((image->v + 239) << 8) + ((j != 2) ? 128 : 64);
+            setUV2Sum(poly, 0,                     image->v + 239);
+            setUV3Sum(poly, ((j != 2) ? 128 : 64), image->v + 239);
 
             setSemiTrans(poly, i < 2);
 
-            *((u16*)&poly->r0) = color + (color << 8);
-            poly->b0           = color;
+            setRGB0Fast(poly, color, color, color);
 
             addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, poly);
             poly++;
@@ -135,9 +133,9 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* image0, s_FsImageDesc* image1
     GsOUT_PACKET_P            = (PACKET*)poly;
 }
 
-void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
+void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image)
 {
-    volatile s32 pad; // TODO: Is there a better solution?
+    volatile s32 pad; // Hack
     s32          i;
     s32          xOffset;
     u8           tPageY;
@@ -155,21 +153,19 @@ void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
 
         setXY2Fast(poly, -160 + xOffset, 120);
         setXY3Fast(poly, xOffset + (i == 2 ? -96 : -32), 120);
-
-        *((u32*)&poly->u0) = (image->v << 8) + (getClut(image->clutX, image->clutY) << 16);
+        setUV0AndClutSum(poly, 0, image->v, getClut(image->clutX, image->clutY));
 
         tPageY = image->tPage[1];
-
-        *((u32*)&poly->u1) = (image->v << 8) + ((i == 2) ? 64 : 128) +
-                             (getTPage(image->tPage[0], 0, (image->tPage[1] + i) << 6, (tPageY << 4) & 0x100) << 16);
-
-        *((u16*)&poly->u2) = (image->v + 239) << 8;
-        *((u16*)&poly->u3) = ((image->v + 239) << 8) + ((i == 2) ? 64 : 128);
+        
+        setUV1AndTPageSum(poly, (i == 2) ? 64 : 128, image->v,
+                          getTPage(image->tPage[0], 0, (image->tPage[1] + i) * 64, (tPageY * 16) & 0x100));
+        
+        setUV2Sum(poly, 0,                     image->v + 239);
+        setUV3Sum(poly, ((i == 2) ? 64 : 128), image->v + 239);
 
         setSemiTrans(poly, false);
 
-        *((u16*)&poly->r0) = g_Screen_BackgroundImgGamma + (g_Screen_BackgroundImgGamma << 8);
-        poly->b0           = g_Screen_BackgroundImgGamma;
+        setRGB0Fast(poly, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma);
 
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
         poly++;
@@ -180,7 +176,7 @@ void Screen_BackgroundImgDrawAlt(s_FsImageDesc* image) // 0x80031AAC
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
-bool Screen_BackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
+bool Screen_BackgroundMotionBlur(s32 vBlanks)
 {
     s32       interlacingEnabled;
     s32       i;
@@ -202,15 +198,15 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
         {
             if (interlacingEnabled)
             {
-                texOffsetY   = (-(i == 0)) & 0x20;
+                texOffsetY   = (i == 0) ?   32 : 0;
                 offsetY      = (i == 0) ? -224 : 0;
-                tPageOffsetY = i << 8;
+                tPageOffsetY = i * 256;
             }
             else
             {
                 offsetY      = -112;
-                texOffsetY   = (g_ActiveBufferIdx == 0) << 5;
-                tPageOffsetY = g_ActiveBufferIdx << 8;
+                texOffsetY   = (g_ActiveBufferIdx == 0) * 32;
+                tPageOffsetY = g_ActiveBufferIdx * 256;
             }
 
             addPrimFast(ot, sprt, 4);
@@ -225,14 +221,14 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
             }
 
             setWH(sprt, 256, 224);
-            *((u32*)&sprt->u0) = texOffsetY << 8;
+            setUV0AndClutSum(sprt, 0, texOffsetY, 0);
 
-            setXY0Fast(sprt, (-g_GameWork.gsScreenWidth / 2) + (j << 8), offsetY);
+            setXY0Fast(sprt, (-g_GameWork.gsScreenWidth / 2) + (j * 256), offsetY);
 
             sprt++;
             tPage = (DR_TPAGE*)sprt;
 
-            setDrawTPage(tPage, 0, 1, getTPage(2, 0, (j << 8), tPageOffsetY));
+            setDrawTPage(tPage, 0, 1, getTPage(2, 0, (j * 256), tPageOffsetY));
             AddPrim(ot, tPage);
 
             sprt = (PACKET*)sprt + sizeof(DR_TPAGE);

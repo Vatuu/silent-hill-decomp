@@ -134,7 +134,7 @@ MemCard_SwEventsClose                        = 0x80030668; // type:func
 MemCard_HwEventsClose                        = 0x800306C8; // type:func
 MemCard_SwEventsTest                         = 0x80030734; // type:func
 MemCard_SwEventsReset                        = 0x800307BC; // type:func
-MemCard_HwEventsTest                         = 0x80030810; // type:func
+MemCard_HwLastEvent                         = 0x80030810; // type:func
 MemCard_HwEventsReset                        = 0x80030820; // type:func
 MemCard_HwEventSpIOE                         = 0x80030884; // type:func
 MemCard_HwEventSpERROR                       = 0x80030894; // type:func
@@ -159,7 +159,7 @@ MemCard_DevicePathGenerate                   = 0x800314A4; // type:func
 //-------------------------------------------------------------------------
 Screen_BackgroundImgDraw                     = 0x800314EC; // type:func
 Screen_BackgroundImgTransition               = 0x800317CC; // type:func
-Screen_BackgroundImgDrawAlt                  = 0x80031AAC; // type:func
+Screen_BackgroundImgDrawBlackFadeIn                  = 0x80031AAC; // type:func
 Screen_BackgroundMotionBlur                  = 0x80031CCC; // type:func
 
 //-----------------------------------------------------------------------
@@ -2462,7 +2462,7 @@ g_Screen_FadeProgress                        = 0x800A8E94; // type:s32
 //-----------------------------------------------------------------------------
 //--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/cutscene_border
 //-----------------------------------------------------------------------------
-g_BlackBorderShade                           = 0x800A8F40;
+g_Screen_BlackBorderShade                           = 0x800A8F40;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0843E4   VA: 0x800A8F44   subsegment: .data, screen/screen_data

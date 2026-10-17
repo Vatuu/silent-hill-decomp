@@ -1193,11 +1193,11 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 3:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, false, false, false);
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             break;
 
         case EventState_UseKey:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
 
             if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
@@ -1267,7 +1267,7 @@ void func_800E9DD8(void) // 0x800E9DD8
 
         case 5:
             Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Sd_SfxPlay(Sfx_Unk1390, Q8(0.0f), Q8(0.5f));
             SysWork_StateStepIncrement(0);
             break;
@@ -1281,12 +1281,12 @@ void func_800E9DD8(void) // 0x800E9DD8
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 8:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_BgTextureCmd(BgTextureCmd_AwaitLoad, 0, false);
             break;
 
@@ -1306,7 +1306,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 10:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_WaitTimer(Q12(1.0f), false);
 
             if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
@@ -1322,12 +1322,12 @@ void func_800E9DD8(void) // 0x800E9DD8
             break;
 
         case 11:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             break;
 
         case 12:
-            Screen_BackgroundImgDrawAlt(D_800F22A0);
+            Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, false, false, false);
             break;
 

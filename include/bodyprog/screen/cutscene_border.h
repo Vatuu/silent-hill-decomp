@@ -32,6 +32,11 @@ typedef enum _CutsceneBorderState
 #define CutsceneBorder_FadeOutStart() \
     g_SysWork.cutsceneBorderState = CutsceneBorderState_FadeOutStart
 
+
+/** @brief 
+ *
+ * Scratch: https://decomp.me/scratch/ztPzJ
+ */
 void Screen_CutsceneCameraStateUpdate(void);
 
 #endif
