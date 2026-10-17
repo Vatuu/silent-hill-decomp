@@ -67,14 +67,19 @@ typedef struct
     u32 field_0_24  : 8;
 } s_SysWork_2514_0;
 
+typedef struct
+{
+    s32 field_0 : 16;
+    s32 field_2 : 8;
+    u32 field_3 : 8;
+} s_SysWork_2514_8;
+
 // Related to controller data?
 typedef struct
 {
     s_SysWork_2514_0   field_0;
     s32                actuatorData_4;
-    s16                field_8;
-    s8                 field_A;
-    u8                 unk_B[1];
+    s_SysWork_2514_8   field_8;
     s_SysWork_2514_C*  field_C;
     s_SysWork_2514_18* field_10;
     s32                unk_14;
@@ -170,6 +175,8 @@ typedef struct _func_8009ECCC
     u16                    field_1C;
     u16                    field_1E;
 } s_func_8009ECCC;
+
+bool func_8009E198(s_SysWork_2514* arg0, u32 port);
 
 s32 func_8009E230(s_SysWork_2514* arg0);
 

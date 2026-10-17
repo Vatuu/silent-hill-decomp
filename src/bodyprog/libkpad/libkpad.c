@@ -50,7 +50,47 @@ s_SysWork_2510 D_800B142C = {
     .func_C  = func_8009E9D0,
 };
 
-INCLUDE_ASM("bodyprog/nonmatchings/libkpad/libkpad", func_8009E198);
+bool func_8009E198(s_SysWork_2514* arg0, u32 port) // 0x8009E198
+{
+    s_SysWork_2514_0 status;
+    s32              ret;
+    u16              isValid;
+    s32              field_0_8 = 0x80;
+
+    ret = arg0 != NULL;
+    if (ret)
+    {
+        isValid = ret;
+        port   &= 0x13;
+
+        arg0->actuatorData_4 = 0;
+        arg0->field_8        = (s_SysWork_2514_8){ 0 };
+        arg0->field_C        = NULL;
+        arg0->field_10       = NULL;
+
+        status = (s_SysWork_2514_0){
+            .padPort_0_0 = 0,
+            .field_0_8   = field_0_8,
+            .field_0_16  = 1,
+            .field_0_17  = 1,
+            .field_0_18  = 1,
+            .field_0_19  = 0,
+            .field_0_22  = 0,
+            .field_0_23  = 0,
+            .field_0_24  = 0,
+        };
+
+        ret                = port;
+        status.padPort_0_0 = ret;
+
+        arg0->field_0 = status;
+
+        isValid = (u8)isValid;
+        return isValid;
+    }
+
+    return ret;
+}
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
@@ -152,7 +192,7 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8
         }
 
         arg0->field_C  = arg1;
-        arg0->unk_B[0] = arg2;
+        arg0->field_8.field_3 = arg2;
 
         while (arg2 > 0)
         {
@@ -194,8 +234,8 @@ bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 pad
             }
 
             arg0->actuatorData_4 = 0;
-            arg0->field_8 = 0;
-            arg0->field_A = 0;
+            arg0->field_8.field_0 = 0;
+            arg0->field_8.field_2 = 0;
             arg0->field_0 = tmp;
         }
 
@@ -243,8 +283,8 @@ bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 pad
     if (isChanged)
     {
         arg0->actuatorData_4  = 0;
-        arg0->field_8  = 0;
-        arg0->field_A  = 0;
+        arg0->field_8.field_0 = 0;
+        arg0->field_8.field_2 = 0;
         tmp.field_0_19 = 0;
         tmp.field_0_23 = 0;
         tmp.field_0_22 = 0;
@@ -374,7 +414,7 @@ bool func_8009E718(s_SysWork_2514* arg0) // 0x8009E718
 
     in  = arg0->field_C;
     out = &arg0->actuatorData_4;
-    for (i = (u8)arg0->field_A; i != 0; i--)
+    for (i = (u8)arg0->field_8.field_2; i != 0; i--)
     {
         // Contains up to 4 actuator data bytes packed into a `u32`, even though there are only two actuators max.
         packedVal = in->data_4;
@@ -457,9 +497,9 @@ bool func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 pad
 
     if (padState == PadStateFindCTP1 && ((0xB0u >> padInfoCurId) & 0x1))
     {
-        work->actuatorData_4 = 0x40;
-        work->field_8        = 0;
-        count                = work->unk_B[0];
+        work->actuatorData_4  = 0x40;
+        work->field_8.field_0 = 0;
+        count                 = work->field_8.field_3;
 
         status            = work->field_0;
         cur               = (s_SysWork_2514_C_0*)work->field_C;
@@ -487,7 +527,7 @@ bool func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 pad
             i             = 1;
         }
 
-        work->field_A     = i;
+        work->field_8.field_2 = i;
         status.field_0_19 = field_0_19;
         work->field_0     = status;
         tmp               = (s_SysWork_2514_C_0){ 0 };
@@ -553,9 +593,9 @@ bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s
         status.field_0_22 = 0;
 
         arg2          = work->field_C;
-        unk_B_0       = work->unk_B[0];
-        work->actuatorData_4 = 0;
-        work->field_8 = 0;
+        unk_B_0               = work->field_8.field_3;
+        work->actuatorData_4  = 0;
+        work->field_8.field_0 = 0;
 
         field_0_19 = 0;
         i          = 2;
@@ -594,7 +634,7 @@ bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s
             i          = 2;
         }
 
-        work->field_A     = i;
+        work->field_8.field_2 = i;
         status.field_0_19 = field_0_19;
         work->field_0     = status;
         tmp.value         = 0;
