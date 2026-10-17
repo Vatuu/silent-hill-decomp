@@ -72,7 +72,7 @@ segments:
       - [0x368C, .data, map6_s05_anim_info]
       - [0x36DC, data]
       - [0x3724, .data, map6_s05_header]
-      - [0x3744, data]
+      - [0x3744, .data, map6_s05]
       - [0x3784, .data, map6_s05_events_data]
       - [0x3790, data]
   - [0x4100]

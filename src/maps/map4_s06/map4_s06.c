@@ -15,4 +15,11 @@ void Map_WorldObjectsInit(void) {}
 
 void Map_WorldObjectsUpdate(void) {}
 
+#if VERSION_IS(USA)
+const char* MAP_MESSAGES[] = {
+#include "maps/shared/map_msg_common.h"
+    "\tNO_STAGE! ~E "
+};
+#else
 INCLUDE_RODATA("maps/map4_s06/nonmatchings/map4_s06", D_800CA618);
+#endif

@@ -73,7 +73,7 @@ segments:
       - [0x3528, .data, map4_s06_anim_info]
       - [0x3578, data]
       - [0x361c, .data, map4_s06_header]
-      - [0x363c, data]
+      - [0x363c, .data, map4_s06]
       - [0x367C, .data, map4_s06_events_data]
       - [0x3688, data]
   - [0x4000]

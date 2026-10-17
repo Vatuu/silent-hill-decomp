@@ -92,7 +92,7 @@ g_MapEventFuncs                 = 0x800CCCB8;
 //----------------------------------------------------
 //--- PA: 0x003744   VA: 0x800CCCBC   subsegment: data
 //----------------------------------------------------
-MAP_MESSAGES                    = 0x800CCCBC;
+MAP_MESSAGES                    = 0x800CCCBC; // type:u32 size:0x40
 
 //---------------------------------------------------------------------------
 //--- PA: 0x003784   VA: 0x800CCCFC   subsegment: .data, map6_s05_events_data
