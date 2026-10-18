@@ -58,41 +58,49 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata, bodyprog]
+      # .rodata section
+      - [0x0, .rodata, bodyprog]
       - [0x4, .rodata, memcard]
-      - [0x130, rodata] # Garbage padding
-      - [0x134, .rodata, screen/screen_fade]
+      - [0x130, rodata] # Garbage padding (should start at 0x13A but causes mismatches)
+      - [0x13C, .rodata, screen/screen_fade]
       - [0x17C, .rodata, screen/cutscene_border]
-      - [0x1DC, rodata]
+      - [0x1DC, .rodata, sys/syswork_globals]
+      - [0x1F0, rodata]
+      - [0x1F4, .rodata, sys/map_info]
       - [0x598, .rodata, sys/fs_screens]
       - [0x5A8, .rodata, sys/settings_reset]
       - [0x604, .rodata, sys/memcard_2]
       - [0x680, rodata] # Garbage padding
       - [0x68C, .rodata, game_boot/game_boot]
-      - [0x6C0, .rodata, events/bgm]
-      - [0x6E8, rodata] # Garbage padding
-      - [0x6EC, .rodata, events/map_msg_display]
+      - [0x6C0, rodata] # Garbage padding
+      - [0x6C8, .rodata, text/bodyprog_8003652C]
+      - [0x6EC, .rodata, text/map_msg_display]
       - [0x744, .rodata, events/bodyprog_data_800A99B4]
       - [0x804, .rodata, events/game_sys_states]
       - [0x908, .rodata, events/title]
-      - [0x9AC, rodata] # Garbage padding (should start at 0x9AB but that causes mismatches?)
-      - [0x9B0, .rodata, gfx/bodyprog_8003BE50]
-      - [0x1040, .rodata, gfx/map_effects]
+      - [0x9AC, rodata] # Garbage padding
+      - [0x9B0, .rodata, world/world_draw]
+      - [0x1040, .rodata, world/world_effects]
       - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
       - [0x11EC, rodata] # Garbage padding
       - [0x11F4, .rodata, text/text_draw_jp]
-      - [0x1450, .rodata, items/item_screens_1]
+      - [0x1450, .rodata, items/item_utils]
       - [0x1470, .rodata, items/item_screens_2]
       - [0x1848, .rodata, items/item_screens_3]
-      - [0x36EC, .rodata, gfx/bodyprog_80055028]
-      - [0x3714, rodata]
-      - [0x3734, .rodata, bodyprog_8005E0DC]
+      - [0x36EC, .rodata, gfx/bodyprog_80056D8C]
+      - [0x3704, .rodata, gfx/texture_utils]
+      - [0x370C, rodata]
+      - [0x3714, .rodata, bodyprog_npc_8005BF38]
+      - [0x372C, rodata]
+      - [0x3734, .rodata, gfx/bodyprog_effects_8005E0DC]
       - [0x3BD8, rodata] # Garbage padding
       - [0x3BE0, .rodata, bodyprog_mapscreen_80066EB0]
       - [0x3BE8, rodata] # Garbage padding
       - [0x3BEC, .rodata, bodyprog_mapscreen_80066D90]
-      - [0x3D04, .rodata, collision]
+      - [0x3CFC, rodata]
+      - [0x3D04, .rodata, collision/collision]
+      - [0x3D54, .rodata, bodyprog_data_80028B94]
       - [0x4910, .rodata, player_control]
       - [0x5A10, .rodata, view/vc_main]
       - [0x5CBC, .rodata, events/events_util]
@@ -118,12 +126,16 @@ segments:
       - [0x9464, .rodata, libsd/smf_io]
       - [0x96F8, .rodata, libsd/smf_mid]
 
-      # data only files
-      - [auto,      c, events/bodyprog_data_800A99B4]
-      #- [0x97F0, asm, bodyprog] # Data
-      #- [0x97F0, asm, globals] # Data
-      #- [0x97F0, asm, syswork_functable] # Data
+      # .text section
 
+      # data only files
+      - [auto,       c, bodyprog]
+      - [auto,       c, screen/screen_data]
+      - [auto,       c, sys/syswork_globals]
+      - [auto,       c, sys/chara_data_info]
+      - [auto,       c, sys/map_info]
+      - [auto,       c, events/bodyprog_data_800A99B4]
+      - [auto,       c, bodyprog_data_80028B94]
       - [0x97F0, c, memcard]
       - [0xC674, c, screen/background_draw]
       - [0xD084, c, text/text_debug_draw]
@@ -134,53 +146,65 @@ segments:
       - [0xDD58, c, sys/fs_screens]
       - [0xDEA4, c, sys/game_main] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE53C, c, sys/settings_reset]
-      - [0xE648, c, sys/memcard_2]
-      - [0xF250, c, sys/warm_boot]
+      - [0xE648, c, sys/memcard_2] # `memcard_update.c?`
+      - [0xF250, c, sys/warm_boot] # Possibly `sh_init` or some `init` derivative name considering SH2 and 4 symbols.
       - [0xF58C, c, sys/joy]
-      - [0xFA30, c, game_boot/game_boot]
+      - [0xFA30, c, sys/npc_anims_clear]
+      - [0xFA58, c, game_boot/game_boot]
       - [0x103FC, c, game_boot/fs_chara_anim]
       - [0x108F0, c, game_boot/background_sound_init]
       - [0x10C74, c, game_boot/load_screen]
-      - [0x10F24, c, events/bgm]
-      - [0x11728, c, events/map_msg_display]
-      - [0x12328, c, events/radio]
-      - [0x123BC, c, events/player_pos_update]
-      - [0x125A0, c, events/events_main]
-      - [0x12F98, c, events/npc_main]
-      - [0x13DA8, c, events/game_sys_states]
-      - [0x15CFC, c, events/title]
-      - [0x16F00, c, events/bodyprog_8003BD2C]
-      - [0x17024, c, gfx/bodyprog_8003BE50]
-      - [0x197BC, c, gfx/map_effects]
-      - [0x1B1D8, c, events/collision_trigger]
-      - [0x1B220, c, view/vc_util]
-      - [0x1BD48, c, gfx/bodyprog_80040B74]
-      - [0x1F778, c, gfx/bodyprog_anim_800445A4]
-      - [0x200E8, c, gfx/bodyprog_bone_80044F14]
+      - [0x10F24, c, events/bgm_update]        # }
+      - [0x1169C, c, text/bodyprog_8003652C]
+      - [0x11728, c, text/map_msg_display]
+      - [0x1201C, c, text/bodyprog_8004B45C]
+      - [0x12328, c, events/radio]             # }
+      - [0x123BC, c, events/player_pos_update] # }
+      - [0x1255C, c, events/events_main]       # }
+      - [0x12F98, c, events/npc_main]          # }
+      - [0x13DA8, c, events/game_sys_states]   # }
+      - [0x15CFC, c, events/title] # Name convention from SH2/4.
+      - [0x16F00, c, world/world_draw]             # }
+      - [0x197BC, c, gfx/option_brightness_line]   # |
+      - [0x198E4, c, world/world_effects]          # }
+      - [0x1B1D8, c, world/collision_trigger]      # }
+      - [0x1B220, c, view/vc_util]                 # |
+      - [0x1BD48, c, world/bodyprog_80040B74]      # } lighting_overlap.c?
+      - [0x1CCB0, c, world/world_map]              # }
+      - [0x1F778, c, world/bodyprog_anim_800445A4] # }
+      - [0x200E8, c, world/bodyprog_bone_80044F14] # }
       - [0x20C50, c, sound/sd_call]
       - [0x23C0C, c, view/vw_main]
       - [0x240FC, c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25A50, c, text/text_draw_jp]
       - [0x27FF4, c, items/item_screens_cam]
-      - [0x28580, c, items/item_screens_1]
-      - [0x28DD4, c, items/item_screens_2]
-      - [0x2BC80, c, items/item_screens_3]
+      - [0x28580, c, items/item_utils]
+      - [0x28EA8, c, items/item_screens_2]
+      - [0x2BE08, c, items/item_screens_3]
       - [0x31F1C, c, gfx/bodyprog_80055028]
+      - [0x33138, c, gfx/materials]
+      - [0x33C80, c, gfx/bodyprog_80056D8C]
+      - [0x38094, c, gfx/texture_utils]
+      - [0x38450, c, gfx/billboard_draw]
       - [0x38E2C, c, bodyprog_math_8005BF38]
-      - [0x396C4, c, bodyprog_combat_8005BF38]
+      - [0x396C4, c, bodyprog_npc_8005BF38]
       - [0x3A760, c, sound/sfx]
-      - [0x3AFD0, c, bodyprog_8005E0DC]
-      - [0x421E8, c, bodyprog_800652F4]
+      - [0x3AFD0, c, gfx/bodyprog_effects_8005E0DC]
+      - [0x421E8, c, gfx/bodyprog_800652F4] # Dead code
       - [0x43C84, c, bodyprog_mapscreen_80066EB0]
       - [0x43DA4, c, bodyprog_mapscreen_80066D90]
-      - [0x466E0, c, collision]
+      - [0x466E0, c, collision/collision]
+      - [0x4A800, c, collision/ray]
+      - [0x4C144, c, collision/trigger]
+      - [0x4C890, c, collision/los]
+      - [0x4D214, c, collision/chara]
       - [0x4D5D8, c, player_control]
       - [0x5D81C, c, view/vc_main]
-      - [0x62C54, c, events/events_util]
-      - [0x64D84, c, bodyprog_bgm_80087EA8]
-      - [0x65094, c, bodyprog_800881B8]
-      - [0x65B58, c, chara_spawn]
-      - [0x65F6C, c, bodyprog_80089090]
+      - [0x62C54, c, events/events_util]           # }
+      - [0x64D84, c, events/bgm_utils]             # }
+      - [0x65094, c, events/events_2d_draw_utils]  # }
+      - [0x65B58, c, events/chara_spawn]           # }
+      - [0x65F6C, c, bodyprog_80089090] # Uses `s_KPadWork` which is mainly used for `libkpad`, possibly vibration?
       - [0x66F34, c, bodyprog_combat_8008A058]
       - [0x6985C, c, dms]
       - [0x6A2D8, c, water]
@@ -369,35 +393,44 @@ segments:
       - [0x84554, c, libsd/smf_main]
       - [0x847F4, c, libsd/smf_mid]
 
-      # TODO - [0x6CF9C, asm, screen/screen_data]     # Data
-      # TODO - [0x6CF9C, asm, bodyprog_data_800A90FC] # Data
 
-      - [0x865D4, data, bodyprog] # TODO [.data, memcard]
+      # .data section
+      - [0x865D4, .data, memcard]
       - [0x86694, .data, screen/background_draw]
       - [0x86698, .data, screen/screen_fade]
       - [0x866D4, .data, screen/cutscene_border]
-      - [0x86780, data]
+      - [0x86780, .data, screen/screen_data]
+      - [0x86938, .data, sys/chara_data_info]
+      - [0x86C08, .data, sys/map_info]
       - [0x86FA4, .data, sys/game_main]
       - [0x87010, .data, sys/memcard_2]
       - [0x87040, .data, game_boot/background_sound_init]
       - [0x87138, .data, game_boot/fs_chara_anim]
-      - [0x871D8, .data, events/bgm]
-      - [0x871E8, .data, events/map_msg_display]
+      - [0x871D8, .data, events/bgm_update]
+      - [0x871E8, .data, text/map_msg_display]
       - [0x871EE, pad] # Garbage padding
       - [0x871F0, .data, events/bodyprog_data_800A99B4]
       - [0x8725C, .data, events/events_main]
       - [0x87268, .data, events/game_sys_states]
       - [0x872B0, .data, events/title]
-      - [0x876E8, .data, gfx/bodyprog_8003BE50]
-      - [0x877BC, .data, gfx/map_effects]
-      - [0x87804, data]
+      - [0x876F0, .data, world/world_draw]
+      - [0x877BC, .data, world/world_effects]
+      - [0x87804, data] # sound/sound_data, differs per release (disc sector offsets)
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, .data, text/text_draw_jp]
       - [0x8ACDC, data]
       - [0x8AD00, .data, items/item_screens_3]
+      - [0x8BA14, .data, gfx/bodyprog_80055028]
+      - [0x8BA64, .data, gfx/billboard_draw]
+      - [0x8BD80, .data, bodyprog_math_8005BF38]
+      - [0x8BDC4, .data, sound/sfx]
+      - [0x8BE08, .data, gfx/bodyprog_effects_8005E0DC]
+      - [0x8BF70, .data, gfx/bodyprog_800652F4]
+      - [0x8BFA0, .data, bodyprog_mapscreen_80066D90]
+      - [0x8C73C, .data, player_control]
       - [0x8D4F4, .data, view/vc_main]
       - [0x8D564, .data, bodyprog_80089090]
-      # 0x8D57C should hold D_800AFD1C here, but that gets included by the bodyprog_combat_8008A058 .bss below somehow?
+      - [0x8D57C, .data, bodyprog_combat_8008A058]
       - [0x8D59C, .data, water]
       - [0x8D618, .data, demo]
       - [0x8D654, .data, ranking]
@@ -431,7 +464,7 @@ segments:
       - [0x8EC9C, o, libspu/s_n2p, .data]
       - [0x8EDBC, .data, libkpad/libkpad]
       - [0x8EE0C, .data, libsd/smf_main]
-      
+
       # .sdata section
       - [0x8FFE0, .sdata, libkpad/libkpad]
       - [0x8FFE6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
@@ -441,56 +474,68 @@ segments:
       - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
       - [0x935FC, pad]
-      - [0x93600, .bss, screen/screen_draw]
-      - [0x93604, bss]
-      - [0x9A6E4, pad] # Garbage
+      - [0x93600, .bss, screen/screen_data]
+      - [0x976A0, bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
+      - [0x97990, .bss, sys/syswork_globals]
+      - [0x9A6D0, bss]
+      - [0x9A6E4, pad] # Garbage.
       - [0x9A6E8, .bss, sys/memcard_2]
-      - [0x9A714, pad] # Garbage
+      - [0x9A711]
+      - [0x9A714, pad] # Garbage.
       - [0x9A718, .bss, game_boot/game_boot]
-      - [0x9A71C, pad] # Garbage
-      - [0x9A720, .bss, events/bgm]
-      - [0x9A730, .bss, events/map_msg_display]
-      - [0x9A74C, pad] # Garbage
+      - [0x9A71C, pad] # Garbage.
+      - [0x9A720, .bss, events/bgm_update]
+      - [0x9A730, .bss, text/map_msg_display]
+      - [0x9A74C, pad] # Garbage.
       - [0x9A750, .bss, events/game_sys_states]
       - [0x9A7AC, pad] # Garbage.
       - [0x9A7B0, .bss, events/title]
-      - [0x9A7B4, bss]
-      - [0x9A7B8, .bss, gfx/map_effects]
-      - [0x9A7C8, bss]
-      - [0x9D5BC, pad] # Garbage
-      - [0x9D5C0, .bss, gfx/bodyprog_80040B74]
-      - [0x9EF7C, pad] # Garbage
-      - [0x9EF80, .bss, gfx/bodyprog_bone_80044F14]
-      - [0x9EF84, pad] # Garbage
+      - [0x9A7B4, pad] # Garbage.
+      - [0x9A7B8, .bss, world/world_effects]
+      - [0x9A7C8, .bss, view/vc_util]
+      - [0x9A7D4, pad] # Unused
+      - [0x9A7E4, .bss, world/world_draw]
+      - [0x9D5A4, pad] # Garbage.
+      - [0x9D5C0, .bss, world/bodyprog_80040B74]
+      - [0x9E9E0, .bss, world/world_map]
+      - [0x9EF7C, pad] # Garbage.
+      - [0x9EF80, .bss, world/bodyprog_bone_80044F14]
+      - [0x9EF84, pad] # Garbage.
       - [0x9EF88, .bss, sound/sd_call]
       - [0xA11B0, .bss, view/vw_main]
       - [0xA1238, .bss, view/vw_calc]
       - [0xA1278, .bss, text/text_draw_jp]
       - [0xA1280, bss]
       - [0xA12F8, .bss, items/item_screens_cam]
-      - [0xA1330, .bss, items/item_screens_1]
+      - [0xA1330, .bss, items/item_utils]
       - [0xA1338, .bss, items/item_screens_2]
       - [0xA1378, .bss, items/item_screens_3]
-      - [0xA1B38, bss]
+      - [0xA1B38, .bss, gfx/bodyprog_80055028]
+      - [0xA1C88, .bss, gfx/billboard_draw]
+      - [0xA1C8C, pad] # Garbage.
       - [0xA1C90, .bss, sound/sfx]
-      - [0xA1CA0, bss]
-      - [0xA1CA8, .bss, bodyprog_8005E0DC]
-      - [0xA1DF8, .bss, bodyprog_800652F4]
+      - [0xA1CA0, bss] # Player related? - Dead code.
+      - [0xA1CA4, pad] # Garbage.
+      - [0xA1CA8, .bss, gfx/bodyprog_effects_8005E0DC]
+      - [0xA1DF8, .bss, gfx/bodyprog_800652F4]
       - [0xA1E18, .bss, bodyprog_mapscreen_80066D90]
-      - [0xA1E24, bss]
-      - [0xA1E28, .bss, collision]
-      - [0xA1E9C, bss]
+      - [0xA1E24, pad] # Garbage.
+      - [0xA1E28, .bss, collision/collision]
+      - [0xA1E9C, pad] # Garbage.
       - [0xA1EA0, .bss, player_control]
-      - [0xA1FEC, bss, player_control_2]
+      - [0xA1FEC, pad] # Garbage.
+      - [0xA1FF0, bss, player_control_2] # Only contains `D_800C4620` which must be nested
+      - [0xA1FFC, pad] # Garbage.
       - [0xA2000, .bss, view/vc_main]
       - [0xA2010, .bss, events/events_util]
       - [0xA20F8, .bss, bodyprog_combat_8008A058]
       - [0xA21E8, .bss, water]
       - [0xA2210, .bss, demo]
       - [0xA2270, .bss, ranking]
-      - [0xA22BC, pad] # Garbage
+      - [0xA22B9]       # Garbage.
+      - [0xA22BC, pad] # Garbage.
       - [0xA22C0, .bss, credits_init]
-      - [0xA22C4, pad] # Garbage
+      - [0xA22C4, pad] # Garbage.
       - [0xA22C8, o, libapi/first, .bss]
       - [0xA22F8,  o, libapi/pad, .bss]
       - [0xA2308,  o, libapi/patch, .bss]

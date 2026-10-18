@@ -343,7 +343,9 @@ s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
 
 const static s_WaterZone WATER_LIGHT_ZONES_0[] = {
     { true, 8, Q4(-120.0f), Q4(80.0f), Q4(-120.0f), Q4(40.0f) },
+#if !VERSION_IS(JAP0)
     { true, 8, Q4(0.0f),    Q4(40.0f), Q4(0.0f),    Q4(80.0f) },
+#endif
     {}
 };
 

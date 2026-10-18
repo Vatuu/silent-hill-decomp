@@ -219,13 +219,13 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
 
 #if VERSION_REGION_IS(NTSCJ)
-                    if (var_a1 != 0)
+                    if (unkJapVal != 0)
                     {
-                        switch (var_a1)
+                        switch (unkJapVal)
                         {
                             case 2:
                             case 3:
-                                func_8004B45C(g_MapMsg_CurrentIdx + 1, var_a1);
+                                func_8004B45C(g_MapMsg_CurrentIdx + 1, unkJapVal);
                                 break;
 
                             case 4:

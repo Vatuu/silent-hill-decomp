@@ -40,7 +40,11 @@
 # and since it couldn't be matched up to our obj, it'd then treat the data itself as unmatched...)
 # TODO: Find how other projects handle this with their data comparisons too.
 .macro jlabel label, visibility=local
+    .ifdef JLABEL_LOCAL
     .\visibility \label
+    .else
+    .global \label
+    .endif
     \label:
 .endm
 

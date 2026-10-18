@@ -36,6 +36,7 @@ DEFAULT_CONTROLLER_CONFIGS                   = 0x80025108;
 //-------------------------------------------------------------------
 //--- PA: 0x0006C0   VA: 0x80025220   subsegment: .rodata, events/bgm
 //-------------------------------------------------------------------
+D_80025234                                   = 0x80025220;
 D_8002523C                                   = 0x80025228;
 
 //--------------------------------------------------------------------------------------
@@ -2939,7 +2940,7 @@ g_Items_GunsMaxLoadAmmo                      = 0x800AF860;
 D_800AD4C8                                   = 0x800AF888; // size:0x690
 g_Inventory_CmdSelectedIdx                   = 0x800AFF18;
 g_Inventory_SelectionId                      = 0x800AFF1C;
-INVENTORY_ITEM_NAMES                         = 0x800AFF20;
+INV_ITEM_NAMES                               = 0x800AFF20;
 g_ItemDescriptions                           = 0x800B022C;
 D_800AE178                                   = 0x800B0538;
 g_Inventory_SelectedItemIdx                  = 0x800B053C;

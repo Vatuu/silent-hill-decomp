@@ -724,10 +724,11 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 
 ifneq ($(OBJDIFF_FIX),1)
 
+# jlabel is global unless building objdiff expected objects (GEN_COMP_TU), which keep jumptable labels local.
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
+	$(AS) $(AS_FLAGS) $(if $(filter 1,$(GEN_COMP_TU)),--defsym JLABEL_LOCAL=1) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(dir $@)
