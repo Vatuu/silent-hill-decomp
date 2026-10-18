@@ -529,7 +529,7 @@ typedef struct _SysWork
     /* 0x2380   */ q19_12           cameraRadiusXz;
     /* 0x2384   */ q19_12           cameraY;
     /* 0x2388   */ s_SysWork_2388   field_2388;
-    /* 0x2510   */ s32              field_2510; // Related to libkpad.
+    /* 0x2510   */ s_KPad_Handler*  kpadHandlers_2510; // Head of the kpad handler list from `func_8009E4F8`.
     /* 0x2514   */ s_KPadWork       kpad_2514;
     /* 0x2534   */ s_KPad_Channel   kpadChannels_2534[2];
     /* 0x2544   */ s_KPad_Effect    kpadEffects_2544[16];

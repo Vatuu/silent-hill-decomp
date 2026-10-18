@@ -100,26 +100,26 @@ void func_800890B8(void) // 0x800890B8
     func_8009E310(&g_SysWork.kpad_2514, g_SysWork.kpadChannels_2534, ARRAY_SIZE(g_SysWork.kpadChannels_2534));
     func_8009EBB8(&g_SysWork.kpad_2514, g_SysWork.kpadEffects_2544, ARRAY_SIZE(g_SysWork.kpadEffects_2544));
 
-    g_SysWork.field_2510 = func_8009E4F8();
+    g_SysWork.kpadHandlers_2510 = func_8009E4F8();
 
-    func_8009E7D8(g_SysWork.field_2510);
-    func_8009E97C(g_SysWork.field_2510);
+    func_8009E7D8(g_SysWork.kpadHandlers_2510);
+    func_8009E97C(g_SysWork.kpadHandlers_2510);
 }
 
 s32 func_80089128(void) // 0x80089128
 {
-    s32            temp_s0;
-    s32            var_s3;
-    s32            var_s5;
-    s32            var_s6;
-    s_KPad_Effect* temp_v0;
-    s_KPad_Effect* var_s0;
-    s_KPad_Effect* temp_s1;
-    s_KPadWork*    var_s2;
+    s_KPad_Handler* temp_s0;
+    s32             var_s3;
+    s32             var_s5;
+    s32             var_s6;
+    s_KPad_Effect*  temp_v0;
+    s_KPad_Effect*  var_s0;
+    s_KPad_Effect*  temp_s1;
+    s_KPadWork*     var_s2;
 
     var_s2 = &g_SysWork.kpad_2514;
 
-    temp_s0 = g_SysWork.field_2510;
+    temp_s0 = g_SysWork.kpadHandlers_2510;
 
     if (!var_s2->status_0.isInit_0_16)
     {
