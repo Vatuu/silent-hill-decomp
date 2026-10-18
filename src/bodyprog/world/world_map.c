@@ -1341,10 +1341,10 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
     subcellX = MIN(subcellX, 4);
     subcellZ = MIN(subcellZ, 4);
 
-    modelInfo.coord   = &modelCoord;
-    modelCoord.flg    = true;
-    modelInfo.field_0 = 0;
-    modelCoord.super  = NULL;
+    modelInfo.coord  = &modelCoord;
+    modelCoord.flg   = true;
+    modelInfo.flags  = ModelFlag_None;
+    modelCoord.super = NULL;
 
     temp_fp = &ipdHdr->textureCount + (subcellZ * 10) + (subcellX * 2);
     for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)

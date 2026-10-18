@@ -120,8 +120,10 @@ extern u8 D_800DB220[][3];
 
 extern SVECTOR D_800CA788;
 
+// Pointers to bone node indices?
 extern s8 D_800DB238[][6];
 
+// Related to anim keyframes.
 extern s32 D_800DB27C[];
 
 extern s32 D_800DB2FC[];

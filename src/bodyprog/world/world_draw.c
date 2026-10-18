@@ -177,7 +177,7 @@ void WorldGfx_HeldItemModelFree(void) // 0x8003C0C0
 
     heldItem->itemId                  = NO_VALUE;
     heldItem->lmHdr                   = HELD_ITEM_LM_BUFFER;
-    heldItem->bone.modelInfo.field_0  = 0;
+    heldItem->bone.modelInfo.flags    = ModelFlag_None;
     heldItem->bone.modelInfo.coord    = NULL;
     heldItem->bone.modelInfo.modelHdr = NULL;
 }
@@ -432,7 +432,7 @@ void WorldGfx_Draw(s32 otShift) // 0x8003C878
 void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* name) // 0x8003C8F8
 {
     model->metadata.modelLocation = WorldModelLocation_None;
-    model->modelInfo.field_0      = 0;
+    model->modelInfo.flags        = ModelFlag_None;
 
     StringCopy(model->metadata.name.str, name);
 
@@ -819,12 +819,12 @@ s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId) // 0x8003CDA0
 
 void func_8003D01C(void) // 0x8003D01C
 {
-    g_WorldGfxWork.heldItem.bone.modelInfo.field_0 &= ~(1 << 31);
+    g_WorldGfxWork.heldItem.bone.modelInfo.flags &= ~ModelFlag_31;
 }
 
 void func_8003D03C(void) // 0x8003D03C
 {
-    g_WorldGfxWork.heldItem.bone.modelInfo.field_0 |= 1 << 31;
+    g_WorldGfxWork.heldItem.bone.modelInfo.flags |= ModelFlag_31;
 }
 
 void WorldGfx_HeldItemDraw(void) // 0x8003D058

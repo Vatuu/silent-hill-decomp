@@ -1,6 +1,14 @@
 #ifndef _BODYPROG_FORMATS_MODEL_H
 #define _BODYPROG_FORMATS_MODEL_H
 
+/** @brief Model flags. */
+typedef enum _ModelFlags
+{
+    ModelFlag_None = 0,
+    ModelFlag_0    = 1 << 0, // Related to view matrix reset?
+    ModelFlag_31   = 1 << 31 // Related to some kind of bone reset?
+} e_ModelFlags;
+
 /** @brief Geometry primitive. */
 typedef struct _Primitive
 {
@@ -61,7 +69,7 @@ STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 /** @brief Model info. */
 typedef struct _ModelInfo
 {
-    /* 0x0 */ s32            field_0; // Visible bone flags?
+    /* 0x0 */ s32            flags; // `e_ModelFlags` | Visible bone flags? Reset? Only flags 0 and 31 are used.
     /* 0x4 */ GsCOORDINATE2* coord;
     /* 0x8 */ s_ModelHeader* modelHdr;
     /* 0xC */ s32            modelIdx;

@@ -1758,9 +1758,19 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         case 4:
-            Event_CameraPositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Event_CameraLookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Event_CameraPositionSet(NULL,
+                                    Q12(-261.27f), Q12(-2.11f), Q12(-105.46f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    Q12(0.0f), Q12(0.0f),
+                                    true);
+            Event_CameraLookAtSet(NULL,
+                                  Q12(-262.74f), Q12(0.07f), Q12(-102.45f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  Q12(0.0f), Q12(0.0f),
+                                  true);
 
+            // Warp player.
             g_SysWork.playerWork.player.position.vx = Q12(-262.39f);
             g_SysWork.playerWork.player.position.vz = Q12(-104.33f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f);
@@ -1786,8 +1796,10 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         default:
+            // Restore player control.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             vcReturnPreAutoCamWork(true);
             func_8003D01C();
             Player_WeaponAttackRestore();

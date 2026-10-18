@@ -52,7 +52,7 @@ s32 g_Inventory_EquippedItemIdx;
 
 s32 __pad_bss_800C3E38[2];
 
-u8 D_800C3E40;
+u8 g_Ranking_ExtraItemFlags;
 
 s8 __pad_bss_800C3E41[7];
 
@@ -1754,7 +1754,7 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
 
     for (i = 0, ptr = g_Items_ItemsModelData; i < 6; i++, ptr++)
     {
-        if ((D_800C3E40 >> i) & (1 << 0))
+        if ((g_Ranking_ExtraItemFlags >> i) & (1 << 0))
         {
             ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
@@ -1787,7 +1787,7 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
 
     for (i = 0; i < DISPLAY_ITEM_COUNT; i++)
     {
-        if ((D_800C3E40 >> i) & (1 << 0))
+        if ((g_Ranking_ExtraItemFlags >> i) & (1 << 0))
         {
             g_Items_Coords[i].coord.t[0]     = OFFSETS[i].vx;
             g_Items_Coords[i].coord.t[1]     = OFFSETS[i].vy;

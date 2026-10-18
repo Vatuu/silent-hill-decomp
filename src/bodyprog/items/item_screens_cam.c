@@ -56,27 +56,30 @@ void ItemScreen_TmdGsFCallInitTG4(void) // JPN0 0x8004CB90
 }
 #endif
 
-void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* unused0, s32 unused1) // 0x8004BB4C
+void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* itemRot, s32 unused1) // 0x8004BB4C
 {
+    // Set camera view.
     camView->vr.vz = 10;
     camView->vp.vx = 0;
     camView->vp.vy = 0;
     camView->vp.vz = 0;
     camView->vr.vx = 0;
     camView->vr.vy = 0;
+    camView->rz    = 0;
+    camView->super = camCoord;
 
-    camView->rz = 0;
-
-    camView->super       = camCoord;
+    // Set camera coord.
     camCoord->coord.t[2] = Q12(-2.5f);
     camCoord->super      = NULL;
     camCoord->coord.t[0] = Q12(0.0f);
     camCoord->coord.t[1] = Q12(0.0f);
 
-    unused0->vx = 0;
-    unused0->vy = 0;
-    unused0->vz = 0;
+    // Clear item rotation.
+    itemRot->vx = Q12_ANGLE(0.0f);
+    itemRot->vy = Q12_ANGLE(0.0f);
+    itemRot->vz = Q12_ANGLE(0.0f);
 
+    // Set camera transform.
     g_ItemScreen_CameraTransform.scale.vz  = Q12(1.0f);
     g_ItemScreen_CameraTransform.scale.vy  = Q12(1.0f);
     g_ItemScreen_CameraTransform.scale.vx  = Q12(1.0f);
@@ -87,9 +90,11 @@ void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* u
     g_ItemScreen_CameraTransform.trans.vy  = Q12(0.0f);
     g_ItemScreen_CameraTransform.trans.vx  = Q12(0.0f);
 
+    // Assign transform to camera coord.
     camCoord->param = &g_ItemScreen_CameraTransform;
 
-    ItemScreen_ItemRotate((SVECTOR*)unused0, camCoord);
+    // Rotate item.
+    ItemScreen_ItemRotate((SVECTOR*)itemRot, camCoord);
     vbSetRefView(camView);
 }
 
@@ -138,11 +143,10 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
     MATRIX viewMat;
     MATRIX localToScreenMat;
     MATRIX worldMat;
-    s32 i;
-    s32 j;
+    s32    i;
+    s32    j;
 
     Vw_CoordToWorldAndViewMatrices(obj->coord2, &worldMat, &viewMat);
-
     localToScreenMat = viewMat;
 
     for (i = 0; i < 3; i++)
@@ -160,7 +164,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
             for (j = 0; j < 3; j++)
             {
                 viewMat.m[i][j] -= Q12_MULT(viewMat.m[i][j],
-                                            Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + Q8(4.0f)) >> 2));
+                                            Math_Sin(DIV_FAST(g_Items_Coords[displayItemIdx].coord.t[2] + Q8(4.0f), 4)));
             }
         }
     }

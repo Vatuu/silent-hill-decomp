@@ -20,7 +20,7 @@
 
 extern s_WorldEnvWork g_WorldEnvWork;
 
-void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7) // 0x80056D8C
+void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, GsOT* ot, s32 otShift) // 0x80056D8C
 {
     s16       var_a3;
     s16       var_a3_2;
@@ -41,23 +41,23 @@ void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s3
     s16       temp_s5;
 
     var_t1  = arg4;
-    temp_s5 = arg3;
+    temp_s5 = y1;
 
     if (!g_WorldEnvWork.isFogEnabled)
     {
         return;
     }
 
-    var_a3 = MAX(arg0, ~(g_GameWork.gsScreenWidth >> 1));
-    var_v1 = MAX(arg1, ~(g_GameWork.gsScreenHeight >> 1));
+    var_a3 = MAX(x0, ~(g_GameWork.gsScreenWidth  >> 1));
+    var_v1 = MAX(y0, ~(g_GameWork.gsScreenHeight >> 1));
 
-    var_v1_2 = CLAMP_HIGH(arg2, (g_GameWork.gsScreenWidth >> 1) + 1);
+    var_v1_2 = CLAMP_HIGH(x1, (g_GameWork.gsScreenWidth >> 1) + 1);
     temp_s6  = var_v1_2;
 
     var_a3_2 = CLAMP_HIGH(temp_s5, (g_GameWork.gsScreenHeight >> 1) + 1);
     temp_s5  = var_a3_2;
 
-    temp_a0_2 = 0x79C << (arg7 + 2);
+    temp_a0_2 = 0x79C << (otShift + 2);
 
     if (g_WorldEnvWork.isFogEnabled)
     {
@@ -131,7 +131,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 otShift, MATRIX* view
 
     modelHdr = modelInfo->modelHdr;
 
-    if (modelInfo->field_0 < 0)
+    if (modelInfo->flags < ModelFlag_None)
     {
         return;
     }

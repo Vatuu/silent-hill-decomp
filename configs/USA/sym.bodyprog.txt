@@ -38,7 +38,7 @@ FONT_12X16_GLYPH_WIDTHS                      = 0x80025D6C;
 STRING_COLORS                                = 0x80025DC0;
 
 //-----------------------------------------------------------------------------
-//--- PA: 0x00179C   VA: 0x800262FC   subsegment: .rodata, items/item_screens_3
+//--- PA: 0x001798   VA: 0x800262F8   subsegment: .rodata, items/item_screens_3
 //-----------------------------------------------------------------------------
 INV_ITEM_ROTATIONS                           = 0x800262FC; // type:DVECTOR size:0x380
 LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
@@ -49,9 +49,9 @@ LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 tileScreenEdgesX                             = 0x80028B2C;
 tileScreenEdgesY                             = 0x80028B34;
 
-//-------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 //--- PA: 0x003FE4   VA: 0x80028B44   subsegment: .rodata, collision/collision
-//-------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 hack_D_80028B8C_fix                          = 0x80028B8C; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
 
 //-------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ MemCard_SwEventsClose                        = 0x80030668; // type:func
 MemCard_HwEventsClose                        = 0x800306C8; // type:func
 MemCard_SwEventsTest                         = 0x80030734; // type:func
 MemCard_SwEventsReset                        = 0x800307BC; // type:func
-MemCard_HwLastEvent                         = 0x80030810; // type:func
+MemCard_HwLastEvent                          = 0x80030810; // type:func
 MemCard_HwEventsReset                        = 0x80030820; // type:func
 MemCard_HwEventSpIOE                         = 0x80030884; // type:func
 MemCard_HwEventSpERROR                       = 0x80030894; // type:func
@@ -159,7 +159,7 @@ MemCard_DevicePathGenerate                   = 0x800314A4; // type:func
 //-------------------------------------------------------------------------
 Screen_BackgroundImgDraw                     = 0x800314EC; // type:func
 Screen_BackgroundImgTransition               = 0x800317CC; // type:func
-Screen_BackgroundImgDrawBlackFadeIn                  = 0x80031AAC; // type:func
+Screen_BackgroundImgDrawBlackFadeIn          = 0x80031AAC; // type:func
 Screen_BackgroundMotionBlur                  = 0x80031CCC; // type:func
 
 //-----------------------------------------------------------------------
@@ -578,8 +578,8 @@ Anim_BlendEaseOut                            = 0x80044DF0; // type:func
 //-------------------------------------------------------------------------------
 //--- PA: 0x0203B4   VA: 0x80044F14   subsegment: c, world/bodyprog_bone_80044F14
 //-------------------------------------------------------------------------------
+Bone_ExtraRotationSet                        = 0x80044F14; // type:func
 Bone_ModelIdxGet                             = 0x80044F6C; // type:func
-Bone_ExtraRotationSet = 0x80044F14; // type:func
 Skeleton_Init                                = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                     = 0x800451B0; // type:func
 
@@ -2463,7 +2463,7 @@ g_Screen_FadeProgress                        = 0x800A8E94; // type:s32
 //-----------------------------------------------------------------------------
 //--- PA: 0x084338   VA: 0x800A8E98   subsegment: .data, screen/cutscene_border
 //-----------------------------------------------------------------------------
-g_Screen_BlackBorderShade                           = 0x800A8F40;
+g_Screen_BlackBorderShade                    = 0x800A8F40;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x0843E4   VA: 0x800A8F44   subsegment: .data, screen/screen_data
@@ -2533,12 +2533,12 @@ g_AmbientVabTaskLoad                         = 0x800A98AC; // type:u16 size:0x50
 //--- PA: 0x084D9C   VA: 0x800A98FC   subsegment: .data, game_boot/fs_chara_anim
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800A98FC;
-
-//------------------------------------------------------------------------
-//--- PA: 0x084DCC   VA: 0x800A992C   subsegment: .data, events/bgm_update
-//------------------------------------------------------------------------
 g_CharaModelAnimsData                        = 0x800A992C;
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
+
+//------------------------------------------------------------------------
+//--- PA: 0x084E3C   VA: 0x800A999C   subsegment: .data, events/bgm_update
+//------------------------------------------------------------------------
 g_Bgm_ChannelSetProcessState                 = 0x800A99A0;
 g_Bgm_ChannelLimits                          = 0x800A99A4;
 
@@ -2576,12 +2576,12 @@ g_MainMenu_NewGameSelectedDifficultyIdx      = 0x800A9A84;
 g_MemCard_PrevSavegameCount                  = 0x800A9A88;
 MAIN_MENU_ENTRY_STRINGS                      = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS                = 0x800A9AA0;
-
-//-----------------------------------------------------------------------
-//--- PA: 0x08534C   VA: 0x800A9EAC   subsegment: .data, world/world_draw
-//-----------------------------------------------------------------------
 RAND.67                                      = 0x800A9EAC;
 FOG_COUNT.68                                 = 0x800A9EB0;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x085354   VA: 0x800A9EB4   subsegment: .data, world/world_draw
+//-----------------------------------------------------------------------
 IMAGE.81                                     = 0x800A9EB4;
 IMAGE_TIM.86                                 = 0x800A9EBC;
 IMAGE_ETC.87                                 = 0x800A9EC4;
@@ -3009,13 +3009,9 @@ g_Text_Debug_PositionSet1                    = 0x800B5C24; // type:DVECTOR size:
 g_Screen_PrevFadeProgressState               = 0x800B5C28; // type:s32
 
 //------------------------------------------------------------------------
-//--- PA: 0x0910D0   VA: 0x800B5C30   subsegment: .bss, screen/screen_draw
+//--- PA: 0x0910D0   VA: 0x800B5C30   subsegment: .bss, screen/screen_data
 //------------------------------------------------------------------------
 g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
-
-//------------------------------------------------------------------------
-//--- PA: 0x0910D4   VA: 0x800B5C34   subsegment: .bss, screen/screen_data
-//------------------------------------------------------------------------
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
@@ -3193,6 +3189,7 @@ g_Item_MapLoadableItems                      = 0x800C3BB8;
 g_Items_Transforms                           = 0x800C3BE8;
 g_Items_ItemsModelData                       = 0x800C3D78;
 g_Inventory_EquippedItemIdx                  = 0x800C3E34;
+g_Ranking_ExtraItemFlags              = 0x800C3E40;
 g_Items_Coords                               = 0x800C3E48;
 
 //---------------------------------------------------------------------------

@@ -291,7 +291,7 @@ MemCard_SwEventsClose                        = 0x800303D0; // type:func
 MemCard_HwEventsClose                        = 0x80030430; // type:func
 MemCard_SwEventsTest                         = 0x8003049C; // type:func
 MemCard_SwEventsReset                        = 0x80030524; // type:func
-MemCard_HwLastEvent                         = 0x80030578; // type:func
+MemCard_HwLastEvent                          = 0x80030578; // type:func
 MemCard_HwEventsReset                        = 0x80030588; // type:func
 MemCard_HwEventSpIOE                         = 0x800305EC; // type:func
 MemCard_HwEventSpERROR                       = 0x800305FC; // type:func
@@ -316,7 +316,7 @@ MemCard_DevicePathGenerate                   = 0x8003120C; // type:func
 //-------------------------------------------------------------------------
 Screen_BackgroundImgDraw                     = 0x80031254; // type:func
 Screen_BackgroundImgTransition               = 0x80031534; // type:func
-Screen_BackgroundImgDrawBlackFadeIn                  = 0x80031814; // type:func
+Screen_BackgroundImgDrawBlackFadeIn          = 0x80031814; // type:func
 Screen_BackgroundMotionBlur                  = 0x80031A34; // type:func
 
 //-----------------------------------------------------------------------
@@ -756,7 +756,7 @@ Anim_BlendEaseOut                            = 0x80044BC8; // type:func
 //-----------------------------------------------------------------------------
 //--- PA: 0x02018C   VA: 0x80044CEC   subsegment: c, gfx/bodyprog_bone_80044F14
 //-----------------------------------------------------------------------------
-Bone_ExtraRotationSet                                = 0x80044CEC; // type:func
+Bone_ExtraRotationSet                        = 0x80044CEC; // type:func
 Bone_ModelIdxGet                             = 0x80044D44; // type:func
 Skeleton_Init                                = 0x80044DB8; // type:func
 func_80045014                                = 0x80044DEC; // type:func
@@ -2795,7 +2795,7 @@ g_Screen_FadeProgress                        = 0x800AB354;
 //-----------------------------------------------------------------------------
 D_800A8E98                                   = 0x800AB358;
 D_800A8EB0                                   = 0x800AB370;
-g_Screen_BlackBorderShade                           = 0x800AB400;
+g_Screen_BlackBorderShade                    = 0x800AB400;
 
 //----------------------------------------------------
 //--- PA: 0x0868A4   VA: 0x800AB404   subsegment: data
@@ -3504,7 +3504,7 @@ g_Items_ItemsModelData                       = 0x800C63D0;
 D_800C3E08                                   = 0x800C6460;
 D_800C3E18                                   = 0x800C6470;
 g_Inventory_EquippedItemIdx                  = 0x800C648C;
-D_800C3E40                                   = 0x800C6498;
+g_Ranking_ExtraItemFlags              = 0x800C6498;
 g_Items_Coords                               = 0x800C64A0;
 
 //---------------------------------------------------

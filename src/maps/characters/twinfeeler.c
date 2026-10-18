@@ -3008,18 +3008,18 @@ void func_800D59C0(s_BoneNode* boneNodes) // 0x800D59C0
 
     for (i = 0; i < BONE_NODE_COUNT_MAX; i++)
     {
-        boneNodes[i].bone.modelInfo.field_0 &= ~(1 << 0);
+        boneNodes[i].bone.modelInfo.flags &= ~ModelFlag_0;
     }
 }
 
 void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D59EC
 {
-    u32         temp_v1;
+    u32         keyframeIdx;
     s32         temp_v1_3;
     s32         j;
     s32         i;
     s32         idx;
-    u32         temp_a0_3;
+    u32         relKeyframeIdx;
     s8*         ptr;
     s_BoneNode* boneNodes;
     s_Bone*     bone;
@@ -3027,16 +3027,13 @@ void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
     boneNodes = WorldGfx_CharaModelBoneNodesGet(Chara_Twinfeeler);
     func_800D59C0(boneNodes);
 
-    temp_v1 = FP_FROM(twinfeeler->model.anim.time, Q12_SHIFT);
-
-    if (temp_v1 < 32)
+    keyframeIdx = FP_FROM(twinfeeler->model.anim.time, Q12_SHIFT);
+    if (keyframeIdx < 32)
     {
-        temp_v1_3 = D_800DB27C[temp_v1];
-
+        temp_v1_3 = D_800DB27C[keyframeIdx];
         for (i = temp_v1_3; i < 11; i++)
         {
             ptr = D_800DB238[i];
-
             for (j = 0; j < 6; j++, ptr++)
             {
                 idx = *ptr;
@@ -3046,22 +3043,20 @@ void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
                     break;
                 }
 
-                bone                     = &boneNodes[idx - 1].bone;
-                bone->modelInfo.field_0 |= 1 << 0;
+                bone                   = &boneNodes[idx - 1].bone;
+                bone->modelInfo.flags |= ModelFlag_0;
             }
         }
     }
     else
     {
-        temp_a0_3 = temp_v1 - 32;
-        if (temp_a0_3 < 41)
+        relKeyframeIdx = keyframeIdx - 32;
+        if (relKeyframeIdx < 41)
         {
-            temp_v1_3 = D_800DB2FC[temp_a0_3];
-
+            temp_v1_3 = D_800DB2FC[relKeyframeIdx];
             for (i = 0; i < temp_v1_3; i++)
             {
                 ptr = D_800DB238[i];
-
                 for (j = 0; j < 6; j++, ptr++)
                 {
                     idx = *ptr;
@@ -3071,8 +3066,8 @@ void func_800D59EC(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
                         break;
                     }
 
-                    bone                     = &boneNodes[idx - 1].bone;
-                    bone->modelInfo.field_0 |= 1 << 0;
+                    bone                   = &boneNodes[idx - 1].bone;
+                    bone->modelInfo.flags |= ModelFlag_0;
                 }
             }
         }

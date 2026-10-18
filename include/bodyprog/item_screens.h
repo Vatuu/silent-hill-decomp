@@ -154,29 +154,20 @@ extern s32 g_ItemScreen_GeomOffsetY;
 // 2.c
 
 extern bool g_Inventory_IsUpClicked;
-
 extern bool g_Inventory_IsDownClicked;
-
 extern bool g_Inventory_IsLeftClicked;
-
 extern bool g_Inventory_IsRightClicked;
-
 extern bool g_Inventory_IsUpPulsed;
-
 extern bool g_Inventory_IsDownPulsed;
-
 extern bool g_Inventory_IsLeftPulsed;
-
 extern bool g_Inventory_IsRightPulsed;
-
 extern bool g_Inventory_IsLeftHeld;
-
 extern bool g_Inventory_IsRightHeld;
 
 /** @brief Used for smooth inventory scrolling if a left/right input is held. */
 extern bool g_Inventory_IsScrolling;
 
-/** Game difficulty. */
+/** `e_GameDifficulty` */
 extern s32 g_Inventory_GameDifficulty;
 
 /** @brief Timer used for the corner borders of the selection box in the inventory.
@@ -251,7 +242,8 @@ extern s32 g_Inventory_EquippedItemIdx;
 
 extern s32 __pad_bss_800C3E38[2];
 
-extern u8 D_800C3E40;
+// TODO: Unsure about name, depends on certain extra options being enabled.
+extern u8 g_Ranking_ExtraItemFlags;
 
 extern s8 __pad_bss_800C3E41[7];
 
@@ -261,8 +253,8 @@ extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 // FUNCTIONS
 // ==========
 
-/** Appears to set the camera for items. `arg3` is @unused. */
-void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* unused0, s32 unused1); // 0x8004BB4C
+/** Appears to set the camera for items. `itemRot` is always cleared to the identity rotation. */
+void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* itemRot, s32 unused1); // 0x8004BB4C
 
 void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
 

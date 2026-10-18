@@ -124,24 +124,24 @@ void Ranking_EvaluateScore() // 0x8008F94C
     g_Ranking_PickedUpSpecialItemCount = g_SavegamePtr->pickedUpSpecialItemCount & 0xF;
 #endif
 
-    g_Ranking_EndLocationId = g_SavegamePtr->locationId;
-    D_800C3E40              = (1 << 0) | (1 << 1) | (1 << 2);
-    extraOptionsEnabled     = g_GameWork.config.extraOptionsEnabled;
+    g_Ranking_EndLocationId  = g_SavegamePtr->locationId;
+    g_Ranking_ExtraItemFlags = (1 << 0) | (1 << 1) | (1 << 2);
+    extraOptionsEnabled      = g_GameWork.config.extraOptionsEnabled;
 
     if ((extraOptionsEnabled & ((1 << 0) | (1 << 1))) &&
         (extraOptionsEnabled & ((1 << 2) | (1 << 3))))
     {
-        D_800C3E40 = 0xF;
+        g_Ranking_ExtraItemFlags = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3);
     }
 
     if (g_GameWork.config.extraOptionsEnabled & (1 << 0))
     {
-        D_800C3E40 |= 1 << 4;
+        g_Ranking_ExtraItemFlags |= 1 << 4;
     }
 
     if (Inventory_HyperBlasterUnlockTest() == NO_VALUE || (g_Ranking_CurrentEndingFlags & GameEndingFlag_Ufo))
     {
-        D_800C3E40 |= 1 << 5;
+        g_Ranking_ExtraItemFlags |= 1 << 5;
     }
 
     g_Ranking_TextColors.ending = StringColorId_White;
@@ -165,7 +165,7 @@ void Ranking_EvaluateScore() // 0x8008F94C
 
         case GameEndingFlag_GoodPlus:
             g_Ranking_TextColors.ending = StringColorId_Gold;
-            g_Ranking_Score += 10;
+            g_Ranking_Score            += 10;
             break;
 
         case GameEndingFlag_Good:

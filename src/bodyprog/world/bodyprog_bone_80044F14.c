@@ -76,7 +76,7 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
     // Traverse bone hierarchy and clear flags.
     for (curBoneNode = &skel->boneHierarchy[0]; curBoneNode < &skel->boneHierarchy[skel->boneCount]; curBoneNode++)
     {
-        curBoneNode->bone.modelInfo.field_0 = 0;
+        curBoneNode->bone.modelInfo.flags = ModelFlag_None;
     }
 }
 
@@ -225,11 +225,11 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     {
         if (cond)
         {
-            curBoneNode->bone.modelInfo.field_0 &= ~(1 << 31);
+            curBoneNode->bone.modelInfo.flags &= ~ModelFlag_31;
         }
         else
         {
-            curBoneNode->bone.modelInfo.field_0 |= 1 << 31;
+            curBoneNode->bone.modelInfo.flags |= ModelFlag_31;
         }
     }
 }
@@ -247,11 +247,11 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     {
         if (cond)
         {
-            boneHierarchy[modelIdx].bone.modelInfo.field_0 &= ~(1 << 31);
+            boneHierarchy[modelIdx].bone.modelInfo.flags &= ~ModelFlag_31;
         }
         else
         {
-            boneHierarchy[modelIdx].bone.modelInfo.field_0 |= 1 << 31;
+            boneHierarchy[modelIdx].bone.modelInfo.flags |= ModelFlag_31;
         }
 
         modelIdx = Bone_ModelIdxGet(arg1, false);
@@ -353,11 +353,11 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
     // Run through bone hierarchy. TODO: What are these bones?
     for (curBoneNode = skel->bones_4; curBoneNode != NULL; curBoneNode = curBoneNode->next)
     {
-        if (curBoneNode->bone.modelInfo.field_0 >= 0)
+        if (curBoneNode->bone.modelInfo.flags >= ModelFlag_None)
         {
             Vw_CoordToWorldAndViewMatrices(&boneCoords[(u8)curBoneNode->bone.idx], &worldMat, &viewMat);
 
-            if (curBoneNode->bone.modelInfo.field_0 & (1 << 0))
+            if (curBoneNode->bone.modelInfo.flags & ModelFlag_0)
             {
                 viewMat.m[2][2]         = 0;
                 *(s32*)&viewMat.m[2][0] = 0;
@@ -468,6 +468,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
             var_v0_5 = (var_v0_4 / 4) + 2;
         }
 
-        Gfx_FogOverlayQuadDraw(var_s5 - var_v0_5, var_s6 - var_v0_5, var_s7 + var_v0_5, var_fp + var_v0_5, var_s3_2 * 16, var_s2, ot, otShift);
+        Gfx_FogOverlayQuadDraw(var_s5 - var_v0_5, var_s6 - var_v0_5, var_s7 + var_v0_5, var_fp + var_v0_5,
+                               var_s3_2 * 16, var_s2, ot, otShift);
     }
 }

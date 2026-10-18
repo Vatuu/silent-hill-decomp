@@ -1396,18 +1396,16 @@ void func_800452EC(s_Skeleton* skel);
 /** Anim func. Traverses skeleton bones for something. */
 void func_80045360(s_Skeleton* skel, s8* arg1);
 
-/** Anim func. Traverses skeleton bones to set flags/mask.
- * `cond` may actually be another `s_Skeleton` pointer.
- */
+/** Anim func. Traverses skeleton bones to set flags/mask. */
 void func_800453E8(s_Skeleton* skel, bool cond);
 
-/** Does something with skeleton bones. `arg0` is a struct pointer. */
+/** Does something with skeleton bones. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images);
 
-/** `arg0` is probably a bit flag. */
-void func_8004C564(u8 arg0, s8 weaponAttack);
+/** `flags` might not be a bitfield. */
+void func_8004C564(u8 flags, s8 weaponAttack);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -1581,7 +1579,7 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 void StringCopy(char* prevStr, char* newStr);
 
 /** @brief Draws a 2D fog overlay quad. */
-void Gfx_FogOverlayQuadDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* ot, s32 arg7);
+void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, GsOT* ot, s32 otShift);
 
 /** Crucial 3D drawing function. */
 void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
