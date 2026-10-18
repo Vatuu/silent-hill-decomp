@@ -5,7 +5,6 @@
 #include "bodyprog/math/math.h"
 
 VW_VIEW_WORK vwViewPointInfo;
-s32 __pad_bss_800C3864;
 
 void vwInitViewInfo(void) // 0x80048A38
 {

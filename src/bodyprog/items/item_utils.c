@@ -12,7 +12,6 @@
 #define playerProps playerChara.properties.player
 
 static const s32 __pad_rodata_80025E90 = 0;
-s32              __pad_bss_800C3964;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {

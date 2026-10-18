@@ -553,11 +553,14 @@ segments:
       - [0x9CA54,  pad] # Garbage.
       - [0x9CA58, .bss, sound/sd_call]
       - [0x9EC80, .bss, view/vw_main]
+      - [0x9ED04, pad] # Garbage.
       - [0x9ED08, .bss, view/vw_calc]
       - [0x9ED48, .bss, text/text_draw]
       - [0x9EDC8, .bss, items/item_screens_cam]
       - [0x9EE00, .bss, items/item_utils]
+      - [0x9EE04, pad] # Garbage.
       - [0x9EE08, .bss, items/item_screens_2]
+      - [0x9EE40, pad] # Garbage.
       - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608, .bss, gfx/bodyprog_80055028]
       - [0x9F758, .bss, gfx/billboard_draw]

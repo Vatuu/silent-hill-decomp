@@ -503,12 +503,15 @@ segments:
       - [0x9EF84, pad] # Garbage.
       - [0x9EF88, .bss, sound/sd_call]
       - [0xA11B0, .bss, view/vw_main]
+      - [0xA1234, pad] # Garbage.
       - [0xA1238, .bss, view/vw_calc]
       - [0xA1278, .bss, text/text_draw_jp]
       - [0xA1280, bss]
       - [0xA12F8, .bss, items/item_screens_cam]
       - [0xA1330, .bss, items/item_utils]
+      - [0xA1334, pad] # Garbage.
       - [0xA1338, .bss, items/item_screens_2]
+      - [0xA1370, pad] # Garbage.
       - [0xA1378, .bss, items/item_screens_3]
       - [0xA1B38, .bss, gfx/bodyprog_80055028]
       - [0xA1C88, .bss, gfx/billboard_draw]
