@@ -14,6 +14,24 @@
 #include "maps/characters/ghost_doctor.h"
 #include "maps/characters/kaufmann.h"
 #include "maps/characters/lisa.h"
+#include "inline_no_dmpsx.h"
+#include "maps/particle.h"
+#include <psyq/gtemac.h>
+#include "maps/characters/player.h"
+#include "maps/characters/stalker.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/stalker.c" // 0x800D06F8
+#include "../src/maps/characters/lisa.c"
+#include "../src/maps/characters/bloody_lisa.c"
+#include "../src/maps/characters/bloodsucker.c" // 0x800D6874
+#include "../src/maps/characters/dahlia.c"
+#include "../src/maps/characters/ghost_child_alessa.c"
+#include "../src/maps/characters/kaufmann.c"
+#include "../src/maps/characters/ghost_doctor.c"
 
 #include "../src/maps/chara_util.c" // 0x800D8C74
 

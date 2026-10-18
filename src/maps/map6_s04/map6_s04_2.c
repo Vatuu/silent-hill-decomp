@@ -15,6 +15,22 @@
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
 #include "maps/characters/monster_cybil.h"
+#include "maps/particle.h"
+#include "maps/characters/larval_stalker.h"
+#include "maps/characters/stalker.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/unk_draw_m1s01.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/larval_stalker.c" // 0x800D00B8
+#include "../src/maps/characters/stalker.c" // 0x800D3560
+#include "../src/maps/characters/monster_cybil.c" // 0x800D87B0
+#include "../src/maps/characters/alessa.c"
+#include "../src/maps/characters/dahlia.c"
 
 #include "../src/maps/chara_util.c" // 0x800DD5B8
 

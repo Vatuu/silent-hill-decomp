@@ -8,6 +8,18 @@
 #include "maps/map3/map3_s04.h"
 #include "maps/characters/lisa.h"
 #include "bodyprog/sound/sound_system.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+#include "maps/characters/puppet_nurse.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/unk_m3s03.c" // 0x800CD574
+
+#include "../src/maps/characters/puppet_nurse.c"
+#include "../src/maps/characters/lisa.c"
 
 #include "../src/maps/chara_util.c" // 0x800D1374
 

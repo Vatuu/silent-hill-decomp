@@ -17,6 +17,15 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/air_screamer.c" // 0x800D18FC
+
+#include "../src/maps/characters/groaner.c" // 0x800E2934
+
+
 // TODO: Move this line into separate `Chara_Romper` split.
 #include "../src/maps/characters/romper.c" // 0x800E6F0C
 

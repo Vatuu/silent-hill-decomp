@@ -15,6 +15,16 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
+#include "../src/maps/unk_draw_m1s01.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/larval_stalker.c" // 0x800CE648
+#include "../src/maps/characters/stalker.c" // 0x800D1AF0
+#include "../src/maps/characters/cat.c" // 0x800D6D40
+
 #include "../src/maps/map_util.c" // 0x800D6F34
 
 #define playerChara g_SysWork.playerWork.player

@@ -8,6 +8,14 @@
 #include "maps/particle.h"
 #include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/creeper.c" // 0x800CEE4C
 
 #include "../src/maps/map_util.c" // 0x800D10C0
 

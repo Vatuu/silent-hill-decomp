@@ -8,6 +8,14 @@
 #include "main/rng.h"
 #include "maps/map5/map5_s03.h"
 #include "maps/characters/kaufmann.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/kaufmann.c"
 
 #include "../src/maps/chara_util.c" // 0x800D054C
 

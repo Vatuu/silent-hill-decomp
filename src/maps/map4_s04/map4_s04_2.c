@@ -9,6 +9,14 @@
 #include "main/rng.h"
 #include "maps/map4/map4_s04.h"
 #include "maps/characters/lisa.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/lisa.c"
 
 #include "../src/maps/chara_util.c" // 0x800D098C
 

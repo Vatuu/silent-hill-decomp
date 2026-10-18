@@ -8,6 +8,14 @@
 #include "main/rng.h"
 #include "maps/map7/map7_s00.h"
 #include "maps/characters/lisa.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/lisa.c"
 
 #include "../src/maps/chara_util.c" // 0x800CF538
 

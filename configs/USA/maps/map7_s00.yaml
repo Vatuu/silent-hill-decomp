@@ -57,21 +57,14 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map7_s00_header]
-      - [0x1050, .rodata, particle]
-      - [0x10A0, .rodata, player]
-      - [0x14F4, rodata]
-      - [0x14F8, .rodata, Chara_Lisa]
-      - [0x1598, .rodata, map7_s00_2]
+      - [0x1050, .rodata, map7_s00_2]
 
       - [0x20AC, c, map7_s00_header]
       - [0x20AC, c, map7_s00_events_data]
       - [0x20AC, c, map7_s00_anim_info]
 
       # .text section
-      - [0x20AC, c, particle]
-      - [0x3234, c, player]
-      - [0x54C0, c, Chara_Lisa]
-      - [0x5FC0, c, map7_s00_2]
+      - [0x20AC, c, map7_s00_2]
 
       # .data section
       - [0x959C, .data, map7_s00_anim_info]

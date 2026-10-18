@@ -4,6 +4,20 @@
 #include "main/rng.h"
 #include "maps/map0/map0_s01.h"
 #include "maps/characters/cybil.h"
+#include "maps/particle.h"
+#include "maps/characters/air_screamer.h"
+#include "maps/characters/player.h"
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
+
+#include "../src/maps/particle_glass.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/air_screamer.c" // 0x800D2170
+#include "../src/maps/characters/cybil.c"
 
 #include "../src/maps/chara_util.c" // 0x800D9B0C
 

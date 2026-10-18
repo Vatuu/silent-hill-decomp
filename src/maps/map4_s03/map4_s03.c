@@ -14,6 +14,12 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
+#include "../src/maps/particle_acid.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
 #include "../src/maps/unk_m3s03.c" // 0x800D04BC
 
 // TODO: Move to separate `Chara_Twinfeeler` split.

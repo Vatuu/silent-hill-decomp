@@ -12,6 +12,26 @@
 #include "maps/characters/ghost_child_alessa.h"
 #include "maps/characters/lisa.h"
 #include "maps/characters/player.h"
+#include "maps/particle.h"
+#include "maps/characters/puppet_nurse.h"
+
+#include "../src/maps/particle_glass.c"
+
+#include "../src/maps/particle.c"
+
+
+// player.c/puppet_nurse.c have some identical rodata which has to be deduplicated to match.
+// More info at `src/maps/map5_s02/characters.c` as that had the same issue.
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/unk_m3s03.c" // 0x800D16A4
+
+#include "../src/maps/characters/puppet_nurse.c"
+
+#include "../src/maps/characters/ghost_child_alessa.c"
+#include "../src/maps/characters/lisa.c"
+#include "../src/maps/characters/bloody_lisa.c"
 
 #include "../src/maps/chara_util.c" // 0x800D5CD8
 

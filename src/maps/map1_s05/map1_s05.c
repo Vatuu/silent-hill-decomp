@@ -11,6 +11,15 @@
 
 #include "maps/characters/split_head.h"
 
+#include "../src/maps/unk_draw.c"
+
+#include "../src/maps/unk_draw_m1s05.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+
 // TODO: Move this line into separate `Chara_SplitHead` split.
 #include "../src/maps/characters/split_head.c" // 0x800CF818
 

@@ -5,6 +5,10 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
 #include "../src/maps/map_util.c" // 0x800CE7DC
 
 #include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE884

@@ -11,6 +11,10 @@
 
 #include "maps/characters/player.h"
 
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
 #include "../src/maps/map_util.c" // 0x800CC818
 
 void Map_RoomBgmInit(bool arg0) // 0x800CC8C8

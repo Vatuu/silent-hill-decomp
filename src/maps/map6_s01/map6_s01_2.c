@@ -9,6 +9,17 @@
 #include "maps/map6/map6_s01.h"
 #include "maps/characters/cybil.h"
 #include "maps/characters/dahlia.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/unk_draw_m1s03.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/cybil.c"
+#include "../src/maps/characters/dahlia.c"
 
 #include "../src/maps/chara_util.c" // 0x800D0358
 

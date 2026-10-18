@@ -14,6 +14,15 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
+#include "../src/maps/particle_water.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/stalker.c" // 0x800D2948
+#include "../src/maps/characters/creeper.c" // 0x800D7B98
+
 #include "../src/maps/map_util.c" // 0x800D9E0C
 
 #include "maps/shared/Map_RoomBgmInit_1_s02.h" // 0x800D9EBC

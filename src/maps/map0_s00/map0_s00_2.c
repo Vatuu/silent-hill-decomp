@@ -8,6 +8,17 @@
 #include "maps/particle.h"
 #include "maps/characters/cheryl.h"
 #include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
+#include "maps/characters/player.h"
+#include "maps/characters/stalker.h"
+#include "maps/shared.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/stalker.c" // 0x800D2F08
+#include "../src/maps/characters/cheryl.c"
 
 // Enemy character used on this map changes depending on the region.
 #if VERSION_REGION_IS(NTSC)

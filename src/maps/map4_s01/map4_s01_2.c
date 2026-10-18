@@ -7,6 +7,16 @@
 #include "main/rng.h"
 #include "maps/map4/map4_s01.h"
 #include "maps/characters/cybil.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/unk_draw.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/cybil.c"
 
 #include "../src/maps/chara_util.c" // 0x800D10C0
 

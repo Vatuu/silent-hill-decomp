@@ -15,6 +15,13 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/stalker.c" // 0x800CEFCC
+#include "../src/maps/characters/hanged_scratcher.c" // 0x800D4264
+
 #include "../src/maps/map_util.c" // 0x800D7F14
 
 void func_800D7F98(void) // 0x800D7F98

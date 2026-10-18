@@ -5,6 +5,10 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
 #include "../src/maps/map_util.c" // 0x800CC7C0
 
 #include "maps/shared/Map_RoomBgmInit_2_s00.h" // 0x800CCA1C

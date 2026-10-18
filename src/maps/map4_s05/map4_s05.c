@@ -14,6 +14,15 @@
 #include "maps/characters/floatstinger.h"
 #include "maps/characters/player.h"
 
+#include "../src/maps/particle_acid.c"
+
+#include "../src/maps/unk_draw_m1s03.c"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+
 // TODO: Move floatstinger to separate split.
 #include "../src/maps/characters/floatstinger.c" // 0x800D16FC
 

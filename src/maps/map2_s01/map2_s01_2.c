@@ -9,6 +9,14 @@
 #include "main/rng.h"
 #include "maps/map2/map2_s01.h"
 #include "maps/characters/dahlia.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+
+#include "../src/maps/particle.c"
+
+#include "../src/maps/characters/player.c"
+
+#include "../src/maps/characters/dahlia.c"
 
 #include "../src/maps/chara_util.c" // 0x800CDDA0
 

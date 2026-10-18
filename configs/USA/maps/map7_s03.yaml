@@ -57,23 +57,7 @@ segments:
       # .rodata section
       - [0x0, rodata]
       - [0x4, .rodata, map7_s03_header]
-      - [0x1050, .rodata, particle]
-      - [0x1278, .rodata, player]
-      - [0x1528, .rodata, Chara_Cybil]
-      - [0x1618, .rodata, Chara_Dahlia]
-      - [0x16EC, rodata]
-      - [0x16F0, .rodata, Chara_Alessa]
-      - [0x171C, rodata]
-      - [0x1720, .rodata, Chara_BloodyIncubator]
-      - [0x1750, .rodata, Chara_Kaufmann]
-      - [0x181C, rodata]
-      - [0x1820, .rodata, chara_util]
-      - [0x18B8, .rodata, map7_s03_2]
-      - [0x193C, rodata]
-      - [0x1940, .rodata, Chara_Incubus]
-      - [0x19BC, rodata]
-      - [0x19C0, .rodata, Chara_Unknown23]
-      - [0x19F0, .rodata, map7_s03_3]
+      - [0x1050, .rodata, map7_s03_3]
 
       # Data only C files
       - [0x3BF8, c, map7_s03_header]
@@ -81,21 +65,7 @@ segments:
       - [0x3BF8, c, map7_s03_anim_info]
 
       # .text section
-      - [0x3BF8, c, particle]
-      - [0x667C, c, player]
-      - [0x7B20, c, Chara_Cybil]
-      - [0x8DF0, c, Chara_Dahlia]
-      - [0x9990, c, Chara_Alessa]
-      - [0xA10C, c, Chara_BloodyIncubator]
-      - [0xA64C, c, Chara_Incubator]
-      - [0xA9E0, c, Chara_Kaufmann]
-      - [0xB6D8, c, Chara_BloodyLisa]
-      - [0xBAC8, c, chara_util]
-      - [0xC650, c, Chara_LittleIncubus]
-      - [0xC7AC, c, map7_s03_2]
-      - [0x143EC, c, Chara_Incubus]
-      - [0x15C5C, c, Chara_Unknown23]
-      - [0x174BC, c, map7_s03_3]
+      - [0x3BF8, c, map7_s03_3]
 
       # .data section
       - [0x20828, .data, map7_s03_anim_info]

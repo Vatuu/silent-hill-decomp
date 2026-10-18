@@ -9,15 +9,12 @@
 
 void func_800D078C(void) // 0x800D078C
 {
-    // @hack string needs to be in separate TU for the alignment in this TU to match properly.
-    // Might need to move this func + related ones to new split?
-    extern const char D_800CA77C[]; // "SPUM602F".
-    u32               tpage1;
-    u16               x;
-    u16               y;
-    s_Texture*        tex;
+    u32        tpage1;
+    u16        x;
+    u16        y;
+    s_Texture* tex;
 
-    tex    = WorldMap_ActiveTextureInfoGet(D_800CA77C);
+    tex    = WorldMap_ActiveTextureInfoGet("SPUM602F");
     tpage1 = tex->imageDesc.tPage[1];
     x      = tex->imageDesc.clutX;
     y      = tex->imageDesc.clutY;
