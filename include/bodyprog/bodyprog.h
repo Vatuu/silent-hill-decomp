@@ -3,6 +3,7 @@
 
 #include "game.h"
 #include "bodyprog/anim.h"
+#include "bodyprog/bodyprog_80089090.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/chara/chara_model.h"
@@ -1691,59 +1692,6 @@ u32 func_800364BC(void);
 
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
                     u32 clutX, s16 clutY, s32 tPage);
-
-/** Might retrun `bool`. */
-void func_80089090(s32 arg0);
-
-// Related to libkpad.
-void func_800890B8(void);
-
-s32 func_80089128(void);
-
-void func_800892A4(s32 idx);
-
-void func_800892DC(s32 idx, u8 arg1);
-
-void func_80089314(s32 arg0);
-
-void func_800893D0(q19_12 arg0);
-
-void func_8008944C(void);
-
-void func_80089470(void);
-
-void func_80089494(void);
-
-void func_800894B8(s32 arg0);
-
-void func_800894DC(void);
-
-void func_80089500(void);
-
-/** Handles initial gamepad init. */
-bool func_80089524(s_KPadWork* arg0, s32 padInfoMode);
-
-s32 func_800895E4(s_KPadWork* arg0, s_8002AC04* arg1, u8 arg2);
-
-bool func_80089644(s_KPadWork* arg0, s_KPad_Effect* arg1, s32 arg2, u32 arg3);
-
-bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3);
-
-bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3);
-
-bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3);
-
-bool func_8008973C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* ptr, u32* arg3);
-
-void func_80089840(s_KPadWork* arg0);
-
-void func_8008989C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32));
-
-void func_8008992C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32));
-
-void func_800899BC(s_KPadWork* arg0, s32 arg1);
-
-bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3);
 
 // Q12 square root?
 u32 func_8008A058(s32 arg0);

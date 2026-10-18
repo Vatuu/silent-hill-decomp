@@ -20,7 +20,7 @@ u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
 
-bool (*D_800AFD08[])(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* ptr, u32* arg3) =
+bool (*g_VibScript_StepHandlers[])(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* ptr, u32* arg3) =
 {
     func_80089A30,
     func_80089BB8,
@@ -69,7 +69,7 @@ s32 func_80089128(void) // 0x80089128
     if (g_GameWork.config.vibrationEnabled)
     {
         func_8009E2A0(var_s2);
-        var_s2->status_0.strength_0_8 = 1 << 7;
+        var_s2->status_0.strength_0_8 = 128; // Full strength.
     }
     else
     {
@@ -118,103 +118,75 @@ s32 func_80089128(void) // 0x80089128
     return var_s5;
 }
 
-// Forward declare pointers used below.
-extern const u32 D_8002AF04[];
-extern const u32 D_8002AF08[];
-extern const u32 D_8002AF20[];
-extern const u32 D_8002AF24[];
-extern const u32 D_8002AF28[];
-extern const u32 D_8002AF2C[];
-extern const u32 D_8002AF34[];
-extern const u32 D_8002AF3C[];
-extern const u32 D_8002AF48[];
-extern const u32 D_8002AF54[];
-extern const u32 D_8002AF5C[];
-extern const u32 D_8002AF64[];
-extern const u32 D_8002AF70[];
+/** @brief Vibration scripts: each entry is a step, `func_800892A4` starts the script at an index. */
+const s_VibScriptStep g_VibScript_Steps[] =
+{
+    // System commands.
+    /*  0 */ VIBSCRIPT_STEP_COMMAND(Pause, NULL),
+    /*  1 */ VIBSCRIPT_STEP_COMMAND(Resume, NULL),
+    /*  2 */ VIBSCRIPT_STEP_COMMAND(Disable, NULL),
+    /*  3 */ VIBSCRIPT_STEP_COMMAND(Enable, NULL),
+    /*  4 */ VIBSCRIPT_STEP_COMMAND(ClearAll, NULL),
 
-const s_8002AC04 D_8002AC04[] = {
-    // 2nd field is used as index into `D_800AFD08` funcptr array.
-    // Seems each function takes different kind of params in 5th/6th fields:
-    // #0 5th field is some kind of index/counter.
-    // #1 5th field is pointer to another `D_8002AC04` entry.
-    // #2 5th field points to some data that comes after this array.
-    // #3 5th field is always 0.
-    // #4 5th field is index/counter.
-    { NULL, { .func_8008973C_data = { 3, 2, 0, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 3, 3, 0, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 3, 1, 0, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 3, 0, 0, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 3, 4, 0, 0, 0 } } },
-    { &D_8002AC04[22], { .func_8008973C_data = { 0, 0, 0, 5, 0 } } },
-    { &D_8002AC04[25], { .func_8008973C_data = { 0, 32, 0, 6, 0 } } },
-    { &D_8002AC04[26], { .func_8008973C_data = { 0, 32, 0, 7, 0 } } },
-    { &D_8002AC04[27], { .func_8008973C_data = { 0, 32, 0, 8, 0 } } },
-    { &D_8002AC04[23], { .func_8008973C_data = { 0, 32, 0, 9, 0 } } },
-    { &D_8002AC04[24], { .func_8008973C_data = { 0, 32, 0, 10, 0 } } },
-    { &D_8002AC04[5], { .func_8008973C_data = { 1, 0, 0, &D_8002AC04[6], 0 } } },
-    { &D_8002AC04[31], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[34], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[37], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[40], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[43], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[46], { .func_8008973C_data = { 0, 32, 0, 12, 0 } } },
-    { &D_8002AC04[28], { .func_8008973C_data = { 0, 32, 0, 18, 0 } } },
-    { &D_8002AC04[29], { .func_8008973C_data = { 0, 32, 0, 19, 0 } } },
-    { NULL, { .func_8008973C_data = { 4, 0, NO_VALUE, 20, -255 } } },
-    { NULL, { .func_8008973C_data = { 4, 1, NO_VALUE, 21, -255 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF70, 0x2D, 9, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF64, 0x180, 0x30, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF5C, 0x90, 0x18, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF54, 0x5A, 0xF, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF48, 0x96, 0xF, 1, 1 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF3C, 0x60, 0xC, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF3C, 0x60, 0xC, 1, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 1, NO_VALUE, &D_8002AF34, 0x4B, 0xF, 1, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF2C, 0x258, 0xF, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF28, 0x1E0, 0xF, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF24, 0x1A4, 0xF, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF20, 0x168, 0xF, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF20, 0x10E, 0xF, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { NULL, { .func_8008973C_data = { 0, 0, 0x0000, 0, 0 } } },
-    { &D_8002AC04[47], { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF08, 0xB40, 0xF, 0, 0 } } },
-    { &D_8002AC04[47], { .func_80089DF0_data = { 2, 0, NO_VALUE, &D_8002AF04, 0x1E, 0xF, 0, 0 } } },
+    // Vibration chain entrypoints.
+    /*  5 */ VIBSCRIPT_STEP_START(0, 5, &g_VibScript_Steps[22]),
+    /*  6 */ VIBSCRIPT_STEP_START(1, 6, &g_VibScript_Steps[25]),
+    /*  7 */ VIBSCRIPT_STEP_START(1, 7, &g_VibScript_Steps[26]),
+    /*  8 */ VIBSCRIPT_STEP_START(1, 8, &g_VibScript_Steps[27]),
+    /*  9 */ VIBSCRIPT_STEP_START(1, 9, &g_VibScript_Steps[23]),
+    /* 10 */ VIBSCRIPT_STEP_START(1, 10, &g_VibScript_Steps[24]),
+    /* 11 */ VIBSCRIPT_STEP_CHAIN(&g_VibScript_Steps[6], &g_VibScript_Steps[5]),
+    /* 12 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[31]),
+    /* 13 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[34]),
+    /* 14 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[37]),
+    /* 15 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[40]),
+    /* 16 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[43]),
+    /* 17 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[46]),
+    /* 18 */ VIBSCRIPT_STEP_START(1, 18, &g_VibScript_Steps[28]),
+    /* 19 */ VIBSCRIPT_STEP_START(1, 19, &g_VibScript_Steps[29]),
+    /* 20 */ VIBSCRIPT_STEP_PULSE(0, NO_VALUE, 20, -255, NULL),
+    /* 21 */ VIBSCRIPT_STEP_PULSE(1, NO_VALUE, 21, -255, NULL),
+
+    // Waveforms for channel 1 (variable speed motor), one byte per sample.
+    /* 22 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 45,  9,  1, 0, VIBSCRIPT_SAMPLES_U8(0xA8, 0xE0, 0xE0, 0xC4, 0xA8, 0x54, 0, 0, 0, 0, 0, 0), NULL),
+    /* 23 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 384, 48, 1, 0, VIBSCRIPT_SAMPLES_U8(0x50, 0x28, 0x3C, 0x14, 0x46, 0x1E, 0x32, 0x0A, 0x50, 0, 0, 0), NULL),
+    /* 24 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 144, 24, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC0, 0x60, 0x90, 0x30, 0xA8, 0x48, 0xC0, 0), NULL),
+    /* 25 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 90,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC8, 0xC8, 0xC8, 0xAF, 0x96, 0x4B, 0, 0), NULL),
+    /* 26 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 150, 15, 1, 1, VIBSCRIPT_SAMPLES_U8(0xA0, 0xA0, 0x8C, 0x46, 0x3C, 0x32, 0x28, 0x1E, 0x14, 0x0A, 0, 0), NULL),
+    /* 27 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
+    /* 28 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
+    /* 29 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 75,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0x80, 0x80, 0, 0x80, 0x80, 0, 0, 0), NULL),
+    /* 30 */ VIBSCRIPT_STEP_EMPTY(),
+
+    // Waveforms for channel 0 (on/off motor), one bit per sample, bit 0 of each byte first.
+    /* 31 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 600, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 0, 0, 0, 0, 0, 1, 1), 0, 0, 0, 0, 0, 0), NULL),
+    /* 32 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 33 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 34 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 480, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 1, 1, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 35 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 36 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 37 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 420, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 38 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 39 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 40 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 360, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 41 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 42 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 43 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 270, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 44 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 45 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 46 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 2880, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 1, 1, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0), &g_VibScript_Steps[47]),
+    /* 47 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 30,   15, 0, 0, VIBSCRIPT_SAMPLES_BITS(0, 0, 0, 0), &g_VibScript_Steps[47]),
 };
 
-// TODO: Figure out what kind of data this is. The array above has some entries pointing to it, all of them using funcptr #2 (`func_80089DF0`).
-// Not sure why they'd all be different sizes though.
-const u32 D_8002AF04[] = { 0 };
-const u32 D_8002AF08[] = { 0x8000184, 0x61000003, 0x81000000, 1, 0x181, 0x10000 };
-const u32 D_8002AF20[] = { 0x184 };
-const u32 D_8002AF24[] = { 0x308 };
-const u32 D_8002AF28[] = { 0x610 };
-const u32 D_8002AF2C[] = { 0xC010, 0 };
-const u32 D_8002AF34[] = { 0x80008080, 0x80 };
-const u32 D_8002AF3C[] = { 0xFFFFFF, 0xFFFFFF00, 0 };
-const u32 D_8002AF48[] = { 0x468CA0A0, 0x1E28323C, 0xA14};
-const u32 D_8002AF54[] = { 0xAFC8C8C8, 0x4B96};
-const u32 D_8002AF5C[] = { 0x309060C0, 0xC048A8 };
-const u32 D_8002AF64[] = { 0x143C2850, 0xA321E46, 0x50};
-const u32 D_8002AF70[] = { 0xC4E0E0A8, 0x54A8, 0};
 
 void func_800892A4(s32 idx) // 0x800892A4
 {
-    func_800895E4(&g_SysWork.kpad_2514, &D_8002AC04[idx], 0x80);
+    func_800895E4(&g_SysWork.kpad_2514, &g_VibScript_Steps[idx], 0x80);
 }
 
 void func_800892DC(s32 idx, u8 arg1) // 0x800892DC
 {
-    func_800895E4(&g_SysWork.kpad_2514, &D_8002AC04[idx], arg1);
+    func_800895E4(&g_SysWork.kpad_2514, &g_VibScript_Steps[idx], arg1);
 }
 
 void func_80089314(s32 arg0) // 0x80089314
@@ -324,7 +296,7 @@ bool func_80089524(s_KPadWork* arg0, s32 padInfoMode) // 0x80089524
     return cond;
 }
 
-s32 func_800895E4(s_KPadWork* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
+s32 func_800895E4(s_KPadWork* arg0, s_VibScriptStep* arg1, u8 arg2) // 0x800895E4
 {
     u32 sp10;
 
@@ -335,89 +307,89 @@ s32 func_800895E4(s_KPadWork* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
         return 0;
     }
 
-    return D_800AFD08[arg1->field_4.funcIdx_4](arg0, 0, arg1, &sp10);
+    return g_VibScript_StepHandlers[arg1->data_4.opcode_4](arg0, 0, arg1, &sp10);
 }
 
 bool func_80089644(s_KPadWork* arg0, s_KPad_Effect* arg1, s32 arg2, u32 arg3) // 0x80089644
 {
-    u32             var1;
-    s_KPad_Channel* ptr0;
-    s_8002AC04*     ptr1;
+    u32              var1;
+    s_KPad_Channel*  ptr0;
+    s_VibScriptStep* ptr1;
 
-    arg3             *= 5;
-    arg1->field_18    = 0;
-    arg1->field_14_31 = 0;
+    arg3                 *= 5;
+    arg1->output_18       = 0;
+    arg1->hasOutput_14_31 = 0;
     while (true)
     {
-        ptr1 = arg1->field_10;
+        ptr1 = arg1->step_10;
         if (!ptr1)
         {
             break;
         }
 
-        if (D_800AFD08[ptr1->field_4.funcIdx_4](arg0, arg1, ptr1, &arg3) == 0)
+        if (g_VibScript_StepHandlers[ptr1->data_4.opcode_4](arg0, arg1, ptr1, &arg3) == 0)
         {
             break;
         }
     }
 
-    if (arg1->field_14_31 && (arg2 & arg1->field_1E))
+    if (arg1->hasOutput_14_31 && (arg2 & arg1->mask_1E))
     {
-        var1 = arg1->field_18;
-        ptr0 = &arg0->channels_C[arg1->field_14_24];
+        var1 = arg1->output_18;
+        ptr0 = &arg0->channels_C[arg1->channel_14_24];
         if (ptr0->strength_4 < var1)
         {
             ptr0->strength_4 = var1;
         }
     }
 
-    return arg1->field_10 != NULL;
+    return arg1->step_10 != NULL;
 }
 
-bool func_8008973C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* ptr, u32* arg3)
+bool func_8008973C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {
         return false;
     }
 
-    if (ptr == NULL || ptr->field_4.func_8008973C_data.funcIdx_4 != 3)
+    if (ptr == NULL || ptr->data_4.command.opcode_4 != VibScriptOp_Command)
     {
         return false;
     }
 
-    switch (ptr->field_4.func_8008973C_data.field_5)
+    switch (ptr->data_4.command.command_5)
     {
-        case 0:
+        case VibScriptCommand_Enable:
             func_8009E2A0(arg0);
             break;
 
-        case 1:
+        case VibScriptCommand_Disable:
             func_8009E2D8(arg0);
             break;
 
-        case 2:
+        case VibScriptCommand_Pause:
             func_8009E268(arg0);
             break;
 
-        case 3:
+        case VibScriptCommand_Resume:
             func_8009E230(arg0);
             break;
 
-        case 4:
+        case VibScriptCommand_ClearAll:
             func_80089840(arg0);
             break;
 
-        case 5:
-            func_8008989C(arg0, ptr->field_4.func_8008973C_data.field_6, ptr->field_4.func_8008973C_data.field_C);
+        case VibScriptCommand_RemoveByMask:
+            func_8008989C(arg0, ptr->data_4.command.arg_6, ptr->data_4.command.callback_C);
             break;
 
-        case 6:
-            func_8008992C(arg0, ptr->field_4.func_8008973C_data.field_6, ptr->field_4.func_8008973C_data.field_C);
+        case VibScriptCommand_RemoveByTag:
+            func_8008992C(arg0, ptr->data_4.command.arg_6, ptr->data_4.command.callback_C);
             break;
 
-        case 7:
-            func_800899BC(arg0, ptr->field_4.func_8008973C_data.field_8);
+        case VibScriptCommand_RemoveById:
+            func_800899BC(arg0, ptr->data_4.command.value_8);
             break;
     }
 
@@ -464,7 +436,7 @@ void func_8008989C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x80089
     {
         next = curr->links_0.next_0;
 
-        if (arg2(curr->field_1E, arg1) != 0)
+        if (arg2(curr->mask_1E, arg1) != 0)
         {
             func_8009EC1C(arg0, curr);
         }
@@ -491,7 +463,7 @@ void func_8008992C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x80089
     {
         next = curr->links_0.next_0;
 
-        if (arg2(curr->field_1C, arg1) != 0)
+        if (arg2(curr->tag_1C, arg1) != 0)
         {
             func_8009EC1C(arg0, curr);
         }
@@ -518,7 +490,7 @@ void func_800899BC(s_KPadWork* arg0, s32 arg1) // 0x800899BC
     {
         next = curr->links_0.next_0;
 
-        if (curr->field_C == arg1)
+        if (curr->id_C == arg1)
         {
             func_8009EC1C(arg0, curr);
         }
@@ -527,7 +499,7 @@ void func_800899BC(s_KPadWork* arg0, s32 arg1) // 0x800899BC
     }
 }
 
-bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089A30
+bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3) // 0x80089A30
 {
     s32            temp_s3;
     s_KPad_Effect* next;
@@ -547,27 +519,27 @@ bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
         return false;
     }
 
-    if (arg2->field_4.funcIdx_4 != 0)
+    if (arg2->data_4.opcode_4 != VibScriptOp_Start)
     {
         return false;
     }
 
-    temp_s3 = arg2->field_4.func_80089A30_data.field_8;
+    temp_s3 = arg2->data_4.start.id_8;
 
-    if (arg2->field_4.func_80089A30_data.field_5_5 || arg2->field_4.func_80089A30_data.field_5_6)
+    if (arg2->data_4.start.skipIfActive_5_5 || arg2->data_4.start.replaceActive_5_6)
     {
         current = arg0->effects_18.next_0;
         head    = KPAD_EFFECTS_HEAD(arg0);
 
-        if (arg2->field_4.func_80089A30_data.field_5_5)
+        if (arg2->data_4.start.skipIfActive_5_5)
         {
             while (current != head)
             {
-                if (current->field_C == temp_s3)
+                if (current->id_C == temp_s3)
                 {
                     if (ptr != NULL)
                     {
-                        ptr->field_10 = NULL;
+                        ptr->step_10 = NULL;
                     }
 
                     return false;
@@ -581,7 +553,7 @@ bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
             while (current != head)
             {
                 next = current->links_0.next_0;
-                if ((ptr == NULL || current != ptr) && current->field_C == temp_s3)
+                if ((ptr == NULL || current != ptr) && current->id_C == temp_s3)
                 {
                     func_8009EC1C(arg0, current);
                 }
@@ -592,27 +564,27 @@ bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
 
     if (ptr == NULL)
     {
-        ptr = func_8009ECCC(arg0, arg2->field_4.func_80089A30_data.field_C);
+        ptr = func_8009ECCC(arg0, arg2->data_4.start.priority_C);
         if (ptr == NULL)
         {
             return false;
         }
-        ptr->field_14_16 = *arg3;
+        ptr->strength_14_16 = *arg3;
     }
 
-    ptr->field_10   = arg2->field_0;
-    ptr->field_14_0 = 0;
-    ptr->field_C    = temp_s3;
+    ptr->step_10   = arg2->next_0;
+    ptr->elapsed_14_0 = 0;
+    ptr->id_C    = temp_s3;
 
-    if (arg2->field_4.func_80089A30_data.field_5_7)
+    if (arg2->data_4.start.hasTag_5_7)
     {
-        ptr->field_1C = arg2->field_4.func_80089A30_data.field_6;
+        ptr->tag_1C = arg2->data_4.start.tag_6;
     }
 
     return true;
 }
 
-bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089BB8
+bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3) // 0x80089BB8
 {
     s_KPad_Effect* temp_a0;
     s_KPad_Effect* temp_v0;
@@ -623,26 +595,26 @@ bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
         return false;
     }
 
-    if (arg2->field_4.funcIdx_4 != 1)
+    if (arg2->data_4.opcode_4 != VibScriptOp_Chain)
     {
         return false;
     }
 
     if (arg1 == NULL)
     {
-        var_s1 = arg2->field_4.func_80089BB8_data.field_C;
+        var_s1 = arg2->data_4.chain.priority_C;
         arg1   = func_8009ECCC(arg0, var_s1);
         if (arg1 == NULL)
         {
             return false;
         }
-        arg1->field_14_16 = *arg3;
+        arg1->strength_14_16 = *arg3;
     }
     else
     {
-        if (arg1->field_10 != arg2)
+        if (arg1->step_10 != arg2)
         {
-            arg1->field_10 = NULL;
+            arg1->step_10 = NULL;
             return false;
         }
         else
@@ -651,12 +623,12 @@ bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
         }
     }
 
-    arg1->field_10   = arg2->field_0;
-    arg1->field_14_0 = 0;
+    arg1->step_10   = arg2->next_0;
+    arg1->elapsed_14_0 = 0;
 
-    if (arg2->field_4.func_80089BB8_data.field_5_7)
+    if (arg2->data_4.chain.hasTag_5_7)
     {
-        arg1->field_1C = arg2->field_4.func_80089BB8_data.field_6;
+        arg1->tag_1C = arg2->data_4.chain.tag_6;
     }
 
     temp_v0 = func_8009ECCC(arg0, var_s1);
@@ -673,42 +645,42 @@ bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
 
         arg1->links_0.next_0 = temp_v0;
 
-        temp_v0->field_10    = arg2->field_4.func_80089BB8_data.field_8;
-        temp_v0->field_14_0  = 0;
-        temp_v0->field_C     = arg1->field_C;
-        temp_v0->field_14_16 = arg1->field_14_16;
-        temp_v0->field_1C    = arg1->field_1C;
+        temp_v0->step_10    = arg2->data_4.chain.spawned_8;
+        temp_v0->elapsed_14_0  = 0;
+        temp_v0->id_C     = arg1->id_C;
+        temp_v0->strength_14_16 = arg1->strength_14_16;
+        temp_v0->tag_1C    = arg1->tag_1C;
     }
 
     return true;
 }
 
-bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
+bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3) // 0x80089D0C
 {
     if (arg0 == NULL || arg2 == NULL)
     {
         return false;
     }
 
-    if (arg2->field_4.func_80089D0C_data.funcIdx_4 == 4)
+    if (arg2->data_4.pulse.opcode_4 == VibScriptOp_Pulse)
     {
         if (arg1 != NULL)
         {
-            arg1->field_14_24 = arg2->field_4.func_80089D0C_data.field_5 & 0x7F;
-            arg1->field_1E    = arg2->field_4.func_80089D0C_data.field_6;
-            arg1->field_10    = arg2->field_0;
-            arg1->field_14_31 = 1;
-            arg1->field_18    = arg1->field_14_16 << 24;
+            arg1->channel_14_24 = arg2->data_4.pulse.channel_5 & 0x7F;
+            arg1->mask_1E    = arg2->data_4.pulse.mask_6;
+            arg1->step_10    = arg2->next_0;
+            arg1->hasOutput_14_31 = 1;
+            arg1->output_18    = arg1->strength_14_16 << 24;
             return false;
         }
         else
         {
-            arg1 = func_8009ECCC(arg0, arg2->field_4.func_80089D0C_data.field_C);
+            arg1 = func_8009ECCC(arg0, arg2->data_4.pulse.priority_C);
             if (arg1 != NULL)
             {
-                arg1->field_10    = arg2;
-                arg1->field_14_16 = *arg3;
-                arg1->field_C     = arg2->field_4.func_80089D0C_data.field_8;
+                arg1->step_10    = arg2;
+                arg1->strength_14_16 = *arg3;
+                arg1->id_C     = arg2->data_4.pulse.id_8;
                 return true;
             }
         }
@@ -717,7 +689,7 @@ bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
     return false;
 }
 
-bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089DF0
+bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3) // 0x80089DF0
 {
     u32 temp_a0;
     s32 temp_a0_2;
@@ -741,32 +713,32 @@ bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
     u32 temp4;
     u64 temp5;
 
-    if (arg2 == NULL || arg1 == NULL || arg2->field_4.funcIdx_4 != 2)
+    if (arg2 == NULL || arg1 == NULL || arg2->data_4.opcode_4 != VibScriptOp_Waveform)
     {
         return false;
     }
 
-    if (arg1->field_10 != arg2)
+    if (arg1->step_10 != arg2)
     {
-        arg1->field_10 = NULL;
+        arg1->step_10 = NULL;
         return false;
     }
 
-    temp_t6 = arg1->field_14_0;
+    temp_t6 = arg1->elapsed_14_0;
 
-    if (!arg1->field_14_31)
+    if (!arg1->hasOutput_14_31)
     {
-        arg1->field_14_31 = 1;
+        arg1->hasOutput_14_31 = 1;
 
-        temp_s0   = arg1->field_14_16;
-        var_t1    = arg2->field_4.func_80089DF0_data.field_5 & 0x7F;
-        temp_t5   = arg2->field_4.func_80089DF0_data.field_8;
-        temp_t4   = arg2->field_4.func_80089DF0_data.field_C_16;
-        var_a1    = arg2->field_4.func_80089DF0_data.field_C_28;
-        temp_a0_2 = arg2->field_4.func_80089DF0_data.field_C_31;
+        temp_s0   = arg1->strength_14_16;
+        var_t1    = arg2->data_4.waveform.channel_5 & 0x7F;
+        temp_t5   = arg2->data_4.waveform.samples_8;
+        temp_t4   = arg2->data_4.waveform.ticksPerSample_C_16;
+        var_a1    = arg2->data_4.waveform.bytesPerSample_C_28;
+        temp_a0_2 = arg2->data_4.waveform.interpolate_C_31;
 
-        arg1->field_14_24 = var_t1;
-        arg1->field_1E    = arg2->field_4.func_80089DF0_data.field_6;
+        arg1->channel_14_24 = var_t1;
+        arg1->mask_1E    = arg2->data_4.waveform.mask_6;
 
         if (temp_t4 == 0)
         {
@@ -838,24 +810,24 @@ bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32*
             temp_a0 = temp5;
         }
 
-        arg1->field_18 = temp_a0;
+        arg1->output_18 = temp_a0;
     }
 
     temp_a0   = *arg3;
-    temp_v1_3 = arg2->field_4.func_80089DF0_data.field_C_0;
+    temp_v1_3 = arg2->data_4.waveform.duration_C_0;
     temp_t6   = temp_t6 + temp_a0;
 
     if (temp_t6 >= temp_v1_3)
     {
-        arg1->field_10   = arg2->field_0;
-        arg1->field_14_0 = 0;
+        arg1->step_10   = arg2->next_0;
+        arg1->elapsed_14_0 = 0;
         temp_a0          = temp_t6 - temp_v1_3;
         *arg3            = temp_a0;
 
         return true;
     }
 
-    arg1->field_14_0 = temp_t6;
+    arg1->elapsed_14_0 = temp_t6;
     *arg3            = 0;
 
     return false;

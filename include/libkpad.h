@@ -37,68 +37,6 @@ typedef struct
 } s_KPad_Channel;
 STATIC_ASSERT_SIZEOF(s_KPad_Channel, 8);
 
-// Exception, as one of the unidentified structs uses this.
-typedef struct _8002AC04
-{
-    struct _8002AC04* field_0;
-
-    union
-    {
-        u8 funcIdx_4; // `funcIdx_4` in structs below, needs to be part of those structs for match.
-
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_8008973C_data;
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_80089D0C_data;
-
-        struct
-        {
-            u8                funcIdx_4;
-            u8                field_5   : 7;
-            u32               field_5_7 : 1;
-            u16               field_6;
-            struct _8002AC04* field_8;
-            u32               field_C;
-        } func_80089BB8_data;
-
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5;
-            u16 field_6;
-            u8* field_8;
-            u32 field_C_0  : 16;
-            u32 field_C_16 : 12;
-            u32 field_C_28 : 3;
-            u32 field_C_31 : 1;
-        } func_80089DF0_data;
-        struct
-        {
-            u8  funcIdx_4;
-            u8  field_5_0 : 5;
-            u32 field_5_5 : 1;
-            u32 field_5_6 : 1;
-            u32 field_5_7 : 1;
-            u16 field_6;
-            s32 field_8;
-            u32 field_C;
-        } func_80089A30_data;
-    } field_4;
-} s_8002AC04;
-STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
-
 /** @brief Links of an `s_KPad_Effect` list. Also used on its own as a list head in `s_KPadWork`. */
 typedef struct
 {
@@ -107,20 +45,23 @@ typedef struct
 } s_KPad_EffectList;
 STATIC_ASSERT_SIZEOF(s_KPad_EffectList, 8);
 
-/** @brief Active vibration effect, kept in `s_KPadWork::effects_18` sorted by descending priority. */
+/**
+ * @brief Active vibration effect, kept in `s_KPadWork::effects_18` sorted by descending priority.
+ * libkpad only reads `links_0` and `priority_8`, everything after is state owned by the caller.
+ */
 typedef struct _KPad_Effect
 {
-    s_KPad_EffectList links_0;
-    s32               priority_8;
-    s32               field_C;
-    s_8002AC04*       field_10;
-    u32               field_14_0  : 16;
-    u32               field_14_16 : 8;
-    u32               field_14_24 : 7;
-    u32               field_14_31 : 1;
-    u32               field_18;
-    u16               field_1C;
-    u16               field_1E;
+    s_KPad_EffectList      links_0;
+    s32                    priority_8;
+    s32                    id_C;
+    struct _VibScriptStep* step_10;
+    u32                    elapsed_14_0    : 16; // Ticks spent in the current step.
+    u32                    strength_14_16  : 8;  // Level the effect was started with, `0x80` is 1.0.
+    u32                    channel_14_24   : 7;
+    u32                    hasOutput_14_31 : 1;  // `output_18` is valid and gets applied to the channel.
+    u32                    output_18;
+    u16                    tag_1C;
+    u16                    mask_1E;
 } s_KPad_Effect;
 STATIC_ASSERT_SIZEOF(s_KPad_Effect, 32);
 
