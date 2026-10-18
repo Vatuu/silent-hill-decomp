@@ -12,14 +12,14 @@ on:
 jobs:
   build:
     if: github.repository == 'shdecompilations/silent-hill-decomp'
-    
+
     container: ghcr.io/shdecompilations/decomp-images-silent-hill:master
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        game_id: [ SLUS-00707 ]
-    
+        version: [ USA, JAP0 ]
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -34,13 +34,14 @@ jobs:
       - name: "Setup Python"
         run: pip3 install -r requirements.txt --break-system-packages
 
-      - name: "Copy ROM"
+      - name: "Copy Binaries"
         run: |
-          mkdir -p ./rom/image
-          cp -r -p /rom/* ./rom/image
+          mkdir -p assets rom
+          cp -r -p /files/assets/${{ matrix.version }} assets/
+          cp -r -p /files/rom/${{ matrix.version }} rom/
 
-      - name: Setup Environment
-        run: make setup
+      - name: Generate Splits
+        run: make GAME_VERSION=${{ matrix.version }} generate
 
       - name: Check Executables Match
-        run: make CHECKSUM=1 build
+        run: make GAME_VERSION=${{ matrix.version }} CHECKSUM=1 build
