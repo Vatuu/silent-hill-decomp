@@ -29,6 +29,66 @@ bool (*g_VibScript_StepHandlers[])(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibS
     func_80089D0C
 };
 
+/** @brief Vibration scripts: each entry is a step, `func_800892A4` starts the script at an index. */
+const s_VibScriptStep g_VibScript_Steps[] =
+{
+    // System commands.
+    /*  0 */ VIBSCRIPT_STEP_COMMAND(Pause, NULL),
+    /*  1 */ VIBSCRIPT_STEP_COMMAND(Resume, NULL),
+    /*  2 */ VIBSCRIPT_STEP_COMMAND(Disable, NULL),
+    /*  3 */ VIBSCRIPT_STEP_COMMAND(Enable, NULL),
+    /*  4 */ VIBSCRIPT_STEP_COMMAND(ClearAll, NULL),
+
+    // Vibration chain entrypoints.
+    /*  5 */ VIBSCRIPT_STEP_START(0, 5, &g_VibScript_Steps[22]),
+    /*  6 */ VIBSCRIPT_STEP_START(1, 6, &g_VibScript_Steps[25]),
+    /*  7 */ VIBSCRIPT_STEP_START(1, 7, &g_VibScript_Steps[26]),
+    /*  8 */ VIBSCRIPT_STEP_START(1, 8, &g_VibScript_Steps[27]),
+    /*  9 */ VIBSCRIPT_STEP_START(1, 9, &g_VibScript_Steps[23]),
+    /* 10 */ VIBSCRIPT_STEP_START(1, 10, &g_VibScript_Steps[24]),
+    /* 11 */ VIBSCRIPT_STEP_CHAIN(&g_VibScript_Steps[6], &g_VibScript_Steps[5]),
+    /* 12 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[31]),
+    /* 13 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[34]),
+    /* 14 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[37]),
+    /* 15 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[40]),
+    /* 16 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[43]),
+    /* 17 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[46]),
+    /* 18 */ VIBSCRIPT_STEP_START(1, 18, &g_VibScript_Steps[28]),
+    /* 19 */ VIBSCRIPT_STEP_START(1, 19, &g_VibScript_Steps[29]),
+    /* 20 */ VIBSCRIPT_STEP_PULSE(0, NO_VALUE, 20, -255, NULL),
+    /* 21 */ VIBSCRIPT_STEP_PULSE(1, NO_VALUE, 21, -255, NULL),
+
+    // Waveforms for channel 1 (variable speed motor), one byte per sample.
+    /* 22 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 45,  9,  1, 0, VIBSCRIPT_SAMPLES_U8(0xA8, 0xE0, 0xE0, 0xC4, 0xA8, 0x54, 0, 0, 0, 0, 0, 0), NULL),
+    /* 23 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 384, 48, 1, 0, VIBSCRIPT_SAMPLES_U8(0x50, 0x28, 0x3C, 0x14, 0x46, 0x1E, 0x32, 0x0A, 0x50, 0, 0, 0), NULL),
+    /* 24 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 144, 24, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC0, 0x60, 0x90, 0x30, 0xA8, 0x48, 0xC0, 0), NULL),
+    /* 25 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 90,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC8, 0xC8, 0xC8, 0xAF, 0x96, 0x4B, 0, 0), NULL),
+    /* 26 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 150, 15, 1, 1, VIBSCRIPT_SAMPLES_U8(0xA0, 0xA0, 0x8C, 0x46, 0x3C, 0x32, 0x28, 0x1E, 0x14, 0x0A, 0, 0), NULL),
+    /* 27 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
+    /* 28 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
+    /* 29 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 75,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0x80, 0x80, 0, 0x80, 0x80, 0, 0, 0), NULL),
+    /* 30 */ VIBSCRIPT_STEP_EMPTY(),
+
+    // Waveforms for channel 0 (on/off motor), one bit per sample, bit 0 of each byte first.
+    /* 31 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 600, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 0, 0, 0, 0, 0, 1, 1), 0, 0, 0, 0, 0, 0), NULL),
+    /* 32 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 33 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 34 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 480, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 1, 1, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 35 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 36 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 37 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 420, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 38 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 39 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 40 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 360, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 41 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 42 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 43 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 270, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
+    /* 44 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 45 */ VIBSCRIPT_STEP_EMPTY(),
+    /* 46 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 2880, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 1, 1, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0), &g_VibScript_Steps[47]),
+    /* 47 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 30,   15, 0, 0, VIBSCRIPT_SAMPLES_BITS(0, 0, 0, 0), &g_VibScript_Steps[47]),
+};
+
 void func_80089090(s32 arg0) // 0x80089090
 {
     func_80089524(&g_SysWork.kpad_2514, arg0);
@@ -117,67 +177,6 @@ s32 func_80089128(void) // 0x80089128
 
     return var_s5;
 }
-
-/** @brief Vibration scripts: each entry is a step, `func_800892A4` starts the script at an index. */
-const s_VibScriptStep g_VibScript_Steps[] =
-{
-    // System commands.
-    /*  0 */ VIBSCRIPT_STEP_COMMAND(Pause, NULL),
-    /*  1 */ VIBSCRIPT_STEP_COMMAND(Resume, NULL),
-    /*  2 */ VIBSCRIPT_STEP_COMMAND(Disable, NULL),
-    /*  3 */ VIBSCRIPT_STEP_COMMAND(Enable, NULL),
-    /*  4 */ VIBSCRIPT_STEP_COMMAND(ClearAll, NULL),
-
-    // Vibration chain entrypoints.
-    /*  5 */ VIBSCRIPT_STEP_START(0, 5, &g_VibScript_Steps[22]),
-    /*  6 */ VIBSCRIPT_STEP_START(1, 6, &g_VibScript_Steps[25]),
-    /*  7 */ VIBSCRIPT_STEP_START(1, 7, &g_VibScript_Steps[26]),
-    /*  8 */ VIBSCRIPT_STEP_START(1, 8, &g_VibScript_Steps[27]),
-    /*  9 */ VIBSCRIPT_STEP_START(1, 9, &g_VibScript_Steps[23]),
-    /* 10 */ VIBSCRIPT_STEP_START(1, 10, &g_VibScript_Steps[24]),
-    /* 11 */ VIBSCRIPT_STEP_CHAIN(&g_VibScript_Steps[6], &g_VibScript_Steps[5]),
-    /* 12 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[31]),
-    /* 13 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[34]),
-    /* 14 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[37]),
-    /* 15 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[40]),
-    /* 16 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[43]),
-    /* 17 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[46]),
-    /* 18 */ VIBSCRIPT_STEP_START(1, 18, &g_VibScript_Steps[28]),
-    /* 19 */ VIBSCRIPT_STEP_START(1, 19, &g_VibScript_Steps[29]),
-    /* 20 */ VIBSCRIPT_STEP_PULSE(0, NO_VALUE, 20, -255, NULL),
-    /* 21 */ VIBSCRIPT_STEP_PULSE(1, NO_VALUE, 21, -255, NULL),
-
-    // Waveforms for channel 1 (variable speed motor), one byte per sample.
-    /* 22 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 45,  9,  1, 0, VIBSCRIPT_SAMPLES_U8(0xA8, 0xE0, 0xE0, 0xC4, 0xA8, 0x54, 0, 0, 0, 0, 0, 0), NULL),
-    /* 23 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 384, 48, 1, 0, VIBSCRIPT_SAMPLES_U8(0x50, 0x28, 0x3C, 0x14, 0x46, 0x1E, 0x32, 0x0A, 0x50, 0, 0, 0), NULL),
-    /* 24 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 144, 24, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC0, 0x60, 0x90, 0x30, 0xA8, 0x48, 0xC0, 0), NULL),
-    /* 25 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 90,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0xC8, 0xC8, 0xC8, 0xAF, 0x96, 0x4B, 0, 0), NULL),
-    /* 26 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 150, 15, 1, 1, VIBSCRIPT_SAMPLES_U8(0xA0, 0xA0, 0x8C, 0x46, 0x3C, 0x32, 0x28, 0x1E, 0x14, 0x0A, 0, 0), NULL),
-    /* 27 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
-    /* 28 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 96,  12, 1, 0, VIBSCRIPT_SAMPLES_U8(0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0), NULL),
-    /* 29 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 75,  15, 1, 0, VIBSCRIPT_SAMPLES_U8(0x80, 0x80, 0, 0x80, 0x80, 0, 0, 0), NULL),
-    /* 30 */ VIBSCRIPT_STEP_EMPTY(),
-
-    // Waveforms for channel 0 (on/off motor), one bit per sample, bit 0 of each byte first.
-    /* 31 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 600, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 0, 0, 0, 0, 0, 1, 1), 0, 0, 0, 0, 0, 0), NULL),
-    /* 32 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 33 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 34 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 480, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 0, 1, 0, 0, 0), VIBSCRIPT_BITS8(0, 1, 1, 0, 0, 0, 0, 0), 0, 0), NULL),
-    /* 35 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 36 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 37 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 420, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
-    /* 38 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 39 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 40 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 360, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
-    /* 41 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 42 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 43 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 270, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0), NULL),
-    /* 44 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 45 */ VIBSCRIPT_STEP_EMPTY(),
-    /* 46 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 2880, 15, 0, 0, VIBSCRIPT_SAMPLES_BITS(VIBSCRIPT_BITS8(0, 0, 1, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, VIBSCRIPT_BITS8(0, 0, 0, 1, 0, 0, 0, 0), VIBSCRIPT_BITS8(1, 1, 0, 0, 0, 0, 0, 0), 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 1, 1, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 1), VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0, VIBSCRIPT_BITS8(1, 0, 0, 0, 0, 0, 0, 0), 0), &g_VibScript_Steps[47]),
-    /* 47 */ VIBSCRIPT_STEP_WAVEFORM(0, NO_VALUE, 30,   15, 0, 0, VIBSCRIPT_SAMPLES_BITS(0, 0, 0, 0), &g_VibScript_Steps[47]),
-};
-
 
 void func_800892A4(s32 idx) // 0x800892A4
 {
