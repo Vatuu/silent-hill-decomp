@@ -1038,9 +1038,16 @@ void func_800E01F4(void) // 0x800E01F4
     D_800ED588 = 6;
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB69C);
+const s_800CB69C D_800CB69C = { { 0, 0, 0, 0 }, Q12(110.0f), Q12(0.5f) };
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB6AC);
+const s_800CB6AC D_800CB6AC[6] = {
+    { 0,  Q12(180.0f), Q12(0.5f),  Q12(0.7f)  },
+    { 6,  Q12(180.0f), Q12(0.05f), Q12(0.25f) },
+    { 7,  Q12(180.0f), Q12(0.05f), Q12(0.25f) },
+    { 8,  Q12(180.0f), Q12(0.05f), Q12(0.25f) },
+    { 9,  Q12(180.0f), Q12(0.05f), Q12(0.25f) },
+    { 10, Q12(180.0f), Q12(0.05f), Q12(0.25f) },
+};
 
 void func_800E0204(void) // 0x800E0204
 {
@@ -1495,7 +1502,7 @@ s32 func_800E0F28(q19_12 val0, q19_12 val1) // 0x800E0F28
     return integer;
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
+const VECTOR3 D_800CB728 = { Q12(2.0f), Q12(-0.3f), Q12(-30.5f) };
 
 void func_800E0FAC(s32 arg0) // 0x800E0FAC
 {
@@ -1744,11 +1751,88 @@ void func_800E1CA0(void) // 0x800E1CA0
 
 void func_800E1D48(void) {}
 
-// TODO: rodata used in a bunch of funcs, can't be inserted properly until they're all decomped.
-extern char D_800CC4C4[]; // "HERO"
-extern char D_800CC4CC[]; // "LIGHT"
-extern char D_800CC4D4[]; // "L_INT"
-extern char D_800CC4DC[]; // "MSB"
+const char* MAP_MESSAGES[] = {
+    #include "maps/shared/map_msg_common.h"
+    /* 15 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
+    /* 16 */ "~J0(10)\t~E ",
+    /* 17 */ "~J0(10)\tCybil! ~E ",
+    /* 18 */ "~J0(2.3)\tWake_up!_Snap_out_of_it! ~E ",
+    /* 19 */ "~J0(1.0)\tCybil! ~E ",
+    /* 20 */ "~J0(4.7)\t...Harry? ~N\n\t\t\t...What...happened? ",
+    /* 21 */ "~J0(3.3)\tDon't_talk. ~N\n\t\t\tI'll_take_care_of_you. ~E ",
+    /* 22 */ "~J1(4.8)\tHarry... ~N\n\t\t\tWhy_did_they_take_your_daughter? ",
+    /* 23 */ "~J1(2.3)\tWhy_her? ",
+    /* 24 */ "~J1(3.0)\tI'm_not_sure,_myself. ",
+    /* 25 */ "~J1(4.3)\tBut_you_know,_Cheryl_isn't ~N\n\t\t\tmy_biological_daughter. ",
+    /* 26 */ "~J1(3.0)\tI_actually_haven't_told_her_yet. ",
+    /* 27 */ "~J1(3.3)\tShe_probably_already_knows ~N\n\t\t\tanyway,_though. ~E ",
+    /* 28 */ "~J1(3.9)\tWe_found_her_abandoned ~N\n\t\t\ton_the_side_of_the_highway. ",
+    /* 29 */ "~J1(3.3)\tNobody_knew ~N\n\t\t\twhere_she_came_from. ",
+    /* 30 */ "~J1(3.3)\tWe_didn't_have_any_kids ~N\n\t\t\tof_our_own. ",
+    /* 31 */ "~J1(2.4)\tMy_wife_was_sick, ",
+    /* 32 */ "~J1(3.4)\tand_it_didn't_look_like ~N\n\t\t\tshe_was_getting_any_better. ",
+    /* 33 */ "~J1(2.7)\tSo_we_took_Cheryl_in. ~E ",
+    /* 34 */ "~J1(3.1)\tSo_in_that_case... ",
+    /* 35 */ "~J1(5.2)\tThere_might_be_some_connection ~N\n\t\t\tbetween_Cheryl_and_this_town. ~E ",
+    /* 36 */ "~J1(3.4)\tSo_what_do_you_do_now? ",
+    /* 37 */ "~J1(3.5)\tCheryl_is_my_daughter. ~N\n\t\t\tI_will_save_her. ",
+    /* 38 */ "~J1(4.5)\tNo_matter_what. ~E ",
+    /* 39 */ "~J0(7.3)\t~E ",
+    /* 40 */ "~J0(7.0)\t~E ",
+    /* 41 */ "~J0(6.0)\tWhat_in_the_hell... ~N\n\t\t\tHow_could_this_have_happened? ~E ",
+    /* 42 */ "~J1(1.7)\tI_figured_you'd_show. ",
+    /* 43 */ "~J1(1.6)\tHold_it_right_there. ",
+    /* 44 */ "~J1(4.0)\tI_don't_know_who_you_are, ~N\n\t\t\twhat_you_are_trying_to_do, ~N\n\t\t\tand_I_don't_care. ",
+    /* 45 */ "~J1(1.6)\tJust_one_thing. ",
+    /* 46 */ "~J1(3.1)\tLet_Cheryl_go. ~N\n\t\t\tThat's_all_I_ask. ~E ",
+    /* 47 */ "~J0(1.0)\tWhat? ~E ",
+    /* 48 */ "~J0(1.0)\tDamn! ~E ",
+    /* 49 */ "~J0(1.2)\tHuh? ~E ",
+    /* 50 */ "~J0(1.5)\tWhat_is_this? ~E ",
+    /* 51 */ "~J0(1.4)\t~E ",
+    /* 52 */ "~J1(1.6)\tWhere's_Cheryl? ",
+    /* 53 */ "~J1(2.0)\tGive_me_back_my_daughter. ~E ",
+    /* 54 */ "~J0(3.2)\tWe_meet_at_last,_Alessa. ",
+    /* 55 */ "~J0(1.2)\t.......! ~E ",
+    /* 56 */ "~J1(1.8)\tDahlia_Gillespie...... ",
+    /* 57 */ "~J1(2.0)\tWhere's_Cheryl? ~N\n\t\t\tWhere_is_she!? ~E ",
+    /* 58 */ "~J1(1.2)\tAlessa. ",
+    /* 59 */ "~J1(4.0)\tThis_is_the_end_of ~N\n\t\t\tyour_little_game. ",
+    /* 60 */ "~J1(1.2)\tMama... ",
+    /* 61 */ "~J1(2.7)\tHuh? ~N\n\t\t\tCould_she_be...? ~E ",
+    /* 62 */ "~J1(4.6)\tYou've_been_a_ghastly_little_pest, ~N\n\t\t\thaven't_you?__Alessa? ",
+    /* 63 */ "~J1(2.0)\tI_was_careless. ",
+    /* 64 */ "~J1(3.5)\tThinking_you_couldn't_escape ~N\n\t\t\tfrom_our_spell. ",
+    /* 65 */ "~J1(4.5)\tBut_Mommy_didn't_know ~N\n\t\t\thow_much_you'd_grown. ",
+    /* 66 */ "~J1(4.3)\tThat's_why_I_couldn't_catch_you ~N\n\t\t\tall_by_myself. ",
+    /* 67 */ "~J1(2.8)\tBut_what_a_pity,_yes? ",
+    /* 68 */ "~J1(5.0)\tNow_you're_half_indebted ~N\n\t\t\tto_this_man_for_his_help. ",
+    /* 69 */ "~J1(2.7)\tHey! ~N\n\t\t\tWhat_are_you_talking_about? ",
+    /* 70 */ "~J1(6.9)\tAlessa._My_dear_little_girl... ~N\n\t\t\tThere_is_one_thing_left ~N\n\t\t\tI_need_you_to_do_for_me. ~E ",
+    /* 71 */ "~J0(2.3)\tNo. ~N\n\t\t\tGet_away_from_me. ",
+    /* 72 */ "~J0(1.8)\tBad_girl. ",
+    /* 73 */ "~J0(5.1)\tEverything_is_ready. ~N\n\t\t\tLet's_go_home_now. ~E ",
+    /* 74 */ "~J0(1.7)\tWhat's_going_on_here!? ~E ",
+    /* 75 */ "~J0(1.2)\t~E "
+};
+
+const s_AnimInfo D_800CC424[8] = {
+    { Anim_BlendLinear, ANIM_STATUS(46, false), false, ANIM_STATUS(46, true), { Q12(10) }, NO_VALUE, 805 },
+    { Anim_PlayOnce, ANIM_STATUS(46, true), false, ANIM_STATUS(46, true), { Q12(18) }, 805, 819 },
+    { Anim_BlendLinear, ANIM_STATUS(47, false), false, ANIM_STATUS(47, true), { Q12(10) }, NO_VALUE, 820 },
+    { Anim_PlayOnce, ANIM_STATUS(47, true), false, ANIM_STATUS(47, true), { Q12(18) }, 820, 834 },
+    { Anim_BlendLinear, ANIM_STATUS(48, false), false, ANIM_STATUS(48, true), { Q12(10) }, NO_VALUE, 835 },
+    { Anim_PlayOnce, ANIM_STATUS(48, true), false, ANIM_STATUS(48, true), { Q12(30) }, 835, 868 },
+    { Anim_BlendLinear, ANIM_STATUS(49, false), false, ANIM_STATUS(49, true), { Q12(10) }, NO_VALUE, 869 },
+    { Anim_PlayOnce, ANIM_STATUS(49, true), false, ANIM_STATUS(49, true), { Q12(30) }, 869, 902 },
+};
+
+const s_UnkStruct3_Mo D_800CC4A4[4] = {
+    { 0x5D5C, 0x00D6, 0x0325, 0x0333 },
+    { 0x5F5E, 0x00D7, 0x0334, 0x0342 },
+    { 0x6160, 0x00F0, 0x0343, 0x0364 },
+    { 0x6362, 0x00F4, 0x0365, 0x0386 },
+};
 
 void func_800E1D50(void) // 0x800E1D50
 {
@@ -1831,12 +1915,12 @@ void func_800E1D50(void) // 0x800E1D50
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, D_800CC4C4, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
-        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &lintRot, D_800CC4CC, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
-        Dms_CharacterTransformGet(&lintPos, &lintRot, D_800CC4D4, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &lintRot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&lintPos, &lintRot, "L_INT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
 
         rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.lightPosition.vx);
         rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.lightPosition.vz);
@@ -1846,83 +1930,6 @@ void func_800E1D50(void) // 0x800E1D50
         g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
 }
-
-const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
-    /* 15 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
-    /* 16 */ "~J0(10)\t~E ",
-    /* 17 */ "~J0(10)\tCybil! ~E ",
-    /* 18 */ "~J0(2.3)\tWake_up!_Snap_out_of_it! ~E ",
-    /* 19 */ "~J0(1.0)\tCybil! ~E ",
-    /* 20 */ "~J0(4.7)\t...Harry? ~N\n\t\t\t...What...happened? ",
-    /* 21 */ "~J0(3.3)\tDon't_talk. ~N\n\t\t\tI'll_take_care_of_you. ~E ",
-    /* 22 */ "~J1(4.8)\tHarry... ~N\n\t\t\tWhy_did_they_take_your_daughter? ",
-    /* 23 */ "~J1(2.3)\tWhy_her? ",
-    /* 24 */ "~J1(3.0)\tI'm_not_sure,_myself. ",
-    /* 25 */ "~J1(4.3)\tBut_you_know,_Cheryl_isn't ~N\n\t\t\tmy_biological_daughter. ",
-    /* 26 */ "~J1(3.0)\tI_actually_haven't_told_her_yet. ",
-    /* 27 */ "~J1(3.3)\tShe_probably_already_knows ~N\n\t\t\tanyway,_though. ~E ",
-    /* 28 */ "~J1(3.9)\tWe_found_her_abandoned ~N\n\t\t\ton_the_side_of_the_highway. ",
-    /* 29 */ "~J1(3.3)\tNobody_knew ~N\n\t\t\twhere_she_came_from. ",
-    /* 30 */ "~J1(3.3)\tWe_didn't_have_any_kids ~N\n\t\t\tof_our_own. ",
-    /* 31 */ "~J1(2.4)\tMy_wife_was_sick, ",
-    /* 32 */ "~J1(3.4)\tand_it_didn't_look_like ~N\n\t\t\tshe_was_getting_any_better. ",
-    /* 33 */ "~J1(2.7)\tSo_we_took_Cheryl_in. ~E ",
-    /* 34 */ "~J1(3.1)\tSo_in_that_case... ",
-    /* 35 */ "~J1(5.2)\tThere_might_be_some_connection ~N\n\t\t\tbetween_Cheryl_and_this_town. ~E ",
-    /* 36 */ "~J1(3.4)\tSo_what_do_you_do_now? ",
-    /* 37 */ "~J1(3.5)\tCheryl_is_my_daughter. ~N\n\t\t\tI_will_save_her. ",
-    /* 38 */ "~J1(4.5)\tNo_matter_what. ~E ",
-    /* 39 */ "~J0(7.3)\t~E ",
-    /* 40 */ "~J0(7.0)\t~E ",
-    /* 41 */ "~J0(6.0)\tWhat_in_the_hell... ~N\n\t\t\tHow_could_this_have_happened? ~E ",
-    /* 42 */ "~J1(1.7)\tI_figured_you'd_show. ",
-    /* 43 */ "~J1(1.6)\tHold_it_right_there. ",
-    /* 44 */ "~J1(4.0)\tI_don't_know_who_you_are, ~N\n\t\t\twhat_you_are_trying_to_do, ~N\n\t\t\tand_I_don't_care. ",
-    /* 45 */ "~J1(1.6)\tJust_one_thing. ",
-    /* 46 */ "~J1(3.1)\tLet_Cheryl_go. ~N\n\t\t\tThat's_all_I_ask. ~E ",
-    /* 47 */ "~J0(1.0)\tWhat? ~E ",
-    /* 48 */ "~J0(1.0)\tDamn! ~E ",
-    /* 49 */ "~J0(1.2)\tHuh? ~E ",
-    /* 50 */ "~J0(1.5)\tWhat_is_this? ~E ",
-    /* 51 */ "~J0(1.4)\t~E ",
-    /* 52 */ "~J1(1.6)\tWhere's_Cheryl? ",
-    /* 53 */ "~J1(2.0)\tGive_me_back_my_daughter. ~E ",
-    /* 54 */ "~J0(3.2)\tWe_meet_at_last,_Alessa. ",
-    /* 55 */ "~J0(1.2)\t.......! ~E ",
-    /* 56 */ "~J1(1.8)\tDahlia_Gillespie...... ",
-    /* 57 */ "~J1(2.0)\tWhere's_Cheryl? ~N\n\t\t\tWhere_is_she!? ~E ",
-    /* 58 */ "~J1(1.2)\tAlessa. ",
-    /* 59 */ "~J1(4.0)\tThis_is_the_end_of ~N\n\t\t\tyour_little_game. ",
-    /* 60 */ "~J1(1.2)\tMama... ",
-    /* 61 */ "~J1(2.7)\tHuh? ~N\n\t\t\tCould_she_be...? ~E ",
-    /* 62 */ "~J1(4.6)\tYou've_been_a_ghastly_little_pest, ~N\n\t\t\thaven't_you?__Alessa? ",
-    /* 63 */ "~J1(2.0)\tI_was_careless. ",
-    /* 64 */ "~J1(3.5)\tThinking_you_couldn't_escape ~N\n\t\t\tfrom_our_spell. ",
-    /* 65 */ "~J1(4.5)\tBut_Mommy_didn't_know ~N\n\t\t\thow_much_you'd_grown. ",
-    /* 66 */ "~J1(4.3)\tThat's_why_I_couldn't_catch_you ~N\n\t\t\tall_by_myself. ",
-    /* 67 */ "~J1(2.8)\tBut_what_a_pity,_yes? ",
-    /* 68 */ "~J1(5.0)\tNow_you're_half_indebted ~N\n\t\t\tto_this_man_for_his_help. ",
-    /* 69 */ "~J1(2.7)\tHey! ~N\n\t\t\tWhat_are_you_talking_about? ",
-    /* 70 */ "~J1(6.9)\tAlessa._My_dear_little_girl... ~N\n\t\t\tThere_is_one_thing_left ~N\n\t\t\tI_need_you_to_do_for_me. ~E ",
-    /* 71 */ "~J0(2.3)\tNo. ~N\n\t\t\tGet_away_from_me. ",
-    /* 72 */ "~J0(1.8)\tBad_girl. ",
-    /* 73 */ "~J0(5.1)\tEverything_is_ready. ~N\n\t\t\tLet's_go_home_now. ~E ",
-    /* 74 */ "~J0(1.7)\tWhat's_going_on_here!? ~E ",
-    /* 75 */ "~J0(1.2)\t~E "
-};
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC424);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4A4);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4C4);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4CC);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4D4);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4DC);
 
 void func_800E219C(void) // 0x800E219C
 {
@@ -2032,20 +2039,20 @@ void func_800E219C(void) // 0x800E219C
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         // Get "HERO" position.
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, D_800CC4C4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Get "MSB" position
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, D_800CC4DC, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, FS_BUFFER_14);
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, D_800CC4CC, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
         g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz));
@@ -2322,20 +2329,20 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     if (g_Cutscene_Timer > Q12(96.0f))
     {
         // Get "HERO" position.
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, D_800CC4C4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Get "MSB" position
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, D_800CC4DC, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, FS_BUFFER_14);
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, D_800CC4CC, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
-        Dms_CharacterTransformGet(&lightIntPos, &unused, D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
         g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy, Math_Vector2MagCalcSafeQ6(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz));
@@ -2623,16 +2630,16 @@ void func_800E3244(void) // 0x800E3244
 
     if (g_Cutscene_Timer > Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, D_800CC4C4, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, D_800CC4DC, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "ICU", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
-        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &lintRot, D_800CC4CC, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
-        Dms_CharacterTransformGet(&lintPos, &lintRot, D_800CC4D4, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &lintRot, "LIGHT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&lintPos, &lintRot, "L_INT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
 
         rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.lightPosition.vx);
         rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.lightPosition.vz);
@@ -3134,12 +3141,12 @@ void func_800E3EF4(void) // 0x800E3EF4
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, &D_800CC4C4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
-        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, &D_800CC4CC, g_Cutscene_Timer, FS_BUFFER_14);
-        Dms_CharacterTransformGet(&lightIntPos, &unused, &D_800CC4D4, g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&g_SysWork.lightPosition, &unused, "LIGHT", g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&lightIntPos, &unused, "L_INT", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Set light rotation.
         g_SysWork.lightRotation.vx = -ratan2(lightIntPos.vy - g_SysWork.lightPosition.vy,
@@ -3335,12 +3342,12 @@ void func_800E558C(void) // 0x800E558C
         if (g_SysWork.sysStateSteps[0] >= 4)
         {
             Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARSIA", g_Cutscene_Timer, FS_BUFFER_14);
-            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, D_800CC4C4, g_Cutscene_Timer, FS_BUFFER_14);
+            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
             playerChara.rotation.vy += Q12_ANGLE(22.5f);
         }
         else
         {
-            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, D_800CC4C4, g_Cutscene_Timer, FS_BUFFER_14);
+            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
         }
     }
 }
@@ -3835,9 +3842,9 @@ void func_800E7204(void) // 0x800E7204
     }
 }
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7C0);
+const VECTOR3 D_800CC7C0 = { Q12(8.7f), Q12(-2.5f), Q12(-28.0f) };
 
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7CC);
+const VECTOR3 D_800CC7CC = { Q12(-16.0f), Q12(-1.5f), Q12(-64.0f) };
 
 void func_800E73B4(q19_12 arg0) // 0x800E73B4
 {

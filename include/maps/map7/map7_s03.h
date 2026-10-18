@@ -52,17 +52,17 @@
 typedef struct
 {
     VECTOR3 field_0;
-    s32     field_C;
-    s32     field_10;
-    s32     field_14;
-    s32     field_18;
-    s32     field_1C;
-    s32     field_20;
+    q19_12  field_C;
+    q19_12  field_10;
+    q19_12  field_14;
+    q19_12  field_18;
+    q19_12  field_1C;
+    q19_12  field_20;
     s32     field_24;
     s32     field_28;
-    s32     field_2C;
+    q19_12  field_2C;
     s32     field_30;
-    s32     field_34;
+    q19_12  field_34;
     s32     flags_38;
 } s_800ED7E0_ptr;
 STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
