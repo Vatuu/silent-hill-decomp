@@ -18,12 +18,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ USA, JAP0 ]
+        version: [ USA, JAP0, JAP1, JAP2 ]
 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
           lfs: true

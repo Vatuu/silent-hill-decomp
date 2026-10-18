@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: recursive
           lfs: true
@@ -46,7 +46,7 @@ jobs:
         run: make report
 
       - name: Upload Progress Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
             name: ${{ matrix.game_id }}_report
             path: ./build/USA/progress.json
