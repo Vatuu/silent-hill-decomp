@@ -20,7 +20,7 @@ typedef struct _AnmHeader
     /* 0x4  */ u16           keyframeDataSize; /** Size per keyframe. `(rotationBoneCount * 9) + (translationBoneCount * 3)`? */
     /* 0x6  */ u8            boneCount;        /** Size of `bindPoses`. */
     /* 0x7  */ s8            __pad_7;
-    /* 0x8  */ u32           activeBones; /** Bit field of bones to update. */
+    /* 0x8  */ u32           activeBoneFlags;
     /* 0xC  */ u32           fileSize;
     /* 0x10 */ u16           keyframeCount;
     /* 0x12 */ u8            scaleLog2;

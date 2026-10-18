@@ -117,7 +117,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     extraModelPtr2->anim.alpha = Q12(1.0f);
 
     // Disable upper body bones.
-    playerExtra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
 
     // Set animation time.
     modelPtr3->anim.time      = Q12(modelPtr3->anim.keyframeIdx);
@@ -126,7 +126,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     Anim_BonesUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
-    playerExtra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     Anim_BonesUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
     func_8004C040();

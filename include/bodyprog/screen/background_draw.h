@@ -22,21 +22,21 @@ extern q0_8 g_Screen_BackgroundImgGamma;
  */
 void Screen_BackgroundImgDraw(s_FsImageDesc* image);
 
-/** @brief Draws transition between images.
+/** @brief Draws a transition between images.
  *
  * Scratch: https://decomp.me/scratch/1MhOK
  *
- * @param imageIn Image previously being drawn.
- * @param imageOut Image to transition.
- * @param alpha Alpha streght between of the second image.
+ * @param imageIn Previous image to transition from.
+ * @param imageOut Image to transition into.
+ * @param alpha Blend alpha to the second image.
  */
 void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* imageOut, q3_12 alpha);
 
-/** @brief Set black background and slowly fade in a background image
+/** @brief Sets a black background and slowly fades in a background image.
  *
  * Scratch: https://decomp.me/scratch/IFpWU
  *
- * @note Most of the code is shared with `Screen_BackgroundImgTransition` code.
+ * @note Most of the code is shared with `Screen_BackgroundImgTransition`.
  *
  * @param image Image to draw.
  */
@@ -49,7 +49,7 @@ void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image);
  * @note Used only in the loading screen.
  *
  * @param vBlanks `e_SyncMode`.
- * @return Always return `false`.
+ * @return Always returns `false`.
  */
 bool Screen_BackgroundMotionBlur(s32 vBlanks);
 

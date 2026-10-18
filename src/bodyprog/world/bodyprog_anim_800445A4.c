@@ -72,7 +72,7 @@ void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfra
 {
     s32            boneCount;
     bool           isPlayer;
-    u32            activeBoneIdxs;
+    u32            activeBoneFlags;
     s32            boneIdx;
     s32            scaleLog2;
     s32            boneTranslationDataIdx;
@@ -96,15 +96,15 @@ void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfra
     frame1Data    = ((u8*)anmHdr + anmHdr->dataOffset) + (anmHdr->keyframeDataSize * keyframe1);
     frame1RotData = frame1Data + (anmHdr->translationBoneCount * 3);
 
-    // For player, use inverted mask of `extra.disabledAnimBones` to facilitate masking of upper and lower body.
+    // For player, use inverted mask of `extra.disabledAnimBoneFlags` to facilitate masking of upper and lower body.
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneIdxs = ~g_SysWork.playerWork.extra.disabledAnimBones;
+        activeBoneFlags = ~g_SysWork.playerWork.extra.disabledAnimBoneFlags;
     }
     else
     {
-        activeBoneIdxs = anmHdr->activeBones;
+        activeBoneFlags = anmHdr->activeBoneFlags;
     }
 
     // Skip root bone (index 0) and start processing from bone 1.
@@ -115,11 +115,11 @@ void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfra
          boneIdx < boneCount;
          boneIdx++, curBindPose++, curBoneCoord++)
     {
-        // Process bones marked as active.
-        if (activeBoneIdxs & (1 << boneIdx))
+        // Process bones flagged active.
+        if (activeBoneFlags & (1 << boneIdx))
         {
             curBoneCoord->flg = false;
-            scaleLog2      = anmHdr->scaleLog2;
+            scaleLog2         = anmHdr->scaleLog2;
 
             boneTranslationDataIdx = curBindPose->translationDataIdx;
             if (boneTranslationDataIdx >= 0)
@@ -133,7 +133,7 @@ void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfra
                 {
                     // Linear interpolation with scaling: `frame0 + (frame1 - frame0) * alpha`.
                     curBoneCoord->coord.t[i] = (*frame0TranslationData << scaleLog2) +
-                                            (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
+                                               (((*frame1TranslationData - *frame0TranslationData) * alpha) >> (Q12_SHIFT - scaleLog2));
 
                     frame0TranslationData++;
                     frame1TranslationData++;

@@ -46,7 +46,9 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
             sprt = (SPRT*)packet;
 
             addPrimFast(ot, sprt, 4);
-            setRGBC0(sprt, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, PRIM_RECT | RECT_TEXTURE);
+            setRGBC0(sprt,
+                     g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma, g_Screen_BackgroundImgGamma,
+                     PRIM_RECT | RECT_TEXTURE);
 
             if (y == 0)
             {
@@ -135,7 +137,7 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* image
 
 void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image)
 {
-    volatile s32 pad; // Hack
+    volatile s32 __pad; // Hack.
     s32          i;
     s32          xOffset;
     u8           tPageY;

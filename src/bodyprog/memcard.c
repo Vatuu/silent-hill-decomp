@@ -1407,7 +1407,7 @@ static bool MemCard_DeviceTest(s32 deviceId)
     return MemCard_HwLastEvent() != 0;
 }
 
-/** @brief Format game file name in memory card.
+/** @brief Format game filename in memory card.
  *
  * Scratch 1: https://decomp.me/scratch/Ir3Z4
  * Scratch 2: https://decomp.me/scratch/RuxhB
@@ -1428,13 +1428,13 @@ static s32 MemCard_DeviceFormat(s32 deviceId)
     #undef BUF_SIZE
 }
 
-/** @brief Clear game file name in memory card.
+/** @brief Clear game filename in memory card.
  *
  * Scratch 1: https://decomp.me/scratch/BL03h
  * Scratch 2: https://decomp.me/scratch/pkwrp
  *
  * @param deviceId Memory card index.
- * @param fileName Save data file name.
+ * @param fileName Save data filename.
  */
 static s32 MemCard_FileClear(s32 deviceId, char* fileName)
 {
@@ -1451,13 +1451,13 @@ static s32 MemCard_FileClear(s32 deviceId, char* fileName)
     #undef BUF_SIZE
 }
 
-/** @unused @brief Rename game file name.
+/** @unused @brief Rename game filename.
  *
  * Scratch: https://decomp.me/scratch/HEQn8
  *
  * @param deviceId Memory card index.
- * @param prevName Previous save data file name.
- * @param newName New save data file name.
+ * @param prevName Previous save data filename.
+ * @param newName New save data filename.
  */
 static s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName)
 {

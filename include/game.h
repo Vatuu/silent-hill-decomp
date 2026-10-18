@@ -52,7 +52,7 @@
     ((weaponAttack) % 10)
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
- * For use with `s_PlayerExtra::disabledAnimBones`.
+ * For use with `s_PlayerExtra::disabledAnimBoneFlags`.
  *
  * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
  *
@@ -333,12 +333,12 @@ STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 /** @brief Extra player character info. */
 typedef struct _PlayerExtra
 {
-    /* 0x0  */ s_Model     model;             /** Manages upper half body's animations (torso, arms, head). */
-    /* 0x18 */ s32         disabledAnimBones; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
-    /* 0x1C */ s32         state;             /** `e_PlayerState` */
-    /* 0x20 */ s32         upperBodyState;    /** `e_PlayerUpperBodyState` */
-    /* 0x24 */ s32         lowerBodyState;    /** `e_PlayerLowerBodyState` */
-    /* 0x28 */ e_InvItemId lastUsedItem;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
+    /* 0x0  */ s_Model     model;                 /** Manages upper half body's animations (torso, arms, head). */
+    /* 0x18 */ s32         disabledAnimBoneFlags; /** Created using `BITMASK_RANGE`. */
+    /* 0x1C */ s32         state;                 /** `e_PlayerState` */
+    /* 0x20 */ s32         upperBodyState;        /** `e_PlayerUpperBodyState` */
+    /* 0x24 */ s32         lowerBodyState;        /** `e_PlayerLowerBodyState` */
+    /* 0x28 */ e_InvItemId lastUsedItem;          /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
 } s_PlayerExtra;
 STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
 

@@ -8,12 +8,12 @@ typedef enum _CutsceneBorderState
     CutsceneBorderState_None         = 1,
 
     CutsceneBorderState_Active       = 1 << 4,                         /** Packing mask. */
-    CutsceneBorderState_FadeInStart  = CutsceneBorderState_Active + 2, /** 18 */
-    CutsceneBorderState_FadingIn     = CutsceneBorderState_Active + 3, /** 19 */
-    CutsceneBorderState_ForceShow    = CutsceneBorderState_Active + 4, /** 20 */
-    CutsceneBorderState_Shown        = CutsceneBorderState_Active + 5, /** 21 */
-    CutsceneBorderState_FadeOutStart = CutsceneBorderState_Active + 6, /** 22 */
-    CutsceneBorderState_FadingOut    = CutsceneBorderState_Active + 7, /** 23 */
+    CutsceneBorderState_FadeInStart  = CutsceneBorderState_Active + 2, /** 18. */
+    CutsceneBorderState_FadingIn     = CutsceneBorderState_Active + 3, /** 19. */
+    CutsceneBorderState_ForceShow    = CutsceneBorderState_Active + 4, /** 20. */
+    CutsceneBorderState_Shown        = CutsceneBorderState_Active + 5, /** 21. */
+    CutsceneBorderState_FadeOutStart = CutsceneBorderState_Active + 6, /** 22. */
+    CutsceneBorderState_FadingOut    = CutsceneBorderState_Active + 7, /** 23. */
 } e_CutsceneBorderState;
 
 /** @brief Resets cutscene borders. */
@@ -31,7 +31,6 @@ typedef enum _CutsceneBorderState
 /** @brief Starts cutscene border fade-out. */
 #define CutsceneBorder_FadeOutStart() \
     g_SysWork.cutsceneBorderState = CutsceneBorderState_FadeOutStart
-
 
 /** @brief 
  *

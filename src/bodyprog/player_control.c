@@ -1194,13 +1194,13 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     if (!g_Player_IsInWalkToRunTransition)
     {
         // Disable upper body bones before playing anim.
-        playerExtra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
+        playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[player->model.anim.status];
         animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
-        playerExtra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
+        playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
         animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
@@ -1208,14 +1208,14 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     }
 
     // Disable upper body bones before playing anim.
-    playerExtra.disabledAnimBones = HARRY_UPPER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
     player->model.anim.status                     = ANIM_STATUS(HarryAnim_Still, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
     animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
-    playerExtra.disabledAnimBones = HARRY_LOWER_BODY_BONE_MASK;
+    playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
     animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);

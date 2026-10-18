@@ -386,7 +386,7 @@ extern u8 D_800A97D7;
 /** @brief Defines if the player is or not in the save screen under the save game mode or in the load game mode. */
 extern s8 g_SaveScreen_IsInSaveScreen;
 
-/** @brief Dead code. Only used for a check which ask if this is 0. */
+/** @brief Dead code. Only used for a check which asks if this is 0. */
 extern s8 D_800A97D9;
 
 // ====================
@@ -612,39 +612,39 @@ bool MemCard_ChecksumValidate(s_Savegame_Footer* saveFooter, s8* saveData, s32 s
  */
 u8 MemCard_ChecksumGenerate(s8* saveData, s32 saveDataLength);
 
-/** @brief Initializes memory card BIOS system.
+/** @brief Initializes the memory card BIOS system.
  *
  * Scratch: https://decomp.me/scratch/4Bd9c
  */
 void MemCard_WorkInit(void);
 
-/** @brief Initializes memory card processes system.
+/** @brief Initializes the memory card processes system.
  *
  * Scratch: https://decomp.me/scratch/dQ9Mh
  */
 void MemCard_EventsInit(void);
 
-/** @brief Finalize memory card processes system.
+/** @brief Finalizes the memory card processes system.
  *
  * Scratch: https://decomp.me/scratch/9iYwp
  */
 void MemCard_EventsClose(void);
 
-/** @brief Return state from any active memory card event.
+/** @brief Returns a state from any active memory card event.
  *
  * Scratch: https://decomp.me/scratch/r0KzP
  * @return EvSpERROR, EvSpTIMOUT, EvSpNEW, EvSpIOE or NULL.
  */
 s32 MemCard_SwEventsTest(void);
 
-/** @brief Reset memory card event system (Software level).
+/** @brief Resets the memory card event system (software level).
  *
  * Scratch 1: https://decomp.me/scratch/bAN2R
  * Scratch 2: https://decomp.me/scratch/D9ZX8
  */
 void MemCard_SwEventsReset(void);
 
-/** @brief Returns last memory card event registered (Hardware level).
+/** @brief Returns the last memory card event registered (hardware level).
  *
  * Scratch: https://decomp.me/scratch/xxLr7
  *
@@ -652,7 +652,7 @@ void MemCard_SwEventsReset(void);
  */
 s32 MemCard_HwLastEvent(void);
 
-/** @brief Reset memory card event system (Hardware level).
+/** @brief Resets the memory card event system (hardware level).
  *
  * Scratch 1: https://decomp.me/scratch/BzLTs
  * Scratch 2: https://decomp.me/scratch/ZvY0z
@@ -697,20 +697,20 @@ void MemCard_HwEventSpUNKNOWN(void);
  */
 s32 MemCard_StateResult(void);
 
-/** @brief Set basic processes related to data transfer.
- * See `e_MemCardWorkIoMode` to see what kind of processes this function can handle.
+/** @brief Sets basic processes related to data transfer.
+ * See `e_MemCardWorkIoMode` for what kind of processes this function can handle.
  *
  * Scratch: https://decomp.me/scratch/ta76s
  *
  * @param mode `e_MemCardWorkIoMode`.
  * @param deviceId Memory card index.
  * @param outDir Memory card directories information.
- * @param filename PS1 Filename directory identifier.
- * @param createBlockCount Memory card files count.
+ * @param filename PS1 filename directory identifier.
+ * @param createBlockCount Memory card file count.
  * @param fileOffset Memory card data pointer.
  * @param outBuf Extracted data buffer.
- * @param bufSize Size of data to be extracted.
- * @return `true` if the work has been set, in case the memory card is in idle state then it return `false`.
+ * @param bufSize Data size to extract.
+ * @return `true` if the work has been set, otherwise `false` if the memory card is in an idle state.
  */
 bool MemCard_WorkSet(e_MemCardWorkIoMode mode, s32 deviceId, s_MemCardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 

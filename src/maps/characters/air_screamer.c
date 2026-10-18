@@ -3803,7 +3803,8 @@ void AirScreamer_Control_14(s_SubCharacter* airScreamer)
                 case 0:
                     distFieldF8 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition);
 
-                    if (var_s6 || (((field14C_2 != 0 && dist < Q12(15.0f)) || dist < Q12(4.0f)) && distFieldF8 < Q12(1.5f)))
+                    if (var_s6 ||
+                        (((field14C_2 != 0 && dist < Q12(15.0f)) || dist < Q12(4.0f)) && distFieldF8 < Q12(1.5f)))
                     {
                         airScreamer->model.controlState = AirScreamerControl_10;
                         airScreamer->model.stateStep    = 0;

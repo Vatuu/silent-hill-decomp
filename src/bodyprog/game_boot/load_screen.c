@@ -81,7 +81,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim.flags                           |= AnimFlag_Visible;
-        g_SysWork.playerWork.extra.disabledAnimBones = 0;
+        g_SysWork.playerWork.extra.disabledAnimBoneFlags = 0;
         model->anim.flags                           |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim.time                             = Q12(26.0f);
         g_SysWork.playerWork.player.position.vy      = Q12(0.2f);
