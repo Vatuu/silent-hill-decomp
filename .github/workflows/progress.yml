@@ -12,13 +12,13 @@ on:
 jobs:
   build:
     if: github.repository == 'shdecompilations/silent-hill-decomp'
-
+    
     container: ghcr.io/shdecompilations/decomp-images-silent-hill:master
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        version: [ USA, JAP0 ]
+        game_id: [ SLUS-00707 ]
 
     runs-on: ubuntu-latest
     steps:
@@ -34,17 +34,21 @@ jobs:
       - name: "Setup Python"
         run: pip3 install -r requirements.txt --break-system-packages
 
-      - name: "Copy Binaries"
+      - name: "Copy ROM"
         run: |
-          mkdir -p assets rom
-          cp -r -p /files/assets/${{ matrix.version }} assets/
-          cp -r -p /files/rom/${{ matrix.version }} rom/
+          mkdir -p ./rom/image
+          cp -r -p /rom/* ./rom/image
+
+      - name: Extract Game Assets
+        run: make extract
 
       - name: Generate Progress Report
-        run: make GAME_VERSION=${{ matrix.version }} report
+        run: make report
 
       - name: Upload Progress Report
         uses: actions/upload-artifact@v7
         with:
-            name: ${{ matrix.version }}_report
-            path: ./build/${{ matrix.version }}/progress.json
+            name: ${{ matrix.game_id }}_report
+            path: ./build/USA/progress.json
+      
+
