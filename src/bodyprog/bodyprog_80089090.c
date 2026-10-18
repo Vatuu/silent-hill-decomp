@@ -20,7 +20,7 @@ u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
 
-bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) =
+bool (*D_800AFD08[])(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* ptr, u32* arg3) =
 {
     func_80089A30,
     func_80089BB8,
@@ -31,14 +31,14 @@ bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* pt
 
 void func_80089090(s32 arg0) // 0x80089090
 {
-    func_80089524(&g_SysWork.field_2514, arg0);
+    func_80089524(&g_SysWork.kpad_2514, arg0);
 }
 
 void func_800890B8(void) // 0x800890B8
 {
-    func_8009E198(&g_SysWork.field_2514, 0);
-    func_8009E310(&g_SysWork.field_2514, &g_SysWork.field_2514.head_18.key_8, 2);
-    func_8009EBB8(&g_SysWork.field_2514, &g_SysWork.field_2514.head_18.unk_18, 16);
+    func_8009E198(&g_SysWork.kpad_2514, 0);
+    func_8009E310(&g_SysWork.kpad_2514, g_SysWork.kpadChannels_2534, ARRAY_SIZE(g_SysWork.kpadChannels_2534));
+    func_8009EBB8(&g_SysWork.kpad_2514, g_SysWork.kpadEffects_2544, ARRAY_SIZE(g_SysWork.kpadEffects_2544));
 
     g_SysWork.field_2510 = func_8009E4F8();
 
@@ -48,20 +48,20 @@ void func_800890B8(void) // 0x800890B8
 
 s32 func_80089128(void) // 0x80089128
 {
-    s32              temp_s0;
-    s32              var_s3;
-    s32              var_s5;
-    s32              var_s6;
-    s_func_8009ECCC* temp_v0;
-    s_func_8009ECCC* var_s0;
-    s_func_8009ECCC* temp_s1;
-    s_SysWork_2514*  var_s2;
+    s32            temp_s0;
+    s32            var_s3;
+    s32            var_s5;
+    s32            var_s6;
+    s_KPad_Effect* temp_v0;
+    s_KPad_Effect* var_s0;
+    s_KPad_Effect* temp_s1;
+    s_KPadWork*    var_s2;
 
-    var_s2 = &g_SysWork.field_2514;
+    var_s2 = &g_SysWork.kpad_2514;
 
     temp_s0 = g_SysWork.field_2510;
 
-    if (!var_s2->field_0.field_0_16)
+    if (!var_s2->status_0.isInit_0_16)
     {
         func_800890B8();
     }
@@ -69,12 +69,12 @@ s32 func_80089128(void) // 0x80089128
     if (g_GameWork.config.vibrationEnabled)
     {
         func_8009E2A0(var_s2);
-        var_s2->field_0.field_0_8 = 1 << 7;
+        var_s2->status_0.strength_0_8 = 1 << 7;
     }
     else
     {
         func_8009E2D8(var_s2);
-        var_s2->field_0.field_0_8 = 0;
+        var_s2->status_0.strength_0_8 = 0;
     }
 
     if (PadChkVsync())
@@ -84,13 +84,13 @@ s32 func_80089128(void) // 0x80089128
 
     var_s5 = 0;
 
-    var_s2->field_C[0].data_4 = 0;
-    var_s2->field_C[1].data_4 = 0;
+    var_s2->channels_C[0].strength_4 = 0;
+    var_s2->channels_C[1].strength_4 = 0;
 
     temp_v0 = func_8009ED74(var_s2);
     var_s0  = func_8009ED7C(temp_v0);
 
-    if (!var_s2->field_0.field_0_17)
+    if (!var_s2->status_0.isPaused_0_17)
     {
         var_s3 = g_VBlanks;
     }
@@ -209,12 +209,12 @@ const u32 D_8002AF70[] = { 0xC4E0E0A8, 0x54A8, 0};
 
 void func_800892A4(s32 idx) // 0x800892A4
 {
-    func_800895E4(&g_SysWork.field_2514, &D_8002AC04[idx], 0x80);
+    func_800895E4(&g_SysWork.kpad_2514, &D_8002AC04[idx], 0x80);
 }
 
 void func_800892DC(s32 idx, u8 arg1) // 0x800892DC
 {
-    func_800895E4(&g_SysWork.field_2514, &D_8002AC04[idx], arg1);
+    func_800895E4(&g_SysWork.kpad_2514, &D_8002AC04[idx], arg1);
 }
 
 void func_80089314(s32 arg0) // 0x80089314
@@ -298,14 +298,14 @@ void func_80089500(void) // 0x80089500
     func_800892DC(9, 0xA0);
 }
 
-bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
+bool func_80089524(s_KPadWork* arg0, s32 padInfoMode) // 0x80089524
 {
-    s32             padState;
-    bool            cond;
-    u8              socket;
-    s_SysWork_2514* temp;
+    s32         padState;
+    bool        cond;
+    u8          socket;
+    s_KPadWork* temp;
 
-    socket = arg0->field_0.padPort_0_0;
+    socket = arg0->status_0.port_0_0;
     PadInfoMode(socket, 2, 0);
 
     padState = PadGetState(socket);
@@ -316,15 +316,15 @@ bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
 
         cond = PadSetMainMode(socket, 1, 0);
 
-        temp            = &g_SysWork.field_2514;
-        temp->field_0.field_0_23 = 0;
-        temp->field_0.field_0_22 = 0;
+        temp                            = &g_SysWork.kpad_2514;
+        temp->status_0.isActSet_0_23    = 0;
+        temp->status_0.isAlignDone_0_22 = 0;
     }
 
     return cond;
 }
 
-s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
+s32 func_800895E4(s_KPadWork* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
 {
     u32 sp10;
 
@@ -338,11 +338,11 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
     return D_800AFD08[arg1->field_4.funcIdx_4](arg0, 0, arg1, &sp10);
 }
 
-bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3) // 0x80089644
+bool func_80089644(s_KPadWork* arg0, s_KPad_Effect* arg1, s32 arg2, u32 arg3) // 0x80089644
 {
-    u32                var1;
-    s_SysWork_2514_C*  ptr0;
-    s_8002AC04*        ptr1;
+    u32             var1;
+    s_KPad_Channel* ptr0;
+    s_8002AC04*     ptr1;
 
     arg3             *= 5;
     arg1->field_18    = 0;
@@ -364,17 +364,17 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
     if (arg1->field_14_31 && (arg2 & arg1->field_1E))
     {
         var1 = arg1->field_18;
-        ptr0 = &arg0->field_C[arg1->field_14_24];
-        if (ptr0->data_4 < var1)
+        ptr0 = &arg0->channels_C[arg1->field_14_24];
+        if (ptr0->strength_4 < var1)
         {
-            ptr0->data_4 = var1;
+            ptr0->strength_4 = var1;
         }
     }
 
     return arg1->field_10 != NULL;
 }
 
-bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3)
+bool func_8008973C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* ptr, u32* arg3)
 {
     if (!arg0 || arg1)
     {
@@ -424,45 +424,45 @@ bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr,
     return true;
 }
 
-void func_80089840(s_SysWork_2514* arg0) // 0x80089840
+void func_80089840(s_KPadWork* arg0) // 0x80089840
 {
-    s_SysWork_2514_18* next;
-    s_SysWork_2514_18* curr;
-    s_SysWork_2514_18* head;
+    s_KPad_Effect* next;
+    s_KPad_Effect* curr;
+    s_KPad_Effect* head;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    curr = arg0->head_18.next_0;
-    head = &arg0->head_18;
+    curr = arg0->effects_18.next_0;
+    head = KPAD_EFFECTS_HEAD(arg0);
 
     while (curr != head)
     {
-        next = curr->next_0;
+        next = curr->links_0.next_0;
         func_8009EC1C(arg0, curr);
         curr = next;
     }
 }
 
-void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
+void func_8008989C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
 {
-    s_SysWork_2514_18* next;
-    s_SysWork_2514_18* head;
-    s_SysWork_2514_18* curr;
+    s_KPad_Effect* next;
+    s_KPad_Effect* head;
+    s_KPad_Effect* curr;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    curr = arg0->head_18.next_0;
-    head = &arg0->head_18;
+    curr = arg0->effects_18.next_0;
+    head = KPAD_EFFECTS_HEAD(arg0);
 
     while (curr != head)
     {
-        next = curr->next_0;
+        next = curr->links_0.next_0;
 
         if (arg2(curr->field_1E, arg1) != 0)
         {
@@ -473,23 +473,23 @@ void func_8008989C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8
     }
 }
 
-void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008992C
+void func_8008992C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008992C
 {
-    s_SysWork_2514_18* next;
-    s_SysWork_2514_18* head;
-    s_SysWork_2514_18* curr;
+    s_KPad_Effect* next;
+    s_KPad_Effect* head;
+    s_KPad_Effect* curr;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    curr = arg0->head_18.next_0;
-    head = &arg0->head_18;
+    curr = arg0->effects_18.next_0;
+    head = KPAD_EFFECTS_HEAD(arg0);
 
     while (curr != head)
     {
-        next = curr->next_0;
+        next = curr->links_0.next_0;
 
         if (arg2(curr->field_1C, arg1) != 0)
         {
@@ -500,23 +500,23 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8
     }
 }
 
-void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
+void func_800899BC(s_KPadWork* arg0, s32 arg1) // 0x800899BC
 {
-    s_SysWork_2514_18* next;
-    s_SysWork_2514_18* head;
-    s_SysWork_2514_18* curr;
+    s_KPad_Effect* next;
+    s_KPad_Effect* head;
+    s_KPad_Effect* curr;
 
     if (arg0 == NULL)
     {
         return;
     }
 
-    curr = arg0->head_18.next_0;
-    head = &arg0->head_18;
+    curr = arg0->effects_18.next_0;
+    head = KPAD_EFFECTS_HEAD(arg0);
 
     while (curr != head)
     {
-        next = curr->next_0;
+        next = curr->links_0.next_0;
 
         if (curr->field_C == arg1)
         {
@@ -527,13 +527,13 @@ void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
     }
 }
 
-bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089A30
+bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089A30
 {
-    s32                temp_s3;
-    s_SysWork_2514_18* next;
-    s_SysWork_2514_18* head;
-    s_SysWork_2514_18* current;
-    s_func_8009ECCC*   ptr;
+    s32            temp_s3;
+    s_KPad_Effect* next;
+    s_KPad_Effect* head;
+    s_KPad_Effect* current;
+    s_KPad_Effect* ptr;
 
     ptr = arg1;
 
@@ -556,8 +556,8 @@ bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
 
     if (arg2->field_4.func_80089A30_data.field_5_5 || arg2->field_4.func_80089A30_data.field_5_6)
     {
-        current = arg0->head_18.next_0;
-        head    = &arg0->head_18;
+        current = arg0->effects_18.next_0;
+        head    = KPAD_EFFECTS_HEAD(arg0);
 
         if (arg2->field_4.func_80089A30_data.field_5_5)
         {
@@ -573,14 +573,14 @@ bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
                     return false;
                 }
 
-                current = current->next_0;
+                current = current->links_0.next_0;
             }
         }
         else
         {
             while (current != head)
             {
-                next = current->next_0;
+                next = current->links_0.next_0;
                 if ((ptr == NULL || current != ptr) && current->field_C == temp_s3)
                 {
                     func_8009EC1C(arg0, current);
@@ -612,11 +612,11 @@ bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     return true;
 }
 
-bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089BB8
+bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089BB8
 {
-    s_func_8009ECCC* temp_a0;
-    s_func_8009ECCC* temp_v0;
-    u32              var_s1;
+    s_KPad_Effect* temp_a0;
+    s_KPad_Effect* temp_v0;
+    u32            var_s1;
 
     if (arg0 == NULL || arg2 == NULL)
     {
@@ -647,7 +647,7 @@ bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
         }
         else
         {
-            var_s1 = arg1->field_8;
+            var_s1 = arg1->priority_8;
         }
     }
 
@@ -662,16 +662,16 @@ bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     temp_v0 = func_8009ECCC(arg0, var_s1);
     if (temp_v0 != NULL)
     {
-        temp_a0                   = temp_v0->field_0;
-        temp_a0->field_4          = temp_v0->field_4;
-        temp_a0->field_4->field_0 = temp_a0;
+        temp_a0                                 = temp_v0->links_0.next_0;
+        temp_a0->links_0.prev_4                 = temp_v0->links_0.prev_4;
+        temp_a0->links_0.prev_4->links_0.next_0 = temp_a0;
 
-        temp_a0          = arg1->field_0;
-        temp_v0->field_4 = arg1;
-        temp_v0->field_0 = temp_a0;
-        temp_a0->field_4 = temp_v0;
+        temp_a0                 = arg1->links_0.next_0;
+        temp_v0->links_0.prev_4 = arg1;
+        temp_v0->links_0.next_0 = temp_a0;
+        temp_a0->links_0.prev_4 = temp_v0;
 
-        arg1->field_0 = temp_v0;
+        arg1->links_0.next_0 = temp_v0;
 
         temp_v0->field_10    = arg2->field_4.func_80089BB8_data.field_8;
         temp_v0->field_14_0  = 0;
@@ -683,7 +683,7 @@ bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     return true;
 }
 
-bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
+bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089D0C
 {
     if (arg0 == NULL || arg2 == NULL)
     {
@@ -717,7 +717,7 @@ bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     return false;
 }
 
-bool func_80089DF0(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089DF0
+bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089DF0
 {
     u32 temp_a0;
     s32 temp_a0_2;

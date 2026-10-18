@@ -260,7 +260,7 @@ segments:
       - [0x63348,    c, events/bgm_utils]             # }
       - [0x63658,    c, events/events_2d_draw_utils]  # }
       - [0x6411C,    c, events/chara_spawn]           # }
-      - [0x64530,    c, bodyprog_80089090] # Uses `s_SysWork_2514` which is mainly used for `libkpad`, possibly vibration?
+      - [0x64530,    c, bodyprog_80089090] # Uses `s_KPadWork` which is mainly used for `libkpad`, possibly vibration?
       - [0x654F8,    c, bodyprog_combat_8008A058]
       - [0x67E40,    c, dms]
       - [0x688BC,    c, water]

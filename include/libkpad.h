@@ -17,86 +17,25 @@ typedef enum _PadTerminalType
     PadTerminalType_MultitapAdapter     = 8
 } e_PadTerminalType;
 
+/** @brief Describes one pad actuator. Unread fields may include what `PadInfoAct` reports. */
 typedef struct
 {
-    u32 bits_0_0   : 8;
-    u32 bits_0_8   : 1;
-    u32 bits_0_9   : 7;
-
-    u32 bits_0_16  : 3;
-    u32 bits_0_19  : 5;
-
-    u32 bits_0_24  : 3;
-    u32 bits_0_27  : 5;
-} s_SysWork_2514_C_0;
-
-typedef union
-{
-    s_SysWork_2514_C_0 flags;
-    s32                value;
-} u_SysWork_2514_C_0;
+    u32 bits_0_0        : 8;
+    u32 bits_0_8        : 1;
+    u32 bits_0_9        : 7; // Possibly current draw in 10 mA units.
+    u32 dataOffset_0_16 : 3; // First byte in `s_KPadWork::actuatorData_4` driving this actuator.
+    u32 bits_0_19       : 5; // Always 1, possibly the actuator function (vibration).
+    u32 dataSize_0_24   : 3; // Data bytes, 0 for an on/off motor that takes a single byte.
+    u32 bits_0_27       : 5; // 2 for on/off motors, 1 for variable speed.
+} s_KPad_ActuatorInfo;
+STATIC_ASSERT_SIZEOF(s_KPad_ActuatorInfo, 4);
 
 typedef struct
 {
-    s_SysWork_2514_C_0 flags;
-    s32                data_4;
-} s_SysWork_2514_C;
-
-typedef struct _SysWork_2514_18
-{
-    struct _SysWork_2514_18* next_0;
-    struct _SysWork_2514_18* prev_4;
-    u_SysWork_2514_C_0       key_8;
-    s32                      field_C;
-    u8                       unk_10[8];
-    struct _SysWork_2514_18* unk_18;
-    u16                      field_1C;
-    u16                      field_1E;
-} s_SysWork_2514_18;
-
-typedef struct
-{
-    u32 padPort_0_0 : 8;
-    u32 field_0_8   : 8;
-    u32 field_0_16  : 1;
-    u32 field_0_17  : 1;
-    u32 field_0_18  : 1;
-    u32 field_0_19  : 3;
-    u32 field_0_22  : 1;
-    u32 field_0_23  : 1;
-    u32 field_0_24  : 8;
-} s_SysWork_2514_0;
-
-typedef struct
-{
-    s32 field_0 : 16;
-    s32 field_2 : 8;
-    u32 field_3 : 8;
-} s_SysWork_2514_8;
-
-// Related to controller data?
-typedef struct
-{
-    s_SysWork_2514_0   field_0;
-    s32                actuatorData_4;
-    s_SysWork_2514_8   field_8;
-    s_SysWork_2514_C*  field_C;
-    s_SysWork_2514_18* field_10;
-    s32                unk_14;
-    s_SysWork_2514_18  head_18;
-} s_SysWork_2514;
-STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
-
-// Controller node? Related to libkpad.
-typedef struct _SysWork_2510
-{
-    struct _SysWork_2510* next_0;
-    u8                    key_4;
-    s8                    pad_5[3];
-    s32                   field_8;
-    s32                   (*func_C)(s_SysWork_2514* ptr, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
-} s_SysWork_2510;
-STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
+    s_KPad_ActuatorInfo info_0;
+    s32                 strength_4; // Requested level, left-aligned to the top byte.
+} s_KPad_Channel;
+STATIC_ASSERT_SIZEOF(s_KPad_Channel, 8);
 
 // Exception, as one of the unidentified structs uses this.
 typedef struct _8002AC04
@@ -160,69 +99,129 @@ typedef struct _8002AC04
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
-typedef struct _func_8009ECCC
+/** @brief Links of an `s_KPad_Effect` list. Also used on its own as a list head in `s_KPadWork`. */
+typedef struct
 {
-    struct _func_8009ECCC* field_0; // TODO: Not sure if these point to other struct type or same type.
-    struct _func_8009ECCC* field_4;
-    s32                    field_8;
-    s32                    field_C;
-    s_8002AC04*            field_10;
-    u32                    field_14_0  : 16;
-    u32                    field_14_16 : 8;
-    u32                    field_14_24 : 7;
-    u32                    field_14_31 : 1;
-    u32                    field_18;
-    u16                    field_1C;
-    u16                    field_1E;
-} s_func_8009ECCC;
+    struct _KPad_Effect* next_0;
+    struct _KPad_Effect* prev_4;
+} s_KPad_EffectList;
+STATIC_ASSERT_SIZEOF(s_KPad_EffectList, 8);
 
-bool func_8009E198(s_SysWork_2514* arg0, u32 port);
+/** @brief Active vibration effect, kept in `s_KPadWork::effects_18` sorted by descending priority. */
+typedef struct _KPad_Effect
+{
+    s_KPad_EffectList links_0;
+    s32               priority_8;
+    s32               field_C;
+    s_8002AC04*       field_10;
+    u32               field_14_0  : 16;
+    u32               field_14_16 : 8;
+    u32               field_14_24 : 7;
+    u32               field_14_31 : 1;
+    u32               field_18;
+    u16               field_1C;
+    u16               field_1E;
+} s_KPad_Effect;
+STATIC_ASSERT_SIZEOF(s_KPad_Effect, 32);
 
-s32 func_8009E230(s_SysWork_2514* arg0);
+/** @brief Status bits for the KPad system. */
+typedef struct
+{
+    u32 port_0_0         : 8; // Pad port: bit 4 selects port 1 or 2, bits 0-1 the multitap slot.
+    u32 strength_0_8     : 8; // Actuator strength, `0x80` is 1.0.
+    u32 isInit_0_16      : 1;
+    u32 isPaused_0_17    : 1;
+    u32 isEnabled_0_18   : 1;
+    u32 actCount_0_19    : 3; // Number of actuator bytes passed to `PadSetAct`.
+    u32 isAlignDone_0_22 : 1; // Set once `PadSetActAlign` succeeds.
+    u32 isActSet_0_23    : 1; // Set once `PadSetAct` was called, cleared to resend.
+    u32 deviceType_0_24  : 8; // `s_KPad_Handler::deviceType_4` of the handler for the connected pad.
+} s_KPad_Status;
+STATIC_ASSERT_SIZEOF(s_KPad_Status, 4);
 
-s32 func_8009E268(s_SysWork_2514* arg0);
+/** @brief Tracks entries in the `s_KPadWork::channels_C` list. */
+typedef struct
+{
+    s32 field_0    : 16;
+    s32 count_2    : 8; // Number of active entries in `s_KPadWork::channels_C`.
+    u32 capacity_3 : 8; // Number of entries allocated in `s_KPadWork::channels_C`.
+} s_KPad_ChannelInfo;
+STATIC_ASSERT_SIZEOF(s_KPad_ChannelInfo, 4);
 
-s32 func_8009E2A0(s_SysWork_2514* arg0);
+// Konami vibration library state.
+typedef struct
+{
+    s_KPad_Status      status_0;
+    s32                actuatorData_4;
+    s_KPad_ChannelInfo channelInfo_8;
+    s_KPad_Channel*    channels_C;
+    s_KPad_EffectList  freeEffects_10; // Only uses `next_0`.
+    s_KPad_EffectList  effects_18;     // Sorted by descending `priority_8`.
+} s_KPadWork;
+STATIC_ASSERT_SIZEOF(s_KPadWork, 32);
 
-s32 func_8009E2D8(s_SysWork_2514* arg0);
+/** @brief Head of `kpad`'s active effect list, as an `s_KPad_Effect`. Only the links are valid. */
+#define KPAD_EFFECTS_HEAD(kpad) \
+    ((s_KPad_Effect*)&(kpad)->effects_18)
 
-s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2);
+/** @brief Handler function definition, called with the pad state to detect and set up the connected pad. */
+typedef struct _KPad_Handler
+{
+    struct _KPad_Handler* next_0;
+    u8                    deviceType_4;
+    s8                    pad_5[3];
+    s32                   alignData_8; // Data passed to `PadSetActAlign`.
+    s32                   (*func_C)(s_KPadWork* ptr, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
+} s_KPad_Handler;
+STATIC_ASSERT_SIZEOF(s_KPad_Handler, 16);
 
-bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
+bool func_8009E198(s_KPadWork* arg0, u32 port);
 
-bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
+s32 func_8009E230(s_KPadWork* arg0);
 
-s_SysWork_2510* func_8009E4F8(void);
+s32 func_8009E268(s_KPadWork* arg0);
 
-s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key);
+s32 func_8009E2A0(s_KPadWork* arg0);
 
-s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node);
+s32 func_8009E2D8(s_KPadWork* arg0);
 
-bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head);
+s32 func_8009E310(s_KPadWork* arg0, s_KPad_Channel* arg1, s32 arg2);
 
-bool func_8009E718(s_SysWork_2514* arg0);
+bool func_8009E3B0(s_KPadWork* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 
-bool func_8009E7D8(s_SysWork_2510* node);
+bool func_8009E438(s_KPadWork* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 
-bool func_8009E82C(s_SysWork_2514*, s32, s32, s32);
+s_KPad_Handler* func_8009E4F8(void);
 
-bool func_8009E97C(s_SysWork_2510* node);
+s_KPad_Handler* func_8009E520(s_KPad_Handler* node, s32 key);
 
-bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3);
+s32 func_8009E550(s_KPadWork* arg0, s_KPad_Handler* node);
 
-bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count);
+bool func_8009E61C(s_KPadWork* arg0, s32 state, s_KPad_Handler* head);
 
-bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
+bool func_8009E718(s_KPadWork* arg0);
+
+bool func_8009E7D8(s_KPad_Handler* node);
+
+bool func_8009E82C(s_KPadWork*, s32, s32, s32);
+
+bool func_8009E97C(s_KPad_Handler* node);
+
+bool func_8009E9D0(s_KPadWork* work, s32 padState, s_KPad_Channel* arg2, s32 arg3);
+
+bool func_8009EBB8(s_KPadWork* list, s_KPad_Effect* node, s32 count);
+
+bool func_8009EC1C(s_KPadWork* list, s_KPad_Effect* node);
 
 /** @brief Ensures a node in a linked list is sorted based on its key value. */
-bool func_8009EC64(s_SysWork_2514* work, s16 val);
+bool func_8009EC64(s_KPadWork* work, s16 val);
 
-s_SysWork_2514_18* func_8009ECCC(s_SysWork_2514* arg0, s32 key);
+s_KPad_Effect* func_8009ECCC(s_KPadWork* arg0, s32 key);
 
-s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list);
+s_KPad_Effect* func_8009ED74(s_KPadWork* list);
 
-s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* node);
+s_KPad_Effect* func_8009ED7C(s_KPad_Effect* node);
 
-s_SysWork_2514_18* func_8009ED90(s_SysWork_2514_18* node);
+s_KPad_Effect* func_8009ED90(s_KPad_Effect* node);
 
 #endif
