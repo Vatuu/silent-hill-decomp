@@ -579,6 +579,7 @@ Anim_BlendEaseOut                            = 0x80044DF0; // type:func
 //--- PA: 0x0203B4   VA: 0x80044F14   subsegment: c, world/bodyprog_bone_80044F14
 //-------------------------------------------------------------------------------
 Bone_ModelIdxGet                             = 0x80044F6C; // type:func
+Bone_ExtraRotationSet = 0x80044F14; // type:func
 Skeleton_Init                                = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                     = 0x800451B0; // type:func
 

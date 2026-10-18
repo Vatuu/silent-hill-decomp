@@ -1855,7 +1855,7 @@ void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             break;
 
         case 6:
-            func_80044F14(&boneCoords[1], 0, 0, -monsterCybilProps.field_118);
+            Bone_ExtraRotationSet(&boneCoords[1], 0, 0, -monsterCybilProps.field_118);
             break;
     }
 

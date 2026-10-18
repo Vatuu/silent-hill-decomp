@@ -150,62 +150,62 @@ s32 g_Player_LastWeaponSelected = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)                     }, NO_VALUE, 0   },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, NO_VALUE, 1   },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)                     }, NO_VALUE, 0   },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)                      }, 0,        0   },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)                     }, NO_VALUE, 1   },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 1,        23  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)                     }, NO_VALUE, 26  },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 26,       45  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)                     }, NO_VALUE, 46  },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 46,       69  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)                     }, NO_VALUE, 70  },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 70,       94  },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)                     }, NO_VALUE, 95  },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_SidestepRight,           true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 95,       119 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeft,                 false), false, ANIM_STATUS(HarryAnim_RunLeft,                 true), { Q12(20.0f)                     }, NO_VALUE, 121 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_RunLeft,                 true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 121,      133 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRight,                false), false, ANIM_STATUS(HarryAnim_RunRight,                true), { Q12(20.0f)                     }, NO_VALUE, 136 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_RunRight,                true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 136,      148 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(50.0f)                     }, NO_VALUE, 150 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(15.0f)                     }, 150,      159 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(50.0f)                     }, NO_VALUE, 160 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(15.0f)                     }, 160,      169 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunForwardStumble,       false), false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(50.0f)                     }, NO_VALUE, 170 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunForwardStumble,       true),  false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(15.0f)                     }, 170,      179 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnLeft,                false), false, ANIM_STATUS(HarryAnim_TurnLeft,                true), { Q12(50.0f)                     }, NO_VALUE, 180 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_TurnLeft,                true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 180,      192 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_TurnRight,               false), false, ANIM_STATUS(HarryAnim_TurnRight,               true), { Q12(50.0f)                     }, NO_VALUE, 193 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_TurnRight,               true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 193,      205 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnRight,          false), false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(50.0f)                     }, NO_VALUE, 206 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_QuickTurnRight,          true),  false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(28.0f)                     }, 206,      217 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_QuickTurnLeft,           false), false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(50.0f)                     }, NO_VALUE, 219 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(28.0f)                     }, 219,      230 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_JumpBackward,            false), false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, NO_VALUE, 240 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_JumpBackward,            true),  false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, 240,      247 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_LookAround,              false), false, ANIM_STATUS(HarryAnim_LookAround,              true), { Q12(50.0f)                     }, NO_VALUE, 248 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_LookAround,              true),  false, NO_VALUE,                                             { Q12(7.0f)                      }, 248,      320 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftWallStop,         false), false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(50.0f)                     }, NO_VALUE, 321 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(20.0f)                     }, 321,      336 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunLeftStumble,          false), false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(50.0f)                     }, NO_VALUE, 337 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunLeftStumble,          true),  false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(15.0f)                     }, 337,      349 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightWallStop,        false), false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(50.0f)                     }, NO_VALUE, 350 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunRightWallStop,        true),  false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(20.0f)                     }, 350,      365 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_RunRightStumble,         false), false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(50.0f)                     }, NO_VALUE, 366 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_RunRightStumble,         true),  false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(15.0f)                     }, 366,      378 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallForward,             false), false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(30.0f)                     }, NO_VALUE, 387 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_FallForward,             true),  false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(20.0f)                     }, 387,      417 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_FallBackward,            false), false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(30.0f)                     }, NO_VALUE, 418 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_FallBackward,            true),  false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(20.0f)                     }, 418,      456 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Kick,                    false), false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(5.0f)                      }, NO_VALUE, 457 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_Kick,                    true),  false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(20.0f)                     }, 457,      484 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Stomp,                   false), false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(5.0f)                      }, NO_VALUE, 485 },
-    { Anim_PlayOnce, ANIM_STATUS(HarryAnim_Stomp,                   true),  false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(20.0f)                     }, 485,      502 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)                      }, NO_VALUE, 503 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)                     }, 503,      542 },
-    { Anim_BlendLinear,  ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)                      }, NO_VALUE, 543 },
-    { Anim_PlayLoop, ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 543,      567 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, NO_VALUE, 1   },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)                     }, NO_VALUE, 0   },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)                      }, 0,        0   },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)                     }, NO_VALUE, 1   },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 1,        23  },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)                     }, NO_VALUE, 26  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 26,       45  },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)                     }, NO_VALUE, 46  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 46,       69  },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)                     }, NO_VALUE, 70  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 70,       94  },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)                     }, NO_VALUE, 95  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_SidestepRight,           true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 95,       119 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunLeft,                 false), false, ANIM_STATUS(HarryAnim_RunLeft,                 true), { Q12(20.0f)                     }, NO_VALUE, 121 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_RunLeft,                 true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 121,      133 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunRight,                false), false, ANIM_STATUS(HarryAnim_RunRight,                true), { Q12(20.0f)                     }, NO_VALUE, 136 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_RunRight,                true),  false, NO_VALUE,                                             { Q12(20.0f)                     }, 136,      148 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(50.0f)                     }, NO_VALUE, 150 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), { Q12(15.0f)                     }, 150,      159 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  false), false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(50.0f)                     }, NO_VALUE, 160 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true),  false, ANIM_STATUS(HarryAnim_RunForwardWallStopLeft,  true), { Q12(15.0f)                     }, 160,      169 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunForwardStumble,       false), false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(50.0f)                     }, NO_VALUE, 170 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunForwardStumble,       true),  false, ANIM_STATUS(HarryAnim_RunForwardStumble,       true), { Q12(15.0f)                     }, 170,      179 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_TurnLeft,                false), false, ANIM_STATUS(HarryAnim_TurnLeft,                true), { Q12(50.0f)                     }, NO_VALUE, 180 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_TurnLeft,                true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 180,      192 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_TurnRight,               false), false, ANIM_STATUS(HarryAnim_TurnRight,               true), { Q12(50.0f)                     }, NO_VALUE, 193 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_TurnRight,               true),  false, NO_VALUE,                                             { Q12(15.0f)                     }, 193,      205 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_QuickTurnRight,          false), false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(50.0f)                     }, NO_VALUE, 206 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_QuickTurnRight,          true),  false, ANIM_STATUS(HarryAnim_QuickTurnRight,          true), { Q12(28.0f)                     }, 206,      217 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_QuickTurnLeft,           false), false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(50.0f)                     }, NO_VALUE, 219 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_QuickTurnLeft,           true),  false, ANIM_STATUS(HarryAnim_QuickTurnLeft,           true), { Q12(28.0f)                     }, 219,      230 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_JumpBackward,            false), false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, NO_VALUE, 240 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_JumpBackward,            true),  false, ANIM_STATUS(HarryAnim_JumpBackward,            true), { Q12(10.0f)                     }, 240,      247 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_LookAround,              false), false, ANIM_STATUS(HarryAnim_LookAround,              true), { Q12(50.0f)                     }, NO_VALUE, 248 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_LookAround,              true),  false, NO_VALUE,                                             { Q12(7.0f)                      }, 248,      320 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunLeftWallStop,         false), false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(50.0f)                     }, NO_VALUE, 321 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunLeftWallStop,         true),  false, ANIM_STATUS(HarryAnim_RunLeftWallStop,         true), { Q12(20.0f)                     }, 321,      336 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunLeftStumble,          false), false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(50.0f)                     }, NO_VALUE, 337 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunLeftStumble,          true),  false, ANIM_STATUS(HarryAnim_RunLeftStumble,          true), { Q12(15.0f)                     }, 337,      349 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunRightWallStop,        false), false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(50.0f)                     }, NO_VALUE, 350 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunRightWallStop,        true),  false, ANIM_STATUS(HarryAnim_RunRightWallStop,        true), { Q12(20.0f)                     }, 350,      365 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunRightStumble,         false), false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(50.0f)                     }, NO_VALUE, 366 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_RunRightStumble,         true),  false, ANIM_STATUS(HarryAnim_RunRightStumble,         true), { Q12(15.0f)                     }, 366,      378 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_FallForward,             false), false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(30.0f)                     }, NO_VALUE, 387 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_FallForward,             true),  false, ANIM_STATUS(HarryAnim_FallForward,             true), { Q12(20.0f)                     }, 387,      417 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_FallBackward,            false), false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(30.0f)                     }, NO_VALUE, 418 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_FallBackward,            true),  false, ANIM_STATUS(HarryAnim_FallBackward,            true), { Q12(20.0f)                     }, 418,      456 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_Kick,                    false), false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(5.0f)                      }, NO_VALUE, 457 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_Kick,                    true),  false, ANIM_STATUS(HarryAnim_Kick,                    true), { Q12(20.0f)                     }, 457,      484 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_Stomp,                   false), false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(5.0f)                      }, NO_VALUE, 485 },
+    { Anim_PlayOnce,    ANIM_STATUS(HarryAnim_Stomp,                   true),  false, ANIM_STATUS(HarryAnim_Stomp,                   true), { Q12(20.0f)                     }, 485,      502 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)                      }, NO_VALUE, 503 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)                     }, 503,      542 },
+    { Anim_BlendLinear, ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)                      }, NO_VALUE, 543 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 543,      567 },
     {}
 };
 // TODO: `GameFs_WeaponInfoUpdate` indicates there should be more.
@@ -1402,11 +1402,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 player->properties.player.afkTimer = Q12(10.0f);
             }
 
-            if (playerProps.moveSpeed != 0)
+            if (playerProps.moveSpeed != Q12(0.0f))
             {
                 playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 3;
 
-                if ((playerProps.moveSpeed) < 0)
+                if (playerProps.moveSpeed < Q12(0.0f))
                 {
                     playerProps.moveSpeed = Q12(0.0f);
                 }
@@ -4784,7 +4784,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             player->headingAngle = player->headingAngle + Q12_ANGLE(90.0f);
                             lowerBodyMoveState                = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
-                            if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
+                            if (g_Player_IsRunning && aimState == 0 &&
+                                lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
                                 playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
@@ -4798,7 +4799,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             player->headingAngle -= Q12_ANGLE(90.0f);
                             lowerBodyMoveState    = Player_LowerBodyMoveStateGet(player, &D_800C45C8);
 
-                            if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
+                            if (g_Player_IsRunning && aimState == 0 &&
+                                lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
                                 playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
@@ -5073,7 +5075,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) && !g_Player_IsInWalkToRunTransition)
+                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) &&
+                    !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(player, aimState);
                 }
@@ -5764,7 +5767,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if ((player->model.anim.keyframeIdx == 125 || player->model.anim.keyframeIdx == 132) &&
+            if ((player->model.anim.keyframeIdx == 125 ||
+                 player->model.anim.keyframeIdx == 132) &&
                 player->position.vy == player->properties.player.groundHeight)
             {
                 player->fallSpeed = Q12(-1.0f);
@@ -5808,12 +5812,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         if (player->properties.player.runStepSfxCount >= 5 &&
                             playerProps.moveSpeed >= Q12(3.125f))
                         {
-                            if (player->model.anim.keyframeIdx > 128 && (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
+                            if (player->model.anim.keyframeIdx > 128 &&
+                                (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                             {
                                 playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                             }
                         }
-                        else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) && player->model.anim.keyframeIdx >= 132 &&
+                        else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
+                                 player->model.anim.keyframeIdx >= 132 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                         {
                             playerExtra.lowerBodyState = PlayerLowerBodyState_None;
@@ -5858,7 +5864,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.controlState++;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_QuickTurnRight, true) && player->model.anim.keyframeIdx >= 206)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_QuickTurnRight, true) &&
+                player->model.anim.keyframeIdx >= 206)
             {
                 D_800C454C = g_DeltaTime * 24;
             }
@@ -5981,7 +5988,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.controlState++;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_QuickTurnLeft, true) && player->model.anim.keyframeIdx >= 219)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_QuickTurnLeft, true) &&
+                player->model.anim.keyframeIdx >= 219)
             {
                 D_800C454C = -(g_DeltaTime * 24);
             }
@@ -6098,7 +6106,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
             else
             {
-                if (playerProps.moveSpeed != 0)
+                if (playerProps.moveSpeed != Q12(0.0f))
                 {
                     playerProps.moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
                     if ((playerProps.moveSpeed >> 16) & (1 << 0))
@@ -6110,7 +6118,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 g_Player_PrevMoveSpeed = playerProps.moveSpeed;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) && player->model.anim.keyframeIdx == 246)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) &&
+                player->model.anim.keyframeIdx == 246)
             {
                 if (player->position.vy < player->properties.player.groundHeight)
                 {
@@ -6157,7 +6166,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardStumble, true) && player->model.anim.keyframeIdx == 179)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardStumble, true) &&
+                player->model.anim.keyframeIdx == 179)
             {
                 playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, PlayerLowerBodyState_Stumble);
@@ -6193,7 +6203,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeftStumble, true) && player->model.anim.keyframeIdx == 349)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeftStumble, true) &&
+                player->model.anim.keyframeIdx == 349)
             {
                 playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 15);
@@ -6231,7 +6242,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRightStumble, true) && player->model.anim.keyframeIdx == 378)
+            if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRightStumble, true) &&
+                player->model.anim.keyframeIdx == 378)
             {
                 playerExtra.lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 16);
@@ -6407,8 +6419,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                  WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_RockDrill &&
                  WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_Katana))
             {
-                if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) && ANIM_STATUS_IS_ACTIVE(extra->model.anim.status) &&
-                    (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) || player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
+                if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
+                    ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
+                    (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
+                     player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
                 {
                     if (!g_Player_IsMovingForward)
                     {
@@ -6455,8 +6469,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) && ANIM_STATUS_IS_ACTIVE(extra->model.anim.status) &&
-                (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) || player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
+                ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
+                (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
+                 player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
             {
                 if (g_Player_IsMovingForward)
                 {
@@ -6514,7 +6530,8 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunForward:
         case PlayerLowerBodyState_RunRight:
         case PlayerLowerBodyState_RunLeft:
-            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) && player->model.anim.status >= ANIM_STATUS(HarryAnim_RunForward, true))
+            if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
+                player->model.anim.status >= ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 player->properties.player.exhaustionTimer += g_DeltaTime;
             }
@@ -7325,10 +7342,14 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         player->damage.amount = Q12(0.0f);
     }
 
-    if (player->health <= Q12(0.0f) && playerExtra.state != PlayerState_Death &&
-        playerExtra.state != PlayerState_Unk36 && playerExtra.state != PlayerState_EnemyGrabPinnedFront &&
-        playerExtra.state != PlayerState_EnemyGrabPinnedBack && playerExtra.state != PlayerState_OnFloorFront &&
-        playerExtra.state != PlayerState_OnFloorBehind && !g_Player_IsInWalkToRunTransition)
+    if (player->health <= Q12(0.0f) &&
+        playerExtra.state != PlayerState_Death                &&
+        playerExtra.state != PlayerState_Unk36                &&
+        playerExtra.state != PlayerState_EnemyGrabPinnedFront &&
+        playerExtra.state != PlayerState_EnemyGrabPinnedBack  &&
+        playerExtra.state != PlayerState_OnFloorFront         &&
+        playerExtra.state != PlayerState_OnFloorBehind        &&
+        !g_Player_IsInWalkToRunTransition)
     {
         player->field_40                     = NO_VALUE;
         g_SavegamePtr->healthSaturation = Q12(0.0f);
@@ -7420,7 +7441,8 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                     g_Player_FlexRotationY = player->angleToTarget - player->rotation.vy;
                 }
 
-                if (player->properties.player.field_100 != 0 || playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
+                if (player->properties.player.field_100 != 0 ||
+                    playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
                     playerExtra.upperBodyState == PlayerUpperBodyState_AimTargetLockSwitch)
                 {
                     if (playerProps.flags & PlayerFlag_Unk8)
@@ -7505,9 +7527,9 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                 g_Player_FlexRotationY = CLAMP(g_Player_FlexRotationY, -FLEX_ROT_Y_RANGE, FLEX_ROT_Y_RANGE);
 
                 // Apply flex rotation to torso and arms.
-                func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_LeftUpperArm].coord);
-                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_RightUpperArm].coord);
+                Bone_ExtraRotationSet(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), DIV_FAST(g_Player_FlexRotationX, 2), g_Player_FlexRotationY);
+                Math_RotMatrixZ(DIV_FAST(g_Player_FlexRotationX, 2), &boneCoords[HarryBone_LeftUpperArm].coord);
+                Math_RotMatrixZ(DIV_FAST(g_Player_FlexRotationX, 2), &boneCoords[HarryBone_RightUpperArm].coord);
             }
             break;
 
@@ -7562,16 +7584,16 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             }
 
             // Apply flex rotation to torso and arms.
-            func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_LeftUpperArm].coord);
-            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &boneCoords[HarryBone_RightUpperArm].coord);
+            Bone_ExtraRotationSet(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), DIV_FAST(g_Player_FlexRotationX, 2), g_Player_FlexRotationY);
+            Math_RotMatrixZ(DIV_FAST(g_Player_FlexRotationX, 2), &boneCoords[HarryBone_LeftUpperArm].coord);
+            Math_RotMatrixZ(DIV_FAST(g_Player_FlexRotationX, 2), &boneCoords[HarryBone_RightUpperArm].coord);
             break;
 
         case PlayerState_Unk180:
             if (g_Player_FlexRotationY != Q12_ANGLE(0.0f))
             {
-                func_80044F14(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f),  Q12_ANGLE(16.9f));
-                func_80044F14(&boneCoords[HarryBone_Head],  Q12_ANGLE(0.0f), Q12_ANGLE(28.2f), Q12_ANGLE(19.7f));
+                Bone_ExtraRotationSet(&boneCoords[HarryBone_Torso], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f),  Q12_ANGLE(16.9f));
+                Bone_ExtraRotationSet(&boneCoords[HarryBone_Head],  Q12_ANGLE(0.0f), Q12_ANGLE(28.2f), Q12_ANGLE(19.7f));
             }
             break;
 
@@ -7579,7 +7601,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             if (playerExtra.state >= PlayerState_Reset &&
                 playerExtra.state <  PlayerState_Unk59)
             {
-                func_80044F14(&boneCoords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
+                Bone_ExtraRotationSet(&boneCoords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
             }
             else
             {
@@ -7591,9 +7613,9 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
 
     if (g_SysWork.enablePlayerMatchAnim && playerExtra.state < PlayerState_Unk58)
     {
-        func_80044F14(&g_SysWork.playerBoneCoords[HarryBone_RightUpperArm], Q12_ANGLE(0.0f),   Q12_ANGLE(63.3f), Q12_ANGLE(-8.8f));
-        func_80044F14(&g_SysWork.playerBoneCoords[HarryBone_RightForearm],  Q12_ANGLE(-14.1f), Q12_ANGLE(22.5f), Q12_ANGLE(-30.8f));
-        func_80044F14(&g_SysWork.playerBoneCoords[HarryBone_RightHand],     Q12_ANGLE(13.2f),  Q12_ANGLE(0.0f),  Q12_ANGLE(0.0f));
+        Bone_ExtraRotationSet(&g_SysWork.playerBoneCoords[HarryBone_RightUpperArm], Q12_ANGLE(0.0f),   Q12_ANGLE(63.3f), Q12_ANGLE(-8.8f));
+        Bone_ExtraRotationSet(&g_SysWork.playerBoneCoords[HarryBone_RightForearm],  Q12_ANGLE(-14.1f), Q12_ANGLE(22.5f), Q12_ANGLE(-30.8f));
+        Bone_ExtraRotationSet(&g_SysWork.playerBoneCoords[HarryBone_RightHand],     Q12_ANGLE(13.2f),  Q12_ANGLE(0.0f),  Q12_ANGLE(0.0f));
     }
 }
 
@@ -7616,10 +7638,10 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
     q3_12      angle;
     q4_12      angleDelta;
 
-    moveSpeed0  = playerProps.moveSpeed >> 3;
+    moveSpeed0  = DIV_FAST(playerProps.moveSpeed, 8);
     moveSpeed0 += Q12(0.75f);
     moveSpeed1  = Q12(-0.6f);
-    moveSpeed1 -= playerProps.moveSpeed >> 4;
+    moveSpeed1 -= DIV_FAST(playerProps.moveSpeed, 16);
 
     offsetX0 = Q12_MULT(Math_Cos(player->headingAngle), Q12(0.2f));
     offsetZ0 = Q12_MULT(Math_Sin(player->headingAngle), Q12(0.2f));
@@ -7651,10 +7673,10 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
 
         if (traceHits[1])
         {
-            arg1->field_14   = (traces[0].hitDistance + traces[1].hitDistance) >> 1;
+            arg1->field_14   = DIV_FAST(traces[0].hitDistance + traces[1].hitDistance, 2);
             arg1->groundType = traces[0].groundType;
 
-            angle      = Q12_ANGLE_NORM_U(Q12_ANGLE_ABS((traces[0].headingAngle + traces[1].headingAngle) >> 1));
+            angle      = Q12_ANGLE_NORM_U(Q12_ANGLE_ABS(DIV_FAST(traces[0].headingAngle + traces[1].headingAngle, 2)));
             angleDelta = ABS_DIFF(angle, player->headingAngle);
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {

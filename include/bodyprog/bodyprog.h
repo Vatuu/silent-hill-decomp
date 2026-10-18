@@ -1368,7 +1368,7 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 // ========================================
 
 /** Something related to player weapon position. Takes coords to arm bones. */
-void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);
+void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);
 
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 

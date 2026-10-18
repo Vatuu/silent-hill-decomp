@@ -13,7 +13,7 @@ s8* D_800C15B0;
 // BONES AND SKELETONS
 // ========================================
 
-void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) // 0x80044F14
+void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) // 0x80044F14
 {
     SVECTOR* rot; // Q3.12
     MATRIX*  rotMat;
