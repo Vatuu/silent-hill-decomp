@@ -2018,6 +2018,7 @@ Math_Sin                                     = 0x80098C18; // type:func
 Math_Cos                                     = 0x80098C38; // type:func
 Math_RotMatrixZ                              = 0x80098C58; // type:func
 Math_RotMatrixZxyNeg                         = 0x80099030; // type:func
+Math_RotMatrixXyzGte                         = 0x80099084; // type:func
 Math_RotMatrixZxyNegGte                      = 0x80099214; // type:func
 
 //---------------------------------------------------------------
@@ -2811,7 +2812,9 @@ g_Bgm_ChannelLimits                          = 0x800ABD40;
 //--- PA: 0x0871F0   VA: 0x800ABD50   subsegment: .data, events/bodyprog_data_800A99B4
 //------------------------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800ABD50;
+D_800A99B5                                   = 0x800ABD51;
 g_PaperMapMarkingFileIdxs                    = 0x800ABD68;
+g_CommonWorldObjectNames                     = 0x800ABD80; // size:0x20
 D_800A9A04                                   = 0x800ABDA0;
 g_IsLoadingFinished                          = 0x800ABDA8;
 g_MapEventSysState                           = 0x800ABDAC;
@@ -3511,6 +3514,7 @@ D_800C4408                                   = 0x800C6938;
 D_800C440C                                   = 0x800C693C;
 D_800C4410                                   = 0x800C6940;
 D_800C4414                                   = 0x800C6944;
+D_800C4418                                   = 0x800C6948; // size:0x10
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0A1DF8   VA: 0x800C6958   subsegment: .bss, bodyprog_800652F4

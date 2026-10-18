@@ -29,9 +29,9 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP0/maps/sym.map0_s00.txt
-    - configs/JAP0/sym.bodyprog.txt
     - configs/USA/sym.main.txt
+    - configs/JAP0/sym.bodyprog.txt
+    - configs/JAP0/maps/sym.map0_s00.txt
   reloc_addrs_path:
     - configs/JAP0/maps/rel.map0_s00.txt
 

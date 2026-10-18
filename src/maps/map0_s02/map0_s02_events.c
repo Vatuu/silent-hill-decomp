@@ -7,6 +7,7 @@
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Chain_saw ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tSome_oil_cans_are_on_the_shelf. ~E ",
     /* 17 */ "\tA_car_engine. ~N\n\tNo_problem_there. ~E ",
@@ -14,6 +15,15 @@ const char* MAP_MESSAGES[] = {
     /* 19 */ "\tThere_is_a_ ~C2 Gasoline_tank ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 20 */ "\tThere_is_a_ ~C2 Katana ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 21 */ "\tThere_is_a_ ~C2 Channeling_stone ~C7 . ~N\n\tTake_it? ~S4 "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t~C2 チェーンソー ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 16 */ "\t棚にオイルの缶が置かれている ~E ",
+    /* 17 */ "\t車のエンジンだ ~N\n\t特に気にする必要はないだろう ~E ",
+    /* 18 */ "\tテレビが置かれている ~N\n\t電源を押しても何の反応もないな ~E ",
+    /* 19 */ "\t~C2 ガソリン ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 20 */ "\t~C2 日本刀 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 21 */ "\t~C2 チャネリングストーン ~C7 がある ~N\n\t取りますか？ ~S4 "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800CEBC8

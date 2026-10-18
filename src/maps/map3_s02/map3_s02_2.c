@@ -36,8 +36,13 @@ void func_800D02AC(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
     /* 16 */ "\tIt's_locked! ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\tエレベーターのボタンを押しても ~N\n\t何の反応もない…… ~E ",
+    /* 16 */ "\t鍵がかかっている！ ~E "
+#endif
 };
 
 const VECTOR3 D_800CAAF8 = { Q12(100.0f), Q12(-1.2f), Q12(-127.2f) };

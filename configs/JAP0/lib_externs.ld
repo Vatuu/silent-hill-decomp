@@ -50,3 +50,10 @@ _spu_RQ               = 0x800231A0;
 StMode                = 0x800231E8;
 DsReadyCallback       = 0x801E352C;
 DsDataCallback        = 0x801E3554;
+
+# @hack Fix for splat/spimdisasm not recognizing `MAP_INFOS` as referenced in certain maps, which only make use of later elements in the array.
+MAP_INFOS = 0x80024FF8;
+
+# @hack map1_s04 `func_800CCA2C` treats `D_800CD768` as both a `s32` and a `u16[]`
+# Can only get code match if the `u16[]` is treated as a different symbol under the same address.
+D_800CD768_tbl = 0x800CFC64;

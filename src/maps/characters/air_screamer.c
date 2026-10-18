@@ -1351,10 +1351,21 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
             dist += distProp8;
         }
 
+#if VERSION_EQUAL_OR_NEWER(USA) // TODO: Check which versions have this.
         if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
         {
             dist += Q12(1.0f);
         }
+#else
+        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
+        {
+            dist += Q12(1.0f);
+        }
+        else
+        {
+            dist += Q12(1.0f);
+        }
+#endif
     }
     else
     {
@@ -1810,6 +1821,9 @@ void AirScreamer_Control_2(s_SubCharacter* airScreamer)
                 {
                     if (airScreamer->health <= Q12(0.0f))
                     {
+#if VERSION_EQUAL_OR_OLDER(JAP0)
+                        airScreamer->health = NO_VALUE;
+#endif
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_Death, false);
                         airScreamerProps.flags          |= AirScreamerFlag_6;
                         break;

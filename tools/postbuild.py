@@ -142,7 +142,40 @@ JAP2_BODYPROG = [
     [0xA65F4, b'\x09\x30\x78\x33']
 ]
 
+# Garbage bytes to patch into map overlays, per version: { version: { map: [[offset, bytes], ...] } }
+MAP_PATCHES = {
+    "JAP0": {
+        "map1_s04": [
+            [0x13AD, b'\x10\x43\x00']
+        ],
+        "map4_s00": [
+            [0x1325, b'\x90\x01\x00']
+        ],
+        "map4_s06": [
+            [0x1325, b'\x61\x6D\x65']
+        ],
+        "map6_s05": [
+            [0x1339, b'\x20']
+        ]
+    }
+}
+
+def apply_map_patches(target):
+    name = target.split("/")[-1]
+    for version, maps in MAP_PATCHES.items():
+        if name not in maps:
+            continue
+        path = f"build/{version}/out/VIN/{name.upper()}.BIN"
+        if not os.path.isfile(path):
+            continue
+        with open(path, "r+b") as file:
+            for offset, data in maps[name]:
+                file.seek(offset)
+                file.write(data)
+
 if __name__ == "__main__":
+    if sys.argv[1].startswith("maps/"):
+        apply_map_patches(sys.argv[1])
     match sys.argv[1]:
         case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN" | "build/JAP1/out/VIN/STREAM.BIN" | "build/JAP2/out/VIN/STREAM.BIN":
             usaPath = "build/USA/out/VIN/STREAM.BIN"

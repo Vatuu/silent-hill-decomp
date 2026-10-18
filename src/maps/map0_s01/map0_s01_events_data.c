@@ -1,5 +1,16 @@
 #include "bodyprog/bodyprog.h"
 
+// JAP0 merges "I better take it with me." into the message before it, so the messages after it shift down by 1.
+#if VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG_MORE_IMPORTANT_STUFF 74
+    #define MAP_MSG_TV                   73
+    #define MAP_MSG_PINBALL              72
+#elif VERSION_REGION_IS(NTSC)
+    #define MAP_MSG_MORE_IMPORTANT_STUFF 75
+    #define MAP_MSG_TV                   74
+    #define MAP_MSG_PINBALL              73
+#endif
+
 s_EventData MAP_EVENTS[23] = {
     // [0]
     {
@@ -156,7 +167,7 @@ s_EventData MAP_EVENTS[23] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 10,
         .sysState          = SysState_ReadMessage,
-        .eventParam        = 75,
+        .eventParam        = MAP_MSG_MORE_IMPORTANT_STUFF,
     },
     // [17]
     {
@@ -172,7 +183,7 @@ s_EventData MAP_EVENTS[23] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 8,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 73,
+        .eventParam     = MAP_MSG_PINBALL,
     },
     // [19]
     {
@@ -180,7 +191,7 @@ s_EventData MAP_EVENTS[23] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 11,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 73,
+        .eventParam     = MAP_MSG_PINBALL,
     },
     // [20]
     {
@@ -188,7 +199,7 @@ s_EventData MAP_EVENTS[23] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 12,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 73,
+        .eventParam     = MAP_MSG_PINBALL,
     },
     // [21]
     {
@@ -196,7 +207,7 @@ s_EventData MAP_EVENTS[23] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 9,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 74,
+        .eventParam     = MAP_MSG_TV,
     },
     // [22]
     {
