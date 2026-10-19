@@ -515,6 +515,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
 
             func_8008D438();
+#if VERSION_EQUAL_OR_NEWER(JAP2) // @bugfix?
+            Game_TurnFlashlightOn();
+#endif
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
