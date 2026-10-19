@@ -98,7 +98,11 @@ s16 D_801E5C24[256] = {
         5,
         13,
         15,
+#if VERSION_EQUAL_OR_NEWER(USA)
         11,
+#else
+        12,
+#endif
         15,
         13,
         9,

@@ -388,7 +388,18 @@ u8 D_801E5E5C[16] = {
 
 u8 D_801E5E6C[8] = {
     '.', 'Y', 'V', 'U',
-    'T', 'S', 'R', ' '
+    'T', 'S', 'R',
+
+    // @todo Garbage padding, maybe can be moved to postbuild.
+#if VERSION_REGION_IS(NTSC)
+    '\x20'
+#elif VERSION_IS(JAP0)
+    '\x8D'
+#elif VERSION_IS(JAP1)
+    '\x04'
+#elif VERSION_IS(JAP2)
+    '\x10'
+#endif
 };
 
 s32 D_801E5E74 = 0;

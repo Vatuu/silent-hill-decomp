@@ -28,7 +28,11 @@ char* g_CreditList[] = {
     "\xD0\xF0" "Director\xD8",
     D_801E558C,
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "K" "\x18" "eiichiro T" "\x19" "oyama\xD8",
+#else
+    "\xD0\xF0" "Keiichiro T" "\x19" "oyama\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,
@@ -116,7 +120,11 @@ char* g_CreditList[] = {
     D_801E558C,
     "\xD0\xF0" "Soichiro Kitai\xD8",
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "K" "\x18" "eiichiro T" "\x19" "oyama\xD8",
+#else
+    "\xD0\xF0" "Keiichiro T" "\x19" "oyama\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,
@@ -174,7 +182,11 @@ char* g_CreditList[] = {
     "\xD0\xF0" "Digital Technician\xD8",
     D_801E558C,
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "K" "\x18" "enichiro Imaizumi\xD8",
+#else
+    "\xD0\xF0" "Kenichiro Imaizumi\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,
@@ -257,7 +269,11 @@ char* g_CreditList[] = {
     D_801E558C,
     "\xD0\xF0" "RMC\xD8",
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "STUD" "\x18" "IO ST" "\x19" "A" "\x19" "T\xD8",
+#else
+    "\xD0\xF0" "STUD" "\x18" "IO ST" "\x18" "A" "\x18" "T\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,
@@ -276,7 +292,11 @@ char* g_CreditList[] = {
     D_801E558C,
     D_801E558C,
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "R""\x18""ecording Director\xD8",
+#else
+    "\xD0\xF0" "Recording Director\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     "\xD0\xF0" "Harry Inaba\xD8",
@@ -326,7 +346,11 @@ char* g_CreditList[] = {
     D_801E558C,
     D_801E558C,
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "R""\x18""ecording Studio\xD8",
+#else
+    "\xD0\xF0" "Recording Studio\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     "\xD0\xF0" "Transmedia\xD8",
@@ -339,7 +363,11 @@ char* g_CreditList[] = {
     "\xD0\xF0" "V""\x18""oice Talent Agency\xD8",
     D_801E558C,
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "ST""\x19""ARS\xD8",
+#else
+    "\xD0\xF0" "ST""\x18""ARS\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,
@@ -383,11 +411,23 @@ char* g_CreditList[] = {
     D_801E558C,
     "\xD0\xF0" "Mike Gallo (KO""\x18""A)\xD8",
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "K" "\x18" "en Ogasawara (KO" "\x18" "A)\xD8",
+#else
+    "\xD0\xF0" "Ken Ogasawara (KO" "\x18" "A)\xD8",
+#endif
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "K""\x18""elly N. Pine (Transmedia)\xD8",
+#else
+    "\xD0\xF0" "Kelly N. Pine (Transmedia)\xD8",
+#endif
     D_801E558C,
+#if VERSION_EQUAL_OR_NEWER(USA)
     "\xD0\xF0" "Britney L. Y""\x18""unker (ST""\x19""ARS)\xD8",
+#else
+    "\xD0\xF0" "Britney L. Y""\x18""unker (ST""\x18""ARS)\xD8",
+#endif
     D_801E558C,
     "\xD0\xF0" "Kiyohiko Y""\x18""amane\xD8",
     D_801E558C,
