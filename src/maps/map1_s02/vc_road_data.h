@@ -1008,8 +1008,13 @@
         .lim_rd = {
             .min_hx = Q4(19.2f),
             .max_hx = Q4(19.2f),
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+            .min_hz = Q4(21.5f),
+            .max_hz = Q4(21.5f),
+#else
             .min_hz = Q4(21.7f),
             .max_hz = Q4(21.7f),
+#endif
         },
         .flags = VC_RD_WARP_IN_OUT_FS,
         .area_size_type = VC_AREA_SMALL,
@@ -1475,13 +1480,21 @@
     },
     {
         .lim_sw = {
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+            .min_hx = Q4(-30.2f),
+#else
             .min_hx = Q4(-29.7f),
+#endif
             .max_hx = Q4(-21.0f),
             .min_hz = Q4(-20.0f),
             .max_hz = Q4(-10.0f),
         },
         .lim_rd = {
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+            .min_hx = Q4(-29.9f),
+#else
             .min_hx = Q4(-30.7f),
+#endif
             .max_hx = Q4(-12.5f),
             .min_hz = Q4(-18.3f),
             .max_hz = Q4(-9.0f),

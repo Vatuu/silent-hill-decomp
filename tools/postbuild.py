@@ -144,6 +144,16 @@ JAP2_BODYPROG = [
 
 # Garbage bytes to patch into map overlays, per version: { version: { map: [[offset, bytes], ...] } }
 MAP_PATCHES = {
+    "JAP2": {
+        "map1_s04": [
+            [0x13AD, b'\x10\x43']
+        ],
+    },
+    "JAP1": {
+        "map1_s04": [
+            [0x13AD, b'\x10\x43']
+        ]
+    },
     "JAP0": {
         "map1_s04": [
             [0x13AD, b'\x10\x43\x00']
