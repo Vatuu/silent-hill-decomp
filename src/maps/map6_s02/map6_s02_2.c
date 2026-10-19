@@ -1135,11 +1135,23 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
             func_800D2170(true);
             D_800D4E6D = 1;
         }
+#if VERSION_EQUAL_OR_NEWER(JAP2) // @bugfix?
+        else if (D_800D4E6D == 1)
+        {
+            D_800D4E6D++;
+        }
+        else if (D_800D4E6D == 2)
+        {
+            D_800D4E6D++;
+            D_800C4414 |= 1 << 5;
+        }
+#else
         else if (D_800D4E6D == 1)
         {
             D_800D4E6D++;
             D_800C4414 |= 1 << 5;
         }
+#endif
 
         D_800D4E70 += Q12_MULT_PRECISE(Rng_GenerateUInt(0, 4095), g_DeltaTime);
 

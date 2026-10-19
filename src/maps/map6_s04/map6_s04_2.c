@@ -2162,6 +2162,12 @@ void func_800E2724(void) // 0x800E2724
 
             D_800A9938 = 0x38630;
 
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix? PARK.DMS gets loaded in `func_800E1D50` above, maybe it had chance of that load being skipped?
+            Fs_QueueStartRead(FILE_ANIM_PARK_DMS, FS_BUFFER_14);
+            Fs_QueueWaitForEmpty();
+            Dms_HeaderFixOffsets(FS_BUFFER_14);
+#endif
+
             Anim_CharaTypeAnimInfoClear();
 
             // Load Monster Cybil character.
