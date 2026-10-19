@@ -1,5 +1,5 @@
 name: The MAP4_S03 map overlay (MAP4_S03)
-sha1: 5ff0b4a62e5a737f9188fd6b41aa3cd801190eac
+sha1: 5FF0B4A62E5A737F9188FD6B41AA3CD801190EAC
 options:
   basename: MAP4_S03.BIN
   target_path: assets/JAP2/VIN/MAP4_S03.BIN
@@ -29,8 +29,8 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP2/sym.main.txt
-    - configs/JAP2/sym.bodyprog.txt
+    - configs/USA/sym.main.txt
+    - configs/JAP1/sym.bodyprog.txt
     - configs/JAP2/maps/sym.map4_s03.txt
   reloc_addrs_path:
     - configs/JAP2/maps/rel.map4_s03.txt
@@ -54,7 +54,23 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # .rodata section
       - [0x0, rodata]
-      - [0x1AE4, asm, map4_s03]
-      - [0x111DC, data]
+      - [0x4, .rodata, map4_s03_header]
+      - [0x1050, .rodata, map4_s03]
+
+      - [0x1AE4, c, map4_s03_header]
+      - [0x1AE4, c, map4_s03_events_data]
+      - [0x1AE4, c, map4_s03_anim_info]
+
+      # .text section
+      - [0x1AE4, c, map4_s03]
+
+      # .data section
+      - [0x111DC, .data, map4_s03_anim_info]
+      - [0x113CC, data]
+      - [0x11EA4, .data, map4_s03_header]
+      - [0x12040, .data, map4_s03]
+      - [0x12094, .data, map4_s03_events_data]
+      - [0x12208, data]
   - [0x17400]

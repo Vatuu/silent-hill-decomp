@@ -314,8 +314,13 @@
       .flags = VC_RD_LIM_UP_FAR_VIEW_F | VC_RD_MARGE_ROAD_F,
       .area_size_type = VC_AREA_WIDE,
       .rd_type = VC_RD_TYPE_ROAD,
+#if VERSION_EQUAL_OR_NEWER(JAP1)
+      .mv_y_type = VC_MV_SELF_VIEW,
+      .lim_rd_max_hy = Q4(-2.32f),
+#else
       .mv_y_type = VC_MV_CHASE,
       .lim_rd_max_hy = Q4(6.0f),
+#endif
       .lim_rd_min_hy = Q4(-6.0f),
       .ofs_watch_hy = Q4(-0.5f),
       .lens_flare = LensFlareType_Default,

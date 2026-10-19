@@ -145,6 +145,15 @@ JAP2_BODYPROG = [
 # Garbage bytes to patch into map overlays, per version: { version: { map: [[offset, bytes], ...] } }
 MAP_PATCHES = {
     "JAP2": {
+        "map4_s06": [
+            [0x1325, b'\x10\xC3']
+        ],
+        "map4_s05": [
+            [0x16F9, b'\x20\x89\xBA']
+        ],
+        "map4_s00": [
+            [0x1325, b'\x90\x01']
+        ],
         "map3_s06": [
             [0x1CA5, b'\x4A\x30\x28']
         ],
@@ -156,6 +165,15 @@ MAP_PATCHES = {
         ],
     },
     "JAP1": {
+        "map4_s06": [
+            [0x1325, b'\x28\x20\x20']
+        ],
+        "map4_s05": [
+            [0x16F9, b'\x20\x89\xBA']
+        ],
+        "map4_s00": [
+            [0x1325, b'\x90\x01']
+        ],
         "map3_s06": [
             [0x1CA5, b'\x4A\x30\x28']
         ],
