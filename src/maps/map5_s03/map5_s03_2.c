@@ -39,6 +39,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800D1340
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tI've_got_a_ ~C2 Motorcycle_key ~C7 . ~E ",
     /* 16 */ "\tThere's_a_crack. ~E ",
     /* 17 */ "\tThere's_a_crack. ~N\n\tSomething_glints_inside. ",
@@ -92,6 +93,59 @@ const char* MAP_MESSAGES[] = {
     /* 65 */ "\tNobody_inside. ~E ",
     /* 66 */ "\tDo_you_want_to_push ~N\n\tthe_shelf? ~S4 ",
     /* 67 */ "\tAn_old_motorcycle. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t~C2 バイクの鍵 ~C7 を手に入れた ~E ",
+    /* 16 */ "\t床に裂け目がある ~E ",
+    /* 17 */ "\t床に裂け目がある ",
+    /* 18 */ "\t奥で何か光っているが ~N\n\t裂け目が小さすぎて手は入らない ~E ",
+    /* 19 */ "\t古びたバイクだ ~N\n\tもう何年も動かしていないだろう ",
+    /* 20 */ "\t~J1(1.0) ",
+    /* 21 */ "\t……変だな ",
+    /* 22 */ "\tタンクのキャップ周辺だけ ~N\n\tほこりが少ない ~E ",
+    /* 23 */ "\t\tビニールに包まれたガラスの小ビンがある ",
+    /* 24 */ "\t\tこれは……？ ~E ",
+    /* 25 */ "\t\t病院の院長室で割れていたビンと ~N\n\t\t同じビンのような気がする…… ~E ",
+    /* 26 */ "~J0(1.3)\tそいつをこっちに渡せ！ ",
+    /* 27 */ "~J0(1.2)\tこれはいったい何なんだ？ ~E ",
+    /* 28 */ "~J1(2.0)\tきみには関係ないことだ！  ",
+    /* 29 */ "~J1(3.9)\tそれより　この馬鹿げた状況から ~N\n\t\t\t逃げ出す算段はついたのか！？ ",
+    /* 30 */ "~J1(0.9)\t……いや ~E ",
+    /* 31 */ "~J1(2.6)\tなら　こんなところでのんびりしている ~N\n\t\t\t場合じゃないだろう！ ",
+    /* 32 */ "~J1(1.3)\tいったい何をやっているんだ？ ",
+    /* 33 */ "~J1(3.0)\tきみだって死にたくないだろ！？ ~N\n\t\t\tそれなら逃げ道を探すんだよ！ ",
+    /* 34 */ "~J1(1.9)\tわかったよ ~E ",
+    /* 35 */ "~J1(3.2)\t死にたくないなら余計なことは考えるな！ ",
+    /* 36 */ "~J1(0.8)\tいいな！ ~E ",
+    /* 37 */ "~J1(3.3)\tあの男が薬の売買に関わっていたのは ~N\n\t\t\tまちがいないだろう ",
+    /* 38 */ "~J1(3.1)\tえらい剣幕だったな ~N\n\t\t\tずいぶんと　あせっていたようだが…… ",
+    /* 39 */ "~J1(1.8)\tあのビンの中身も麻薬なのか？ ",
+    /* 40 */ "~J1(3.9)\t何にしろ　勝手にするがいいさ ~N\n\t\t\t命より大事なようだからな ~E ",
+    /* 41 */ "~J1(2.0)\t無駄な時間を過ごしてしまった ",
+    /* 42 */ "~J1(2.0)\t急ごう　シェリルが心配だ ~E ",
+    /* 43 */ "~J1(3.1)\tえらい剣幕だったな ~N\n\t\t\tずいぶんと　あせっていたようだが…… ~E ",
+    /* 44 */ "\tテーブルの上に新聞が置いてある ~E ",
+    /* 45 */ "\tテーブルの上に新聞が置いてある ",
+    /* 46 */ "\t病院で切り抜かれていたやつと ~N\n\t同じ日付だな…… ~E ",
+    /* 47 */ "~L4 ~C3\n\t捜査難航。 ~N\n\t麻薬“ＰＴＶ”の売人特定できず。~N\n\t~N\n\t相次ぐ怪死事件。 ~N\n\t麻薬売買の取締り強化を掲げた市長に続き、 ~N\n\t麻薬捜査官が原因不明の心臓発作で死亡。 ~E ",
+    /* 48 */ "~C3\t９月１０日 ",
+    /* 49 */ "~C3\t荷物を預けられて、 ~N\n\t\tしばらく隠しておくように言われた。 ",
+    /* 50 */ "~C3\tやばいことに巻き込まれるのはごめんだが ~N\n\t\t……あいつには逆らえない。 ",
+    /* 51 */ "~C3\t市長たちの事件もきっとあいつが ~N\n\t\t絡んでいるのに違いない。 ~E ",
+    /* 52 */ "\t~C2 磁石 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 53 */ "\t~C2 バイクの鍵 ~C7 を使った ~E ",
+    /* 54 */ "\t棚にはバッテリーだのオイルの缶だの ~N\n\tいろいろなものが置かれている ",
+    /* 55 */ "\tどれもが長い間　手をつけられなかったかの ~N\n\tようにほこりがうっすらと積もっている ~E ",
+    /* 56 */ "\tラジオが棚の上に置かれている ~N\n\t壊れているのか何の反応も示さない ~E ",
+    /* 57 */ "\t壁にポスターが貼られている ~N\n\t今はこんなものを見ている場合ではない ~E ",
+    /* 58 */ "\tテレビが置いてある ",
+    /* 59 */ "\t停電しているらしく ~N\n\t電源スイッチを押しても反応がない ~E ",
+    /* 60 */ "\t宿泊者名簿が置かれている ~N\n\t特に気になることは書かれていない ~E ",
+    /* 61 */ "\t特に役立ちそうなものはない ~E ",
+    /* 62 */ "\t自動販売機がある ~N\n\t動いていないようだ ~E ",
+    /* 63 */ "\t何もいない ~E ",
+    /* 64 */ "\t棚を押しますか？ ~S4 ",
+    /* 65 */ "\t古びたバイクがある ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D159C
@@ -252,13 +306,13 @@ void func_800D1904(void) // 0x800D1904
 
 void func_800D1A84(void) // 0x800D1A84
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), 49);
+    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYMTL_TIM, Q12(2.5f), Q12(2.0f), MAP_MSG(49));
     Savegame_EventFlagSet(EventFlag_398);
 }
 
 void func_800D1ACC(void) // 0x800D1ACC
 {
-    Event_ItemTake(InvItemId_Magnet, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S03_PickupMagnet, 53);
+    Event_ItemTake(InvItemId_Magnet, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S03_PickupMagnet, MAP_MSG(53));
 }
 
 void func_800D1AF8(void) // 0x800D1AF8
@@ -294,7 +348,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_DisplayMapMsg(false, 54, 0, 0, 0, false); // "Used the Motorcycle Key."
+            Event_DisplayMapMsg(false, MAP_MSG(54), 0, 0, 0, false); // "Used the Motorcycle Key."
             break;
 
         case 2:
@@ -320,7 +374,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 6:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "A small glass vial, wrapped in a plastic bag."
+            Event_DisplayMapMsg(false, MAP_MSG(24), 0, 0, 0, false); // "A small glass vial, wrapped in a plastic bag."
 
             if (g_SysWork.sysStateSteps[0] != 6 && !Savegame_EventFlagGet(EventFlag_204))
             {
@@ -331,7 +385,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 7:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 26, 0, 0, 0, false); // "It's like the busted vial I found in the director's office at the hospital."
+            Event_DisplayMapMsg(false, MAP_MSG(26), 0, 0, 0, false); // "It's like the busted vial I found in the director's office at the hospital."
             break;
 
         case 8:
@@ -392,7 +446,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 16:
-            Event_DisplayMapMsgWithAudio(27, &D_800D6F54, &D_800D3BDC);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(27), &D_800D6F54, &D_800D3BDC);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;
 
@@ -415,17 +469,17 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 20:
-            Event_DisplayMapMsgWithAudio(29, &D_800D6F54, &D_800D3BDC);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(29), &D_800D6F54, &D_800D3BDC);
             break;
 
         case 21:
-            Event_DisplayMapMsgWithAudio(32, &D_800D6F54, &D_800D3BDC);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(32), &D_800D6F54, &D_800D3BDC);
             g_Cutscene_Timer = Q12(77.0f);
             break;
 
         case 22:
             g_Cutscene_Timer = Q12(78.0f);
-            Event_DisplayMapMsgWithAudio(36, &D_800D6F54, &D_800D3BDC);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(36), &D_800D6F54, &D_800D3BDC);
             break;
 
         case 23:
@@ -462,11 +516,11 @@ void func_800D1AF8(void) // 0x800D1AF8
                 Savegame_EventFlagGet(EventFlag_397) &&
                 Savegame_EventFlagGet(EventFlag_398))
             {
-                Event_DisplayMapMsg(false, 38, 0, 0, 0, false); // "That guy's gotta be involved in the local drug racket."
+                Event_DisplayMapMsg(false, MAP_MSG(38), 0, 0, 0, false); // "That guy's gotta be involved in the local drug racket."
             }
             else
             {
-                Event_DisplayMapMsg(false, 44, 0, 0, 0, false); // "Man, was he pissed. And in such a rush, too."
+                Event_DisplayMapMsg(false, MAP_MSG(44), 0, 0, 0, false); // "Man, was he pissed. And in such a rush, too."
             }
             break;
 
@@ -485,7 +539,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             SysWork_StateStepIncrement(0);
 
         case 30:
-            Event_DisplayMapMsg(false, 42, 0, 0, 0, false); // "I guess I wasted my time."
+            Event_DisplayMapMsg(false, MAP_MSG(42), 0, 0, 0, false); // "I guess I wasted my time."
             break;
 
         case 31:
@@ -559,11 +613,11 @@ void func_800D1AF8(void) // 0x800D1AF8
 
 void func_800D2640(void) // 0x800D2640
 {
-    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(46), MAP_MSG(48));
 
-    // @bug NTSC-U release is missing code to set `EventFlag_M5S03_SeenSecondNewspaper` here,
-    // causing later newspaper in `M7S01` & `M7S02` not to appear.
-#if VERSION_REGION_IS(NTSCJ) || VERSION_REGION_IS(PAL)
+    // @bugfix JAP0 & USA releases are missing code to set `EventFlag_M5S03_SeenSecondNewspaper` here,
+    // causing later newspaper in `M7S01` & `M7S02` not to appear. Fixed in JAP1 and later releases.
+#if VERSION_EQUAL_OR_NEWER(JAP1)
     Savegame_EventFlagSet(EventFlag_M5S03_SeenSecondNewspaper);
 #endif
 }
@@ -583,7 +637,7 @@ void func_800D2674(void) // 0x800D2674
             break;
 
         case 2:
-            Event_DisplayMapMsg(true, 66, 4, 3, 0, false); // "Do you want to push the shelf?"
+            Event_DisplayMapMsg(true, MAP_MSG(66), 4, 3, 0, false); // "Do you want to push the shelf?"
             break;
 
         case 3:

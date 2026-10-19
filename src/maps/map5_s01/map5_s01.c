@@ -560,11 +560,19 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tNothing_unusual. ~E ",
     /* 17 */ "\tUsed_the_ ~C2 Kaufmann_key ~C7 . ~E ",
     /* 18 */ "~J0(1.0)\tWhat? ~E ",
     /* 19 */ "~J0(2.5)\tThat_light!? ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~H\t~C5 リゾート街の地図 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 16 */ "\t特に気になることはない ~E ",
+    /* 17 */ "\t~C2 カウフマンの鍵 ~C7 を使った ~E ",
+    /* 18 */ "~J0(1.0)\t何だ？ ~E ",
+    /* 19 */ "~J0(2.5)\tあの光は！？ ~E"
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800EB9A4

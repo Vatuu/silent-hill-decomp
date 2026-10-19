@@ -54,6 +54,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(8.7)\t~E ",
     /* 16 */ "~J0(1.2)\tAre_you_OK? ~E ",
     /* 17 */ "~J0(1.4)\tYeah,_I_guess_so. ",
@@ -90,6 +91,43 @@ const char* MAP_MESSAGES[] = {
     /* 48 */ "\tIt's_locked. ~E ",
     /* 49 */ "\tI've_got_a_ ~C2 Receipt ~C7 . ~E ",
     /* 50 */ "\tI've_got_a_ ~C2 Kaufmann_key ~C7 . ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(8.7)\t~E ",
+    /* 16 */ "~J0(1.2)\t大丈夫か？ ~E ",
+    /* 17 */ "~J0(1.4)\tああ　何とかな ",
+    /* 18 */ "~J0(3.0)\t不意をつかれたんだ ~N\n\t\t\t死ぬかと思ったよ ~E ",
+    /* 19 */ "~J1(3.0)\tところでどうだ？ ~N\n\t\t\t町から出られそうか？ ",
+    /* 20 */ "~J1(2.4)\tいや　今のところは…… ",
+    /* 21 */ "~J1(1.1)\tあんたの方は？ ",
+    /* 22 */ "~J1(1.0)\t駄目だ ",
+    /* 23 */ "~J1(1.8)\tだが　あきらめるのは早い ",
+    /* 24 */ "~J1(2.8)\tこんな馬鹿げた事態が ~N\n\t\t\tいつまでも続くはずがない ",
+    /* 25 */ "~J1(3.4)\t今ごろは軍の救助隊が ~N\n\t\t\t近くまで来ているだろう ",
+    /* 26 */ "~J1(2.8)\t町を抜ければきっと助かる ",
+    /* 27 */ "~J1(1.7)\t……そうだといいな ",
+    /* 28 */ "~J1(1.4)\tわたしはそろそろ行く ",
+    /* 29 */ "~J1(3.4)\t悠長に話をしている場合ではないからな ~E ",
+    /* 30 */ "~J0(2.0)\tアレッサという子を知っているか？ ~E ",
+    /* 31 */ "~J0(1.0)\t知らないな ~E ",
+    /* 32 */ "\tカウフマンが落としたのか？ ~N\n\tいろいろと入っているようだが…… ~E ",
+    /* 33 */ "\tこれは…… ~N\n\tドラッグなのか？ ~E ",
+    /* 34 */ "~C3\t８月２０日 ",
+    /* 35 */ "~C3\tあいつがやってきた。 ~N\n\t\tあの女から預かっているものを渡す。 ",
+    /* 36 */ "~C3\t９月１２日 ",
+    /* 37 */ "~C3\tあいつがノーマンのところへも ~N\n\t\t現れたらしい。 ",
+    /* 38 */ "~C3\tあんな奴らとはこれ以上 ~N\n\t\t関わり合いになりたくないのだが…… ",
+    /* 39 */ "~C3\tあいつには以前にはなかった ~N\n\t\t得体の知れない恐ろしさを感じる。 ",
+    /* 40 */ "~C3\tいっそのことこの町を出ようかとも ~N\n\t\t考えたが、それこそどんな目にあうか ~N\n\t\t考えただけでも恐ろしい。 ~E ",
+    /* 41 */ "~C3\tパン　　３斤 ~N\n\t\tミルク　３パック ~N\n\t\t卵　　　２ケース ",
+    /* 42 */ "~C3\t毎朝８時までに裏口へ届けること ~N\n\t\t裏口のナンバーは０８８６ ~N\n\t\t　　　　　　　　　　ノーマン・ヤング ~E ",
+    /* 43 */ "~C3\tノーマン開業祝い ~E ",
+    /* 44 */ "\t引き出しがある ~N\n\t開けますか？ ~S4 ",
+    /* 45 */ "\t~C2 金庫の鍵 ~C7 を使った ~E ",
+    /* 46 */ "\t~C2 金庫の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 47 */ "\t鍵がかかっている ~E ",
+    /* 48 */ "\t~C2 領収証 ~C7 を手に入れた ~E ",
+    /* 49 */ "\t~C2 カウフマンの鍵 ~C7 を手に入れた ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D4AB8
@@ -139,7 +177,7 @@ void func_800D4B58(void) // 0x800D4B58
             break;
 
         case 2:
-            Event_DisplayMapMsg(true, 45, 3, NO_VALUE, 0, false); // "There is a drawer. Do you want to open it?"
+            Event_DisplayMapMsg(true, MAP_MSG(45), 3, NO_VALUE, 0, false); // "There is a drawer. Do you want to open it?"
             break;
 
         case 3:
@@ -194,13 +232,13 @@ void func_800D4B58(void) // 0x800D4B58
 
 void func_800D4DF8(void) // 0x800D4DF8
 {
-    Event_ItemTake(InvItemId_SafeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S02_PickupSafeKey, 47);
+    Event_ItemTake(InvItemId_SafeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S02_PickupSafeKey, MAP_MSG(47));
 }
 
 void func_800D4E24(void) // 0x800D4E24
 {
     Savegame_EventFlagSet(EventFlag_397);
-    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), 35);
+    Event_DisplayMapMsgWithBg(FILE_TIM_DIARYINR_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(35));
 }
 
 void func_800D4E64(void) // 0x800D4E64
@@ -232,7 +270,7 @@ void func_800D4E64(void) // 0x800D4E64
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_DisplayMapMsg(false, 46, 0, 0, 0, false); // "Used the Safe Key."
+            Event_DisplayMapMsg(false, MAP_MSG(46), 0, 0, 0, false); // "Used the Safe Key."
             break;
 
         case 5:
@@ -259,7 +297,7 @@ void func_800D4E64(void) // 0x800D4E64
             break;
 
         case 9:
-            Event_DisplayMapMsg(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
+            Event_DisplayMapMsg(false, MAP_MSG(34), 0, 0, 0, false); // "What is this? Drugs?"
             break;
 
         case 10:
@@ -336,7 +374,7 @@ void func_800D519C(void) // 0x800D519C
             break;
 
         case 7:
-            Event_DisplayMapMsg(false, 34, 0, 0, 0, false); // "What is this? Drugs?"
+            Event_DisplayMapMsg(false, MAP_MSG(34), 0, 0, 0, false); // "What is this? Drugs?"
             break;
 
         case 8:
@@ -371,12 +409,12 @@ void func_800D519C(void) // 0x800D519C
 
 void func_800D5478(void) // 0x800D5478
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), 44);
+    Event_DisplayMapMsgWithBg(FILE_TIM_PICT_INR_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(44));
 }
 
 void func_800D54A4(void) // 0x800D54A4
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), 42);
+    Event_DisplayMapMsgWithBg(FILE_TIM_MEMO_INR_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(42));
 }
 
 void func_800D54D0(void) // 0x800D54D0
@@ -412,7 +450,7 @@ void func_800D54D0(void) // 0x800D54D0
 
             if (Gfx_PickupItemAnimate(InvItemId_KaufmannKey))
             {
-                Event_DisplayMapMsg(false, 50, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(50), 0, 0, 0, false);
 
                 if (g_SysWork.sysStateSteps[0] != 6)
                 {
@@ -432,7 +470,7 @@ void func_800D54D0(void) // 0x800D54D0
         case 9:
             if (Gfx_PickupItemAnimate(InvItemId_Receipt))
             {
-                Event_DisplayMapMsg(false, 49, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(49), 0, 0, 0, false);
 
                 if (g_SysWork.sysStateSteps[0] != 9)
                 {

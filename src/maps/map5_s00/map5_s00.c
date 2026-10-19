@@ -639,12 +639,21 @@ void func_800D6888(void) // 0x800D6888
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
     /* 16 */ "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",
     /* 17 */ "\tThere_is_a_ ~C2 Sewer_key ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 18 */ "\tThere_is_a_ ~C2 Sewer_exit_key ~C7 ~N\n\tin_the_water._Take_it? ~S4 ",
     /* 19 */ "\tGot_to_find_Cheryl. ~N\n\tNo_time_to_go_back. ~E ",
     /* 20 */ "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_resort_area) ~C7 . ~N\n\tTake_it? ~S4 "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t~C2 下水道通路の鍵 ~C7 を使った ~E ",
+    /* 16 */ "\t~C2 下水道出口の鍵 ~C7 を使った ~E ",
+    /* 17 */ "\t~C2 下水道通路の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 18 */ "\t水の中に ~C2 下水道出口の鍵 ~C7 が落ちている ~N\n\t取りますか？ ~S4 ",
+    /* 19 */ "\tシェリルを探しに行こう ~N\n\t戻っている暇はない ~E ",
+    /* 20 */ "~H ~C5 下水道の地図（リゾート方面） ~C7 がある ~N\n\t取りますか？ ~S4 "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D691C

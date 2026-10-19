@@ -2760,6 +2760,7 @@ g_HealthPortraitImg                          = 0x800AB3F8; // type:FsImageDesc s
 g_InventoryKeyItemTextureImg                 = 0x800AB400; // type:FsImageDesc size:8
 g_FirstAidKitItemTextureImg                  = 0x800AB408; // type:FsImageDesc size:8
 D_800A9074                                   = 0x800AB410;
+D_800A907C                                   = 0x800AB418;
 D_800A9084                                   = 0x800AB420;
 D_800A908C                                   = 0x800AB428;
 D_800A9094                                   = 0x800AB430;

@@ -26,6 +26,12 @@
 #define MAP_FIELD_4C_COUNT 150
 #define MAP_BLOOD_SPLAT_COUNT_MAX 50
 
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 58 ? (idx) - 2 : (idx) >= 20 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 extern s_Pose      g_WorldObjectPose_HealthDrink0;

@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map5/map5_s02.h"
 
 s_EventData MAP_EVENTS[21] = {
     // [0]
@@ -155,7 +156,7 @@ s_EventData MAP_EVENTS[21] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 11,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 48,
+        .eventParam      = MAP_MSG(48),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [17]
