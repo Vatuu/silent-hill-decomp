@@ -1,5 +1,12 @@
 #include "bodyprog/bodyprog.h"
 
+// @bugfix? Map messages didn't change in JAP1 but the index it uses here did?
+#if VERSION_REGION_IS(NTSCJ) && VERSION_EQUAL_OR_NEWER(JAP1)
+    #define MAP_MSG_CAR_BROKEN 36
+#else
+    #define MAP_MSG_CAR_BROKEN 37
+#endif
+
 s_EventData MAP_EVENTS[72] = {
     // [0]
     {
@@ -489,7 +496,7 @@ s_EventData MAP_EVENTS[72] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 52,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 37,
+        .eventParam      = MAP_MSG_CAR_BROKEN,
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [55]
@@ -498,7 +505,7 @@ s_EventData MAP_EVENTS[72] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 53,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 37,
+        .eventParam      = MAP_MSG_CAR_BROKEN,
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [56]
@@ -507,7 +514,7 @@ s_EventData MAP_EVENTS[72] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 54,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 37,
+        .eventParam      = MAP_MSG_CAR_BROKEN,
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [57]
