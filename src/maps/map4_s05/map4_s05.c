@@ -42,10 +42,17 @@ void func_800D61A4(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\tWhat? ~E ",
     /* 16 */ "~J0(2.5)\tThat_light!? ~E ",
     /* 17 */ "\tThe_stairs_are_wrecked! ~E ",
     /* 18 */ "~C3\tAlchemilla_Hospital ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(1.0)\t何だ？ ~E ",
+    /* 16 */ "~J0(2.5)\tあの光は！？ ~E",
+    /* 17 */ "\t階段は壊れていて ~N\n\t逃げることはできない！ ~E ",
+    /* 18 */ "~C3\tアルケミラ病院 ~E "
+#endif
 };
 
 const VECTOR3 D_800CABE4 = { Q12(-115.5f), Q12(2.0f), Q12(110.5f) };

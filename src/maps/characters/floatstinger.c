@@ -152,11 +152,17 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         floatstingerProps.field_FA += FP_FROM(floatstinger->damage.amount, Q12_SHIFT);
 
         Sfx_WithFlagsPlay(Sfx_Unk1570, &sp10, Q8(0.5f), SfxFlag_None);
-
+        
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix in USA onwards this block always runs when `health == 0`, previously controlState/anim.status also had to match.
         if (floatstinger->health == Q12(0.0f) ||
             ((floatstingerProps.field_F8 > 1000 || floatstingerProps.field_FA > 1200) &&
              floatstinger->model.controlState == FloatstingerControl_2 &&
              floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_9, true)))
+#else
+        if ((floatstinger->health == Q12(0.0f) || floatstingerProps.field_F8 > 1000 || floatstingerProps.field_FA > 1200) &&
+            floatstinger->model.controlState == FloatstingerControl_2 &&
+            floatstinger->model.anim.status == ANIM_STATUS(FloatstingerAnim_9, true))
+#endif
         {
             floatstingerProps.field_F8       = 0;
             floatstinger->model.controlState = FloatstingerControl_3;

@@ -37,12 +37,21 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tDaddy...where_are_you...? ",
     /* 16 */ "~J0(1.0)\tCheryl! ~E  ",
     /* 17 */ "\tThere_is_a_ ~C2 Hunting_rifle ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 18 */ "\tNothing_unusual. ~E ",
     /* 19 */ "\tA_picture_is_projected ~N\n\ton_the_screen. ",
     /* 20 */ "\tCheryl... ~N\n\twhere_could_she_be? ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\tパパ……どこにいるの？ ~E ",
+    /* 16 */ "~J0(1.0)\tシェリル！ ~E ",
+    /* 17 */ "\t~C2 狩猟用ライフル ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 18 */ "\t特に気になることはない ~E ",
+    /* 19 */ "\tスクリーンには映像が映し出されている ",
+    /* 20 */ "\tシェリル……どこにいるんだ？ ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D667C
