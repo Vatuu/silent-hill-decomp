@@ -1756,7 +1756,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 4:
-            Sfx_WithFlagsPlay(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1494, &Q12_VECTOR3(180.5f, -0.5f, -60.6f), Q8(0.5f), SfxFlag_None);
             SD_Call(Sfx_Unk1495);
             Savegame_EventFlagClear(EventFlag_549);
 
@@ -1774,7 +1774,7 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 8:
-            Sfx_WithFlagsPlay(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1494, &Q12_VECTOR3(180.5f, -0.5f, -60.6f), Q8(0.5f), SfxFlag_None);
             Savegame_EventFlagSet(EventFlag_549);
 
             D_800EBAF4 = 0;

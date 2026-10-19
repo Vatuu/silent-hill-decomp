@@ -512,9 +512,10 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             D_800DA6E8 = 0;
             ScreenFade_ResetTimestep();
             CutsceneBorder_ForceShow();
-            g_SysWork.sysFlags           |= SysFlag_CutsceneActive;
+            g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();
+
 #if VERSION_EQUAL_OR_NEWER(JAP2) // @bugfix?
             Game_TurnFlashlightOn();
 #endif
