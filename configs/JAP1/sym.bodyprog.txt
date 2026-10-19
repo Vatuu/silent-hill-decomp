@@ -3827,7 +3827,6 @@ sd_timer_event                               = 0x800CB150;
 //-------------------------------------------------------------------
 smf_song                                     = 0x800CB158;
 g_MapOverlayHdr                              = 0x800CBBD4; // type:MapOverlayHeader size:0x104C
-D_800CBAE0                                   = 0x800CBC08;
 open_main                                    = 0x801E2AF0; // type:func
 GameState_LoadSavegameScreen_Update          = 0x801E7030; // type:func
 // Gamestates inside overlays. TODO: Move these to sym files for each overlay
