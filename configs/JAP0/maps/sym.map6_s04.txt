@@ -411,3 +411,4 @@ g_WorldObject9                               = 0x800EFCE0; // type:WorldObjectDe
 D_800ED840                                   = 0x800EFD10;
 D_800ED841                                   = 0x800EFD11;
 D_800ED848                                   = 0x800EFD18;
+D_801E8918                                   = 0x801E8918; // ignore:True - FS_BUFFER_6 var
