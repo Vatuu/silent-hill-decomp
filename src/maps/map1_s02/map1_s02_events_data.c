@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map1/map1_s02.h"
 
 s_EventData MAP_EVENTS[121] = {
     // [0]
@@ -193,7 +194,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 38,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 52,
+        .eventParam      = MAP_MSG(52),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [22]
@@ -247,7 +248,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 42,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 50,
+        .eventParam      = MAP_MSG(50),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [28]
@@ -1137,7 +1138,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 105,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 54,
+        .eventParam     = MAP_MSG(54),
     },
     // [118]
     {
@@ -1145,7 +1146,7 @@ s_EventData MAP_EVENTS[121] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 104,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 53,
+        .eventParam     = MAP_MSG(53),
     },
     // [119]
     {

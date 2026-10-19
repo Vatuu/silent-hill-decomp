@@ -23,6 +23,12 @@
 #define MAP_FIELD_4C_COUNT 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 25 ? (idx) + 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 extern SVECTOR D_800E1F74;

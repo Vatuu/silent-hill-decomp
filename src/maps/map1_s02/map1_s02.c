@@ -39,6 +39,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.2)\tWhere_am_I? ~E ",
     /* 16 */ "~J0(2.0)\tHave_I_been_here_before? ~E ",
     /* 17 */ "~J0(3.8)\tI_don't_remember ~N\n\t\t\tthis_being_here_before... ~E ",
@@ -79,6 +80,47 @@ const char* MAP_MESSAGES[] = {
     /* 52 */ "\tA_hanging_body... ~N\n\tWhy_would_somebody... ~E ",
     /* 53 */ "\tA_doll_is_on_the_floor. ~E ",
     /* 54 */ "\tA_headless_doll_is_stuck ~N\n\tto_the_wall. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(1.2)\t……ここは？ ~E ",
+    /* 16 */ "~J0(2.0)\t元の場所？ ~E ",
+    /* 17 */ "~J0(3.8)\tこれは何だ？ ~N\n\t\t\tさっきまではなかったはずだが…… ~E ",
+    /* 18 */ "\t扉は開かない ~E ",
+    /* 19 */ "\t~C2 ロビーの鍵 ~C7 を使った ~E ",
+    /* 20 */ "\tつづく ~E ",
+    /* 21 */ "\t~C5 黄金の時 ~C7 ~E ",
+    /* 22 */ "\t~C5 白銀の月 ~C7 ~E ",
+    /* 23 */ "\t何だ……？ ~N\n\tこれは扉なのか？ ",
+    /* 24 */ "\t扉にしては鍵穴どころか ~N\n\tノブもないが…… ",
+    /* 25 */ "\t押してみても　かすかには動くが ~N\n\tそれ以上は開きそうにない ~E ",
+    /* 26 */ "\t……これは？ ~E ",
+    /* 27 */ "\t扉の中央に横長のスリットがある ",
+    /* 28 */ "\t何の意味があるのだろう？ ~E ",
+    /* 29 */ "\t~C2 絵札 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 30 */ "\t~C2 絵札 ~C7 をスリットに差し込んだ ~E ",
+    /* 31 */ "~J0(0.9)\t　 ",
+    /* 32 */ "~J0(3.0)\tパパ……　たすけて…… ",
+    /* 33 */ "~J0(3.0)\tパパ……どこにいるの……？ ",
+    /* 34 */ "~D ~J0(2.0)\n\tシェリル！ ~E ",
+    /* 35 */ "~J1(2.4)\tシェリルの声だ　まちがいない ",
+    /* 36 */ "~J1(2.0)\tどこにいるんだ？ ~N\n\t\t\tシェリル…… ~E ",
+    /* 37 */ "\t~C2 ゴムボール ~C7 が置かれている ~N\n\t取りますか？ ~S4 ",
+    /* 38 */ "\t~C5 レナード・ライン　潜在する怪物 ~C7 ",
+    /* 39 */ "\t潜在する怪物…… ~N\n\t何のことだ？ ~E ",
+    /* 40 */ "\t~C2 ショットガン ~C7 が落ちている ~N\n\t取りますか？ ~S4 ",
+    /* 41 */ "\tバルブがある ~S3 ",
+    /* 42 */ "\t左に回す ",
+    /* 43 */ "\t右に回す ",
+    /* 44 */ "\t回すのを止める ",
+    /* 45 */ "\tカードが散らばっている ~E ",
+    /* 46 */ "\t車椅子が置かれている ~N\n\t小学校に……？ ~E ",
+    /* 47 */ "\tロッカーには鍵がかかっている ~E ",
+    /* 48 */ "\t巨大なファンが回転している ~N\n\t無闇に近づくと引き込まれてしまいそうだ ~E ",
+    /* 49 */ "\t電話機は使えない ~E ",
+    /* 50 */ "\t~C2 教室の鍵 ~C7 が落ちている ~N\n\t取りますか？ ~S4 ",
+    /* 51 */ "\t吊るされた死体だ…… ~N\n\tいったい誰が……！？ ~E ",
+    /* 52 */ "\t人形が床に置かれている ~E ",
+    /* 53 */ "\t首のない人形が壁に張りつけられている ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800DA200
@@ -1367,7 +1409,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_ClassroomKey))
             {
-                Event_DisplayMapMsg(true, 51, 6, 7, 0, false); // "There is a CLassroom key. Take it?"
+                Event_DisplayMapMsg(true, MAP_MSG(51), 6, 7, 0, false); // "There is a CLassroom key. Take it?"
             }
 
             Savegame_EventFlagSet(EventFlag_M1S02_PickupClassroomKey);
@@ -1428,17 +1470,17 @@ void Map_WorldObjectsInit(void) // 0x800DD494
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 8, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 8, SpawnFlag_None);
         Chara_SpawnFlagsSet(Chara_Creeper, 1, SpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 14, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 15, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 11, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 14, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 15, SpawnFlag_0 | SpawnFlag_1);
         Chara_SpawnFlagsSet(Chara_Creeper, 0, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_Creeper, 2, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
         Chara_SpawnFlagsSet(Chara_Creeper, 4, SpawnFlag_0 | SpawnFlag_2 | SpawnFlag_3);
@@ -1740,11 +1782,11 @@ void func_800DEC88(void) // 0x800DEC88
     {
         if (g_SavegamePtr->gameDifficulty == 1)
         {
-            Chara_SpawnPositionSet(Chara_GreyChild, 12, Q12(134.1f), Q12(21.3f));
+            Chara_SpawnPositionSet(Chara_GreyChildOrMumbler, 12, Q12(134.1f), Q12(21.3f));
         }
         else
         {
-            Chara_SpawnFlagsSet(Chara_GreyChild, 12, SpawnFlag_None);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 12, SpawnFlag_None);
         }
     }
 

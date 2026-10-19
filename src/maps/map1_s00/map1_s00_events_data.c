@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map1/map1_s00.h"
 
 s_EventData MAP_EVENTS[101] = {
     // [0]
@@ -106,7 +107,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 31,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 32,
+        .eventParam      = MAP_MSG(32),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [12]
@@ -115,7 +116,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 32,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 33,
+        .eventParam      = MAP_MSG(33),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [13]
@@ -925,7 +926,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 26,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 35,
+        .eventParam     = MAP_MSG(35),
     },
     // [96]
     {
@@ -933,7 +934,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 87,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 36,
+        .eventParam     = MAP_MSG(36),
     },
     // [97]
     {
@@ -941,7 +942,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 88,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 36,
+        .eventParam     = MAP_MSG(36),
     },
     // [98]
     {
@@ -949,7 +950,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 92,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 39,
+        .eventParam     = MAP_MSG(39),
     },
     // [99]
     {
@@ -957,7 +958,7 @@ s_EventData MAP_EVENTS[101] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 93,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 39,
+        .eventParam     = MAP_MSG(39),
     },
     // [100]
     {

@@ -76,6 +76,7 @@ void MapEvent_DoorUnlocked(void) // 0x800D7180
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tStatue_of_an_old_man's_hand.",
     /* 16 */ "\tThe_fist_shut_tight, ~N\n\tas_if_never_to_let_go. ~E ",
     /* 17 */ "\tThere_is_a_ ~C2 Gold_medallion ~C7 . ~N\n\tTake_it? ~S4 ",
@@ -109,6 +110,39 @@ const char* MAP_MESSAGES[] = {
     /* 45 */ "\tNo_special_book_here. ~E ",
     /* 46 */ "\tNo_need_to_read ~N\n\tany_of_these_books. ~E ",
     /* 47 */ "\tThere's_some_blood ~N\n\ton_some_of_the_keys..... ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t\t老人の手の彫像がある ",
+    /* 16 */ "\t\t何かを放すまいとするかのように ~N\n\t\t堅く握り締められている ~E ",
+    /* 17 */ "\t\t~C2 金のメダリオン ~C7 がある ~N\n\t\t取りますか？ ~S4 ",
+    /* 18 */ "\t\t~C2 化学薬品 ~C7 がある ~N\n\t\t取りますか？ ~S4 ",
+    /* 19 */ "\t\t特に何もない ~E ",
+    /* 20 */ "\t\t溶けた手の彫像があるだけだ ~N\n\t\t特に気になることはない ~E ",
+    /* 21 */ "\t\t鍵がかかっている ~N\n\t\t中に何かいるような気配がするのだが…… ~E ",
+    /* 22 */ "~L4 ~M ~C3\n\t−声無き鳥の飛び比べ− ~N\n\t~N\n\t最初に飛び出す欲張りアヒル ~N\n\tご褒美欲しくてたまらない ~N\n\tバタバタ動かす白い羽 ~N\n\t~N\n\t続けて飛び出す気取り屋ペリカン ~N\n\tひょいとアヒルを追い抜いて ~N\n\t見くだし見おろし得意顔 ",
+    /* 23 */ "~L4 ~M ~C3 ~N\n\tその次飛び出すツバメの高さ ~N\n\tペリカンよりも上だった ~N\n\tにやりと笑うと宙返り ~N\n\t~N\n\t遅れて来たのはカモメの水兵 ~N\n\t平凡なりには努力して ~N\n\tアヒルに勝ったがその程度 ",
+    /* 24 */ "~L4 ~M ~C3\n\tぼんやりカラスは最後の最後 ~N\n\t飛ばず鳴かずに昼寝する ~N\n\tのんびりぐうたら大あくび ~N\n\t~N\n\t鳴く声無くした鳥たちが ~N\n\t勲章めぐって大騒ぎ ~N\n\t~N\n\t銀色ご褒美誰のもの ~N\n\t銀ピカメダルは誰のもの ~E ",
+    /* 25 */ "\t開かないな　鍵がかかって ~N\n\tいるわけでもなさそうだが…… ~E ",
+    /* 26 */ "\t鍵盤の一部に血がついている ~N\n\t何か意味があるのだろうか……？ ~E ",
+    /* 27 */ "\tピアノを調べますか？ ~S4 ",
+    /* 28 */ "\t~C2 銀のメダリオン ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 29 */ "\t血で文字が書かれている ~E ",
+    /* 30 */ "\tロッカーの中には何もない ~E ",
+    /* 31 */ "~J0(2.0)\t何だ　猫か…… ~E ",
+    /* 32 */ "\t蒸留水が置いてある ~N\n\t持っていく必要はないだろう ~E ",
+    /* 33 */ "\t棚の中に役に立ちそうなものはない ~E ",
+    /* 34 */ "\t机の中に役に立ちそうな物は入ってない ~E ",
+    /* 35 */ "\t使えそうなものは特にない ~E ",
+    /* 36 */ "\tブドウ糖が置いてある ~N\n\t持っていく必要はないだろう ~E ",
+    /* 37 */ "\t~C3 忘れ物注意 ~N\n\tロッカー室使用上の注意 ~N\n\tサマーキャンプの案内 ",
+    /* 38 */ "\t普通の小学校の掲示板だな ~N\n\t特に気になることはないか…… ~E ",
+    /* 39 */ "\t~C3 ロッカー室で騒がないこと ~E ",
+    /* 40 */ "\tロッカーの中に役に ~N\n\t立ちそうな物は入ってない ~E ",
+    /* 41 */ "\t机の中に役に立ちそうな物は入ってない ~E ",
+    /* 42 */ "\t役に立ちそうな本はない ~E ",
+    /* 43 */ "\t特に気になる本はない ~E ",
+    /* 44 */ "\tここの本は特に読む必要もないだろう ~E ",
+    /* 45 */ "\t鍵盤の一部に血がついている ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D7214
@@ -329,7 +363,7 @@ void MapEvent_GoldMedallionItemPickup(void) // 0x800D76F4
 
 void func_800D7830(void) // 0x800D7830
 {
-    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), MAP_MSG(31), MAP_MSG(23));
 }
 
 void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
@@ -376,12 +410,12 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
 
         case 3:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 27, false, false, 0, false); // "There's some blood on some of the keys."
+            Event_DisplayMapMsg(false, MAP_MSG(27), false, false, 0, false); // "There's some blood on some of the keys."
             break;
 
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(true, 29, EventState_CheckPiano, EventState_DontCheckPiano, 0, false); // "Check the piano?"
+            Event_DisplayMapMsg(true, MAP_MSG(29), EventState_CheckPiano, EventState_DontCheckPiano, 0, false); // "Check the piano?"
             break;
 
         case EventState_CheckPiano:
@@ -508,7 +542,7 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
 
 void func_800D7EEC(void) // 0x800D7EEC
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), 47);
+    Event_DisplayMapMsgWithBg(FILE_TIM_PIANO1_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(47));
 }
 
 void PianoPuzzle_Control(bool playNote) // 0x800D7F18
@@ -760,7 +794,7 @@ void func_800D857C(void) // 0x800D857C
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_SilverMedallion))
             {
-                Event_DisplayMapMsg(true, 30, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(30), 6, 7, 0, false);
             }
 
             Savegame_EventFlagSet(EventFlag_M1S01_PickupSilverMedallion);
@@ -789,7 +823,7 @@ void func_800D857C(void) // 0x800D857C
 
 void func_800D8794(void) // 0x800D8794
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(32));
 }
 
 extern q19_12 g_Cutscene_Timer;
@@ -916,7 +950,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 12:
-            Event_DisplayMapMsg(false, 33, 0, 0, 0, false); // "Just a cat..."
+            Event_DisplayMapMsg(false, MAP_MSG(33), 0, 0, 0, false); // "Just a cat..."
 
             g_Cutscene_Timer = MIN((Q12_MULT_PRECISE(g_DeltaTime, Q12(20.0f)) + g_Cutscene_Timer), Q12(121.0f));
             g_Cutscene_Timer = MAX(g_Cutscene_Timer, Q12(49.0f));
@@ -1040,13 +1074,13 @@ void Map_WorldObjectsInit(void) // 0x800D91EC
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, SpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, SpawnFlag_0 | SpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
@@ -1169,27 +1203,27 @@ void func_800D9DDC(void) // 0x800D9DDC
     {
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
         }
 
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
         {
-            Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
 
             if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
-                Chara_SpawnFlagsSet(Chara_GreyChild, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
+                Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
             }
         }
     }
 
     if (Savegame_EventFlagGet(EventFlag_77))
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, SpawnFlag_0 | SpawnFlag_1);
 
         if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
         {
-            Chara_SpawnFlagsSet(Chara_GreyChild, 7, SpawnFlag_None);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 7, SpawnFlag_None);
         }
     }
 }

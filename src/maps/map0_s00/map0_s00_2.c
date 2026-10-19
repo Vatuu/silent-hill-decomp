@@ -20,13 +20,6 @@
 #include "../src/maps/characters/stalker.c" // 0x800D2F08
 #include "../src/maps/characters/cheryl.c"
 
-// Enemy character used on this map changes depending on the region.
-#if VERSION_REGION_IS(NTSC)
-    #define ENEMY_CHARA_ID Chara_GreyChild
-#elif VERSION_REGION_IS(NTSCJ)
-    #define ENEMY_CHARA_ID Chara_Mumbler
-#endif
-
 #include "../src/maps/chara_util.c" // 0x800D88AC
 
 #include "../src/maps/map_util.c" // 0x800D929C
@@ -1018,7 +1011,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             if (Fs_QueueChunksLoad())
             {
                 D_800DFB60++;
-                Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
+                Chara_Load(1, Chara_GreyChildOrMumbler, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
             }
 
         case 7:
@@ -1053,9 +1046,9 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateSetNext(SysState_Gameplay);
 
             Chara_ProcessLoads();
-            Chara_Spawn(ENEMY_CHARA_ID, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
-            Chara_Spawn(ENEMY_CHARA_ID, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
-            Chara_Spawn(ENEMY_CHARA_ID, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
             break;
     }
 
@@ -1064,7 +1057,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
         if (Fs_QueueChunksLoad())
         {
             D_800DFB60++;
-            Chara_Load(1, ENEMY_CHARA_ID, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
+            Chara_Load(1, Chara_GreyChildOrMumbler, &g_SysWork.npcBoneCoordBuffer[0], 0, NULL, NULL);
         }
     }
 }
@@ -1261,7 +1254,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             // Make all Grey Children aggressive.
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs[i].model.charaId == ENEMY_CHARA_ID)
+                if (g_SysWork.npcs[i].model.charaId == Chara_GreyChildOrMumbler)
                 {
                     g_SysWork.npcs[i].model.controlState = 0;
                     g_SysWork.npcs[i].model.stateStep    = 6;
@@ -1381,9 +1374,9 @@ void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
         {
-            Chara_Spawn(ENEMY_CHARA_ID, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
-            Chara_Spawn(ENEMY_CHARA_ID, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
-            Chara_Spawn(ENEMY_CHARA_ID, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 0, Q12(-252.0f), Q12(223.0f), Q12_ANGLE(180.0f), 5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 1, Q12(-254.0f), Q12(221.0f), Q12_ANGLE(135.0f), 5);
+            Chara_Spawn(Chara_GreyChildOrMumbler, 2, Q12(-259.0f), Q12(232.0f), Q12_ANGLE(0.0f),   5);
         }
     }
 }

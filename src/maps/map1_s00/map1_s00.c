@@ -62,6 +62,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThe_tower_door_is_locked. ~E ",
     /* 16 */ "\tThe_hands_are_stopped_at_10:00. ~E ",
     /* 17 */ "\tThe_hands_are_stopped_at_12:00. ~E ",
@@ -87,6 +88,32 @@ const char* MAP_MESSAGES[] = {
     /* 37 */ "~H\tThere_is_a_ ~C5 School_map ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 38 */ "\tMoore,_Ranaldo,_Gordon... ~N\n\tThis_must_be_the_list_of_teachers. ~E ",
     /* 39 */ "\tNothing_inside. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t時計塔の扉には鍵がかかっている ~E ",
+    /* 16 */ "\t時計の針は１０時を ~N\n\t指したまま止まっている ~E ",
+    /* 17 */ "\t時計の針は１２時を ~N\n\t指したまま止まっている ~E ",
+    /* 18 */ "\t時計の針は５時を ~N\n\t指したまま止まっている ~E ",
+    /* 19 */ "\t~C3 黄金の時 ~E ",
+    /* 20 */ "\t~C3 白銀の月 ~E ",
+    /* 21 */ "\t扉が開かなくなっている！ ~E ",
+    /* 22 */ "~L4 ~M ~C3\n\t十時 ~N\n\t~N\n\t錬金術師の実験場 ~N\n\t~N\n\t老人の掌に黄金 ~N\n\t握り隠された未来 ~N\n\t賢者の水と引き替えに ~E ",
+    /* 23 */ "~L4 ~M ~C3\n\t十二時 ~N\n\t~N\n\t歌と音の集う場所 ~N\n\t~N\n\t失われた言葉の中 ~N\n\t眠りにつく銀の道標 ~N\n\t定められた流れに目覚める ~E ",
+    /* 24 */ "~L4 ~M ~C3\n\t五時 ~N\n\t~N\n\t暑い風を生む光届かぬ地 ~N\n\t~N\n\t静寂を破り灯される炎 ~N\n\t目覚める飢えたけもの ~N\n\t時の扉を開き餌を招く ~E ",
+    /* 25 */ "\t血で文字が書かれている ~E ",
+    /* 26 */ "\tシェリルがここにいるかもしれない ~N\n\t探してみた方がいいだろう ~E ",
+    /* 27 */ "\t扉が描かれている ~N\n\t誰が飾ったかは知らないが悪趣味な絵だ ~E ",
+    /* 28 */ "\tスイッチがある ~N\n\t押しますか？ ~S4 ",
+    /* 29 */ "\t何も起こらないようだ ~E ",
+    /* 30 */ "\tボイラーが稼動している ~E ",
+    /* 31 */ "\t壊れていて動かないようだ ~E ",
+    /* 32 */ "\tバルブは固く閉められていて ~N\n\t動かせそうにない ",
+    /* 33 */ "\t何の配管かわからないし ~N\n\t下手にいじらない方がいいだろう ~E ",
+    /* 34 */ "\t特に気になることは書かれていない ~E ",
+    /* 35 */ "\t机の中に役に立ちそうな物は入ってない ~E ",
+    /* 36 */ "~H\t~C5 学校の地図 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 37 */ "\tムーア　ラナルド　ゴードン…… ~N\n\tどうやら　この学校の教員名簿のようだ ~E ",
+    /* 38 */ "\t中には何もない ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D7A28
@@ -652,7 +679,7 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
         case 2:
             g_SysWork.silentYesSelection = true;
-            Event_DisplayMapMsg(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
+            Event_DisplayMapMsg(true, MAP_MSG(29), 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
         case 3:
@@ -722,7 +749,7 @@ void MapEvent_Boiler1(void)
 
         case 2:
             g_SysWork.silentYesSelection = true;
-            Event_DisplayMapMsg(true, 29, 3, -1, 0, false); // "Do you want to press the switch?"
+            Event_DisplayMapMsg(true, MAP_MSG(29), 3, -1, 0, false); // "Do you want to press the switch?"
             break;
 
         case 3:
@@ -734,7 +761,7 @@ void MapEvent_Boiler1(void)
             break;
 
         case 5:
-            Event_DisplayMapMsg(false, 30, 0, 0, 0, false); // "Nothing appears to happen."
+            Event_DisplayMapMsg(false, MAP_MSG(30), 0, 0, 0, false); // "Nothing appears to happen."
             break;
 
         default:
@@ -758,7 +785,7 @@ void MapEvent_Boiler2(void) // 0x800D9148
             break;
 
         case 2:
-            Event_DisplayMapMsg(false, 31, 0, 0, 0, false); // "The boiler is working."
+            Event_DisplayMapMsg(false, MAP_MSG(31), 0, 0, 0, false); // "The boiler is working."
             break;
 
         default:
@@ -773,13 +800,13 @@ void MapEvent_Boiler2(void) // 0x800D9148
 
 void MapEvent_TownMapTake(void) // 0x800D922C
 {
-    Event_PaperMapTake(6, EventFlag_M1S00_PickupMap, 37);
+    Event_PaperMapTake(6, EventFlag_M1S00_PickupMap, MAP_MSG(37));
 }
 
 void func_800D9254(void) // 0x800D9254
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), 38);
+    Event_DisplayMapMsgWithBg(FILE_TIM_USCBOOK_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(38));
 }
 
 void func_800D928C(void) // 0x800D928C
@@ -816,16 +843,16 @@ void Map_WorldObjectsInit(void)
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 3, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 9, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 9, SpawnFlag_None);
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 11, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 12, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 13, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 11, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 12, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 13, SpawnFlag_0 | SpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
@@ -1026,7 +1053,7 @@ void func_800DA3FC(void) // 0x800DA3FC
 {
     if (Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
     {
-        Chara_SpawnFlagsSet(Chara_GreyChild, 0, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChild, 1, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
     }
 }

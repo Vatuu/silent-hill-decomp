@@ -18,6 +18,13 @@
 #define MAP_FIELD_4C_COUNT 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+// JAP0 has a different set of messages from 22 up (one dropped, two merged).
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 29 ? (idx) - 2 : (idx) >= 23 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 extern u8  D_800DC9FC;

@@ -112,6 +112,14 @@ typedef enum _CharaId
     Chara_Padlock          = 44,
 
     Chara_Count,
+
+/** @brief Grey Child enemy is replaced by the Mumbler in non-USA releases. */
+#if VERSION_REGION_IS(NTSC)
+    Chara_GreyChildOrMumbler = Chara_GreyChild,
+#else
+    Chara_GreyChildOrMumbler = Chara_Mumbler,
+#endif
+
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharaId;
 

@@ -154,7 +154,7 @@ const s_MapOverlayHdr g_MapOverlayHdr = {
     .charaUpdateFuncs             = {
         NULL, NULL, NULL, NULL, NULL, NULL, LarvalStalker_Update, Stalker_Update,
         Stalker_Update, Stalker_Update },
-    .charaGroupIds = { Chara_GreyChild, Chara_LarvalStalker },
+    .charaGroupIds = { Chara_GreyChildOrMumbler, Chara_LarvalStalker },
     .charaSpawnInfos   = {
         #include "chara_spawns.h"
     },
