@@ -233,6 +233,43 @@ MAP_PATCHES = {
     }
 }
 
+# Garbage bytes to patch into screen overlays, per version: { version: { screen: [[offset, bytes], ...] } }
+SCREEN_PATCHES = {
+    "JAP0": {
+        "options": [
+            [0xB62, b'\x68\x98']
+        ]
+    },
+    "JAP1": {
+        "options": [
+            [0xB62, b'\x68\x98']
+        ]
+    },
+    "JAP2": {
+        "options": [
+            [0xB62, b'\x68\x98']
+        ]
+    }
+}
+
+SCREEN_BIN_NAMES = {
+    "options": "OPTION",
+    "credits": "STF_ROLL"
+}
+
+def apply_screen_patches(target):
+    name = target.split("/")[-1]
+    for version, screens in SCREEN_PATCHES.items():
+        if name not in screens:
+            continue
+        path = f"build/{version}/out/VIN/{SCREEN_BIN_NAMES[name]}.BIN"
+        if not os.path.isfile(path):
+            continue
+        with open(path, "r+b") as file:
+            for offset, data in screens[name]:
+                file.seek(offset)
+                file.write(data)
+
 def apply_map_patches(target):
     name = target.split("/")[-1]
     for version, maps in MAP_PATCHES.items():
@@ -249,6 +286,8 @@ def apply_map_patches(target):
 if __name__ == "__main__":
     if sys.argv[1].startswith("maps/"):
         apply_map_patches(sys.argv[1])
+    if sys.argv[1].startswith("screens/"):
+        apply_screen_patches(sys.argv[1])
     match sys.argv[1]:
         case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN" | "build/JAP1/out/VIN/STREAM.BIN" | "build/JAP2/out/VIN/STREAM.BIN":
             usaPath = "build/USA/out/VIN/STREAM.BIN"

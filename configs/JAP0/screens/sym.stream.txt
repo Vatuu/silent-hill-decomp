@@ -39,7 +39,7 @@ DecDCTReset                          = 0x801E3578; // type:func
 DecDCTGetEnv                         = 0x801E35AC; // type:func
 DecDCTPutEnv                         = 0x801E3638; // type:func
 DecDCTBufSize                        = 0x801E36D0; // type:func
-DecDCTin                             = 0x801E36DC; // type:func
+DecDCTin                             = 0x801E36DC; // type:func allow_duplicated:True - overlays share vram, same address as `Options_ExtraOptionsMenu_Control` (options)
 DecDCTout                            = 0x801E3758; // type:func
 DecDCTinSync                         = 0x801E3778; // type:func
 DecDCToutSync                        = 0x801E37B4; // type:func
@@ -90,3 +90,4 @@ m                                    = 0x801F5128;
 //--- PA: 0x012B30   VA: 0x801F5130   subsegment: o, libds/dscb, .bss
 //-------------------------------------------------------------------
 GlobalCallback                       = 0x801F5130;
+open_main                                    = 0x801E2AF0; // type:func

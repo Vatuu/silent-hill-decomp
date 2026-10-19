@@ -1,12 +1,52 @@
-
-
-
-//================================================
-//=== .rodata section
-//================================================
-
-
-//------------------------------------------------------
-//--- PA: 0x000004   VA: 0x801E2604   subsegment: rodata
-//------------------------------------------------------
-GameState_Options_Update = 0x801E3164; // type:func
+GameState_Options_Update                     = 0x801E3164; // type:func
+Options_ExtraOptionsMenu_Control             = 0x801E36DC; // type:func allow_duplicated:True - overlays share vram, same address as `DecDCTin` (stream)
+Options_MainOptionsMenu_Control              = 0x801E3CC8; // type:func
+Options_MainOptionsMenu_BgmVolumeBarDraw     = 0x801E44C8; // type:func
+Options_MainOptionsMenu_SfxVolumeBarDraw     = 0x801E44F0; // type:func
+Options_MainOptionsMenu_VolumeBarDraw        = 0x801E4518; // type:func
+Options_ExtraOptionsMenu_EntryStringsDraw    = 0x801E46CC; // type:func
+Options_MainOptionsMenu_EntryStringsDraw     = 0x801E484C; // type:func
+Options_ExtraOptionsMenu_SelectionHighlightDraw = 0x801E49B0; // type:func
+Options_MainOptionsMenu_SelectionHighlightDraw = 0x801E4C8C; // type:func
+Options_Menu_BackgroundDraw                  = 0x801E4F50; // type:func
+Options_ExtraOptionsMenu_ConfigDraw          = 0x801E508C; // type:func
+Options_MainOptionsMenu_ConfigDraw           = 0x801E555C; // type:func
+Options_ScreenPosMenu_Control                = 0x801E5900; // type:func
+Options_ScreenPosMenu_ArrowsDraw             = 0x801E5F68; // type:func
+Options_ScreenPosMenu_ConfigDraw             = 0x801E621C; // type:func
+Options_BrightnessMenu_Control               = 0x801E6578; // type:func
+Options_BrightnessMenu_ConfigDraw            = 0x801E6798; // type:func
+Options_BrightnessMenu_ArrowsDraw            = 0x801E67EC; // type:func
+Options_Selection_HighlightDraw              = 0x801E697C; // type:func
+Options_Selection_ArrowDraw                  = 0x801E6B8C; // type:func
+Options_Selection_BulletPointDraw            = 0x801E6D10; // type:func
+Options_ControllerMenu_Control               = 0x801E7CA4; // type:func
+Options_ControllerMenu_ConfigUpdate          = 0x801E7FDC; // type:func
+Options_ControllerMenu_EntriesDraw           = 0x801E8248; // type:func
+Options_ControllerMenu_ButtonIconsDraw       = 0x801E8454; // type:func
+g_MainOptionsMenu_SelectedEntry              = 0x801E85DC;
+g_ExtraOptionsMenu_SelectedEntry             = 0x801E85E0;
+g_MainOptionsMenu_PrevSelectedEntry          = 0x801E85E4;
+g_ExtraOptionsMenu_PrevSelectedEntry         = 0x801E85E8;
+g_ScreenPosMenu_InvertBackgroundFade         = 0x801E85EC;
+g_ControllerMenu_IsOnActionsPane             = 0x801E85F0;
+controllerMenu_SelectionHighlightDrawModes   = 0x801E85F4;
+controllerMenu_SelectionHighlightQuads       = 0x801E860C;
+CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS   = 0x801E8654;
+CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS   = 0x801E8664;
+extraOptions_SelectionHighlightFrom_Unused   = 0x801E869C;
+extraOptions_SelectionHighlightTo_Unused     = 0x801E86A0;
+mainOptions_SelectionHighlightFrom_Unused    = 0x801E86A4;
+mainOptions_SelectionHighlightTo_Unused      = 0x801E86A8;
+extraOptions_SelectionHighlightFrom          = 0x801E86AC;
+extraOptions_SelectionHighlightTo            = 0x801E86B0;
+mainOptions_SelectionHighlightFrom           = 0x801E86B4;
+mainOptions_SelectionHighlightTo             = 0x801E86B8;
+screenPosMenu_BackgroundFade                 = 0x801E86BC;
+screenPosMenu_PositionX                      = 0x801E86C0;
+screenPosMenu_PositionY                      = 0x801E86C2;
+controllerMenu_SelectedEntries               = 0x801E86C4;
+g_Options_SelectionHighlightTimer            = 0x801E86CC;
+g_ExtraOptionsMenu_EntryCount                = 0x801E86D0;
+g_ExtraOptionsMenu_SelectedBloodColorEntry   = 0x801E86D4;
+g_ExtraOptionsMenu_BulletMultMax             = 0x801E86D8;

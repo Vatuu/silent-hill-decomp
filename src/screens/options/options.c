@@ -16,6 +16,17 @@
 #include "screens/options.h"
 #include "screens/stream/stream.h"
 
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
+#endif
+
+// Japanese releases draw the main and extra option menus 20 pixels higher.
+#if VERSION_REGION_IS(NTSCJ)
+    #define MENU_SHIFT_Y -20
+#else
+    #define MENU_SHIFT_Y 0
+#endif
+
 #define LINE_CURSOR_TIMER_MAX          8
 #define LAYER_24                       24
 #define LAYER_40                       40
@@ -44,6 +55,53 @@ static s32 g_ExtraOptionsMenu_BulletMultMax;
 // MAIN AND EXTRA OPTION SCREEN
 // ========================================
 
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2604);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2630);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E265C);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2688);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E26B4);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E26E0);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E270C);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2738);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2764);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2790);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27BC);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27E4);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2810);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E283C);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2868);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2894);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E28C0);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E28EC);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2918);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2944);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2970);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E299C);
+
+INCLUDE_ASM("screens/options/nonmatchings/options", GameState_Options_Update);
+#else
 void GameState_Options_Update(void) // 0x801E2D44
 {
     s32 unlockedOptFlags;
@@ -218,11 +276,17 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
     }
 }
+#endif
 
 void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 {
     Options_ExtraOptionsMenu_EntryStringsDraw();
     Options_ExtraOptionsMenu_ConfigDraw();
+
+#if VERSION_REGION_IS(NTSCJ)
+    func_801E749C();
+#endif
+
     Options_ExtraOptionsMenu_SelectionHighlightDraw();
     Options_Menu_BackgroundDraw();
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
@@ -425,6 +489,14 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     // Draw graphics.
     Options_MainOptionsMenu_EntryStringsDraw();
     Options_MainOptionsMenu_ConfigDraw();
+
+#if VERSION_REGION_IS(NTSCJ)
+    #define BRIGHTNESS_IMG_FILE FILE_TIM_OP_BRT_TIM
+    func_801E794C();
+#else
+    #define BRIGHTNESS_IMG_FILE FILE_TIM_OP_BRT_E_TIM
+#endif
+    
     Options_MainOptionsMenu_SelectionHighlightDraw();
     Options_Menu_BackgroundDraw();
     Screen_BackgroundImgDraw(&g_ItemInspectionImg);
@@ -519,11 +591,11 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
                 if (g_GameWork.gameStatePrev == GameState_MainMenu)
                 {
-                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &g_BrightnessScreenImg0);
+                    Fs_QueueStartReadTim(BRIGHTNESS_IMG_FILE, IMAGE_BUFFER_3, &g_BrightnessScreenImg0);
                 }
                 else
                 {
-                    Fs_QueueStartReadTim(FILE_TIM_OP_BRT_E_TIM, IMAGE_BUFFER_3, &g_BrightnessScreenImg1);
+                    Fs_QueueStartReadTim(BRIGHTNESS_IMG_FILE, IMAGE_BUFFER_3, &g_BrightnessScreenImg1);
                 }
 
                 ScreenFade_Start(true, false, false);
@@ -653,6 +725,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         g_MainOptionsMenu_SelectedEntry   = MainOptionsMenuEntry_Exit;
     }
 
+    #undef BRIGHTNESS_IMG_FILE
     #undef SOUND_VOL_STEP
 }
 
@@ -718,11 +791,11 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
             }
 
             xOffset = 24 + (i * 6);
-            offset  = -69;
+            offset  = -69 - MENU_SHIFT_Y;
 
             x0Offset = j + 24;
             x0       = (x0Offset + (i * 6)) & 0xFFFF;
-            yOffset  = j + 56;
+            yOffset  = j + (56 + MENU_SHIFT_Y);
 
             setXY0Fast(poly, x0,                           (isSfx * STR_OFFSET_Y) + yOffset);
             setXY1Fast(poly, x0,                           (isSfx * STR_OFFSET_Y) - (j + offset));
@@ -741,7 +814,7 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
 void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 {
     #define LINE_BASE_X   (SCREEN_WIDTH / 5)
-    #define LINE_BASE_Y   64
+    #define LINE_BASE_Y   (64 + MENU_SHIFT_Y)
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
 
@@ -749,7 +822,11 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     static DVECTOR selectionHighlightFromUnused;
     static DVECTOR selectionHighlightToUnused;
 
+#if VERSION_REGION_IS(NTSCJ)
+    const DVECTOR STR_POS = { 86, 12 };
+#else
     const DVECTOR STR_POS = { 86, 20 };
+#endif
 
     const char* EXTRA_OPTIONS_STR = "EXTRA_OPTION_\x01\x01\x01\x01\x01S";
 
@@ -800,7 +877,7 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 {
     #define LINE_BASE_X   64
-    #define LINE_BASE_Y   56
+    #define LINE_BASE_Y   (56 + MENU_SHIFT_Y)
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
 
@@ -808,14 +885,22 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     static DVECTOR selectionHighlightFromUnused;
     static DVECTOR selectionHighlightToUnused;
 
+#if VERSION_REGION_IS(NTSCJ)
+    DVECTOR strPos = { 121, 12 };
+#else
     DVECTOR strPos = { 121, 20 };
+#endif
 
     const char* OPTIONS_STR = "OPTION_\x01\x01\x01\x01\x01S";
 
     const char* ENTRY_STRS[] = {
         "Exit",
         "Brightness_Level",
+#if VERSION_REGION_IS(NTSCJ)
+        "Key_Config",
+#else
         "Controller_Config",
+#endif
         "Screen_Position",
         "Vibration",
         "Auto_Load",
@@ -864,7 +949,7 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     #define LINE_OFFSET_X      16
     #define LINE_OFFSET_Y      16
     #define HIGHLIGHT_OFFSET_X -121
-    #define HIGHLIGHT_OFFSET_Y 50
+    #define HIGHLIGHT_OFFSET_Y (50 - MENU_SHIFT_Y)
 
     s32            i;
     s32            j;
@@ -880,20 +965,38 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     };
 
     // 12x12 quad.
+#if VERSION_REGION_IS(NTSCJ)
+    const DVECTOR FRONT_BULLET_QUAD[] = {
+        { -120, -67 },
+        { -120, -55 },
+        { -108, -67 },
+        { -108, -55 }
+    };
+#else
     const DVECTOR FRONT_BULLET_QUAD[] = {
         { -120, -47 },
         { -120, -35 },
         { -108, -47 },
         { -108, -35 }
     };
+#endif
 
     // 14x14 quad.
+#if VERSION_REGION_IS(NTSCJ)
+    const DVECTOR BACK_BULLET_QUAD[] = {
+        { -121, -68 },
+        { -121, -54 },
+        { -107, -68 },
+        { -107, -54 }
+    };
+#else
     const DVECTOR BACK_BULLET_QUAD[] = {
         { -121, -48 },
         { -121, -34 },
         { -107, -48 },
         { -107, -34 }
     };
+#endif
 
     // Set active selection highlight position references.
     if (g_Options_SelectionHighlightTimer == 0)
@@ -957,7 +1060,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 {
     #define LINE_OFFSET_Y      16
     #define HIGHLIGHT_OFFSET_X -121
-    #define HIGHLIGHT_OFFSET_Y 58
+    #define HIGHLIGHT_OFFSET_Y (58 - MENU_SHIFT_Y)
 
     s32            i;
     s32            j;
@@ -968,25 +1071,49 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     static DVECTOR selectionHighlightFrom;
     static DVECTOR selectionHighlightTo;
 
+#if VERSION_REGION_IS(NTSCJ)
+    const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
+        59, 169, 119, 156, 104, 112, 75, 129, 112
+    };
+#else
     const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
         59, 169, 174, 156, 104, 112, 75, 129, 112
     };
+#endif
 
     // 12x12 quad.
+#if VERSION_REGION_IS(NTSCJ)
+    const DVECTOR BULLET_QUAD_VERTS_FRONT[] = {
+        { -120, -75 },
+        { -120, -63 },
+        { -108, -75 },
+        { -108, -63 }
+    };
+#else
     const DVECTOR BULLET_QUAD_VERTS_FRONT[] = {
         { -120, -55 },
         { -120, -43 },
         { -108, -55 },
         { -108, -43 }
     };
+#endif
 
     // 14x14 quad.
+#if VERSION_REGION_IS(NTSCJ)
+    const DVECTOR BULLET_QUAD_VERTS_BACK[] = {
+        { -121, -76 },
+        { -121, -62 },
+        { -107, -76 },
+        { -107, -62 }
+    };
+#else
     const DVECTOR BULLET_QUAD_VERTS_BACK[] = {
         { -121, -56 },
         { -121, -42 },
         { -107, -56 },
         { -107, -42 }
     };
+#endif
 
     // Set active selection highlight position references.
     if (g_Options_SelectionHighlightTimer == 0)
@@ -1085,9 +1212,29 @@ void Options_Menu_BackgroundDraw(void) // 0x801E49F0
 
 void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 {
-    #define STR_BASE_Y   64
+    #define STR_BASE_Y   (64 + MENU_SHIFT_Y)
     #define STR_OFFSET_Y 16
 
+#if VERSION_REGION_IS(NTSCJ)
+    const s_Triangle2d FRONT_ARROWS[] = {
+        { { 38,  -62 }, { 46,  -70 }, { 46,  -54 } },
+        { { 120, -62 }, { 112, -70 }, { 112, -54 } },
+        { { 38,  -46 }, { 46,  -54 }, { 46,  -38 } },
+        { { 120, -46 }, { 112, -54 }, { 112, -38 } },
+        { { 35,  -30 }, { 43,  -38 }, { 43,  -22  } },
+        { { 123, -30 }, { 115, -38 }, { 115, -22  } },
+        { { 35,   -14  }, { 43,  -22  }, { 43,   -6 } },
+        { { 123,  -14  }, { 115, -22  }, { 115,  -6 } },
+        { { 35,   2 }, { 43,   -6 }, { 43,   10 } },
+        { { 123,  2 }, { 115,  -6 }, { 115,  10 } },
+        { { 51,   18 }, { 59,   10 }, { 59,   26 } },
+        { { 107,  18 }, { 99,   10 }, { 99,   26 } },
+        { { 24,   34 }, { 32,   26 }, { 32,   42 } },
+        { { 131,  34 }, { 123,  26 }, { 123,  42 } },
+        { { 57,   50 }, { 65,   42 }, { 65,   58 } },
+        { { 104,  50 }, { 96,   42 }, { 96,   58 } }
+    };
+#else
     const s_Triangle2d FRONT_ARROWS[] = {
         { { 38,  -42 }, { 46,  -50 }, { 46,  -34 } },
         { { 120, -42 }, { 112, -50 }, { 112, -34 } },
@@ -1106,7 +1253,28 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
         { { 57,   70 }, { 65,   62 }, { 65,   78 } },
         { { 104,  70 }, { 96,   62 }, { 96,   78 } }
     };
+#endif
 
+#if VERSION_REGION_IS(NTSCJ)
+    const s_Triangle2d BACK_ARROWS[] = {
+        { { 37,  -62 }, { 47,  -72 }, { 47,  -52 } },
+        { { 121, -62 }, { 111, -72 }, { 111, -52 } },
+        { { 37,  -46 }, { 47,  -56 }, { 47,  -36 } },
+        { { 121, -46 }, { 111, -56 }, { 111, -36 } },
+        { { 34,  -30 }, { 44,  -40 }, { 44,   -20  } },
+        { { 124, -30 }, { 114, -40 }, { 114,  -20  } },
+        { { 34,   -14  }, { 44,  -24  }, { 44,   -4 } },
+        { { 124,  -14  }, { 114, -24  }, { 114,  -4 } },
+        { { 34,   2 }, { 44,   -8 }, { 44,   12 } },
+        { { 124,  2 }, { 114,  -8 }, { 114,  12 } },
+        { { 50,   18 }, { 60,   8 }, { 60,   28 } },
+        { { 108,  18 }, { 98,   8 }, { 98,   28 } },
+        { { 23,   34 }, { 33,   24 }, { 33,   44 } },
+        { { 132,  34 }, { 122,  24 }, { 122,  44 } },
+        { { 56,   50 }, { 66,   40 }, { 66,   60 } },
+        { { 105,  50 }, { 95,   40 }, { 95,   60 } }
+    };
+#else
     const s_Triangle2d BACK_ARROWS[] = {
         { { 37,  -42 }, { 47,  -52 }, { 47,  -32 } },
         { { 121, -42 }, { 111, -52 }, { 111, -32 } },
@@ -1125,6 +1293,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
         { { 56,   70 }, { 66,   60 }, { 66,   80 } },
         { { 105,  70 }, { 95,   60 }, { 95,   80 } }
     };
+#endif
 
     // TODO: Can this be split?
     const char* CONFIG_STRS[] = {
@@ -1258,6 +1427,20 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 {
+#if VERSION_REGION_IS(NTSCJ)
+    const s_Triangle2d FRONT_ARROWS[] = {
+        { { 40,  -6 }, { 48,  -14  }, { 48,  2 } },
+        { { 96,  -6 }, { 88,  -14  }, { 88,  2 } },
+        { { 40,  10 }, { 48,  2 }, { 48,  18 } },
+        { { 96,  10 }, { 88,  2 }, { 88,  18 } },
+        { { 19,  26 }, { 27,  18 }, { 27,  34 } },
+        { { 124, 26 }, { 116, 18 }, { 116, 34 } },
+        { { 12,  42 }, { 20,  34 }, { 20,  50 } },
+        { { 131, 42 }, { 123, 34 }, { 123, 50 } },
+        { { 12,  58 }, { 20,  50 }, { 20,  66 } },
+        { { 131, 58 }, { 123, 50 }, { 123, 66 } }
+    };
+#else
     const s_Triangle2d FRONT_ARROWS[] = {
         { { 40,  14 }, { 48,  6  }, { 48,  22 } },
         { { 96,  14 }, { 88,  6  }, { 88,  22 } },
@@ -1270,7 +1453,22 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         { { 12,  78 }, { 20,  70 }, { 20,  86 } },
         { { 131, 78 }, { 123, 70 }, { 123, 86 } }
     };
+#endif
 
+#if VERSION_REGION_IS(NTSCJ)
+    const s_Triangle2d BACK_ARROWS[] = {
+        { { 39,  -6 }, { 49,  -16  }, { 49,  4 } },
+        { { 97,  -6 }, { 87,  -16  }, { 87,  4 } },
+        { { 39,  10 }, { 49,  0 }, { 49,  20 } },
+        { { 97,  10 }, { 87,  0 }, { 87,  20 } },
+        { { 18,  26 }, { 28,  16 }, { 28,  36 } },
+        { { 125, 26 }, { 115, 16 }, { 115, 36 } },
+        { { 11,  42 }, { 21,  32 }, { 21,  52 } },
+        { { 132, 42 }, { 122, 32 }, { 122, 52 } },
+        { { 11,  58 }, { 21,  48 }, { 21,  68 } },
+        { { 132, 58 }, { 122, 48 }, { 122, 68 } }
+    };
+#else
     const s_Triangle2d BACK_ARROWS[] = {
         { { 39,  14 }, { 49,  4  }, { 49,  24 } },
         { { 97,  14 }, { 87,  4  }, { 87,  24 } },
@@ -1283,6 +1481,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         { { 11,  78 }, { 21,  68 }, { 21,  88 } },
         { { 132, 78 }, { 122, 68 }, { 122, 88 } }
     };
+#endif
 
     const char* CONFIG_STRS[] =
     {
@@ -1324,7 +1523,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         {
             case 0:
                 strPosX = !g_GameWork.config.vibrationEnabled ? 214 : 216;
-                Gfx_StringPositionSet(strPosX, 120);
+                Gfx_StringPositionSet(strPosX, 120 + MENU_SHIFT_Y);
 
                 strIdx = !g_GameWork.config.vibrationEnabled;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -1332,7 +1531,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 
             case 1:
                 strPosX = !g_GameWork.config.autoLoad ? 214 : 216;
-                Gfx_StringPositionSet(strPosX, 136);
+                Gfx_StringPositionSet(strPosX, 136 + MENU_SHIFT_Y);
 
                 strIdx = !g_GameWork.config.autoLoad;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -1340,7 +1539,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 
             case 2:
                 strPosX = g_GameWork.config.soundType ? 194 : 206;
-                Gfx_StringPositionSet(strPosX, 152);
+                Gfx_StringPositionSet(strPosX, 152 + MENU_SHIFT_Y);
 
                 strIdx = g_GameWork.config.soundType + 2;
                 Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
@@ -2038,6 +2237,18 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
 // ========================================
 // CONTROLS OPTION SCREEN
 // ========================================
+
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_ASM("screens/options/nonmatchings/options", func_801E6F1C);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E305C);
+
+INCLUDE_ASM("screens/options/nonmatchings/options", func_801E749C);
+
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E30B0);
+
+INCLUDE_ASM("screens/options/nonmatchings/options", func_801E794C);
+#endif
 
 void Options_ControllerMenu_Control(void) // 0x801E69BC
 {

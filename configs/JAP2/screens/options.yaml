@@ -30,11 +30,11 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP2/screens/sym.options.txt
-    - configs/JAP2/sym.bodyprog.txt
-    - configs/JAP2/sym.main.txt
+    - configs/JAP1/screens/sym.options.txt
+    - configs/JAP1/sym.bodyprog.txt
+    - configs/USA/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP2/screens/rel.options.txt
+    - configs/JAP1/screens/rel.options.txt
 
   undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.options.txt
   undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.options.txt
@@ -55,7 +55,18 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0xC78, asm, options]
-      - [0x5FDC, data, options]
+      # .rodata section
+      - [0x0, .rodata, options]
+
+      # .text section
+      - [0xB64, c, options]
+
+      # .data section
+      - [0x5FDC, .data, options]
+      - [0x609C, .bss, options]
+
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0x60DC
   - [0x6100]

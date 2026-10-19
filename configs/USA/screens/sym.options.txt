@@ -48,14 +48,14 @@ Options_ControllerMenu_ButtonIconsDraw          = 0x801E716C; // type:func
 //--------------------------------------------------------------
 g_MainOptionsMenu_SelectedEntry                 = 0x801E72F4;
 g_ExtraOptionsMenu_SelectedEntry                = 0x801E72F8;
-g_MainOptionsMenu_PrevSelectedEntry             = 0x801E72FC; // allow_duplicated:True
+g_MainOptionsMenu_PrevSelectedEntry             = 0x801E72FC; // allow_duplicated:True - overlays share vram, same address as `GameState_AutoLoadSavegame_Update` (saveload)
 g_ExtraOptionsMenu_PrevSelectedEntry            = 0x801E7300;
 g_ScreenPosMenu_InvertBackgroundFade            = 0x801E7304;
 g_ControllerMenu_IsOnActionsPane                = 0x801E7308;
 controllerMenu_SelectionHighlightDrawModes      = 0x801E730C;
 controllerMenu_SelectionHighlightQuads          = 0x801E7324;
 CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS      = 0x801E736C;
-CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E737C; // allow_duplicated:True
+CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E737C; // allow_duplicated:True - overlays share vram, same address as `SaveScreen_AutoLoad_SelectSave` (saveload)
 
 
 

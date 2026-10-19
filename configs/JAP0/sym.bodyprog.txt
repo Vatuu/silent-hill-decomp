@@ -2756,6 +2756,9 @@ g_PaperMapImg                                = 0x800AB3B8; // type:FsImageDesc s
 g_PaperMapMarkingAtlasImg                    = 0x800AB3C0; // type:FsImageDesc size:8
 g_ItemInspectionImg                          = 0x800AB3C8; // type:FsImageDesc size:8
 g_LoadingScreenImg                           = 0x800AB3D0; // type:FsImageDesc size:8
+g_ControllerButtonAtlasImg                   = 0x800AB3D8; // type:FsImageDesc size:8
+g_BrightnessScreenImg0                       = 0x800AB3E0; // type:FsImageDesc size:8
+g_BrightnessScreenImg1                       = 0x800AB3E8; // type:FsImageDesc size:8
 g_DeathTipImg                                = 0x800AB3F0; // type:FsImageDesc size:8
 g_HealthPortraitImg                          = 0x800AB3F8; // type:FsImageDesc size:8
 g_InventoryKeyItemTextureImg                 = 0x800AB400; // type:FsImageDesc size:8
@@ -3882,7 +3885,3 @@ sd_timer_event                               = 0x800CB028;
 //-------------------------------------------------------------------
 smf_song                                     = 0x800CB030;
 g_MapOverlayHdr                              = 0x800CBAAC; // type:MapOverlayHeader size:0x104C
-open_main                                    = 0x801E2AF0; // type:func
-GameState_LoadSavegameScreen_Update          = 0x801E7040; // type:func
-// Gamestates inside overlays. TODO: Move these to sym files for each overlay
-GameState_AutoLoadSavegame_Update            = 0x801E801C; // type:func
