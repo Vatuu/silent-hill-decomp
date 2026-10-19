@@ -728,9 +728,14 @@ s_EventData MAP_EVENTS[203] = {
         .triggerType     = TriggerType_TouchObbFacing,
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 111,
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+        .sysState        = SysState_EventCallback,
+        .eventParam      = 36, // `func_800DB13C`
+#else
         .sysState        = SysState_ReadMessage,
         .eventParam      = MAP_MSG(87),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
+#endif
     },
     // [78]
     {

@@ -413,7 +413,9 @@ def disassemble(path, start, stop):
 def add_map_patch(version, m, entries):
     text = read('tools/postbuild.py')
     block = '        "%s": [\n%s\n        ]' % (m, ',\n'.join("            [0x%X, b'%s']" % e for e in entries))
-    if '"%s": [' % m in text.split('MAP_PATCHES')[1].split('def apply_map_patches')[0].split('"%s": {' % version)[-1]:
+    table = text.split('MAP_PATCHES = {')[1].split('def apply_map_patches')[0]
+    own = table.split('    "%s": {' % version)[1].split('\n    },')[0] if '    "%s": {' % version in table else ''
+    if '"%s": [' % m in own:
         print('  %s already has patches for %s in tools/postbuild.py, edit them by hand' % (version, m))
     else:
         head = '    "%s": {\n' % version

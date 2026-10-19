@@ -6891,6 +6891,9 @@ void func_800E62CC(void) // 0x800E62CC
             }
             else
             {
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+                func_800E941C();
+#endif
                 SysWork_StateStepSet(0, 38);
             }
             break;
@@ -6911,6 +6914,9 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 36:
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+            func_800E941C();
+#endif
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, g_SysWork.npcs, 25, false);
             SD_Call(Sfx_XaAudio657);
             func_800D7ED0();
@@ -6926,7 +6932,9 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 38:
+#if !VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
             func_800E941C();
+#endif
             func_800E9444(Chara_EndingKaufmann, &g_SysWork.npcs[3]);
 
             if (Savegame_EventFlagGet(EventFlag_449))

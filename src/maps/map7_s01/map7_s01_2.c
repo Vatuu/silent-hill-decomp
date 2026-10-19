@@ -1795,24 +1795,36 @@ void func_800DAE00(void) // 0x800DAE00
 
 void func_800DB13C(void) // 0x800DB13C
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(74));
-
-    if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
+    if (Savegame_EventFlagGet(EventFlag_486))
     {
-        if (D_800E2CE8 != Q12(0.0f))
+#endif
+        Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(74));
+
+        if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
         {
-            D_800E2CE8 -= g_DeltaTime;
-            if (D_800E2CE8 < Q12(0.0f))
+            if (D_800E2CE8 != Q12(0.0f))
             {
-                D_800E2CE8 = Q12(0.0f);
+                D_800E2CE8 -= g_DeltaTime;
+                if (D_800E2CE8 < Q12(0.0f))
+                {
+                    D_800E2CE8 = Q12(0.0f);
+                }
+            }
+            else
+            {
+                SD_Call(Sfx_Unk1653);
+                D_800E2CE8 = Rng_GenerateInt(Q12(0.2f), Q12(2.2f) - 1);
             }
         }
-        else
-        {
-            SD_Call(Sfx_Unk1653);
-            D_800E2CE8 = Rng_GenerateInt(Q12(0.2f), Q12(2.2f) - 1);
-        }
+#if VERSION_EQUAL_OR_NEWER(JAP1)
     }
+    else
+    {
+        g_Screen_BackgroundImgGamma = Q8(14.0f / 32.0f);
+        Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(87));
+    }
+#endif
 }
 
 void func_800DB1F0(void) // 0x800DB1F0
