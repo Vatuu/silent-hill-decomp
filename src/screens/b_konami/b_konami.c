@@ -313,8 +313,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                         case GameState_MovieIntroAlternate:
                         default:
-                            // USA moves `Demo_*` calls to after the switch.
-                            // TODO: Confirm whether the later JAP1 release also had them moved.
+                            // USA and later versions move these `Demo_*` calls to after the switch.
 #if VERSION_EQUAL_OR_OLDER(JAP0) 
                             Demo_SequenceAdvance(0);
                             Demo_DemoDataRead();
@@ -323,7 +322,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                             break;
                     }
                     
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix Moved from the switch above.
                     Demo_SequenceAdvance(0);
                     Demo_DemoDataRead();
 #endif

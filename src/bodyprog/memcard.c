@@ -1352,7 +1352,7 @@ static void MemCard_SaveBlockGenerate(s_PsxSaveBlock* saveBlock, s8 blockCount, 
     char      fileIdxStr[8];
     TIM_IMAGE iconTexture;
 
-#if VERSION_EQUAL_OR_NEWER(USA) // `bzero` call missing in JPNv1, assuming it was added in NTSC and later versions.
+#if VERSION_EQUAL_OR_NEWER(USA) // `bzero` call missing in JPN0
     bzero(saveBlock, sizeof(s_PsxSaveBlock));
 #endif
 

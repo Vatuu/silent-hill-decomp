@@ -2096,7 +2096,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
             {
                 STALKER_ANIM_INFOS[stalker->model.anim.status].duration.constant = Q12(24.0f);
             }
-#if VERSION_EQUAL_OR_NEWER(USA) // TODO: Check which versions have this.
+#if VERSION_EQUAL_OR_NEWER(USA)
             else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 59, 65))
             {
                 STALKER_ANIM_INFOS[stalker->model.anim.status].duration.constant = Q12(32.0f);

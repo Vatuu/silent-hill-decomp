@@ -207,7 +207,7 @@ bool MemCard_ElementsUpdate(void) // 0x80033548
                 case MemCardState_Unavailable:
                     g_MemCard_ActiveMemCardSlotSaves->type = SavegameEntryType_NoMemCard;
 
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bug Fail safe.
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix Fail safe.
                                  // If the game have as selected the slot where a memory card is
                                  // not available (disconected) it will automatically switch to the one available.
                     if (g_SelectedSaveSlotIdx == (WrapIdx(i) >> 2))

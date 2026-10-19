@@ -1351,16 +1351,11 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
             dist += distProp8;
         }
 
-#if VERSION_EQUAL_OR_NEWER(USA) // TODO: Check which versions have this.
         if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
         {
             dist += Q12(1.0f);
         }
-#else
-        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
-        {
-            dist += Q12(1.0f);
-        }
+#if !VERSION_EQUAL_OR_NEWER(USA) // @bugfix Code removed in USA and later releases.
         else
         {
             dist += Q12(1.0f);

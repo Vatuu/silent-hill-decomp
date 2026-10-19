@@ -287,7 +287,8 @@ void func_800D2668(void) // 0x800D2668
             CutsceneBorder_ForceShow();
             ScreenFade_ResetTimestep();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
-#if VERSION_EQUAL_OR_NEWER(USA) // TODO: Check which versions have this.
+
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Game_TurnFlashlightOn();
 #endif
 

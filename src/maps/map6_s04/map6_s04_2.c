@@ -3953,7 +3953,7 @@ void func_800E73B4(q19_12 arg0) // 0x800E73B4
         sp48.vy = Q8_TO_Q12(sp38.vy);
         sp48.vz = Q8_TO_Q12(sp38.vz);
 
-#if VERSION_EQUAL_OR_NEWER(USA)
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix? TODO: figure out what the changed 3rd param affects.
         func_8005F6B0(&g_SysWork.npcs[0], &sp48, 9, 15);
 #else
         func_8005F6B0(&g_SysWork.npcs[0], &sp48, 9, 1);

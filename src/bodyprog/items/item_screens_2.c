@@ -134,7 +134,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 case 18:
                     g_Inventory_SelectionId     = InvSelectionId_Settings;
                     g_Inventory_PrevSelectionId = InvSelectionId_Settings;
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bug
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix
                     g_Inventory_IsScrolling = false;
 #endif
                     break;
@@ -142,7 +142,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 case 15:
                     g_Inventory_SelectionId     = InvSelectionId_Map;
                     g_Inventory_PrevSelectionId = InvSelectionId_Map;
-#if VERSION_EQUAL_OR_NEWER(JAP1) // @bug
+#if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix
                     g_Inventory_IsScrolling = false;
 #endif
                     break;

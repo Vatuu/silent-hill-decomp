@@ -283,8 +283,6 @@ void Demo_DemoRandSeedAdvance(void) // 0x8008F598
     #undef SEED_OFFSET
 #else
     // JAP0 doesn't have code here, just 16 bytes of stack for some reason?
-    // TODO: Find which other versions are also missing code for this function.
-    // `>= VERSION_DATE_NTSC_1_1` check above is just a guess.
     u8 unused[16];
 #endif
 }

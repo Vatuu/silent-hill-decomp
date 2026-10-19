@@ -153,7 +153,8 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
 
         Sfx_WithFlagsPlay(Sfx_Unk1570, &sp10, Q8(0.5f), SfxFlag_None);
         
-#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix in USA onwards this block always runs when `health == 0`, previously controlState/anim.status also had to match.
+ // @bugfix USA onwards always runs this block if `health == 0`, in JAP0 controlState/anim.status also had to pass the conditions.
+#if VERSION_EQUAL_OR_NEWER(USA)
         if (floatstinger->health == Q12(0.0f) ||
             ((floatstingerProps.field_F8 > 1000 || floatstingerProps.field_FA > 1200) &&
              floatstinger->model.controlState == FloatstingerControl_2 &&
