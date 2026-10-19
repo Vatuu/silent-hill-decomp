@@ -598,6 +598,7 @@
       .fix_ang_x = Q8_ANGLE(272.0f),
       .fix_ang_y = Q8_ANGLE(192.0f),
     },
+#if !VERSION_EQUAL_OR_NEWER(JAP1)
     {
       .lim_sw = {
         .min_hx = Q4(0.0f),
@@ -623,6 +624,7 @@
       .fix_ang_x = Q8_ANGLE(0.0f),
       .fix_ang_y = Q8_ANGLE(0.0f),
     },
+#endif
     {
       .lim_sw = {
         .min_hx = Q4(15.0f),
