@@ -39,6 +39,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.5)\tWhat's_this! ~E ",
     /* 16 */ "~J0(0.1)\t~E ",
     /* 17 */ "~J0(0.1)\t~E ",
@@ -51,6 +52,20 @@ const char* MAP_MESSAGES[] = {
     /* 24 */ "\tThe_cover_has_been_removed... ",
     /* 25 */ "\tCould_Cybil_have_gotten ~N\n\tto_the_Amusement_Park_from_here? ~E ",
     /* 26 */ "~C3\tLAKE_SIDE_AMUSEMENT_PARK ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(1.5)\t何だ？ ~E ",
+    /* 16 */ "~J0(0.1)\t~E ",
+    /* 17 */ "~J0(0.1)\t~E ",
+    /* 18 */ "~J0(0.1)\t~E ",
+    /* 19 */ "~J0(4.0)\tまたか……？ ~N\n\t\t\tいや　今までとは違うような気がする ",
+    /* 20 */ "~J0(4.5)\t現実から悪夢に移ったというよりは…… ",
+    /* 21 */ "~J0(4.5)\t現実が悪夢に変わったような ",
+    /* 22 */ "~J0(4.5)\t嫌な気分だ ~N\n\t\t\t悪い予感がする…… ",
+    /* 23 */ "~J0(6.0)\tまちがいない　とんでもなく ~N\n\t\t\tまずい事態になってきている ~E ",
+    /* 24 */ "\t下水道の入口が開いている…… ",
+    /* 25 */ "\tシビルはここから遊園地に向かったのか？ ~E ",
+    /* 26 */ "~C3\tレイクサイド遊園地 ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800EB090

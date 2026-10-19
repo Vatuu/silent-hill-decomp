@@ -190,7 +190,7 @@ const s_MapOverlayHdr g_MapOverlayHdr = {
         Parasite_Update,
         NULL,
     },
-    .charaGroupIds = { Chara_LarvalStalker, Chara_GreyChild },
+    .charaGroupIds = { Chara_LarvalStalker, Chara_GreyChildOrMumbler },
     .charaSpawnInfos   = {
 #include "chara_spawns.h"
     },

@@ -29,7 +29,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP0/sym.main.txt
+    - configs/USA/sym.main.txt
     - configs/JAP0/sym.bodyprog.txt
     - configs/JAP0/maps/sym.map6_s04.txt
   reloc_addrs_path:
@@ -54,7 +54,23 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # .rodata section
       - [0x0, rodata]
-      - [0x3208, asm, map7_s03]
-      - [0x1e5c0, data]
+      - [0x4, .rodata, map6_s04_header]
+      - [0x1050, .rodata, map6_s04_2]
+
+      - [0x3208, c, map6_s04_header]
+      - [0x3208, c, map6_s04_events_data]
+      - [0x3208, c, map6_s04_anim_info]
+
+      # .text section
+      - [0x3208, c, map6_s04_2]
+
+      # .data section
+      - [0x1E5C0, .data, map6_s04_anim_info]
+      - [0x1EA90, data]
+      - [0x22184, .data, map6_s04_header]
+      - [0x22244, .data, map6_s04_2]
+      - [0x22374, .data, map6_s04_events_data]
+      - [0x22458, data]
   - [0x24A00]

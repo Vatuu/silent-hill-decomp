@@ -117,6 +117,7 @@ void func_800CF0B0(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\t...! ~E ",
     /* 16 */ "~J0(1.0)\tWait! ~E ",
     /* 17 */ "~J0(1.7)\tDamn! ~N\n\t\t\tI_was_too_late? ~E ",
@@ -127,6 +128,18 @@ const char* MAP_MESSAGES[] = {
     /* 22 */ "~J0(2.8)\tShort,_black_hair... ~E ",
     /* 23 */ "~J0(1.0)\tWhat? ~E ",
     /* 24 */ "~J0(2.5)\tThat_light!? ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(1.0)\tこれは…… ~E ",
+    /* 16 */ "~J0(1.0)\t待て！ ~E ",
+    /* 17 */ "~J0(1.7)\tくそっ…… ~N\n\t\t\t間に合わなかったか ~E ",
+    /* 18 */ "~J0(1.5)\tちょっと失礼 ",
+    /* 19 */ "~J0(0.6)\tえーと…… ",
+    /* 20 */ "~J0(1.5)\t_ ",
+    /* 21 */ "~J0(3.6)\tここらへんで女の子を見なかったかな？ ~E ",
+    /* 22 */ "~J0(2.8)\t短い黒髪で…… ~E ",
+    /* 23 */ "~J0(1.0)\t何だ？ ~E ",
+    /* 24 */ "~J0(2.5)\tあの光は！？ ~E"
+#endif
 };
 
 void func_800CF0B8(void) // 0x800CF0B8
@@ -578,7 +591,7 @@ void func_800CFC34(void) // 0x800CFC34
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         // TODO: Remove null chars from "HERO" once later rodata is added.
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO\0\0\0\0", g_Cutscene_Timer, FS_BUFFER_13);
+        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_13);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_13));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);

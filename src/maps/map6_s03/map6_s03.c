@@ -134,8 +134,13 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_amusement_park) ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~H\t~C5 下水道の地図（遊園地方面） ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 16 */ "\tシビルを探しに行かなくては！ ~E "
+#endif
 };
 
 void MapEvent_CommonItemTake(void) // 0x800D81AC
