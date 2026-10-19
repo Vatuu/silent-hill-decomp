@@ -21,6 +21,10 @@ void Map_WorldObjectsUpdate(void) {} // 0x800CCB34
 
 const char* MAP_MESSAGES[] = {
 #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     "\tNO_STAGE! ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    "\tこのステージは存在しません ~E "
+#endif
 };
 

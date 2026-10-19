@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map2/map2_s01.h"
 
 s_EventData MAP_EVENTS[28] = {
     // [0]
@@ -122,7 +123,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 11,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 40,
+        .eventParam     = MAP_MSG(40),
     },
     // [14]
     {
@@ -130,7 +131,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 12,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 41,
+        .eventParam     = MAP_MSG(41),
     },
     // [15]
     {
@@ -138,7 +139,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 13,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [16]
     {
@@ -146,7 +147,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 14,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [17]
     {
@@ -154,7 +155,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 15,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [18]
     {
@@ -162,7 +163,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 16,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [19]
     {
@@ -170,7 +171,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 17,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [20]
     {
@@ -178,7 +179,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 18,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 42,
+        .eventParam     = MAP_MSG(42),
     },
     // [21]
     {
@@ -186,7 +187,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 19,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [22]
     {
@@ -194,7 +195,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 20,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [23]
     {
@@ -202,7 +203,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 21,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [24]
     {
@@ -210,7 +211,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 22,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [25]
     {
@@ -218,7 +219,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 23,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [26]
     {
@@ -226,7 +227,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 24,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 43,
+        .eventParam     = MAP_MSG(43),
     },
     // [27]
     {

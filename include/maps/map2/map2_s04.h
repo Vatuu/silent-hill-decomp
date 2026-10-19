@@ -10,6 +10,13 @@
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+// JAP0 merges "Coroner Seals called." into the message after it, so messages afterward are all indexed one lower than in USA.
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 17 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 void func_800CCB30(s32 arg0);

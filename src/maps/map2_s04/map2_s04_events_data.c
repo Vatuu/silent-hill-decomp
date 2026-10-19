@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map2/map2_s04.h"
 
 s_EventData MAP_EVENTS[28] = {
     // [0]
@@ -120,7 +121,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 13,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 24,
+        .eventParam     = MAP_MSG(24),
     },
     // [14]
     {
@@ -223,7 +224,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 14,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 25,
+        .eventParam     = MAP_MSG(25),
     },
     // [26]
     {
@@ -231,7 +232,7 @@ s_EventData MAP_EVENTS[28] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 15,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 25,
+        .eventParam     = MAP_MSG(25),
     },
     // [27]
     {

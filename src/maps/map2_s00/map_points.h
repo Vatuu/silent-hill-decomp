@@ -627,8 +627,13 @@
     },
     // [91]
     {
+#if VERSION_REGION_IS(NTSC)
         .positionX = Q12(4.0f),
         .triggerParam0 = 72,
+#elif VERSION_REGION_IS(NTSCJ)
+        .positionX = Q12(0.0f),
+        .triggerParam0 = 56,
+#endif
         .triggerParam1 = 32,
         .positionZ = Q12(-106.0f),
     },

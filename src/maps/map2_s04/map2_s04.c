@@ -27,6 +27,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800CCE6C
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere's_a_memo_on_the_desk. ",
     /* 16 */ "~C3\tCoroner_Seals_called. ",
     /* 17 */ "~C3\tOfficer_Gucci_is_unlikely_to ~N\n\t\tbe_murdered._He_apparently ~N\n\t\tdied_naturally. ",
@@ -39,6 +40,19 @@ const char* MAP_MESSAGES[] = {
     /* 24 */ "\tNothing_helpful. ~E ",
     /* 25 */ "\tThe_desk_is_messy. ~E ",
     /* 26 */ "\tThere_is_a_ ~C2 Shotgun ~C7 . ~N\n\tTake_it? ~S4 "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\tメモが置いてある ",
+    /* 16 */ "~C3\tシールズ医師より電話。 ~N\n\t\tグッジ捜査官が殺された可能性はきわめて ~N\n\t\t低いとのこと。自然死らしいです。 ",
+    /* 17 */ "~C3\tただし、グッジ捜査官は過去の検査で、 ~N\n\t\t心臓の疾患が発見されたことは ~N\n\t\tなかったとも言っていました。 ~E ",
+    /* 18 */ "\t何か書いてある ",
+    /* 19 */ "~C3\tサイレントヒルを中心にした ~N\n\t\t特定地域のみで出回っている。 ",
+    /* 20 */ "~C3\t原料となるホワイトクロジェアは ~N\n\t\tこの地方特有の植物。 ",
+    /* 21 */ "~C3\t生産地もこの近辺？ ~N\n\t\t販売者＝生産者？ ~E ",
+    /* 22 */ "~H\t~C5 繁華街の地図 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 23 */ "\t特に気になるものはない ~E ",
+    /* 24 */ "\t机の上は散らかっている ~E ",
+    /* 25 */ "\t~C2 ショットガン ~C7 が落ちている ~N\n\t取りますか？ ~S4 "
+#endif
 };
 
 void func_800CCF9C(void) // 0x800CCF9C
@@ -98,18 +112,18 @@ void func_800CD050(void) // 0x800CD050
 
 void MapEvent_PoliceChalkboardInspect(void) // 0x800CD088
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), 19);
+    Event_DisplayMapMsgWithBg(FILE_TIM_PLCSBORD_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(19));
     Savegame_EventFlagSet(EventFlag_M2S04_SeenPoliceChalkboard);
 }
 
 void MapEvent_PaperMapTake(void) // 0x800CD0D0
 {
-    Event_PaperMapTake(2, EventFlag_M2S00_PickupMap, 23);
+    Event_PaperMapTake(2, EventFlag_M2S00_PickupMap, MAP_MSG(23));
 }
 
 void MapEvent_ShotgunTake(void) // 0x800CD0F8
 {
-    Event_ItemTake(InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, 26);
+    Event_ItemTake(InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, MAP_MSG(26));
 }
 
 extern u8 D_800CF280;

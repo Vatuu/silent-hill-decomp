@@ -22,6 +22,13 @@
 #define MAP_FIELD_4C_COUNT 100
 #define MAP_BLOOD_SPLAT_COUNT_MAX 50
 
+// JAP0 merges the messages 52 and 53 into one, so messages afterward are all indexed one lower than in USA.
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 53 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 extern u16 g_Cutscene_MapMsgAudioCmds[2]; // 0x800F1A10

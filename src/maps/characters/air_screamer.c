@@ -9314,11 +9314,19 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
+#if VERSION_EQUAL_OR_NEWER(USA)
     if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) &&
         (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
     }
+#else
+    if (airScreamer->model.charaId == Chara_AirScreamer &&
+        (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+    {
+        return false;
+    }
+#endif
 
     sharedData_800F216C_2_s00.vx = airScreamer->position.vx + Q12_MULT_PRECISE(Math_Sin(airScreamer->rotation.vy), Q12(2.0f));
     sharedData_800F216C_2_s00.vy = airScreamer->position.vy + Q12(0.5f);
@@ -9365,9 +9373,14 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
         return stateStep;
     }
 
+#if VERSION_EQUAL_OR_NEWER(USA)
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
         (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) ||
          (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
+#else
+    if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
+        !(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+#endif
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsGroundedCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {
