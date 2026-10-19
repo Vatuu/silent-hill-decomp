@@ -18,6 +18,12 @@
 #define MAP_FIELD_4C_COUNT 250
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 34 ? (idx) - 2 : (idx) >= 31 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 extern u8 D_800D6B40[][2];

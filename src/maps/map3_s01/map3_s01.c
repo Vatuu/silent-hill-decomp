@@ -33,6 +33,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
     /* 16 */ "\tA_glass_vial_lies_shattered. ",
     /* 17 */ "\tIt's_not_just_broken. ~N\n\tIt_looks_smashed_on_purpose. ~E ",
@@ -59,6 +60,34 @@ const char* MAP_MESSAGES[] = {
     /* 38 */ "\tThe_refrigerator_is_empty. ~E ",
     /* 39 */ "\tNothing_unusual. ~E ",
     /* 40 */ "\tNothing_helpful. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\tエレベーターは動いていないようだ ~E ",
+    /* 16 */ "\tガラスのビンが床で割れている ",
+    /* 17 */ "\t落として割ったというより ~N\n\t意図的に壊したという感じだ ~E ",
+    /* 18 */ "\tビンの底に少しだけ残っていた液体を ~N\n\t~C2 ペットボトル ~C7 へあけた  ",
+    /* 19 */ "\tこれはいったい何なのだろう……？ ~E ",
+    /* 20 */ "\tガラスのビンが床で割れている ~E ",
+    /* 21 */ "\t~C2 ペットボトル ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 22 */ "~H ~C5 病院の地図 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 23 */ "~H ~C5 病院地下の地図 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 24 */ "\t~C2 病院地下の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 25 */ "~C3\t非常用自家発電機 ~N\n\t\tエレベーター、ＩＣＵ、手術室のみ通電 ",
+    /* 26 */ "\tスイッチがある ~N\n\t押しますか？ ~S4 ",
+    /* 27 */ "\t発電機は動いている ~E ",
+    /* 28 */ "\t~C2 病院地下の鍵 ~C7 を使った ~E ",
+    /* 29 */ "\t病院の中を調べよう ~E ",
+    /* 30 */ "\t電話機とこの地域の電話帳がある ~N\n\t特に調べる必要はないだろう ~E ",
+    /* 31 */ "\t自動販売機がある ~N\n\t故障か停電かわからないが動いていない ~E ",
+    /* 32 */ "\t棚の中は荒らされている ~N\n\t誰がやったのだろうか？ ~E ",
+    /* 33 */ "\t机の周辺には本が散らかっている ~N\n\t他に特に気になるものはない ~E ",
+    /* 34 */ "\t電話機は使えないようだ ~N\n\t何をしても反応がない ~E ",
+    /* 35 */ "\tホワイトボードがある ~N\n\t特に気になるようなことは書かれていない ~E ",
+    /* 36 */ "\t新聞が置いてある ",
+    /* 37 */ "\t切り抜いた跡があるな…… ~E ",
+    /* 38 */ "\t冷蔵庫がある ~N\n\t中に気になるものはない ~E ",
+    /* 39 */ "\t特に気になることはない ~E ",
+    /* 40 */ "\t役に立ちそうなものはない ~E "
+#endif
 };
 
 void func_800D14BC(void) // 0x800D14BC

@@ -32,6 +32,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Plate_of_[Hatter] ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tThere_is_a_ ~C2 Plate_of_[Cat] ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 17 */ "\tThere_is_a_ ~C2 Plate_of_[Turtle] ~C7 . ~N\n\tTake_it? ~S4 ",
@@ -80,6 +81,54 @@ const char* MAP_MESSAGES[] = {
     /* 60 */ "\tThere's_a_bottle_filled ~N\n\twith_some_kind_of_drug. ~N\n\tBetter_leave_it. ~E ",
     /* 61 */ "\tThere_are_some_empty_bottles. ~E ",
     /* 62 */ "\tNothing_special_in_the_box. ~N\n\tNothing_to_worry_about. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\t~C2 ［帽子屋］のプレート ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 16 */ "\t~C2 ［猫］のプレート ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 17 */ "\t~C2 ［海亀］のプレート ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 18 */ "~D ~C3\t丘を越え流れゆく雲 ",
+    /* 19 */ "~D ~C3\t晴れた日の空 ",
+    /* 20 */ "~D ~C3\t季節外れのミカン ",
+    /* 21 */ "~D ~C3\t幸運の四つ葉 ",
+    /* 22 */ "~D ~C3\t庭先のスミレ ",
+    /* 23 */ "~D ~C3\t道端のタンポポ ",
+    /* 24 */ "~D ~C3\t訪れた眠りの時間 ",
+    /* 25 */ "~D ~C3\t手首から流れゆくもの ~E ",
+    /* 26 */ "\tビデオデッキは壊れてしまったようだ ~N\n\t動かなくなっている ~E ",
+    /* 27 */ "~J0(0.7)\t　 ",
+    /* 28 */ "~J2(1.5)\t……………て？ ",
+    /* 29 */ "~J2(2.7)\t………高熱………………続い……わ…… ",
+    /* 30 */ "~J2(5.4)\t…………さない……………………… ~N\n\t\t\t……かに息を…………だけ ",
+    /* 31 */ "~J2(2.3)\t皮………………が焼け…………………… ",
+    /* 32 */ "~J2(5.0)\t…………度替え…… ~N\n\t\t\tすぐに血と…………ロにな………… ",
+    /* 33 */ "~J2(5.9)\tどうして…… ~N\n\t\t\t…………あの子は……てるの？ ",
+    /* 34 */ "~J2(2.8)\t……………………………………… ",
+    /* 35 */ "~J2(3.3)\t……………話さな…… ~N\n\t\t\t……………… ",
+    /* 36 */ "~J2(2.0)\t…………………許して ",
+    /* 37 */ "~J2(0.5)\t　 ~E ",
+    /* 38 */ "\t~C2 輸血用血液パック ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 39 */ "\t~C2 消毒用アルコール ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 40 */ "\t~C2 ライター ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 41 */ "\t~C2 地下倉庫の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 42 */ "\t　 ~E ",
+    /* 43 */ "\t石板がある ~N\n\tそれだけで他には特に何もないようだ ~E ",
+    /* 44 */ "\tアルコールのボトルが置いてある ~N\n\t中身は入っていないようだ ~E ",
+    /* 45 */ "\tどこにプレートをはめますか？ ~E ",
+    /* 46 */ "\tそこにプレートをはめることはできません ~E ",
+    /* 47 */ "\tどこのプレートを外しますか？ ~E ",
+    /* 48 */ "\tそのプレートを外すことはできません ~E ",
+    /* 49 */ "\t扉には４つの正方形のくぼみがある ~E ",
+    /* 50 */ "\t~C4 ここで血液パックを使ってください ~C7 ~E ",
+    /* 51 */ "\t鳥カゴがある ~N\n\t中は空っぽで何もいない ~E ",
+    /* 52 */ "\tビデオデッキがある ~N\n\t古びてはいるが　まだ使えそうだ ~E ",
+    /* 53 */ "\t鉄板が壁にネジ止めされている ~E ",
+    /* 54 */ "\t特に気になるものはない ~E ",
+    /* 55 */ "\t乾燥機が並んでいる ~N\n\t今は何の役にも立たない ~E ",
+    /* 56 */ "\t特に役に立ちそうなものはない ~E ",
+    /* 57 */ "\tダンボール箱の中に ~N\n\t役に立ちそうなものは入っていない ~E ",
+    /* 58 */ "\t中身のわからない薬のビンが置かれている ~N\n\t無視していった方がいいだろう ~E ",
+    /* 59 */ "\t空のビンが置かれている ~E ",
+    /* 60 */ "\t箱の中にはろくなものが入っていない ~N\n\t気にしないでいいだろう ~E "
+#endif
 };
 
 void func_800D151C(void) // 0x800D151C
@@ -325,7 +374,7 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 7:
             func_800D17F8(8, 0);
-            Event_DisplayMapMsg(false, 47, false, false, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(47), false, false, 0, false);
             break;
 
         case 8:
@@ -424,7 +473,7 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 10:
             func_800D17F8(8, 0);
-            Event_DisplayMapMsg(false, 48, false, false, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(48), false, false, 0, false);
 
             if (g_SysWork.sysStateSteps[0] != 10)
             {
@@ -434,7 +483,7 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 11:
             func_800D17F8(8, 0);
-            Event_DisplayMapMsg(false, 49, false, false, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(49), false, false, 0, false);
             break;
 
         case 12:
@@ -533,7 +582,7 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 14:
             func_800D17F8(8, 0);
-            Event_DisplayMapMsg(false, 50, false, false, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(50), false, false, 0, false);
 
             if (g_SysWork.sysStateSteps[0] != 14)
             {
@@ -542,7 +591,7 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 15:
-            Event_DisplayMapMsg(false, 51, false, false, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(51), false, false, 0, false);
             func_800D17F8(8, 0);
             break;
 
@@ -568,13 +617,13 @@ void func_800D26D0(void) // 0x800D26D0
 void func_800D2708(void) // 0x800D2708
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 44);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(44));
 }
 
 void func_800D2740(void) // 0x800D2740
 {
     g_Screen_BackgroundImgGamma = Q8(3.0f / 8.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), 45);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_2_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(45));
 }
 
 void func_800D2778(void) // 0x800D2778
@@ -703,22 +752,22 @@ void func_800D27F4(void) // 0x800D27F4
 
 void func_800D2C2C(void) // 0x800D2C2C
 {
-    Event_ItemTake(InvItemId_BloodPack, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBloodPack, 40);
+    Event_ItemTake(InvItemId_BloodPack, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBloodPack, MAP_MSG(40));
 }
 
 void func_800D2C58(void) // 0x800D2C58
 {
-    Event_ItemTake(InvItemId_DisinfectingAlcohol, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupDisinfectingAlcohol, 41);
+    Event_ItemTake(InvItemId_DisinfectingAlcohol, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupDisinfectingAlcohol, MAP_MSG(41));
 }
 
 void func_800D2C84(void) // 0x800D2C84
 {
-    Event_ItemTake(InvItemId_Lighter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupLighter, 42);
+    Event_ItemTake(InvItemId_Lighter, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupLighter, MAP_MSG(42));
 }
 
 void func_800D2CB0(void) // 0x800D2CB0
 {
-    Event_ItemTake(InvItemId_BasementStoreroomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBasementStoreroomKey, 43);
+    Event_ItemTake(InvItemId_BasementStoreroomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupBasementStoreroomKey, MAP_MSG(43));
 }
 
 void func_800D2CDC(void) // 0x800D2CDC
@@ -824,13 +873,13 @@ void func_800D2CDC(void) // 0x800D2CDC
 
 void func_800D30FC(void) // 0x800D30FC
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 53);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(53));
 }
 
 void func_800D3128(void) // 0x800D3128
 {
     g_Screen_BackgroundImgGamma = Q8(7.0f / 16.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(55));
 }
 
 const VECTOR3 sharedData_800CB088_3_s01 = { Q12(19.1f), Q12(-2.0f), Q12(59.1f) };

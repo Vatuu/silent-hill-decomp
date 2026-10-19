@@ -29,7 +29,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP0/sym.main.txt
+    - configs/USA/sym.main.txt
     - configs/JAP0/sym.bodyprog.txt
     - configs/JAP0/maps/sym.map3_s06.txt
   reloc_addrs_path:
@@ -54,7 +54,24 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # .rodata section
       - [0x0, rodata]
-      - [0x1CA8, asm, map3_s06]
-      - [0x8588, data]
+      - [0x4, .rodata, map3_s06_header]
+      - [0x1050, .rodata, map3_s06_2]
+      - [0x1CA5, rodata] # 3 random bytes, linker artifact, splat doesn't seem to write to .s so postbuild.py has to patch them back in.
+
+      - [0x1CA8, c, map3_s06_header]
+      - [0x1CA8, c, map3_s06_events_data]
+      - [0x1CA8, c, map3_s06_anim_info]
+
+      # .text section
+      - [0x1CA8, c, map3_s06_2]
+
+      # .data section
+      - [0x8588, .data, map3_s06_anim_info]
+      - [0x8638, data]
+      - [0x8A84, .data, map3_s06_header]
+      - [0x8D84, .data, map3_s06_2]
+      - [0x8E40, .data, map3_s06_events_data]
+      - [0x9098, data]
   - [0xCA00]
