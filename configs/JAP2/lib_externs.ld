@@ -12,6 +12,7 @@ DMACallback           = 0x800133BC;
 GetVideoMode          = 0x80013E50;
 CdReady               = 0x80014120;
 CdReadyCallback       = 0x80014154;
+CdGetSector           = 0x80014544;
 CdDataCallback        = 0x80014584;
 CdPosToInt            = 0x800146CC;
 ResetGraph            = 0x800180FC;
@@ -47,6 +48,8 @@ CD_nopen              = 0x800226CC;
 DS_active             = 0x800226D8;
 _spu_RQ               = 0x800231A0;
 StMode                = 0x800231E8;
+DsReadyCallback       = 0x801E352C;
+DsDataCallback        = 0x801E3554;
 
 # @hack Fix for splat/spimdisasm not recognizing `MAP_INFOS` as referenced in certain maps, which only make use of later elements in the array.
 MAP_INFOS = 0x80025004;
