@@ -101,6 +101,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
 #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "\t\tSame_thing... ~E ",
     /* 16 */ "~L4 ~C3 Investigation_stalled. ~N\n\t[PTV]_dealers_still_at_large. ~N\n\t~N\n\tSuspicious_deaths_continue. ~N\n\tLike_anti-drug_Mayor, ~N\n\tnarcotics_officer_dies_of ~N\n\tsudden_heart_failure_of ~N\n\tunknown_origin. ~E ",
     /* 17 */ "\t\tAre_there_others? ~N\n\t\tIt's_pretty_old... ",
@@ -245,6 +246,149 @@ const char* MAP_MESSAGES[] = {
     /* 156 */ "\tNothing_inside. ~E ",
     /* 157 */ "\tNothing_useful_in_the_boxes. ~E ",
     /* 158 */ "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "\tまた　これか…… ~E ",
+    /* 16 */ "~L4 ~C3\n\t捜査難航。 ~N\n\t麻薬“ＰＴＶ”の売人特定できず。~N\n\t~N\n\t相次ぐ怪死事件。 ~N\n\t麻薬売買の取締り強化を掲げた市長に続き、 ~N\n\t麻薬捜査官が原因不明の心臓発作で死亡。 ~E ",
+    /* 17 */ "\t\t他にもあるのか？ ~N\n\t\tかなり古いな…… ",
+    /* 18 */ "~L4 ~C3\n\t繁華街で不審火。 ~N\n\t６棟が全焼。 ~N\n\t~N\n\t逃げ遅れたアレッサ・ギレスピー（７歳）の ~N\n\t焼死体が発見された。 ~N\n\t~N\n\t出火の原因を調査中。 ",
+    /* 19 */ "~L4 ~C3\n\t調査の結果、出火場所は ~N\n\tギレスピー宅の地下室と限定された。 ~N\n\t出火原因は老朽化したボイラーの ~N\n\t故障ではないかと推測される。 ~E ",
+    /* 20 */ "\tこの火事の日付は…… ",
+    /* 21 */ "\tシェリルを見つけたあの日だ…… ~E ",
+    /* 22 */ "\t\tしおりの挟んである本がある ~E ",
+    /* 23 */ "~L4 ~C3\n\t［ホワイトクロジェア］ ~N\n\t~N\n\t河岸／湖岸に生える多年草。 ~N\n\t高さは３０〜４０ｃｍ。 ~N\n\t長楕円状の葉を持ち、白い花を咲かせる。 ~N\n\t種に幻覚作用のある成分が含まれている。 ~N\n\t古来、その幻覚作用を利用して、宗教儀式 ~N\n\tに使われていたという記録も残っている。 ~E ",
+    /* 24 */ "~L4 ~C3\n\t先生にあの患者の担当から ~N\n\t外してもらえるよう頼んだ。 ~N\n\t~N\n\tどう考えてもおかしい。 ~E ",
+    /* 25 */ "~L4 ~C3\n\t部屋に数え切れないほどの虫がいる。 ~N\n\t~N\n\t窓や扉を閉めても入ってくる。 ~N\n\t~N\n\t震えるあたしをあざ笑っている。 ~N\n\t~N\n\t病院へ…… ~E ",
+    /* 26 */ "~L4 ~C3\n\tまだ生きている。 ~N\n\tなのに傷は治らない。 ~E ",
+    /* 27 */ "~L4 ~C3\n\tバスルームの蛇口から ~N\n\t血と膿が流れ出してくる。 ~N\n\t止めようとしても止まらない。 ~E ",
+    /* 28 */ "~L4 ~C3\n\t気持ちが悪い。 ~N\n\t吐き気がする。 ~N\n\tだけど、もう何も出てこない。 ~N\n\t胃液すら吐きつくした。 ~E ",
+    /* 29 */ "~L4 ~C3\t薬が、欲しい。 ~E ",
+    /* 30 */ "~L4 ~C3\t先生に辞める意志を伝えた。 ~N\n\t\t\tもう、あの病院で働くつもりはない。 ~E ",
+    /* 31 */ "~J0(0.7)\t　 ",
+    /* 32 */ "~J2(1.5)\t……どうして？ ",
+    /* 33 */ "~J2(2.7)\t異常な高熱状態がずっと続いてるわ…… ",
+    /* 34 */ "~J2(5.4)\t目も覚まさない……点滴を受け…… ~N\n\t\t\tかすかに息をしているだけ ",
+    /* 35 */ "~J2(2.3)\t皮膚のほとんどが焼けただれてるのよ！ ",
+    /* 36 */ "~J2(5.0)\t包帯を何度替えても ~N\n\t\t\tすぐに血と膿でドロドロになるのよ！ ",
+    /* 37 */ "~J2(5.9)\tどうして…… ~N\n\t\t\tどうしてあの子は生きてるの？ ",
+    /* 38 */ "~J2(2.8)\tあたし……もう耐えられない…… ",
+    /* 39 */ "~J2(3.3)\t……誰にも話さないわ ~N\n\t\t\t……約束する ",
+    /* 40 */ "~J2(2.0)\tだから……もう許して ",
+    /* 41 */ "~J2(1.0)\t　 ~E ",
+    /* 42 */ "~J0(1.3)\t",
+    /* 43 */ "~J0(3.3)\t~E ",
+    /* 44 */ "~J1(6.4)\t計画は成功していたわ ~N\n\t\t\t胎内に宿っていた ",
+    /* 45 */ "~J1(1.8)\tしかし完全ではない ",
+    /* 46 */ "~J1(4.5)\t魂の半分が失せている ~N\n\t\t\tそのせいで種子は目覚めない ",
+    /* 47 */ "~J1(3.6)\t残った魂も　種子を抱えたまま ",
+    /* 48 */ "~J1(3.7)\t意識の底に閉じこもってしまった ",
+    /* 49 */ "~J1(2.6)\tそれでは役に立たないというのか？ ",
+    /* 50 */ "~J1(2.0)\t話が違うぞ！ ",
+    /* 51 */ "~J1(4.0)\tいいえ　必死に押さえつけているだけよ ",
+    /* 52 */ "~J1(4.4)\tわたしたちが手を貸せば ~N\n\t\t\t力を引き出すことはできるわ ",
+    /* 53 */ "~J1(5.4)\t大丈夫　約束は守るわ ",
+    /* 54 */ "~J1(5.0)\tしかし　こんな状態では引き出せる力は ~N\n\t\t\tごくわずかだ……無力に等しい ",
+    /* 55 */ "~J1(3.2)\t消えた魂のかけらを探さねば…… ",
+    /* 56 */ "~J1(3.1)\t呪法を使うわ ",
+    /* 57 */ "~J1(6.0)\tこの子の苦しみを感じて ~N\n\t\t\tきっと現れるはずよ ",
+    /* 58 */ "~J1(2.8)\t時間がかかるな…… ~E ",
+    /* 59 */ "~J0(2.9)\t",
+    /* 60 */ "~J0(3.0)\tいやよ！ ~N\n\t\t\tもう　いやなの！ ",
+    /* 61 */ "~J0(2.7)\tどうしてママの言うことを ~N\n\t\t\t聞いてくれないの ",
+    /* 62 */ "~J0(6.3)\tほんの少し　少しだけあなたの力を ~N\n\t\t\t貸してくれればそれでいいのよ ",
+    /* 63 */ "~J2(1.2)\tいや！ ~E ",
+    /* 64 */ "~J0(2.0)\tこんなことしたくない！ ~E ",
+    /* 65 */ "~J1(5.8)\tみんなが幸せになるためなのよ…… ~N\n\t\t\tあなたのためにもなるのよ ",
+    /* 66 */ "~J1(4.3)\tこんなことするより　あたしはママと ~N\n\t\t\t一緒にいられる方が幸せなの…… ",
+    /* 67 */ "~J1(4.3)\tそれ以上いらない ~N\n\t\t\tだからわかってよ ~E ",
+    /* 68 */ "~J1(7.1)\tそう……　そうね ~N\n\t\t\tママがまちがっていたのかもしれないわね ",
+    /* 69 */ "~J1(1.3)\tママ…… ",
+    /* 70 */ "~J1(5.3)\tどうして気がつかなかったのかしら？ ~N\n\t\t\t待っている必要なんかないんだわ…… ",
+    /* 71 */ "~J1(7.2)\t復活のための力を秘めた ~N\n\t\t\t母胎はここにあるわ ",
+    /* 72 */ "~J1(4.2)\tすべてをあたしの手で行えば良かったのよ ",
+    /* 73 */ "~J1(1.6)\tママ……？ ~E ",
+    /* 74 */ "\t~C2\t［ベトール］の鍵 ~C7 を使った ~E ",
+    /* 75 */ "\t~C2\t［アラトロン］の鍵 ~C7 を使った ~E ",
+    /* 76 */ "\t~C2\t［ベトール］の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 77 */ "\t~C2\t［アラトロン］の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 78 */ "\t~C2 アンク ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 79 */ "\t~C2 メルキオールの小剣 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 80 */ "\t~C2\tウロボロスの円環 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 81 */ "\t非常用発電機は動いている ~N\n\tスイッチを押しますか？ ~S4 ",
+    /* 82 */ "\t非常用発電機は止まっている ~N\n\tスイッチを押しますか？ ~S4 ",
+    /* 83 */ "\t鍵がかかっている ",
+    /* 84 */ "\t扉には“ベトール”と刻まれている ~E ",
+    /* 85 */ "\t鍵がかかっている ",
+    /* 86 */ "\t扉には“アラトロン”と刻まれている ~E ",
+    /* 87 */ "\tゼリービーンズがある ~N\n\t開けますか？ ~S4 ",
+    /* 88 */ "\t鎖は途中で切れている ~E ",
+    /* 89 */ "\t指輪で補われて鎖はつながっている ~E ",
+    /* 90 */ "\t~C2 契約の指輪 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 91 */ "\t~C2\tドライバー ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 92 */ "\t~C2\tカメラ ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 93 */ "\t~C2 ソロモンの護符 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 94 */ "\t~C2\tメルクリウスの紋章 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 95 */ "~C3\t帰れ ",
+    /* 96 */ "~C3\t泥棒 ",
+    /* 97 */ "~C3\t死ね ~E ",
+    /* 98 */ "\t　 ~E ",
+    /* 99 */ "~C3\t石板に刻まれた名前 ~N\n\tそれは冥府に帰りし者の目録 ",
+    /* 100 */ "~C3\tさあ、その頭を並べろ ~N\n\t若さを尊び老いをあざけり列を作れ ",
+    /* 101 */ "~C3\tその時、道が開かれる ~N\n\t行く手に待つは狂騒、死の宴！ ~E ",
+    /* 102 */ "\t鍵がある ",
+    /* 103 */ "\t鍵には電気が流れているようだ ~N\n\tこのまま取ると感電してしまうだろう ~E ",
+    /* 104 */ "~C3\t光導く未来 ~E ",
+    /* 105 */ "~C3\t闇を開く光 ~E ",
+    /* 106 */ "\t鳥カゴがある ~N\n\t中は空っぽで何もいない ~E ",
+    /* 107 */ "\t鉄板が壁にネジ止めされている ~E ",
+    /* 108 */ "~J0(1.2)\tハリー ~E ",
+    /* 109 */ "~J1(2.6)\tリサ…… ~N\n\t\t\tいったいどうしたんだ？ ",
+    /* 110 */ "~J1(1.8)\tわかったのよ ",
+    /* 111 */ "~J1(4.0)\tどうしてみんな死んでしまったのに ~N\n\t\t\tあたしは生きてるのか ",
+    /* 112 */ "~J1(4.0)\tあたしだけ生きてるんじゃなかったのよ ",
+    /* 113 */ "~J1(1.7)\tみんなと同じ ",
+    /* 114 */ "~J1(2.8)\tあたしは気がつかなかっただけ ~E ",
+    /* 115 */ "~J1(1.3)\tリサ…… ",
+    /* 116 */ "~J1(3.6)\tハリー ~N\n\t\t\tお願い……そばにいて…… ",
+    /* 117 */ "~J1(3.3)\tあたし怖いわ ~N\n\t\t\t助けて…… ~E ",
+    /* 118 */ "~J0(2.4)\tあいつらから守って…… ",
+    /* 119 */ "~J0(4.0)\tね？　ハリー…… ~E ",
+    /* 120 */ "~J0(8.9)\t~E ",
+    /* 121 */ "~C3\tアレッサ ~E ",
+    /* 122 */ "\t~C2 ソロモンの護符 ~C7 を使った ~E ",
+    /* 123 */ "\t~C2 メルクリウスの紋章 ~C7 を使った ~E ",
+    /* 124 */ "\t~C2 アンク ~C7 を使った ~E ",
+    /* 125 */ "\t~C2 メルキオールの小剣 ~C7 を使った ~E ",
+    /* 126 */ "\t~C2 ウロボロスの円環 ~C7 を使った ~E ",
+    /* 127 */ "~M ~C3\n\t汝が手中にあり ~N\n\tその身を護りし ~N\n\t五つのまじない ~N\n\tここに捧げよ ~E ",
+    /* 128 */ "\t切れた電線がある ~N\n\t特に気にすることもないだろう ~E ",
+    /* 129 */ "\tエレベーターは動いていないようだ ~E ",
+    /* 130 */ "\t文字盤の壊れた時計がある ~E ",
+    /* 131 */ "\t~C2 契約の指輪 ~C7 を使った ~E ",
+    /* 132 */ "\tいろいろなものが置かれているが ~N\n\t特に役に立ちそうなものはない ~E ",
+    /* 133 */ "\tただの壁だ ~E ",
+    /* 134 */ "\t壁に蝶や蛾の標本が飾ってある ~E ",
+    /* 135 */ "\t女の子の洋服が壁にかけてある ",
+    /* 136 */ "\t６歳か７歳…… ~N\n\tたぶんそれぐらいの年齢の子だろう ~E ",
+    /* 137 */ "\t床にカードが散らばっている ~E ",
+    /* 138 */ "\t床に人形が置かれている ~E ",
+    /* 139 */ "\t床に子どもの描いた絵が散らばっている ~N\n\tこれは何の絵なのだろう？ ~E ",
+    /* 140 */ "\tいろいろなものが置かれている ~N\n\tだが役に立ちそうなものはない ~E ",
+    /* 141 */ "\t棚の中には古びてボロボロになった ~N\n\t童話や動植物の図鑑などが置かれている ~E ",
+    /* 142 */ "\t棚の中には何もない ~E ",
+    /* 143 */ "~L4 ~C3\tだれか、たすけて…… ~E ",
+    /* 144 */ "\t床に日記が置かれている ~E ",
+    /* 145 */ "\t役に立ちそうなものはない ~E ",
+    /* 146 */ "\t祭壇らしきものがある ~N\n\tこれは何を祭っているのだろうか？ ~E ",
+    /* 147 */ "\t壁や床は落書きで埋め尽くされている ~E ",
+    /* 148 */ "\tビデオデッキがある ~N\n\t古びてはいるが　まだ使えそうだ ~E ",
+    /* 149 */ "\t死体がベッドに寝かされている ~N\n\tあれこれと調べる気にはなれない ~E ",
+    /* 150 */ "\t中身のわからない薬のビンが置かれている ~N\n\t無視していった方がいいだろう ~E ",
+    /* 151 */ "\t空のビンが置かれている ~E ",
+    /* 152 */ "\t箱の中にはろくなものが入っていない ~N\n\t特に気にする必要はないだろう ~E ",
+    /* 153 */ "\t棚の中には何も入っていない ~E ",
+    /* 154 */ "\tダンボール箱の中に ~N\n\t役に立ちそうなものは入っていない ~E ",
+    /* 155 */ "\t植物事典が置かれている ~N\n\t今は読む必要はないだろう ~E "
+#endif
 };
 
 void func_800DA248(void) // 0x800DA248
@@ -301,7 +445,7 @@ void func_800DA248(void) // 0x800DA248
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_DisplayMapMsgWithAudio(111, &D_800EB6B0, &D_800E9CE4);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(111), &D_800EB6B0, &D_800E9CE4);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
             Event_WaitTimer(Q12(0.8f), false);
             break;
@@ -311,7 +455,7 @@ void func_800DA248(void) // 0x800DA248
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_DisplayMapMsgWithAudio(111, &D_800EB6B0, &D_800E9CE4);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(111), &D_800EB6B0, &D_800E9CE4);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(20.0f), true, false);
             break;
 
@@ -326,11 +470,11 @@ void func_800DA248(void) // 0x800DA248
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_DisplayMapMsgWithAudio(112, &D_800EB6B0, &D_800E9CE4);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(112), &D_800EB6B0, &D_800E9CE4);
             break;
 
         case 10:
-            Event_DisplayMapMsgWithAudio(118, &D_800EB6B0, &D_800E9CE4);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(118), &D_800EB6B0, &D_800E9CE4);
             break;
 
         case 11:
@@ -338,7 +482,7 @@ void func_800DA248(void) // 0x800DA248
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Event_DisplayMapMsgWithAudio(121, &D_800EB6B0, &D_800E9CE4);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(121), &D_800EB6B0, &D_800E9CE4);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(22.0f), Q12(97.0f), false, false);
             break;
 
@@ -415,7 +559,7 @@ void func_800DA248(void) // 0x800DA248
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA\0\0\0\0", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -658,14 +802,14 @@ void func_800DB498(void) // 0x800DB498
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    Event_DisplayMapMsgWithSfx(86, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(86), Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    Event_DisplayMapMsgWithSfx(88, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(88), Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
@@ -673,7 +817,7 @@ void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfBethor, 1);
-    Event_DisplayMapMsgWithSfx(77, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(77), Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_533);
 }
 
@@ -682,7 +826,7 @@ void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfAratron, 1);
-    Event_DisplayMapMsgWithSfx(78, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(78), Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_534);
 }
 
@@ -738,7 +882,7 @@ void func_800DB738(void) // 0x800DB738
             break;
 
         case 8:
-            Event_DisplayMapMsgWithAudio(32, &D_800EB6B0, &D_800E9CFC);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(32), &D_800EB6B0, &D_800E9CFC);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 8 &&
@@ -930,7 +1074,7 @@ void func_800DBB34(void) // 0x800DBB34
 
 void MapEvent_AnkhTake(void) // 0x800DC120
 {
-    Event_ItemTake(InvItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
+    Event_ItemTake(InvItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, MAP_MSG(81));
 }
 
 void func_800DC14C(void) // 0x800DC14C
@@ -960,7 +1104,7 @@ void func_800DC14C(void) // 0x800DC14C
 
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(true, 90, 7, 5, 0, false);
+            Event_DisplayMapMsg(true, MAP_MSG(90), 7, 5, 0, false);
             break;
 
         case 5:
@@ -1095,7 +1239,7 @@ void func_800DC778(void) // 0x800DC778
 
             if (Gfx_PickupItemAnimate(InvItemId_KeyOfBethor))
             {
-                Event_DisplayMapMsg(true, 79, 5, 6, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(79), 5, 6, 0, false);
             }
             break;
 
@@ -1174,7 +1318,7 @@ void func_800DC954(void) // 0x800DC954
             break;
 
         case 9:
-            Event_DisplayMapMsg(false, 134, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(134), 0, 0, 0, false);
             Event_BgTextureCmd(BgTextureCmd_DrawSecondary, 0, false);
             break;
 
@@ -1249,11 +1393,11 @@ void func_800DCD00(void) // 0x800DCD00
         case 5:
             if (Savegame_EventFlagGet(EventFlag_552))
             {
-                Event_DisplayMapMsg(false, 92, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(92), 0, 0, 0, false);
             }
             else
             {
-                Event_DisplayMapMsg(false, 91, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(91), 0, 0, 0, false);
             }
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
@@ -1291,7 +1435,7 @@ void func_800DCD00(void) // 0x800DCD00
         case 11:
             if (Gfx_PickupItemAnimate(InvItemId_DaggerOfMelchior) != false)
             {
-                Event_DisplayMapMsg(true, 82, 12, 13, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(82), 12, 13, 0, false);
             }
 
             Savegame_EventFlagSet(EventFlag_M7S02_PickupDaggerOfMelchior);
@@ -1608,7 +1752,7 @@ void func_800DDEC8(void) // 0x800DDEC8
 
         case 3:
             g_SysWork.silentYesSelection = true;
-            Event_DisplayMapMsg(true, 85, 4, -1, 0, false);
+            Event_DisplayMapMsg(true, MAP_MSG(85), 4, -1, 0, false);
             break;
 
         case 4:
@@ -1626,7 +1770,7 @@ void func_800DDEC8(void) // 0x800DDEC8
 
         case 7:
             g_SysWork.silentYesSelection = true;
-            Event_DisplayMapMsg(true, 84, 8, -1, 0, false);
+            Event_DisplayMapMsg(true, MAP_MSG(84), 8, -1, 0, false);
             break;
 
         case 8:
@@ -1757,7 +1901,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             break;
 
         case 3:
-            Event_DisplayMapMsgWithAudio(47, &D_800EB6B0, &D_800E9D30);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(47), &D_800EB6B0, &D_800E9D30);
             WorldObjects_Add(&g_WorldObject_Cover.object, &g_WorldObject_Cover.position, &SVECTOR3_Zero);
             break;
 
@@ -1981,7 +2125,7 @@ void func_800DF1E8(void) {}
 
 void MapEvent_DiskOfOuroborosTake(void) // 0x800DF1F0
 {
-    Event_ItemTake(InvItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, 83);
+    Event_ItemTake(InvItemId_DiskOfOuroboros, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupDiskOfOuroboros, MAP_MSG(83));
 }
 
 void func_800DF21C(void) // 0x800DF21C
@@ -2027,7 +2171,7 @@ void func_800DF21C(void) // 0x800DF21C
             g_SysWork.lightIntensity     = Q12(0.8f);
 
             Savegame_EventFlagSet(EventFlag_560);
-            Event_DisplayMapMsgWithAudio(62, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(62), &D_800EB6B0, &D_800E9D50);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -2038,7 +2182,7 @@ void func_800DF21C(void) // 0x800DF21C
 
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
-            Event_DisplayMapMsgWithAudio(62, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(62), &D_800EB6B0, &D_800E9D50);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -2047,7 +2191,7 @@ void func_800DF21C(void) // 0x800DF21C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_DisplayMapMsgWithAudio(62, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(62), &D_800EB6B0, &D_800E9D50);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(0.0f), Q12(32.0f), true, false);
             break;
 
@@ -2058,7 +2202,7 @@ void func_800DF21C(void) // 0x800DF21C
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_DisplayMapMsgWithAudio(67, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(67), &D_800EB6B0, &D_800E9D50);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(5.0f), Q12(33.0f), Q12(59.0f), true, false);
             break;
 
@@ -2076,13 +2220,13 @@ void func_800DF21C(void) // 0x800DF21C
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_DisplayMapMsgWithAudio(68, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(68), &D_800EB6B0, &D_800E9D50);
             break;
 
         case 9:
             g_Cutscene_Timer = Q12(61.0f);
             Savegame_EventFlagSet(EventFlag_560);
-            Event_DisplayMapMsgWithAudio(71, &D_800EB6B0, &D_800E9D50);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(71), &D_800EB6B0, &D_800E9D50);
             break;
 
         case 10:
@@ -2152,29 +2296,29 @@ void func_800DF21C(void) // 0x800DF21C
 
 void func_800DFA54(void) // 0x800DFA54
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 98);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(98));
 }
 
 void MapEvent_ScrewdriverTake(void) // 0x800DFA80
 {
-    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 94);
+    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, MAP_MSG(94));
 }
 
 void func_800DFAAC(void) // 0x800DFAAC
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 101);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(101));
 }
 
 void func_800DFAE4(void) // 0x800DFAE4
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 102);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(102));
 }
 
 void MapEvent_AmuletOfSolomonTake(void) // 0x800DFB1C
 {
-    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 96);
+    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, MAP_MSG(96));
 }
 
 void func_800DFB48(void) // 0x800DFB48
@@ -2200,7 +2344,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 147, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(147), 0, 0, 0, false);
             break;
 
         case 4:
@@ -2625,17 +2769,17 @@ void func_800DFDDC(void) // 0x800DFDDC
 
 void MapEvent_CrestOfMercuryTake(void) // 0x800E0C30
 {
-    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 97);
+    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, MAP_MSG(97));
 }
 
 void MapEvent_RingOfContractTake(void) // 0x800E0C5C
 {
-    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 93);
+    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, MAP_MSG(93));
 }
 
 void MapEvent_CameraTake(void) // 0x800E0C88
 {
-    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 95);
+    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, MAP_MSG(95));
 }
 
 void func_800E0CB4(void) // 0x800E0CB4
@@ -2765,7 +2909,7 @@ void func_800E0FF0(void) // 0x800E0FF0
 
             case 5:
                 Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-                Event_DisplayMapMsg(true, 80, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(80), 6, 7, 0, false);
                 break;
 
             case 6:
@@ -2787,7 +2931,7 @@ void func_800E0FF0(void) // 0x800E0FF0
     {
         if (Savegame_EventFlagGet(EventFlag_486))
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, 0, 0, 105);
+            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, 0, 0, MAP_MSG(105));
             if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
             {
                 // Plays SFX after random time between 0.2f - 2.2f?
@@ -2809,7 +2953,7 @@ void func_800E0FF0(void) // 0x800E0FF0
         else
         {
             g_Screen_BackgroundImgGamma = Q8(7.0f / 16.0f);
-            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, 0, 0, 110);
+            Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE0_TIM, 0, 0, MAP_MSG(110));
         }
     }
 }
@@ -2820,22 +2964,22 @@ void func_800E12E4(void) // 0x800E12E4
     {
         if (Savegame_EventFlagGet(EventFlag_498))
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, 108);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, MAP_MSG(108));
         }
         else
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, 108);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, MAP_MSG(108));
         }
     }
     else
     {
         if (Savegame_EventFlagGet(EventFlag_499))
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, 107);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, MAP_MSG(107));
         }
         else
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, 107);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, MAP_MSG(107));
         }
     }
 
@@ -2885,11 +3029,11 @@ void func_800E1398(void) // 0x800E1398
         case 4:
             if (Savegame_EventFlagGet(EventFlag_496))
             {
-                Event_DisplayMapMsg(false, 108, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(108), 0, 0, 0, false);
             }
             else
             {
-                Event_DisplayMapMsg(false, 107, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(107), 0, 0, 0, false);
             }
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
@@ -2945,14 +3089,14 @@ void func_800E1DAC(void) // 0x800E1DAC
 
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 15, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(15), 0, 0, 0, false);
             break;
 
         case 5:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 16, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(16), 0, 0, 0, false);
             break;
 
         case 6:
@@ -2963,14 +3107,14 @@ void func_800E1DAC(void) // 0x800E1DAC
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 17, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(17), 0, 0, 0, false);
             break;
 
         case 8:
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsg(false, 20, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(20), 0, 0, 0, false);
             break;
 
         case 9:
@@ -2997,7 +3141,7 @@ void func_800E1FF4(void) // 0x800E1FF4
         Sfx_WithFlagsPlay(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(22), MAP_MSG(23));
 }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };
@@ -3006,7 +3150,7 @@ const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f
 
 void func_800E2DC0(void) // 0x800E2DC0
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(124));
 }
 
 void func_800E2DEC(void) // 0x800E2DEC
@@ -3068,7 +3212,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 125 + D_800EA4A9, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(125) + D_800EA4A9, 0, 0, 0, false);
             break;
 
         case 4:
@@ -3142,7 +3286,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 14:
-            Event_DisplayMapMsg(false, 130, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(130), 0, 0, 0, false);
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
             break;
 

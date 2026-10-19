@@ -34,6 +34,12 @@
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+#if VERSION_REGION_IS(NTSC)
+    #define MAP_MSG(idx) (idx)
+#elif VERSION_REGION_IS(NTSCJ)
+    #define MAP_MSG(idx) ((idx) >= 39 ? (idx) - 3 : (idx) >= 36 ? (idx) - 2 : (idx) >= 24 ? (idx) - 1 : (idx))
+#endif
+
 #include "maps/shared.h"
 
 typedef struct

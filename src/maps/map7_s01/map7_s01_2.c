@@ -88,6 +88,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
 #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(5.5)\t",
     /* 16 */ "~J0(2.8)\tDamn! ~N\n\t\t\tWhat's_that? ~E ",
     /* 17 */ "~J0(1.2)\tHarry? ~E ",
@@ -170,6 +171,87 @@ const char* MAP_MESSAGES[] = {
     /* 94 */ "\tLooks_like_an_altar. ~N\n\tWonder_what_they_worship? ~E ",
     /* 95 */ "\tA_body_is_laid_out_on_the_bed. ~N\n\tDon't_feel_like_checking_this_out. ~E ",
     /* 96 */ "\tThere's_a_botanical ~N\n\treference_book. ~N\n\tDon't_need_to_read_it_now. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J0(5.5)\t",
+    /* 16 */ "~J0(2.8)\t何だ今のは！？ ~E ",
+    /* 17 */ "~J0(1.2)\tハリー ~E ",
+    /* 18 */ "~J1(2.6)\tリサ…… ~N\n\t\t\tいったいどうしたんだ？ ",
+    /* 19 */ "~J1(1.8)\tわかったのよ ",
+    /* 20 */ "~J1(4.0)\tどうしてみんな死んでしまったのに ~N\n\t\t\tあたしは生きてるのか ",
+    /* 21 */ "~J1(4.0)\tあたしだけ生きてるんじゃなかったのよ ",
+    /* 22 */ "~J1(1.7)\tみんなと同じ ",
+    /* 23 */ "~J1(2.8)\tあたしは気がつかなかっただけ ~E ",
+    /* 24 */ "~J1(1.3)\tリサ…… ",
+    /* 25 */ "~J1(3.6)\tハリー ~N\n\t\t\tお願い……そばにいて…… ",
+    /* 26 */ "~J1(3.3)\tあたし怖いわ ~N\n\t\t\t助けて…… ~E ",
+    /* 27 */ "~J0(2.4)\tあいつらから守って…… ",
+    /* 28 */ "~J0(4.0)\tね？　ハリー…… ~E ",
+    /* 29 */ "~J0(8.9)\t~E ",
+    /* 30 */ "\t\tまた　これか…… ~E ",
+    /* 31 */ "~L4 ~C3\n\t捜査難航。 ~N\n\t麻薬“ＰＴＶ”の売人特定できず。~N\n\t~N\n\t相次ぐ怪死事件。 ~N\n\t麻薬売買の取締り強化を掲げた市長に続き、 ~N\n\t麻薬捜査官が原因不明の心臓発作で死亡。 ~E ",
+    /* 32 */ "\t\t他にもあるのか？ ~N\n\t\tかなり古いな…… ",
+    /* 33 */ "~L4 ~C3\n\t繁華街で不審火。 ~N\n\t６棟が全焼。 ~N\n\t~N\n\t逃げ遅れたアレッサ・ギレスピー（７歳）の ~N\n\t焼死体が発見された。 ~N\n\t~N\n\t出火の原因を調査中。 ",
+    /* 34 */ "~L4 ~C3\n\t調査の結果、出火場所は ~N\n\tギレスピー宅の地下室と限定された。 ~N\n\t出火原因は老朽化したボイラーの ~N\n\t故障ではないかと推測される。 ~E ",
+    /* 35 */ "\tこの火事の日付は…… ",
+    /* 36 */ "\tシェリルを見つけたあの日だ…… ~E ",
+    /* 37 */ "\t\tしおりの挟んである本がある ~E ",
+    /* 38 */ "~L4 ~C3\n\t［ホワイトクロジェア］ ~N\n\t~N\n\t河岸／湖岸に生える多年草。 ~N\n\t高さは３０〜４０ｃｍ。 ~N\n\t長楕円状の葉を持ち、白い花を咲かせる。 ~N\n\t種に幻覚作用のある成分が含まれている。 ~N\n\t古来、その幻覚作用を利用して、宗教儀式 ~N\n\tに使われていたという記録も残っている。 ~E ",
+    /* 39 */ "~L4 ~C3\n\t先生にあの患者の担当から ~N\n\t外してもらえるよう頼んだ。 ~N\n\t~N\n\tどう考えてもおかしい。 ~E ",
+    /* 40 */ "~L4 ~C3\n\t部屋に数え切れないほどの虫がいる。 ~N\n\t~N\n\t窓や扉を閉めても入ってくる。 ~N\n\t~N\n\t震えるあたしをあざ笑っている。 ~N\n\t~N\n\t病院へ…… ~E ",
+    /* 41 */ "~L4 ~C3\n\tまだ生きている。 ~N\n\tなのに傷は治らない。 ~E ",
+    /* 42 */ "~L4 ~C3\n\tバスルームの蛇口から ~N\n\t血と膿が流れ出してくる。 ~N\n\t止めようとしても止まらない。 ~E ",
+    /* 43 */ "~L4 ~C3\n\t気持ちが悪い。 ~N\n\t吐き気がする。 ~N\n\tだけど、もう何も出てこない。 ~N\n\t胃液すら吐きつくした。 ~E ",
+    /* 44 */ "~L4 ~C3\t薬が、欲しい。 ~E ",
+    /* 45 */ "~L4 ~C3\n\t先生に辞める意志を伝えた。 ~N\n\tもう、あの病院で働くつもりはない。 ~E ",
+    /* 46 */ "~L4 ~C3\tだれか、たすけて…… ~E ",
+    /* 47 */ "\t~C2\t［オフィエル］の鍵 ~C7 を使った ~E ",
+    /* 48 */ "\t~C2\t［ハギト］の鍵 ~C7 を使った ~E ",
+    /* 49 */ "\t~C2\t［ファレグ］の鍵 ~C7 を使った ~E ",
+    /* 50 */ "\t~C2 契約の指輪 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 51 */ "\t~C2\tペンチ ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 52 */ "\t~C2\tドライバー ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 53 */ "\t~C2\t鳥カゴの鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 54 */ "\t~C2\tカメラ ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 55 */ "\t~C2\t時の石 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 56 */ "\t~C2\t［オフィエル］の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 57 */ "\t~C2\t［ハギト］の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 58 */ "\t~C2\t［ファレグ］の鍵 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 59 */ "\t~C2 ソロモンの護符 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 60 */ "\t~C2\tメルクリウスの紋章 ~C7 がある ~N\n\t取りますか？ ~S4 ",
+    /* 61 */ "~C3\t帰れ ",
+    /* 62 */ "~C3\t泥棒 ",
+    /* 63 */ "~C3\t死ね ~E ",
+    /* 64 */ "\t古びた置き時計がある ~N\n\t時計の中央には四角い穴が空いている ",
+    /* 65 */ "\tこの時計の針は……鍵だ ~N\n\tガラスがあるせいで取ることはできない ~E ",
+    /* 66 */ "\t蛇口から鍵がのぞいている ~N\n\tしかし　どう引っ張っても取れそうにない ~E ",
+    /* 67 */ "\t石板がある ~E ",
+    /* 68 */ "~C3\t石板に刻まれた名前 ~N\n\t\tそれは冥府に帰りし者の目録 ",
+    /* 69 */ "~C3\tさあ、その頭を並べろ ~N\n\t\t若さを尊び老いをあざけり列を作れ ",
+    /* 70 */ "~C3\tその時、道が開かれる ~N\n\t\t行く手に待つは狂騒、死の宴！ ~E ",
+    /* 71 */ "\t鍵がある ",
+    /* 72 */ "\t鍵には電気が流れているようだ ~N\n\tこのまま取ると感電してしまうだろう ~E ",
+    /* 73 */ "~C3\t光導く未来 ~E ",
+    /* 74 */ "~C3\t闇を開く光 ~E ",
+    /* 75 */ "\t鳥カゴには鍵がかかっている ~E ",
+    /* 76 */ "\t~C2\t鳥カゴの鍵 ~C7 を使った ~E ",
+    /* 77 */ "\t鳥カゴがある ~N\n\t中は空っぽで何もいない ~E ",
+    /* 78 */ "\t鍵がかかっている ",
+    /* 79 */ "\t扉には“オフィエル”と刻まれている ~E ",
+    /* 80 */ "\t鍵がかかっている ",
+    /* 81 */ "\t扉には“ハギト”と刻まれている ~E ",
+    /* 82 */ "\t鍵がかかっている ",
+    /* 83 */ "\t扉には“ファレグ”と刻まれている ~E ",
+    /* 84 */ "\t鉄板が壁にネジ止めされている ~E ",
+    /* 85 */ "\tエレベーターは動いていないようだ ~E ",
+    /* 86 */ "\t文字盤の壊れた時計がある ~E ",
+    /* 87 */ "\tいろいろなものが置かれているが ~N\n\t特に役に立ちそうなものはない ~E ",
+    /* 88 */ "\tただの壁だ ~E ",
+    /* 89 */ "\t床に日記が置かれている ~E ",
+    /* 90 */ "\t役に立ちそうなものはない ~E ",
+    /* 91 */ "\t祭壇らしきものがある ~N\n\tこれは何を祭っているのだろうか？ ~E ",
+    /* 92 */ "\t死体がベッドに寝かされている ~N\n\tあれこれと調べる気にはなれない ~E ",
+    /* 93 */ "\t植物事典が置かれている ~N\n\t今は読む必要はないだろう ~E "
+#endif
 };
 
 void func_800D725C(void) // 0x800D725C
@@ -600,21 +682,21 @@ void func_800D84AC(void) // 0x800D84AC
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    Event_DisplayMapMsgWithSfx(81, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(81), Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8540(void) // 0x800D8540
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    Event_DisplayMapMsgWithSfx(83, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(83), Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D85D4(void) // 0x800D85D4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
-    Event_DisplayMapMsgWithSfx(85, Sfx_DoorLocked, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(85), Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfOphielUse(void) // 0x800D8668
@@ -622,7 +704,7 @@ void MapEvent_KeyOfOphielUse(void) // 0x800D8668
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfOphiel, 1);
-    Event_DisplayMapMsgWithSfx(48, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(48), Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_530);
 }
 
@@ -631,7 +713,7 @@ void MapEvent_KeyOfHagithUse(void) // 0x800D8724
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfHagith, 1);
-    Event_DisplayMapMsgWithSfx(49, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(49), Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_531);
 }
 
@@ -640,7 +722,7 @@ void MapEvent_KeyOfPhalegUse(void) // 0x800D87E0
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventData->mapPointIdx].positionX, Q12(-1.2f), MAP_POINTS[g_MapEventData->mapPointIdx].positionZ };
 
     Player_ItemRemove(InvItemId_KeyOfPhaleg, 1);
-    Event_DisplayMapMsgWithSfx(50, Sfx_UseKey, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(50), Sfx_UseKey, &sfxPos);
     Savegame_EventFlagSet(EventFlag_532);
 }
 
@@ -666,31 +748,31 @@ void func_800D889C(void) // 0x800D889C
 
 void func_800D8958(void) // 0x800D8958
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), 78);
+    Event_DisplayMapMsgWithBg(FILE_TIM_BIRDCAGE_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(78));
 }
 
 void MapEvent_BirdCageKeyUse(void) // 0x800D8984
 {
     const static VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
 
-    Event_DisplayMapMsgWithSfx(79, Sfx_Unk1645, &sfxPos);
+    Event_DisplayMapMsgWithSfx(MAP_MSG(79), Sfx_Unk1645, &sfxPos);
     Player_ItemRemove(InvItemId_BirdCageKey, 1);
     Savegame_EventFlagSet(EventFlag_491);
 }
 
 void func_800D89D8(void) // 0x800D89D8
 {
-    Event_ItemTake(InvItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, 59);
+    Event_ItemTake(InvItemId_KeyOfPhaleg, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfPhaleg, MAP_MSG(59));
 }
 
 void func_800D8A04(void) // 0x800D8A04
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), 80);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CAGEEMPT_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(80));
 }
 
 void func_800D8A30(void) // 0x800D8A30
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), 68);
+    Event_DisplayMapMsgWithBg(FILE_TIM_WATERTAP_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(68));
 }
 
 void func_800D8A5C(void) // 0x800D8A5C
@@ -813,7 +895,7 @@ void func_800D8DB4(void) // 0x800D8DB4
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_KeyOfOphiel))
             {
-                Event_DisplayMapMsg(true, 57, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(57), 6, 7, 0, false);
             }
 
             Savegame_EventFlagSet(EventFlag_525);
@@ -841,7 +923,7 @@ void func_800D8DB4(void) // 0x800D8DB4
 
 void func_800D8FCC(void) // 0x800D8FCC
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), 65);
+    Event_DisplayMapMsgWithBg(FILE_TIM_CLOCKKEY_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(65));
 }
 
 void func_800D8FF8(void) // 0x800D8FF8
@@ -949,34 +1031,34 @@ void func_800D8FF8(void) // 0x800D8FF8
 
 void func_800D93BC(void) // 0x800D93BC
 {
-    Event_ItemTake(InvItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, 58);
+    Event_ItemTake(InvItemId_KeyOfHagith, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupKeyOfHagith, MAP_MSG(58));
 }
 
 void func_800D93E8(void) // 0x800D93E8
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), 62);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ABUSEDSK_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(62));
 }
 
 void func_800D9414(void) // 0x800D9414
 {
-    Event_ItemTake(InvItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, 52);
+    Event_ItemTake(InvItemId_Pliers, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupPliers, MAP_MSG(52));
 }
 
 void func_800D9440(void) // 0x800D9440
 {
-    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, 53);
+    Event_ItemTake(InvItemId_Screwdriver, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupScrewdriver, MAP_MSG(53));
 }
 
 void func_800D946C(void) // 0x800D946C
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), 70);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGRPH_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(70));
 }
 
 void func_800D94A4(void) // 0x800D94A4
 {
     g_Screen_BackgroundImgGamma = Q8(13.0f / 32.0f);
-    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), 71);
+    Event_DisplayMapMsgWithBg(FILE_TIM_LITHGR_3_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(71));
 }
 
 void func_800D94DC(void) // 0x800D94DC
@@ -1105,7 +1187,7 @@ void func_800D94DC(void) // 0x800D94DC
 
 void func_800D99DC(void) // 0x800D99DC
 {
-    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, 60);
+    Event_ItemTake(InvItemId_AmuletOfSolomon, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupAmuletOfSolomon, MAP_MSG(60));
 }
 
 void func_800D9A08(void) // 0x800D9A08
@@ -1131,7 +1213,7 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 92, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(92), 0, 0, 0, false);
             break;
 
         case 4:
@@ -1573,7 +1655,7 @@ void func_800DAB64(void) // 0x800DAB64
         case 5:
             if (Gfx_PickupItemAnimate(InvItemId_StoneOfTime) != false)
             {
-                Event_DisplayMapMsg(true, 56, 6, 7, 0, false);
+                Event_DisplayMapMsg(true, MAP_MSG(56), 6, 7, 0, false);
             }
 
             Savegame_EventFlagSet(EventFlag_M7S01_PickupStoneOfTime);
@@ -1601,17 +1683,17 @@ void func_800DAB64(void) // 0x800DAB64
 
 void func_800DAD7C(void) // 0x800DAD7C
 {
-    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, 61);
+    Event_ItemTake(InvItemId_CrestOfMercury, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCrestOfMercury, MAP_MSG(61));
 }
 
 void func_800DADA8(void) // 0x800DADA8
 {
-    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, 51);
+    Event_ItemTake(InvItemId_RingOfContract, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupRingOfContract, MAP_MSG(51));
 }
 
 void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
 {
-    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, 55);
+    Event_ItemTake(InvItemId_Camera, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupCamera, MAP_MSG(55));
 }
 
 void func_800DAE00(void) // 0x800DAE00
@@ -1713,7 +1795,7 @@ void func_800DAE00(void) // 0x800DAE00
 
 void func_800DB13C(void) // 0x800DB13C
 {
-    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), 74);
+    Event_DisplayMapMsgWithBg(FILE_TIM_ELCWIRE1_TIM, Q12(0.0f), Q12(0.0f), MAP_MSG(74));
 
     if (g_SysWork.sysStateSteps[1] >= 3 && g_SysWork.sysStateSteps[1] <= 5)
     {
@@ -1764,22 +1846,22 @@ void func_800DB31C(void) // 0x800DB31C
     {
         if (Savegame_EventFlagGet(EventFlag_498))
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, 77);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT2_TIM, 0, 0, MAP_MSG(77));
         }
         else
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, 77);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT2_TIM, 0, 0, MAP_MSG(77));
         }
     }
     else
     {
         if (Savegame_EventFlagGet(EventFlag_499))
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, 76);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3HINT1_TIM, 0, 0, MAP_MSG(76));
         }
         else
         {
-            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, 76);
+            Event_DisplayMapMsgWithBg(FILE_TIM_3X3PICT1_TIM, 0, 0, MAP_MSG(76));
         }
     }
 
@@ -1829,11 +1911,11 @@ void func_800DB3D0(void) // 0x800DB3D0
         case 4:
             if (Savegame_EventFlagGet(EventFlag_496))
             {
-                Event_DisplayMapMsg(false, 77, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(77), 0, 0, 0, false);
             }
             else
             {
-                Event_DisplayMapMsg(false, 76, 0, 0, 0, false);
+                Event_DisplayMapMsg(false, MAP_MSG(76), 0, 0, 0, false);
             }
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
@@ -1941,12 +2023,12 @@ void func_800DC028(void) // 0x800DC028
         Sfx_WithFlagsPlay(Sfx_Unk1464, &SFX_POS, Q8(0.5f), SfxFlag_None);
     }
 
-    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
+    Event_DisplayMapMsgWithDimmedBg(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, MAP_MSG(38));
 }
 
 void func_800DC080(void) // 0x800DC080
 {
-    Event_ItemTake(InvItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
+    Event_ItemTake(InvItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, MAP_MSG(54));
 }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };

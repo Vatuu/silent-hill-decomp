@@ -4486,6 +4486,7 @@ void func_800E17B8(s_800F4B40_1C* dest, s_800F4B40_1C* src) // 0x800E17B8
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/map_msg_common.h"
+#if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(4.9)\tI_was_shocked_to_realize ~N\n\t\t\tthe_talisman_of_Metraton ~N\n\t\t\twas_being_used. ",
     /* 16 */ "~J1(4.0)\tIn_spite_of_the_lost_soul ~N\n\t\t\treturning_at_last, ",
     /* 17 */ "~J1(4.3)\tJust_a_little_longer_and_all ~N\n\t\t\twould_have_been_for_naught. ",
@@ -4571,6 +4572,93 @@ const char* MAP_MESSAGES[] = {
     /* 97 */ "~J0(4.5)\t~E ",
     /* 98 */ "~J0(1.4)\tHarry. ",
     /* 99 */ "~J0(1.0)\tGo. ~E "
+#elif VERSION_REGION_IS(NTSCJ)
+    /* 15 */ "~J1(4.9)\tメトラトンの印章を作っていることに ~N\n\t\t\t気がついたときは本当に驚いたわ ",
+    /* 16 */ "~J1(4.0)\t待ち望んでいた消えた魂が ~N\n\t\t\tやっと帰ってきたというのに ",
+    /* 17 */ "~J1(4.3)\tもう少しですべてが ~N\n\t\t\t水の泡になるところだったのよ ",
+    /* 18 */ "~J1(7.0)\tあの男のおかげよ ~N\n\t\t\t本当に感謝しているわ ",
+    /* 19 */ "~J1(3.2)\tアレッサを止めても止めなくても ",
+    /* 20 */ "~J1(8.5)\t結局　あの男の娘なんて ~N\n\t\t\t消えてしまうのにね ~E ",
+    /* 21 */ "~J0(1.2)\tふざけるな！ ~E ",
+    /* 22 */ "~J0(2.6)\tそんな……！ ~E ",
+    /* 23 */ "~J0(1.1)\t~E ",
+    /* 24 */ "~J1(1.1)\tダリア！ ",
+    /* 25 */ "~J1(5.6)\t……まあ ~N\n\t\t\tこんなところまでたどり着くなんて ",
+    /* 26 */ "~J1(2.5)\tシェリルは！？ ~N\n\t\t\tいったいどこにいるんだ！ ",
+    /* 27 */ "~J1(2.0)\t何を言っているの？ ",
+    /* 28 */ "~J1(4.8)\t何度も会っているじゃない ~N\n\t\t\t本来の自分に還元されて ",
+    /* 29 */ "~J1(2.4)\t……何だって？ ~E ",
+    /* 30 */ "~J0(3.4)\tまだわからない？ ~N\n\t\t\tそこにいるじゃない ~E ",
+    /* 31 */ "~J1(1.8)\tそんな馬鹿な ",
+    /* 32 */ "~J1(4.5)\tそう思わないのはあなたの勝手よ ",
+    /* 33 */ "~J1(1.4)\t何のためだ？ ",
+    /* 34 */ "~J1(2.2)\t何のためにこんなことをする？ ~E ",
+    /* 35 */ "~J1(3.8)\t……この７年間　長かったわ ",
+    /* 36 */ "~J1(4.4)\tあの日から７年の間 ",
+    /* 37 */ "~J1(3.2)\tアレッサは生かされ続けたわ ",
+    /* 38 */ "~J1(3.9)\t死よりつらい苦しみが７年も続いたのよ ",
+    /* 39 */ "~J1(6.5)\tアレッサは目覚めることのない ~N\n\t\t\t悪夢を見続け…… ",
+    /* 40 */ "~J1(4.0)\t彼はその悪夢と共に育っていった…… ",
+    /* 41 */ "~J1(3.8)\t彼はじっと生まれる日を待ち続けたわ ",
+    /* 42 */ "~J1(3.6)\tそして　ついにこの日が来たのよ ",
+    /* 43 */ "~J1(2.9)\tすべてはこれからよ ~E ",
+    /* 44 */ "~J1(5.1)\tみんな解放されるわ ~N\n\t\t\tすべての苦しみから ",
+    /* 45 */ "~J1(3.1)\tあたしたちの悲願…… ",
+    /* 46 */ "~J1(2.8)\t約束の日 ",
+    /* 47 */ "~J1(4.7)\tすべての罪が洗い流される日 ",
+    /* 48 */ "~J1(4.8)\tあたしたちは真の楽園を取り戻すのよ！ ~E ",
+    /* 49 */ "~J0(6.2)\tあたしの娘が！ ~N\n\t\t\t救い手の母となるのよ！ ~E ",
+    /* 50 */ "~J0(4.0)\t~E ",
+    /* 51 */ "~J1(1.7)\tふざけるな！ ",
+    /* 52 */ "~J1(2.4)\tとっとと元の世界に戻せ！ ",
+    /* 53 */ "~J1(1.0)\tカウフマン！ ",
+    /* 54 */ "~J1(1.9)\t誰がこんなことを望んだ？ ",
+    /* 55 */ "~J1(1.9)\tこの俺を利用しやがって！ ",
+    /* 56 */ "~J1(4.0)\tおまえらのような化け物に ~N\n\t\t\t好きにさせてたまるか！ ~E ",
+    /* 57 */ "~J1(4.7)\tあなたの役目は終わったの ~N\n\t\t\t必要ないのよ ",
+    /* 58 */ "~J1(3.6)\tこんなところに現れて ~N\n\t\t\tどうしようというの？ ",
+    /* 59 */ "~J1(3.0)\t何だと？ ~N\n\t\t\tずいぶんと偉そうじゃないか？ ",
+    /* 60 */ "~J1(3.2)\tだが　こいつを見てもそんなふうに ~N\n\t\t\t涼しい顔でいられるのか？ ~E ",
+    /* 61 */ "~J0(3.5)\tアグラオフォティス！ ~N\n\t\t\t処分したはずだわ！ ",
+    /* 62 */ "~J0(3.2)\tわざと見つかるところに１つ置いておけば ",
+    /* 63 */ "~J0(3.9)\tおまえらじゃ　それ以上 ~N\n\t\t\t気がまわらないからな ",
+    /* 64 */ "~J0(1.7)\t甘いんだよ！ ",
+    /* 65 */ "~J0(2.4)\t切り札が１枚しかないと思ったか ~E ",
+    /* 66 */ "~J0(1.7)\tやめて！！ ~E ",
+    /* 67 */ "~J0(2.2)\t~E ",
+    /* 68 */ "~J0(1.4)\t",
+    /* 69 */ "~J2(1.2)\t……あれは！？ ~E ",
+    /* 70 */ "~J0(10.4)\t~E ",
+    /* 71 */ "~J0(3.0)\tいったいどうしたというんだ……？ ~N\n\t\t\tこんなはずは…… ~E ",
+    /* 72 */ "~J0(1.8)\t~E ",
+    /* 73 */ "~J0(3.5)\t~E ",
+    /* 74 */ "~J0(3.4)\t目覚めたわ！ ~N\n\t\t\t目覚めたのよ！ ",
+    /* 75 */ "~J0(3.0)\tもう誰にも邪魔されないわ！ ~E ",
+    /* 76 */ "~J0(1.2)\tシェリル！！ ",
+    /* 77 */ "~J0(3.5)\t無駄よ！ ~N\n\t\t\tもうそんな人間は存在しないわ ~E ",
+    /* 78 */ "~J0(2.0)\tここにいるのは神よ！ ",
+    /* 79 */ "~J2(4.9)\tあたしたちに救いの手を ~N\n\t\t\t差し伸べるために降臨したのよ！ ~E ",
+    /* 80 */ "~J0(13.2)\t~E ",
+    /* 81 */ "~J0(2.4)\t~E ",
+    /* 82 */ "~J0(1.3)\t",
+    /* 83 */ "~J0(1.1)\t~E ",
+    /* 84 */ "~J0(1.6)\tありがとう　パパ ",
+    /* 85 */ "~J0(1.4)\tさようなら ~E ",
+    /* 86 */ "~J0(3.0)\tシェリル……？ ~E ",
+    /* 87 */ "~J0(2.3)\t嘘だろう……？ ",
+    /* 88 */ "~J0(2.2)\tこんなこと許されるはずないじゃないか…… ",
+    /* 89 */ "~J0(3.2)\t嘘だろう？　シェリル！？ ~E ",
+    /* 90 */ "~J0(1.4)\t……シェリル！！ ~E ",
+    /* 91 */ "~J0(1.1)\t~E ",
+    /* 92 */ "~J0(3.9)\t~E ",
+    /* 93 */ "~J0(1.3)\t待ってくれ…… ~E ",
+    /* 94 */ "~J0(4.8)\t~E ",
+    /* 95 */ "~J0(1.0)\t~E ",
+    /* 96 */ "~J0(1.0)\t~E ",
+    /* 97 */ "~J0(4.5)\t~E ",
+    /* 98 */ "~J0(1.4)\tハリー ",
+    /* 99 */ "~J0(1.0)\t行くのよ ~E "
+#endif
 };
 
 void func_800E1854(void) // 0x800E1854
@@ -7350,8 +7438,12 @@ void func_800E787C(void) // 0x800E787C
             g_Cutscene_UpdateHero  = false;
 
             Model_AnimFlagsSet(&g_SysWork.npcs[5].model, 2);
+
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+#endif
+
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 9, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
@@ -7413,8 +7505,11 @@ void func_800E787C(void) // 0x800E787C
 
         case 23:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 9, false);
+
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+#endif
 
             D_800F483C = Q12(100.0f);
 
@@ -7665,7 +7760,10 @@ void func_800E86BC(void) // 0x800E86BC
             D_800F4819 = 0;
             D_800F481A = false;
 
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+#endif
+
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 11, false);
 
             g_SysWork.playerWork.player.position.vx = Q12(140.0f);
@@ -7702,6 +7800,8 @@ void func_800E86BC(void) // 0x800E86BC
 
             g_Cutscene_UpdateHero = true;
             g_Cutscene_UpdateBar  = false;
+            
+#if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             D_800F4820 = 0;
             D_800F4818 = true;
 
@@ -7709,6 +7809,16 @@ void func_800E86BC(void) // 0x800E86BC
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(70.0f);
+#else
+            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Gfx_MapEnvSet(17, 17);
+
+            D_800F4820 = 0;
+            D_800F4818 = true;
+
+            Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
+#endif
+
             Gfx_MapEnvSet(9, 9);
             Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrement(0);

@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/map7/map7_s01.h"
 
 s_EventData MAP_EVENTS[203] = {
     // [0]
@@ -113,7 +114,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 3,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 88,
+        .eventParam      = MAP_MSG(88),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [13]
@@ -122,7 +123,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 4,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 88,
+        .eventParam      = MAP_MSG(88),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [14]
@@ -361,7 +362,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType    = TriggerActivationType_Button,
         .mapPointIdx       = 116,
         .sysState          = SysState_ReadMessage,
-        .eventParam        = 89,
+        .eventParam        = MAP_MSG(89),
     },
     // [38]
     {
@@ -728,7 +729,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType  = TriggerActivationType_Button,
         .mapPointIdx     = 111,
         .sysState        = SysState_ReadMessage,
-        .eventParam      = 87,
+        .eventParam      = MAP_MSG(87),
         .transitionFlags = AreaTransitionFlag_UnfreezeWorld,
     },
     // [78]
@@ -805,7 +806,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 109,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 96,
+        .eventParam     = MAP_MSG(96),
     },
     // [86]
     {
@@ -1644,7 +1645,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 142,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 90,
+        .eventParam     = MAP_MSG(90),
     },
     // [176]
     {
@@ -1652,7 +1653,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 143,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 91,
+        .eventParam     = MAP_MSG(91),
     },
     // [177]
     {
@@ -1660,7 +1661,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 144,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 93,
+        .eventParam     = MAP_MSG(93),
     },
     // [178]
     {
@@ -1668,7 +1669,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 145,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 93,
+        .eventParam     = MAP_MSG(93),
     },
     // [179]
     {
@@ -1676,7 +1677,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 146,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 93,
+        .eventParam     = MAP_MSG(93),
     },
     // [180]
     {
@@ -1684,7 +1685,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 147,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 93,
+        .eventParam     = MAP_MSG(93),
     },
     // [181]
     {
@@ -1692,7 +1693,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 148,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 94,
+        .eventParam     = MAP_MSG(94),
     },
     // [182]
     {
@@ -1700,7 +1701,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 149,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 94,
+        .eventParam     = MAP_MSG(94),
     },
     // [183]
     {
@@ -1708,7 +1709,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 150,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 94,
+        .eventParam     = MAP_MSG(94),
     },
     // [184]
     {
@@ -1716,7 +1717,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 151,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [185]
     {
@@ -1724,7 +1725,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 152,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [186]
     {
@@ -1732,7 +1733,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 153,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [187]
     {
@@ -1740,7 +1741,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 154,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [188]
     {
@@ -1748,7 +1749,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 155,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [189]
     {
@@ -1756,7 +1757,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 156,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [190]
     {
@@ -1764,7 +1765,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 157,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [191]
     {
@@ -1772,7 +1773,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 158,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [192]
     {
@@ -1780,7 +1781,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 159,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [193]
     {
@@ -1788,7 +1789,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 160,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [194]
     {
@@ -1796,7 +1797,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 161,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [195]
     {
@@ -1804,7 +1805,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 162,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [196]
     {
@@ -1812,7 +1813,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 163,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [197]
     {
@@ -1820,7 +1821,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 164,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [198]
     {
@@ -1828,7 +1829,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 165,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [199]
     {
@@ -1836,7 +1837,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 166,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [200]
     {
@@ -1844,7 +1845,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 167,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [201]
     {
@@ -1852,7 +1853,7 @@ s_EventData MAP_EVENTS[203] = {
         .activationType = TriggerActivationType_Button,
         .mapPointIdx    = 168,
         .sysState       = SysState_ReadMessage,
-        .eventParam     = 95,
+        .eventParam     = MAP_MSG(95),
     },
     // [202]
     {
