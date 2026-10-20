@@ -38,8 +38,7 @@ void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32
     *(u16*)(&poly->u3) = (u + width) + ((v + height) << 8);
 
     // Set color.
-    *(u16*)(&poly->r0) = tint + (tint << 8);
-    poly->b0 = tint;
+    setRGB0Fast(poly, tint, tint, tint);
     setSemiTrans(poly, false);
 
     // Submit polygon.
@@ -102,8 +101,7 @@ void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
 
         // Set color.
         blueIntensity      = 128 - ((i << 6) / 5);
-        *(u16*)(&line->r0) = 0;
-        line->b0           = blueIntensity;
+        setRGB0Fast(line, 0, 0, blueIntensity);
 
         // Draw first line.
         addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);

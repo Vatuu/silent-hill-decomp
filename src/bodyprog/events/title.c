@@ -601,10 +601,10 @@ static PACKET* MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
                    -176 + (16 * j), yOffset - 184,
                    -160 + (16 * j), yOffset - 184);
 
-            *((u32*)&poly->r0) = color0;
-            *((u32*)&poly->r1) = color1;
-            *((u32*)&poly->r2) = color2;
-            *((u32*)&poly->r3) = color3;
+            setRGBC0Word(poly, color0);
+            setRGBC1Word(poly, color1);
+            setRGBC2Word(poly, color2);
+            setRGBC3Word(poly, color3);
 
             addPrim(ot, poly);
             packet += sizeof(POLY_G4);

@@ -918,8 +918,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     setXY1Fast(line, sp10[2], sp10[3]);
     setXY2Fast(line, sp10[4], sp10[5]);
     setXY3Fast(line, sp10[0], sp10[1]);
-    *(u16*)&line->r0 = 0x1010; // TODO: Use packing macro?
-    line->b0         = 0x10;
+    setRGB0Fast(line, 0x10, 0x10, 0x10);
 
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], line);
 
@@ -928,12 +927,9 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     setXY0Fast(poly, sp10[0], sp10[1]);
     setXY1Fast(poly, sp10[2], sp10[3]);
     setXY2Fast(poly, sp10[4], sp10[5]);
-    *(u16*)&poly->r0 = 0x0000;
-    poly->b0         = 0xFF;
-    *(u16*)&poly->r1 = 0xFF00;
-    poly->b1         = 0x00;
-    *(u16*)&poly->r2 = 0xFF00;
-    poly->b2         = 0x00;
+    setRGB0Fast(poly, 0x00, 0x00, 0xFF);
+    setRGB1Fast(poly, 0x00, 0xFF, 0x00);
+    setRGB2Fast(poly, 0x00, 0xFF, 0x00);
 
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
@@ -967,12 +963,9 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
                 setXY2Fast(poly,  8, -200);
             }
 
-            *(u16*)&poly->r0 = 0x1010;
-            poly->b0         = 0xC4;
-            *(u16*)&poly->r1 = 0x8080;
-            poly->b1         = 0xC4;
-            *(u16*)&poly->r2 = 0x8080;
-            poly->b2         = 0xC4;
+            setRGB0Fast(poly, 0x10, 0x10, 0xC4);
+            setRGB1Fast(poly, 0x80, 0x80, 0xC4);
+            setRGB2Fast(poly, 0x80, 0x80, 0xC4);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
             GsOUT_PACKET_P = ++poly;

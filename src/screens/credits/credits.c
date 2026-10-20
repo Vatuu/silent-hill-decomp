@@ -907,10 +907,10 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
                     *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
                     *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
 
-                    *(u32*)(&poly->r0) = color0;
-                    *(u32*)(&poly->r1) = color1;
-                    *(u32*)(&poly->r2) = color2;
-                    *(u32*)(&poly->r3) = color3;
+                    setRGBC0Word(poly, color0);
+                    setRGBC1Word(poly, color1);
+                    setRGBC2Word(poly, color2);
+                    setRGBC3Word(poly, color3);
 
                     packet += sizeof(POLY_G4);
 
@@ -932,10 +932,10 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
             *(u32*)(&poly->x2) = (((x2) & 0xFFFF) + (sp20));
             *(u32*)(&poly->x3) = (((x3) & 0xFFFF) + (sp20));
 
-            *(u32*)(&poly->r0) = color0;
-            *(u32*)(&poly->r1) = color1;
-            *(u32*)(&poly->r2) = color2;
-            *(u32*)(&poly->r3) = color3;
+            setRGBC0Word(poly, color0);
+            setRGBC1Word(poly, color1);
+            setRGBC2Word(poly, color2);
+            setRGBC3Word(poly, color3);
 
             packet += sizeof(POLY_G4);
         }
@@ -1034,7 +1034,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
         {
             sprite = (SPRT*)packet;
             addPrimFast(ot, sprite, 4);
-            *(u32*)(&sprite->r0) = colorCode;
+            setRGBC0Word(sprite, colorCode);
             setXY0Fast(sprite, textX, textY);
 
             idx                   = charCode - '!';
@@ -1055,7 +1055,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
             if (charCode >= 160 && charCode < 176)
             {
                 addPrimFast(ot, sprite16, 3);
-                *(u32*)(&sprite16->r0) = colorCode ^ (24 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
+                setRGBC0Word(sprite16, colorCode ^ (24 << 24)); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
                 idx                     = charCode - 160;
@@ -1068,7 +1068,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
             else if (charCode >= 184 && charCode < 191)
             {
                 addPrimFast(ot, sprite16, 3);
-                *(u32*)(&sprite16->r0) = colorCode ^ (24 << 24); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
+                setRGBC0Word(sprite16, colorCode ^ (24 << 24)); // GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending.
                 setXY0Fast(sprite16, textX, textY + 4);
 
                 idx                     = charCode - 184;
@@ -1364,7 +1364,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             }
 
             addPrimFast(ot, (POLY_FT4*)packet, 9);
-            *(u32*)(&poly->r0) = colorCode; // GP0(2Ch) - Textured four-point polygon, opaque, texture-blending.
+            setRGBC0Word(poly, colorCode); // GP0(2Ch) - Textured four-point polygon, opaque, texture-blending.
             setXY0Fast(poly, FP_FROM(var_a3, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
             setXY1Fast(poly, FP_FROM(var_a3 + var_a1, Q12_SHIFT), FP_FROM(var_t4, Q12_SHIFT));
             setXY2Fast(poly, FP_FROM(var_t3, Q12_SHIFT), FP_FROM(var_t0_2, Q12_SHIFT));
