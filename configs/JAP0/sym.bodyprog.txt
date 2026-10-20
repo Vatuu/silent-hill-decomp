@@ -94,7 +94,7 @@ D_80025590                                   = 0x8002557C;
 D_80025BE4                                   = 0x80025BD0; // Garbage data
 
 //--------------------------------------------------------------------------
-//--- PA: 0x0011F4   VA: 0x80025D54   subsegment: .rodata, text/text_draw_jp
+//--- PA: 0x0011F4   VA: 0x80025D54   subsegment: .rodata, text/text_draw
 //--------------------------------------------------------------------------
 FONT_12X16_GLYPH_WIDTHS                      = 0x80025D58;
 STRING_COLORS                                = 0x80025DAC;
@@ -843,13 +843,16 @@ vwVectorToAngle                              = 0x8004A448; // type:func
 vwOresenHokan                                = 0x8004A4FC; // type:func
 
 //--------------------------------------------------------------------
-//--- PA: 0x025A50   VA: 0x8004A5B0   subsegment: c, text/text_draw_jp
+//--- PA: 0x025A50   VA: 0x8004A5B0   subsegment: c, text/text_draw
 //--------------------------------------------------------------------
 Gfx_StringPositionSet                        = 0x8004A5B0; // type:func
 Gfx_StringLayerIdxSet                        = 0x8004A5F4; // type:func
 Gfx_StringLayerIdxReset                      = 0x8004A600; // type:func
 Gfx_StringColorSet                           = 0x8004A610; // type:func
 Gfx_StringDraw                               = 0x8004A61C; // type:func
+func_8004B658                                = 0x8004AA28; // type:func
+Gfx_GlyphSprite_PositionSet                  = 0x8004AA6C; // type:func
+func_8004B74C                                = 0x8004AAE4; // type:func
 func_8004B76C                                = 0x8004AB04; // type:func
 Gfx_StringDrawInt                            = 0x8004AD90; // type:func
 Gfx_MapMsg_Reset                             = 0x8004AEA8; // type:func
@@ -3005,7 +3008,7 @@ g_Vab_InfoTable                              = 0x800AEE44;
 D_800AD480                                   = 0x800AF81C;
 
 //------------------------------------------------------------------------
-//--- PA: 0x08ACD4   VA: 0x800AF834   subsegment: .data, text/text_draw_jp
+//--- PA: 0x08ACD4   VA: 0x800AF834   subsegment: .data, text/text_draw
 //------------------------------------------------------------------------
 g_StringColorId                              = 0x800AF834; // type:s16
 // text_draw
@@ -3552,7 +3555,7 @@ D_800C3868                                   = 0x800C5D98;
 VbWvsMatrix                                  = 0x800C5DB8; // type:MATRIX size:0x20
 
 //-----------------------------------------------------------------------
-//--- PA: 0x0A1278   VA: 0x800C5DD8   subsegment: .bss, text/text_draw_jp
+//--- PA: 0x0A1278   VA: 0x800C5DD8   subsegment: .bss, text/text_draw
 //-----------------------------------------------------------------------
 g_StringPosition                             = 0x800C5DD8; // type:DVECTOR
 D_800C38AA                                   = 0x800C5DDA;

@@ -84,7 +84,7 @@ segments:
       - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
       - [0x11EC, rodata] # Garbage padding
-      - [0x11F4, .rodata, text/text_draw_jp]
+      - [0x11F4, .rodata, text/text_draw]
       - [0x1450, .rodata, items/item_utils]
       - [0x1470, .rodata, items/item_screens_2]
       - [0x1848, .rodata, items/item_screens_3]
@@ -176,7 +176,7 @@ segments:
       - [0x20C50, c, sound/sd_call]
       - [0x23C0C, c, view/vw_main]
       - [0x240FC, c, view/vw_calc] # Contains part of SH2's `vb_main`?
-      - [0x25A50, c, text/text_draw_jp]
+      - [0x25A50, c, text/text_draw]
       - [0x27FF4, c, items/item_screens_cam]
       - [0x28580, c, items/item_utils]
       - [0x28EA8, c, items/item_screens_2]
@@ -417,7 +417,7 @@ segments:
       - [0x877BC, .data, world/world_effects]
       - [0x87804, data] # sound/sound_data, differs per release (disc sector offsets)
       - [0x8ACBC, .data, view/vw_calc]
-      - [0x8ACD4, .data, text/text_draw_jp]
+      - [0x8ACD4, .data, text/text_draw]
       - [0x8ACDC, data]
       - [0x8AD00, .data, items/item_screens_3]
       - [0x8BA14, .data, gfx/bodyprog_80055028]
@@ -505,7 +505,7 @@ segments:
       - [0xA11B0, .bss, view/vw_main]
       - [0xA1234, pad] # Garbage.
       - [0xA1238, .bss, view/vw_calc]
-      - [0xA1278, .bss, text/text_draw_jp]
+      - [0xA1278, .bss, text/text_draw]
       - [0xA1280, bss]
       - [0xA12F8, .bss, items/item_screens_cam]
       - [0xA1330, .bss, items/item_utils]
