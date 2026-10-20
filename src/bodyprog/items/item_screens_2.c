@@ -1801,12 +1801,12 @@ void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
 
     if (strIdx)
     {
-        *(u32*)&sprt->w = 156 + (16 << 16); // setWHFast(sprt, 156, 16);
+        setWHFast(sprt, 156, 16);
         setUV0AndClutSum(sprt, 0, 224, 0x7F93);
     }
     else
     {
-        *(u32*)&sprt->w = 192 + (16 << 16); // setWHFast(sprt, 192, 16);
+        setWHFast(sprt, 192, 16);
         setUV0AndClutSum(sprt, 0, 16, 0x7F93);
     }
 

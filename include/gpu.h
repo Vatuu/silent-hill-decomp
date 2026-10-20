@@ -120,10 +120,6 @@ typedef struct _PrimColor
 #define setXY0Fast(p, x, y) \
     *(u32*)(&(p)->x0) = (((x) & 0xFFFF) + ((y) << 16))
 
-/** @brief Same as `setXY0Fast`, but `x` must already be truncated to 16 bits, so no mask is applied. */
-#define setXY0Sum(p, x, y) \
-    *(u32*)(&(p)->x0) = ((x) + ((y) << 16))
-
 #define setXY1Fast(p, x, y) \
     *(u32*)(&(p)->x1) = (((x) & 0xFFFF) + ((y) << 16))
 
@@ -135,7 +131,7 @@ typedef struct _PrimColor
 
 /** @brief Same as `setWH`, but uses 1x 32-bit store instead of 2x 16-bit stores. */
 #define setWHFast(p, _w, _h) \
-    *(u32*)(&(p)->w) = (((_w) & 0xFFFF) + ((_h) << 16))
+    *(u32*)(&(p)->w) = ((_w) + ((_h) << 16))
 
 /** @brief Combines `setUV0` and `setClut` into a single 32-bit stores. Also doesn't call `GetClut`. */
 #define setUV0AndClut(p, u, v, cx, cy) \

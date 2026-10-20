@@ -105,7 +105,6 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
     u8*       strCpy;
     bool      result;
     s32       glyphWidth;
-    s32       posXCpy;
     GsOT*     ot;
     PACKET*   packet;
     DR_TPAGE* tPage;
@@ -198,17 +197,15 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
             }
             else
             {
-                posXCpy = (u16)posX;
-
-                glyphSprt              = (SPRT*)packet;
+                glyphSprt = (SPRT*)packet;
                 setWHFast(glyphSprt, FONT_12X16_GLYPH_SIZE_X, FONT_12X16_GLYPH_SIZE_Y);
 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
-                posX    += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
                 setRGBC0Word(glyphSprt, glyphColor);
-                setXY0Sum(glyphSprt, posXCpy, posY);
+                setXY0Fast(glyphSprt, posX, posY);
+                posX += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
 
                 setUV0AndClutSum(glyphSprt, (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X, ATLAS_BASE_Y, 0x7FD3); // TODO: Demagic CLUT arg.
 
