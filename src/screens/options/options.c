@@ -2244,9 +2244,111 @@ void func_801E6F1C(RECT* rect);
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("screens/options/nonmatchings/options", func_801E6F1C);
 
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E305C);
+void func_801E749C(void)
+{
+    s16   entryPosX[8] = { -78, -60, -78, -66, -78, -60, -78, -48 };
+    GsOT* ot;
+    SPRT* prim;
+    RECT  rect;
 
-INCLUDE_ASM("screens/options/nonmatchings/options", func_801E749C);
+    prim = (SPRT*)GsOUT_PACKET_P;
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
+
+    setSprt(prim);
+    setRGBC0(prim, 128, 128, 128, 0x64);
+    setWHFast(prim, g_ExtraOptionsMenu_SelectedEntry == 7 ? 72 : 120, 16);
+    setXY0Fast(prim, entryPosX[g_ExtraOptionsMenu_SelectedEntry], 78);
+    setUV0AndClut(prim, 0x00, (g_ExtraOptionsMenu_SelectedEntry / 5) != 0 ? 0xE0 : 0x10, 0x130, 0x1FE);
+
+    addPrim((u8*)ot->org + LAYER_32, prim);
+    GsOUT_PACKET_P = (u8*)prim + sizeof(SPRT);
+
+    Gfx_Primitive2dTextureSet((g_ExtraOptionsMenu_SelectedEntry % 5) << 6, ((g_ExtraOptionsMenu_SelectedEntry / 5) != 0) << 8, 8, 0);
+
+    prim = (SPRT*)GsOUT_PACKET_P;
+    setSprt(prim);
+    setRGBC0(prim, 128, 128, 128, 0x64);
+
+    switch (g_ExtraOptionsMenu_SelectedEntry)
+    {
+        case 0:
+            setWHFast(prim, 48, 16);
+            setXY0Fast(prim, 30, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraWeaponCtrl != 0 ? 0x30 : 0, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 1:
+            setWHFast(prim, g_ExtraOptionsMenu_SelectedBloodColorEntry == 0 ? 48 : 12, 16);
+            setXY0Fast(prim, 24, 78);
+            setUV0AndClutSum(prim, g_ExtraOptionsMenu_SelectedBloodColorEntry == 0 ? 0x30 : 0x60 + ((g_ExtraOptionsMenu_SelectedBloodColorEntry - 1) * 12), 0xE0, 0x7F93);
+            break;
+
+        case 2:
+            setWHFast(prim, 48, 16);
+            setXY0Fast(prim, 30, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraViewCtrl != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 3:
+            setWHFast(prim, 48, 16);
+            setXY0Fast(prim, 18, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraRetreatTurn != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 4:
+            setWHFast(prim, 48, 16);
+            setXY0Fast(prim, 30, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraWalkRunCtrl != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 5:
+            setWHFast(prim, 24, 16);
+            setXY0Fast(prim, 36, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraAutoAiming != 0 ? 0xC0 : 0xD8, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 6:
+            setWHFast(prim, 48, 16);
+            setXY0Fast(prim, 30, 78);
+            setUV0AndClut(prim, g_GameWork.config.extraViewMode != 0 ? 0xC0 : 0x90, 0xE0, 0x130, 0x1FE);
+            break;
+
+        case 7:
+            setWHFast(prim, 24, 16);
+            setXY0Fast(prim, 24, 78);
+            setUV0AndClutSum(prim, 0x60 + (g_GameWork.config.extraBulletAdjust * 24), 0xE0, 0x7F93);
+            break;
+    }
+
+    addPrim((u8*)ot->org + LAYER_32, prim);
+    GsOUT_PACKET_P = (u8*)prim + sizeof(SPRT);
+
+    switch (g_ExtraOptionsMenu_SelectedEntry)
+    {
+        case 0:
+        case 5:
+            Gfx_Primitive2dTextureSet(192, 256, 8, 0);
+            break;
+
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 6:
+            Gfx_Primitive2dTextureSet(256, 256, 8, 0);
+            break;
+
+        case 7:
+            Gfx_Primitive2dTextureSet(128, 256, 8, 0);
+            break;
+    }
+
+    setRECT(&rect, -136, 72, 272, 28);
+    func_801E6F1C(&rect);
+
+    setRECT(&rect, -136, -80, 272, 148);
+    func_801E6F1C(&rect);
+}
 
 void func_801E794C(void)
 {
@@ -2262,11 +2364,10 @@ void func_801E794C(void)
     setRGBC0(prim, 128, 128, 128, 0x64);
     setWHFast(prim, 240, 16);
     setXY0Fast(prim, entryPosX[g_MainOptionsMenu_SelectedEntry], 78);
-
     setUV0AndClut(prim, 0x00, (g_MainOptionsMenu_SelectedEntry / 5) != 0 ? 0xE0 : 0x10, 0x130, 0x1FE);
 
     addPrim((u8*)ot->org + LAYER_32, prim);
-    GsOUT_PACKET_P = &prim[1];
+    GsOUT_PACKET_P = (u8*)prim + sizeof(SPRT);
 
     Gfx_Primitive2dTextureSet((g_MainOptionsMenu_SelectedEntry % 5) << 6, ((g_MainOptionsMenu_SelectedEntry / 5) != 0) << 8, 8, 0);
 
@@ -2300,7 +2401,7 @@ void func_801E794C(void)
             }
 
             addPrim((u8*)ot->org + LAYER_32, prim);
-            GsOUT_PACKET_P = &prim[1];
+            GsOUT_PACKET_P = (u8*)prim + sizeof(SPRT);
 
             Gfx_Primitive2dTextureSet(256, 256, 8, 0);
         }
