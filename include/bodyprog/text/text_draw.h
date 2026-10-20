@@ -57,8 +57,24 @@ typedef struct _MapMsgLine
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
+#if VERSION_REGION_IS(NTSCJ)
 extern DVECTOR      g_StringPosition;
-extern s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
+extern s32          g_StringPositionX1;
+extern s32          __pad_bss_800C5DE0[2];
+extern GsSPRITE     g_MapMsg_GlyphSprite;
+extern s16          g_GlyphSpritePositionX;
+extern s16          D_800C391E;
+extern DVECTOR      g_StringPosition_JP;
+extern s32          g_StringPositionX1_JP;
+extern s_MapMsgLine g_MapMsg_ActiveLine;
+extern s8           __pad_bss_800C5E1A[2];
+extern s32          g_MapMsg_WidthIdx;
+extern s32          D_800C5E20;
+extern s32          __pad_bss_800C5E24[3];
+extern s32          g_MapMsg_Widths[9];
+#else
+extern DVECTOR      g_StringPosition;
+extern s32          g_StringPositionX1;
 extern s_MapMsgLine g_MapMsg_ActiveLine;
 extern s8           __pad_bss_800C38B2[2];
 extern s32          g_MapMsg_WidthIdx;
@@ -66,9 +82,9 @@ extern s32          __pad_bss_800C38B8[4];
 extern s32          g_MapMsg_Widths[12];
 extern GsSPRITE     g_MapMsg_GlyphSprite;
 extern s16          g_GlyphSpritePositionX;
-extern s16          __pad_bss_800C391E;
+extern s16          D_800C391E;
+#endif
 extern s32          D_800C3920; // Something for Japanese glyphs.
-extern s32          __pad_bss_800C3924;
 
 // ==========
 // FUNCTIONS

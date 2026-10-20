@@ -418,7 +418,6 @@ segments:
       - [0x87804, data] # sound/sound_data, differs per release (disc sector offsets)
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, .data, text/text_draw]
-      - [0x8ACDC, data]
       - [0x8AD00, .data, items/item_screens_3]
       - [0x8BA14, .data, gfx/bodyprog_80055028]
       - [0x8BA64, .data, gfx/billboard_draw]
@@ -506,7 +505,6 @@ segments:
       - [0xA1234, pad] # Garbage.
       - [0xA1238, .bss, view/vw_calc]
       - [0xA1278, .bss, text/text_draw]
-      - [0xA1280, bss]
       - [0xA12F8, .bss, items/item_screens_cam]
       - [0xA1330, .bss, items/item_utils]
       - [0xA1334, pad] # Garbage.

@@ -849,8 +849,6 @@ extern s8 D_800C15B4;
 
 extern s16 D_800C16A4;
 
-extern s16 D_800C391E;
-
 extern s8 D_800C39A0;
 
 /** Functions from `bodyprog_8003AB28` access `g_WorldEnvWork` as constant, but some functions from `bodyprog_80055028` write to it.
