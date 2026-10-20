@@ -783,27 +783,24 @@ INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C394);
 
 void func_8004C7E4(void) // 0x8004C7E4
 {
-    // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
-    extern u8      D_80025EB4;
-    extern u8      D_80025EE0;
-    extern u8      D_80025F0C;
-    extern VECTOR3 D_80025F38;
-
-    VECTOR3 unused = D_80025F38;
+    // @unused Copied to the stack but never read? Is there a way to de-duplicate these?
+    char* msgs[3] = {
+        "ここで使うことはできない　　　　　　　＿",
+        "ここの地図は持っていない　　　　　　　　",
+        "暗くて見ることができない　　　　　　　　"
+    };
 
     D_800C3920 = 20;
 
-    func_8004C918(&D_80025EB4, 1, 1, 5);
-    func_8004C918(&D_80025EE0, 1, 1, 6);
-    func_8004C918(&D_80025F0C, 1, 1, 7);
+    func_8004C918("ここで使うことはできない　　　　　　　＿", 1, 1, 5);
+    func_8004C918("ここの地図は持っていない　　　　　　　　", 1, 1, 6);
+    func_8004C918("暗くて見ることができない　　　　　　　　", 1, 1, 7);
 }
 
-void func_8004C870(void)  // 0x8004C870
+void func_8004C870(void) // 0x8004C870
 {
-    extern u8 D_80025F44; // TODO: .rodata? `u8` used as placeholder, likely some kind of struct.
-
     D_800C3920 = 20;
-    func_8004C918(&D_80025F44, 1, 1, 5);
+    func_8004C918("セーブしますか？　はい　　　　　　いいえ", 1, 1, 5);
 }
 
 s32 func_8004C8AC(u8* arg0) // 0x8004C8AC
@@ -811,17 +808,29 @@ s32 func_8004C8AC(u8* arg0) // 0x8004C8AC
     return Krom2RawAdd2(arg0[1] | (arg0[0] << 8));
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C8D8);
+void func_8004C8D8(u16* arg0, s32* idx, s32 arg2) // 0x8004C8D8
+{
+    s16* ptr;
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EB4);
+    // @hack Identical arms split basic blocks - first schedules `sw ra` first, second moves `arg0` to `a3`.
+    if (arg2 == 0)
+    {
+        ptr = (s16*)0x801E1E80 + (*idx * 3);
+    }
+    else
+    {
+        ptr = (s16*)0x801E1E80 + (*idx * 3);
+    }
 
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025EE0);
-
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F0C);
-
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F38);
-
-INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F44);
+    if (arg2 == 0)
+    {
+        func_80036E48(arg0, ptr);
+    }
+    else
+    {
+        func_80036E48(arg0, ptr);
+    }
+}
 
 void func_8004C918(char* str, s32 idx, s32 arg2, s32 arg3) // 0x8004C918
 {
