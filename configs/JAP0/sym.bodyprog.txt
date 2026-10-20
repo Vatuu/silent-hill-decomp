@@ -2852,6 +2852,8 @@ g_GameStateUpdateFuncs                       = 0x800ABB18;
 //--------------------------------------------------------------------
 g_SlotElementSelectedIdx                     = 0x800ABB70;
 g_SelectedSaveSlotIdx                        = 0x800ABB72;
+D_800A97D7                                   = 0x800ABB73;
+g_SaveScreen_IsInSaveScreen                  = 0x800ABB74;
 D_800A97D9                                   = 0x800ABB75;
 D_800A97DC                                   = 0x800ABB78;
 unavailableMemCardSlotIdx                    = 0x800ABB7C;
@@ -3417,6 +3419,7 @@ g_MemCard_ActiveMemCardSlotSaves             = 0x800BF25C;
 g_Savegame_ElementCount0                     = 0x800BF260;
 g_MemCard_AllMemCardsStatus                  = 0x800BF264;
 g_SaveScreen_SaveScreenState                 = 0x800BF268;
+g_SaveScreen_IsLoadError                     = 0x800BF269;
 g_MemCard_TotalElementsCount                 = 0x800BF26A;
 g_Savegame_ElementCount1                     = 0x800BF26C;
 g_Savegame_SelectedElementIdx                = 0x800BF26E;
@@ -4001,3 +4004,5 @@ sd_timer_event                               = 0x800CB028;
 //-------------------------------------------------------------------
 smf_song                                     = 0x800CB030;
 g_MapOverlayHdr                              = 0x800CBAAC; // type:MapOverlayHeader size:0x104C
+D_800FE5F8                                   = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
+hack_D_800FE5FC_fix                          = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
