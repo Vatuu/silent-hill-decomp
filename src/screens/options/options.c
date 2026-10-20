@@ -29,9 +29,11 @@ INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
 
 #define LINE_CURSOR_TIMER_MAX          8
 #define LAYER_24                       24
-#define LAYER_40                       40
-#define LAYER_36                       36
 #define LAYER_32                       32
+#define LAYER_36                       36
+#define LAYER_40                       40
+#define LAYER_44                       44
+#define LAYER_48                       48
 #define LAYER_8148                     8148
 #define OPTIONS_ENTRY_STRING_LAYER_IDX 8 // TODO: Leftover from JAP builds or required for all?
 
@@ -2236,13 +2238,94 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
 }
 
 // ========================================
-// CONTROLS OPTION SCREEN
+// JAPANESE SCREEN DRAW FUNCTIONS
 // ========================================
 
-void func_801E6F1C(RECT* rect);
-
 #if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/options/nonmatchings/options", func_801E6F1C);
+void func_801E6F1C(RECT* rect)
+{
+    DVECTOR outline[6] =
+    {
+        { rect->x,               rect->y                },
+        { rect->x + rect->w - 8, rect->y                },
+        { rect->x + rect->w,     rect->y + 8            },
+        { rect->x + rect->w,     rect->y + rect->h      },
+        { rect->x + 8,           rect->y + rect->h      },
+        { rect->x,               rect->y + rect->h - 8  }
+    };
+    s_Triangle2d corners[2] =
+    {
+        {
+            { rect->x + rect->w,     rect->y     },
+            { rect->x + rect->w - 8, rect->y     },
+            { rect->x + rect->w,     rect->y + 8 }
+        },
+        {
+            { rect->x,     rect->y + rect->h     },
+            { rect->x + 8, rect->y + rect->h     },
+            { rect->x,     rect->y + rect->h - 8 }
+        }
+    };
+    GsOT*    ot;
+    POLY_F3* tri;
+    POLY_F4* quad;
+    LINE_G2* line;
+    s32      i;
+
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
+
+    // Draw corner triangles.
+    for (i = 0; i < 2; i++)
+    {
+        tri = (POLY_F3*)GsOUT_PACKET_P;
+        setPolyF3(tri);
+        setSemiTrans(tri, true);
+        setRGB0(tri, 0x30, 0x30, 0x30);
+        setXY3(tri, corners[i].vertex0.vx, corners[i].vertex0.vy,
+                    corners[i].vertex1.vx, corners[i].vertex1.vy,
+                    corners[i].vertex2.vx, corners[i].vertex2.vy);
+        addPrim((u8*)ot->org + LAYER_44, tri);
+        GsOUT_PACKET_P = (u8*)tri + sizeof(POLY_F3);
+    }
+
+    Gfx_Primitive2dTextureSet(0, 0, 11, 2);
+
+    // Draw background.
+    quad = (POLY_F4*)GsOUT_PACKET_P;
+    setPolyF4(quad);
+    setSemiTrans(quad, true);
+    setRGB0(quad, 0x30, 0x30, 0x30);
+    setXY4(quad, rect->x,           rect->y,
+                 rect->x,           rect->y + rect->h,
+                 rect->x + rect->w, rect->y,
+                 rect->x + rect->w, rect->y + rect->h);
+    addPrim((u8*)ot->org + LAYER_48, quad);
+    GsOUT_PACKET_P = (u8*)quad + sizeof(POLY_F4);
+
+    Gfx_Primitive2dTextureSet(0, 0, 12, 1);
+
+    // Draw outline.
+    for (i = 0; i < 6; i++)
+    {
+        line = (LINE_G2*)GsOUT_PACKET_P;
+        setLineG2(line);
+
+        if (i & 1)
+        {
+            setRGB0(line, 160, 128, 64);
+            setRGB1(line, 176, 176, 176);
+        }
+        else
+        {
+            setRGB0(line, 176, 176, 176);
+            setRGB1(line, 160, 128, 64);
+        }
+
+        setXY2(line, outline[i].vx, outline[i].vy, outline[(i + 1) % 6].vx, outline[(i + 1) % 6].vy);
+        addPrim((u8*)ot->org + LAYER_32, line);
+        GsOUT_PACKET_P = (u8*)line + sizeof(LINE_G2);
+    }
+}
 
 void func_801E749C(void)
 {
@@ -2414,6 +2497,10 @@ void func_801E794C(void)
     func_801E6F1C(&rect);
 }
 #endif
+
+// ========================================
+// CONTROLS OPTION SCREEN
+// ========================================
 
 void Options_ControllerMenu_Control(void) // 0x801E69BC
 {

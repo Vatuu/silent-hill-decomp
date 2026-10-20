@@ -264,6 +264,7 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
 
 #if VERSION_REGION_IS(NTSCJ)
 void func_801E6F1C(RECT* rect);
+void func_801E749C(void);
 void func_801E794C(void);
 #endif
 

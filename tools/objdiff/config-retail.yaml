@@ -265,5 +265,7 @@ ignored_files:
   - main/header
   - main/psyq/libsn/snmain
   - bodyprog/libkmath
+  - screens/hp_safe1/safechk
+  - screens/s__safe2/safechk
 
 output: ./objdiff.json
