@@ -11,6 +11,7 @@
 // TODO: JPN releases seem to use much different text draw functions.
 // Some functions from USA are still included, but in a different order to USA.
 // Unsure if these can be merged into same .c, might need to be kept seperate.
+// TODO: Make FS_BUFFER define for 0x801E1E80
 
 extern s_MapMsgLine g_MapMsg_ActiveLine; // 0x800C5E18 in JPN.
 
@@ -822,4 +823,70 @@ INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F38);
 
 INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw_jp", D_80025F44);
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C918);
+void func_8004C918(char* str, s32 idx, s32 arg2, s32 arg3) // 0x8004C918
+{
+    RECT  rect;
+    s32   i;
+    char* ptr;
+
+    ptr = str;
+
+    for (i = 0; i < D_800C3920; i++)
+    {
+        func_8004C8D8(func_8004C8AC(ptr), &i, arg2);
+        ptr += 2;
+    }
+
+    switch (arg3)
+    {
+        case 13:
+            setRECT(&rect, 158, 16, 30, 16);
+            break;
+
+        case 12:
+            setRECT(&rect, 256, 480, 60, 16);
+            break;
+
+        case 7:
+        case 8:
+            setRECT(&rect, 192, 16, 60, 16);
+            break;
+
+        case 11:
+            setRECT(&rect, 192, 480, 60, 16);
+            break;
+
+        case 0:
+        case 6:
+            setRECT(&rect, 256, 480, 60, 16);
+            break;
+
+        case 2:
+        case 3:
+        case 5:
+            setRECT(&rect, 256, 16, 60, 16);
+            break;
+
+        case 9:
+            setRECT(&rect, 158, 480, 30, 16);
+            break;
+
+        case 10:
+            setRECT(&rect, ((idx % 5) << 5 & 0x3C0) + ((idx % 5) & 1) * 30, (idx / 5) != 0 ? 480 : 16, D_800C3920 * 3, 16);
+            break;
+
+        case 14:
+            setRECT(&rect, (idx % 5) << 6, (idx / 5) != 0 ? 480 : 16, 60, 16);
+            break;
+    }
+
+    // @hack Keeps `arg2` live to the end of the function.
+    if (arg2 == 0)
+    {
+        u8 x = -x;
+    }
+
+    ClearImage(&rect, 0, 0, 0);
+    LoadImage(&rect, (u32*)0x801E1E80);
+    DrawSync(0);
+}

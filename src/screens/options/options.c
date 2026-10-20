@@ -58,57 +58,38 @@ static s32 g_ExtraOptionsMenu_BulletMultMax;
 // MAIN AND EXTRA OPTION SCREEN
 // ========================================
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2604);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2630);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E265C);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2688);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E26B4);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E26E0);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E270C);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2738);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2764);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2790);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27BC);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27E4);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2810);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E283C);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2868);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2894);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E28C0);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E28EC);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2918);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2944);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2970);
-
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E299C);
-
-INCLUDE_ASM("screens/options/nonmatchings/options", GameState_Options_Update);
-#else
 void GameState_Options_Update(void) // 0x801E2D44
 {
     s32 unlockedOptFlags;
     s32 i;
+#if VERSION_REGION_IS(NTSCJ)
+    char* mainOptionsDescs[10] =
+    {
+        "オプションモードを終了します　　　　　　",
+        "画面の明るさを調節します　　　　　　　　",
+        "操作方法を変更します　　　　　　　　　　",
+        "画面の表示位置を調節します　　　　　　　",
+        "　アナログコントローラの振動設定：　　　",
+        "　　　　オートロードの設定：　　　　　　",
+        "　　サウンドの設定：　　　　　　　　　　",
+        "ＢＧＭのボリュームを調節します　　　　　",
+        "ＳＥのボリュームを調節します　　　　　　",
+        "オンオフステレオモノラル　　　　　　　　"
+    };
+    char* extraOptions[10] =
+    {
+        "武器の構えタイプ：　　　　　　　　　　　",
+        "血しぶきの色：　　　　　　　　　　　　　",
+        "サーチビュー操作：　　　　　　　　　　　",
+        "後退時の旋回：　　　　　　　　　　　　　",
+        "歩行／走行の操作：　　　　　　　　　　　",
+        "武器の自動照準：　　　　　　　　　　　　",
+        "サーチビュー効果：　　　　　　　　　　　",
+        "弾薬量設定：　　×１×２×３×４×５×６",
+        "切り替え押し続け×１×２×３×５オフオン",
+        "リバースノーマル緑紫黒白前方視点自己視点"
+    };
+#endif
 
     if (g_GameWork.gameStatePrev == GameState_InGame)
     {
@@ -128,7 +109,11 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             if (g_GameWork.gameStatePrev != GameState_InGame)
             {
+#if VERSION_REGION_IS(NTSCJ)
+                VSync(SyncMode_Wait3);
+#else
                 VSync(SyncMode_Wait8);
+#endif
             }
 
             g_GameWork.background2dColor.r = 0;
@@ -183,6 +168,16 @@ void GameState_Options_Update(void) // 0x801E2D44
             g_ExtraOptionsMenu_EntryCount = (g_GameWork.config.extraOptionsEnabled) ? 8 : 6;
 
             Game_StateStepSet(0, OptionsMenuState_MainOptions);
+
+#if VERSION_REGION_IS(NTSCJ)
+            func_80037124();
+
+            D_800C3920 = 20;
+            for (i = 0; i < 10; i++)
+            {
+                func_8004C918(mainOptionsDescs[i], i, 1, 14);
+            }
+#endif
             break;
 
         case OptionsMenuState_LeaveScreenPos:
@@ -248,6 +243,14 @@ void GameState_Options_Update(void) // 0x801E2D44
                 Game_StateStepSet(0, OptionsMenuState_ExtraOptions);
                 ScreenFade_Start(false, true, false);
                 g_Options_SelectionHighlightTimer = 0;
+
+#if VERSION_REGION_IS(NTSCJ)
+                D_800C3920 = 20;
+                for (i = 0; i < 10; i++)
+                {
+                    func_8004C918(extraOptions[i], i, 1, 14);
+                }
+#endif
             }
             break;
 
@@ -279,7 +282,6 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
     }
 }
-#endif
 
 void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 {
