@@ -185,27 +185,27 @@ bool func_8006F3C4(s_func_8006F338* arg0, const s_CollisionTrigger* trigger) // 
 q19_12 Collision_CeilingHeightGet(VECTOR3* moveOffset,
                                   const s_CollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderHeight) // 0x8006F620
 {
-    q19_12              projOffsetToTriggerX;
-    q19_12              projOffsetToTriggerZ;
-    q19_12              offsetToTriggerX;
-    q19_12              offsetToTriggerZ;
-    q19_12              cylinderTop;
-    q19_12              projCylinderTop;
-    q19_12              pushOffsetX;
-    q19_12              pushOffsetZ;
-    q19_12              cylinderTopToCeilDist;
-    q19_12              triggerHeight;
-    q19_12              distToTrigger;
-    q19_12              pushDist;
-    q19_12              projDistToTrigger;
-    q19_12              angleToTrigger;
-    q19_12              allowedIntersectDist;
-    s32                 i;
-    q19_12              moveOffsetX;
-    q19_12              moveOffsetZ;
-    q19_12              ceilHeight;
-    q19_12              headroom;
-    s_CollisionTrigger* curTrigger;
+    q19_12                    projOffsetToTriggerX;
+    q19_12                    projOffsetToTriggerZ;
+    q19_12                    offsetToTriggerX;
+    q19_12                    offsetToTriggerZ;
+    q19_12                    cylinderTop;
+    q19_12                    projCylinderTop;
+    q19_12                    pushOffsetX;
+    q19_12                    pushOffsetZ;
+    q19_12                    cylinderTopToCeilDist;
+    q19_12                    triggerHeight;
+    q19_12                    distToTrigger;
+    q19_12                    pushDist;
+    q19_12                    projDistToTrigger;
+    q19_12                    angleToTrigger;
+    q19_12                    allowedIntersectDist;
+    s32                       i;
+    q19_12                    moveOffsetX;
+    q19_12                    moveOffsetZ;
+    q19_12                    ceilHeight;
+    q19_12                    headroom;
+    const s_CollisionTrigger* curTrigger;
 
     ceilHeight  = Q12(DEFAULT_CEILING_HEIGHT);
     pushOffsetX = Q12(0.0f);

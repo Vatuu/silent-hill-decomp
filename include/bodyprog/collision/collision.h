@@ -160,8 +160,8 @@ typedef struct _CollisionState
     /* 0x34   */ s32                   field_34;
     /* 0x38   */ s16                   field_38; // `distanceAlpha` for something.
     /* 0x3A   */ q11_4                 field_3A;
-    /* 0x3C   */ s16                   field_3C; // X?
-    /* 0x3E   */ s16                   field_3E; // Z?
+    /* 0x3C   */ q7_8                  field_3C; // X?
+    /* 0x3E   */ q7_8                  field_3E; // Z?
     /* 0x40   */ s8*                   field_40;
     /* 0x44   */ s_CollisionState_44   field_44;
     /* 0x7C   */ q23_8                 slopedGroundHeight; // TODO: How is `groundHeight` different?
@@ -220,7 +220,10 @@ extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 /** @brief Initializes the collision subsystem, resetting flags and clearing the trigger zone count. */
 void Collision_Init(void);
 
-/** @brief Gets the active collision flags. */
+/** @brief Gets the active collision flags.
+ *
+ * @return Active collision flags.
+ */
 u16 Collision_FlagsGet(void);
 
 /** @brief Sets the active collision flags.
@@ -229,12 +232,16 @@ u16 Collision_FlagsGet(void);
  */
 void Collision_FlagsSet(u16 collFlags);
 
-/** @brief Sets additional active collision flags using OR.
+/** @brief Sets additional active collision flags.
  *
- * @param collFlags Collision flag bits to set.
+ * @param collFlags Additional collision flags to set.
  */
 void Collision_FlagBitsSet(u16 collFlags);
 
+/** @brief Clears active collision flags. `CollisionTriggerFlag_Map` is excepted.
+ *
+ * @param collFlags Collision flags to clear.
+ */
 void Collision_FlagBitsClear(s32 collFlags);
 
 /** @brief Runs through collision triggers and collects those containing the given XZ position.
@@ -243,7 +250,7 @@ void Collision_FlagBitsClear(s32 collFlags);
  * @param posZ Query Z position.
  * @param triggers Array of collision triggers.
  */
-void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers);
+void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, const s_CollisionTrigger* triggers);
 
 // ========================================
 // @split? IPD functions.
@@ -445,9 +452,5 @@ void func_8006D774(s_CollisionState* state, const VECTOR3* offset0, const VECTOR
 
 /** Offsets are Q23.8. */
 void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, const SVECTOR* offset1);
-
-// ========================================
-// @split? Harry weapon anim infos.
-// ========================================
 
 #endif

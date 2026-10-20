@@ -43,9 +43,9 @@ STATIC_ASSERT_SIZEOF(s_CollisionTrigger, 4);
 /** @brief Collection of nearby collision triggers. */
 typedef struct _ActiveCollisionTriggers
 {
-    /* 0x0 */ u16                 flags; /** `e_CollisionTriggerFlags` */
-    /* 0x2 */ u8                  collisionTriggerCount;
-    /* 0x4 */ s_CollisionTrigger* collisionTriggers[20]; // Guessed size.
+    /* 0x0 */ u16                       flags; /** `e_CollisionTriggerFlags` */
+    /* 0x2 */ u8                        collisionTriggerCount;
+    /* 0x4 */ const s_CollisionTrigger* collisionTriggers[20]; // TODO: Guessed size.
 } s_ActiveCollisionTriggers;
 
 void func_8006F250(q19_12* arg0, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ);

@@ -43,15 +43,15 @@ void Collision_FlagBitsClear(s32 collFlags) // 0x80069844
     g_ActiveCollisionTriggers.flags = (g_ActiveCollisionTriggers.flags & ~collFlags) | CollisionTriggerFlag_Map;
 }
 
-void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, s_CollisionTrigger* triggers) // 0x80069860
+void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, const s_CollisionTrigger* triggers) // 0x80069860
 {
     #define AABB_BUFFER Q12(16.0f)
 
-    s_CollisionTrigger* curTrigger;
-    q19_12              minX;
-    q19_12              maxX;
-    q19_12              minZ;
-    q19_12              maxZ;
+    const s_CollisionTrigger* curTrigger;
+    q19_12                    minX;
+    q19_12                    maxX;
+    q19_12                    minZ;
+    q19_12                    maxZ;
 
     g_ActiveCollisionTriggers.collisionTriggerCount = 0;
 
@@ -1995,8 +1995,8 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     q23_8  temp;
     q23_8  temp2;
     q23_8  radiusOffset;
-    s32    temp4;
-    s32    tarCharaBottom;
+    q23_8  temp4;
+    q23_8  targetCharaBottom;
 
     if (state->field_A0.s_1.collisionState < CharaCollisionState_2 ||
         *state->field_A0.s_1.field_8 != 0)
@@ -2047,7 +2047,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
     else if (state->isCharaMoving && state->field_44.field_0.field_0 == 0 && func_8006C1B8(1, distAlpha, state))
     {
         temp2 = (state->charaState.positionFromZ - state->charaPositionTo.vz);
-        tarCharaBottom = Q12_MULT(distAlpha, state->charaState.offset.vz);
+        targetCharaBottom = Q12_MULT(distAlpha, state->charaState.offset.vz);
 
         state->field_40 = state->field_A0.s_1.field_8;
         state->field_38 = distAlpha;
@@ -2059,7 +2059,7 @@ void func_8006CC9C(s_CollisionState* state) // 0x8006CC9C
 
         state->field_3A = Q12_TO_Q4(state->charaState.distance * distAlpha);
         state->field_3C = temp + temp4;
-        state->field_3E = temp2 + tarCharaBottom;
+        state->field_3E = temp2 + targetCharaBottom;
     }
 }
 
