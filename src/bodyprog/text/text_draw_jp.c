@@ -23,6 +23,7 @@ static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
 // TODO: Unsure if these correspond to variables in USA.
 extern s16 D_800AF83C; // Set by `Gfx_StringColorSet_JP`
+extern u32 D_800AF840[]; // Glyph colors, indexed by `D_800AF83C`.
 extern s16 D_800C5DEC;
 extern s16 D_800C5DEE;
 extern s16 g_GlyphSpritePositionX; // 0x800C5E0C;
@@ -98,12 +99,6 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
 {
     #define WIDE_SPACE_SIZE 10
     #define ATLAS_BASE_Y    240
-
-    // TODO: This only works for one case. There may originally have been some other generic macro.
-    #define setSprtUvClut(glyphSprt, idx, clut)                                                                                                     \
-    *((u32*)&(glyphSprt)->u0) = (((idx) % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + /* `u0`:   Column in atlas. */            \
-                                (ATLAS_BASE_Y << 8)                                                 + /* `v0`:   Row 0 in atlas with offset. */ \
-                                ((clut) << 16)                                                        /* `clut`: Packed magic value. */
 
     s32       posX;
     s32       posY;
@@ -198,10 +193,10 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
 
                 u0 = (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
 
-                *((u32*)&glyphPoly->u0) = u0 + (0xF000 + (0x7FD3 << 16));                                                    // `u0`, `v0`, `clut`.
-                *((u32*)&glyphPoly->u1) = u0 + (((((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16) << 16) | 0xFF00); // `u1`, `v1`, `page`.
-                *((u16*)&glyphPoly->u2) = u0 - 0xFF4;                                                                        // `u2`, `v2`.
-                *((u16*)&glyphPoly->u3) = u0 - 0xF4;                                                                         // `u3`, `v3`.
+                setUV0AndClutSum(glyphPoly, u0, 0xF0, 0x7FD3);
+                setUV1AndTPageSum(glyphPoly, u0, 0xFF, ((glyphIdx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 16);
+                setUV2Sum(glyphPoly, u0 + FONT_12X16_GLYPH_SIZE_X, 0xF0);
+                setUV3Sum(glyphPoly, u0 + FONT_12X16_GLYPH_SIZE_X, 0xFF);
 
                 addPrim(ot, glyphPoly);
                 GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
@@ -211,17 +206,16 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
                 posXCpy = (u16)posX;
 
                 glyphSprt              = (SPRT*)packet;
-                *((u32*)&glyphSprt->w) = 0x10000C;
+                setWHFast(glyphSprt, FONT_12X16_GLYPH_SIZE_X, FONT_12X16_GLYPH_SIZE_Y);
 
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
                 posX    += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
 
                 addPrimFast(ot, glyphSprt, 4);
-                *((u32*)&glyphSprt->r0)   = glyphColor;
-                *((u32*)(&glyphSprt->x0)) = posXCpy + (posY << 16);
+                setRGBC0Word(glyphSprt, glyphColor);
+                setXY0Sum(glyphSprt, posXCpy, posY);
 
-                setSprtUvClut(glyphSprt, glyphIdx, 0x7FD3); // TODO: Demagic CLUT arg.
-                //*((u32*)&glyphSprt->u0) = ((glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X) + 0xF000 + (0x7FD3 << 16); // `u0`, `v0`, `clut`.
+                setUV0AndClutSum(glyphSprt, (glyphIdx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X, ATLAS_BASE_Y, 0x7FD3); // TODO: Demagic CLUT arg.
 
                 packet += sizeof(SPRT);
 
@@ -777,9 +771,259 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
 
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_StringDraw_JP);
+void Gfx_StringDraw_JP(char* str, s32 lineIdx) // 0x8004BFC0
+{
+    GsOT_TAG* ot;
+    GsOT*     ot2;
+    PACKET*   packet;
+    POLY_FT4* poly;
+    SPRT*     sprt;
+    u32       color;
+    s32       i;
+    s16       x;
+    s16       y;
+    s32       glyphY;
+    s16       x1;
+    s16       y0;
+    s16       y1;
+    DVECTOR*  pos;
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", func_8004C394);
+    ot     = &g_OtTags0[g_ActiveBufferIdx][6];
+    color  = D_800AF840[D_800AF83C];
+    packet = NULL;
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    pos = &D_800C5E10;
+    x   = pos->vx = -120;
+
+    if (D_800C5E20 == 2)
+    {
+        y = (lineIdx * 16) - 12;
+    }
+    else
+    {
+        y = (lineIdx * 16) - 20;
+    }
+
+    pos->vy = y;
+    glyphY  = y;
+
+    for (i = 0; i < 21; )
+    {
+        switch (*str)
+        {
+            case '\t':
+            case ' ':
+                str++;
+                break;
+
+            case '\0':
+                i = 21;
+                break;
+
+            default:
+                if (g_SysWork.enableHalfHeightGlyphs)
+                {
+                    ot2  = &g_OrderingTable2[g_ActiveBufferIdx];
+                    poly = (POLY_FT4*)GsOUT_PACKET_P;
+                    setPolyFT4(poly);
+
+                    setUV0AndClutSum(poly, i * 12, (lineIdx & 1) ? 0xE0 : 0x10, 0x7F93);
+                    setUV1AndTPageSum(poly, i * 12, (lineIdx & 1) ? 0xF0 : 0x20,
+                                      (lineIdx & 1) ? getTPage(0, 0, ((lineIdx >> 1) << 6) + 192, 256) :
+                                                      getTPage(0, 0, ((lineIdx >> 1) << 6) + 192, 0));
+                    setUV2Sum(poly, (i + 1) * 12, (lineIdx & 1) ? 0xE0 : 0x10);
+                    setUV3Sum(poly, (i + 1) * 12, (lineIdx & 1) ? 0xF0 : 0x20);
+
+                    setRGB0(poly, color, color >> 8, color >> 16);
+
+                    y0 = glyphY * 2;
+                    y1 = (glyphY + 15) * 2;
+                    x1 = x + 12;
+                    setXY4(poly, x, y0, x, y1, x1, y0, x1, y1);
+                    x = x1;
+
+                    addPrim(&ot2->org[10], poly);
+                    GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_FT4);
+                }
+                else
+                {
+                    sprt = (SPRT*)packet;
+                    setWHFast(sprt, 12, 16);
+                    addPrimFast(ot, sprt, 4);
+                    setRGBC0Word(sprt, color);
+                    setXY0Fast(sprt, x, glyphY);
+                    setUV0AndClutSum(sprt, i * 12, (lineIdx & 1) ? 0xE0 : 0x10, 0x7F93);
+                    x += 12;
+
+                    packet += sizeof(SPRT);
+                    setDrawTPage((DR_TPAGE*)packet, 0, 1,
+                                 (lineIdx & 1) ? getTPage(0, 0, ((lineIdx >> 1) << 6) + 192, 256) :
+                                                 getTPage(0, 0, ((lineIdx >> 1) << 6) + 192, 0));
+                    addPrim(ot, (DR_TPAGE*)packet);
+                    packet += sizeof(DR_TPAGE);
+                }
+
+                str += 2;
+                i++;
+                break;
+        }
+    }
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        GsOUT_PACKET_P = packet;
+    }
+}
+
+void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
+{
+    PACKET*   packet;
+    GsOT_TAG* ot;
+    SPRT*     sprt;
+    u32       color;
+    s32       colorId;
+    s32       code;
+    s32       i;
+    s32       x;
+    s32       y;
+
+    ot     = &g_OtTags0[g_ActiveBufferIdx][6];
+    packet = GsOUT_PACKET_P;
+    color  = D_800AF840[D_800AF83C];
+
+    // @hack References to `mode` and `color` outside of the loop below are needed for match
+    if (mode || color)
+    {
+        u8 x = -x;
+    }
+    
+    if (col < 2)
+    {
+        if (col >= 0)
+        {
+            y = D_800C5E10.vy = (row * 20) - 60;
+            x = D_800C5E10.vx = (col * 150) - 130;
+        }
+        else
+        {
+            y = D_800C5E10.vy = 72 - ((col - 2) * 8);
+            x = D_800C5E10.vx = row * -6;
+        }
+    }
+    else
+    {
+        y = D_800C5E10.vy = 72 - ((col - 2) * 8);
+        x = D_800C5E10.vx = row * -6;
+    }
+
+    switch (mode)
+    {
+        case 9:
+            y = D_800C5E10.vy = (row * 20) - 60;
+            x = D_800C5E10.vx = (col * 150) - 112;
+            break;
+
+        case 0:
+        case 2:
+        case 3:
+        case 4:
+            y = D_800C5E10.vy = -33;
+            x = D_800C5E10.vx = (col * 150) - 134;
+            if (mode == 4)
+            {
+                x = D_800C5E10.vx = (col * 150) - 128;
+            }
+            break;
+
+        case 1:
+            y = D_800C5E10.vy = -33;
+            x = D_800C5E10.vx = (col * 150) - 134;
+            break;
+
+        case 5:
+        case 6:
+            y = D_800C5E10.vy = -25;
+            x = D_800C5E10.vx = (col * 150) - 134;
+            break;
+    }
+    
+    i = 0;
+    do
+    {
+        // Wrap to next line?
+        if (i == 10 && mode >= 0 && mode < 7)
+        {
+            x = D_800C5E10.vx;
+            y = D_800C5E10.vy += 18;
+            if (mode == 3)
+            {
+                x = D_800C5E10.vx -= 6;
+            }
+        }
+
+        switch (*str)
+        {
+            case '~':
+                str++;
+                code    = *str++;
+                colorId = *str - '0';
+                if (code == 'C')
+                {
+                    color      = D_800AF840[colorId];
+                    D_800AF83C = colorId;
+                }
+                str++;
+                break;
+
+            case '\0':
+                i = 20;
+                break;
+
+            default:
+                sprt = (SPRT*)packet;
+                setWHFast(sprt, 12, 16);
+                addPrimFast(ot, sprt, 4);
+                setRGBC0Word(sprt, color);
+                setXY0Fast(sprt, x, y);
+
+                if (col < 2)
+                {
+                    setUV0AndClutSum(sprt, ((row & 1) * 120) + (i * 12), (col != 0) ? 0xE0 : 0x10, 0x7F93);
+                }
+                else
+                {
+                    setUV0AndClutSum(sprt, i * 12, 0x10, 0x7F93);
+                }
+
+                x += 12;
+                packet += sizeof(SPRT);
+                
+                if (col < 2)
+                {
+                    setDrawTPage((DR_TPAGE*)packet, 0, 1, getTPage(0, 0, (row >> 1) << 6, (col != 0) ? 256 : 0));
+                }
+                else
+                {
+                    setDrawTPage((DR_TPAGE*)packet, 0, 1, getTPage(0, 0, 256, 0));
+                }
+
+                addPrim(ot, (DR_TPAGE*)packet);
+                packet += sizeof(DR_TPAGE);
+
+                str += 2;
+                i++;
+                break;
+        }
+    }
+    while (i < 20);
+
+    GsOUT_PACKET_P = packet;
+}
 
 void func_8004C7E4(void) // 0x8004C7E4
 {

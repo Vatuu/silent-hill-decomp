@@ -150,6 +150,8 @@ void Gfx_StringDrawInt(s32 lengthMin, s32 val);
 
 #if VERSION_REGION_IS(NTSCJ)
     void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1);
+    void Gfx_StringDraw_JP(char* str, s32 lineIdx);
+    void func_8004C394(char* str, s32 col, s32 row, s32 mode);
     void func_8004C8D8(u16*, s32*, s32);
     s32 func_8004C8AC(u8*);
     void func_8004C918(char* str, s32 idx, s32 arg2, s32 arg3);

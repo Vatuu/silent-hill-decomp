@@ -120,6 +120,10 @@ typedef struct _PrimColor
 #define setXY0Fast(p, x, y) \
     *(u32*)(&(p)->x0) = (((x) & 0xFFFF) + ((y) << 16))
 
+/** @brief Same as `setXY0Fast`, but `x` must already be truncated to 16 bits, so no mask is applied. */
+#define setXY0Sum(p, x, y) \
+    *(u32*)(&(p)->x0) = ((x) + ((y) << 16))
+
 #define setXY1Fast(p, x, y) \
     *(u32*)(&(p)->x1) = (((x) & 0xFFFF) + ((y) << 16))
 
@@ -156,6 +160,22 @@ typedef struct _PrimColor
 /** @brief Combines `setcode` and `setRGB0`. */
 #define setCodeWord(p, code, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((code) << 24) | ((rgb24) & 0xFFFFFF))
+
+/** @brief Sets `r0`, `g0`, `b0` and `code` from one packed 32-bit word. */
+#define setRGBC0Word(p, rgbc) \
+    *(u32*)(&(p)->r0) = (rgbc)
+
+/** @brief Sets `r1`, `g1`, `b1` and the padding byte after them from one packed 32-bit word. */
+#define setRGBC1Word(p, rgbc) \
+    *(u32*)(&(p)->r1) = (rgbc)
+
+/** @brief Sets `r2`, `g2`, `b2` and the padding byte after them from one packed 32-bit word. */
+#define setRGBC2Word(p, rgbc) \
+    *(u32*)(&(p)->r2) = (rgbc)
+
+/** @brief Sets `r3`, `g3`, `b3` and the padding byte after them from one packed 32-bit word. */
+#define setRGBC3Word(p, rgbc) \
+    *(u32*)(&(p)->r3) = (rgbc)
 
 // TODO: Perhaps `setRGBC0`, `setRGBC1`, `setRGBC2`, and `setRGBC3` were one macro. Incidental value set to padding fields suggests it?
 /** @brief Combines `setRGB0` and `setcode`. */
