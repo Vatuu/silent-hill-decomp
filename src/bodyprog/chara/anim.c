@@ -2,6 +2,7 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/chara/anim.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/math/math.h"

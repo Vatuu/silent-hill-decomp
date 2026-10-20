@@ -2,16 +2,13 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/chara/bone.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "main/fsqueue.h"
 
 s8* D_800C15B0;
-
-// ========================================
-// BONES AND SKELETONS
-// ========================================
 
 void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) // 0x80044F14
 {
@@ -264,7 +261,8 @@ void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond) // 0x8004546
 
 extern s_WorldEnvWork const g_WorldEnvWork;
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images) // 0x80045534
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords,
+                   q3_12 arg4, u16 clutY, s_FsImageDesc* images) // 0x80045534
 {
     MATRIX         viewMat;
     MATRIX         worldMat;

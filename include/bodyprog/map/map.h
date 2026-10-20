@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_MAP_MAP_H
 #define _BODYPROG_MAP_MAP_H
 
-#include "bodyprog/anim.h"
+#include "bodyprog/chara/anim.h"
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/formats/anm.h"

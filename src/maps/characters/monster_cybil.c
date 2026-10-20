@@ -1,6 +1,7 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/chara/bone.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
 

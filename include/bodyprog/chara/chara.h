@@ -1,8 +1,8 @@
 #ifndef _BODYPROG_CHARA_CHARA_H
 #define _BODYPROG_CHARA_CHARA_H
 
-#include "bodyprog/anim.h"
-#include "bodyprog/model.h"
+#include "bodyprog/chara/anim.h"
+#include "bodyprog/chara/model.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
