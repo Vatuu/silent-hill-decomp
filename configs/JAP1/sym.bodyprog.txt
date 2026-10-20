@@ -799,7 +799,7 @@ WorldMap_Draw                                = 0x80043E68; // type:func
 WorldMap_SubcellVisibleCheck                 = 0x800441F8; // type:func
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x01F81C   VA: 0x8004437C   subsegment: c, world/bodyprog_anim_800445A4
+//--- PA: 0x01F81C   VA: 0x8004437C   subsegment: c, chara/anim
 //-------------------------------------------------------------------------------
 Anim_BonesInit                               = 0x8004437C; // type:func
 Anim_BonesUpdate                             = 0x800444B0; // type:func
@@ -812,7 +812,7 @@ Anim_BlendLinear                             = 0x80044A7C; // type:func
 Anim_BlendEaseOut                            = 0x80044BC8; // type:func
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x02018C   VA: 0x80044CEC   subsegment: c, world/bodyprog_bone_80044F14
+//--- PA: 0x02018C   VA: 0x80044CEC   subsegment: c, chara/bone
 //-------------------------------------------------------------------------------
 Bone_ExtraRotationSet                        = 0x80044CEC; // type:func
 Bone_ModelIdxIterator                        = 0x80044D44; // type:func
@@ -3605,7 +3605,7 @@ activeChunksCollData.0                       = 0x800C3668;
 g_WorldMapWork                               = 0x800C3678; // type:u8 size:0x58C - size from bzero call
 
 //----------------------------------------------------------------------------------
-//--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, world/bodyprog_bone_80044F14
+//--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, chara/bone
 //----------------------------------------------------------------------------------
 D_800C15B0                                   = 0x800C3C08;
 D_800C15B4                                   = 0x800C3C0C;

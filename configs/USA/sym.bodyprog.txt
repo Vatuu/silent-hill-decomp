@@ -568,7 +568,7 @@ WorldMap_Draw                                = 0x80044090; // type:func
 WorldMap_SubcellVisibleCheck                 = 0x80044420; // type:func
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x01FA44   VA: 0x800445A4   subsegment: c, world/bodyprog_anim_800445A4
+//--- PA: 0x01FA44   VA: 0x800445A4   subsegment: c, chara/anim
 //-------------------------------------------------------------------------------
 Anim_BonesInit                               = 0x800445A4; // type:func
 Anim_BonesUpdate                             = 0x800446D8; // type:func
@@ -581,7 +581,7 @@ Anim_BlendLinear                             = 0x80044CA4; // type:func
 Anim_BlendEaseOut                            = 0x80044DF0; // type:func
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x0203B4   VA: 0x80044F14   subsegment: c, world/bodyprog_bone_80044F14
+//--- PA: 0x0203B4   VA: 0x80044F14   subsegment: c, chara/bone
 //-------------------------------------------------------------------------------
 Bone_ExtraRotationSet                        = 0x80044F14; // type:func
 Bone_ModelIdxIterator                        = 0x80044F6C; // type:func

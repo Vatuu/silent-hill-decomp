@@ -6,7 +6,7 @@
 #include "bodyprog/bodyprog_80089090.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/collision/collision.h"
-#include "bodyprog/chara/chara_model.h"
+#include "bodyprog/chara/model.h"
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
@@ -1289,7 +1289,7 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
  */
 bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ);
 
-// TODO: Move to `bodyprog/anim.h`.
+// TODO: Move to `bodyprog/chara/anim.h`.
 // ========================================
 
 void Anim_BonesInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
@@ -1366,6 +1366,7 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
  */
 void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
+// TODO: Move to `bodyprog/chara/bone.h`.
 // ========================================
 
 /** Something related to player weapon position. Takes coords to arm bones. */
@@ -1404,6 +1405,8 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond);
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images);
+
+// ======================================
 
 /** `flags` might not be a bitfield. */
 void func_8004C564(u8 flags, s8 weaponAttack);

@@ -330,9 +330,9 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
 
 void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transformMat) // 0x80049984
 {
-    GsCOORDINATE2* prevCoord;
-    GsCOORDINATE2* parentCoord;
-    GsCOORDINATE2* curCoord;
+    GsCOORDINATE2* prevBoneCoord;
+    GsCOORDINATE2* parentBoneCoord;
+    GsCOORDINATE2* curBoneCoord;
 
     // If no root coord provided, set output matrix to identity.
     if (boneCoords == NULL)
@@ -340,27 +340,27 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transform
         *transformMat = GsIDMATRIX;
     }
 
-    curCoord  = boneCoords;
-    prevCoord = NULL;
+    curBoneCoord  = boneCoords;
+    prevBoneCoord = NULL;
 
     // Traverse coord parent hierarchy upward.
     while (true)
     {
-        parentCoord = curCoord->super;
+        parentBoneCoord = curBoneCoord->super;
 
         // Stop if node has already been processed.
-        if (curCoord->flg)
+        if (curBoneCoord->flg)
         {
             break;
         }
 
-        prevCoord = curCoord;
+        prevBoneCoord = curBoneCoord;
 
         // If parent node exists, link it downward for later traversal.
-        if (parentCoord != NULL)
+        if (parentBoneCoord != NULL)
         {
-            parentCoord->sub = curCoord;
-            curCoord         = parentCoord;
+            parentBoneCoord->sub = curBoneCoord;
+            curBoneCoord         = parentBoneCoord;
         }
         else
         {
@@ -369,28 +369,28 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transform
     }
 
     // If at least one unprocessed node found, process coord hierarchy downward.
-    if (prevCoord != NULL)
+    if (prevBoneCoord != NULL)
     {
-        curCoord       = prevCoord;
+        curBoneCoord    = prevBoneCoord;
         boneCoords->sub = NULL; // Detach child link to prevent cycles.
         do
         {
-            prevCoord = curCoord->super;
-            curCoord->flg++; // Mark node as processed.
+            prevBoneCoord = curBoneCoord->super;
+            curBoneCoord->flg++; // Mark node as processed.
 
             // Compute cumulative transformation matrix.
-            if (prevCoord == NULL)
+            if (prevBoneCoord == NULL)
             {
-                curCoord->workm = curCoord->coord;
+                curBoneCoord->workm = curBoneCoord->coord;
             }
             else
             {
-                Vw_MultiplyAndTransformMatrix(&prevCoord->workm, &curCoord->coord, &curCoord->workm);
+                Vw_MultiplyAndTransformMatrix(&prevBoneCoord->workm, &curBoneCoord->coord, &curBoneCoord->workm);
             }
 
-            curCoord = curCoord->sub;
+            curBoneCoord = curBoneCoord->sub;
         }
-        while (curCoord != NULL);
+        while (curBoneCoord != NULL);
     }
 
     // Set output.
