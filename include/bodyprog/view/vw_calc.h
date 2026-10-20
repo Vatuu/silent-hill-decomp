@@ -56,27 +56,27 @@ void vbSetRefView(VbRVIEW* rview);
 
 /** @brief Computes the transformation matrix of a given coord.
  *
- * @param rootCoord Root coord.
+ * @param boneCoords Character model bone coords.
  * @param transformMat Output transformation matrix.
  */
-void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* transformMat);
+void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transformMat);
 
 /** @brief Computes a view-space matrix for a coordinate hierarchy node.
  *
  * Gets the cumulative world matrix, subtracts the camera position, and multiplies by `VbWvsMatrix`.
  *
- * @param rootCoord Root coordinate hierarchy node.
+ * @param boneCoords Character model bone coords.
  * @param vewMat Output view-space matrix.
  */
-void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* rootCoord, MATRIX* viewMat);
+void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* boneCoords, MATRIX* viewMat);
 
 /** @brief Computes world-space and view-space matrices for a coordinate node hierachy.
  *
- * @param rootCoord Root coordinate hierarchy node.
+ * @param boneCoords Character model bone coords.
  * @param worldMat Output world-space matrix.
  * @param viewMat Output view-space matrix.
  */
-void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* rootCoord, MATRIX* worldMat, MATRIX* viewMat);
+void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* boneCoords, MATRIX* worldMat, MATRIX* viewMat);
 
 /** @brief Constructs a world-to-screen matrix at a given world position.
  *

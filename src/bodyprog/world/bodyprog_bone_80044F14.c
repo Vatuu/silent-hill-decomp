@@ -29,8 +29,10 @@ void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 
     MulMatrix(&coord->coord, rotMat);
 }
 
-s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
+s8 Bone_ModelIdxIterator(s8* boneHierarchy, bool reset) // 0x80044F6C
 {
+    // TODO: Bone/mesh/model terms are probably mixed up.
+
     // TODO: These two are probably part of a bigger struct.
     // `boneMeshIdx` is not referenced directly anywhere else.
     // It must be reset somewhere at some point.
@@ -39,13 +41,13 @@ s8 Bone_ModelIdxGet(s8* ptr, bool reset) // 0x80044F6C
 
     if (reset)
     {
-        boneIdxs = ptr;
+        boneIdxs = boneHierarchy;
     }
 
     // LM has <= 1 model.
-    if (boneIdxs[0] != -3)
+    if (boneIdxs[0] != BoneHierarchy_MultiModel)
     {
-        // -2 for 0 models, 0 for 1 model.
+        // `BoneHierarchy_End` for 0 models, 0 for 1 model.
         boneMeshIdx = boneIdxs[0];
         boneIdxs++;
     }
@@ -82,34 +84,36 @@ void func_80045014(s_Skeleton* skel) // 0x80045014
 
 void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
 {
-    u8  sp10[4]; // Size unsure, this could be larger.
+    // TODO: Size unsure, seems like this should be larger. Theoretically up to 32 bones in a skeleton, does this
+    // represent a subset for iteration?
+    u8  boneHierarchy[8];
     s32 modelCount;
 
-    modelCount = LmHeader_ModelCountGet(lmHdr);
-    sp10[0]    = 0;
+    modelCount       = LmHeader_ModelCountGet(lmHdr);
+    boneHierarchy[0] = 0;
 
     switch (modelCount)
     {
         case 0:
-            sp10[0] = BoneHierarchy_End;
+            boneHierarchy[0] = BoneHierarchy_End;
             break;
 
         case 1:
-            sp10[0] = 0;
-            sp10[1] = BoneHierarchy_End;
+            boneHierarchy[0] = 0;
+            boneHierarchy[1] = BoneHierarchy_End;
             break;
 
         default:
-            sp10[1] = BoneHierarchy_MultiModel;
-            sp10[2] = LmHeader_ModelCountGet(lmHdr) - 1;
-            sp10[3] = BoneHierarchy_End;
+            boneHierarchy[1] = BoneHierarchy_MultiModel;
+            boneHierarchy[2] = LmHeader_ModelCountGet(lmHdr) - 1;
+            boneHierarchy[3] = BoneHierarchy_End;
             break;
     }
 
-    func_80045108(skel, lmHdr, (s8*)sp10, false);
+    func_80045108(skel, lmHdr, (s8*)boneHierarchy, false);
 }
 
-void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, bool cond) // 0x80045108
+void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* boneHierarchy, bool cond) // 0x80045108
 {
     s_BoneNode*  curBoneNode;
     s_BoneNode** curBoneNodeOrd;
@@ -122,7 +126,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, bool cond) // 
     }
 
     boneIdx = skel->boneIdx;
-    Skeleton_BoneModelAssign(skel, lmHdr, arg2);
+    Skeleton_BoneModelAssign(skel, lmHdr, boneHierarchy);
 
     curBoneNodeOrd = &skel->bones_4;
     while (*curBoneNodeOrd != NULL)
@@ -136,17 +140,17 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, bool cond) // 
     func_800453E8(skel, false);
 }
 
-void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
+void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* boneHierarchy) // 0x800451B0
 {
     s32 modelIdx;
 
-    modelIdx = Bone_ModelIdxGet(arg2, true);
+    modelIdx = Bone_ModelIdxIterator(boneHierarchy, true);
     while (modelIdx != BoneHierarchy_End)
     {
         Bone_ModelAssign(&skel->boneHierarchy[skel->boneIdx].bone, lmHdr, modelIdx);
 
         skel->boneIdx++;
-        modelIdx = Bone_ModelIdxGet(arg2, false);
+        modelIdx = Bone_ModelIdxIterator(boneHierarchy, false);
     }
 }
 
@@ -174,9 +178,9 @@ void func_80045258(s_BoneNode** boneOrd, s_BoneNode* boneHierarchy, s32 boneIdx,
 
 void func_800452EC(s_Skeleton* skel) // 0x800452EC
 {
-    s32            boneIdxTens;
-    s32            boneIdx;
-    u32            boneIdxOnes;
+    s32            modelIdxTens;
+    s32            modelIdx;
+    u32            modelIdxOnes;
     s_BoneNode*    curBoneNode;
     s_ModelHeader* modelHdr;
 
@@ -185,34 +189,34 @@ void func_800452EC(s_Skeleton* skel) // 0x800452EC
     {
         modelHdr = curBoneNode->bone.modelInfo.modelHdr;
 
-        // Extract bone index from first two `char`s of model name.
-        boneIdxOnes = modelHdr->name.str[1] - '0';
-        boneIdxTens = modelHdr->name.str[0] - '0';
-        if (boneIdxOnes < 10 && boneIdxTens >= 0 && boneIdxTens < 10)
+        // Extract model index from first two `char`s of model name.
+        modelIdxOnes = modelHdr->name.str[1] - '0';
+        modelIdxTens = modelHdr->name.str[0] - '0';
+        if (modelIdxOnes < 10 && modelIdxTens >= 0 && modelIdxTens < 10)
         {
-            boneIdx = (boneIdxTens * 10) + boneIdxOnes;
+            modelIdx = (modelIdxTens * 10) + modelIdxOnes;
         }
         else
         {
-            boneIdx = 0;
+            modelIdx = 0;
         }
 
-        curBoneNode->bone.idx = boneIdx;
-        curBoneNode           = curBoneNode->next;
+        curBoneNode->bone.modelIdx = modelIdx;
+        curBoneNode                = curBoneNode->next;
     }
 }
 
-void func_80045360(s_Skeleton* skel, s8* arg1) // 0x80045360
+void func_80045360(s_Skeleton* skel, s8* boneHierarchy) // 0x80045360
 {
     s32 i;
-    s32 boneIdx;
+    s32 modelIdx;
 
-    for (boneIdx = Bone_ModelIdxGet(arg1, true), i = 0;
-         boneIdx != -2;
+    for (modelIdx = Bone_ModelIdxIterator(boneHierarchy, true), i = 0;
+         modelIdx != BoneHierarchy_End;
          i++)
     {
-        skel->boneHierarchy[i].bone.idx = boneIdx;
-        boneIdx                         = Bone_ModelIdxGet(arg1, false);
+        skel->boneHierarchy[i].bone.modelIdx = modelIdx;
+        modelIdx                              = Bone_ModelIdxIterator(boneHierarchy, false);
     }
 }
 
@@ -234,27 +238,27 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     }
 }
 
-void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
+void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond) // 0x80045468
 {
-    s_BoneNode* boneHierarchy;
+    s_BoneNode* boneHierarchyPtr; // TODO: Wrong struct?
     s32         modelIdx;
 
-    boneHierarchy = skel->boneHierarchy;
+    boneHierarchyPtr = skel->boneHierarchy;
 
-    // Traverse bone hierarchy and set flag 31 according to some condition.
-    modelIdx = Bone_ModelIdxGet(arg1, true);
-    while (modelIdx != -2)
+    // Traverse bone hierarchy and set `ModelFlag_31` according to some condition.
+    modelIdx = Bone_ModelIdxIterator(boneHierarchy, true);
+    while (modelIdx != BoneHierarchy_End)
     {
         if (cond)
         {
-            boneHierarchy[modelIdx].bone.modelInfo.flags &= ~ModelFlag_31;
+            boneHierarchyPtr[modelIdx].bone.modelInfo.flags &= ~ModelFlag_31;
         }
         else
         {
-            boneHierarchy[modelIdx].bone.modelInfo.flags |= ModelFlag_31;
+            boneHierarchyPtr[modelIdx].bone.modelInfo.flags |= ModelFlag_31;
         }
 
-        modelIdx = Bone_ModelIdxGet(arg1, false);
+        modelIdx = Bone_ModelIdxIterator(boneHierarchy, false);
     }
 }
 
@@ -355,7 +359,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
     {
         if (curBoneNode->bone.modelInfo.flags >= ModelFlag_None)
         {
-            Vw_CoordToWorldAndViewMatrices(&boneCoords[(u8)curBoneNode->bone.idx], &worldMat, &viewMat);
+            Vw_CoordToWorldAndViewMatrices(&boneCoords[(u8)curBoneNode->bone.modelIdx], &worldMat, &viewMat);
 
             if (curBoneNode->bone.modelInfo.flags & ModelFlag_0)
             {

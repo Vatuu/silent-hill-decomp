@@ -334,16 +334,16 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr) // 0x80056C80
     return lmHdr->modelCount;
 }
 
-void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
+void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelIdx)
 {
     s_ModelHeader* modelHdr;
 
     modelHdr                 = lmHdr->modelHdrs;
-    bone->modelInfo.modelIdx = modelHdrIdx;
+    bone->modelInfo.modelIdx = modelIdx;
 
     if (lmHdr->magic == LM_HEADER_MAGIC)
     {
-        bone->modelInfo.modelHdr = &modelHdr[modelHdrIdx];
+        bone->modelInfo.modelHdr = &modelHdr[modelIdx];
     }
 }
 

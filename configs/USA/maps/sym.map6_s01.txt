@@ -6,15 +6,11 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x0025E8   VA: 0x800CBB60   subsegment: c, unk_draw_m1s03
-//-----------------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x0025E8   VA: 0x800CBB60   subsegment: c, map6_s01_2
+//-------------------------------------------------------------
 sharedFunc_800CE5D4_1_s03       = 0x800CBB60; // type:func
 sharedFunc_800CE688_1_s03       = 0x800CBC14; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x002D64   VA: 0x800CC2DC   subsegment: c, particle
-//-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CC2DC; // type:func
 Particle_EnvironmentSet         = 0x800CC444; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CC5C4; // type:func
@@ -22,10 +18,6 @@ sharedFunc_800D0B18_0_s00       = 0x800CC67C; // type:func
 Particle_SoundStop              = 0x800CC7E0; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CC800; // type:func
 Particle_BeamDraw               = 0x800CD078; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x003EEC   VA: 0x800CD464   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CD464; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CDABC; // type:func
 Player_CutsceneWeaponUnequip    = 0x800CDEE8; // type:func
@@ -51,28 +43,16 @@ sharedFunc_800D2E9C_0_s00       = 0x800CE490; // type:func
 Player_PropertyField10DGet      = 0x800CE498; // type:func
 Player_EmptyWeaponHandSet       = 0x800CE4A8; // type:func
 Player_WeaponAttackRestore      = 0x800CE4E8; // type:func
-
-//--------------------------------------------------------------
-//--- PA: 0x004F84   VA: 0x800CE4FC   subsegment: c, Chara_Cybil
-//--------------------------------------------------------------
 Cybil_Update                    = 0x800CE4FC; // type:func
 Cybil_AnimUpdate                = 0x800CE570; // type:func
 Cybil_MovementUpdate            = 0x800CE5B8; // type:func
 Cybil_AnimStateUpdate           = 0x800CE750; // type:func
 Cybil_Init                      = 0x800CF794; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x006258   VA: 0x800CF7D0   subsegment: c, Chara_Dahlia
-//---------------------------------------------------------------
 Dahlia_Update                   = 0x800CF7D0; // type:func
 Dahlia_AnimUpdate               = 0x800CF844; // type:func
 Dahlia_MovementUpdate           = 0x800CF88C; // type:func
 Dahlia_ControlUpdate            = 0x800CFA64; // type:func
 Dahlia_Init                     = 0x800D031C; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x006DE0   VA: 0x800D0358   subsegment: c, map6_s01_2
-//-------------------------------------------------------------
 Chara_MovementReset             = 0x800D0358; // type:func
 Chara_AnimReset                 = 0x800D036C; // type:func
 Chara_AnimStateSet              = 0x800D03B0; // type:func

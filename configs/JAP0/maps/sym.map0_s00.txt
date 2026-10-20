@@ -6,16 +6,12 @@
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CCAF8   subsegment: .rodata, map0_s00
-//-----------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CCAF8   subsegment: .rodata, map0_s00_2
+//-------------------------------------------------------------------
 D_800CA79C                          = 0x800CCCCC;
 D_800CA7CC                          = 0x800CCCFC;
 sharedData_800CAB70_0_s00           = 0x800CD0A0;
-
-//-------------------------------------------------------------------
-//--- PA: 0x0018E0   VA: 0x800CD388   subsegment: .rodata, map0_s00_2
-//-------------------------------------------------------------------
 D_800CAE7C                          = 0x800CD3AC;
 D_800CB4AC                          = 0x800CD9A0;
 D_800CB68C                          = 0x800CDB7C;
@@ -29,9 +25,9 @@ D_800CB6A4                          = 0x800CDB94;
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x0020F8   VA: 0x800CDBA0   subsegment: c, map0_s00
-//-----------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x0020F8   VA: 0x800CDBA0   subsegment: c, map0_s00_2
+//-------------------------------------------------------------
 Particle_SystemUpdate               = 0x800CDBA0; // type:func
 Particle_CameraMovedCheck           = 0x800CE0AC; // type:func
 Particle_SnowInitialize             = 0x800CE184; // type:func
@@ -108,20 +104,12 @@ sharedFunc_800D6970_0_s00           = 0x800D8E60; // type:func
 Stalker_CollisionUpdate             = 0x800D95B4; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800DA0D8; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800DA2F4; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x00EA00   VA: 0x800DA4A8   subsegment: c, Chara_Cheryl
-//---------------------------------------------------------------
 Cheryl_Update                       = 0x800DA4A8; // type:func
 Cheryl_AnimUpdate                   = 0x800DA51C; // type:func
 Cheryl_MovementUpdate               = 0x800DA614; // type:func
 Cheryl_ControlUpdate                = 0x800DA800; // type:func
 Cheryl_FootstepSfxPlay              = 0x800DAC38; // type:func
 Cheryl_Init                         = 0x800DAD78; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x00F2F4   VA: 0x800DAD9C   subsegment: c, map0_s00_2
-//-------------------------------------------------------------
 Chara_MovementReset                 = 0x800DAD9C; // type:func
 Chara_AnimReset                     = 0x800DADB0; // type:func
 Chara_AnimStateSet                  = 0x800DADF4; // type:func

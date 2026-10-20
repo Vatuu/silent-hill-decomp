@@ -6,9 +6,9 @@
 //================================================
 
 
-//--------------------------------------------------------------------------
-//--- PA: 0x001478   VA: 0x800CA9F0   subsegment: .rodata, Chara_AirScreamer
-//--------------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map0_s01_2
+//-------------------------------------------------------------------
 sharedData_800CA9F0_0_s01         = 0x800CA9F0; // size:0x10
 sharedData_800CAA00_0_s01         = 0x800CAA00; // size:0x18
 sharedData_800CAA18_0_s01         = 0x800CAA18; // size:0x18
@@ -28,15 +28,11 @@ D_800CC8FC                        = 0x800CC8FC;
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x003614   VA: 0x800CCB8C   subsegment: c, particle_glass
-//-----------------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x003614   VA: 0x800CCB8C   subsegment: c, map0_s01_2
+//-------------------------------------------------------------
 sharedFunc_800CCB8C_0_s01         = 0x800CCB8C; // type:func
 sharedFunc_800CD1F8_0_s01         = 0x800CD1F8; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x004A88   VA: 0x800CE000   subsegment: c, particle
-//-----------------------------------------------------------
 Particle_SystemUpdate             = 0x800CE000; // type:func
 Particle_CameraMovedCheck         = 0x800CE4C4; // type:func
 Particle_SnowInitialize           = 0x800CE59C; // type:func
@@ -55,10 +51,6 @@ sharedFunc_800D0B18_0_s00         = 0x800CFE20; // type:func
 Particle_SoundStop                = 0x800CFFB8; // type:func
 Particle_HyperBlasterBeamDraw     = 0x800CFFD8; // type:func
 Particle_BeamDraw                 = 0x800D0850; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x0076C4   VA: 0x800D0C3C   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02         = 0x800D0C3C; // type:func
 sharedFunc_800D1C38_0_s00         = 0x800D16C4; // type:func
 Player_CutsceneWeaponUnequip      = 0x800D1B00; // type:func
@@ -84,10 +76,6 @@ sharedFunc_800D2E9C_0_s00         = 0x800D2104; // type:func
 Player_PropertyField10DGet        = 0x800D210C; // type:func
 Player_EmptyWeaponHandSet         = 0x800D211C; // type:func
 Player_WeaponAttackRestore        = 0x800D215C; // type:func
-
-//--------------------------------------------------------------------
-//--- PA: 0x008BF8   VA: 0x800D2170   subsegment: c, Chara_AirScreamer
-//--------------------------------------------------------------------
 AirScreamer_Update                = 0x800D2170; // type:func
 sharedFunc_800D21E4_0_s01         = 0x800D21E4; // type:func
 sharedFunc_800D2200_0_s01         = 0x800D2200; // type:func
@@ -207,19 +195,11 @@ sharedFunc_800D82B8_0_s01         = 0x800D82B8; // type:func
 sharedFunc_800D8714_0_s01         = 0x800D8714; // type:func
 sharedFunc_800D87FC_0_s01         = 0x800D87FC; // type:func
 sharedFunc_800D8804_0_s01         = 0x800D8804; // type:func
-
-//--------------------------------------------------------------
-//--- PA: 0x00F29C   VA: 0x800D8814   subsegment: c, Chara_Cybil
-//--------------------------------------------------------------
 Cybil_Update                      = 0x800D8814; // type:func
 Cybil_AnimUpdate                  = 0x800D8888; // type:func
 Cybil_MovementUpdate              = 0x800D88D0; // type:func
 Cybil_AnimStateUpdate             = 0x800D8A68; // type:func
 Cybil_Init                        = 0x800D9AD0; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x010594   VA: 0x800D9B0C   subsegment: c, map0_s01_2
-//-------------------------------------------------------------
 Chara_MovementReset               = 0x800D9B0C; // type:func
 Chara_AnimReset                   = 0x800D9B20; // type:func
 Chara_AnimStateSet                = 0x800D9B64; // type:func

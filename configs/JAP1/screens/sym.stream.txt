@@ -15,6 +15,7 @@ GameState_MovieOpening_Update        = 0x801E2884; // type:func
 GameState_ExitMovie_Update           = 0x801E28FC; // type:func
 GameState_DebugMoviePlayer_Update    = 0x801E2954; // type:func
 GameState_MovieIntroAlternate_Update = 0x801E2A70; // type:func
+open_main                            = 0x801E2AF0; // type:func
 movie_main                           = 0x801E2BE8; // type:func
 strSetDefDecEnv                      = 0x801E2FD8; // type:func
 strInit                              = 0x801E3058; // type:func
@@ -90,4 +91,3 @@ m                                    = 0x801F5128;
 //--- PA: 0x012B30   VA: 0x801F5130   subsegment: o, libds/dscb, .bss
 //-------------------------------------------------------------------
 GlobalCallback                       = 0x801F5130;
-open_main                                    = 0x801E2AF0; // type:func

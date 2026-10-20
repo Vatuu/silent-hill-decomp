@@ -6,14 +6,10 @@
 //================================================
 
 
-//----------------------------------------------------------------------
-//--- PA: 0x0016D0   VA: 0x800CAC48   subsegment: .rodata, Chara_Stalker
-//----------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map7_s02_2
+//-------------------------------------------------------------------
 sharedData_800CAB70_0_s00        = 0x800CACD8; // type:VECTOR
-
-//-------------------------------------------------------------------
-//--- PA: 0x001CA8   VA: 0x800CB220   subsegment: .rodata, map7_s02_2
-//-------------------------------------------------------------------
 sharedData_800CB094_3_s01        = 0x800CD944;
 
 
@@ -23,9 +19,9 @@ sharedData_800CB094_3_s01        = 0x800CD944;
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x0046EC   VA: 0x800CDC64   subsegment: c, particle
-//-----------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x0046EC   VA: 0x800CDC64   subsegment: c, map7_s02_2
+//-------------------------------------------------------------
 Particle_SystemUpdate            = 0x800CDC64; // type:func
 Particle_EnvironmentSet          = 0x800CDDCC; // type:func
 sharedFunc_800D0A60_0_s00        = 0x800CDF4C; // type:func
@@ -33,10 +29,6 @@ sharedFunc_800D0B18_0_s00        = 0x800CE004; // type:func
 Particle_SoundStop               = 0x800CE168; // type:func
 Particle_HyperBlasterBeamDraw    = 0x800CE188; // type:func
 Particle_BeamDraw                = 0x800CEA00; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x005874   VA: 0x800CEDEC   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02        = 0x800CEDEC; // type:func
 sharedFunc_800D1C38_0_s00        = 0x800CFC94; // type:func
 Player_CutsceneWeaponUnequip     = 0x800D00E4; // type:func
@@ -62,10 +54,6 @@ sharedFunc_800D2E9C_0_s00        = 0x800D068C; // type:func
 Player_PropertyField10DGet       = 0x800D0694; // type:func
 Player_EmptyWeaponHandSet        = 0x800D06A4; // type:func
 Player_WeaponAttackRestore       = 0x800D06E4; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x007180   VA: 0x800D06F8   subsegment: c, Chara_Stalker
-//----------------------------------------------------------------
 Stalker_Update                   = 0x800D06F8; // type:func
 Stalker_Init                     = 0x800D088C; // type:func
 sharedFunc_800D3308_0_s00        = 0x800D0AF8; // type:func
@@ -87,28 +75,16 @@ sharedFunc_800D6970_0_s00        = 0x800D4350; // type:func
 Stalker_CollisionUpdate          = 0x800D4AA4; // type:func
 sharedFunc_800D7BE8_0_s00        = 0x800D55C8; // type:func
 sharedFunc_800D7E04_0_s00        = 0x800D57E4; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x00C420   VA: 0x800D5998   subsegment: c, Chara_Lisa
-//-------------------------------------------------------------
 Lisa_Update                      = 0x800D5998; // type:func
 Lisa_AnimUpdate                  = 0x800D5A0C; // type:func
 Lisa_MovementUpdate              = 0x800D5A54; // type:func
 Lisa_AnimStateUpdate             = 0x800D5BEC; // type:func
 Lisa_Init                        = 0x800D6460; // type:func
-
-//-------------------------------------------------------------------
-//--- PA: 0x00CF0C   VA: 0x800D6484   subsegment: c, Chara_BloodyLisa
-//-------------------------------------------------------------------
 BloodyLisa_Update                = 0x800D6484; // type:func
 BloodyLisa_AnimUpdate            = 0x800D64F8; // type:func
 BloodyLisa_MovementUpdate        = 0x800D6540; // type:func
 BloodyLisa_AnimStateUpdate       = 0x800D66D8; // type:func
 BloodyLisa_Init                  = 0x800D6850; // type:func
-
-//--------------------------------------------------------------------
-//--- PA: 0x00D2FC   VA: 0x800D6874   subsegment: c, Chara_Bloodsucker
-//--------------------------------------------------------------------
 Bloodsucker_Update               = 0x800D6874; // type:func
 Bloodsucker_Init                 = 0x800D6B8C; // type:func
 Bloodsucker_Control_1            = 0x800D6C20; // type:func
@@ -116,46 +92,26 @@ Bloodsucker_Control_2            = 0x800D6C38; // type:func
 Bloodsucker_Control_3            = 0x800D6C40; // type:func
 Bloodsucker_Control_4            = 0x800D6C8C; // type:func
 sharedFunc_800D0F28_3_s03        = 0x800D6C94; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x00D95C   VA: 0x800D6ED4   subsegment: c, Chara_Dahlia
-//---------------------------------------------------------------
 Dahlia_Update                    = 0x800D6ED4; // type:func
 Dahlia_AnimUpdate                = 0x800D6F48; // type:func
 Dahlia_MovementUpdate            = 0x800D6F90; // type:func
 Dahlia_ControlUpdate             = 0x800D7168; // type:func
 Dahlia_Init                      = 0x800D7A20; // type:func
-
-//-------------------------------------------------------------------------
-//--- PA: 0x00E4F0   VA: 0x800D7A68   subsegment: c, Chara_GhostChildAlessa
-//-------------------------------------------------------------------------
 GhostChildAlessa_Update          = 0x800D7A68; // type:func
 GhostChildAlessa_AnimUpdate      = 0x800D7ADC; // type:func
 GhostChildAlessa_MovementUpdate  = 0x800D7B24; // type:func
 GhostChildAlessa_AnimStateUpdate = 0x800D7CBC; // type:func
 GhostChildAlessa_Init            = 0x800D7E88; // type:func
-
-//-----------------------------------------------------------------
-//--- PA: 0x00E934   VA: 0x800D7EAC   subsegment: c, Chara_Kaufmann
-//-----------------------------------------------------------------
 Kaufmann_Update                  = 0x800D7EAC; // type:func
 Kaufmann_AnimUpdate              = 0x800D7F20; // type:func
 Kaufmann_MovementUpdate          = 0x800D7F68; // type:func
 Kaufmann_ControlUpdate           = 0x800D8100; // type:func
 Kaufmann_Init                    = 0x800D8AA8; // type:func
-
-//--------------------------------------------------------------------
-//--- PA: 0x00F578   VA: 0x800D8AF0   subsegment: c, Chara_GhostDoctor
-//--------------------------------------------------------------------
 GhostDoctor_Update               = 0x800D8AF0; // type:func
 GhostDoctor_AnimUpdate           = 0x800D8B64; // type:func
 GhostDoctor_CoordTransformUpdate = 0x800D8BAC; // type:func
 GhostDoctor_Init                 = 0x800D8BE0; // type:func
 GhostDoctor_CoordRotationUpdate  = 0x800D8C00; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x00F6FC   VA: 0x800D8C74   subsegment: c, map7_s02_2
-//-------------------------------------------------------------
 Chara_MovementReset              = 0x800D8C74; // type:func
 Chara_AnimReset                  = 0x800D8C88; // type:func
 Chara_AnimStateSet               = 0x800D8CCC; // type:func

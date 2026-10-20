@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x00237C   VA: 0x800CB8F4   subsegment: c, particle
-//-----------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x00237C   VA: 0x800CB8F4   subsegment: c, map5_s03_2
+//-------------------------------------------------------------
 Particle_SystemUpdate           = 0x800CB8F4; // type:func
 Particle_CameraMovedCheck       = 0x800CBD8C; // type:func
 Particle_SnowInitialize         = 0x800CBE64; // type:func
@@ -27,10 +27,6 @@ sharedFunc_800D0B18_0_s00       = 0x800CD780; // type:func
 Particle_SoundStop              = 0x800CD918; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CD938; // type:func
 Particle_BeamDraw               = 0x800CE1B0; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x005024   VA: 0x800CE59C   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CE59C; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CEE78; // type:func
 Player_CutsceneWeaponUnequip    = 0x800CF2C8; // type:func
@@ -56,19 +52,11 @@ sharedFunc_800D2E9C_0_s00       = 0x800CF870; // type:func
 Player_PropertyField10DGet      = 0x800CF878; // type:func
 Player_EmptyWeaponHandSet       = 0x800CF888; // type:func
 Player_WeaponAttackRestore      = 0x800CF8C8; // type:func
-
-//-----------------------------------------------------------------
-//--- PA: 0x006364   VA: 0x800CF8DC   subsegment: c, Chara_Kaufmann
-//-----------------------------------------------------------------
 Kaufmann_Update                 = 0x800CF8DC; // type:func
 Kaufmann_AnimUpdate             = 0x800CF950; // type:func
 Kaufmann_MovementUpdate         = 0x800CF998; // type:func
 Kaufmann_ControlUpdate          = 0x800CFB30; // type:func
 Kaufmann_Init                   = 0x800D0510; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x006FD4   VA: 0x800D054C   subsegment: c, map5_s03_2
-//-------------------------------------------------------------
 Chara_MovementReset             = 0x800D054C; // type:func
 Chara_AnimReset                 = 0x800D0560; // type:func
 Chara_AnimStateSet              = 0x800D05A4; // type:func

@@ -1336,6 +1336,7 @@ void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DE60
     s32 variantId;
     s32 swappableId;
 
+    // TODO: Bone hierarchies? How are these loaded?
     static s32 D_800A9ECC = 0xFE16FD13;
     static s32 D_800A9ED0 = 0x0000FE13;
     static s32 D_800A9ED4 = 0x0000FE14;

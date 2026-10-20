@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x001A98   VA: 0x800CB010   subsegment: c, particle
-//-----------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x001A98   VA: 0x800CB010   subsegment: c, map2_s01_2
+//-------------------------------------------------------------
 Particle_SystemUpdate           = 0x800CB010; // type:func
 Particle_EnvironmentSet         = 0x800CB178; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CB2F8; // type:func
@@ -16,10 +16,6 @@ sharedFunc_800D0B18_0_s00       = 0x800CB3B0; // type:func
 Particle_SoundStop              = 0x800CB514; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CB534; // type:func
 Particle_BeamDraw               = 0x800CBDAC; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x002C20   VA: 0x800CC198   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CC198; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CC7CC; // type:func
 Player_CutsceneWeaponUnequip    = 0x800CCBF8; // type:func
@@ -45,19 +41,11 @@ sharedFunc_800D2E9C_0_s00       = 0x800CD1A0; // type:func
 Player_PropertyField10DGet      = 0x800CD1A8; // type:func
 Player_EmptyWeaponHandSet       = 0x800CD1B8; // type:func
 Player_WeaponAttackRestore      = 0x800CD1F8; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x003C94   VA: 0x800CD20C   subsegment: c, Chara_Dahlia
-//---------------------------------------------------------------
 Dahlia_Update                   = 0x800CD20C; // type:func
 Dahlia_AnimUpdate               = 0x800CD280; // type:func
 Dahlia_MovementUpdate           = 0x800CD2C8; // type:func
 Dahlia_ControlUpdate            = 0x800CD4A0; // type:func
 Dahlia_Init                     = 0x800CDD64; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x004828   VA: 0x800CDDA0   subsegment: c, map2_s01_2
-//-------------------------------------------------------------
 Chara_MovementReset             = 0x800CDDA0; // type:func
 Chara_AnimReset                 = 0x800CDDB4; // type:func
 Chara_AnimStateSet              = 0x800CDDF8; // type:func

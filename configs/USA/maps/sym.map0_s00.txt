@@ -6,9 +6,9 @@
 //================================================
 
 
-//----------------------------------------------------------------------
-//--- PA: 0x001568   VA: 0x800CAAE0   subsegment: .rodata, Chara_Stalker
-//----------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map0_s00_2
+//-------------------------------------------------------------------
 sharedData_800CAB70_0_s00           = 0x800CAB70; // type:s32
 
 
@@ -18,9 +18,9 @@ sharedData_800CAB70_0_s00           = 0x800CAB70; // type:s32
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x002138   VA: 0x800CB6B0   subsegment: c, particle
-//-----------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x002138   VA: 0x800CB6B0   subsegment: c, map0_s00_2
+//-------------------------------------------------------------
 Particle_SystemUpdate               = 0x800CB6B0; // type:func
 Particle_CameraMovedCheck           = 0x800CBBBC; // type:func
 Particle_SnowInitialize             = 0x800CBC94; // type:func
@@ -41,10 +41,6 @@ Particle_SoundUpdate                = 0x800D0CB8; // type:func
 Particle_SoundStop                  = 0x800D0E04; // type:func
 Particle_HyperBlasterBeamDraw       = 0x800D0E24; // type:func
 Particle_BeamDraw                   = 0x800D0E2C; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x0078BC   VA: 0x800D0E34   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02           = 0x800D0E34; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800D1C38; // type:func
 Player_CutsceneWeaponUnequip        = 0x800D209C; // type:func
@@ -70,10 +66,6 @@ sharedFunc_800D2E9C_0_s00           = 0x800D2E9C; // type:func
 Player_PropertyField10DGet          = 0x800D2EA4; // type:func
 Player_EmptyWeaponHandSet           = 0x800D2EB4; // type:func
 Player_WeaponAttackRestore          = 0x800D2EF4; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x009990   VA: 0x800D2F08   subsegment: c, Chara_Stalker
-//----------------------------------------------------------------
 Stalker_Update                      = 0x800D2F08; // type:func
 Stalker_Init                        = 0x800D309C; // type:func
 sharedFunc_800D3308_0_s00           = 0x800D3308; // type:func
@@ -95,20 +87,12 @@ sharedFunc_800D6970_0_s00           = 0x800D6970; // type:func
 Stalker_CollisionUpdate             = 0x800D70C4; // type:func
 sharedFunc_800D7BE8_0_s00           = 0x800D7BE8; // type:func
 sharedFunc_800D7E04_0_s00           = 0x800D7E04; // type:func
-
-//---------------------------------------------------------------
-//--- PA: 0x00EA40   VA: 0x800D7FB8   subsegment: c, Chara_Cheryl
-//---------------------------------------------------------------
 Cheryl_Update                       = 0x800D7FB8; // type:func
 Cheryl_AnimUpdate                   = 0x800D802C; // type:func
 Cheryl_MovementUpdate               = 0x800D8124; // type:func
 Cheryl_ControlUpdate                = 0x800D8310; // type:func
 Cheryl_FootstepSfxPlay              = 0x800D8748; // type:func
 Cheryl_Init                         = 0x800D8888; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x00F334   VA: 0x800D88AC   subsegment: c, map0_s00_2
-//-------------------------------------------------------------
 Chara_MovementReset                 = 0x800D88AC; // type:func
 Chara_AnimReset                     = 0x800D88C0; // type:func
 Chara_AnimStateSet                  = 0x800D8904; // type:func

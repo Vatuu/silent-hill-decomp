@@ -6,9 +6,9 @@
 //================================================
 
 
-//-------------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, characters
-//-------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map6_s00
+//-----------------------------------------------------------------
 sharedData_800CA9F0_0_s01        = 0x800CA854; // size:0x10
 sharedData_800CAA00_0_s01        = 0x800CA864; // size:0x18
 sharedData_800CAA18_0_s01        = 0x800CA87C; // size:0x18
@@ -23,9 +23,9 @@ sharedData_800CAA98_0_s01        = 0x800CA8FC; // type:s32 size:0xD84
 //================================================
 
 
-//-------------------------------------------------------------
-//--- PA: 0x0035B8   VA: 0x800CCB30   subsegment: c, characters
-//-------------------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x0035B8   VA: 0x800CCB30   subsegment: c, map6_s00
+//-----------------------------------------------------------
 Particle_SystemUpdate            = 0x800CCB30; // type:func
 Particle_CameraMovedCheck        = 0x800CCFCC; // type:func
 Particle_SnowInitialize          = 0x800CD0A4; // type:func
@@ -253,10 +253,6 @@ sharedFunc_800E5AA4_2_s00        = 0x800E52F8; // type:func
 Groaner_AnimUpdate               = 0x800E5718; // type:func
 Groaner_CollisionUpdate          = 0x800E5B8C; // type:func
 sharedFunc_800E71E8_2_s00        = 0x800E6A3C; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x01D994   VA: 0x800E6F0C   subsegment: c, map6_s00
-//-----------------------------------------------------------
 Romper_Update                    = 0x800E6F0C; // type:func
 Romper_Init                      = 0x800E6FAC; // type:func
 Romper_FootstepSfxPlay           = 0x800E719C; // type:func

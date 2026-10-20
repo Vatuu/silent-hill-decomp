@@ -1,2 +1,13 @@
-GameState_LoadSavegameScreen_Update          = 0x801E7040; // type:func
-GameState_AutoLoadSavegame_Update            = 0x801E801C; // type:func
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x000900   VA: 0x801E2F00   subsegment: asm, saveload
+//-------------------------------------------------------------
+GameState_LoadSavegameScreen_Update = 0x801E7040; // type:func
+GameState_AutoLoadSavegame_Update   = 0x801E801C; // type:func

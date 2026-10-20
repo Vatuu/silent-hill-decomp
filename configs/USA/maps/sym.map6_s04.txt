@@ -6,9 +6,9 @@
 //================================================
 
 
-//----------------------------------------------------------------------
-//--- PA: 0x001840   VA: 0x800CADB8   subsegment: .rodata, Chara_Stalker
-//----------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map6_s04_2
+//-------------------------------------------------------------------
 sharedData_800CAB70_0_s00       = 0x800CAE48; // type:VECTOR
 
 
@@ -18,17 +18,13 @@ sharedData_800CAB70_0_s00       = 0x800CAE48; // type:VECTOR
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x003268   VA: 0x800CC7E0   subsegment: c, unk_draw_m1s01
-//-----------------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x003268   VA: 0x800CC7E0   subsegment: c, map6_s04_2
+//-------------------------------------------------------------
 sharedFunc_800CB7F4_1_s01       = 0x800CC7E0; // type:func
 sharedFunc_800CB8A0_1_s01       = 0x800CC88C; // type:func
 sharedFunc_800CBA38_1_s01       = 0x800CCA24; // type:func
 sharedFunc_800CBB30_1_s01       = 0x800CCB1C; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x003E34   VA: 0x800CD3AC   subsegment: c, particle
-//-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CD3AC; // type:func
 Particle_EnvironmentSet         = 0x800CD514; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CD694; // type:func
@@ -36,10 +32,6 @@ sharedFunc_800D0B18_0_s00       = 0x800CD74C; // type:func
 Particle_SoundStop              = 0x800CD8B0; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CD8D0; // type:func
 Particle_BeamDraw               = 0x800CE148; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x004FBC   VA: 0x800CE534   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CE534; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CF620; // type:func
 Player_CutsceneWeaponUnequip    = 0x800CFA4C; // type:func
@@ -65,10 +57,6 @@ sharedFunc_800D2E9C_0_s00       = 0x800D004C; // type:func
 Player_PropertyField10DGet      = 0x800D0054; // type:func
 Player_EmptyWeaponHandSet       = 0x800D0064; // type:func
 Player_WeaponAttackRestore      = 0x800D00A4; // type:func
-
-//----------------------------------------------------------------------
-//--- PA: 0x006B40   VA: 0x800D00B8   subsegment: c, Chara_LarvalStalker
-//----------------------------------------------------------------------
 LarvalStalker_Update            = 0x800D00B8; // type:func
 LarvalStalker_ControlUpdate     = 0x800D01D0; // type:func
 sharedFunc_800D140C_1_s00       = 0x800D2474; // type:func
@@ -76,10 +64,6 @@ sharedFunc_800D1524_1_s00       = 0x800D258C; // type:func
 LarvalStalker_Init              = 0x800D2764; // type:func
 sharedFunc_800D17BC_1_s00       = 0x800D2824; // type:func
 LarvalStalker_CollisionUpdate   = 0x800D2E24; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x009FE8   VA: 0x800D3560   subsegment: c, Chara_Stalker
-//----------------------------------------------------------------
 Stalker_Update                  = 0x800D3560; // type:func
 Stalker_Init                    = 0x800D36F4; // type:func
 sharedFunc_800D3308_0_s00       = 0x800D3960; // type:func
@@ -101,16 +85,8 @@ sharedFunc_800D6970_0_s00       = 0x800D7168; // type:func
 Stalker_CollisionUpdate         = 0x800D78BC; // type:func
 sharedFunc_800D7BE8_0_s00       = 0x800D83E0; // type:func
 sharedFunc_800D7E04_0_s00       = 0x800D85FC; // type:func
-
-//---------------------------------------------------------------------
-//--- PA: 0x00F238   VA: 0x800D87B0   subsegment: c, Chara_MonsterCybil
-//---------------------------------------------------------------------
 MonsterCybil_Update             = 0x800D8908; // type:func
 MonsterCybil_Init               = 0x800D89CC; // type:func
-
-//---------------------------------------------------------------------
-//--- PA: 0x012D3C   VA: 0x800DC2B4   subsegment: c, Chara_AlessaDahlia
-//---------------------------------------------------------------------
 Alessa_Update                   = 0x800DC2B4; // type:func
 Alessa_AnimUpdate               = 0x800DC328; // type:func
 Alessa_MovementUpdate           = 0x800DC370; // type:func
@@ -121,10 +97,6 @@ Dahlia_AnimUpdate               = 0x800DCAA4; // type:func
 Dahlia_MovementUpdate           = 0x800DCAEC; // type:func
 Dahlia_ControlUpdate            = 0x800DCCC4; // type:func
 Dahlia_Init                     = 0x800DD57C; // type:func
-
-//-------------------------------------------------------------
-//--- PA: 0x014040   VA: 0x800DD5B8   subsegment: c, map6_s04_2
-//-------------------------------------------------------------
 Chara_MovementReset             = 0x800DD5B8; // type:func
 Chara_AnimReset                 = 0x800DD5CC; // type:func
 Chara_AnimStateSet              = 0x800DD610; // type:func

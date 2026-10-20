@@ -6,9 +6,9 @@
 //================================================
 
 
-//----------------------------------------------------------------------
-//--- PA: 0x0014E8   VA: 0x800CAA60   subsegment: .rodata, Chara_Stalker
-//----------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map1_s02
+//-----------------------------------------------------------------
 sharedData_800CAB70_0_s00               = 0x800CAAF0; // type:VECTOR
 
 
@@ -18,18 +18,14 @@ sharedData_800CAB70_0_s00               = 0x800CAAF0; // type:VECTOR
 //================================================
 
 
-//-----------------------------------------------------------------
-//--- PA: 0x0024D4   VA: 0x800CBA4C   subsegment: c, particle_water
-//-----------------------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x0024D4   VA: 0x800CBA4C   subsegment: c, map1_s02
+//-----------------------------------------------------------
 sharedFunc_800CBA4C_1_s02               = 0x800CBA4C; // type:func
 sharedFunc_800CBC98_1_s02               = 0x800CBC98; // type:func
 sharedFunc_800CBD58_1_s02               = 0x800CBD58; // type:func
 sharedFunc_800CBDA8_1_s02               = 0x800CBDA8; // type:func
 sharedFunc_800CCE60_1_s02               = 0x800CCE60; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x0044D4   VA: 0x800CDA4C   subsegment: c, particle
-//-----------------------------------------------------------
 Particle_SystemUpdate                   = 0x800CDA4C; // type:func
 Particle_CameraMovedCheck               = 0x800CDE40; // type:func
 Particle_SnowInitialize                 = 0x800CDF18; // type:func
@@ -48,10 +44,6 @@ Particle_SoundUpdate                    = 0x800CF8F4; // type:func
 Particle_SoundStop                      = 0x800CFA40; // type:func
 Particle_HyperBlasterBeamDraw           = 0x800CFA60; // type:func
 Particle_BeamDraw                       = 0x800D02D8; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x00714C   VA: 0x800D06C4   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02               = 0x800D06C4; // type:func
 sharedFunc_800D1C38_0_s00               = 0x800D1624; // type:func
 Player_CutsceneWeaponUnequip            = 0x800D1AAC; // type:func
@@ -77,10 +69,6 @@ sharedFunc_800D2E9C_0_s00               = 0x800D28DC; // type:func
 Player_PropertyField10DGet              = 0x800D28E4; // type:func
 Player_EmptyWeaponHandSet               = 0x800D28F4; // type:func
 Player_WeaponAttackRestore              = 0x800D2934; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x0093D0   VA: 0x800D2948   subsegment: c, Chara_Stalker
-//----------------------------------------------------------------
 Stalker_Update                          = 0x800D2948; // type:func
 Stalker_Init                            = 0x800D2ADC; // type:func
 sharedFunc_800D3308_0_s00               = 0x800D2D48; // type:func
@@ -102,10 +90,6 @@ sharedFunc_800D6970_0_s00               = 0x800D6550; // type:func
 Stalker_CollisionUpdate                 = 0x800D6CA4; // type:func
 sharedFunc_800D7BE8_0_s00               = 0x800D77C8; // type:func
 sharedFunc_800D7E04_0_s00               = 0x800D79E4; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x00E620   VA: 0x800D7B98   subsegment: c, Chara_Creeper
-//----------------------------------------------------------------
 Creeper_Update                          = 0x800D7B98; // type:func
 Creeper_Init                            = 0x800D7C28; // type:func
 sharedFunc_800D7EE8_1_s02               = 0x800D7EE8; // type:func
@@ -118,10 +102,6 @@ Creeper_ControlDamage                   = 0x800D9774; // type:func
 sharedFunc_800D983C_1_s02               = 0x800D983C; // type:func
 Creeper_AnimUpdate                      = 0x800D9960; // type:func
 Creeper_CollisionUpdate                 = 0x800D99D0; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x010894   VA: 0x800D9E0C   subsegment: c, map1_s02
-//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00               = 0x800D9E0C; // type:func
 Map_RoomIdxGet                          = 0x800D9E1C; // type:func
 Map_RoomBgmInit                         = 0x800D9EBC; // type:func

@@ -6,9 +6,9 @@
 //================================================
 
 
-//----------------------------------------------------------------------
-//--- PA: 0x001328   VA: 0x800CA8A0   subsegment: .rodata, Chara_Stalker
-//----------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map6_s03
+//-----------------------------------------------------------------
 sharedData_800CAB70_0_s00          = 0x800CA930; // type:VECTOR
 
 
@@ -19,7 +19,7 @@ sharedData_800CAB70_0_s00          = 0x800CA930; // type:VECTOR
 
 
 //-----------------------------------------------------------
-//--- PA: 0x001CF4   VA: 0x800CB26C   subsegment: c, particle
+//--- PA: 0x001CF4   VA: 0x800CB26C   subsegment: c, map6_s03
 //-----------------------------------------------------------
 Particle_SystemUpdate              = 0x800CB26C; // type:func
 Particle_CameraMovedCheck          = 0x800CB660; // type:func
@@ -40,10 +40,6 @@ Particle_SoundUpdate               = 0x800CD288; // type:func
 Particle_SoundStop                 = 0x800CD3D4; // type:func
 Particle_HyperBlasterBeamDraw      = 0x800CD3F4; // type:func
 Particle_BeamDraw                  = 0x800CDC6C; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x004AE0   VA: 0x800CE058   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02          = 0x800CE058; // type:func
 sharedFunc_800D1C38_0_s00          = 0x800CE58C; // type:func
 Player_CutsceneWeaponUnequip       = 0x800CE9B8; // type:func
@@ -69,10 +65,6 @@ sharedFunc_800D2E9C_0_s00          = 0x800CEF60; // type:func
 Player_PropertyField10DGet         = 0x800CEF68; // type:func
 Player_EmptyWeaponHandSet          = 0x800CEF78; // type:func
 Player_WeaponAttackRestore         = 0x800CEFB8; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x005A54   VA: 0x800CEFCC   subsegment: c, Chara_Stalker
-//----------------------------------------------------------------
 Stalker_Update                     = 0x800CEFCC; // type:func
 Stalker_Init                       = 0x800CF160; // type:func
 sharedFunc_800D3308_0_s00          = 0x800CF414; // type:func
@@ -94,10 +86,6 @@ sharedFunc_800D6970_0_s00          = 0x800D2C1C; // type:func
 Stalker_CollisionUpdate            = 0x800D3370; // type:func
 sharedFunc_800D7BE8_0_s00          = 0x800D3E94; // type:func
 sharedFunc_800D7E04_0_s00          = 0x800D40B0; // type:func
-
-//------------------------------------------------------------------------
-//--- PA: 0x00ACEC   VA: 0x800D4264   subsegment: c, Chara_HangedScratcher
-//------------------------------------------------------------------------
 HangedScratcher_Update             = 0x800D4264; // type:func
 HangedScratcher_Init               = 0x800D42E8; // type:func
 sharedFunc_800CFF74_5_s00          = 0x800D45B4; // type:func
@@ -123,10 +111,6 @@ sharedFunc_800D2844_5_s00          = 0x800D6E84; // type:func
 HangedScratcher_CollisionUpdate    = 0x800D7258; // type:func
 sharedFunc_800D3214_5_s00          = 0x800D7854; // type:func
 sharedFunc_800D3300_5_s00          = 0x800D7998; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x00E99C   VA: 0x800D7F14   subsegment: c, map6_s03
-//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00          = 0x800D7F14; // type:func
 Map_RoomIdxGet                     = 0x800D7F24; // type:func
 GameBoot_LoadScreen_StageString    = 0x800D81A4; // type:func

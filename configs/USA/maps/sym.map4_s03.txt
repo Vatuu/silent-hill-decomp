@@ -6,17 +6,13 @@
 //================================================
 
 
-//----------------------------------------------------------------
-//--- PA: 0x001B2C   VA: 0x800CB0A4   subsegment: c, particle_acid
-//----------------------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x001B2C   VA: 0x800CB0A4   subsegment: c, map4_s03
+//-----------------------------------------------------------
 sharedFunc_800CB0A4_4_s03       = 0x800CB0A4; // type:func
 sharedFunc_800CB1B0_4_s03       = 0x800CB1B0; // type:func
 sharedFunc_800CBE54_4_s03       = 0x800CBE54; // type:func
 sharedFunc_800CC004_4_s03       = 0x800CC004; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x003188   VA: 0x800CC700   subsegment: c, particle
-//-----------------------------------------------------------
 Particle_SystemUpdate           = 0x800CC700; // type:func
 Particle_CameraMovedCheck       = 0x800CCB4C; // type:func
 Particle_SnowInitialize         = 0x800CCC24; // type:func
@@ -36,10 +32,6 @@ Particle_SoundUpdate            = 0x800CE864; // type:func
 Particle_SoundStop              = 0x800CE9B0; // type:func
 Particle_HyperBlasterBeamDraw   = 0x800CE9D0; // type:func
 Particle_BeamDraw               = 0x800CF248; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x0060BC   VA: 0x800CF634   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02       = 0x800CF634; // type:func
 sharedFunc_800D1C38_0_s00       = 0x800CFA58; // type:func
 Player_CutsceneWeaponUnequip    = 0x800CFEA8; // type:func
@@ -65,10 +57,6 @@ sharedFunc_800D2E9C_0_s00       = 0x800D0450; // type:func
 Player_PropertyField10DGet      = 0x800D0458; // type:func
 Player_EmptyWeaponHandSet       = 0x800D0468; // type:func
 Player_WeaponAttackRestore      = 0x800D04A8; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x006F44   VA: 0x800D04BC   subsegment: c, map4_s03
-//-----------------------------------------------------------
 sharedFunc_800CD6B0_3_s03       = 0x800D04BC; // type:func
 sharedFunc_800CD7F8_3_s03       = 0x800D0604; // type:func
 sharedFunc_800CD920_3_s03       = 0x800D072C; // type:func

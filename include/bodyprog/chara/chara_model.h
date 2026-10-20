@@ -11,7 +11,7 @@
 typedef struct _Bone
 {
     /* 0x0  */ s_ModelInfo modelInfo;
-    /* 0x10 */ s8          idx;
+    /* 0x10 */ s8          modelIdx;
                // 3 bytes of padding.
 } s_Bone;
 STATIC_ASSERT_SIZEOF(s_Bone, 20);

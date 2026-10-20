@@ -6,9 +6,9 @@
 //================================================
 
 
-//--------------------------------------------------------------------------
-//--- PA: 0x0012E8   VA: 0x800CA860   subsegment: .rodata, Chara_AirScreamer
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map2_s00
+//-----------------------------------------------------------------
 sharedData_800CA9F0_0_s01        = 0x800CA860; // size:0x10
 sharedData_800CAA00_0_s01        = 0x800CA870; // size:0x18
 sharedData_800CAA18_0_s01        = 0x800CA888; // size:0x18
@@ -24,7 +24,7 @@ sharedData_800CAA98_0_s01        = 0x800CA908; // type:s32 size:0xD84
 
 
 //-----------------------------------------------------------
-//--- PA: 0x004048   VA: 0x800CD5C0   subsegment: c, particle
+//--- PA: 0x004048   VA: 0x800CD5C0   subsegment: c, map2_s00
 //-----------------------------------------------------------
 Particle_SystemUpdate            = 0x800CD5C0; // type:func
 Particle_CameraMovedCheck        = 0x800CDC3C; // type:func
@@ -44,10 +44,6 @@ sharedFunc_800D0B18_0_s00        = 0x800CFBA8; // type:func
 Particle_SoundStop               = 0x800CFD40; // type:func
 Particle_HyperBlasterBeamDraw    = 0x800CFD60; // type:func
 Particle_BeamDraw                = 0x800D05D8; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x00744C   VA: 0x800D09C4   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02        = 0x800D09C4; // type:func
 sharedFunc_800D1C38_0_s00        = 0x800D0DC4; // type:func
 Player_CutsceneWeaponUnequip     = 0x800D1214; // type:func
@@ -73,10 +69,6 @@ sharedFunc_800D2E9C_0_s00        = 0x800D1A64; // type:func
 Player_PropertyField10DGet       = 0x800D1EDC; // type:func
 Player_EmptyWeaponHandSet        = 0x800D1EEC; // type:func
 Player_WeaponAttackRestore       = 0x800D1F2C; // type:func
-
-//--------------------------------------------------------------------
-//--- PA: 0x0089C8   VA: 0x800D1F40   subsegment: c, Chara_AirScreamer
-//--------------------------------------------------------------------
 AirScreamer_Update               = 0x800D1F40; // type:func
 sharedFunc_800D21E4_0_s01        = 0x800D1FB4; // type:func
 sharedFunc_800D2200_0_s01        = 0x800D1FD0; // type:func
@@ -244,10 +236,6 @@ sharedFunc_800D82B8_0_s01        = 0x800E2A1C; // type:func
 sharedFunc_800D8714_0_s01        = 0x800E2E78; // type:func
 sharedFunc_800D87FC_0_s01        = 0x800E2F60; // type:func
 sharedFunc_800D8804_0_s01        = 0x800E2F68; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x019A00   VA: 0x800E2F78   subsegment: c, Chara_Groaner
-//----------------------------------------------------------------
 Groaner_Update                   = 0x800E2F78; // type:func
 Groaner_Init                     = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
 sharedFunc_800E33DC_2_s00        = 0x800E33DC; // type:func
@@ -263,10 +251,6 @@ sharedFunc_800E5AA4_2_s00        = 0x800E5AA4; // type:func
 Groaner_AnimUpdate               = 0x800E5EC4; // type:func
 Groaner_CollisionUpdate          = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00        = 0x800E71E8; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x01E140   VA: 0x800E76B8   subsegment: c, map2_s00
-//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00        = 0x800E76B8; // type:func
 Map_RoomIdxGet                   = 0x800E76C8; // type:func
 Map_RoomBgmInit                  = 0x800E7914; // type:func

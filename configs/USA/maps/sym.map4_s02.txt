@@ -6,9 +6,9 @@
 //================================================
 
 
-//-------------------------------------------------------------------
-//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, characters
-//-------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x001050   VA: 0x800CA5C8   subsegment: .rodata, map4_s02
+//-----------------------------------------------------------------
 sharedData_800CA9F0_0_s01        = 0x800CA77C; // size:0x10
 sharedData_800CAA00_0_s01        = 0x800CA78C; // size:0x18
 sharedData_800CAA18_0_s01        = 0x800CA7A4; // size:0x18
@@ -23,9 +23,9 @@ sharedData_800CAA98_0_s01        = 0x800CA824; // type:s32 size:0xD84
 //================================================
 
 
-//-------------------------------------------------------------
-//--- PA: 0x003290   VA: 0x800CC808   subsegment: c, characters
-//-------------------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x003290   VA: 0x800CC808   subsegment: c, map4_s02
+//-----------------------------------------------------------
 Particle_SystemUpdate            = 0x800CC808; // type:func
 Particle_CameraMovedCheck        = 0x800CCBFC; // type:func
 Particle_SnowInitialize          = 0x800CCCD4; // type:func
@@ -276,10 +276,6 @@ Romper_CollisionUpdate           = 0x800E91F8; // type:func
 sharedFunc_800E939C_2_s02        = 0x800E9798; // type:func
 sharedFunc_800E94B4_2_s02        = 0x800E98B0; // type:func
 sharedFunc_800E9714_2_s02        = 0x800E9B10; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x0207B0   VA: 0x800E9D28   subsegment: c, map4_s02
-//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00        = 0x800E9D28; // type:func
 Map_RoomIdxGet                   = 0x800E9D38; // type:func
 Map_RoomBgmInit                  = 0x800E9F34; // type:func

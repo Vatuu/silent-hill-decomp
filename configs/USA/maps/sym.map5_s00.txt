@@ -7,7 +7,7 @@
 
 
 //-----------------------------------------------------------
-//--- PA: 0x0027B4   VA: 0x800CBD2C   subsegment: c, particle
+//--- PA: 0x001B60   VA: 0x800CB0D8   subsegment: c, map5_s00
 //-----------------------------------------------------------
 Particle_SystemUpdate              = 0x800CBD2C; // type:func
 Particle_CameraMovedCheck          = 0x800CC120; // type:func
@@ -28,10 +28,6 @@ Particle_SoundUpdate               = 0x800CDD48; // type:func
 Particle_SoundStop                 = 0x800CDE94; // type:func
 Particle_HyperBlasterBeamDraw      = 0x800CDEB4; // type:func
 Particle_BeamDraw                  = 0x800CE72C; // type:func
-
-//---------------------------------------------------------
-//--- PA: 0x0055A0   VA: 0x800CEB18   subsegment: c, player
-//---------------------------------------------------------
 sharedFunc_800CDAA8_0_s02          = 0x800CEB18; // type:func
 sharedFunc_800D1C38_0_s00          = 0x800CF1C0; // type:func
 Player_CutsceneWeaponUnequip       = 0x800CF610; // type:func
@@ -57,10 +53,6 @@ sharedFunc_800D2E9C_0_s00          = 0x800CFBB8; // type:func
 Player_PropertyField10DGet         = 0x800CFBC0; // type:func
 Player_EmptyWeaponHandSet          = 0x800CFBD0; // type:func
 Player_WeaponAttackRestore         = 0x800CFC10; // type:func
-
-//------------------------------------------------------------------------
-//--- PA: 0x0066AC   VA: 0x800CFC24   subsegment: c, Chara_HangedScratcher
-//------------------------------------------------------------------------
 HangedScratcher_Update             = 0x800CFC24; // type:func
 HangedScratcher_Init               = 0x800CFCA8; // type:func
 sharedFunc_800CFF74_5_s00          = 0x800CFF74; // type:func
@@ -86,10 +78,6 @@ sharedFunc_800D2844_5_s00          = 0x800D2844; // type:func
 HangedScratcher_CollisionUpdate    = 0x800D2C18; // type:func
 sharedFunc_800D3214_5_s00          = 0x800D3214; // type:func
 sharedFunc_800D3300_5_s00          = 0x800D3300; // type:func
-
-//----------------------------------------------------------------
-//--- PA: 0x00A304   VA: 0x800D387C   subsegment: c, Chara_Creeper
-//----------------------------------------------------------------
 Creeper_Update                     = 0x800D387C; // type:func
 Creeper_Init                       = 0x800D390C; // type:func - extra code at end compared to 1_s02
 sharedFunc_800D7EE8_1_s02          = 0x800D3BDC; // type:func
@@ -102,10 +90,6 @@ Creeper_ControlDamage              = 0x800D5468; // type:func
 sharedFunc_800D983C_1_s02          = 0x800D5530; // type:func
 Creeper_AnimUpdate                 = 0x800D5654; // type:func
 Creeper_CollisionUpdate            = 0x800D56C4; // type:func
-
-//-----------------------------------------------------------
-//--- PA: 0x00C588   VA: 0x800D5B00   subsegment: c, map5_s00
-//-----------------------------------------------------------
 sharedFunc_800D929C_0_s00          = 0x800D64F8; // type:func
 Map_RoomIdxGet                     = 0x800D6508; // type:func
 GameBoot_LoadScreen_StageString    = 0x800D67EC; // type:func
