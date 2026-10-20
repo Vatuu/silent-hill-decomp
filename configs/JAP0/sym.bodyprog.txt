@@ -3010,6 +3010,8 @@ D_800AD480                                   = 0x800AF81C;
 g_StringColorId                              = 0x800AF834; // type:s16
 // text_draw
 g_StringLayerIdx                             = 0x800AF838;
+g_StringColorId_JP                           = 0x800AF83C; // type:s16
+STRING_COLORS_JP                             = 0x800AF840;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x08AD00   VA: 0x800AF860   subsegment: .data, items/item_screens_3
@@ -3562,8 +3564,11 @@ g_StringPositionX1                           = 0x800C5DDC; // type:s32
 g_MapMsg_GlyphSprite                         = 0x800C5DE8;
 g_GlyphSpritePositionX                       = 0x800C5E0C;
 D_800C391E                                   = 0x800C5E0E;
-D_800C5E10                                   = 0x800C5E10; // size:4
+g_StringPosition_JP                          = 0x800C5E10; // type:DVECTOR
+g_StringPositionX1_JP                        = 0x800C5E14; // type:s32
 g_MapMsg_ActiveLine                          = 0x800C5E18;
+g_MapMsg_WidthIdx                            = 0x800C5E1C;
+g_MapMsg_Widths                              = 0x800C5E30; // type:s32
 D_800C3920                                   = 0x800C5E54;
 
 //----------------------------------------------------------------------------

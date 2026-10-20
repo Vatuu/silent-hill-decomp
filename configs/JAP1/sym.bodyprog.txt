@@ -941,7 +941,7 @@ Gfx_StringLayerIdxReset                      = 0x8004A6A4; // type:func
 Gfx_StringColorSet                           = 0x8004A6B4; // type:func
 Gfx_StringDraw                               = 0x8004A6C0; // type:func
 func_8004AA28                                = 0x8004AACC; // type:func
-func_8004AA6C                                = 0x8004AB10; // type:func
+Gfx_GlyphSprite_PositionSet                  = 0x8004AB10; // type:func
 func_8004AAE4                                = 0x8004AB88; // type:func
 func_8004B76C                                = 0x8004ABA8; // type:func
 Gfx_StringDrawInt                            = 0x8004AE34; // type:func
@@ -3114,8 +3114,8 @@ g_StringLayerIdx                             = 0x800AF95C;
 //----------------------------------------------------
 //--- PA: 0x08AE00   VA: 0x800AF960   subsegment: data
 //----------------------------------------------------
-D_800AF83C                                   = 0x800AF960;
-D_800AF840                                   = 0x800AF964;
+g_StringColorId_JP                           = 0x800AF960; // type:s16
+STRING_COLORS_JP                             = 0x800AF964;
 
 //---------------------------------------------------------------------------
 //--- PA: 0x08AE24   VA: 0x800AF984   subsegment: .data, items/item_screens_3
@@ -3679,17 +3679,15 @@ g_StringPositionX1                           = 0x800C5F04; // type:s32
 //--- PA: 0x0A13A8   VA: 0x800C5F08   subsegment: bss
 //---------------------------------------------------
 g_MapMsg_GlyphSprite                         = 0x800C5F10;
-D_800C5DEC                                   = 0x800C5F14;
-D_800C5DEE                                   = 0x800C5F16;
 g_GlyphSpritePositionX                       = 0x800C5F34;
 D_800C391E                                   = 0x800C5F36;
-D_800C5E10                                   = 0x800C5F38;
-D_800C5E14                                   = 0x800C5F3C;
+g_StringPosition_JP                          = 0x800C5F38; // type:DVECTOR
+g_StringPositionX1_JP                        = 0x800C5F3C; // type:s32
 g_MapMsg_ActiveLine                          = 0x800C5F40;
 D_800C5E19                                   = 0x800C5F41;
-D_800C5E1C                                   = 0x800C5F44;
+g_MapMsg_WidthIdx                            = 0x800C5F44;
 D_800C5E20                                   = 0x800C5F48;
-D_800C5E30                                   = 0x800C5F58;
+g_MapMsg_Widths                              = 0x800C5F58; // type:s32
 D_800C3920                                   = 0x800C5F7C;
 
 //----------------------------------------------------------------------------

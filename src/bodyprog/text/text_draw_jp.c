@@ -21,18 +21,13 @@ static s16 g_StringColorId = StringColorId_White; /** `e_ColorId` */
 // 2 bytes of padding.
 static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 
-// TODO: Unsure if these correspond to variables in USA.
-extern s16 D_800AF83C; // Set by `Gfx_StringColorSet_JP`
-extern u32 D_800AF840[]; // Glyph colors, indexed by `D_800AF83C`.
-extern s16 D_800C5DEC;
-extern s16 D_800C5DEE;
+// JPN copies of the USA string state, used by the map message functions below.
+extern s16 g_StringColorId_JP; // Set by `Gfx_StringColorSet_JP`.
+extern u32 STRING_COLORS_JP[];
 extern s16 g_GlyphSpritePositionX; // 0x800C5E0C;
 extern s16 D_800C391E; // 0x800C5E0E;
-extern DVECTOR D_800C5E10;
-extern s32 D_800C5E14;
-extern s32 D_800C5E1C;
-
-extern s32 D_800C5E30[];
+extern DVECTOR g_StringPosition_JP;
+extern s32 g_StringPositionX1_JP;
 extern s32 D_800C5E20;
 
 const u32 __pad_rodata_80025D54 = 0;
@@ -274,18 +269,17 @@ void func_8004AA28(void) // 0x8004AA28
     func_8003652C();
 }
 
-// TODO: Matches USA `Gfx_GlyphSprite_PositionSet`, rename symbols to match.
-void func_8004AA6C(s16 x, s16 y) // 0x8004AA6C
+void Gfx_GlyphSprite_PositionSet(s16 x, s16 y) // 0x8004AA6C
 {
     if (x != NO_VALUE)
     {
-        D_800C5DEC = x + (-g_GameWork.gsScreenWidth / 2);
-        g_GlyphSpritePositionX = D_800C5DEC;
+        g_MapMsg_GlyphSprite.x = x + (-g_GameWork.gsScreenWidth / 2);
+        g_GlyphSpritePositionX = g_MapMsg_GlyphSprite.x;
     }
 
     if (y != NO_VALUE)
     {
-        D_800C5DEE = y + (-g_GameWork.gsScreenHeight / 2);
+        g_MapMsg_GlyphSprite.y = y + (-g_GameWork.gsScreenHeight / 2);
     }
 }
 
@@ -453,11 +447,11 @@ void Gfx_MapMsg_Reset(void) // 0x8004AEA8
 {
     g_MapMsg_ActiveLine.unused = 0;
     g_MapMsg_ActiveLine.positionIdx = 1;
-    D_800C5E1C = 1;
-    D_800C5E10.vx = -0x78;
-    D_800C5E10.vy = 0x4C;
-    D_800C5E14 = -0x78;
-    D_800AF83C = StringColorId_White;
+    g_MapMsg_WidthIdx = 1;
+    g_StringPosition_JP.vx = -0x78;
+    g_StringPosition_JP.vy = 0x4C;
+    g_StringPositionX1_JP = -0x78;
+    g_StringColorId_JP = StringColorId_White;
     g_SysWork.enableHalfHeightGlyphs = 0;
 }
 
@@ -465,18 +459,18 @@ void func_8004AF14(s32 x, s32 y) // 0x8004AF14
 {
     if (x != -1)
     {
-        D_800C5E10.vx = x - (SCREEN_WIDTH / 2);
-        D_800C5E14 = D_800C5E10.vx;
+        g_StringPosition_JP.vx = x - (SCREEN_WIDTH / 2);
+        g_StringPositionX1_JP = g_StringPosition_JP.vx;
     }
     if (y != -1)
     {
-        D_800C5E10.vy = y - (FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2);
+        g_StringPosition_JP.vy = y - (FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2);
     }
 }
 
 void Gfx_StringColorSet_JP(s16 colorId) // 0x8004A8DC
 {
-    D_800AF83C = colorId;
+    g_StringColorId_JP = colorId;
 }
 
 s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
@@ -493,12 +487,12 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
     char* mapMsg;
 
     ret                = 0;
-    D_800C5E1C         = 1;
+    g_MapMsg_WidthIdx         = 1;
     g_MapMsg_AudioType = MapMsgAudioType_None;
 
     for (i = 0; i < FONT_12X16_LINE_COUNT_MAX; i++)
     {
-        D_800C5E30[i] = 0;
+        g_MapMsg_Widths[i] = 0;
     }
 
     mapMsg = g_MapOverlayHdr.mapMessages[mapMsgIdx];
@@ -525,9 +519,9 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
                     if (msgCode == MAP_MSG_CODE_NEWLINE)
                     {
                         j++;
-                        D_800C5E30[D_800C5E1C - 1] = i;
+                        g_MapMsg_Widths[g_MapMsg_WidthIdx - 1] = i;
                         i                          = 21;
-                        D_800C5E1C++;
+                        g_MapMsg_WidthIdx++;
                     }
                     else if (msgCode == MAP_MSG_CODE_JUMP)
                     {
@@ -549,7 +543,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
 
                 case 0:
                     j                          = FONT_12X16_LINE_COUNT_MAX;
-                    D_800C5E30[D_800C5E1C - 1] = i;
+                    g_MapMsg_Widths[g_MapMsg_WidthIdx - 1] = i;
                     i                          = 21;
                     break;
 
@@ -661,7 +655,7 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
                     }
                     else
                     {
-                        D_800C3920 = D_800C5E30[j];
+                        D_800C3920 = g_MapMsg_Widths[j];
                         func_8004C8D8(temp, &i, 0);
                         mapMsg += 2;
                         i++;
@@ -769,7 +763,302 @@ void func_8004B45C(s32 mapMsgBaseIdx, s32 arg1) // 0x8004B45C
     }
 }
 
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw_jp", Gfx_MapMsg_StringDraw);
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004B6F4
+{
+    GsOT*     ot2;
+    s32       posY;
+    s32       posX;
+    s32       page;
+    s32       decimalCount;
+    s32       j;
+    s32       value;
+    s32       timer;
+    s32       remaining;
+    s32       hasDecimal;
+    s32       glyphIdx;
+    s32       lineIdx;
+    s32       maxWidth;
+    GsOT_TAG* ot;
+    char*     str;
+    u32       color;
+    u8        code;
+    u8        charCode;
+    s32       digit;
+    s32       arg;
+    s32       result; // `e_MapMsgReturnCode`
+    PACKET*   packet;
+    DVECTOR*  pos;
+    DVECTOR*  pos2;
+    POLY_FT4* poly;
+
+    str       = mapMsg;
+    remaining = displayLength;
+    packet    = NULL;
+    result    = MapMsgReturnCode_None;
+    ot        = &g_OtTags0[g_ActiveBufferIdx][6];
+    color     = STRING_COLORS_JP[g_StringColorId_JP];
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        packet = GsOUT_PACKET_P;
+    }
+
+    switch (g_MapMsg_ActiveLine.positionIdx)
+    {
+        case 0:
+            g_StringPosition_JP.vy = -92;
+            break;
+
+        case 1:
+            g_StringPosition_JP.vy = 76 - ((g_MapMsg_WidthIdx - 1) * 16);
+            break;
+
+        case 2:
+            g_StringPosition_JP.vy = -60;
+            break;
+
+        case 3:
+            g_StringPosition_JP.vy = 44 - ((g_MapMsg_WidthIdx - 1) * 16);
+            break;
+
+        case 4:
+            g_StringPosition_JP.vy = ((9 - g_MapMsg_WidthIdx) * 8) - 76;
+            break;
+    }
+
+    maxWidth = g_MapMsg_Widths[0];
+    for (glyphIdx = 1; glyphIdx < g_MapMsg_WidthIdx; glyphIdx++)
+    {
+        if (maxWidth < g_MapMsg_Widths[glyphIdx])
+        {
+            maxWidth = g_MapMsg_Widths[glyphIdx];
+        }
+    }
+
+    posY = g_StringPosition_JP.vy;
+    for (lineIdx = 0; lineIdx < g_MapMsg_WidthIdx; lineIdx++)
+    {
+        pos  = &g_StringPosition_JP;
+        pos2 = &g_StringPosition_JP;
+
+        if (result == MapMsgReturnCode_AlignCenter)
+        {
+            g_StringPosition_JP.vx = -g_MapMsg_Widths[lineIdx] * 6;
+        }
+        else
+        {
+            g_StringPosition_JP.vx = -maxWidth * 6;
+        }
+
+        // @hack `pos2` equals `pos` here - compiler will delete the store but keep the load, matching a dead load in the original.
+        pos2->vx = pos->vx;
+
+        switch (result)
+        {
+            case MapMsgReturnCode_AlignCenter:
+                posX = g_StringPosition_JP.vx = -g_MapMsg_Widths[lineIdx] * 6;
+                break;
+
+            case MapMsgReturnCode_SetByT:
+                posX = g_StringPositionX1_JP;
+                break;
+
+            default:
+                posX = g_StringPosition_JP.vx = -maxWidth * 6;
+                break;
+        }
+
+        for (glyphIdx = 0; glyphIdx < 21; )
+        {
+            charCode = *str;
+            switch (charCode)
+            {
+                case '\t':
+                case '\n':
+                case ' ':
+                    str++;
+                    break;
+
+                case MAP_MSG_CODE_MARKER:
+                    code = *++str;
+                    arg  = *++str - '0';
+
+                    switch (code)
+                    {
+                        case MAP_MSG_CODE_NEWLINE:
+                            posY     += 16;
+                            glyphIdx  = 21;
+                            break;
+
+                        case MAP_MSG_CODE_JUMP:
+                            decimalCount = 0;
+                            hasDecimal   = 0;
+                            value        = 0;
+                            if (g_SysWork.mapMsgTimer == NO_VALUE)
+                            {
+                                str  += 2;
+                                digit = (u8)*str;
+                                g_MapMsg_AudioType = arg + 1;
+
+                                while (digit != ')')
+                                {
+                                    if (digit == '.')
+                                    {
+                                        hasDecimal = 1;
+                                    }
+                                    else
+                                    {
+                                        if (hasDecimal != 0)
+                                        {
+                                            decimalCount++;
+                                        }
+                                        value *= 10;
+                                        value -= '0' - digit;
+                                    }
+                                    str++;
+                                    digit = (u8)*str;
+                                }
+
+                                timer = Q12(value);
+                                for (j = 0; j < decimalCount; j++)
+                                {
+                                    timer /= 10;
+                                }
+
+                                g_SysWork.mapMsgTimer = timer;
+                            }
+                            else
+                            {
+                                while (arg != ' ' && arg != '\t')
+                                {
+                                    arg = *++str;
+                                }
+                            }
+                            break;
+
+                        case MAP_MSG_CODE_MIDDLE:
+                            posX   = g_StringPosition_JP.vx = -g_MapMsg_Widths[lineIdx] * 6;
+                            result = MapMsgReturnCode_AlignCenter;
+                            break;
+
+                        case MAP_MSG_CODE_TAB:
+                            posX = g_StringPositionX1_JP;
+                            result = MapMsgReturnCode_SetByT;
+                            break;
+
+                        case MAP_MSG_CODE_COLOR:
+                            color      = STRING_COLORS_JP[arg];
+                            g_StringColorId_JP = arg;
+                            break;
+
+                        case MAP_MSG_CODE_DISPLAY_ALL:
+                            remaining = MAP_MESSAGE_DISPLAY_ALL_LENGTH;
+                            break;
+
+                        case MAP_MSG_CODE_END:
+                            result   = NO_VALUE;
+                            glyphIdx = 21;
+                            lineIdx  = 9;
+                            break;
+
+                        case MAP_MSG_CODE_SELECT:
+                            result   = arg;
+                            glyphIdx = 21;
+                            lineIdx  = 9;
+                            break;
+
+                        case 'W':
+                            break;
+                    }
+
+                    str++;
+                    break;
+
+                case '\0':
+                    result   = MapMsgReturnCode_Terminate;
+                    glyphIdx = 21;
+                    lineIdx  = 9;
+                    break;
+
+                default:
+                    remaining--;
+
+                    if (g_SysWork.enableHalfHeightGlyphs)
+                    {
+                        ot2  = &g_OrderingTable2[g_ActiveBufferIdx];
+                        poly = (POLY_FT4*)GsOUT_PACKET_P;
+                        setPolyFT4(poly);
+
+                        setUV0AndClutSum(poly, glyphIdx * 12, (g_MapMsg_ActiveLine.positionIdx & 1) ? 0xE0 : 0x10, 0x7F93);
+                        page = lineIdx & 0xF;
+                        setUV1AndTPageSum(poly, glyphIdx * 12, (g_MapMsg_ActiveLine.positionIdx & 1) ? 0xF0 : 0x20,
+                                          (g_MapMsg_ActiveLine.positionIdx & 1) ? (page | 0x10) : page);
+                        setUV2Sum(poly, (glyphIdx + 1) * 12, (g_MapMsg_ActiveLine.positionIdx & 1) ? 0xE0 : 0x10);
+                        setUV3Sum(poly, (glyphIdx + 1) * 12, (g_MapMsg_ActiveLine.positionIdx & 1) ? 0xF0 : 0x20);
+
+                        setRGB0(poly, color, color >> 8, color >> 16);
+                        setXY4(poly,
+                               posX,      posY * 2,
+                               posX,      (posY * 2) + 30,
+                               posX + 12, posY * 2,
+                               posX + 12, (posY * 2) + 30);
+                        posX += 12;
+
+                        addPrim(&ot2->org[10], poly);
+                        GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
+                    }
+                    else
+                    {
+                        setWHFast((SPRT*)packet, FONT_12X16_GLYPH_SIZE_X, FONT_12X16_GLYPH_SIZE_Y);
+                        addPrimFast(ot, (SPRT*)packet, 4);
+                        setRGBC0Word((SPRT*)packet, color);
+                        setXY0Fast((SPRT*)packet, posX, posY);
+
+                        if (g_MapMsg_ActiveLine.positionIdx == 4)
+                        {
+                            setUV0AndClutSum((SPRT*)packet, glyphIdx * 12, (lineIdx / 5) ? 0xE0 : 0x10, 0x7F93);
+                        }
+                        else
+                        {
+                            setUV0AndClutSum((SPRT*)packet, glyphIdx * 12, (g_MapMsg_ActiveLine.positionIdx & 1) ? 0xE0 : 0x10, 0x7F93);
+                        }
+                        posX += 12;
+
+                        packet += sizeof(SPRT);
+                        if (g_MapMsg_ActiveLine.positionIdx == 4)
+                        {
+                            setDrawTPage((DR_TPAGE*)packet, 0, 1, ((lineIdx % 5) & 0xF) | ((lineIdx / 5) ? 0x10 : 0));
+                        }
+                        else
+                        {
+                            setDrawTPage((DR_TPAGE*)packet, 0, 1, (lineIdx & 0xF) | ((g_MapMsg_ActiveLine.positionIdx & 1) ? 0x10 : 0));
+                        }
+                        addPrim(ot, (DR_TPAGE*)packet);
+                        packet += sizeof(DR_TPAGE);
+                    }
+
+                    str += 2;
+                    glyphIdx++;
+
+                    if (remaining <= 0)
+                    {
+                        if (!g_SysWork.enableHalfHeightGlyphs)
+                        {
+                            GsOUT_PACKET_P = packet;
+                        }
+                        return result;
+                    }
+            }
+        }
+    }
+
+    if (!g_SysWork.enableHalfHeightGlyphs)
+    {
+        GsOUT_PACKET_P = packet;
+    }
+
+    return result;
+}
 
 void Gfx_StringDraw_JP(char* str, s32 lineIdx) // 0x8004BFC0
 {
@@ -789,7 +1078,7 @@ void Gfx_StringDraw_JP(char* str, s32 lineIdx) // 0x8004BFC0
     DVECTOR*  pos;
 
     ot     = &g_OtTags0[g_ActiveBufferIdx][6];
-    color  = D_800AF840[D_800AF83C];
+    color  = STRING_COLORS_JP[g_StringColorId_JP];
     packet = NULL;
 
     if (!g_SysWork.enableHalfHeightGlyphs)
@@ -797,7 +1086,7 @@ void Gfx_StringDraw_JP(char* str, s32 lineIdx) // 0x8004BFC0
         packet = GsOUT_PACKET_P;
     }
 
-    pos = &D_800C5E10;
+    pos = &g_StringPosition_JP;
     x   = pos->vx = -120;
 
     if (D_800C5E20 == 2)
@@ -894,7 +1183,7 @@ void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
 
     ot     = &g_OtTags0[g_ActiveBufferIdx][6];
     packet = GsOUT_PACKET_P;
-    color  = D_800AF840[D_800AF83C];
+    color  = STRING_COLORS_JP[g_StringColorId_JP];
 
     // @hack References to `mode` and `color` outside of the loop below are needed for match
     if (mode || color)
@@ -906,49 +1195,49 @@ void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
     {
         if (col >= 0)
         {
-            y = D_800C5E10.vy = (row * 20) - 60;
-            x = D_800C5E10.vx = (col * 150) - 130;
+            y = g_StringPosition_JP.vy = (row * 20) - 60;
+            x = g_StringPosition_JP.vx = (col * 150) - 130;
         }
         else
         {
-            y = D_800C5E10.vy = 72 - ((col - 2) * 8);
-            x = D_800C5E10.vx = row * -6;
+            y = g_StringPosition_JP.vy = 72 - ((col - 2) * 8);
+            x = g_StringPosition_JP.vx = row * -6;
         }
     }
     else
     {
-        y = D_800C5E10.vy = 72 - ((col - 2) * 8);
-        x = D_800C5E10.vx = row * -6;
+        y = g_StringPosition_JP.vy = 72 - ((col - 2) * 8);
+        x = g_StringPosition_JP.vx = row * -6;
     }
 
     switch (mode)
     {
         case 9:
-            y = D_800C5E10.vy = (row * 20) - 60;
-            x = D_800C5E10.vx = (col * 150) - 112;
+            y = g_StringPosition_JP.vy = (row * 20) - 60;
+            x = g_StringPosition_JP.vx = (col * 150) - 112;
             break;
 
         case 0:
         case 2:
         case 3:
         case 4:
-            y = D_800C5E10.vy = -33;
-            x = D_800C5E10.vx = (col * 150) - 134;
+            y = g_StringPosition_JP.vy = -33;
+            x = g_StringPosition_JP.vx = (col * 150) - 134;
             if (mode == 4)
             {
-                x = D_800C5E10.vx = (col * 150) - 128;
+                x = g_StringPosition_JP.vx = (col * 150) - 128;
             }
             break;
 
         case 1:
-            y = D_800C5E10.vy = -33;
-            x = D_800C5E10.vx = (col * 150) - 134;
+            y = g_StringPosition_JP.vy = -33;
+            x = g_StringPosition_JP.vx = (col * 150) - 134;
             break;
 
         case 5:
         case 6:
-            y = D_800C5E10.vy = -25;
-            x = D_800C5E10.vx = (col * 150) - 134;
+            y = g_StringPosition_JP.vy = -25;
+            x = g_StringPosition_JP.vx = (col * 150) - 134;
             break;
     }
     
@@ -958,11 +1247,11 @@ void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
         // Wrap to next line?
         if (i == 10 && mode >= 0 && mode < 7)
         {
-            x = D_800C5E10.vx;
-            y = D_800C5E10.vy += 18;
+            x = g_StringPosition_JP.vx;
+            y = g_StringPosition_JP.vy += 18;
             if (mode == 3)
             {
-                x = D_800C5E10.vx -= 6;
+                x = g_StringPosition_JP.vx -= 6;
             }
         }
 
@@ -974,8 +1263,8 @@ void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
                 colorId = *str - '0';
                 if (code == 'C')
                 {
-                    color      = D_800AF840[colorId];
-                    D_800AF83C = colorId;
+                    color      = STRING_COLORS_JP[colorId];
+                    g_StringColorId_JP = colorId;
                 }
                 str++;
                 break;
