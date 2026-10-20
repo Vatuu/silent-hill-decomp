@@ -262,6 +262,11 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
  */
 void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool isInactive);
 
+#if VERSION_REGION_IS(NTSCJ)
+void func_801E6F1C(RECT* rect);
+void func_801E794C(void);
+#endif
+
 /** @brief Controller for the controller configuration options menu.
  *
  * Handles the menu state, user input, SFX, and graphics drawing.

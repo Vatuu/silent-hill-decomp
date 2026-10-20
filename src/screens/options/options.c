@@ -31,6 +31,7 @@ INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
 #define LAYER_24                       24
 #define LAYER_40                       40
 #define LAYER_36                       36
+#define LAYER_32                       32
 #define LAYER_8148                     8148
 #define OPTIONS_ENTRY_STRING_LAYER_IDX 8 // TODO: Leftover from JAP builds or required for all?
 
@@ -2238,6 +2239,8 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
 // CONTROLS OPTION SCREEN
 // ========================================
 
+void func_801E6F1C(RECT* rect);
+
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("screens/options/nonmatchings/options", func_801E6F1C);
 
@@ -2245,9 +2248,70 @@ INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E305C);
 
 INCLUDE_ASM("screens/options/nonmatchings/options", func_801E749C);
 
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E30B0);
+void func_801E794C(void)
+{
+    s16   entryPosX[9] = { -84, -72, -60, -78, -120, -120, -96, -90, -84 };
+    GsOT* ot;
+    SPRT* prim;
+    RECT  rect;
 
-INCLUDE_ASM("screens/options/nonmatchings/options", func_801E794C);
+    prim = (SPRT*)GsOUT_PACKET_P;
+    ot   = &g_OrderingTable2[g_ActiveBufferIdx];
+
+    setSprt(prim);
+    setRGBC0(prim, 128, 128, 128, 0x64);
+    setWHFast(prim, 240, 16);
+    setXY0Fast(prim, entryPosX[g_MainOptionsMenu_SelectedEntry], 78);
+
+    setUV0AndClut(prim, 0x00, (g_MainOptionsMenu_SelectedEntry / 5) != 0 ? 0xE0 : 0x10, 0x130, 0x1FE);
+
+    addPrim((u8*)ot->org + LAYER_32, prim);
+    GsOUT_PACKET_P = &prim[1];
+
+    Gfx_Primitive2dTextureSet((g_MainOptionsMenu_SelectedEntry % 5) << 6, ((g_MainOptionsMenu_SelectedEntry / 5) != 0) << 8, 8, 0);
+
+    if (g_MainOptionsMenu_SelectedEntry < 7)
+    {
+        if (g_MainOptionsMenu_SelectedEntry >= 4)
+        {
+            prim = (SPRT*)GsOUT_PACKET_P;
+            setSprt(prim);
+            setRGBC0(prim, 128, 128, 128, 0x64);
+
+            switch (g_MainOptionsMenu_SelectedEntry)
+            {
+                case 6:
+                    setWHFast(prim, 48, 16);
+                    setXY0Fast(prim, 24, 78);
+                    setUV0AndClut(prim, g_GameWork.config.soundType != 0 ? 0x60 : 0x30, 0xE0, 0x130, 0x1FE);
+                    break;
+
+                case 5:
+                    setWHFast(prim, 24, 16);
+                    setXY0Fast(prim, 48, 78);
+                    setUV0AndClut(prim, g_GameWork.config.autoLoad == 0 ? 0x18 : 0, 0xE0, 0x130, 0x1FE);
+                    break;
+
+                case 4:
+                    setWHFast(prim, 24, 16);
+                    setXY0Fast(prim, 84, 78);
+                    setUV0AndClut(prim, g_GameWork.config.vibrationEnabled == 0 ? 0x18 : 0, 0xE0, 0x130, 0x1FE);
+                    break;
+            }
+
+            addPrim((u8*)ot->org + LAYER_32, prim);
+            GsOUT_PACKET_P = &prim[1];
+
+            Gfx_Primitive2dTextureSet(256, 256, 8, 0);
+        }
+    }
+
+    setRECT(&rect, -136, 72, 272, 28);
+    func_801E6F1C(&rect);
+
+    setRECT(&rect, -136, -80, 272, 148);
+    func_801E6F1C(&rect);
+}
 #endif
 
 void Options_ControllerMenu_Control(void) // 0x801E69BC
