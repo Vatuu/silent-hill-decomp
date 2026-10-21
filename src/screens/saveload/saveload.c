@@ -244,8 +244,8 @@ SAVE_BSS s16 g_SaveScreen_VisualElementIdx[MEMCARD_SLOT_COUNT_MAX];
 
 SAVE_BSS s8 D_801E757C[8]; // Unused/Pad.
 
-/** @brief @unused Dead code. */
-SAVE_BSS s8 D_801E7584[MEMCARD_SLOT_COUNT_MAX][SAVEGAME_COUNT_MAX];
+/** @brief @unused Dead code in USA. (@todo JPN makes more use of it) */
+SAVE_BSS u8 D_801E7584[MEMCARD_SLOT_COUNT_MAX][SAVEGAME_COUNT_MAX];
 
 /** @brief Stores the index of the last save done.
  *
@@ -588,12 +588,31 @@ void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* 
     }
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_SavesSlotDraw);
-#else
 void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
+#if VERSION_REGION_IS(NTSCJ)
+    RECT rect;
+    s32 rowIdx;
+    s32 isNextFearMode;
+#endif
+
+    s32 i;
+    s32 entryType;
+
     const char* DIALOG_STRS[11] = {
+#if VERSION_REGION_IS(NTSCJ)
+        "~C7　メモリーカードが　　差されていません　",
+        "~C7　メモリーカードが　初期化されていません",
+        "~C7　メモリーカードに　　異常があります　　",
+        "~C7　メモリーカードを　　チェックしています",
+        "~C7　空きブロックが　　　不足しています　　",
+        "~C7ファイルがありません",
+        "~C7データがありません　",
+        "~C7ファイルが壊れてます",
+        "~C7　　　　　　　　　　",
+        "~C7セーブできます　　　",
+        "~C7新規ファイルにセーブ"
+#else
         "\7MEMORY_CARD\nis_not_inserted",
         "\7MEMORY_CARD\nis_\x01not_\x01""formatted",
         "\7MEMORY_CARD\nmay_be_broken",
@@ -605,10 +624,8 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
         "\7",
         "\7________\x01New_save",
         "\7____Crea\x01t\x01""e_\x01n\x01""e\x01w_\x01""fi\x01le"
+#endif
     };
-
-    s32 i;
-    s32 entryType;
 
     entryType = saveEntry->type;
 
@@ -636,6 +653,13 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
 
         if (g_SaveScreen_IsMemCardNotInserted[slotIdx])
         {
+#if VERSION_REGION_IS(NTSCJ)
+            if (entryType != SavegameEntryType_LoadMemCard)
+            {
+                D_801E7564[slotIdx] = 0;
+            }
+#endif
+
             if (g_SlotElementSelectedIdx[slotIdx] == (g_Savegame_ElementCount1[slotIdx] - 2))
             {
                 g_SaveScreen_HiddenSaves[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - 3;
@@ -691,12 +715,21 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
         case SavegameEntryType_LoadMemCard:
             g_SaveScreen_IsMemCardNotInserted[slotIdx] = true;
 
+#if VERSION_REGION_IS(NTSCJ)
+            for (i = 0; i < 5; i++)
+            {
+                g_SaveScreen_LocationGlyphSaveIdx[slotIdx][i] = NO_VALUE;
+            }
+#endif
+
             for (i = 0; i < SAVEGAME_COUNT_MAX; i++)
             {
                 D_801E7584[slotIdx][i] = 0;
             }
 
+#if !VERSION_REGION_IS(NTSCJ)
             g_SaveScreen_HiddenSaves[slotIdx] = NO_VALUE;
+#endif
             break;
 
         case SavegameEntryType_CorruptedSave:
@@ -717,6 +750,87 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
         return;
     }
 
+#if VERSION_REGION_IS(NTSCJ)
+    // Glyph rows for this slot are cached in VRAM, only redraw them when the visible entries change.
+    if (D_801E7514[slotIdx] != 0 || D_801E7584[slotIdx][saveIdx] != (u8)entryType)
+    {
+        if (D_801E7514[slotIdx] == 0 && D_801E7518[slotIdx] == 0)
+        {
+            D_801E7564[slotIdx] = 0;
+        }
+
+        if (D_801E7564[slotIdx] == 0)
+        {
+            func_801E4334(entryType, saveIdx, slotIdx, DIALOG_STRS[entryType]);
+            D_801E7574[slotIdx] = g_SaveScreen_HiddenSaves[slotIdx];
+        }
+        else
+        {
+            if (g_SaveScreen_HiddenSaves[slotIdx] > D_801E7574[slotIdx])
+            {
+                // Scrolled down, shift the cached rows up.
+                if (saveIdx == g_SaveScreen_HiddenSaves[slotIdx])
+                {
+                    for (rowIdx = 1; rowIdx < 5; rowIdx++)
+                    {
+                        setRECT(&rect, ((rowIdx >> 1) << 6) + ((rowIdx & 1) * 30), (slotIdx != 0) ? 480 : 16, 30, 16);
+                        MoveImage(&rect, (((rowIdx - 1) >> 1) << 6) + (((rowIdx - 1) & 1) * 30), (slotIdx != 0) ? 480 : 16);
+
+                        g_SaveScreen_LocationGlyphSaveIdx[slotIdx][rowIdx - 1] = g_SaveScreen_LocationGlyphSaveIdx[slotIdx][rowIdx];
+                    }
+                }
+
+                if (g_SaveScreen_HiddenSaves[slotIdx] == (saveIdx - 4))
+                {
+                    func_801E4334(entryType, saveIdx, slotIdx, DIALOG_STRS[entryType]);
+                    D_801E7574[slotIdx] = g_SaveScreen_HiddenSaves[slotIdx];
+                    D_801E7514[slotIdx] = 0;
+
+                    g_SaveScreen_LocationGlyphSaveIdx[slotIdx][saveIdx - g_SaveScreen_HiddenSaves[slotIdx]] = NO_VALUE;
+                }
+            }
+            else if (g_SaveScreen_HiddenSaves[slotIdx] < D_801E7574[slotIdx])
+            {
+                // Scrolled up, shift the cached rows down.
+                if (saveIdx == g_SaveScreen_HiddenSaves[slotIdx])
+                {
+                    for (rowIdx = 3; rowIdx >= 0; rowIdx--)
+                    {
+                        setRECT(&rect, ((rowIdx >> 1) << 6) + ((rowIdx & 1) * 30), (slotIdx != 0) ? 480 : 16, 30, 16);
+                        MoveImage(&rect, (((rowIdx + 1) >> 1) << 6) + (((rowIdx + 1) & 1) * 30), (slotIdx != 0) ? 480 : 16);
+
+                        g_SaveScreen_LocationGlyphSaveIdx[slotIdx][rowIdx + 1] = g_SaveScreen_LocationGlyphSaveIdx[slotIdx][rowIdx];
+                    }
+
+                    g_SaveScreen_LocationGlyphSaveIdx[slotIdx][saveIdx - g_SaveScreen_HiddenSaves[slotIdx]] = NO_VALUE;
+
+                    func_801E4334(entryType, saveIdx, slotIdx, DIALOG_STRS[entryType]);
+                    D_801E7574[slotIdx] = g_SaveScreen_HiddenSaves[slotIdx];
+                    D_801E7514[slotIdx] = 0;
+                }
+            }
+        }
+
+        D_801E7584[slotIdx][saveIdx] = entryType;
+    }
+
+    isNextFearMode = SaveScreen_NextFearModeSave(saveEntry->saveMetadata);
+
+    if (g_SaveScreen_IsGameSaving != 0 && g_SelectedSaveSlotIdx == slotIdx && g_SlotElementSelectedIdx[slotIdx] == saveIdx)
+    {
+        isNextFearMode = g_SaveScreen_IsNextFearMode;
+    }
+
+    if (entryType == SavegameEntryType_Save)
+    {
+        func_801E4128(slotIdx, saveIdx - g_SaveScreen_HiddenSaves[slotIdx],
+                      (s32)strlen(g_Savegame_SaveLocationNames[saveEntry->locationId]) / 2, isNextFearMode);
+    }
+    else
+    {
+        func_8004C394(DIALOG_STRS[entryType], slotIdx, saveIdx - g_SaveScreen_HiddenSaves[slotIdx], entryType);
+    }
+#else
     D_801E7514[slotIdx] = true;
     Gfx_StringColorSet(StringColorId_White);
 
@@ -744,6 +858,7 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
             break;
     }
     Gfx_StringDraw(DIALOG_STRS[entryType], 50);
+#endif
 
     // Draw memory card message box.
     if (entryType < SavegameEntryType_CorruptedSave)
@@ -766,7 +881,6 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
         }
     }
 }
-#endif
 
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("screens/saveload/nonmatchings/saveload", func_801E4128);

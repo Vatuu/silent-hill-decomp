@@ -57,6 +57,11 @@ void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* 
 /** @brief Draws saves, information and slots. */
 void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx);
 
+#if VERSION_REGION_IS(NTSCJ)
+void func_801E4128(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_801E4334(s32 arg0, s32 saveIdx, s32 slotIdx, u8* str);
+#endif
+
 /** @brief Draws memory card state.
  *
  * @param saveScreenState `e_SaveScreenState`
