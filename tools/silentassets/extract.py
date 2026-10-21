@@ -127,6 +127,68 @@ RELEASES = (
     Release("PAL 99-06-07", "SLES-01514", 0x337E4A60, 0xB8FC, 2310, DIRS_PAL, FILE_TYPES, Flags.ENCRYPTED_1ST_FOLDER),
 )
 
+# Files referenced by `g_AudioData` in BODYPROG.BIN, in table order, with each entry's `e_AudioType`.
+# Used to regenerate `g_AudioData` table.
+# `None` entries are empty rows in the table.
+AUDIO_DATA_FILES = [
+    ("1ST/BASE.VAB", "AudioType_BaseAudio"),
+    ("1ST/COATION.VAB", "AudioType_Ambient"),
+    ("SND/FIRST.VAB", "AudioType_Ambient"),
+    ("SND/DRILL.VAB", "AudioType_Weapon"), ("SND/FUEL.VAB", "AudioType_Weapon"), ("SND/HYPER.VAB", "AudioType_Weapon"), ("SND/PISTOL.VAB", "AudioType_Weapon"), ("SND/RIFEL.VAB", "AudioType_Weapon"),
+    ("SND/SHOTGUN.VAB", "AudioType_Weapon"), ("SND/SAW.VAB", "AudioType_Weapon"),
+    ("SND/MAP000.VAB", "AudioType_Ambient"), ("SND/MAP001.VAB", "AudioType_Ambient"), ("SND/MAP100.VAB", "AudioType_Ambient"), ("SND/MAP101.VAB", "AudioType_Ambient"), ("SND/MAP102.VAB", "AudioType_Ambient"),
+    ("SND/MAP103.VAB", "AudioType_Ambient"), ("SND/MAP105.VAB", "AudioType_Ambient"), ("SND/MAP106.VAB", "AudioType_Ambient"), ("SND/MAP200.VAB", "AudioType_Ambient"), ("SND/MAP201.VAB", "AudioType_Ambient"),
+    ("SND/MAP300.VAB", "AudioType_Ambient"), ("SND/MAP301.VAB", "AudioType_Ambient"), ("SND/MAP302.VAB", "AudioType_Ambient"), ("SND/MAP303.VAB", "AudioType_Ambient"), ("SND/MAP304.VAB", "AudioType_Ambient"),
+    ("SND/MAP305.VAB", "AudioType_Ambient"), ("SND/MAP306.VAB", "AudioType_Ambient"), ("SND/MAP401.VAB", "AudioType_Ambient"), ("SND/MAP402.VAB", "AudioType_Ambient"), ("SND/MAP403.VAB", "AudioType_Ambient"),
+    ("SND/MAP405.VAB", "AudioType_Ambient"), ("SND/MAP500.VAB", "AudioType_Ambient"), ("SND/MAP501.VAB", "AudioType_Ambient"), ("SND/MAP502.VAB", "AudioType_Ambient"), ("SND/MAP503.VAB", "AudioType_Ambient"),
+    ("SND/MAP600.VAB", "AudioType_Ambient"), ("SND/MAP601.VAB", "AudioType_Ambient"), ("SND/MAP602.VAB", "AudioType_Ambient"), ("SND/MAP603.VAB", "AudioType_Ambient"), ("SND/MAP604.VAB", "AudioType_Ambient"),
+    ("SND/MAP700.VAB", "AudioType_Ambient"), ("SND/MAP701.VAB", "AudioType_Ambient"), ("SND/MAP702.VAB", "AudioType_Ambient"), ("SND/MAP703.VAB", "AudioType_Ambient"), ("SND/MAP001_2.VAB", "AudioType_Ambient"),
+    ("SND/A2.VAB", "AudioType_MusicKeys"), ("SND/B.VAB", "AudioType_MusicKeys"), ("SND/B2.VAB", "AudioType_MusicKeys"), ("SND/C.VAB", "AudioType_MusicKeys"), ("SND/C2.VAB", "AudioType_MusicKeys"),
+    ("SND/D.VAB", "AudioType_MusicKeys"), ("SND/D2.VAB", "AudioType_MusicKeys"), ("SND/E.VAB", "AudioType_MusicKeys"), ("SND/E2.VAB", "AudioType_MusicKeys"), ("SND/F.VAB", "AudioType_MusicKeys"),
+    ("SND/F2.VAB", "AudioType_MusicKeys"), ("SND/G.VAB", "AudioType_MusicKeys"), ("SND/G2.VAB", "AudioType_MusicKeys"), ("SND/H.VAB", "AudioType_MusicKeys"), ("SND/H2.VAB", "AudioType_MusicKeys"),
+    ("SND/I.VAB", "AudioType_MusicKeys"), ("SND/J.VAB", "AudioType_MusicKeys"), ("SND/J2.VAB", "AudioType_MusicKeys"), ("SND/K.VAB", "AudioType_MusicKeys"), ("SND/K2.VAB", "AudioType_MusicKeys"),
+    ("SND/L.VAB", "AudioType_MusicKeys"), ("SND/M.VAB", "AudioType_MusicKeys"), ("SND/N.VAB", "AudioType_MusicKeys"), ("SND/O.VAB", "AudioType_MusicKeys"), ("SND/P.VAB", "AudioType_MusicKeys"),
+    ("SND/Q.VAB", "AudioType_MusicKeys"), ("SND/R.VAB", "AudioType_MusicKeys"), ("SND/S.VAB", "AudioType_MusicKeys"), ("SND/T.VAB", "AudioType_MusicKeys"), ("SND/T2.VAB", "AudioType_MusicKeys"),
+    ("SND/U.VAB", "AudioType_MusicKeys"), ("SND/UFO.VAB", "AudioType_MusicKeys"), ("SND/V.VAB", "AudioType_MusicKeys"), ("SND/W2.VAB", "AudioType_MusicKeys"), ("SND/X.VAB", "AudioType_MusicKeys"),
+    ("SND/Y.VAB", "AudioType_MusicKeys"), ("SND/Z.VAB", "AudioType_MusicKeys"), ("SND/Z2.VAB", "AudioType_MusicKeys"), ("SND/Z3.VAB", "AudioType_MusicKeys"), ("SND/Z4.VAB", "AudioType_MusicKeys"),
+    None,
+    ("SND/A2.KDT", "AudioType_MusicSheet"), ("SND/B.KDT", "AudioType_MusicSheet"), ("SND/B2.KDT", "AudioType_MusicSheet"), ("SND/C.KDT", "AudioType_MusicSheet"), ("SND/C2.KDT", "AudioType_MusicSheet"),
+    ("SND/D.KDT", "AudioType_MusicSheet"), ("SND/D2.KDT", "AudioType_MusicSheet"), ("SND/E.KDT", "AudioType_MusicSheet"), ("SND/E2.KDT", "AudioType_MusicSheet"), ("SND/F.KDT", "AudioType_MusicSheet"),
+    ("SND/F2.KDT", "AudioType_MusicSheet"), ("SND/G.KDT", "AudioType_MusicSheet"), ("SND/G2.KDT", "AudioType_MusicSheet"), ("SND/H.KDT", "AudioType_MusicSheet"), ("SND/H2.KDT", "AudioType_MusicSheet"),
+    ("SND/I.KDT", "AudioType_MusicSheet"), ("SND/J.KDT", "AudioType_MusicSheet"), ("SND/J2.KDT", "AudioType_MusicSheet"), ("SND/K.KDT", "AudioType_MusicSheet"), ("SND/K2.KDT", "AudioType_MusicSheet"),
+    ("SND/L.KDT", "AudioType_MusicSheet"), ("SND/M.KDT", "AudioType_MusicSheet"), ("SND/N.KDT", "AudioType_MusicSheet"), ("SND/O.KDT", "AudioType_MusicSheet"), ("SND/P.KDT", "AudioType_MusicSheet"),
+    ("SND/Q.KDT", "AudioType_MusicSheet"), ("SND/R.KDT", "AudioType_MusicSheet"), ("SND/S.KDT", "AudioType_MusicSheet"), ("SND/T.KDT", "AudioType_MusicSheet"), ("SND/T2.KDT", "AudioType_MusicSheet"),
+    ("SND/U.KDT", "AudioType_MusicSheet"), ("SND/UFO.KDT", "AudioType_MusicSheet"), ("SND/V.KDT", "AudioType_MusicSheet"), ("SND/W2.KDT", "AudioType_MusicSheet"), ("SND/X.KDT", "AudioType_MusicSheet"),
+    ("SND/Y.KDT", "AudioType_MusicSheet"), ("SND/Z.KDT", "AudioType_MusicSheet"), ("SND/Z2.KDT", "AudioType_MusicSheet"), ("SND/Z3.KDT", "AudioType_MusicSheet"), ("SND/Z4.KDT", "AudioType_MusicSheet"),
+    None,
+]
+
+# Release-specific audio file swaps.
+AUDIO_FILE_REPLACEMENTS = {
+    "NTSC 1.1 99-02-10": {
+        "SND/MAP000.VAB": "SND/MEP000.VAB",
+        "SND/MAP100.VAB": "SND/MEP100.VAB",
+        "SND/MAP101.VAB": "SND/MEP101.VAB",
+        "SND/MAP102.VAB": "SND/MEP102.VAB",
+        "SND/MAP103.VAB": "SND/MEP103.VAB",
+        "SND/MAP502.VAB": "SND/MEP502.VAB",
+        "SND/MAP604.VAB": "SND/MEP604.VAB",
+    },
+}
+
+# Some g_AudioData sizes don't match actual audio data in NTSC, override with what the table has for them here.
+AUDIO_VAG_OFFSET_OVERRIDES = {
+    "NTSC 1.1 99-02-10": {
+        "SND/MEP102.VAB": 5664,
+        "SND/MEP103.VAB": 5664,
+    },
+}
+
+VAB_HEADER_SIZE = 32
+VAB_PROGRAM_ATTRS_SIZE = 128 * 16
+VAB_TONE_ATTRS_SIZE_PER_PROGRAM = 16 * 32
+VAB_VAG_OFFSETS_SIZE = 256 * 2
+
 FILESIZE_STEP = 256
 
 ENTRY_STRUCT = Struct("<3I")
@@ -310,6 +372,42 @@ def _extract(entries: Iterable[TableEntry], output: Path, file: BinaryIO, sector
         index = index + 1
 
 
+def _formatAudioData(entries: Iterable[TableEntry], output: Path, release: Release) -> str | None:
+    lbas = {entry.path: entry.offset for entry in entries}
+    replacements = AUDIO_FILE_REPLACEMENTS.get(release.id, {})
+    files = [None if item is None else (replacements.get(item[0], item[0]), item[1]) for item in AUDIO_DATA_FILES]
+    if any(item is not None and item[0] not in lbas for item in files):
+        logging.info("Release does not contain every audio file of the final releases, skipping audio data")
+        return None
+
+    overrides = AUDIO_VAG_OFFSET_OVERRIDES.get(release.id, {})
+    text = f"// Generated from {release.name} ({release.id})\n"
+    for item in files:
+        if item is None:
+            text += f"/* {'':12s} */ {{ 0, 0, 0, 0, 0 }},\n"
+            continue
+
+        path, audioType = item
+        with (output / path).open("rb") as file:
+            header = file.read(VAB_HEADER_SIZE)
+
+        if path.endswith(".VAB"):
+            # VAB header: `fsize` at 0x0C, `ps` (program count) at 0x12.
+            fileSize = int.from_bytes(header[12:16], "little")
+            programCount = int.from_bytes(header[18:20], "little")
+            vagDataOffset = (VAB_HEADER_SIZE + VAB_PROGRAM_ATTRS_SIZE +
+                             (programCount * VAB_TONE_ATTRS_SIZE_PER_PROGRAM) + VAB_VAG_OFFSETS_SIZE)
+        else:
+            # KDT header: data size at 0x04, stored rounded up to 4 bytes.
+            fileSize = (int.from_bytes(header[4:8], "little") + 3) & ~3
+            vagDataOffset = 0
+
+        vagDataOffset = overrides.get(path, vagDataOffset)
+        text += f"/* {os.path.basename(path):12s} */ {{ {audioType + ',':21s} 0, {vagDataOffset:4d}, {fileSize:6d}, {lbas[path]:5d} }},\n"
+
+    return text
+
+
 def main():
     logging.basicConfig(level=logging.INFO)
     args = _createParser().parse_args()
@@ -357,6 +455,12 @@ def main():
     with open(os.path.join(args.outputFolder, "fileenum.h.inc"), "a+") as f:
         f.truncate(0)
         f.write(enumText)
+
+    audioDataText = _formatAudioData(entriesSilent, args.outputFolder, release)
+    if audioDataText is not None:
+        with open(os.path.join(args.outputFolder, "audiodata.c.inc"), "a+") as f:
+            f.truncate(0)
+            f.write(audioDataText)
 
     logging.info("All done!")
 

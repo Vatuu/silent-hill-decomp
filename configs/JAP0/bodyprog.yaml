@@ -135,6 +135,7 @@ segments:
       - [auto,       c, sys/chara_data_info]
       - [auto,       c, sys/map_info]
       - [auto,       c, events/bodyprog_data_800A99B4]
+      - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, bodyprog_data_80028B94]
       - [0x97F0, c, memcard]
       - [0xC674, c, screen/background_draw]
@@ -415,7 +416,7 @@ segments:
       - [0x872B0, .data, events/title]
       - [0x876F0, .data, world/world_draw]
       - [0x877BC, .data, world/world_effects]
-      - [0x87804, data] # sound/sound_data, differs per release (disc sector offsets)
+      - [0x87804, .data, sound/sound_data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, .data, text/text_draw]
       - [0x8AD00, .data, items/item_screens_3]
