@@ -90,13 +90,14 @@ def _normalize_suffixed_symbols(path: Path):
 
     return normalized
 
-EXCLUDED_NAMES = {"data", "rodata", "sdata", "bss"}
+# Skip non-migrated units by suffix
+EXCLUDED_NAME = re.compile(r"\.(data|rodata|sdata|bss)\.s\.o$|\.bin\.o$")
 
 def _collect_objects(path: Path, config) -> list[Path]:
     ignored = config["ignored_files"]
     return [
         path for path in path.rglob("*.o")
-        if not any(name in path.name for name in EXCLUDED_NAMES ) and not any(file in str(path) for file in ignored)
+        if not EXCLUDED_NAME.search(path.name) and not any(file in str(path) for file in ignored)
     ]
 
 def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
