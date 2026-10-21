@@ -1,13 +1,61 @@
+SaveScreen_ScreenInfoClear                   = 0x801E2F00; // type:func
+SaveScreen_SelectedElementIdxUpdate          = 0x801E3290; // type:func
+SaveScreen_FileIdxDraw                       = 0x801E32CC; // type:func
+SaveScreen_NextFearModeSave                  = 0x801E354C; // type:func
+SaveScreen_SaveLocationDraw                  = 0x801E3598; // type:func
+SaveScreen_SaveBorder                        = 0x801E3664; // type:func
+SaveScreen_SavesSlotDraw                     = 0x801E36FC; // type:func
+SaveScreen_SaveFlash                         = 0x801E4BCC; // type:func allow_duplicated:True - overlays share vram, same address as `Credits_Text3dBlendSet` (credits)
+SaveScreen_SlotBorder                        = 0x801E4D64; // type:func
+SaveScreen_SlotStatusMsgShineDraw            = 0x801E511C; // type:func
+SaveScreen_NavigationDraw                    = 0x801E5270; // type:func
+SaveScreen_SaveBorderDraw                    = 0x801E5AE4; // type:func
+SaveScreen_SlotStatusMsgDraw                 = 0x801E602C; // type:func
+SaveScreen_SlotStatusMsgStepDraw             = 0x801E6230; // type:func
+SaveScreen_RectSaveInfoDraw                  = 0x801E65EC; // type:func
+SaveScreen_ElementInfoDraw                   = 0x801E6B6C; // type:func
+GameState_LoadSavegameScreen_Update          = 0x801E7040; // type:func
+SaveScreen_Init                              = 0x801E70E0; // type:func
+SaveScreen_LogicUpdate                       = 0x801E71BC; // type:func
+SaveScreen_FormatCard                        = 0x801E7708; // type:func
+SaveScreen_SaveGame                          = 0x801E7838; // type:func
+SaveScreen_LoadSave                          = 0x801E7AD0; // type:func
+SaveScreen_Continue                          = 0x801E7C58; // type:func
+SaveScreen_BackgroundAndInfoDraw             = 0x801E7DBC; // type:func
+SaveScreen_ScreenDraw                        = 0x801E7DE8; // type:func
+SaveScreen_MemCardState                      = 0x801E7F64; // type:func
+SaveScreen_WriteOptionsDraw                  = 0x801E7FFC; // type:func
+GameState_AutoLoadSavegame_Update            = 0x801E801C; // type:func
+SaveScreen_AutoLoad_SelectSave               = 0x801E809C; // type:func
+g_Savegame_SaveLocationNames                 = 0x801E81C8;
+g_SaveScreen_OverwriteActive                 = 0x801E822C;
+g_SaveScreen_MemCardStateDisplay             = 0x801E8230;
+D_801E7514                                   = 0x801E8234;
+D_801E7518                                   = 0x801E8238;
+g_SaveScreen_State                           = 0x801E823C; // type:s32
+g_SaveScreen_MemCardStateTextTimer           = 0x801E8240;
+g_GameState_SaveScreen_Funcs                 = 0x801E8244;
+g_SaveScreen_IsFormatting                    = 0x801E825C;
+g_SaveScreen_IsNewSaveSelected               = 0x801E8260;
+g_GameState_AutoLoadSavegame_Funcs           = 0x801E8264;
 
-
-
-//================================================
-//=== .text section
-//================================================
-
-
-//-------------------------------------------------------------
-//--- PA: 0x000900   VA: 0x801E2F00   subsegment: asm, saveload
-//-------------------------------------------------------------
-GameState_LoadSavegameScreen_Update = 0x801E7040; // type:func
-GameState_AutoLoadSavegame_Update   = 0x801E801C; // type:func
+SaveScreen_SlotStrAndBottomRectDraw          = 0x801E30DC; // type:func
+SaveScreen_MemCardStateDraw                  = 0x801E4460; // type:func
+SaveScreen_WriteOptionsStepDraw              = 0x801E4820; // type:func
+D_801E7554                                   = 0x801E8274; // size:0x4
+D_801E7558                                   = 0x801E8278; // size:0x4
+isSaveWriteOptionSelected                    = 0x801E827C; // size:0x4
+D_801E7560                                   = 0x801E8280; // size:0x4
+D_801E7564                                   = 0x801E8284; // size:0x8
+D_801E756C                                   = 0x801E828C; // size:0x4
+g_SaveScreen_HiddenSaves                     = 0x801E82A8; // size:0x4
+D_801E7574                                   = 0x801E82AC; // size:0x4
+g_SaveScreen_VisualElementIdx                = 0x801E82B0; // size:0x4
+D_801E7584                                   = 0x801E82B4; // size:0x14A
+g_SaveScreen_LastSaveIdx                     = 0x801E83FE; // size:0x2
+g_SaveScreen_DisplaySaveInfo                 = 0x801E8400; // size:0x1
+D_801E76D1                                   = 0x801E8401; // size:0x1
+g_SaveScreen_IsMemCardNotInserted            = 0x801E8402; // size:0x2
+g_SaveScreen_SaveFlashTimer                  = 0x801E8404; // size:0x1
+g_SaveScreen_IsNextFearMode                  = 0x801E8405; // size:0x1
+g_SaveScreen_IsGameSaving                    = 0x801E8406; // size:0x1
