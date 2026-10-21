@@ -1046,22 +1046,27 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
 }
 #endif
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B98);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2BC4);
-
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_WriteOptionsStepDraw);
-#else
 void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x801E3C44
 {
-    s8          color;
-    u32         time;
-    GsOT*       ot;
-    POLY_F4*    poly;
-    static bool D_801E7558;
+    SAVE_BSS bool D_801E7558;
+    s8       color;
+    u32      time;
+    GsOT*    ot;
+    POLY_F4* poly;
+#if VERSION_REGION_IS(NTSCJ)
+    POLY_FT4* glyphPoly;
+    s32       i;
 
-    const char* DIALOG_STRS[] = {
+    const char* const DIALOG_STRS[] = {
+        "~C7上書きしてもよろしいですか？　　　　　　",
+        "~C7初期化してもよろしいですか？　　　　　　"
+    };
+
+    const u8 GLYPH_COUNTS[] = {
+        14, 14
+    };
+#else
+    const char* const DIALOG_STRS[] = {
         "\7Is_it_OK_to_overwrite?",
         "\7Is_it_OK_to_format?",
         "\7Yes__________No"
@@ -1070,6 +1075,7 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
     const u8 X_OFFSETS[] = {
         180, 154
     };
+#endif
 
     g_SaveScreen_DisplaySaveInfo = false;
     time                         = (u8)g_SysWork.gameStateCounter % 64;
@@ -1079,14 +1085,59 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
     {
         case 0:
             g_SaveScreen_MemCardStateDisplay = 0;
+#if VERSION_REGION_IS(NTSCJ)
+            D_800C3920 = 20;
+            func_8004C918(DIALOG_STRS[stringIdx != 0] + 3, 1, 0, 3);
+            D_801E7558 = stringIdx != 0;
+            g_SaveScreen_OverwriteActive++;
+#else
             D_801E7558 = stringIdx != 0;
             g_SaveScreen_OverwriteActive = 1;
+#endif
 
         case 1:
+#if VERSION_REGION_IS(NTSCJ)
+            if (D_801E7558 == (stringIdx != 0))
+            {
+                func_8004C394(DIALOG_STRS[D_801E7558], 3, GLYPH_COUNTS[D_801E7558], -1);
+            }
+            else
+            {
+                g_SaveScreen_OverwriteActive--;
+            }
+
+            for (i = 0; i < 2; i++)
+            {
+                glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
+                setPolyFT4(glyphPoly);
+                glyphPoly->tpage = getTPage(0, 0, 256, 256);
+                glyphPoly->clut  = getClut(304, 510);
+                setRGB0(glyphPoly, 128, 128, 128);
+
+                if (i != 0)
+                {
+                    setUV4(glyphPoly, 144, 224, 144, 240,
+                                      168, 224, 168, 240);
+                    setXY4(glyphPoly, -54, 82, -54, 98,
+                                      -30, 82, -30, 98);
+                }
+                else
+                {
+                    setUV4(glyphPoly, 204, 224, 204, 240,
+                                      240, 224, 240, 240);
+                    setXY4(glyphPoly, 24, 82, 24, 98,
+                                      60, 82, 60, 98);
+                }
+
+                addPrim((u8*)ot->org + LAYER_24, glyphPoly);
+                GsOUT_PACKET_P = (u8*)glyphPoly + sizeof(POLY_FT4);
+            }
+#else
             Gfx_StringPositionSet(160 - (X_OFFSETS[stringIdx] / 2), 178);
             Gfx_StringDraw(DIALOG_STRS[stringIdx], DEFAULT_MAP_MESSAGE_LENGTH);
             Gfx_StringPositionSet(104, 196);
-            Gfx_StringDraw("\7Yes__________No", DEFAULT_MAP_MESSAGE_LENGTH);
+            Gfx_StringDraw(DIALOG_STRS[2], DEFAULT_MAP_MESSAGE_LENGTH);
+#endif
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);
@@ -1121,7 +1172,6 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
             break;
     }
 }
-#endif
 
 void SaveScreen_SaveFlash(void) // 0x801E3E78
 {
