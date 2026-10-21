@@ -330,60 +330,6 @@ void SaveScreen_ScreenInfoClear(void) // 0x801E2D8C
 #endif
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2780);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E27AC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E27D8);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2804);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2830);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E285C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2874);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E288C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E28A4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E28BC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E28D4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E28EC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2918);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2944);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2970);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E299C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29C8);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29F4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A20);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A4C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A78);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AA4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AD0);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AFC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B28);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B58);
-#endif
-
 void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
 {
     s_Line2d line;
@@ -881,6 +827,36 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
         }
     }
 }
+
+#if VERSION_REGION_IS(NTSCJ)
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2918);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2944);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2970);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E299C);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29C8);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29F4);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A20);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A4C);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A78);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AA4);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AD0);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AFC);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B28);
+
+INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B58);
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("screens/saveload/nonmatchings/saveload", func_801E4128);
