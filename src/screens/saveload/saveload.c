@@ -1800,8 +1800,6 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
 void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 {
-    // Constant-index reads of a `const` array are folded by the compiler to the string addresses,
-    // so this table is only copied to the stack and the draw calls below use the literals directly.
     const char* const labelStrs[] = {
 #if VERSION_REGION_IS(NTSCJ)
         "data",
@@ -1828,7 +1826,6 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     s32                     saveDataIdx;
     s32                     i;
     s32                     digitCount;
-    s32                     offset;
     u32                     hyperBlasterBeamColor;
 #if VERSION_EQUAL_OR_NEWER(USA)
     u32                     timeInSec;
@@ -1849,10 +1846,9 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringPositionSet(66, 178);
         Gfx_StringDraw(labelStrs[5], 50);
     }
-    else if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
-#else
-    if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
+    else
 #endif
+    if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
     {
         saveId      = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].savegameCount;
         saveDataIdx = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].elementIdx + 1;
@@ -1863,19 +1859,15 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
 #if VERSION_EQUAL_OR_NEWER(USA)
         timeInSec = FP_FROM(ptr->gameplayTimer, Q12_SHIFT);
-
-        offset = ptr->add290Hours;
-        hours  = (timeInSec / 3600) + (offset * 290);
 #else
         timeInSec = FP_FROM((s32)ptr->gameplayTimer, Q12_SHIFT);
-
-        hours = (timeInSec / 3600) + (ptr->add290Hours * 290);
 #endif
 
-        hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount;
-
+        hours = (timeInSec / 3600) + (ptr->add290Hours * 290);
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
+
+        hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount;
 
         Gfx_StringColorSet(StringColorId_White);
         Gfx_StringPositionSet(40, 178);
