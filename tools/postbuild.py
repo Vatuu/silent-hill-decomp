@@ -283,7 +283,32 @@ def apply_map_patches(target):
                 file.seek(offset)
                 file.write(data)
 
+# TS seems to have trimmed the main EXE down by truncating some bytes from .bss.
+# Since those are zero-filled it wouldn't cause an issue for the game, but means we have to trim it too.
+# We can use the size from original EXE header (+ 0x800 header size) to tell us what the expected size should be.
+# TODO: Our `libgpu/sys.o` lib object was edited to trim the .bss for USA, that can be undone to closer match original lib.
+MAIN_EXE_PATHS = [
+    "build/USA/out/SLUS_007.07",
+    "build/EUR/out/SLES_015.14",
+    "build/JAP0/out/SLPM_861.92",
+    "build/JAP1/out/SLPM_861.92",
+    "build/JAP2/out/SLPM_861.92",
+]
+
+def trim_main_exes():
+    for path in MAIN_EXE_PATHS:
+        if not os.path.isfile(path):
+            continue
+        with open(path, "r+b") as file:
+            file.seek(0x1C)
+            size = 0x800 + int.from_bytes(file.read(4), "little")
+            file.seek(0, os.SEEK_END)
+            if file.tell() > size:
+                file.truncate(size)
+
 if __name__ == "__main__":
+    if sys.argv[1] == "main":
+        trim_main_exes()
     if sys.argv[1].startswith("maps/"):
         apply_map_patches(sys.argv[1])
     if sys.argv[1].startswith("screens/"):

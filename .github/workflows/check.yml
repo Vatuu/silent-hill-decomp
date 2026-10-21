@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ USA, JAP0, JAP1, JAP2 ]
+        version: [ JAP0, USA, JAP1, EUR, JAP2 ]
 
     runs-on: ubuntu-latest
     steps:

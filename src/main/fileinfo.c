@@ -17,6 +17,8 @@ s_FileInfo g_FileTable[FS_FILE_COUNT] = {
     #include "filetable.c.JAP0.inc"
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
     #include "filetable.c.JAP1.inc"
+#elif VERSION_IS(EUR)
+    #include "filetable.c.EUR.inc"
 #endif
 };
 
@@ -31,6 +33,12 @@ char* g_FilePaths[] = {
     "\\TEST\\",
     "\\TIM\\",
     "\\VIN\\",
+#if VERSION_REGION_IS(PAL)
+    "\\VIN2\\",
+    "\\VIN3\\",
+    "\\VIN4\\",
+    "\\VIN5\\",
+#endif
     "\\XA\\"
 };
 
@@ -46,7 +54,10 @@ char* g_FileExts[] = {
     ".TMD",
     ".DAT",
     ".KDT",
-    ".CMP"
+    ".CMP",
+#if VERSION_REGION_IS(PAL)
+    ".TXT"
+#endif
 };
 
 u32 g_FileXaLoc[] = {
@@ -85,6 +96,18 @@ u32 g_FileXaLoc[] = {
     0x10974,
     0x16F0C,
     0x1979C,
+    0x00000
+#elif VERSION_IS(EUR)
+    0x00000,
+    0x0B847,
+    0x0C0AF,
+    0x0D1FF,
+    0x0EF47,
+    0x108DF,
+    0x1181F,
+    0x127F7,
+    0x18D8F,
+    0x1B61F,
     0x00000
 #endif
 };

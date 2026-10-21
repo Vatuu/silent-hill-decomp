@@ -1,0 +1,9 @@
+// symbols referenced by the main executable
+Screen_BackgroundImgDraw   = 0x80030D10; // type:func
+MainLoop                   = 0x8003272C; // type:func
+Fs_CharaAnimDataUpdate     = 0x80034E78; // type:func
+WorldGfx_ChunkInitCheck    = 0x8003C298; // type:func
+func_80089128              = 0x80088D08; // type:func
+func_800892A4              = 0x80088E84; // type:func
+CHARA_FILE_INFOS           = 0x800A8CD8; // type:CharaFileInfo size:0x2D0
+g_Demo_IsLoadingChunks     = 0x800C3E8C;

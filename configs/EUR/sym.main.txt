@@ -1,0 +1,711 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x000800   VA: 0x80010000   subsegment: .rodata, main
+//-------------------------------------------------------------
+g_OvlDynamic                = 0x80010000; // type:u32
+g_OvlBodyprog               = 0x80010004; // type:u32
+
+//----------------------------------------------------------------
+//--- PA: 0x00080C   VA: 0x8001000C   subsegment: .rodata, fsqueue
+//----------------------------------------------------------------
+a_PcDrvPath                 = 0x8001000C; // type:asciz
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-------------------------------------------------------
+//--- PA: 0x000F74   VA: 0x80010774   subsegment: c, main
+//-------------------------------------------------------
+main                        = 0x80010774; // type:func
+
+//-----------------------------------------------------------
+//--- PA: 0x0012B0   VA: 0x80010AB0   subsegment: c, fileinfo
+//-----------------------------------------------------------
+Fs_DecryptOverlay           = 0x80010AB0; // type:func
+Fs_GetFileSize              = 0x80010B04; // type:func
+Fs_GetFileName              = 0x80010B34; // type:func
+Fs_GetFileInfoName          = 0x80010B68; // type:func
+Fs_EncodeFileName           = 0x80010C40; // type:func
+Fs_GetFileSectorAlignedSize = 0x80010CB4; // type:func
+Fs_FindNextFileOfType       = 0x80010CEC; // type:func
+Fs_FindNextFile             = 0x80010D60; // type:func
+
+//----------------------------------------------------------
+//--- PA: 0x001638   VA: 0x80010E38   subsegment: c, fsqueue
+//----------------------------------------------------------
+Fs_QueueIsEntryLoaded       = 0x80010E38; // type:func
+Fs_QueueGetLength           = 0x80010E48; // type:func
+Fs_QueueChunksLoad          = 0x80010E64; // type:func
+Fs_QueueWaitForEmpty        = 0x80010EAC; // type:func
+Fs_QueueStartSeek           = 0x80010F14; // type:func
+Fs_QueueStartRead           = 0x80010F48; // type:func
+Fs_QueueStartReadTim        = 0x80010F7C; // type:func
+Fs_QueueStartReadAnm        = 0x80010FF8; // type:func
+Fs_QueueEnqueue             = 0x80011054; // type:func
+Fs_QueueInitialize          = 0x80011150; // type:func
+Fs_QueueReset               = 0x800111BC; // type:func
+Fs_QueueUpdate              = 0x80011240; // type:func
+Fs_QueueUpdateSeek          = 0x8001135C; // type:func
+Fs_QueueUpdateRead          = 0x800114A4; // type:func
+Fs_QueueAllocEntryData      = 0x80011610; // type:func
+Fs_QueueCanRead             = 0x8001169C; // type:func
+Fs_QueueDoBuffersOverlap    = 0x8001178C; // type:func
+Fs_QueueTickSetLoc          = 0x800117C8; // type:func
+Fs_QueueTickRead            = 0x8001180C; // type:func
+Fs_QueueResetTick           = 0x80011864; // type:func
+Fs_QueueTickReadPcDrv       = 0x800118EC; // type:func
+Fs_QueueUpdatePostLoad      = 0x80011A2C; // type:func
+Fs_QueuePostLoadTim         = 0x80011B04; // type:func
+Fs_QueuePostLoadAnm         = 0x80011C1C; // type:func
+
+//--------------------------------------------------------
+//--- PA: 0x002450   VA: 0x80011C50   subsegment: c, fsmem
+//--------------------------------------------------------
+Fs_InitializeMem            = 0x80011C50; // type:func
+nullsub_80011cfc            = 0x80011CDC; // type:func
+Fs_AllocMem                 = 0x80011CE4; // type:func
+Fs_ClampMemBlock            = 0x80011E2C; // type:func
+Fs_FreeMem                  = 0x80011EB0; // type:func
+Fs_RelinkMemBlock           = 0x80011F28; // type:func
+
+//---------------------------------------------------------
+//--- PA: 0x002758   VA: 0x80011F58   subsegment: c, memcpy
+//---------------------------------------------------------
+memcpy                      = 0x80011F58; // type:func
+nullsub_800120b0            = 0x80012090; // type:func
+
+//------------------------------------------------------
+//--- PA: 0x002898   VA: 0x80012098   subsegment: c, rng
+//------------------------------------------------------
+Rng_Rand32                  = 0x80012098; // type:func
+Rng_Rand16                  = 0x800120C4; // type:func
+Rng_GetSeed                 = 0x800120E4; // type:func
+Rng_SetSeed                 = 0x800120F0; // type:func
+Rng_Rand12                  = 0x800120FC; // type:func
+
+//------------------------------------------------------------
+//--- PA: 0x00291C   VA: 0x8001211C   subsegment: c, memmove32
+//------------------------------------------------------------
+Mem_Move32                  = 0x8001211C; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x00299C   VA: 0x8001219C   subsegment: o, libapi/a36
+//-------------------------------------------------------------
+EnterCriticalSection        = 0x8001219C;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029AC   VA: 0x800121AC   subsegment: o, libapi/a37
+//-------------------------------------------------------------
+ExitCriticalSection         = 0x800121AC;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029BC   VA: 0x800121BC   subsegment: o, libapi/a50
+//-------------------------------------------------------------
+open                        = 0x800121BC;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029CC   VA: 0x800121CC   subsegment: o, libapi/a52
+//-------------------------------------------------------------
+read                        = 0x800121CC;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029DC   VA: 0x800121DC   subsegment: o, libapi/a54
+//-------------------------------------------------------------
+close                       = 0x800121DC;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029EC   VA: 0x800121EC   subsegment: o, libapi/a08
+//-------------------------------------------------------------
+OpenEvent                   = 0x800121EC;
+
+//-------------------------------------------------------------
+//--- PA: 0x0029FC   VA: 0x800121FC   subsegment: o, libapi/a12
+//-------------------------------------------------------------
+EnableEvent                 = 0x800121FC;
+
+//-----------------------------------------------------------
+//--- PA: 0x002A0C   VA: 0x8001220C   subsegment: o, libc/c21
+//-----------------------------------------------------------
+strcat                      = 0x8001220C;
+
+//-----------------------------------------------------------
+//--- PA: 0x002A1C   VA: 0x8001221C   subsegment: o, libc/c23
+//-----------------------------------------------------------
+strcmp                      = 0x8001221C;
+
+//-----------------------------------------------------------
+//--- PA: 0x002A2C   VA: 0x8001222C   subsegment: o, libc/c40
+//-----------------------------------------------------------
+bzero                       = 0x8001222C;
+
+//-----------------------------------------------------------
+//--- PA: 0x002A3C   VA: 0x8001223C   subsegment: o, libc/c43
+//-----------------------------------------------------------
+memset                      = 0x8001223C;
+
+//-------------------------------------------------------------
+//--- PA: 0x002A4C   VA: 0x8001224C   subsegment: o, libspu/s_i
+//-------------------------------------------------------------
+SpuInit                     = 0x8001224C;
+
+//---------------------------------------------------------------
+//--- PA: 0x002A6C   VA: 0x8001226C   subsegment: o, libspu/s_ini
+//---------------------------------------------------------------
+_SpuInit                    = 0x8001226C;
+SpuStart                    = 0x80012354;
+
+//-------------------------------------------------------------
+//--- PA: 0x002BCC   VA: 0x800123CC   subsegment: o, libspu/spu
+//-------------------------------------------------------------
+_spu_init                   = 0x800123CC;
+_spu_FwriteByIO             = 0x8001264C;
+_spu_FiDMA                  = 0x8001280C;
+_spu_Fr_                    = 0x800128C8;
+_spu_t                      = 0x80012970;
+_spu_Fw                     = 0x80012BF0;
+_spu_Fr                     = 0x80012C74;
+_spu_FsetRXX                = 0x80012CD8;
+_spu_FsetRXXa               = 0x80012D1C;
+_spu_FgetRXXa               = 0x80012DC0;
+_spu_FsetPCR                = 0x80012DFC;
+_spu_FsetDelayW             = 0x80012E54;
+_spu_FsetDelayR             = 0x80012E7C;
+_spu_Fw1ts                  = 0x80012EA4;
+
+//-------------------------------------------------------------
+//--- PA: 0x00370C   VA: 0x80012F0C   subsegment: o, libapi/a07
+//-------------------------------------------------------------
+DeliverEvent                = 0x80012F0C;
+
+//-----------------------------------------------------------
+//--- PA: 0x00371C   VA: 0x80012F1C   subsegment: o, libc/c63
+//-----------------------------------------------------------
+printf                      = 0x80012F1C;
+
+//---------------------------------------------------------------
+//--- PA: 0x00372C   VA: 0x80012F2C   subsegment: o, libspu/s_dcb
+//---------------------------------------------------------------
+_SpuDataCallback            = 0x80012F2C;
+
+//------------------------------------------------------------------
+//--- PA: 0x00375C   VA: 0x80012F5C   subsegment: hasm, libsn/snmain
+//------------------------------------------------------------------
+__SN_ENTRY_POINT            = 0x80012F5C;
+__main                      = 0x80013004;
+__do_global_dtors           = 0x80013074;
+
+//-------------------------------------------------------------
+//--- PA: 0x0038DC   VA: 0x800130DC   subsegment: o, libapi/c57
+//-------------------------------------------------------------
+InitHeap                    = 0x800130DC;
+
+//---------------------------------------------------------------
+//--- PA: 0x0038EC   VA: 0x800130EC   subsegment: o, libetc/vsync
+//---------------------------------------------------------------
+VSync                       = 0x800130EC;
+v_wait                      = 0x80013264;
+
+//-------------------------------------------------------------
+//--- PA: 0x003AFC   VA: 0x800132FC   subsegment: o, libapi/a91
+//-------------------------------------------------------------
+ChangeClearPAD              = 0x800132FC;
+
+//-------------------------------------------------------------
+//--- PA: 0x003B0C   VA: 0x8001330C   subsegment: o, libapi/l10
+//-------------------------------------------------------------
+ChangeClearRCnt             = 0x8001330C;
+
+//-----------------------------------------------------------
+//--- PA: 0x003B1C   VA: 0x8001331C   subsegment: o, libc/a63
+//-----------------------------------------------------------
+__ps_libinfo__libc__        = 0x8001331C; // TODO libinfo header for libc.lib, may need to move `puts` under that instead.
+puts                        = 0x80013324;
+
+//--------------------------------------------------------------
+//--- PA: 0x003B3C   VA: 0x8001333C   subsegment: o, libetc/intr
+//--------------------------------------------------------------
+ResetCallback               = 0x8001333C;
+InterruptCallback           = 0x8001336C;
+DMACallback                 = 0x8001339C;
+VSyncCallback               = 0x800133CC;
+VSyncCallbacks              = 0x80013400;
+StopCallback                = 0x80013430;
+RestartCallback             = 0x80013460;
+CheckCallback               = 0x80013490;
+GetIntrMask                 = 0x800134A0;
+SetIntrMask                 = 0x800134B8;
+startIntr                   = 0x800134D0;
+trapIntr                    = 0x800135A8;
+setIntr                     = 0x80013778;
+stopIntr                    = 0x800138C0;
+restartIntr                 = 0x80013960;
+memclr_0                    = 0x800139D8;
+
+//--------------------------------------------------------------
+//--- PA: 0x0041FC   VA: 0x800139FC   subsegment: o, libapi/c114
+//--------------------------------------------------------------
+__ps_libinfo__libapi__      = 0x800139FC;
+_96_remove                  = 0x80013A04;
+
+//-------------------------------------------------------------
+//--- PA: 0x00421C   VA: 0x80013A1C   subsegment: o, libapi/a23
+//-------------------------------------------------------------
+ReturnFromException         = 0x80013A1C;
+
+//-------------------------------------------------------------
+//--- PA: 0x00422C   VA: 0x80013A2C   subsegment: o, libapi/a24
+//-------------------------------------------------------------
+ResetEntryInt               = 0x80013A2C;
+
+//-------------------------------------------------------------
+//--- PA: 0x00423C   VA: 0x80013A3C   subsegment: o, libapi/a25
+//-------------------------------------------------------------
+HookEntryInt                = 0x80013A3C;
+
+//-----------------------------------------------------------
+//--- PA: 0x00424C   VA: 0x80013A4C   subsegment: o, libc/c19
+//-----------------------------------------------------------
+setjmp                      = 0x80013A4C;
+
+//-----------------------------------------------------------------
+//--- PA: 0x00425C   VA: 0x80013A5C   subsegment: o, libetc/intr_vb
+//-----------------------------------------------------------------
+startIntrVSync              = 0x80013A5C;
+trapIntrVSync               = 0x80013AB4;
+setIntrVSync                = 0x80013B20;
+memclr_1                    = 0x80013B4C;
+
+//------------------------------------------------------------------
+//--- PA: 0x00437C   VA: 0x80013B7C   subsegment: o, libetc/intr_dma
+//------------------------------------------------------------------
+startIntrDMA                = 0x80013B7C;
+trapIntrDMA                 = 0x80013BC8;
+setIntrDMA                  = 0x80013D48;
+memclr_2                    = 0x80013DF4;
+
+//---------------------------------------------------------------
+//--- PA: 0x00461C   VA: 0x80013E1C   subsegment: o, libetc/vmode
+//---------------------------------------------------------------
+SetVideoMode                = 0x80013E1C;
+GetVideoMode                = 0x80013E30;
+
+//--------------------------------------------------------------
+//--- PA: 0x00464C   VA: 0x80013E4C   subsegment: o, libcd/event
+//--------------------------------------------------------------
+CdInit                      = 0x80013E4C;
+CdReset2                    = 0x80013EDC;
+def_cbsync                  = 0x80013F18;
+def_cbready                 = 0x80013F40;
+def_cbread                  = 0x80013F68;
+
+//------------------------------------------------------------
+//--- PA: 0x00479C   VA: 0x80013F9C   subsegment: o, libcd/sys
+//------------------------------------------------------------
+CdStatus                    = 0x80013F9C;
+CdMode                      = 0x80013FAC;
+CdLastCom                   = 0x80013FBC;
+CdLastPos                   = 0x80013FCC;
+CdReset                     = 0x80013FD8;
+CdFlush                     = 0x80014044;
+CdSetDebug                  = 0x80014064;
+CdComstr                    = 0x80014078;
+CdIntstr                    = 0x800140AC;
+CdSync                      = 0x800140E0;
+CdReady                     = 0x80014100;
+CdSyncCallback              = 0x80014120;
+CdReadyCallback             = 0x80014134;
+CdControl                   = 0x80014148;
+CdControlF                  = 0x80014284;
+CdControlB                  = 0x800143B8;
+CdMix                       = 0x80014504;
+CdGetSector                 = 0x80014524;
+CdGetSector2                = 0x80014544;
+CdDataCallback              = 0x80014564;
+CdDataSync                  = 0x80014588;
+CdIntToPos                  = 0x800145A8;
+CdPosToInt                  = 0x800146AC;
+
+//-------------------------------------------------------------
+//--- PA: 0x004F2C   VA: 0x8001472C   subsegment: o, libcd/bios
+//-------------------------------------------------------------
+getintr                     = 0x8001472C;
+CD_sync                     = 0x80014C88;
+CD_ready                    = 0x80014F08;
+CD_cw                       = 0x800151D0;
+CD_vol                      = 0x800155DC;
+CD_flush                    = 0x80015664;
+CD_initvol                  = 0x80015738;
+CD_initintr                 = 0x80015828;
+CD_init                     = 0x80015874;
+CD_datasync                 = 0x80015A54;
+CD_getsector                = 0x80015BBC;
+CD_getsector2               = 0x80015CBC;
+CD_set_test_parmnum         = 0x80015DA8;
+callback                    = 0x80015DB4;
+
+//---------------------------------------------------------------
+//--- PA: 0x00668C   VA: 0x80015E8C   subsegment: o, libcd/cdread
+//---------------------------------------------------------------
+cb_pause                    = 0x80015E8C;
+cb_read                     = 0x80015EC0;
+cb_data                     = 0x80016134;
+cd_read_entry               = 0x80016204;
+CdReadBreak                 = 0x800163EC;
+CdRead                      = 0x8001658C;
+CdReadSync                  = 0x80016728;
+CdReadCallback              = 0x8001682C;
+CdReadMode                  = 0x80016840;
+
+//-------------------------------------------------------------
+//--- PA: 0x00705C   VA: 0x8001685C   subsegment: o, libgpu/tmd
+//-------------------------------------------------------------
+OpenTIM                     = 0x8001685C;
+ReadTIM                     = 0x8001686C;
+OpenTMD                     = 0x800168D0;
+ReadTMD                     = 0x80016910;
+get_tim_addr                = 0x80016BB8;
+get_tmd_addr                = 0x80016CD0;
+unpack_packet               = 0x80016E44;
+
+//-------------------------------------------------------------
+//--- PA: 0x0088DC   VA: 0x800180DC   subsegment: o, libgpu/sys
+//-------------------------------------------------------------
+ResetGraph                  = 0x800180DC;
+SetGraphDebug               = 0x80018250;
+SetGraphQueue               = 0x800182AC;
+GetGraphDebug               = 0x80018350;
+DrawSyncCallback            = 0x80018360;
+SetDispMask                 = 0x800183C0;
+DrawSync                    = 0x80018458;
+checkRECT                   = 0x800184C0;
+ClearImage                  = 0x800185DC;
+ClearImage2                 = 0x8001866C;
+LoadImage                   = 0x80018704;
+StoreImage                  = 0x80018764;
+MoveImage                   = 0x800187C4;
+ClearOTag                   = 0x8001887C;
+ClearOTagR                  = 0x80018944;
+DrawPrim                    = 0x800189F0;
+DrawOTag                    = 0x80018A4C;
+PutDrawEnv                  = 0x80018ABC;
+DrawOTagEnv                 = 0x80018B7C;
+GetDrawEnv                  = 0x80018C54;
+PutDispEnv                  = 0x80018C88;
+GetDispEnv                  = 0x80019180;
+GetODE                      = 0x800191B4;
+SetTexWindow                = 0x800191E4;
+SetDrawArea                 = 0x8001921C;
+SetDrawOffset               = 0x8001929C;
+SetPriority                 = 0x800192DC;
+SetDrawStp                  = 0x80019304;
+SetDrawMode                 = 0x8001932C;
+SetDrawEnv                  = 0x80019380;
+SetDrawEnv2                 = 0x80019578;
+get_mode                    = 0x800197E8;
+get_cs                      = 0x80019808;
+get_ce                      = 0x800198A0;
+get_ofs                     = 0x80019938;
+get_tw                      = 0x80019954;
+_status                     = 0x800199D4;
+_otc                        = 0x800199EC;
+_clr                        = 0x80019ACC;
+_dws                        = 0x80019CFC;
+_drs                        = 0x80019F38;
+_ctl                        = 0x8001A1B8;
+_getctl                     = 0x8001A1DC;
+_cwb                        = 0x8001A1F0;
+_cwc                        = 0x8001A230;
+_param                      = 0x8001A278;
+_addque                     = 0x8001A2A8;
+_addque2                    = 0x8001A2CC;
+_exeque                     = 0x8001A57C;
+_reset                      = 0x8001A7DC;
+_sync                       = 0x8001A92C;
+set_alarm                   = 0x8001AA68;
+get_alarm                   = 0x8001AA9C;
+_version                    = 0x8001ABE0;
+LoadImage2                  = 0x8001AC80;
+StoreImage2                 = 0x8001AD6C;
+MoveImage2                  = 0x8001AE58;
+DrawOTag2                   = 0x8001AF9C;
+_GPU_ResetCallback          = 0x8001B098;
+memset_0                    = 0x8001B0C0;
+
+//-------------------------------------------------------------
+//--- PA: 0x00B8EC   VA: 0x8001B0EC   subsegment: o, libapi/c73
+//-------------------------------------------------------------
+GPU_cw                      = 0x8001B0EC;
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//---------------------------------------------------------------
+//--- PA: 0x00B8FC   VA: 0x8001B0FC   subsegment: .data, fileinfo
+//---------------------------------------------------------------
+g_FileTable                 = 0x8001B0FC; // type:FileInfo size:0x6C48
+g_FilePaths                 = 0x80021D44; // type:u32 size:0x3C
+g_FileExts                  = 0x80021D80; // type:u32 size:0x34
+g_FileXaLoc                 = 0x80021DB4; // type:u32 size:44
+
+//-----------------------------------------------------------
+//--- PA: 0x0125E0   VA: 0x80021DE0   subsegment: .data, main
+//-----------------------------------------------------------
+g_MainDispEnv               = 0x80021DE0; // type:DISPENV size:0x14
+g_MainDrawEnv               = 0x80021DF4; // type:DRAWENV size:0x5c
+
+//----------------------------------------------------------------------
+//--- PA: 0x012650   VA: 0x80021E50   subsegment: o, libspu/s_ini, .data
+//----------------------------------------------------------------------
+__ps_libinfo__libspu__      = 0x80021E50; // SDK version? has 0x44 in SH1
+_spu_EVdma                  = 0x80021E58;
+_spu_keystat                = 0x80021E5C;
+_spu_trans_mode             = 0x80021E60;
+_spu_rev_flag               = 0x80021E64;
+_spu_rev_reserve_wa         = 0x80021E68;
+_spu_rev_offsetaddr         = 0x80021E6C;
+_spu_rev_attr               = 0x80021E70;
+_spu_RQvoice                = 0x80021E84;
+_spu_RQmask                 = 0x80021E88;
+_spu_voice_centerNote       = 0x80021E8C;
+_spu_env                    = 0x80021EBC;
+_spu_isCalled               = 0x80021EC0;
+
+//--------------------------------------------------------------------
+//--- PA: 0x0126D0   VA: 0x80021ED0   subsegment: o, libspu/spu, .data
+//--------------------------------------------------------------------
+_spu_RXX                    = 0x80021ED0;
+_spu_madr                   = 0x80021ED4;
+_spu_bcr                    = 0x80021ED8;
+_spu_chcr                   = 0x80021EDC;
+_spu_sys_pcr                = 0x80021EE0;
+_spu_delay                  = 0x80021EE4;
+_spu_tsa                    = 0x80021EE8;
+_spu_transMode              = 0x80021EEC;
+_spu_addrMode               = 0x80021EF0;
+_spu_mem_mode               = 0x80021EF4;
+_spu_mem_mode_plus          = 0x80021EF8;
+_spu_mem_mode_unit          = 0x80021EFC;
+_spu_mem_mode_unitM         = 0x80021F00;
+_spu_inTransfer             = 0x80021F04;
+_spu_transferCallback       = 0x80021F08;
+_spu_IRQCallback            = 0x80021F0C;
+_spu_dummy_2                = 0x80021F10;
+_spu_dma_mode               = 0x80021F20;
+_spu_transfer_startaddr     = 0x80021F24;
+_spu_transfer_time          = 0x80021F28;
+
+//--------------------------------------------------------------------
+//--- PA: 0x012730   VA: 0x80021F30   subsegment: o, libspu/s_m, .data
+//--------------------------------------------------------------------
+_spu_rev_startaddr          = 0x80021F30;
+_spu_AllocBlockNum          = 0x80021F60;
+_spu_AllocLastNum           = 0x80021F64;
+_spu_memList                = 0x80021F68;
+
+//-------------------------------------------------------------------
+//--- PA: 0x012770   VA: 0x80021F70   subsegment: .data, libsn/snmain
+//-------------------------------------------------------------------
+__initialised               = 0x80021F70;
+__heapbase                  = 0x80021F74;
+__heapsize                  = 0x80021F78;
+__text                      = 0x80021F7C;
+__textlen                   = 0x80021F80;
+__data                      = 0x80021F84;
+__datalen                   = 0x80021F88;
+__bss                       = 0x80021F8C;
+__bsslen                    = 0x80021F90;
+
+//----------------------------------------------------------------------
+//--- PA: 0x012794   VA: 0x80021F94   subsegment: o, libetc/vsync, .data
+//----------------------------------------------------------------------
+__ps_libinfo__libetc__      = 0x80021F94; // SDK version? has 0x44 in SH1
+gp1_0                       = 0x80021F9C; // gp1
+t1_count                    = 0x80021FA0;
+Hcount                      = 0x80021FA4;
+
+//------------------------------------------------------------------------
+//--- PA: 0x0127B4   VA: 0x80021FB4   subsegment: o, libetc/intr_vb, .data
+//------------------------------------------------------------------------
+copyright                   = 0x80021FB4;
+intrEnv                     = 0x8002200C;
+jtb_0                       = 0x80023074; // jtb
+jtbp_0                      = 0x80023094; // jtbp
+i_reg                       = 0x80023098;
+i_mask                      = 0x8002309C;
+d_pcr_0                     = 0x800230A0; // d_pcr
+cbIntrVSync                 = 0x800230B4;
+Vcount                      = 0x800230D4;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x0138E4   VA: 0x800230E4   subsegment: o, libetc/intr_dma, .data
+//-------------------------------------------------------------------------
+d_icr                       = 0x800230E4;
+cbIntrDMA                   = 0x800230E8;
+madr_top                    = 0x80023108;
+
+//----------------------------------------------------------------------
+//--- PA: 0x013914   VA: 0x80023114   subsegment: o, libetc/vmode, .data
+//----------------------------------------------------------------------
+_etc_vmode                  = 0x80023114;
+
+//---------------------------------------------------------------------
+//--- PA: 0x013924   VA: 0x80023124   subsegment: o, libcd/event, .data
+//---------------------------------------------------------------------
+CD_cbread                   = 0x80023124;
+CD_read_dma_mode            = 0x80023128;
+
+//-------------------------------------------------------------------
+//--- PA: 0x013934   VA: 0x80023134   subsegment: o, libcd/sys, .data
+//-------------------------------------------------------------------
+setloc                      = 0x80023134;
+
+//--------------------------------------------------------------------
+//--- PA: 0x0139B4   VA: 0x800231B4   subsegment: o, libcd/bios, .data
+//--------------------------------------------------------------------
+__ps_libinfo__libcd__       = 0x800231B4; // 4.3 patch?
+CD_cbsync                   = 0x800231BC;
+CD_cbready                  = 0x800231C0;
+CD_debug                    = 0x800231C4;
+CD_status                   = 0x800231C8;
+CD_status1                  = 0x800231CC;
+CD_nopen                    = 0x800231D0;
+CD_pos                      = 0x800231D4;
+CD_mode                     = 0x800231D8;
+CD_com                      = 0x800231D9;
+DS_active                   = 0x800231DC; // unused?
+CD_comstr                   = 0x800231E0;
+CD_intstr                   = 0x80023260;
+ComAttr                     = 0x80023280;
+CD_test_parmnum             = 0x80023464; // name guessed from CD_set_test_parmnum fn name, not named inside sdk libs
+reg0                        = 0x80023480;
+reg1                        = 0x80023484;
+reg2                        = 0x80023488;
+reg3                        = 0x8002348C;
+com_delay                   = 0x80023490;
+spu                         = 0x80023494;
+Intr                        = 0x80023498;
+dv5_delay                   = 0x800234B4;
+d_pcr_1                     = 0x800234B8; // d_pcr
+d3_madr                     = 0x800234BC;
+d3_bcr                      = 0x800234C0;
+d3_chcr                     = 0x800234C4;
+
+//--------------------------------------------------------------------
+//--- PA: 0x013CD4   VA: 0x800234D4   subsegment: o, libgpu/sys, .data
+//--------------------------------------------------------------------
+ReadAttr                    = 0x800234D4;
+__ps_libinfo__libgpu__      = 0x80023514; // 4.3 patch?
+jtb_1                       = 0x8002351C; // jtb
+jtbp_1                      = 0x8002355C; // jtbp
+GPU_printf                  = 0x80023560;
+GEnv                        = 0x80023564;
+com                         = 0x800235FC;
+nop                         = 0x80023610;
+nop2                        = 0x80023624;
+gp0                         = 0x80023668;
+gp1_1                       = 0x8002366C; // gp1
+d2_madr                     = 0x80023670;
+d2_bcr                      = 0x80023674;
+d2_chcr                     = 0x80023678;
+d6_madr                     = 0x8002367C;
+d6_bcr                      = 0x80023680;
+d6_chcr                     = 0x80023684;
+d_pcr_2                     = 0x80023688; // d_pcr
+_qin                        = 0x8002368C;
+_qout                       = 0x80023690;
+target                      = 0x800236A0;
+nenter                      = 0x800236A4;
+
+
+
+//================================================
+//=== .sdata section
+//================================================
+
+
+//----------------------------------------------------------------
+//--- PA: 0x013EB4   VA: 0x800236B4   subsegment: .sdata, fileinfo
+//----------------------------------------------------------------
+__sdata_start__             = 0x800236B4;
+
+//------------------------------------------------------------
+//--- PA: 0x013F98   VA: 0x80023798   subsegment: .sdata, main
+//------------------------------------------------------------
+_ramsize                    = 0x80023798;
+_stacksize                  = 0x8002379C;
+g_MainImg0                  = 0x800237A0; // type:FsImageDesc size:8
+g_MainImg1                  = 0x800237A8; // type:FsImageDesc size:8
+g_MainFbIdx                 = 0x800237B0; // type:u32
+
+
+
+//================================================
+//=== .sbss section
+//================================================
+
+
+//----------------------------------------------------------
+//--- PA: 0x013FC0   VA: 0x800237C0   subsegment: .sbss, rng
+//----------------------------------------------------------
+g_RngSeed                   = 0x800237C0; // type:u32
+
+//-------------------------------------------------------------------
+//--- PA: 0x013FC4   VA: 0x800237C4   subsegment: .sbss, libsn/snmain
+//-------------------------------------------------------------------
+__ra_temp                   = 0x800237C4;
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x013FC8   VA: 0x800237C8   subsegment: .bss, fsqueue
+//-------------------------------------------------------------
+g_FsQueue                   = 0x800237C8; // type:FsQueue size:0x428
+
+//-----------------------------------------------------------
+//--- PA: 0x0143F0   VA: 0x80023BF0   subsegment: .bss, fsmem
+//-----------------------------------------------------------
+g_FsMem                     = 0x80023BF0; // type:FsMemState size:0xe0
+
+//-------------------------------------------------------------------
+//--- PA: 0x0144D0   VA: 0x80023CD0   subsegment: o, libspu/spu, .bss
+//-------------------------------------------------------------------
+_spu_RQ                     = 0x80023CD0;
+
+//---------------------------------------------------------------------
+//--- PA: 0x0144E8   VA: 0x80023CE8   subsegment: o, libcd/cdread, .bss
+//---------------------------------------------------------------------
+Result                      = 0x80023CE8;
+Alarm                       = 0x80023D00;
+StMode                      = 0x80023D18; // unused?
+
+//-------------------------------------------------------------------
+//--- PA: 0x014520   VA: 0x80023D20   subsegment: o, libgpu/tmd, .bss
+//-------------------------------------------------------------------
+tim                         = 0x80023D30;
+
+//-------------------------------------------------------------------
+//--- PA: 0x014540   VA: 0x80023D40   subsegment: o, libgpu/sys, .bss
+//-------------------------------------------------------------------
+ctlbuf                      = 0x80023D88;
+_que                        = 0x80023E90;
+g_bodyProg                  = 0x80025690;

@@ -9,7 +9,9 @@ options:
 
   asm_path: asm/EUR/main
   src_path: src/main
+  o_path: ../../lib
   build_path: build/EUR
+  hasm_in_src_path: True
   # create_asm_dependencies: True
 
   ld_script_path: linkers/EUR/main.ld
@@ -28,7 +30,6 @@ options:
   generate_asm_macros_files: False # Disabled as our include_asm.h is customized to work with different game versions.
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
-  
   symbol_addrs_path:
     - configs/EUR/sym.bodyprog.txt
     - configs/EUR/sym.main.txt
@@ -46,6 +47,7 @@ options:
   data_string_guesser_level: 2
 
   ld_bss_is_noload: False
+
 segments:
   - name: header
     type: header
@@ -57,8 +59,109 @@ segments:
     vram: 0x80010000
     align: 4
     subalign: 4
+    bss_size: 0x21F8
     subsegments:
-      - [0x800, rodata]
-      - [0xF74, asm, main]
-      - [0xB8FC, data]
+      # .rodata section
+      - [0x800, .rodata, main]
+      - [0x80C, .rodata, fsqueue]
+      - [0x834, o, libspu/spu, .rdata]
+      - [0x884, o, libetc/vsync, .rdata]
+      - [0x894, o, libetc/intr, .rdata]
+      - [0x904, o, libetc/intr_dma, .rdata]
+      - [0x934, o, libcd/event, .rdata]
+      - [0x954, o, libcd/sys, .rdata]
+      - [0x964, o, libcd/bios, .rdata] # Has jtbl, bss pointers.
+      - [0xBC4, o, libcd/cdread, .rdata]
+      - [0xC14, o, libgpu/tmd, .rdata]
+      - [0xD54, o, libgpu/sys, .rdata]
+
+      # .text section
+      - [0xF74, c, main] # Main function.
+      - [0x12B0, c, fileinfo] # File entry functions.
+      - [0x1638, c, fsqueue] # fs queue functions.
+      - [0x2450, c, fsmem] # fs heap allocator.
+      - [0x2758, c, memcpy] # Custom memcpy implementation.
+      - [0x2898, c, rng] # RNG functions.
+      - [0x291C, c, memmove32] # memmove32
+      - [0x299C, o, libapi/a36] #EnterCriticalSection
+      - [0x29AC, o, libapi/a37] #ExitCriticalSection
+      - [0x29BC, o, libapi/a50] #open
+      - [0x29CC, o, libapi/a52] #read
+      - [0x29DC, o, libapi/a54] #close
+      - [0x29EC, o, libapi/a08] #OpenEvent
+      - [0x29FC, o, libapi/a12] #EnableEvent
+      - [0x2A0C, o, libc/c21] #strcat
+      - [0x2A1C, o, libc/c23] #strcmp
+      - [0x2A2C, o, libc/c40] #bzero
+      - [0x2A3C, o, libc/c43] #memset
+      - [0x2A4C, o, libspu/s_i] # SpuInit
+      - [0x2A6C, o, libspu/s_ini]
+      - [0x2BCC, o, libspu/spu] # Has bss section: https://github.com/lab313ru/psx_psyq_signatures/blob/e9e46e7e133ef275a79bfce650924f98edb086bc/470/LIBSPU.LIB.json#L279
+      - [0x370C, o, libapi/a07] #DeliverEvent
+      - [0x371C, o, libc/c63] #printf
+      - [0x372C, o, libspu/s_dcb]
+      - [0x375C, hasm, libsn/snmain] # entry point (psyq-obj-parser doesn't support it...)
+      - [0x38DC, o, libapi/c57] #InitHeap
+      - [0x38EC, o, libetc/vsync] #VSync
+      - [0x3AFC, o, libapi/a91] #ChangeClearPAD
+      - [0x3B0C, o, libapi/l10] #ChangeClearRCnt
+      - [0x3B1C, o, libc/a63] # puts from psyq 4.4?
+      - [0x3B3C, o, libetc/intr] # Callback functions
+      - [0x41FC, o, libapi/c114] # _96_remove
+      - [0x421C, o, libapi/a23] # ReturnFromException
+      - [0x422C, o, libapi/a24] # ResetEntryInt
+      - [0x423C, o, libapi/a25] # HookEntryInt
+      - [0x424C, o, libc/c19] # setjmp
+      - [0x425C, o, libetc/intr_vb] # startIntrVSync
+      - [0x437C, o, libetc/intr_dma] # startIntrDMA
+      - [0x461C, o, libetc/vmode] # Set/GetVideoMode
+      - [0x464C, o, libcd/event] # CdInit
+      - [0x479C, o, libcd/sys] # CD related functions.
+      - [0x4F2C, o, libcd/bios] # More CD functions, has bss StMode
+      - [0x668C, o, libcd/cdread] # Still CD.
+      - [0x705C, o, libgpu/tmd]
+      - [0x88DC, o, libgpu/sys]
+      - [0xB8EC, o, libapi/c73] # GPU_cw
+
+      # .data section
+      - [0xB8FC,  .data, fileinfo]
+      - [0x125E0, .data, main]
+      - [0x12650, o, libspu/s_ini, .data]
+      - [0x126D0, o, libspu/spu, .data]
+      - [0x12730, o, libspu/s_rmp0, .data]
+      - [0x12730, o, libspu/s_m, .data]
+      - [0x12770, .data, libsn/snmain]
+      - [0x12794, o, libetc/vsync, .data]
+      - [0x127B4, o, libetc/intr, .data]
+      - [0x127B4, o, libetc/intr_vb, .data]
+      - [0x138E4, o, libetc/intr_dma, .data]
+      - [0x13914, o, libetc/vmode, .data]
+      - [0x13924, o, libcd/event, .data]
+      - [0x13934, o, libcd/sys, .data]
+      - [0x139B4, o, libcd/bios, .data]
+      - [0x13CD4, o, libcd/cdread, .data]
+      - [0x13CD4, o, libgpu/sys, .data]
+
+      # .sdata section
+      - [0x13EB4, .sdata, fileinfo]
+      - [0x13F94, pad]
+      - [0x13F98, .sdata, main]
+      - [0x13FB4, pad]
+
+      # .sbss section
+      - [0x13FC0, .sbss, rng]
+      - [0x13FC4, .sbss, libsn/snmain]
+
+      # .bss section
+      - [0x13FC8, .bss, fsqueue]
+      - [0x143F0, .bss, fsmem]
+      - [0x144D0, o, libspu/spu, .bss]
+      - [0x144E4, pad]
+      - [0x144E8, o, libcd/event, .bss]
+      - [0x144E8, o, libcd/sys, .bss]
+      - [0x144E8, o, libcd/bios, .bss]
+      - [0x144E8, o, libcd/cdread, .bss]
+      - [0x1451C, pad]
+      - [0x14520, o, libgpu/tmd, .bss]
+      - [0x14540, o, libgpu/sys, .bss] # sys.o .bss runs 0x2C0 bytes past original EXE end, `postbuild.py` trims EXE to original size.
   - [0x14800]

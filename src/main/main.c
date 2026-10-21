@@ -19,11 +19,18 @@
     void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBAA8;
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
     void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBBD0;
+#elif VERSION_IS(EUR)
+    void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CB370;
 #else
     void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
 #endif
 
-void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
+#if VERSION_REGION_IS(PAL)
+    void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80025690;
+    void* SECTION(".rodata") g_OvlItemLang = (void*)0x800C8B68; // Load address of `VIN/ITEM_*.BIN` language overlays.
+#else
+    void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
+#endif
 
 // Overridable defines used by `snmain`
 s32 _ramsize = 2 * 1024 * 1024; // 2MiB of RAM
@@ -38,7 +45,11 @@ s_FsImageDesc g_MainImg0 = {
 };
 
 s_FsImageDesc g_MainImg1 = {
+#if VERSION_REGION_IS(PAL)
+    .tPage = { 0, 12 },
+#else
     .tPage = { 0, 20 },
+#endif
     .u     = 0,
     .v     = 240,
     .clutX = 0,
@@ -49,11 +60,15 @@ s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv = {
     .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
-    .screen = { 0, 8, 256,          224           }
+#if VERSION_REGION_IS(PAL)
+    .screen = { 0, 16, 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE }
+#else
+    .screen = { 0, 8, 256,  FRAMEBUFFER_HEIGHT_PROGRESSIVE }
+#endif
 };
 
 DRAWENV g_MainDrawEnv = {
-    .clip = { 0, 0, SCREEN_WIDTH, 224 },
+    .clip = { 0, 0, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE },
     .dtd  = true,
     .isbg = true
 };
@@ -70,6 +85,9 @@ int main(void)
     ResetCallback();
     CdInit();
     Fs_QueueInitialize();
+#if VERSION_REGION_IS(PAL)
+    SetVideoMode(MODE_PAL);
+#endif
     VSync(SyncMode_Wait);
     ResetGraph(3);
 
@@ -110,7 +128,11 @@ int main(void)
     prim = PSX_SCRATCH;
     while (true)
     {
-        g_MainDispEnv.disp.y = 256 - (g_MainFbIdx * 224);
+#if VERSION_REGION_IS(PAL)
+        g_MainDispEnv.disp.y = g_MainFbIdx ? 0 : 256;
+#else
+        g_MainDispEnv.disp.y = 256 - (g_MainFbIdx * FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+#endif
         PutDispEnv(&g_MainDispEnv);
 
         // Finished fading.
@@ -121,7 +143,11 @@ int main(void)
 
         // Swap buffers.
         fbNext               = g_MainFbIdx == 0;
-        offsetY              = 256 - (fbNext * 224);
+#if VERSION_REGION_IS(PAL)
+        offsetY              = fbNext ? 0 : 256;
+#else
+        offsetY              = 256 - (fbNext * FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+#endif
         g_MainFbIdx          = fbNext;
         g_MainDrawEnv.ofs[1] = offsetY; // Draw Y offset.
         g_MainDrawEnv.clip.y = offsetY;
@@ -134,8 +160,16 @@ int main(void)
             DrawPrim((DR_TPAGE*)prim);
             setlen((SPRT*)prim, 4);
             setCodeWord((SPRT*)prim, PRIM_RECT | RECT_TEXTURE, 0x808080); // `setSprt(); setRGB0();`
+#if VERSION_REGION_IS(PAL)
+            setWH((SPRT*)prim, 256, 240);
+#else
             setWH((SPRT*)prim, 256, 256);
+#endif
+#if VERSION_REGION_IS(PAL)
+            setXY0Fast((SPRT*)prim, sprtX, 7);
+#else
             setXY0Fast((SPRT*)prim, sprtX, -8);
+#endif
             setUV0AndClut((SPRT*)prim, 0, 0, g_MainImg0.clutX, g_MainImg0.clutY);
             DrawPrim((SPRT*)prim);
         }
@@ -148,7 +182,11 @@ int main(void)
         setlen((TILE*)prim, 3);
         setcode((TILE*)prim, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
         setRGB0((TILE*)prim, fade, fade, fade);
+#if VERSION_REGION_IS(PAL)
+        setWHFast((TILE*)prim, SCREEN_WIDTH * 2, FRAMEBUFFER_HEIGHT_PROGRESSIVE); // TODO: is SCREEN_HEIGHT set to PAL's FRAMEBUFFER_HEIGHT_PROGRESSIVE (255)?
+#else
         setWHFast((TILE*)prim, SCREEN_WIDTH * 2, SCREEN_HEIGHT);
+#endif
         setXY0Fast((TILE*)prim, 0, 0);
         DrawPrim((TILE*)prim);
 
@@ -171,7 +209,9 @@ int main(void)
     Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER_1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
     // Load `1ST/FONT8NOC.TIM` (8x8 font atlas).
+#if !VERSION_REGION_IS(PAL) // PAL skips this font load but keeps the wait below.
     Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER_1, &g_MainImg1);
+#endif
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();

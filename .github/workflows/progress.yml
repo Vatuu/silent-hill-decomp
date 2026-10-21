@@ -19,9 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { game_id: SLUS-00707, version: USA }
           - { game_id: SLPM-86192, version: JAP0 }
+          - { game_id: SLUS-00707, version: USA }
           - { game_id: SLPM-86498, version: JAP1 }
+          - { game_id: SLES-01514, version: EUR }
           - { game_id: SLPM-87029, version: JAP2 }
 
     runs-on: ubuntu-latest
