@@ -48,6 +48,7 @@ isSaveWriteOptionSelected                    = 0x801E827C; // size:0x4
 D_801E7560                                   = 0x801E8280; // size:0x4
 D_801E7564                                   = 0x801E8284; // size:0x8
 D_801E756C                                   = 0x801E828C; // size:0x4
+g_SaveScreen_LocationGlyphSaveIdx            = 0x801E8294; // size:0x14
 g_SaveScreen_HiddenSaves                     = 0x801E82A8; // size:0x4
 D_801E7574                                   = 0x801E82AC; // size:0x4
 g_SaveScreen_VisualElementIdx                = 0x801E82B0; // size:0x4

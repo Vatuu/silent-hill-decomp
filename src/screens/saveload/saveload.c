@@ -224,6 +224,14 @@ SAVE_BSS s16 g_SaveScreen_HiddenSaves[MEMCARD_SLOT_COUNT_MAX];
  */
 SAVE_BSS s16 D_801E7574[MEMCARD_SLOT_COUNT_MAX];
 
+#if VERSION_REGION_IS(NTSCJ)
+/** @brief Savegame index whose location name glyphs are currently rendered for each
+ * visible row of each slot, `NO_VALUE` if none. Lets `SaveScreen_SaveLocationDraw`
+ * only render a row's glyphs when the element shown in it changes.
+ */
+SAVE_BSS s16 g_SaveScreen_LocationGlyphSaveIdx[MEMCARD_SLOT_COUNT_MAX][5];
+#endif
+
 /** @brief Stores the index of the element selected in each
  * slot based on what is visually available in the slot.
  *
@@ -237,7 +245,7 @@ SAVE_BSS s16 g_SaveScreen_VisualElementIdx[MEMCARD_SLOT_COUNT_MAX];
 SAVE_BSS s8 D_801E757C[8]; // Unused/Pad.
 
 /** @brief @unused Dead code. */
-SAVE_BSS s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMCARD_SLOT_COUNT_MAX];
+SAVE_BSS s8 D_801E7584[MEMCARD_SLOT_COUNT_MAX][SAVEGAME_COUNT_MAX];
 
 /** @brief Stores the index of the last save done.
  *
@@ -262,12 +270,67 @@ SAVE_BSS u8 g_SaveScreen_IsGameSaving;
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2600);
 
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2724);
+#endif
 
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E273C);
+void SaveScreen_ScreenInfoClear(void) // 0x801E2D8C
+{
+    s32 i;
+    s32 j;
 
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2754);
+#if VERSION_REGION_IS(NTSCJ)
+    const char* digitStr = "０１２３４５６７８９";
+    const char* glyphStrs[2] = {
+        "差込口１　差込口２　",
+        "ファイル　　ファイル　　はい　　　いいえ"
+    };
+#endif
 
+    func_80037124();
+
+    g_SaveScreen_OverwriteActive     = 0;
+    g_SaveScreen_MemCardStateDisplay = 0;
+    g_SaveScreen_SaveFlashTimer      = SAVE_FLASH_TIMER_MAX;
+    g_SaveScreen_IsGameSaving        = 0;
+
+    for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)
+    {
+        g_SaveScreen_IsMemCardNotInserted[i] = true;
+        g_SaveScreen_LastSaveIdx[i]          = NO_VALUE;
+        D_801E7564[i]                        = 0;
+        D_801E756C[i]                        = 0;
+        g_SaveScreen_HiddenSaves[i]          = NO_VALUE;
+        D_801E7574[i]                        = NO_VALUE;
+        g_SaveScreen_VisualElementIdx[i]     = 0;
+        D_801E7514[i]                        = true;
+        D_801E7518[i]                        = 0;
+
+#if VERSION_REGION_IS(NTSCJ)
+        for (j = 0; j < 5; j++)
+        {
+            g_SaveScreen_LocationGlyphSaveIdx[i][j] = NO_VALUE;
+        }
+#endif
+
+        for (j = 0; j < SAVEGAME_COUNT_MAX; j++)
+        {
+            D_801E7584[i][j] = 0;
+        }
+
+        g_SaveScreen_DisplaySaveInfo = true;
+    }
+
+#if VERSION_REGION_IS(NTSCJ)
+    D_800C3920 = 10;
+    func_8004C918(digitStr,     1, 0, 13);
+
+    func_8004C918(glyphStrs[0], 1, 0, 9);
+
+    D_800C3920 = 20;
+    func_8004C918(glyphStrs[1], 1, 0, 12);
+#endif
+}
+
+#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2780);
 
 INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E27AC);
@@ -319,51 +382,17 @@ INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AFC);
 INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B28);
 
 INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B58);
-
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_ScreenInfoClear);
-#else
-void SaveScreen_ScreenInfoClear(void) // 0x801E2D8C
-{
-    s32 i;
-    s32 j;
-
-    func_80037124();
-
-    g_SaveScreen_OverwriteActive     = 0;
-    g_SaveScreen_MemCardStateDisplay = 0;
-    g_SaveScreen_SaveFlashTimer      = SAVE_FLASH_TIMER_MAX;
-    g_SaveScreen_IsGameSaving        = 0;
-
-    for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)
-    {
-        g_SaveScreen_IsMemCardNotInserted[i] = true;
-        g_SaveScreen_LastSaveIdx[i]          = NO_VALUE;
-        D_801E7564[i]                        = 0;
-        D_801E756C[i]                        = 0;
-        g_SaveScreen_HiddenSaves[i]          = NO_VALUE;
-        D_801E7574[i]                        = NO_VALUE;
-        g_SaveScreen_VisualElementIdx[i]     = 0;
-        D_801E7514[i]                        = true;
-        D_801E7518[i]                        = 0;
-
-        for (j = 0; j < SAVEGAME_COUNT_MAX; j++)
-        {
-            D_801E7584[j + (SAVEGAME_COUNT_MAX * i)] = 0;
-        }
-
-        g_SaveScreen_DisplaySaveInfo = true;
-    }
-}
 #endif
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_SlotStrAndBottomRectDraw);
-#else
 void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
 {
     s_Line2d line;
     s32      i;
 
+#if VERSION_REGION_IS(NTSCJ)
+    GsOT*     ot;
+    POLY_FT4* poly;
+#else
     const DVECTOR SLOT_STR_POS_TABLE[] =
     {
         { 59, 16 },
@@ -374,7 +403,39 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
         "SLOT1",
         "SLOT2"
     };
+#endif
 
+#if VERSION_REGION_IS(NTSCJ)
+    ot = &g_OrderingTable2[g_ActiveBufferIdx];
+
+    // Draw SLOT1/SLOT2 label sprites.
+    for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)
+    {
+        poly = (POLY_FT4*)GsOUT_PACKET_P;
+        setPolyFT4(poly);
+        poly->tpage = 18;
+        poly->clut  = 32659;
+        setRGB0(poly, 128, 128, 128);
+
+        if (i != 0)
+        {
+            setUV4(poly, 120, 224, 120, 240,
+                         168, 224, 168, 240);
+            setXY4(poly, -96, -96, -96, -80,
+                         -48, -96, -48, -80);
+        }
+        else
+        {
+            setUV4(poly, 180, 224, 180, 240,
+                         228, 224, 228, 240);
+            setXY4(poly, 52,  -96, 52,  -80,
+                         100, -96, 100, -80);
+        }
+
+        addPrim((u8*)ot->org + LAYER_24, poly);
+        GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_FT4);
+    }
+#else
     Gfx_StringColorSet(StringColorId_White);
 
     for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)
@@ -382,6 +443,7 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
         Gfx_StringPositionSet(SLOT_STR_POS_TABLE[i].vx, SLOT_STR_POS_TABLE[i].vy);
         Gfx_StringDraw(SLOT_STRS[i], 50);
     }
+#endif
 
     line.vertex0.vx = -136;
     line.vertex0.vy = 60;
@@ -389,7 +451,6 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
     line.vertex1.vy = 40;
     SaveScreen_RectSaveInfoDraw(&line);
 }
-#endif
 
 void SaveScreen_SelectedElementIdxUpdate(s32 slotIdx, s32 unused) // 0x801E2F90
 {
@@ -440,9 +501,6 @@ bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry) // 0x801E307
     return false;
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_SaveLocationDraw);
-#else
 void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E30C4
 {
     #define OFFSET_X 150
@@ -451,6 +509,11 @@ void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s3
     #define MARGIN_Y 53
 
     s32 nameIdx = saveEntry->locationId;
+    s32 selectedSaveIdx;
+    s16 hiddenSaveCount;
+
+#if !VERSION_REGION_IS(NTSCJ)
+    s32 colorId;
 
     const u8 X_OFFSETS[] = {
         82, 37,  30, 44,
@@ -461,10 +524,7 @@ void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s3
         95, 48,  71, 102,
         77
     };
-
-    s32 selectedSaveIdx;
-    s16 hiddenSaveCount;
-    s32 colorId;
+#endif
 
     hiddenSaveCount = g_SaveScreen_HiddenSaves[slotIdx];
 
@@ -472,6 +532,15 @@ void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s3
     {
         selectedSaveIdx = saveIdx - hiddenSaveCount;
 
+#if VERSION_REGION_IS(NTSCJ)
+        if (g_SaveScreen_LocationGlyphSaveIdx[slotIdx][selectedSaveIdx] != saveIdx)
+        {
+            g_SaveScreen_LocationGlyphSaveIdx[slotIdx][selectedSaveIdx] = saveIdx;
+
+            D_800C3920 = (s32)strlen(g_Savegame_SaveLocationNames[nameIdx]) / 2;
+            func_8004C918(g_Savegame_SaveLocationNames[nameIdx], (slotIdx * 5) + selectedSaveIdx, 0, 10);
+        }
+#else
         SaveScreen_NextFearModeSave(saveEntry->saveMetadata);
 
         if (g_SaveScreen_IsGameSaving != 0 && g_SelectedSaveSlotIdx == slotIdx && g_SlotElementSelectedIdx[slotIdx] == saveIdx)
@@ -490,6 +559,7 @@ void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s3
         Gfx_StringPositionSet(((slotIdx * OFFSET_X) + MARGIN_X) - (X_OFFSETS[nameIdx] / 2),
                               (selectedSaveIdx * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(g_Savegame_SaveLocationNames[nameIdx], 50);
+#endif
     }
 
     #undef OFFSET_X
@@ -497,7 +567,6 @@ void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s3
     #undef OFFSET_Y
     #undef MARGIN_Y
 }
-#endif
 
 void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E326C
 {
@@ -624,7 +693,7 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
 
             for (i = 0; i < SAVEGAME_COUNT_MAX; i++)
             {
-                D_801E7584[i + (slotIdx * SAVEGAME_COUNT_MAX)] = 0;
+                D_801E7584[slotIdx][i] = 0;
             }
 
             g_SaveScreen_HiddenSaves[slotIdx] = NO_VALUE;
