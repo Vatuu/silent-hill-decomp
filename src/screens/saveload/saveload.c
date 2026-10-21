@@ -359,9 +359,10 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
     {
         poly = (POLY_FT4*)GsOUT_PACKET_P;
         setPolyFT4(poly);
-        poly->tpage = 18;
-        poly->clut  = 32659;
-        setRGB0(poly, 128, 128, 128);
+        poly->tpage = getTPage(0, 0, 128, 256);
+        poly->clut  = getClut(304, 510);
+        
+        setRGB0(poly, 0x80, 0x80, 0x80);
 
         if (i != 0)
         {
@@ -403,9 +404,6 @@ void SaveScreen_SelectedElementIdxUpdate(s32 slotIdx, s32 unused) // 0x801E2F90
     g_SaveScreen_VisualElementIdx[slotIdx] = g_SlotElementSelectedIdx[slotIdx] - g_SaveScreen_HiddenSaves[slotIdx];
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_FileIdxDraw);
-#else
 void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType) // 0x801E2FCC
 {
     #define OFFSET_X             150
@@ -413,10 +411,46 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
     #define FILE_ID_STR_MARGIN_X (FILE_STR_MARGIN_X + 50)
     #define POS_Y                35
 
+#if VERSION_REGION_IS(NTSCJ)
+    GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
+#else
     const char* FILE_STR = "FILE";
+#endif
 
     if (saveIdx == g_SlotElementSelectedIdx[slotIdx] && entryType >= SavegameEntryType_OutOfBlocks)
     {
+#if VERSION_REGION_IS(NTSCJ)
+        RECT      rect;
+        POLY_FT4* poly;
+
+        if (fileId / 10 != 0)
+        {
+            setRECT(&rect, ((fileId / 10) * 3) + 158, 16, 3, 16);
+            MoveImage(&rect, (slotIdx * 18) + 268, 480);
+        }
+        else
+        {
+            setRECT(&rect, (slotIdx * 18) + 268, 480, 3, 16);
+            ClearImage(&rect, 0, 0, 0);
+        }
+
+        setRECT(&rect, ((fileId % 10) * 3) + 158, 16, 3, 16);
+        MoveImage(&rect, (slotIdx * 18) + 271, 480);
+
+        poly = (POLY_FT4*)GsOUT_PACKET_P;
+        setPolyFT4(poly);
+        poly->tpage = getTPage(0, 0, 256, 256);
+        poly->clut  = getClut(304, 510);
+
+        setRGB0(poly, 0x80, 0x80, 0x80);
+        setUV4(poly, slotIdx * 72,        224, slotIdx * 72,        240,
+                     (slotIdx * 72) + 72, 224, (slotIdx * 72) + 72, 240);
+        setXY4(poly, (slotIdx * OFFSET_X) - 130, -78, (slotIdx * OFFSET_X) - 130, -62,
+                     (slotIdx * OFFSET_X) - 58,  -78, (slotIdx * OFFSET_X) - 58,  -62);
+
+        addPrim((u8*)ot->org + LAYER_24, poly);
+        GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_FT4);
+#else
         Gfx_StringColorSet(StringColorId_White);
 
         // Draw "FILE" string.
@@ -426,6 +460,7 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
         // Draw file ID string.
         Gfx_StringPositionSet((slotIdx * OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
         Gfx_StringDrawInt(1, fileId);
+#endif
     }
 
     #undef OFFSET_X
@@ -433,7 +468,6 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
     #undef FILE_ID_STR_MARGIN_X
     #undef POS_Y
 }
-#endif
 
 bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry) // 0x801E3078
 {
