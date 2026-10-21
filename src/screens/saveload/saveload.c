@@ -1798,31 +1798,25 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
     }
 }
 
-#if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2EB4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2EBC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2EC4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2ECC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2EDC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2EE8);
-
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_ElementInfoDraw);
-#else
 void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 {
-    // @unused
-    char* labelStrs[] = {
+    // Constant-index reads of a `const` array are folded by the compiler to the string addresses,
+    // so this table is only copied to the stack and the draw calls below use the literals directly.
+    const char* const labelStrs[] = {
+#if VERSION_REGION_IS(NTSCJ)
+        "data",
+        "save",
+        "time",
+#else
         "Data",
         "Save",
         "Time",
+#endif
         "hyper blaster",
         "power up",
+#if !VERSION_REGION_IS(NTSCJ)
         "You_need_1_free_block\n__to_create_a_new_file."
+#endif
     };
 
     GsOT*                   ot;
@@ -1836,7 +1830,11 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     s32                     digitCount;
     s32                     offset;
     u32                     hyperBlasterBeamColor;
+#if VERSION_EQUAL_OR_NEWER(USA)
     u32                     timeInSec;
+#else
+    s32                     timeInSec;
+#endif
     s_MemCard_SaveMetadata* ptr;
     POLY_G4*                poly;
 
@@ -1844,13 +1842,17 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
     g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(slotIdx);
 
+#if !VERSION_REGION_IS(NTSCJ)
     if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_NewFile)
     {
         Gfx_StringColorSet(StringColorId_White);
         Gfx_StringPositionSet(66, 178);
-        Gfx_StringDraw("You_need_1_free_block\n__to_create_a_new_file.", 50);
+        Gfx_StringDraw(labelStrs[5], 50);
     }
     else if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
+#else
+    if (g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].type == SavegameEntryType_Save)
+#endif
     {
         saveId      = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].savegameCount;
         saveDataIdx = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].elementIdx + 1;
@@ -1859,10 +1861,16 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
         ptr = g_MemCard_ActiveMemCardSlotSaves[selectedSaveIdx].saveMetadata;
 
+#if VERSION_EQUAL_OR_NEWER(USA)
         timeInSec = FP_FROM(ptr->gameplayTimer, Q12_SHIFT);
 
         offset = ptr->add290Hours;
         hours  = (timeInSec / 3600) + (offset * 290);
+#else
+        timeInSec = FP_FROM((s32)ptr->gameplayTimer, Q12_SHIFT);
+
+        hours = (timeInSec / 3600) + (ptr->add290Hours * 290);
+#endif
 
         hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount;
 
@@ -1871,7 +1879,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
 
         Gfx_StringColorSet(StringColorId_White);
         Gfx_StringPositionSet(40, 178);
-        Gfx_StringDraw("Data", 5);
+        Gfx_StringDraw(labelStrs[0], 5);
 
         digitCount = (saveDataIdx < 10) ? 1 : 0;
 
@@ -1879,7 +1887,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringDrawInt(2, saveDataIdx);
 
         Gfx_StringPositionSet(40, 196);
-        Gfx_StringDraw("Save", 5);
+        Gfx_StringDraw(labelStrs[1], 5);
 
         digitCount = (saveId < 10) ? 1 : 0;
 
@@ -1887,7 +1895,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringDrawInt(2, saveId);
 
         Gfx_StringPositionSet(128, 178);
-        Gfx_StringDraw("Time", 5);
+        Gfx_StringDraw(labelStrs[2], 5);
 
         digitCount = 0;
         if (hours < 100)
@@ -1924,9 +1932,9 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         }
 
         Text_Debug_PositionSet(152, 194);
-        Text_Debug_Draw("hyper blaster");
+        Text_Debug_Draw(labelStrs[3]);
         Text_Debug_PositionSet(172, 202);
-        Text_Debug_Draw("power up");
+        Text_Debug_Draw(labelStrs[4]);
 
         for (i = 0; i < 2; i++)
         {
@@ -1960,7 +1968,6 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         }
     }
 }
-#endif
 
 void GameState_LoadSavegameScreen_Update(void) // 0x801E6320
 {

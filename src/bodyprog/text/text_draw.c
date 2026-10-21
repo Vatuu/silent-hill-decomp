@@ -1828,8 +1828,7 @@ void func_8004C394(char* str, s32 col, s32 row, s32 mode) // 0x8004C394
 
 void func_8004C7E4(void) // 0x8004C7E4
 {
-    // @unused Copied to the stack but never read? Is there a way to de-duplicate these?
-    char* msgs[3] = {
+    const char* const msgs[3] = {
         "ここで使うことはできない　　　　　　　＿",
         "ここの地図は持っていない　　　　　　　　",
         "暗くて見ることができない　　　　　　　　"
@@ -1837,9 +1836,9 @@ void func_8004C7E4(void) // 0x8004C7E4
 
     D_800C3920 = 20;
 
-    func_8004C918("ここで使うことはできない　　　　　　　＿", 1, 1, 5);
-    func_8004C918("ここの地図は持っていない　　　　　　　　", 1, 1, 6);
-    func_8004C918("暗くて見ることができない　　　　　　　　", 1, 1, 7);
+    func_8004C918(msgs[0], 1, 1, 5);
+    func_8004C918(msgs[1], 1, 1, 6);
+    func_8004C918(msgs[2], 1, 1, 7);
 }
 
 void func_8004C870(void) // 0x8004C870

@@ -420,7 +420,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     GsOT* ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
 #if VERSION_REGION_IS(NTSC)
-    const char* SAVE_DIALOG_STRS[] = {
+    const char* const SAVE_DIALOG_STRS[] = {
         "\7Is_it_OK_to_save?",
         "\7Yes_____________No"
     };
@@ -467,10 +467,10 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     g_SysWork.enableHalfHeightGlyphs = true;
 
     Gfx_StringPositionSet(90, 92);
-    Gfx_StringDraw("\7Is_it_OK_to_save?", DEFAULT_MAP_MESSAGE_LENGTH);
+    Gfx_StringDraw(SAVE_DIALOG_STRS[0], DEFAULT_MAP_MESSAGE_LENGTH);
 
     Gfx_StringPositionSet(94, 122);
-    Gfx_StringDraw("\7Yes_____________No", DEFAULT_MAP_MESSAGE_LENGTH);
+    Gfx_StringDraw(SAVE_DIALOG_STRS[1], DEFAULT_MAP_MESSAGE_LENGTH);
 
     g_SysWork.enableHalfHeightGlyphs = false;
 #elif VERSION_REGION_IS(NTSCJ)
