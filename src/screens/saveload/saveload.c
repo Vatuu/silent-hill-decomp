@@ -221,6 +221,8 @@ SAVE_BSS s16 g_SaveScreen_HiddenSaves[MEMCARD_SLOT_COUNT_MAX];
  * `D_801E7514` a true value. However, the only instance where a value
  * is assigned is when booting the save screen when it get assigned
  * the value of -1 so it's always realizing the conditional.
+ * (@todo JPN makes use of it in `SaveScreen_SavesSlotDraw` - comment may need 
+ * updating)
  */
 SAVE_BSS s16 D_801E7574[MEMCARD_SLOT_COUNT_MAX];
 
@@ -863,48 +865,31 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
 }
 
 #if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2918);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2944);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2970);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E299C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29C8);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E29F4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A20);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A4C);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2A78);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AA4);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AD0);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2AFC);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B28);
-
-INCLUDE_RODATA("screens/saveload/nonmatchings/saveload", D_801E2B58);
-#endif
-
-#if VERSION_REGION_IS(NTSCJ)
 INCLUDE_ASM("screens/saveload/nonmatchings/saveload", func_801E4128);
 
 INCLUDE_ASM("screens/saveload/nonmatchings/saveload", func_801E4334);
+#endif
 
-INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_MemCardStateDraw);
-#else
 void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardState) // 0x801E3910
 {
-    s32        strIdx;
-    static s32 D_801E7554;
+    s32          strIdx;
+    SAVE_BSS s32 D_801E7554;
 
     const char* DIALOG_STRS[] = {
+#if VERSION_REGION_IS(NTSCJ)
+        "　　　　　　　　　　　　　　　　　　　　",
+        "~C7メモリーカードが抜かれました　　　　　　",
+        "~C7メモリーカードを初期化しています　　　　",
+        "~C7セーブ中です　　　　　　　　　　　　　　",
+        "~C7新規ファイルを作れませんでした　　　　　",
+        "~C7セーブが終了しました　　　　　　　　　　",
+        "~C7セーブに失敗しました　　　　　　　　　　",
+        "~C7ロードしようとしたデータは存在しなかった",
+        "~C7データが壊れています　　　　　　　　　　",
+        "~C7ロードに失敗しました　　　　　　　　　　",
+        "~C7ロードが終了しました　　　　　　　　　　",
+        "~C7ロード中です　　　　　　　　　　　　　　"
+#else
         " ",
         "\7You_\x01\x01removed_\x01\x01the_\x01\x01MEMORY_\x01\x01""CARD!",
         "\7Now_formatting...",
@@ -917,8 +902,14 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
         "\7""Failed_to_load!",
         "\7""Finished_loading.",
         "\7Now_loading..."
+#endif
     };
 
+#if VERSION_REGION_IS(NTSCJ)
+    const u8 GLYPH_COUNTS[] = {
+        0, 14, 16, 6, 15, 10, 10, 20, 10, 10, 10, 6
+    };
+#else
     const s16 X_OFFSETS[] = {
         0,   268,
         141, 107,
@@ -927,6 +918,8 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
         170, 117,
         143, 114
     };
+
+#endif
 
     switch (g_SaveScreen_SaveScreenState)
     {
@@ -1015,8 +1008,24 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
                 g_SaveScreen_VisualElementIdx[g_SelectedSaveSlotIdx] = NO_VALUE;
             }
 
+#if VERSION_REGION_IS(NTSCJ)
+            D_800C3920 = 20;
+            func_8004C918(DIALOG_STRS[strIdx] + 3, 1, 0, 3);
+#endif
+
             D_801E7554 = strIdx;
             g_SaveScreen_MemCardStateDisplay++;
+
+#if VERSION_REGION_IS(NTSCJ)
+            if (strIdx == 5)
+            {
+                D_801E7564[g_SelectedSaveSlotIdx]                   = 0;
+                g_SaveScreen_LastSaveIdx[g_SelectedSaveSlotIdx]     = g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx];
+                g_SaveScreen_LastSaveIdx[1 - g_SelectedSaveSlotIdx] = NO_VALUE;
+                g_SaveScreen_IsGameSaving                           = 0;
+                g_SaveScreen_SaveFlashTimer                         = 0;
+            }
+#endif
 
         case 1:
             if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && memCardState == MemCardWorkResult_Success)
@@ -1024,6 +1033,22 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
                 g_SaveScreen_IsGameSaving = memCardState;
             }
 
+#if VERSION_REGION_IS(NTSCJ)
+            if (D_801E7554 == strIdx)
+            {
+                func_8004C394(DIALOG_STRS[strIdx], 2, GLYPH_COUNTS[strIdx], strIdx + 11);
+
+                if (strIdx == 5)
+                {
+                    g_SaveScreen_LocationGlyphSaveIdx[g_SelectedSaveSlotIdx][g_SaveScreen_VisualElementIdx[g_SelectedSaveSlotIdx]] = NO_VALUE;
+                }
+            }
+            else
+            {
+                g_SaveScreen_MemCardStateDisplay--;
+                D_801E7564[g_SelectedSaveSlotIdx] = 0;
+            }
+#else
             // Finished saving and `D_801E7554` isn't required string.
             if (strIdx == 5 && D_801E7554 != strIdx)
             {
@@ -1041,10 +1066,10 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
             {
                 g_SaveScreen_IsGameSaving = 0;
             }
+#endif
             break;
     }
 }
-#endif
 
 void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x801E3C44
 {
