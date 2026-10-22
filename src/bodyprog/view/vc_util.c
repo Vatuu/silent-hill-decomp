@@ -10,9 +10,6 @@
 
 VECTOR3 vcRefPosSt; /** Q19.12 | View camera reference position start. */
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/view/vc_util", vcInitCamera);
-#else
 void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {
     g_WorldGfxWork.vcCameraInternalInfo.mv_smooth   = VC_MV_CHASE;
@@ -20,7 +17,13 @@ void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos
     g_WorldGfxWork.vcCameraInternalInfo.mode        = 0;
 
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY);
+
+#if VERSION_REGION_IS(PAL)
+    SetGeomScreen(SCREEN_HEIGHT);
+#else
     SetGeomScreen(g_GameWork.gsScreenHeight);
+#endif
+
     vwInitViewInfo();
     vcInitVCSystem(map_overlay_ptr->cameraPaths);
     vcStartCameraSystem();
@@ -29,7 +32,6 @@ void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos
     g_SysWork.cameraRadiusXz = Q12(3.0f);
     g_SysWork.cameraY        = Q12(0.0f);
 }
-#endif
 
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
 {

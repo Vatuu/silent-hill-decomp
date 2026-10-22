@@ -67,9 +67,6 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
 // MAIN LOOP
 // ========================================
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/sys/game_main", GameState_Init_Update);
-#else
 void GameState_Init_Update(void) // 0x80032D1C
 {
     s32 gameState;
@@ -103,8 +100,12 @@ void GameState_Init_Update(void) // 0x80032D1C
             break;
 
         case 2:
+#if VERSION_REGION_IS(PAL)
+            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_Font16AtlasImg); // PAL reads konami image into g_Font16AtlasImg?
+#else
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
+#endif
 
             ScreenFade_Start(true, false, false);
             g_GameWork.gameStateSteps[0]++;
@@ -124,7 +125,6 @@ void GameState_Init_Update(void) // 0x80032D1C
     Screen_BackgroundImgDraw(&g_MainImg0);
     func_80089090(1);
 }
-#endif
 
 void MainLoop(void) // 0x80032EE0
 {
