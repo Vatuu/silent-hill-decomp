@@ -80,7 +80,11 @@ s_BoneNode* WorldGfx_CharaModelBoneNodesGet(e_CharaId charaId)
 
 void GameFs_BgEtcGfxLoad(void)
 {
+#if VERSION_IS(EUR)
+    static s_FsImageDesc IMAGE = { .tPage = { 0, 12 }, .clutX = 944, .clutY = 496 };
+#else
     static s_FsImageDesc IMAGE = { .tPage = { 0, 12 }, .clutX = 192 };
+#endif
 
     Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &IMAGE);
 }
@@ -90,6 +94,17 @@ void GameFs_BgItemLoad(void)
     g_WorldGfxWork.itemLmQueueIdx = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfxWork.itemLmHdr);
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+s_FsImageDesc IMAGE_ETC __asm__("IMAGE_ETC.87") = {
+    .tPage = { 0, 12 },
+    .u     = 32,
+    .v     = 64,
+    .clutX = 944,
+    .clutY = 496
+};
+INCLUDE_ASM("bodyprog/nonmatchings/world/world_draw", GameFs_CommonItemsTextureLoad);
+#else
 static void GameFs_CommonItemsTextureLoad(void)
 {
     static s_FsImageDesc IMAGE_TIM = {
@@ -122,6 +137,7 @@ static void GameFs_CommonItemsTextureLoad(void)
     Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "BG_ETC", &IMAGE_ETC, 1);
     Lm_MaterialFlagsApply(&g_WorldGfxWork.itemLmHdr);
 }
+#endif
 
 s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 {

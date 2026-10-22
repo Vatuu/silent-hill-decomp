@@ -40,6 +40,17 @@ void GameState_LoadScreen_Update(void)
     #undef LOAD_COUNT_MAX
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void GameBoot_InGameStartup_Statics(void)
+{
+    static s32 demoLoadAttempCount __asm__("demoLoadAttempCount");
+
+    (void)demoLoadAttempCount;
+}
+INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", GameBoot_InGameStartup);
+#else
 void GameBoot_InGameStartup(void)
 {
     // Makes up to 5 attemps. If the load fails, the timer used to check if a demo should be triggered is restarted.
@@ -232,6 +243,7 @@ void GameBoot_InGameStartup(void)
 
     #undef playerChara
 }
+#endif
 
 /** @brief Initalizes drawing of the loading screen. */
 static void GameBoot_LoadingScreen(void) // 0x80034E58
@@ -373,6 +385,13 @@ void GameBoot_WorldInit(void) // 0x80035178
     #undef ANIMS_DATA_BUFFER_SIZE
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", func_80034A98);
+#endif
+
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", GameBoot_MapLoad);
+#else
 void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
 {
     Fs_QueueStartRead(FILE_VIN_MAP0_S00_BIN + mapIdx, g_OvlDynamic);
@@ -390,3 +409,8 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     }
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
 }
+#endif
+
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", func_80034B44);
+#endif

@@ -72,6 +72,19 @@ extern s32          g_MapMsg_WidthIdx;
 extern s32          D_800C5E20;
 extern s32          __pad_bss_800C5E24[3];
 extern s32          g_MapMsg_Widths[9];
+#elif VERSION_IS(EUR)
+extern DVECTOR      g_StringPosition;
+extern s32          D_800C2E9C;
+extern s32          D_800C2EA0;
+extern s32          g_StringPositionX1;
+extern s_MapMsgLine g_MapMsg_ActiveLine;
+extern s8           __pad_bss_800C2EA9[2];
+extern s32          g_MapMsg_WidthIdx;
+extern s32          __pad_bss_800C2EB0[2];
+extern s32          g_MapMsg_Widths[12];
+extern GsSPRITE     g_MapMsg_GlyphSprite;
+extern s16          g_GlyphSpritePositionX;
+extern s16          D_800C391E;
 #else
 extern DVECTOR      g_StringPosition;
 extern s32          g_StringPositionX1;

@@ -5,7 +5,7 @@
 #define DEFAULT_MAP_MESSAGE_LENGTH          99
 
 
-#if VERSION_REGION_IS(NTSC)
+#if VERSION_REGION_IS(NTSC) || VERSION_REGION_IS(PAL)
     #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
 #elif VERSION_REGION_IS(NTSCJ)
     #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 200 /** Long string length is used to display a whole message instantly without a rollout. */

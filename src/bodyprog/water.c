@@ -85,6 +85,9 @@ void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_Water
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/water", func_8008D5A0);
+#else
 void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
 {
     RECT      sp10;
@@ -143,6 +146,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     SetDrawMove(packet, &sp10, (g_ActiveBufferIdx * 8) + 784, 112);
     AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
 }
+#endif
 
 void func_8008D78C(void) // 0x8008D78C
 {
@@ -254,6 +258,8 @@ q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8
     const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x51, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #elif VERSION_IS(JAP2)
     const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x00, 0xA3, 0x8E, 0x00, 0x00, 0x00, 0x00 };
+#elif VERSION_IS(EUR)
+    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x31, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
 #endif
 
 // Angles used by `func_8008D990`.
@@ -266,6 +272,10 @@ q3_12 D_800AFD7C[] = {
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002A994);
+INCLUDE_ASM("bodyprog/nonmatchings/water", func_8008D990);
+#else
 void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
 {
     s32       sp20;
@@ -546,6 +556,7 @@ void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 
     poly++;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
+#endif
 
 void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {
@@ -573,6 +584,12 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
     return NULL;
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+RECT D_800AF39C = { 832, 224, 32, 32 };
+s32  D_800AF3A4 = 0;
+INCLUDE_ASM("bodyprog/nonmatchings/water", func_8008E5B4);
+#else
 void func_8008E5B4(void) // 0x8008E5B4
 {
     typedef struct
@@ -657,7 +674,13 @@ void func_8008E5B4(void) // 0x8008E5B4
 
     DrawOTag((u32*)packet);
 }
+#endif
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+SVECTOR svec0 __asm__("svec0.264") = {};
+INCLUDE_ASM("bodyprog/nonmatchings/water", func_8008E794);
+#else
 void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
 {
     VECTOR    sp10;
@@ -730,6 +753,7 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
         GsOUT_PACKET_P = poly + 1;
     }
 }
+#endif
 
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 {
@@ -884,4 +908,7 @@ const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
 const s32 D_8002B2D4 = 0;
 #else
 INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2CC);
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2D4);
+#endif
 #endif

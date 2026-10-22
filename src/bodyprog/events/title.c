@@ -42,6 +42,13 @@ s8* D_800BCDE0;
 // CORE
 // ========================================
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+s32 g_MainMenu_NewGameSelectedDifficultyIdx = 1;
+s32 g_MemCard_PrevSavegameCount             = 0;
+INCLUDE_RODATA("bodyprog/nonmatchings/events/title", D_80025FB0);
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", GameState_MainMenu_Update);
+#else
 void GameState_MainMenu_Update(void) // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
@@ -393,6 +400,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     #undef MAIN_MENU_GAME_STATE_COUNT
 }
+#endif
 
 void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
 {
@@ -492,6 +500,9 @@ static void MainMenu_DifficultyTextDraw(s32 selectedEntryIdx) // 0x8003B678
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", MainMenu_BackgroundDraw);
+#else
 static void MainMenu_BackgroundDraw(void) // 0x8003B758
 {
     if (g_SysWork.sysState == SysState_Gameplay)
@@ -503,12 +514,16 @@ static void MainMenu_BackgroundDraw(void) // 0x8003B758
     Screen_BackgroundImgDraw(&g_TitleImg);
     MainMenu_FogUpdate();
 }
+#endif
 
 // ========================================
 // FOG
 // ========================================
 
 // Could this be an image or an embed texture instead?
+#if VERSION_IS(EUR)
+#define D_800A9AAC D_800A96AC
+#endif
 static u32 D_800A9AAC[256] = {
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
     0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000, 0x3A000000,
@@ -544,6 +559,9 @@ static u32 D_800A9AAC[256] = {
     0x3ABCAEA9, 0x3ABDAFAA, 0x3ABEB0AB, 0x3ABEB1AC, 0x3ABFB2AD, 0x3AC0B3AE, 0x3AC1B4AF, 0x3AC2B5B0
 };
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", func_8003B7BC);
+#else
 static void func_8003B7BC(void) // 0x8003B7BC
 {
     // Can't be `s32*` since 462 doesn't divide by 4, so guessing `s8`.
@@ -552,7 +570,11 @@ static void func_8003B7BC(void) // 0x8003B7BC
     memset(s0, 0, 462);
     D_800BCDE0 = s0;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", func_8003B7FC);
+#else
 static u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 {
     u8  idx0 = D_800BCDE0[idx];
@@ -565,7 +587,11 @@ static u32 func_8003B7FC(s32 idx) // 0x8003B7FC
 
     return val;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", MainMenu_FogPacketGet);
+#else
 static PACKET* MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
 {
     s32      yOffset;
@@ -613,6 +639,7 @@ static PACKET* MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
 
     return packet;
 }
+#endif
 
 static void MainMenu_FogDraw(void) // 0x8003BA08
 {
@@ -626,6 +653,11 @@ static void MainMenu_FogDraw(void) // 0x8003BA08
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+q19_12 randAngle __asm__("RAND.67") = Q12_ANGLE(0.0f);
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", MainMenu_FogRandomize);
+#else
 static void MainMenu_FogRandomize(void) // 0x8003BAC4
 {
     s32 idx;
@@ -660,7 +692,11 @@ static void MainMenu_FogRandomize(void) // 0x8003BAC4
         ptr1[idx] = 0;
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/title", MainMenu_FogScatter);
+#else
 static void MainMenu_FogScatter(void) // 0x8003BBF4
 {
     s32 i;
@@ -694,6 +730,7 @@ static void MainMenu_FogScatter(void) // 0x8003BBF4
         }
     }
 }
+#endif
 
 void MainMenu_FogUpdate(void) // 0x8003BC8C
 {

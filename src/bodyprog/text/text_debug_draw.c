@@ -36,6 +36,9 @@ void Text_Debug_PositionSet(s16 x, s16 y) // 0x80031EFC
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_debug_draw", Text_Debug_Draw);
+#else
 void Text_Debug_Draw(char* str) // 0x80031F40
 {
     #define GLYPH_SIZE_X 8
@@ -107,6 +110,7 @@ void Text_Debug_Draw(char* str) // 0x80031F40
     packet        += sizeof(DR_TPAGE);
     GsOUT_PACKET_P = packet;
 }
+#endif
 
 char* Text_Debug_IntToString(s32 lengthMin, s32 val) // 0x80032154
 {

@@ -17,6 +17,9 @@ s16  D_800A8E5A                  = 3; // Unused.
 // 2D BACKGROUND IMAGE DRAWING
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", Screen_BackgroundImgDraw);
+#else
 void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 {
     s32       baseYOffset;
@@ -82,6 +85,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
     g_SysWork.bgmStatusFlags   |= BgmStatusFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
+#endif
 
 void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* imageOut, q3_12 alpha)
 {
@@ -178,6 +182,9 @@ void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image)
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", Screen_BackgroundMotionBlur);
+#else
 bool Screen_BackgroundMotionBlur(s32 vBlanks)
 {
     s32       interlacingEnabled;
@@ -240,3 +247,4 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
     GsOUT_PACKET_P = sprt;
     return false;
 }
+#endif

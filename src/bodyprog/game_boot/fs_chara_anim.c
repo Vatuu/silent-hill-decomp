@@ -42,6 +42,12 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
     }
 };
 
+#if VERSION_IS(EUR)
+// File index tables? @todo: change to `e_FsFile` enum
+s32 D_800A956C[5] = { 0x7FF, 0x831, 0x85F, 0x88D, 0x8BB };
+s32 D_800A9580[5] = { 0x7FA, 0x7FC, 0x7FB, 0x7FE, 0x7FD };
+#endif
+
 s_AnimInfo D_800A998C = {
     .playbackFunc        = Anim_PlayLoop,
     .status              = 0,

@@ -47,9 +47,15 @@ s_800AE204 D_800AE204[26] = {
 
 // Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/2BvV1)
 s_800AE4DC D_800AE4DC[3] = {
+#if VERSION_IS(EUR)
+    { &D_800AE204[1],  3,  0, 0,      0x80, 0, 0xBF, 0x3F },
+    { &D_800AE204[0],  12, 0, 0,      0x80, 0, 0xBF, 0x3F },
+    { &D_800AE204[12], 5,  0, 0xFF67, 0x80, 0, 0xBF, 0x3F },
+#else
     { &D_800AE204[1],  3,  0, 0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[0],  12, 0, 0,      0, 0x80, 0x3F, 0xBF },
     { &D_800AE204[12], 5,  0, 0xFF67, 0, 0x80, 0x3F, 0xBF },
+#endif
 };
 
 SVECTOR D_800AE500[4] = {
@@ -78,6 +84,9 @@ void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/billboard_draw", Gfx_BillboardDraw);
+#else
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift) // 0x8005B62C
 {
     MATRIX            worldToScreenMat;
@@ -331,6 +340,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 
     GsOUT_PACKET_P = poly_gt4;
 }
+#endif
 
 // ========================================
 // UNUSED

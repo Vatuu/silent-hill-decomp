@@ -32,6 +32,9 @@ s8 g_SelectedSaveSlotIdx                            = 0;
 u8 D_800A97D7                                       = 0;
 s8 g_SaveScreen_IsInSaveScreen                      = 0xFF;
 s8 D_800A97D9                                       = 0;
+#if VERSION_IS(EUR)
+static s32 unkEur_800A93B8                          = NO_VALUE;
+#endif
 
 // ========================================
 // INLINE FUNCTIONS

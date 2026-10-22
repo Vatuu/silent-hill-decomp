@@ -10,6 +10,10 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/text/bodyprog_8003652C", D_80025D6C);
+INCLUDE_ASM("bodyprog/nonmatchings/text/bodyprog_8003652C", func_8003652C);
+#else
 void func_8003652C(void) // 0x8003652C
 {
     RECT rect;
@@ -26,5 +30,8 @@ void func_8003652C(void) // 0x8003652C
 
     LoadImage(&rect, VALS);
 }
+#endif
 
+#if !VERSION_IS(EUR) // The EUR rodata include already carries this padding.
 static const s32 __pad = 0;
+#endif

@@ -48,3 +48,16 @@ CD_nopen              = 0x800231D0;
 DS_active             = 0x800231DC;
 _spu_RQ               = 0x80023CD0;
 StMode                = 0x80023D18;
+DsReadyCallback       = 0x801E34E0;
+DsDataCallback        = 0x801E3508;
+
+# @hack Fix for splat/spimdisasm not recognizing `MAP_INFOS` as referenced in certain maps, which only make use of later elements in the array.
+MAP_INFOS    = 0x80025B3C;
+
+# @hack Referenced in some HARRY_MXSXX_ANIM_INFOS tables.
+Player_VariableAnimDurationGet = 0x800702CC;
+
+# Statics of INCLUDE_ASM'd bodyprog functions, absolute until their data is split out of the C.
+D_800A8A74 = 0x800A8A74;
+D_800A8A8C = 0x800A8A8C;
+D_800C15B4 = 0x800C0BA4;

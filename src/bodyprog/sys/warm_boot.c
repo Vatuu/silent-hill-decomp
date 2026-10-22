@@ -16,6 +16,9 @@ void SysWork_Clear(void) // 0x800340E0
     bzero(&g_SysWork, sizeof(s_SysWork));
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/sys/warm_boot", MainLoop_ShouldWarmReset);
+#else
 s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 {
     #define WARM_BOOT_COMBO_HOLD      (ControllerFlag_Select | ControllerFlag_Start)
@@ -83,7 +86,11 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     #undef WARM_BOOT_COMBO_PRESS
     #undef WARM_BOOT_COMBO_PRESS_ALT
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/sys/warm_boot", Game_WarmBoot);
+#else
 void Game_WarmBoot(void) // 0x80034264
 {
     e_GameState prevState;
@@ -136,3 +143,4 @@ void Game_WarmBoot(void) // 0x80034264
     ScreenFade_Start(true, true, false);
     g_ScreenFadeTimestep = Q12(0.0f);
 }
+#endif

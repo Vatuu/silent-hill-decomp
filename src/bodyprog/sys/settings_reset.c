@@ -11,6 +11,9 @@ void Settings_ScreenAndVolUpdate(void) // 0x800333CC
     Sd_GlobalVolumeSet(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/sys/settings_reset", Settings_RestoreDefaults);
+#else
 void Settings_RestoreDefaults(void) // 0x8003342C
 {
     g_GameWork.config.extraWeaponCtrl = 1;
@@ -26,13 +29,14 @@ void Settings_RestoreDefaults(void) // 0x8003342C
 
     g_GameWork.config.extraBloodColor = 0;
 }
+#endif
 
 void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
 {
     u32  i;
     u16* ptr;
 
-#if VERSION_IS(USA)
+#if VERSION_IS(USA) || VERSION_IS(EUR)
     static const s_ControllerConfig DEFAULT_CONTROLLER_CONFIGS[3] = {
         {
             .enter      = ControllerFlag_Start | ControllerFlag_Cross,

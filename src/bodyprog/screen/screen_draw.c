@@ -20,13 +20,20 @@ void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) //
     DrawSync(SyncMode_Wait);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_Refresh);
+#else
 void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
     DrawSync(SyncMode_Wait);
     Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_Init);
+#else
 void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
 {
     g_GameWork.gsScreenWidth  = screenWidth;
@@ -44,12 +51,16 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
+#endif
 
 void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
 {
     Screen_DisplayEnvXySet(&GsDISPENV, x, y);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_DisplayEnvXySet);
+#else
 void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 {
     #define RANGE_X 11
@@ -67,3 +78,4 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
     #undef RANGE_X
     #undef RANGE_Y
 }
+#endif

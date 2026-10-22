@@ -73,6 +73,9 @@ void WorldEnv_Init(void) // 0x80055028
     WorldEnv_FogDistanceSet(Q12(32.0f), Q12(34.0f));
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_80055028", WorldGfx_2dEffectsDraw);
+#else
 void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 {
     s32      color0;
@@ -155,6 +158,7 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
     GsOUT_PACKET_P = packet + 24;
 }
+#endif
 
 void WorldEnv_WorldLightingParamSet(u8 arg0, q19_12 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {

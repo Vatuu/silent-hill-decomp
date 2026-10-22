@@ -25,7 +25,9 @@
 #include "main/rng.h"
 
 #ifndef PAD_HACK_IGNORE
+#if !VERSION_IS(EUR) // The EUR `D_800BC370` include already covers this padding.
     s8  __pad_bss_800BCD81[3];
+#endif
     s32 __pad_bss_800BCD88[2];
     s32 __pad_bss_800BCD94[5];
     s32 __pad_bss_800BCDD0;
@@ -483,6 +485,9 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/events/game_sys_states", SysState_MapScreen_Update);
+#else
 void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
@@ -525,6 +530,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
         }
     }
 }
+#endif
 
 void GameState_LoadMapScreen_Update(void) // 0x8003991C
 {
@@ -857,6 +863,20 @@ static inline s32 Flags16b_IsSet(const u16* flags, s32 flagIdx)
     return (flags[flagIdx >> 5] >> (flagIdx & 0x1F)) & (1 << 0);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/events/game_sys_states", D_80025F78);
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void SysState_GameOver_Update_Statics(void)
+{
+    static u8 prevTipIdx __asm__("D_800BC370");
+    static u8 __pad_bss_800BC371[3] __asm__("__pad_bss_800BC371");
+
+    (void)prevTipIdx;
+    (void)__pad_bss_800BC371;
+}
+INCLUDE_ASM("bodyprog/nonmatchings/events/game_sys_states", SysState_GameOver_Update);
+#else
 void SysState_GameOver_Update(void) // 0x8003A52C
 {
     #define TIP_COUNT 15
@@ -1031,6 +1051,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
     #undef TIP_COUNT
 }
+#endif
 
 void GameState_MapEvent_Update(void) // 0x8003AA4C
 {

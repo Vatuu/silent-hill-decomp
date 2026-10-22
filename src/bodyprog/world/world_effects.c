@@ -36,6 +36,15 @@ static s_MapEnvPresetIdxs D_800A9FA4 = { 5, 5  };
 
 void GameFs_FlameGfxLoad(void) // 0x8003E710
 {
+#if VERSION_IS(EUR)
+    static s_FsImageDesc IMG_FLAME = {
+        .tPage = { 0, 13 },
+        .u     = 0,
+        .v     = 0,
+        .clutX = 832,
+        .clutY = 64
+    };
+#else
     static s_FsImageDesc IMG_FLAME = {
         .tPage = { 0, 12 },
         .u     = 32,
@@ -43,11 +52,17 @@ void GameFs_FlameGfxLoad(void) // 0x8003E710
         .clutX = 800,
         .clutY = 64
     };
+#endif
 
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &IMG_FLAME);
 }
 
 // Attach the lighter effect at the beginning of the game.
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+u32 D_800A9FB0_0 __asm__("D_800A9FB0.0") = 0;
+INCLUDE_ASM("bodyprog/nonmatchings/world/world_effects", func_8003E740);
+#else
 void func_8003E740(void) // 0x8003E740
 {
     DVECTOR   sp10;
@@ -173,6 +188,7 @@ void func_8003E740(void) // 0x8003E740
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
     }
 }
+#endif
 
 void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {

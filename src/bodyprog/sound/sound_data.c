@@ -23,6 +23,8 @@ s_AudioItemData g_AudioData[127] = {
     #include "audiodata.c.JAP0.inc"
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
     #include "audiodata.c.JAP1.inc"
+#elif VERSION_IS(EUR)
+    #include "audiodata.c.EUR.inc"
 #endif
 };
 

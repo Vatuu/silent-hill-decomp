@@ -71,6 +71,31 @@ GsOT g_OrderingTable2[2] = {
 q19_12 g_DeltaTimeRaw    = TIMESTEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
+#if VERSION_IS(EUR)
+// PAL image layout: different VRAM positions, and no separate death tip image.
+s_FsImageDesc g_Font16AtlasImg             = { { 0,   12  }, 0,    0,   1088, 511 };
+s_FsImageDesc g_KonamiLogoImg              = { { 0,   14  }, 0,    0,   1104, 511 };
+s_FsImageDesc g_KcetLogoImg                = { { 0,   28  }, 0,    0,   1120, 511 };
+s_FsImageDesc g_MemCardWarningImg          = { { 0,   12  }, 0,    128, 816,  255 };
+s_FsImageDesc g_TitleImg                   = { { 0,   14  }, 0,    0,   832,  511 };
+s_FsImageDesc g_PaperMapImg                = { { 1,   5   }, 0,    16,  1088, 511 };
+s_FsImageDesc g_PaperMapMarkingAtlasImg    = { { 0,   7   }, 32,   0,   480,  255 };
+s_FsImageDesc g_ItemInspectionImg          = { { 1,   5   }, 0,    16,  1088, 511 };
+s_FsImageDesc D_800A9A04                   = { { 1,   21  }, 0,    0,   832,  511 };
+s_FsImageDesc g_LoadingScreenImg           = { { 0,   5   }, 0,    16,  928,  448 };
+s_FsImageDesc g_ControllerButtonAtlasImg   = { { 0,   7   }, 32,   0,   912,  496 };
+s_FsImageDesc g_BrightnessScreenImg0       = { { 0,   28  }, 0,    16,  928,  448 };
+s_FsImageDesc g_BrightnessScreenImg1       = { { 0,   30  }, 0,    16,  928,  448 };
+s_FsImageDesc g_HealthPortraitImg          = { { 1,   31  }, 12,   0,   832,  511 };
+s_FsImageDesc g_InventoryKeyItemTextureImg = { { 0,   14  }, 0,    0,   912,  480 };
+s_FsImageDesc g_FirstAidKitItemTextureImg  = { { 0,   15  }, 0,    0,   928,  480 };
+s_FsImageDesc D_800A9074                   = { { 0,   13  }, 32,   0,   896,  480 };
+s_FsImageDesc D_800A907C                   = { { 0,   5   }, 0,    128, 896,  488 };
+s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   944,  480 };
+s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   928,  432 }; // } Effect textures.
+s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 928,  440 }; // }
+s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960,  496 };
+#else
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };
 s_FsImageDesc g_KonamiLogoImg              = { { 0,   12  }, 0,    0,   0,   0   };
 s_FsImageDesc g_KcetLogoImg                = { { 0,   14  }, 0,    0,   0,   1   };
@@ -93,6 +118,7 @@ s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   304, 0  
 s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   }; // } Effect textures.
 s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   }; // }
 s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496 };
+#endif
 /* Not sure if these are really `s_FsImageDesc`. Seems plausible but not sure about negative values here. */
 s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };
 s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   }; // @unused?

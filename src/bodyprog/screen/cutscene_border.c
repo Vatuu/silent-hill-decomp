@@ -20,51 +20,63 @@ static DR_MODE D_800A8E98[] = {
     { 0x3000000, { 0xE1000240, 0x0 } }
 };
 
+#if VERSION_REGION_IS(PAL)
+    #define BORDER_TOP_OUTER_Y     -127
+    #define BORDER_TOP_INNER_Y     -96
+    #define BORDER_BOTTOM_OUTER_Y  128
+    #define BORDER_BOTTOM_INNER_Y  97
+#else
+    #define BORDER_TOP_OUTER_Y     -112
+    #define BORDER_TOP_INNER_Y     -96
+    #define BORDER_BOTTOM_OUTER_Y  112
+    #define BORDER_BOTTOM_INNER_Y  96
+#endif
+
 // TODO: Make a macro?
 static POLY_G4 D_800A8EB0[] = {
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
-        -160, -112,
+        -160, BORDER_TOP_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, -112,
+        160, BORDER_TOP_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        -160, -96,
+        -160, BORDER_TOP_INNER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, -96
+        160, BORDER_TOP_INNER_Y
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
-        -160, -112,
+        -160, BORDER_TOP_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, -112,
+        160, BORDER_TOP_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        -160, -96,
+        -160, BORDER_TOP_INNER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, -96
+        160, BORDER_TOP_INNER_Y
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
-        -160, 112,
+        -160, BORDER_BOTTOM_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, 112,
+        160, BORDER_BOTTOM_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        -160, 96,
+        -160, BORDER_BOTTOM_INNER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, 96
+        160, BORDER_BOTTOM_INNER_Y
     },
     {
         0x8000000,
         0x0, 0x0, 0x0, 0x3A,
-        -160, 112,
+        -160, BORDER_BOTTOM_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, 112,
+        160, BORDER_BOTTOM_OUTER_Y,
         0x0, 0x0, 0x0, 0x0,
-        -160, 96,
+        -160, BORDER_BOTTOM_INNER_Y,
         0x0, 0x0, 0x0, 0x0,
-        160, 96
+        160, BORDER_BOTTOM_INNER_Y
     }
 };
 
@@ -74,6 +86,10 @@ static q19_12 g_Screen_BlackBorderShade = Q12(0.0f);
 // CUTSCENE BORDERS
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/matchings/screen/cutscene_border", Screen_BlackBorderDraw);
+INCLUDE_ASM("bodyprog/nonmatchings/screen/cutscene_border", Screen_CutsceneCameraStateUpdate);
+#else
 void Screen_CutsceneCameraStateUpdate(void)
 {
     static void Screen_BlackBorderDraw(POLY_G4* poly, q19_12 color)
@@ -178,3 +194,4 @@ void Screen_CutsceneCameraStateUpdate(void)
         vcChangeProjectionValue(g_GameWork.gsScreenHeight + Q12_MULT(377 - g_GameWork.gsScreenHeight, g_Screen_BlackBorderShade));
     }
 }
+#endif

@@ -859,6 +859,19 @@ s32 Sd_XaAudioLengthGet(s32 idx) // 0x80046DCC
 }
 
 /** @brief Loads and plays XA audio in `gSDXATable`. */
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Sd_XaAudioPlay_Statics(void)
+{
+    static u16 xaAudioIdx __asm__("D_800C0BBA");
+    static u32 xaFileOffset __asm__("D_800C0BBC");
+
+    (void)xaAudioIdx;
+    (void)xaFileOffset;
+}
+INCLUDE_ASM("bodyprog/nonmatchings/sound/sd_call", Sd_XaAudioPlay);
+#else
 static void Sd_XaAudioPlay(void) // 0x80046E00
 {
 
@@ -988,6 +1001,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
             break;
     }
 }
+#endif
 
 void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx) // 0x8004729C
 {
@@ -1007,6 +1021,21 @@ void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx) // 0x800472BC
     Sd_TaskPoolAdd(6);
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Sd_XaPreLoadAudio_Statics(void)
+{
+    static u16 xaAudioIdx __asm__("D_800C0BC0");
+    static u16 __pad_bss_800C0BC2 __asm__("__pad_bss_800C0BC2");
+    static u32 xaFileOffset __asm__("D_800C0BC4");
+
+    (void)xaAudioIdx;
+    (void)__pad_bss_800C0BC2;
+    (void)xaFileOffset;
+}
+INCLUDE_ASM("bodyprog/nonmatchings/sound/sd_call", Sd_XaPreLoadAudio);
+#else
 static void Sd_XaPreLoadAudio(void) // 0x80047308
 {
     static u16 xaAudioIdx;
@@ -1087,6 +1116,7 @@ static void Sd_XaPreLoadAudio(void) // 0x80047308
             break;
     }
 }
+#endif
 
 /** @brief Prepares the audio load of the XA set in `gSDXATable`. */
 static void Sd_XaAudioStopTaskAdd(void) // 0x8004760C

@@ -131,6 +131,9 @@ void WorldMap_ChunkQueueClear(s_MapChunk* chunkBufferPtr, s32 activeChunkCount) 
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_TexturesInit);
+#else
 void WorldMap_TexturesInit(void) // 0x80041D48
 {
     s32 i;
@@ -167,6 +170,7 @@ void WorldMap_TexturesInit(void) // 0x80041D48
     Textures_ActiveTex_CountReset(&g_WorldMapWork.chunkTextures.halfPage);
     Textures_ActiveTex_PutTextures(&g_WorldMapWork.chunkTextures.halfPage, g_WorldMapWork.chunkTextures.halfPageTextures, 2);
 }
+#endif
 
 void WorldMap_CollisionDataReset(void) // 0x80041E98
 {
@@ -1401,6 +1405,9 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
     #undef CHUNK_SUBCELL_SIZE
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_SubcellVisibleCheck);
+#else
 bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ) // 0x80044420
 {
     GsCOORDINATE2 viewCoord;
@@ -1437,4 +1444,5 @@ bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_
 
     return false;
 }
+#endif
 

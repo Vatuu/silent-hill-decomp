@@ -15,6 +15,16 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
+#if VERSION_REGION_IS(PAL)
+RECT D_800AE5A8[4] = {
+    { 0x0, 0x1, 0x140, 0xFF },
+    { 0x0, 0x100, 0x140, 0xFF },
+    { 0x140, 0x100, 0x140, 0xFF },
+    { 0xA0, 0x81, 0xA0, 0x17F }
+};
+
+u16 D_800AE5C8[2] = { 0x01E0, 0x017F };
+#else
 RECT D_800AE5A8[4] = {
     { 0x0, 0x20, 0x140, 0xE0 },
     { 0x0, 0x100, 0x140, 0xE0 },
@@ -22,7 +32,8 @@ RECT D_800AE5A8[4] = {
     { 0xA0, 0x90, 0xA0, 0x170 }
 };
 
-u16 D_800AE5C8[2] = { 0x01E0, 0x0170 }; // Passed to `SetDrawOffset` and is accessed as part of a RECT with data from `D_800AE5A8`.
+u16 D_800AE5C8[2] = { 0x01E0, 0x0170 };
+#endif // Passed to `SetDrawOffset` and is accessed as part of a RECT with data from `D_800AE5A8`.
 
 // https://decomp.me/scratch/HNL4n something to do with animations?
 // `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
@@ -94,6 +105,19 @@ s_800C4418     D_800C4418;
 // ENVIRONMENT EFFECTS HANDLING
 // ========================================
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Map_EffectTexturesLoad_Statics(void)
+{
+    static u16 loadedEffectTextureFlags __asm__("loadedEffectTextureFlags");
+    static s16 __pad_bss_800C38CA[7] __asm__("__pad_bss_800C38CA");
+
+    (void)loadedEffectTextureFlags;
+    (void)__pad_bss_800C38CA;
+}
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", Map_EffectTexturesLoad);
+#else
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
     s32        i;
@@ -214,6 +238,7 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
         }
     }
 }
+#endif
 
 void func_8005E414(s32 orgIdx) // 0x8005E414
 {
@@ -1067,6 +1092,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80060044);
+#else
 bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 {
     s32              temp_v0_2;
@@ -1366,7 +1394,11 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     return true;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_800611C0);
+#else
 bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 {
     s_func_800611C0    sp10;
@@ -1738,6 +1770,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     return true;
 }
+#endif
 
 void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
 {
@@ -1820,6 +1853,9 @@ void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80062708);
+#else
 bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 {
     s_func_80062708    sp10;
@@ -2043,6 +2079,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
     return true;
 }
+#endif
 
 void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coord) // 0x8006342C
 {
@@ -2218,6 +2255,9 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80063A50);
+#else
 bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 {
     s_func_80063A50* ptr;
@@ -2393,7 +2433,11 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
     return true;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80064334);
+#else
 bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 {
     s32              temp_s0;
@@ -2546,6 +2590,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     return true;
 }
+#endif
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
 {
@@ -2562,6 +2607,9 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80064FC0);
+#else
 bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
 {
     s_func_80064FC0* ptr;
@@ -2607,3 +2655,4 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
     *polys += 1;
     return true;
 }
+#endif

@@ -87,6 +87,9 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
     vcWork.updateLookAtMat     = false;
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/view/vc_main", vcStartCameraSystem);
+#else
 void vcStartCameraSystem(void) // 0x800809DC
 {
     vcWork.view_cam_active_f = true;
@@ -94,6 +97,7 @@ void vcStartCameraSystem(void) // 0x800809DC
     vcWork.updateLookAtMat   = false;
     vcWork.geom_screen_dist  = g_GameWork.gsScreenHeight;
 }
+#endif
 
 void vcEndCameraSystem(void) // 0x80080A04
 {
@@ -251,6 +255,9 @@ void vcGetNowCamPos(VECTOR3* cam_pos) // 0x80080EA8
     *cam_pos = vcWork.cam_pos;
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/view/vc_main", vcReturnPreAutoCamWork);
+#else
 void vcReturnPreAutoCamWork(bool warp_f) // 0x80080ED0
 {
     // Set warp flags if warping.
@@ -262,6 +269,7 @@ void vcReturnPreAutoCamWork(bool warp_f) // 0x80080ED0
     vcWork.flags         &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
     vcWork.geom_screen_dist = g_GameWork.gsScreenHeight;
 }
+#endif
 
 void vcSetSubjChara(VECTOR3* chara_pos,
                     q19_12 chara_bottom_y, q19_12 chara_top_y, q19_12 chara_grnd_y,

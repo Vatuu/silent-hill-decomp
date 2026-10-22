@@ -13,7 +13,7 @@
 #ifndef PAD_HACK_IGNORE
 #if VERSION_REGION_IS(NTSCJ)
     const u32 __pad_rodata_80025D54 = 0;
-#else
+#elif !VERSION_IS(EUR)
     const s32 __pad_rodata_80025D68 = 0;
 #endif
 #endif
@@ -23,14 +23,19 @@
 // ========================================
 
 /** @brief Glyph widths of the 12x16 font. Used for kerning. */
+#if VERSION_IS(EUR)
+#else
 static const u8 FONT_12X16_GLYPH_WIDTHS[FONT_12X16_GLYPH_COUNT] = {
     3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,
     10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
     13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
     7,  11, 11, 6,  6,  10, 6,  13, 11, 10, 11, 10, 8,  8,  7,  10, 10, 12, 10, 10, 9
 };
+#endif
 
 /** @brief See `e_StringColorId`. */
+#if VERSION_IS(EUR)
+#else
 static const u32 STRING_COLORS[StringColorId_Count] = {
     COLOR_RGBC(160, 128, 64,  PRIM_RECT | RECT_TEXTURE),
     COLOR_RGBC(32,  32,  32,  PRIM_RECT | RECT_TEXTURE),
@@ -41,6 +46,7 @@ static const u32 STRING_COLORS[StringColorId_Count] = {
     COLOR_RGBC(100, 100, 100, PRIM_RECT | RECT_TEXTURE),
     COLOR_RGBC(128, 128, 128, PRIM_RECT | RECT_TEXTURE)
 };
+#endif
 
 #if VERSION_REGION_IS(NTSCJ) && !defined(PAD_HACK_IGNORE)
 const u32 __pad_rodata_80025DCC[2] = { 0, 0 };
@@ -49,6 +55,9 @@ const u32 __pad_rodata_80025DCC[2] = { 0, 0 };
 static s16 g_StringColorId = StringColorId_White; /** `e_ColorId` */
 // 2 bytes of padding.
 static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
+#if VERSION_IS(EUR)
+u8 D_800AD098[4] = { 0, 0, 1, 2 };
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
 // Additional color state for the JPN map message functions, set by `Gfx_StringColorSet_JP`.
@@ -92,6 +101,23 @@ s32          __pad_bss_800C5E24[3];
 #endif
 s32          g_MapMsg_Widths[9];
 s32          D_800C3920;
+#elif VERSION_IS(EUR)
+DVECTOR      g_StringPosition;
+s32          D_800C2E9C;
+s32          D_800C2EA0;
+s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
+s_MapMsgLine g_MapMsg_ActiveLine;
+#ifndef PAD_HACK_IGNORE
+s8           __pad_bss_800C2EA9[2];
+#endif
+s32          g_MapMsg_WidthIdx;
+#ifndef PAD_HACK_IGNORE
+s32          __pad_bss_800C2EB0[2];
+#endif
+s32          g_MapMsg_Widths[12];
+GsSPRITE     g_MapMsg_GlyphSprite;
+s16          g_GlyphSpritePositionX;
+s16          D_800C391E;
 #else
 DVECTOR      g_StringPosition;
 s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
@@ -150,6 +176,12 @@ void Gfx_StringColorSet(s16 colorId) // 0x8004A8DC
     g_StringColorId = colorId;
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw", D_80026898);
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw", FONT_12X16_GLYPH_WIDTHS);
+INCLUDE_RODATA("bodyprog/nonmatchings/text/text_draw", STRING_COLORS);
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_StringDraw);
+#else
 bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
 {
     #define WIDE_SPACE_SIZE 10
@@ -313,6 +345,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
     #undef WIDE_SPACE_SIZE
     #undef ATLAS_BASE_Y
 }
+#endif
 
 // ========================================
 // USA MAPMSG FUNCTIONS
@@ -321,6 +354,9 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
 
 #if !VERSION_REGION_IS(NTSCJ)
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_MapMsg_WidthsCompute);
+#else
 s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 {
     s32 i;
@@ -425,7 +461,11 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
         }
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_MapMsg_StringDraw);
+#else
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
 {
     #define LINE_SPACE_SIZE 32
@@ -742,9 +782,13 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
     #undef LINE_SPACE_SIZE
     #undef CHARCODE_OFFSET
 }
+#endif
 
 #endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", func_8004B658);
+#else
 void func_8004B658(void) // 0x8004B658
 {
     g_MapMsg_GlyphSprite.attribute = 64;
@@ -756,6 +800,7 @@ void func_8004B658(void) // 0x8004B658
     func_8003652C();
 #endif
 }
+#endif
 
 #if !VERSION_REGION_IS(NTSCJ)
 // USA-only Gfx_MapMsg_Reset (JPN version is relocated later in file.)
@@ -796,6 +841,9 @@ void func_8004B74C(s16 arg0) // 0x8004B74C
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", func_8004B76C);
+#else
 void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
 {
     #define GLYPH_SIZE_X       11
@@ -878,6 +926,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
     #undef LINE_SPACE_SIZE
     #undef ATLAS_COLUMN_COUNT
 }
+#endif
 
 void Gfx_StringDrawInt(s32 lengthMin, s32 val) // 0x8004B9F8
 {

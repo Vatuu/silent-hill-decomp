@@ -147,6 +147,8 @@ s_800AD4C8 D_800AD4C8[70] = {
 s32 g_Inventory_CmdSelectedIdx = 0;
 u32 g_Inventory_SelectionId    = 0;
 
+// PAL builds load the item names and descriptions from the `VIN/ITEM_*.BIN` language overlays.
+#if !VERSION_REGION_IS(PAL)
 const char* INV_ITEM_NAMES[] = {
 #if VERSION_REGION_IS(NTSCJ)
     "栄養剤",
@@ -514,6 +516,12 @@ const char* g_ItemDescriptions[] = {
     "Fuel_for_chainsaws_and\n\t\t\t\t\trock_drills."
 #endif
 };
+#else
+// Pointers into the item language overlays?
+const char* INV_ITEM_NAMES[5] = {
+    (char*)0x800C8B6C, (char*)0x800C8B6C, (char*)0x800C8B6C, (char*)0x800C8B6C, (char*)0x800C8B6C
+};
+#endif
 
 // TODO: `Items_` subsystem globals and funcs could be part of `Inventory_` instead, not sure yet.
 
@@ -542,6 +550,19 @@ s16 D_800AE1A8                                 = 0;
 s32    g_Items_PickupAnimState = 0;
 q19_12 g_Items_PickupScale     = Q12(0.0f);
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", LABEL_STR_POS_TABLE);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002736C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027378);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027380);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027388);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002738C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027394);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002739C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800273A0);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800273A8);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_ItemScreens_DrawInit);
+#else
 void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 {
     #define LABEL_COUNT 8
@@ -643,7 +664,11 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 
     func_8004FB0C();
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_8004FB0C);
+#else
 void func_8004FB0C(void) // 0x8004FB0C
 {
     GsOT*    ot;
@@ -663,6 +688,7 @@ void func_8004FB0C(void) // 0x8004FB0C
 
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_F4);
 }
+#endif
 
 /** Draws many 2D menu elements.
  * The background behind the text in the upper
@@ -670,6 +696,11 @@ void func_8004FB0C(void) // 0x8004FB0C
  * box used to indicate what the user has selected,
  * and triggers the drawing of the health status.
  */
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800273C8);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027410);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_2dBackgroundDraw);
+#else
 void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 {
     s32       temp_t3;
@@ -899,7 +930,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                -0x8C + (0x60 * j), 0xB6 + (6 * k),
                                -0x34 + (0x60 * j), 0xB0 + (6 * k),
                                -0x34 + (0x60 * j), 0xB6 + (6 * k));
-#elif VERSION_REGION_IS(NTSC)
+#elif VERSION_REGION_IS(NTSC) || VERSION_REGION_IS(PAL)
                                -0x8C + (0x60 * j), 0xC0 + (6 * k),
                                -0x8C + (0x60 * j), 0xC6 + (6 * k),
                                -0x34 + (0x60 * j), 0xC0 + (6 * k),
@@ -1124,6 +1155,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);
     }
 }
+#endif
 
 static inline s16 GetUvOrRandom(void)
 {
@@ -1138,6 +1170,10 @@ static inline s16 GetUvOrRandom(void)
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027474);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_HealthStatusDraw);
+#else
 void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
 {
     s32       tempOverlayY;
@@ -1391,7 +1427,30 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
         g_Inventory_HealthStatusScanlinePosition   = -300;
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027484);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027498);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800274B4);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800274D0);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800274E8);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027500);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002752C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027560);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027594);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_800275CC);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027600);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027628);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002762C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027634);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_8002763C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027648);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027654);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027660);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_3", D_80027668);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_ItemDescriptionDraw);
+#else
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 {
     s32     temp;
@@ -1841,6 +1900,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     }
 #endif
 }
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
 void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
@@ -1869,9 +1929,9 @@ void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
     addPrim(&ot->org[6], sprt);
 
     GsOUT_PACKET_P = &sprt[1];
-
     Gfx_Primitive2dTextureSet(0, (arg1 & 0x1) ? 256 : 0, 6, 1);
 }
+
 
 void func_800539A0(s32 arg0, s32 arg1) // JPN0 0x800539A0
 {

@@ -40,6 +40,52 @@ USA_BODYPROG = [
     [0x9821C, b'\x21\x10\x49'],
 ]
 
+EUR_BODYPROG = [
+    [0x1, b'\x8E\x00'],
+    [0xAD, b'\x45'],
+    [0x136, b'\x2C'],
+    [0x139, b'\xAF\x28'],
+    [0x9BF, b'\xB2\x00\x08\xDD\x86'],
+    [0x1355, b'\x8F\x28\x00'],
+    [0x533A, b'\x08\x80'],
+    [0x83F2A, b'\x40\x08'],
+    [0x8850E, b'\x0A\x80'],
+    [0x886A6, b'\x0A'],
+    [0x8C577, b'\x18'],
+    [0x8FB8C, b'\x74\x7A\x74\x20'],
+    [0x96CA1, b'\x01\x2C'],
+    [0x96CA4, b'\x48\x02'],
+    [0x96CAC, b'\x4A\xA4\x01\x02'],
+    [0x96CDC, b'\x01\x02\x84'],
+    [0x96D3D, b'\x08\x3E\x1D'],
+    [0x96D45, b'\x12\x08'],
+    [0x99B4F, b'\x50'],
+    [0x9B50C, b'\x80'],
+    [0x9B50E, b'\xFC'],
+    [0x9B516, b'\xF8'],
+    [0x9D73E, b'\x5C'],
+    [0x9D7C4, b'\x2C\x04\x04'],
+    [0x9D884, b'\x04\x2C\x04\x03'],
+    [0x9D8C5, b'\x0A\x52\xCC'],
+    [0x9D902, b'\x04\xFC'],
+    [0x9D906, b'\x0A\x4A'],
+    [0x9E21E, b'\x43\x8C'],
+    [0x9E235, b'\x25\x09'],
+    [0x9E3B6, b'\x02'],
+    [0x9E42C, b'\x02\x13\x08'],
+    [0x9E57E, b'\x02\x3C'],
+    [0x9E58C, b'\x86\xF7\x42\x26'],
+    [0x9E84A, b'\x62\x14\x47'],
+    [0x9E84E, b'\x02\x24'],
+    [0x9E854, b'\x13'],
+    [0x9E856, b'\x02\x24'],
+    [0xA0E9E, b'\x0C\x0C'],
+    [0xA0F8C, b'\x24\x0A'],
+    [0xA0F8F, b'\x05'],
+    [0xA164E, b'\x02\x0F'],
+    [0xA2A5C, b'\x24\x10\x50'],
+]
+
 JAP0_STREAM = [
     [0x12B2C, b'\x56\x49\x45\x57']
 ]
@@ -344,14 +390,21 @@ if __name__ == "__main__":
                     file.write(data[1])
                 file.close()
 
-        case "bodyprog" | "build/USA/out/1ST/BODYPROG.BIN" | "build/JAP0/out/1ST/BODYPROG.BIN" | "build/JAP1/out/1ST/BODYPROG.BIN" | "build/JAP2/out/1ST/BODYPROG.BIN":
+        case "bodyprog" | "build/USA/out/1ST/BODYPROG.BIN" | "build/EUR/out/1ST/BODYPROG.BIN" | "build/JAP0/out/1ST/BODYPROG.BIN" | "build/JAP1/out/1ST/BODYPROG.BIN" | "build/JAP2/out/1ST/BODYPROG.BIN":
             usaPath = "build/USA/out/1ST/BODYPROG.BIN"
+            eurPath = "build/EUR/out/1ST/BODYPROG.BIN"
             jap0Path = "build/JAP0/out/1ST/BODYPROG.BIN"
             jap1Path = "build/JAP1/out/1ST/BODYPROG.BIN"
             jap2Path = "build/JAP2/out/1ST/BODYPROG.BIN"
             if os.path.isfile(usaPath):
                 file = open(usaPath, "r+b")
                 for data in USA_BODYPROG:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+            if os.path.isfile(eurPath):
+                file = open(eurPath, "r+b")
+                for data in EUR_BODYPROG:
                     file.seek(data[0])
                     file.write(data[1])
                 file.close()

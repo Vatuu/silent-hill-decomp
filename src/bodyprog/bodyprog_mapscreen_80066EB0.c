@@ -14,6 +14,9 @@ const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
 // MAP
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_mapscreen_80066EB0", func_80066D90);
+#else
 void func_80066D90(void) // 0x80066D90
 {
     s32       i;
@@ -40,6 +43,7 @@ void func_80066D90(void) // 0x80066D90
 
     Fs_QueueWaitForEmpty();
 }
+#endif
 
 void func_80066E40(void) // 0x80066E40
 {

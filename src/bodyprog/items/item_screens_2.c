@@ -65,6 +65,9 @@ static const s8 D_80025EB0[] = {
     0,  0,  0,  0
 };
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", GameState_ItemScreens_Update);
+#else
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringColorSet(StringColorId_White);
@@ -380,7 +383,14 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         Gfx_Results_Save();
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026B58);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026BB8);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026BCC);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Results_Save);
+#else
 void Gfx_Results_Save(void) // 0x8004D1A0
 {
     s32      i;
@@ -523,6 +533,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
             break;
     }
 }
+#endif
 
 void Inventory_Update(void) // 0x8004D518
 {
@@ -1220,6 +1231,18 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     #undef playerExtra
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D3C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D40);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D48);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D50);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D58);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D60);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D64);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D68);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026D70);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Gfx_Inventory_CmdOptionsDraw);
+#else
 void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
 {
     s32      i;
@@ -1378,6 +1401,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
         }
     }
 }
+#endif
 
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 {
@@ -1785,6 +1809,20 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     return j;
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E08);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E2C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E54);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E7C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026EA8);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026ED4);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026EFC);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F2C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F50);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F7C);
+INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026FA0);
+INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Inventory_UnavailableMapTextDraw);
+#else
 void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
 {
 #if VERSION_REGION_IS(NTSCJ)
@@ -1834,6 +1872,7 @@ void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
     Gfx_StringDraw(STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 #endif
 }
+#endif
 
 void Inventory_DirectionalInputSet(void) // 0x8004F5DC
 {

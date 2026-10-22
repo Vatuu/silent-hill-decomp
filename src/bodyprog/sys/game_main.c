@@ -67,6 +67,9 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
 // MAIN LOOP
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/sys/game_main", GameState_Init_Update);
+#else
 void GameState_Init_Update(void) // 0x80032D1C
 {
     s32 gameState;
@@ -121,6 +124,7 @@ void GameState_Init_Update(void) // 0x80032D1C
     Screen_BackgroundImgDraw(&g_MainImg0);
     func_80089090(1);
 }
+#endif
 
 void MainLoop(void) // 0x80032EE0
 {
