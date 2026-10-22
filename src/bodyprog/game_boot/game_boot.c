@@ -40,17 +40,6 @@ void GameState_LoadScreen_Update(void)
     #undef LOAD_COUNT_MAX
 }
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
-static inline void GameBoot_InGameStartup_Statics(void)
-{
-    static s32 demoLoadAttempCount __asm__("demoLoadAttempCount");
-
-    (void)demoLoadAttempCount;
-}
-INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", GameBoot_InGameStartup);
-#else
 void GameBoot_InGameStartup(void)
 {
     // Makes up to 5 attemps. If the load fails, the timer used to check if a demo should be triggered is restarted.
@@ -87,7 +76,7 @@ void GameBoot_InGameStartup(void)
             break;
 
         case 1:
-            if (g_SysWork.gameStateStepCounter > SECONDS_60_FPS(20) && 
+            if (g_SysWork.gameStateStepCounter > SECONDS_TO_FRAMES(20) && 
                 Fs_QueueGetLength() == 0 && Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 Demo_DemoFileSavegameUpdate();
@@ -200,7 +189,7 @@ void GameBoot_InGameStartup(void)
             break;
 
         case 11:
-            if (g_SysWork.gameStateCounter >= SECONDS_60_FPS(1))
+            if (g_SysWork.gameStateCounter >= SECONDS_TO_FRAMES(1))
             {
                 if (g_SysWork.processFlags == ProcessFlag_RoomTransition)
                 {
@@ -243,7 +232,6 @@ void GameBoot_InGameStartup(void)
 
     #undef playerChara
 }
-#endif
 
 /** @brief Initalizes drawing of the loading screen. */
 static void GameBoot_LoadingScreen(void) // 0x80034E58

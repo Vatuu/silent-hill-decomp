@@ -20,6 +20,21 @@
 #define TIMESTEP_30_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
 #define TIMESTEP_60_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND))
 
+/** @brief Tickrate used in some (but not all) PAL framerate code.
+ * Usually seen used by `SECONDS_60_FPS` macros, where the tickrate was
+ * changed from 60 to 50.
+ * Some code may still use normal SECONDS_60_FPS though (with 60 tickrate), 
+ * code that does change in PAL is changed to `SECONDS_TO_FRAMES`, which 
+ * picks the rate based on which region is being built.
+*/
+#define TICKS_PER_SECOND_PAL 50 /** Tick-rate used in some PAL code. */
+
+#if VERSION_REGION_IS(PAL)
+#define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND_PAL
+#else
+#define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
+#endif
+
 #define SCREEN_WIDTH                   320
 #define SCREEN_HEIGHT                  240
 #if VERSION_REGION_IS(PAL)
@@ -37,6 +52,15 @@
  */
 #define SECONDS_60_FPS(sec) \
     (s32)((sec) * TICKS_PER_SECOND)
+
+/** @brief Converts seconds to frames at the regions full refresh rate.
+ * (60FPS for NTSC/NTSCJ, 50FPS for PAL)
+ *
+ * @param sec Seconds to convert.
+ * @return Frames at 60/50 FPS.
+ */
+#define SECONDS_TO_FRAMES(sec) \
+    (s32)((sec) * TICKS_PER_SECOND_REGIONAL)
 
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *

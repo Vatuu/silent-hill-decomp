@@ -22,23 +22,17 @@ u16                  g_Demo_RandSeed = 0;
 // 2 bytes of padding.
 s_DemoPlaybackFrame* g_Demo_PlaybackFrames = (s_DemoPlaybackFrame*)0x800F5E00;
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-s_DemoFileInfo DEMO_FILE_INFOS[] __asm__("DEMO_FILE_INFOS.30") = {
-    { FILE_MISC_DEMO000C_DAT, FILE_MISC_PLAY000C_DAT, 0 },
-    { FILE_MISC_DEMO000D_DAT, FILE_MISC_PLAY000D_DAT, 0 },
-    { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
-    { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 }
-};
-INCLUDE_ASM("bodyprog/nonmatchings/demo", Demo_SequenceAdvance);
-#else
 bool Demo_SequenceAdvance(s32 incAmount) // 0x8008EF20
 {
+#if VERSION_REGION_IS(PAL)
+    #define DEMO_FILE_COUNT_MAX 4
+#else
     #define DEMO_FILE_COUNT_MAX 5
+#endif
 
     static s_DemoFileInfo DEMO_FILE_INFOS[DEMO_FILE_COUNT_MAX] =
     {
-#if VERSION_IS(USA)
+#if VERSION_REGION_IS(NTSC)
         { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, 0 },
         { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
         { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
@@ -49,6 +43,11 @@ bool Demo_SequenceAdvance(s32 incAmount) // 0x8008EF20
         { FILE_MISC_DEMO0007_DAT, FILE_MISC_PLAY0007_DAT, 0 },
         { FILE_MISC_DEMO0008_DAT, FILE_MISC_PLAY0008_DAT, 0 },
         { FILE_MISC_DEMO0004_DAT, FILE_MISC_PLAY0004_DAT, 0 },
+        { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 }
+#elif VERSION_REGION_IS(PAL)
+        { FILE_MISC_DEMO000C_DAT, FILE_MISC_PLAY000C_DAT, 0 },
+        { FILE_MISC_DEMO000D_DAT, FILE_MISC_PLAY000D_DAT, 0 },
+        { FILE_MISC_DEMO0003_DAT, FILE_MISC_PLAY0003_DAT, 0 },
         { FILE_MISC_DEMO0005_DAT, FILE_MISC_PLAY0005_DAT, 0 }
 #endif
     };
@@ -94,7 +93,6 @@ bool Demo_SequenceAdvance(s32 incAmount) // 0x8008EF20
 
     #undef DEMO_FILE_COUNT_MAX
 }
-#endif
 
 void Demo_DemoDataRead(void) // 0x8008F048
 {
@@ -250,17 +248,13 @@ s32 Demo_StateGet(s32 gameState)
     return DemoState_None;
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/demo", Demo_ExitDemo);
-#else
 void Demo_ExitDemo(void) // 0x8008F4E4
 {
-    g_Demo_FrameCount          = SECONDS_60_FPS(999);
+    g_Demo_FrameCount          = SECONDS_TO_FRAMES(999);
     g_Demo_ActivePlaybackFrame = NULL;
     g_Demo_DemoStep            = 0;
     g_SysWork.sysFlags        |= SysFlag_DoWarmReset;
 }
-#endif
 
 void nullsub_8008F518(void) {} // 0x8008F518
 

@@ -16,9 +16,6 @@ void SysWork_Clear(void) // 0x800340E0
     bzero(&g_SysWork, sizeof(s_SysWork));
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/sys/warm_boot", MainLoop_ShouldWarmReset);
-#else
 s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 {
     #define WARM_BOOT_COMBO_HOLD      (ControllerFlag_Select | ControllerFlag_Start)
@@ -44,7 +41,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 
     if (g_SysWork.sysFlags & SysFlag_DemoActive)
     {
-        if (g_Demo_FrameCount > SECONDS_60_FPS(30))
+        if (g_Demo_FrameCount > SECONDS_TO_FRAMES(30))
         {
             return ResetType_WarmBoot;
         }
@@ -65,7 +62,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         g_WarmBootTimer = 0;
     }
 
-    if (g_WarmBootTimer > SECONDS_60_FPS(2))
+    if (g_WarmBootTimer > SECONDS_TO_FRAMES(2))
     {
         return ResetType_WarmBoot;
     }
@@ -86,7 +83,6 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     #undef WARM_BOOT_COMBO_PRESS
     #undef WARM_BOOT_COMBO_PRESS_ALT
 }
-#endif
 
 #if VERSION_IS(EUR)
 INCLUDE_ASM("bodyprog/nonmatchings/sys/warm_boot", Game_WarmBoot);
