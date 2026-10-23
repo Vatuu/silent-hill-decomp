@@ -1948,7 +1948,10 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
             Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
         }
 
-        if (func_8005F680(&surfaces[0]) || func_8005F680(&surfaces[1]) || func_8005F680(&surfaces[2]) || func_8005F680(&surfaces[3]) ||
+        if (func_8005F680(&surfaces[0]) ||
+            func_8005F680(&surfaces[1]) ||
+            func_8005F680(&surfaces[2]) ||
+            func_8005F680(&surfaces[3]) ||
             ABS(surfaces[0].groundHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
             ABS(surfaces[1].groundHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
             ABS(surfaces[2].groundHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||

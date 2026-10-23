@@ -72,7 +72,7 @@ typedef struct _CollisionResult
 typedef struct
 {
     /* 0x0 */ u8    subChunkTransDir; /**`e_SubChunkTransitionDirection` */
-    /* 0x1 */ u8    surfaceIdx;       // Index for `s_IpdCollisionData::surfaces`.
+    /* 0x1 */ u8    surfaceIdx;       // Index for `s_IpdCollisionData::cellSurfaces`.
     /* 0x2 */ q7_8  collDiffDist;
     /* 0x4 */ q23_8 radiusCollDiffDist;
 } s_CollisionState_A8;
@@ -119,16 +119,16 @@ typedef union
 typedef struct _CollisionCellPoint
 {
     /* 0x0  */ s_IpdCollisionData*    ipdCollisionData;
-    /* 0x4  */ u8                     subcellIdx; // `s_IpdCollisionData::subcells` index.
+    /* 0x4  */ u8                     cellIdx; // `s_IpdCollisionData::cells` index.
     /* 0x5  */ u8                     heightDisabled;
-    /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position inside cell/subcell?
+    /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position inside cell/cell? Wrong struct? Y is maybe Z.
     /* 0xC  */ s_CollisionState_CC_C  field_C; // Cell surface??
     /* 0xE  */ u8                     field_E;               // } Index from `s_IpdCollisionData::field_6_8`.
     /* 0xF  */ u8                     field_F;               // }
     /* 0x10 */ u8                     disableSurface0Height; /** `bool` */
     /* 0x11 */ u8                     disableSurface1Height; /** `bool` */
-    /* 0x12 */ SVECTOR3               splitVertex0;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
-    /* 0x18 */ SVECTOR3               splitVertex1;          /** Q23.8 | Data from `s_IpdCollisionData::splitVertices` */
+    /* 0x12 */ SVECTOR3               splitVertex0;          /** Q23.8 | Data from `s_IpdCollisionData::cellSplitVertices` */
+    /* 0x18 */ SVECTOR3               splitVertex1;          /** Q23.8 | Data from `s_IpdCollisionData::cellSplitVertices` */
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCellPoint;
 STATIC_ASSERT_SIZEOF(s_CollisionCellPoint, 56);
@@ -188,12 +188,12 @@ typedef struct _CollisionState
                  {
                      struct
                      {
-                         /* 0x0 */ u8                     closestXSubcellIdx;
-                         /* 0x1 */ u8                     closestZSubcellIdx;
-                         /* 0x2 */ u8                     closeFarXSubcellIdxDiff;
-                         /* 0x3 */ u8                     closeFarZSubcellIdxDiff;
-                         /* 0x4 */ s_IpdCollSubcellRange* subcellRange;
-                         /* 0x8 */ s_CollisionState_A8    field_8[4];
+                         /* 0x0 */ u8                  closestXCellIdx;
+                         /* 0x1 */ u8                  closestZCellIdx;
+                         /* 0x2 */ u8                  closeFarXCellIdxDiff;
+                         /* 0x3 */ u8                  closeFarZCellIdxDiff;
+                         /* 0x4 */ s_IpdCellRange* cellRange;
+                         /* 0x8 */ s_CollisionState_A8 field_8[4];
                      } s_0;
                      struct
                      {
@@ -205,7 +205,7 @@ typedef struct _CollisionState
                      } s_1;
     /* 0xA0   */ } field_A0; // Ground info? Cell info? Cell state?
 
-    /* 0xC8   */ u8                   subcellIdx; /** Secondary. Used only if detecting a subcell after not finding one. */
+    /* 0xC8   */ u8                   cellIdx; /** Secondary. Used only if detecting a cell after not finding one. */
     /* 0xCA   */ q7_8                 groundHeight; // TODO: Base ground height with slope unaccounted for?
     /* 0xCC   */ s_CollisionCellPoint point;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
@@ -389,14 +389,14 @@ void Collision_CharaCollisionHandle(s_CollisionState* state, s_IpdCollisionData*
 
 bool Collision_SubcellInit(s_CollisionState* state, const s_IpdCollisionData* collData);
 
-bool Collision_SubcellIdxGet(s_CollisionState* state, const s_IpdCollisionData* collData);
+bool Collision_CellIdxGet(s_CollisionState* state, const s_IpdCollisionData* collData);
 
-void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
+void func_8006B1C8(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
-bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, s32 subcellIdx);
+bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, s32 cellIdx);
 
 /** `arg1` is unused, but `func_8006B1C8` passes second arg to this. */
-void func_8006B6E8(s_CollisionState* state, s_IpdCollSubcellRange* subcellRanges);
+void func_8006B6E8(s_CollisionState* state, s_IpdCellRange* cellRanges);
 
 bool func_8006B7E0(s_CollisionState_A8* cur, s_CollisionState_CC_20* prev);
 
@@ -423,7 +423,7 @@ bool func_8006C1B8(u32 arg0, q3_12 distAlpha, s_CollisionState* state);
 
 q3_12 func_8006C248(s32 packedDir, q3_12 arg1, q3_12 deltaX, q7_8 deltaZ, q7_8 radius);
 
-bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 subcellIdx);
+bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 cellIdx);
 
 void func_8006C45C(s_CollisionState* state);
 
@@ -432,7 +432,7 @@ void func_8006C794(s_CollisionState* state, s32 arg1, q23_8 dist);
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData);
 
 // Accounts for slopes in ground height?
-void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCollSubcellRange* subcellRanges);
+void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
 // TODO: Computes alpha related to the ground slope?
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* state);

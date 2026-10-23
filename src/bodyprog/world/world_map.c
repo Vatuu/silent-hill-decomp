@@ -175,7 +175,7 @@ void WorldMap_TexturesInit(void) // 0x80041D48
 void WorldMap_CollisionDataReset(void) // 0x80041E98
 {
     bzero(&g_WorldMapWork.collisionData, sizeof(s_IpdCollisionData));
-    g_WorldMapWork.collisionData.subcellSize = Q8(2.0f);
+    g_WorldMapWork.collisionData.cellSize = Q8(2.0f);
 }
 
 void WorldMap_ChunkSet(s16 ipdFileIdx, s32 chunkX, s32 chunkZ) // 0x80041ED0
@@ -1417,7 +1417,7 @@ bool WorldMap_SubchunkVisibleCheck(s_IpdModelBuffer* modelBuf,
 
     // Run through subchunk ranges.
     for (curSubchunkRange = modelBuf->subchunkRanges;
-         curSubchunkRange < &modelBuf->subchunkRanges[modelBuf->subcellCount];
+         curSubchunkRange < &modelBuf->subchunkRanges[modelBuf->cellCount];
          curSubchunkRange++)
     {
         if (subchunkX > curSubchunkRange->minX &&

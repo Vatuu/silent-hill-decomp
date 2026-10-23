@@ -883,7 +883,7 @@ Collision_CollStateInit                      = 0x8006AB50; // type:func
 Collision_MoveDirectionCalc                  = 0x8006ABC0; // type:func
 Collision_CharaCollisionHandle               = 0x8006AD44; // type:func
 Collision_SubcellInit                        = 0x8006AEAC;
-Collision_SubcellIdxGet                      = 0x8006B004;
+Collision_CellIdxGet                         = 0x8006B004;
 Collision_OffsetAlphaGet                     = 0x8006CB90;
 Ipd_GroundHeightGet                          = 0x8006CC44; // type:func
 

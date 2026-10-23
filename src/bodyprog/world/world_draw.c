@@ -302,7 +302,7 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    #define HALF_CELL_SIZE Q12(2.5f) // TODO: 5x5 subcell thing, check this.
+    #define HALF_CELL_SIZE Q12(2.5f) // TODO: 5x5 subchunk thing, check this.
     #define PROJ_DIST_NEAR Q12(6.0f)
     #define PROJ_DIST_FAR  Q12(14.0f)
 

@@ -29,7 +29,7 @@ typedef struct
     /* 0xE */ s16   field_E;
 } s_RayState_6C;
 
-// Something related to subcell ranges.
+// Something related to cell ranges.
 typedef struct
 {
     s16 field_0;
@@ -122,11 +122,11 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* state, s_IpdCollSubcellRange* subcellRanges, s_IpdCollisionData* collData);
+void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollisionData* collData);
 
-void func_8006E78C(s_RayState* state, s_IpdCollSubcell* subcell, SVECTOR3* splitVerts, s_IpdCollSurface* surfaces, bool hasSurface);
+void func_8006E78C(s_RayState* state, s_IpdCell* cell, SVECTOR3* splitVerts, s_IpdCellSurface* cellSurfaces, bool hasSurface);
 
-void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
+void func_8006EB8C(s_RayState* state, s_IpdCellAttribs* arg1);
 
 // Fills ray hit data?
 void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* chara);
