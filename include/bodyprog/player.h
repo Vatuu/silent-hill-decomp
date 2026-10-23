@@ -368,7 +368,7 @@ typedef struct _800AFBF4
     /* 0x8 */ u8  animAttackHold;
     /* 0x9 */ u8  field_9;
     /* 0xA */ u8  field_A; // Attack type?
-    /* 0xB */ u8  __pad_B;
+    /* 0xB */ s8  __pad_B;
 } s_800AFBF4;
 STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
 
@@ -423,33 +423,16 @@ extern q19_12 D_800C45DC;
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-/** Table of player keyframe indices. Purpose unknown. */
-extern s_800C44F0 D_800C44F0[10];
-
-// Q19.12 | Enemy target.
-extern VECTOR3 g_Player_TargetEnemyPosition;
-
-/** @brief Player rotation speed.
- * More context is required for a name.
- */
-extern q19_12 D_800C454C;
-
-// TODO: Unsure if it should be called a "previous" move speed.
-extern q19_12 g_Player_PrevMoveSpeed;
-
-extern s16 D_800C4554; // Timer?
-
-extern s16 D_800C4556; // Timer?
-
-/** @brief Determines if the player is pressing a movement button or the right analog stick. */
-extern s32 g_Player_HasMoveInput;
-
-/** @brief Used to cancel the idle state if the Action or Run button is tapped. */
-extern s32 g_Player_HasActionInput;
-
-extern s8 g_Player_PrevAttackReceived;
-
-extern u8 g_Player_IsDead;
+extern s_800C44F0 D_800C44F0[10];               /** Table of player keyframe indices. Purpose unknown. */
+extern VECTOR3    g_Player_TargetEnemyPosition; /** @brief Q19.12 */
+extern q19_12     D_800C454C;                   /** @brief Player rotation speed. More context is required for a name. */
+extern q19_12     g_Player_PrevMoveSpeed;       // TODO: Unsure if it should be called a "previous" move speed.
+extern s16        D_800C4554;                   // Timer?
+extern s16        D_800C4556;                   // Timer?
+extern s32        g_Player_HasMoveInput;        /** Determines if input is detected from a movement button or the right analog stick. */
+extern s32        g_Player_HasActionInput;      /** Cancels the idle state if the Action or Run buttons are tapped. */
+extern s8         g_Player_PrevAttackReceived;
+extern u8         g_Player_IsDead;              /** `bool` */
 
 /** `bool`
  *
@@ -486,20 +469,11 @@ extern u8 g_Player_CutsceneState;
 
 extern u8 __pad_bss_800C457D;
 
-/** @brief Defines if the player is triggering the aiming action. */
-extern u16 g_Player_IsAiming;
-
-/** `bool` */
-extern u16 g_Player_IsSteppingLeftTap;
-
-/** `bool` */
-extern u16 g_Player_IsSteppingRightTap;
-
-/** `bool` */
-extern u16 g_Player_IsTurningLeft;
-
-/** `bool` */
-extern u16 g_Player_IsTurningRight;
+extern u16 g_Player_IsAiming;           /** Determines if the player is aiming a weapon. */
+extern u16 g_Player_IsSteppingLeftTap;  /** `bool` */
+extern u16 g_Player_IsSteppingRightTap; /** `bool` */
+extern u16 g_Player_IsTurningLeft;      /** `bool` */
+extern u16 g_Player_IsTurningRight;     /** `bool` */
 
 extern u8 D_800C4588;
 
