@@ -332,7 +332,7 @@ def sort_and_format_with_yaml_comments(input_text, section_map, subsegment_map):
 
 def main():
     # Discover and validate files
-    for region in ["USA", "JAP0", "JAP1"]:
+    for region in ["EUR", "JAP0", "JAP1", "JAP2", "USA"]:
         txt_files, yaml_files = discover_and_validate_files(region)
 
         # Process pairs
