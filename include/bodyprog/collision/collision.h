@@ -9,6 +9,8 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
+// TODO: "Subcell" should become just "cell"
+
 #define INTERSECTION_BUFFER    Q12(0.1f)
 #define DEFAULT_CEILING_HEIGHT -16.0f
 
@@ -120,7 +122,7 @@ typedef struct _CollisionCellPoint
     /* 0x4  */ u8                     subcellIdx; // `s_IpdCollisionData::subcells` index.
     /* 0x5  */ u8                     heightDisabled;
     /* 0x6  */ SVECTOR3               field_6; // Q7.8 | Probe position inside cell/subcell?
-    /* 0xC  */ s_CollisionState_CC_C  field_C;
+    /* 0xC  */ s_CollisionState_CC_C  field_C; // Cell surface??
     /* 0xE  */ u8                     field_E;               // } Index from `s_IpdCollisionData::field_6_8`.
     /* 0xF  */ u8                     field_F;               // }
     /* 0x10 */ u8                     disableSurface0Height; /** `bool` */

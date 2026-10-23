@@ -1227,9 +1227,9 @@ void WorldMap_ChunkHeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
          curModelBuf < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuf++)
     {
-        curModelBuf->modelInstances   = (u8*)curModelBuf->modelInstances   + (u32)ipdHdr;
-        curModelBuf->field_10         = (u8*)curModelBuf->field_10         + (u32)ipdHdr;
-        curModelBuf->subcellPositions = (u8*)curModelBuf->subcellPositions + (u32)ipdHdr;
+        curModelBuf->modelInstances = (u8*)curModelBuf->modelInstances + (u32)ipdHdr;
+        curModelBuf->field_10       = (u8*)curModelBuf->field_10       + (u32)ipdHdr;
+        curModelBuf->subchunkRanges = (u8*)curModelBuf->subchunkRanges + (u32)ipdHdr;
     }
 }
 
@@ -1411,35 +1411,33 @@ INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_SubchunkVisibleChe
 bool WorldMap_SubchunkVisibleCheck(s_IpdModelBuffer* modelBuf,
                                    q7_8 subchunkX, q7_8 subchunkZ, q23_8 chunkEdgeX, q23_8 chunkEdgeZ) // 0x80044420
 {
-    GsCOORDINATE2 viewCoord;
-    MATRIX        viewMat;
-    SVECTOR*      curSubchunkPos; // TODO: Wrong struct.
+    GsCOORDINATE2    viewCoord;
+    MATRIX           viewMat;
+    s_SubchunkRange* curSubchunkRange;
 
-    // Run through subchunk positions.
-    for (curSubchunkPos = modelBuf->subcellPositions;
-         curSubchunkPos < &modelBuf->subcellPositions[modelBuf->subcellCount];
-         curSubchunkPos++)
+    // Run through subchunk ranges.
+    for (curSubchunkRange = modelBuf->subchunkRanges;
+         curSubchunkRange < &modelBuf->subchunkRanges[modelBuf->subcellCount];
+         curSubchunkRange++)
     {
-        if (curSubchunkPos->vx < subchunkX          &&
-            subchunkX          < curSubchunkPos->vy &&
-            curSubchunkPos->vz < subchunkZ)
+        if (subchunkX > curSubchunkRange->minX &&
+            subchunkX < curSubchunkRange->maxX &&
+            subchunkZ > curSubchunkRange->minZ &&
+            subchunkZ < curSubchunkRange->maxZ)
         {
-            if (subchunkZ < curSubchunkPos->pad) // TODO: `pad` access indicates different struct.
-            {
-                viewCoord.flg   = true;
-                viewCoord.super = NULL;
-                viewCoord.workm = GsIDMATRIX;
+            viewCoord.flg   = true;
+            viewCoord.super = NULL;
+            viewCoord.workm = GsIDMATRIX;
 
-                viewCoord.workm.t[0] = chunkEdgeX;
-                viewCoord.workm.t[1] = Q8(0.0f);
-                viewCoord.workm.t[2] = chunkEdgeZ;
+            viewCoord.workm.t[0] = chunkEdgeX;
+            viewCoord.workm.t[1] = Q8(0.0f);
+            viewCoord.workm.t[2] = chunkEdgeZ;
 
-                Vw_CoordToViewSpaceMatrix(&viewCoord, &viewMat);
-                return Vw_AabbVisibleInFrustumCheck(&viewMat,
-                                                    modelBuf->minX, Q8(-8.0f), modelBuf->minZ,
-                                                    modelBuf->maxX, Q8(4.0f), modelBuf->maxZ,
-                                                    Q8(25.0f), g_GameWork.gsScreenHeight);
-            }
+            Vw_CoordToViewSpaceMatrix(&viewCoord, &viewMat);
+            return Vw_AabbVisibleInFrustumCheck(&viewMat,
+                                                modelBuf->minX, Q8(-8.0f), modelBuf->minZ,
+                                                modelBuf->maxX, Q8(4.0f), modelBuf->maxZ,
+                                                Q8(25.0f), g_GameWork.gsScreenHeight);
         }
     }
 

@@ -73,6 +73,7 @@ typedef struct _IpdCollisionData_18
 } s_IpdCollisionData_18;
 STATIC_ASSERT_SIZEOF(s_IpdCollisionData_18, 10);
 
+// TODO: Name might be wrong, maybe surface indices? Start+end for each field.
 typedef struct _IpdCollSubcellRange
 {
     /* 0x0 */ s16 field_0; // Base index into `s_IpdCollisionData::ptr_28`.
@@ -97,10 +98,10 @@ typedef struct _IpdCollisionData
     /* 0x1E   */ u8                     subcellCountX;
     /* 0x1F   */ u8                     subcellCountZ;
     /* 0x20   */ s_IpdCollSubcellRange* subcellRanges;
-    /* 0x24   */ u16                    field_24; // `ptr_24` size. `field_24`/`field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
-    /* 0x26   */ u16                    field_26; // `ptr_26` size.
+    /* 0x24   */ u16                    field_24; // `ptr_28` size. `field_24`/`field_26` defined in ipd2obj but haven't seen used yet, might be size of `ptr_28`/`ptr_2C`.
+    /* 0x26   */ u16                    field_26; // `ptr_2C` size.
     /* 0x28   */ u8*                    ptr_28;   // Accessed as array of indices into `subcellCheckIdxs` by `func_8006E53C`.
-    /* 0x2C   */ u8*                    ptr_2C;         
+    /* 0x2C   */ u8*                    ptr_2C;   // Surface indices?    
     /* 0x30   */ u8                     subcellCheckCount;
     /* 0x31   */ s8                     __pad[3];
     /* 0x34   */ u8                     subcellCheckIdxs[256]; // This should be the same size as of the value assigned to
@@ -127,6 +128,15 @@ typedef struct _IpdModelInstance
 } s_IpdModelInstance;
 STATIC_ASSERT_SIZEOF(s_IpdModelInstance, 36);
 
+// TODO: Name uncertain.
+typedef struct _SubcellRange
+{
+    q7_8 minX;
+    q7_8 maxX;
+    q7_8 minZ;
+    q7_8 maxZ;
+} s_SubchunkRange;
+
 /** @brief IPD file model buffer. */
 typedef struct _IpdModelBuffer
 {
@@ -134,13 +144,13 @@ typedef struct _IpdModelBuffer
     /* 0x1  */ u8                  field_1;
     /* 0x2  */ u8                  subcellCount;
     /* 0x3  */ s8                  __pad_3;
-    /* 0x4  */ q7_8                minX; // } TODO: Cell range or subcell range?
+    /* 0x4  */ q7_8                minX; // } Subchunk range?
     /* 0x6  */ q7_8                maxX; // }
     /* 0x8  */ q7_8                minZ; // }
     /* 0xA  */ q7_8                maxZ; // }
     /* 0xC  */ s_IpdModelInstance* modelInstances;
-    /* 0x10 */ SVECTOR*            field_10;         // Q7.8 | Pointer to unknown collision data. TODO: Wrong struct? See `Ipd_ChunkDraw`.
-    /* 0x14 */ SVECTOR*            subcellPositions; /** Q7.8 | XZ positions. TODO: Wrong struct? See `Gfx_ChunkSubcellVisibleCheck`. */
+    /* 0x10 */ SVECTOR*            field_10;       // Q7.8 | Pointer to unknown collision data. `s_SubchunkRange`?
+    /* 0x14 */ s_SubchunkRange*    subchunkRanges; // TODO: Not sure about name.
 } s_IpdModelBuffer;
 STATIC_ASSERT_SIZEOF(s_IpdModelBuffer, 24);
 

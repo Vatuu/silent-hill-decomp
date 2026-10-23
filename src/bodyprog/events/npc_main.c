@@ -169,8 +169,8 @@ void Game_NpcUpdate(void) // 0x80038354
     s8              idx;
     s32             closeNpcInfoIdx;
     s32             bitIdx;
-    u32             curDistToNpc;
-    u32             curDistToNpcCpy;
+    u32             curDistToNpc;    // Squared integer.
+    u32             curDistToNpcCpy; // Squared integer.
     s32             l;
     s32             animDataIdx;
     s32             temp2;
@@ -270,17 +270,17 @@ void Game_NpcUpdate(void) // 0x80038354
                 if (isLowVisInterior)
                 {
                     // Check X axis.
-                    s32 playerCell = (g_SysWork.playerWork.player.position.vx + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
-                    s32 npcCell    = (curNpc->position.vx                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
-                    if (npcCell != playerCell)
+                    s32 playerChunk = (g_SysWork.playerWork.player.position.vx + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    s32 npcChunk    = (curNpc->position.vx                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    if (npcChunk != playerChunk)
                     {
                         continue;
                     }
 
                     // Check Z axis.
-                    playerCell = (g_SysWork.playerWork.player.position.vz + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
-                    npcCell    = (curNpc->position.vz                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
-                    if (npcCell != playerCell)
+                    playerChunk = (g_SysWork.playerWork.player.position.vz + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    npcChunk    = (curNpc->position.vz                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    if (npcChunk != playerChunk)
                     {
                         continue;
                     }
@@ -300,8 +300,6 @@ void Game_NpcUpdate(void) // 0x80038354
                 closestNpcInfos[j].position.vz   = curNpc->position.vz;
                 break;
             }
-
-            // TODO: Approximate Q12 values don't seem right.
 
             // Unload distant NPC to avoid drawing.
             curDistToNpcCpy = curDistToNpc;
