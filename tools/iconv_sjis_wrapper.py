@@ -3,6 +3,7 @@
 Drop-in iconv wrapper that converts UTF-8 to SJIS and escapes all
 multi-byte SJIS sequences so cc1 (GCC 2.8.1) doesn't misinterpret
 trail bytes like 0x5C (backslash), 0x22 (quote), 0x0A (newline).
+Other target encodings (ISO-8859-1 for PAL) are converted without escaping.
 
 Usage: iconv_sjis_wrapper.py -f UTF-8 -t SHIFT-JIS input.i -o output.sjis.i
 """
@@ -47,8 +48,11 @@ def main():
         sys.stderr.write(result.stderr.decode(errors='replace'))
         sys.exit(result.returncode)
 
-    # Step 2: escape all multi-byte SJIS sequences
-    escaped = escape_sjis_multibyte(result.stdout)
+    # Step 2: escape all multi-byte SJIS sequences. Single-byte encodings (PAL's Latin-1) have none.
+    if args.to_code.upper().replace('_', '-') in ('SHIFT-JIS', 'SJIS', 'CP932'):
+        escaped = escape_sjis_multibyte(result.stdout)
+    else:
+        escaped = result.stdout
 
     with open(args.output, 'wb') as f:
         f.write(escaped)
