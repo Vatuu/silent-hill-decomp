@@ -1,16 +1,17 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/map/map.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/view/vc_util.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/screen/screen_data.h"
-#include "bodyprog/math/math.h"
 
 #define V_BLANKS_MULT 11
 
 VECTOR3 vcRefPosSt; /** Q19.12 | View camera reference position start. */
 
-void vcInitCamera(struct _MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
+void vcInitCamera(s_MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {
     g_WorldGfxWork.vcCameraInternalInfo.mv_smooth   = VC_MV_CHASE;
     g_WorldGfxWork.vcCameraInternalInfo.ev_cam_rate = Q12(0.0f);

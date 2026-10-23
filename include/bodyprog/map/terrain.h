@@ -4,6 +4,8 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 
+// TODO: "Chunk cells", "cells", and "subcells". Document these terms.
+
 #define CHUNK_SIZE                        40.0f
 #define ACTIVE_CHUNK_COUNT_MAX            4
 #define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
@@ -102,5 +104,14 @@ typedef struct _WorldMapWork
     /* 0x588 */ bool               isExterior;
 } s_WorldMapWork;
 STATIC_ASSERT_SIZEOF(s_WorldMapWork, 1420);
+
+/** @brief Packs XZ cell coordinates in a single value.
+ *
+ * @param x X cell coordinate.
+ * @param z Z cell coordinate.
+ * @return Packed XZ cell coordinates.
+ */
+#define CELL_XZ(x, z) \
+    ((x) + ((z) << 8))
 
 #endif

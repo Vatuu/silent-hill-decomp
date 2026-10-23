@@ -1,16 +1,19 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bodyprog_data_800A99B4.h"
 #include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s00.h"
 #include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "inline_no_dmpsx.h"
-#include <psyq/gtemac.h>
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
+#include "maps/characters/player.h"
 
 #include "../src/maps/particle.c"
 
