@@ -3656,6 +3656,7 @@ g_Inventory_IsScrolling                      = 0x800C2F80;
 g_Inventory_GameDifficulty                   = 0x800C2F84;
 g_Inventory_SelectionBordersDraw             = 0x800C2F88;
 g_Inventory_PrevSelectionId                  = 0x800C2F8C;
+D_800C39A0                                   = 0x800C2F90;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x09D908   VA: 0x800C2F98   subsegment: .bss, items/item_screens_3

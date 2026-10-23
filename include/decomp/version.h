@@ -78,4 +78,24 @@
     #define VERSION_SERIAL "SLPM-86192" // Actually SLPM-87029, but regions share same serial for save support.
 #endif
 
+/** @brief Checks the language of a PAL map overlay.
+ *
+ * PAL includes copies of each map overlay per-language, only difference appears to be translated
+ * map messages.
+ * For these copies we can build from the same source with Makefile defining `LANG_XXX`, which this
+ * macro checks for.
+ * 
+ * Messages can then be switched out by checking `#if LANGUAGE_IS(ENG)` inside map message code.
+ *
+ * @todo We should handle JPN text the same way to be consistent, needs more Makefile changes though.
+ *
+ * @param lang Language identifier (ENG, GER, FRN, SPN, ITL).
+ */
+#define LANGUAGE_IS(lang) defined(LANG_##lang)
+
+// @hack Remove once all versions build with LANG_ defines set.
+#if VERSION_REGION_IS(PAL) && !defined(LANG_GER) && !defined(LANG_FRN) && !defined(LANG_SPN) && !defined(LANG_ITL)
+    #define LANG_ENG 1
+#endif
+
 #endif

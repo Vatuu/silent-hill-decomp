@@ -32,4 +32,6 @@
     /* 12 */ " 鍵がかかっている ~E ",
     /* 13 */ " 鍵を開けた ~E ",
     /* 14 */ " ~C4 −開発中− ~C7 ~E ",
+#elif VERSION_REGION_IS(PAL)
+    #include "maps/shared/map_msg_common_pal.h"
 #endif

@@ -49,6 +49,28 @@
 #define MAP_USE_PARTICLES (MAP_PARTICLE_HAS_SNOW || MAP_PARTICLE_HAS_RAIN)
 #define MAP_PARTICLE_HAS_800D0690 (MAP_PARTICLE_HAS_RAIN && !defined(MAP0_S00) && !defined(MAP1_S02) && !defined(MAP4_S03))
 
+// VRAM position of the particle sprite cells and their CLUTs, which PAL moved.
+#if VERSION_REGION_IS(PAL)
+    #define PARTICLE_TEX_U  128
+    #define PARTICLE_TEX_V  112
+    #define PARTICLE_CLUT_X 944
+    #define PARTICLE_CLUT_Y 496
+#else
+    #define PARTICLE_TEX_U  0
+    #define PARTICLE_TEX_V  240
+    #define PARTICLE_CLUT_X 192
+    #define PARTICLE_CLUT_Y 0
+#endif
+
+/** @brief Sets the UVs of `poly` to the 16x16 particle cell at `u` pixels into the particle row.
+ * The right edge stops at 255, the last cell of the PAL row ends at the edge of the texture page.
+ */
+#define setParticleUV4(poly, u)                                                                \
+    setUV4(poly,                                                                               \
+           PARTICLE_TEX_U + (u), PARTICLE_TEX_V, PARTICLE_TEX_U + (u), PARTICLE_TEX_V + 15,      \
+           MIN(PARTICLE_TEX_U + (u) + 16, 255), PARTICLE_TEX_V,                                \
+           MIN(PARTICLE_TEX_U + (u) + 16, 255), PARTICLE_TEX_V + 15)
+
 #if !MAP_USE_PARTICLES
 
 /** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
@@ -1824,26 +1846,26 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
     // Set as `POLY_FT4` with `tpage = 44`.
     setPolyFT4TPage(poly, 44);
 
-    poly->clut = 12;
+    poly->clut = getClut(PARTICLE_CLUT_X, PARTICLE_CLUT_Y);
 
     if (sharedData_800DD584_0_s00 != 0)
     {
         switch (arg0 & 3)
         {
             case 0:
-                setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                setParticleUV4(poly, 0);
                 break;
 
             case 1:
-                setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                setParticleUV4(poly, 16);
                 break;
 
             case 2:
-                setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                setParticleUV4(poly, 32);
                 break;
 
             case 3:
-                setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                setParticleUV4(poly, 48);
                 break;
         }
     }
@@ -1856,19 +1878,19 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 switch (arg0 & 3)
                 {
                     case 0:
-                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        setParticleUV4(poly, 0);
                         break;
 
                     case 1:
-                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        setParticleUV4(poly, 16);
                         break;
 
                     case 2:
-                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        setParticleUV4(poly, 32);
                         break;
 
                     case 3:
-                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        setParticleUV4(poly, 48);
                         break;
                 }
                 break;
@@ -1878,19 +1900,19 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 switch (arg0 & 0x3)
                 {
                     case 0:
-                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        setParticleUV4(poly, 16);
                         break;
 
                     case 1:
-                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        setParticleUV4(poly, 32);
                         break;
 
                     case 2:
-                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        setParticleUV4(poly, 48);
                         break;
 
                     case 3:
-                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        setParticleUV4(poly, 0);
                         break;
                 }
                 break;
@@ -1900,19 +1922,19 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 switch (arg0 & 0x3)
                 {
                     case 0:
-                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        setParticleUV4(poly, 32);
                         break;
 
                     case 1:
-                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        setParticleUV4(poly, 48);
                         break;
 
                     case 2:
-                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        setParticleUV4(poly, 0);
                         break;
 
                     case 3:
-                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        setParticleUV4(poly, 16);
                         break;
                 }
                 break;
@@ -1922,19 +1944,19 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 switch (arg0 & 0x3)
                 {
                     case 0:
-                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        setParticleUV4(poly, 48);
                         break;
 
                     case 1:
-                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        setParticleUV4(poly, 0);
                         break;
 
                     case 2:
-                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        setParticleUV4(poly, 16);
                         break;
 
                     case 3:
-                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        setParticleUV4(poly, 32);
                         break;
                 }
                 break;
@@ -2066,26 +2088,26 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
     setSemiTrans(poly, true);
 
     poly->tpage = 76;
-    poly->clut  = 76;
+    poly->clut  = getClut(PARTICLE_CLUT_X, PARTICLE_CLUT_Y + 1);
 
     if (sharedData_800DD584_0_s00 != 0)
     {
         switch (arg0 & 3)
         {
             case 0:
-                setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                setParticleUV4(poly, 64);
                 break;
 
             case 1:
-                setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                setParticleUV4(poly, 80);
                 break;
 
             case 2:
-                setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                setParticleUV4(poly, 96);
                 break;
 
             case 3:
-                setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                setParticleUV4(poly, 112);
                 break;
         }
     }
@@ -2098,19 +2120,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 0x3)
                 {
                     case 0:
-                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        setParticleUV4(poly, 64);
                         break;
 
                     case 1:
-                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        setParticleUV4(poly, 80);
                         break;
 
                     case 2:
-                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        setParticleUV4(poly, 96);
                         break;
 
                     case 3:
-                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        setParticleUV4(poly, 112);
                         break;
                 }
                 break;
@@ -2120,19 +2142,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        setParticleUV4(poly, 80);
                         break;
 
                     case 1:
-                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        setParticleUV4(poly, 96);
                         break;
 
                     case 2:
-                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        setParticleUV4(poly, 112);
                         break;
 
                     case 3:
-                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        setParticleUV4(poly, 64);
                         break;
                 }
                 break;
@@ -2142,19 +2164,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        setParticleUV4(poly, 96);
                         break;
 
                     case 1:
-                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        setParticleUV4(poly, 112);
                         break;
 
                     case 2:
-                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        setParticleUV4(poly, 64);
                         break;
 
                     case 3:
-                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        setParticleUV4(poly, 80);
                         break;
                 }
                 break;
@@ -2164,19 +2186,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        setParticleUV4(poly, 112);
                         break;
 
                     case 1:
-                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        setParticleUV4(poly, 64);
                         break;
 
                     case 2:
-                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        setParticleUV4(poly, 80);
                         break;
 
                     case 3:
-                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        setParticleUV4(poly, 96);
                         break;
                 }
         }

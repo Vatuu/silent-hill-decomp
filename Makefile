@@ -90,6 +90,14 @@ GAME_FILE_HILL   := HILL.
 
 endif
 
+# Encoding of map text in the game's binaries, C sources are converted to it from UTF-8.
+# Everything else is Shift-JIS in every release, including the memory card save titles in PAL.
+ifeq ($(GAME_VERSION), EUR)
+MAP_TEXT_ENCODING := ISO-8859-1
+else
+MAP_TEXT_ENCODING := SHIFT-JIS
+endif
+
 ROM_DIR         := rom
 CONFIG_BASE_DIR := configs
 CONFIG_DIR      := $(CONFIG_BASE_DIR)/$(GAME_VERSION_DIR)
@@ -185,11 +193,15 @@ define FlagsSwitch
 		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler --expand-div $(AS_FLAGS)), \
 		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler $(AS_FLAGS)))
 
-	$(eval _rel_path := $(patsubst $(BUILD_DIR)/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
+	$(eval _lang := $(word 1,$(subst /, ,$(patsubst $(BUILD_DIR)/lang/%,%,$(filter $(BUILD_DIR)/lang/%,$(1))))))
+	$(eval _path := $(patsubst $(BUILD_DIR)/lang/$(_lang)/%,$(BUILD_DIR)/%,$(strip $(1))))
+	$(eval _rel_path := $(patsubst $(BUILD_DIR)/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(_path))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
 	$(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
 		$(eval OVL_FLAGS := -D$(_map_name)), \
 		$(eval OVL_FLAGS :=))
+	$(if $(_lang), \
+		$(eval OVL_FLAGS += -DLANG_$(shell echo $(_lang) | tr a-z A-Z)))
 endef
 
 ifeq ($(NON_MATCHING),1)
@@ -706,8 +718,26 @@ ifeq ($(MAKE_COMPILE_LOG),1)
 endif
 	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
+# PAL map overlays in languages other than English are built from the English map's source,
+# into build/<version>/lang/<language>/ (the `build_path` of their yaml).
+PAL_LANGUAGES := ger frn spn itl
+
+define make_lang_rules
+$(BUILD_DIR)/lang/$(1)/%.i: %.c
+	@mkdir -p $$(dir $$@)
+	$$(call FlagsSwitch, $$@)
+	$$(CPP) -P -MMD -MP -MT $$@ -MF $$@.d $$(CPP_FLAGS) $$(OVL_FLAGS) -o $$@ $$<
+
+$(BUILD_DIR)/lang/$(1)/%.s.o: %.s
+	@mkdir -p $$(dir $$@)
+	$$(call FlagsSwitch, $$@)
+	$$(AS) $$(AS_FLAGS) $$(if $$(filter 1,$$(GEN_COMP_TU)),--defsym JLABEL_LOCAL=1) -o $$@ $$<
+endef
+
+$(foreach lang,$(PAL_LANGUAGES),$(eval $(call make_lang_rules,$(lang))))
+
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
-	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t SHIFT-JIS $< -o $@
+	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t $(if $(findstring /src/maps/,$@),$(MAP_TEXT_ENCODING),SHIFT-JIS) $< -o $@
 
 # Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `libkpad` code.
 $(BUILD_DIR)/src/bodyprog/libkpad/%.c.s: CC := $(CC272)

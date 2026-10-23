@@ -115,6 +115,8 @@ const char* MAP_MESSAGES[] = {
     /* 36 */ // TODO: JAP versions concatenate 35+36 into single string? Code would need adjustment too with `#ifdef`.
     /* 37 */ "\t乗ってきた車だ ~N\n\t壊れて動かなくなっている ",
     /* 38 */ "\t……シェリルはどこに行ったのだろう？ ~N\n\t無事ならいいのだが…… ~E "
+#elif VERSION_REGION_IS(PAL)
+    #include "map_msg_pal.h"
 #endif
 };
 
@@ -240,7 +242,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
         case EventState_7:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            Event_DisplayMapMsg(false, 15, false, false, 0, false); // "Cheryl. Where could you be?"
+            Event_DisplayMapMsg(false, MAP_MSG(15), false, false, 0, false); // "Cheryl. Where could you be?"
             break;
 
         case EventState_8:
@@ -250,7 +252,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
         case EventState_9:
             g_Cutscene_Timer = MIN((g_Cutscene_Timer + Q12_MULT_PRECISE(g_DeltaTime, Q12(4.0f))), Q12(72.0f));
-            Event_DisplayMapMsg(false, 16, false, false, 0, false); // "It's strange..."
+            Event_DisplayMapMsg(false, MAP_MSG(16), false, false, 0, false); // "It's strange..."
             break;
 
         case EventState_10:
@@ -266,7 +268,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             break;
 
         case EventState_12:
-            Event_DisplayMapMsg(false, 19, false, false, 0, false); // "Cheryl."
+            Event_DisplayMapMsg(false, MAP_MSG(19), false, false, 0, false); // "Cheryl."
             break;
 
         case EventState_13:
@@ -343,7 +345,7 @@ void MapEvent_CutsceneCherylFootsteps0(void) // 0x800D9D98
             break;
 
         case 5:
-            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, MAP_MSG(20), 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -393,7 +395,7 @@ void MapEvent_CutsceneCherylFootsteps1(void) // 0x800DA028
             break;
 
         case 5:
-            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, MAP_MSG(20), 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -440,7 +442,7 @@ void MapEvent_CutsceneCherylFootsteps2(void) // 0x800DA254
             break;
 
         case 5:
-            Event_DisplayMapMsg(false, 20, 0, 0, 0, false); // "Footsteps?"
+            Event_DisplayMapMsg(false, MAP_MSG(20), 0, 0, 0, false); // "Footsteps?"
             break;
 
         case 6:
@@ -589,7 +591,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             SysWork_StateStepIncrement(0);
 
         case 2:
-            Event_DisplayMapMsgWithAudio(21, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Cheryl? Is that Cheryl!?"
+            Event_DisplayMapMsgWithAudio(MAP_MSG(21), &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Cheryl? Is that Cheryl!?"
             break;
 
         case 3:
@@ -624,7 +626,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 8:
-            Event_DisplayMapMsgWithAudio(22, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Where are you going?"
+            Event_DisplayMapMsgWithAudio(MAP_MSG(22), &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Where are you going?"
             break;
 
         case 9:
@@ -637,7 +639,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 11:
-            Event_DisplayMapMsgWithAudio(23, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Hey wait...stop!"
+            Event_DisplayMapMsgWithAudio(MAP_MSG(23), &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Hey wait...stop!"
             break;
 
         default:
@@ -675,7 +677,7 @@ void MapEvent_CutsceneCherylRedirect0(void) // 0x800DAA68
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, MAP_MSG(24), 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -707,7 +709,7 @@ void MapEvent_CutsceneCherylRedirect1(void) // 0x800DAB8C
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, MAP_MSG(24), 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -738,7 +740,7 @@ void MapEvent_CutsceneCherylRedirect2(void) // 0x800DACB0
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, MAP_MSG(24), 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -769,7 +771,7 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
             break;
 
         case 3:
-            Event_DisplayMapMsg(false, 24, 0, 0, 0, false); // "I'd better follow Cheryl..."
+            Event_DisplayMapMsg(false, MAP_MSG(24), 0, 0, 0, false); // "I'd better follow Cheryl..."
             break;
 
         case 4:
@@ -994,7 +996,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_DisplayMapMsg(false, 25, 0, 0, 0, false); // "That's strange, it's getting darker."
+            Event_DisplayMapMsg(false, MAP_MSG(25), 0, 0, 0, false); // "That's strange, it's getting darker."
             break;
 
         case 5:
@@ -1037,7 +1039,7 @@ void MapEven_CutsceneAlleyGetsDarker(void) // 0x800DB514
 
         case 11:
             Savegame_EventFlagSet(EventFlag_17);
-            Event_DisplayMapMsg(false, 30, 0, 0, 0, false); // "......better than nothing, I guess."
+            Event_DisplayMapMsg(false, MAP_MSG(30), 0, 0, 0, false); // "......better than nothing, I guess."
             break;
 
         default:
@@ -1084,7 +1086,7 @@ void func_800DB870(void) // 0x800DB870
             break;
 
         case EventState_MsgDeadEnd:
-            Event_DisplayMapMsg(false, 26, 0, 0, 0, false); // "A dead end? What the hell!?"
+            Event_DisplayMapMsg(false, MAP_MSG(26), 0, 0, 0, false); // "A dead end? What the hell!?"
             break;
 
         default: // `EventState_Unfreeze`
@@ -1242,7 +1244,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             break;
 
         case EventState_LookAtDeadBody:
-            Event_DisplayMapMsgWithAudio(27, &D_800DFB61, &D_800DFAC8); // "What is this?"
+            Event_DisplayMapMsgWithAudio(MAP_MSG(27), &D_800DFB61, &D_800DFAC8); // "What is this?"
             break;
 
         default:

@@ -682,7 +682,11 @@
         },
         .lim_rd = {
             .min_hx = Q4(-8.0f),
+#if VERSION_REGION_IS(PAL)
+            .max_hx = Q4(2.3f),
+#else
             .max_hx = Q4(2.63f),
+#endif
             .min_hz = Q4(2.63f),
             .max_hz = Q4(216.0f),
         },
@@ -706,7 +710,11 @@
             .max_hz = Q4(216.0f),
         },
         .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+            .min_hx = Q4(5.9f),
+#else
             .min_hx = Q4(5.5f),
+#endif
             .max_hx = Q4(16.0f),
             .min_hz = Q4(-231.0f),
             .max_hz = Q4(216.0f),
@@ -881,7 +889,11 @@
             .max_hz = Q4(60.0f),
         },
         .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+            .min_hx = Q4(-256.3f),
+#else
             .min_hx = Q4(-256.5f),
+#endif
             .max_hx = Q4(-253.0f),
             .min_hz = Q4(-216.5f),
             .max_hz = Q4(64.0f),
@@ -1215,13 +1227,23 @@
         .area_size_type = VC_AREA_SMALL,
         .rd_type = VC_RD_TYPE_EVENT,
         .mv_y_type = VC_MV_SELF_VIEW,
+#if VERSION_REGION_IS(PAL)
+        .lim_rd_max_hy = Q4(-6.0f),
+        .lim_rd_min_hy = Q4(-6.0f),
+#else
         .lim_rd_max_hy = Q4(-6.3f),
         .lim_rd_min_hy = Q4(-6.3f),
+#endif
         .ofs_watch_hy = Q4(-1.2f),
         .lens_flare = LensFlareType_Default,
         .cam_mv_type = VC_MV_FIX_ANG,
+#if VERSION_REGION_IS(PAL)
+        .fix_ang_x = Q8_ANGLE(282.0f),
+        .fix_ang_y = Q8_ANGLE(195.0f),
+#else
         .fix_ang_x = Q8_ANGLE(280.0f),
         .fix_ang_y = Q8_ANGLE(197.0f),
+#endif
     },
     {
         .lim_sw = {
@@ -1545,8 +1567,13 @@
         .ofs_watch_hy = Q4(0.5f),
         .lens_flare = LensFlareType_Default,
         .cam_mv_type = VC_MV_FIX_ANG,
+#if VERSION_REGION_IS(PAL)
+        .fix_ang_x = Q8_ANGLE(308.0f),
+        .fix_ang_y = Q8_ANGLE(158.0f),
+#else
         .fix_ang_x = Q8_ANGLE(313.0f),
         .fix_ang_y = Q8_ANGLE(152.0f),
+#endif
     },
     {
         .lim_sw = {
@@ -1606,17 +1633,30 @@
             .max_hz = Q4(234.0f),
         },
         .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+            .min_hx = Q4(-109.1f),
+            .max_hx = Q4(-109.1f),
+            .min_hz = Q4(227.0f),
+            .max_hz = Q4(227.0f),
+#else
             .min_hx = Q4(-109.3f),
             .max_hx = Q4(-109.3f),
             .min_hz = Q4(227.2f),
             .max_hz = Q4(227.2f),
+#endif
         },
         .flags = VC_RD_WARP_IN_OUT_FS,
         .area_size_type = VC_AREA_TINY,
         .rd_type = VC_RD_TYPE_EVENT,
+#if VERSION_REGION_IS(PAL)
+        .mv_y_type = VC_MV_SELF_VIEW,
+        .lim_rd_max_hy = Q4(-4.8f),
+        .lim_rd_min_hy = Q4(-4.8f),
+#else
         .mv_y_type = VC_MV_SETTLE,
         .lim_rd_max_hy = Q4(-3.0f),
         .lim_rd_min_hy = Q4(-5.2f),
+#endif
         .ofs_watch_hy = Q4(0.5f),
         .lens_flare = LensFlareType_Default,
         .cam_mv_type = VC_MV_SETTLE,
@@ -1973,6 +2013,83 @@
         .fix_ang_x = Q8_ANGLE(287.0f),
         .fix_ang_y = Q8_ANGLE(37.0f),
     },
+#if VERSION_REGION_IS(PAL)
+    {
+        .lim_sw = {
+            .min_hx = Q4(113.0f),
+            .max_hx = Q4(125.5f),
+            .min_hz = Q4(216.0f),
+            .max_hz = Q4(217.7f),
+        },
+        .lim_rd = {
+            .min_hx = Q4(116.0f),
+            .max_hx = Q4(128.2f),
+            .min_hz = Q4(217.1f),
+            .max_hz = Q4(217.1f),
+        },
+        .flags = VC_RD_WARP_IN_OUT_FS | VC_RD_LIM_UP_FAR_VIEW_F,
+        .area_size_type = VC_AREA_TINY,
+        .rd_type = VC_RD_TYPE_ROAD,
+        .mv_y_type = VC_MV_SELF_VIEW,
+        .lim_rd_max_hy = Q4(-2.0f),
+        .lim_rd_min_hy = Q4(-2.0f),
+        .ofs_watch_hy = Q4(-1.5f),
+        .lens_flare = LensFlareType_Default,
+        .cam_mv_type = VC_MV_FIX_ANG,
+        .fix_ang_x = Q8_ANGLE(339.0f),
+        .fix_ang_y = Q8_ANGLE(273.0f),
+    },
+    {
+        .lim_sw = {
+            .min_hx = Q4(115.5f),
+            .max_hx = Q4(120.0f),
+            .min_hz = Q4(217.8f),
+            .max_hz = Q4(220.0f),
+        },
+        .lim_rd = {
+            .min_hx = Q4(116.1f),
+            .max_hx = Q4(116.1f),
+            .min_hz = Q4(221.1f),
+            .max_hz = Q4(221.1f),
+        },
+        .flags = VC_RD_NOFLAG,
+        .area_size_type = VC_AREA_WIDE,
+        .rd_type = VC_RD_TYPE_ROAD,
+        .mv_y_type = VC_MV_SETTLE,
+        .lim_rd_max_hy = Q4(-1.2f),
+        .lim_rd_min_hy = Q4(-1.8f),
+        .ofs_watch_hy = Q4(-1.2f),
+        .lens_flare = LensFlareType_Default,
+        .cam_mv_type = VC_MV_CHASE,
+        .fix_ang_x = Q8_ANGLE(0.0f),
+        .fix_ang_y = Q8_ANGLE(0.0f),
+    },
+    {
+        .lim_sw = {
+            .min_hx = Q4(115.5f),
+            .max_hx = Q4(117.2f),
+            .min_hz = Q4(220.8f),
+            .max_hz = Q4(222.5f),
+        },
+        .lim_rd = {
+            .min_hx = Q4(117.7f),
+            .max_hx = Q4(117.7f),
+            .min_hz = Q4(218.3f),
+            .max_hz = Q4(218.3f),
+        },
+        .flags = VC_RD_NOFLAG,
+        .area_size_type = VC_AREA_SMALL,
+        .rd_type = VC_RD_TYPE_EFFECT,
+        .mv_y_type = VC_MV_SETTLE,
+        .lim_rd_max_hy = Q4(-2.6f),
+        .lim_rd_min_hy = Q4(-2.6f),
+        .ofs_watch_hy = Q4(-0.7f),
+        .lens_flare = LensFlareType_Default,
+        .cam_mv_type = VC_MV_CHASE,
+        .fix_ang_x = Q8_ANGLE(0.0f),
+        .fix_ang_y = Q8_ANGLE(0.0f),
+    },
+#else
     {
         .lim_sw = {
             .min_hx = Q4(114.8f),
@@ -2023,6 +2140,7 @@
         .fix_ang_x = Q8_ANGLE(0.0f),
         .fix_ang_y = Q8_ANGLE(0.0f),
     },
+#endif
     {
         .lim_sw = {
             .min_hx = Q4(113.0f),
@@ -2164,14 +2282,27 @@
         .flags = VC_RD_WARP_IN_OUT_FS | VC_RD_LIM_UP_FAR_VIEW_F,
         .area_size_type = VC_AREA_TINY,
         .rd_type = VC_RD_TYPE_ROAD,
+#if VERSION_REGION_IS(PAL)
+        .mv_y_type = VC_MV_SELF_VIEW,
+        .lim_rd_max_hy = Q4(-2.0f),
+        .lim_rd_min_hy = Q4(-2.0f),
+        .ofs_watch_hy = Q4(-1.5f),
+#else
         .mv_y_type = VC_MV_CHASE,
         .lim_rd_max_hy = Q4(-2.1f),
         .lim_rd_min_hy = Q4(-2.1f),
         .ofs_watch_hy = Q4(-0.7f),
+#endif
         .lens_flare = LensFlareType_Default,
+#if VERSION_REGION_IS(PAL)
+        .cam_mv_type = VC_MV_FIX_ANG,
+        .fix_ang_x = Q8_ANGLE(339.0f),
+        .fix_ang_y = Q8_ANGLE(273.0f),
+#else
         .cam_mv_type = VC_MV_CHASE,
         .fix_ang_x = Q8_ANGLE(0.0f),
         .fix_ang_y = Q8_ANGLE(0.0f),
+#endif
     },
     {
         .lim_sw = {
@@ -2187,12 +2318,24 @@
             .max_hz = Q4(301.1f),
         },
         .flags = VC_RD_NOFLAG,
+#if VERSION_REGION_IS(PAL)
+        .area_size_type = VC_AREA_WIDE,
+#else
         .area_size_type = VC_AREA_SMALL,
+#endif
         .rd_type = VC_RD_TYPE_ROAD,
         .mv_y_type = VC_MV_SETTLE,
+#if VERSION_REGION_IS(PAL)
+        .lim_rd_max_hy = Q4(-1.2f),
+#else
         .lim_rd_max_hy = Q4(-1.1f),
+#endif
         .lim_rd_min_hy = Q4(-1.8f),
+#if VERSION_REGION_IS(PAL)
+        .ofs_watch_hy = Q4(-1.2f),
+#else
         .ofs_watch_hy = Q4(-0.7f),
+#endif
         .lens_flare = LensFlareType_Default,
         .cam_mv_type = VC_MV_CHASE,
         .fix_ang_x = Q8_ANGLE(0.0f),
@@ -2406,21 +2549,37 @@
             .max_hz = Q4(347.4f),
         },
         .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+            .min_hx = Q4(235.44f),
+            .max_hx = Q4(235.44f),
+            .min_hz = Q4(345.0f),
+            .max_hz = Q4(345.0f),
+#else
             .min_hx = Q4(235.63f),
             .max_hx = Q4(235.63f),
             .min_hz = Q4(344.7f),
             .max_hz = Q4(344.7f),
+#endif
         },
         .flags = VC_RD_NOFLAG,
         .area_size_type = VC_AREA_SMALL,
         .rd_type = VC_RD_TYPE_ROAD,
         .mv_y_type = VC_MV_SELF_VIEW,
+#if VERSION_REGION_IS(PAL)
+        .lim_rd_max_hy = Q4(-4.5f),
+        .lim_rd_min_hy = Q4(-4.5f),
+#else
         .lim_rd_max_hy = Q4(-4.8f),
         .lim_rd_min_hy = Q4(-4.8f),
+#endif
         .ofs_watch_hy = Q4(0.0f),
         .lens_flare = LensFlareType_Default,
         .cam_mv_type = VC_MV_FIX_ANG,
+#if VERSION_REGION_IS(PAL)
+        .fix_ang_x = Q8_ANGLE(290.0f),
+#else
         .fix_ang_x = Q8_ANGLE(294.0f),
+#endif
         .fix_ang_y = Q8_ANGLE(9.0f),
     },
     {

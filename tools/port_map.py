@@ -15,12 +15,23 @@ Subcommands:
     check MAP       Rebuild MAP for <ver>, report undefined symbols, section
                     size mismatches, function-level diffs and garbage bytes.
     msgs MAP        Show / generate the NTSCJ MAP_MESSAGES block for MAP.
+                    EUR: write the messages of all five languages to map_msg_pal.h.
+    wrap MAP [N]    Wrap message indices >= N in MAP_MSG(). EUR always uses 3.
 
 Typical flow:
     tools/port_map.py port map1_s05
     tools/port_map.py check map1_s05
     (fix whatever `check` reports: missing symbols with `syms`, VERSION_*
      differences in the C, garbage bytes in tools/postbuild.py MAP_PATCHES)
+
+EUR has every map once per language (map1_s05 English, s15 German, s25 French,
+s35 Spanish, s45 Italian), built from the English map's source with LANG_<XXX> set:
+    tools/port_map.py --version EUR port map1_s05      (from USA, as above)
+    tools/port_map.py --version EUR msgs map1_s05      (text of all languages)
+    tools/port_map.py --version EUR wrap map1_s05
+    tools/port_map.py --version EUR check map1_s05
+    tools/port_map.py --version EUR port map1_s15      (from the EUR English map)
+    tools/port_map.py --version EUR check map1_s15     (likewise s25, s35, s45)
 
 Usage:
     python3 tools/port_map.py [--version JAP0] <subcommand> ...
@@ -55,6 +66,41 @@ def write(path, data):
 
 def yaml_vram(path):
     return int(re.search(r'vram:\s*(0x[0-9A-Fa-f]+)', read(path)).group(1), 16)
+
+
+def yaml_target(path):
+    return re.search(r'target_path:\s*(\S+)', read(path)).group(1)
+
+
+# PAL has every map overlay once per language: the digit after `_s` is the language (map0_s20 is the
+# French map0_s00). They are built from the English map's source with LANG_<XXX> set.
+PAL_LANGS = ('eng', 'ger', 'frn', 'spn', 'itl')
+# PAL inserts an extra message at index 3 of the common messages every map starts with.
+PAL_COMMON_MSG_COUNT = 16
+
+
+def pal_lang(m):
+    """(language index, English map) for a PAL map overlay name, e.g. map0_s20 -> (2, 'map0_s00')."""
+    x = re.fullmatch(r'(map\d_s)(\d)(\d)', m)
+    if not x or int(x.group(2)) >= len(PAL_LANGS):
+        return 0, m
+    return int(x.group(2)), '%s0%s' % (x.group(1), x.group(3))
+
+
+def pal_lang_map(base, lang):
+    return '%s%d%s' % (base[:-2], lang, base[-1])
+
+
+def overlay_bin(version, m):
+    """Path of the original overlay binary, from the yaml (language overlays live in VIN2..VIN5)."""
+    y = 'configs/%s/maps/%s.yaml' % (version, m)
+    if os.path.exists(y):
+        return yaml_target(y)
+    return 'assets/%s/VIN/%s.BIN' % (version, m.upper())
+
+
+def built_bin(version, m):
+    return 'build/%s/out/%s' % (version, overlay_bin(version, m).split('/', 2)[2])
 
 
 # ---------------------------------------------------------------------------
@@ -190,11 +236,77 @@ def overlay_extern(addr, version):
     return None
 
 
+def port_pal_language(args):
+    """Port a PAL language overlay (e.g. map0_s20) from its already ported English map (map0_s00).
+
+    The code is the same in every language, only the text and what follows it moves. The English
+    yaml/sym are remapped onto the language binary, and the yaml builds the English map's source
+    with the language set (src_path stays the English map, build_path is the language's directory).
+    """
+    M = args.map
+    lang, base = pal_lang(M)
+    base_y = 'configs/EUR/maps/%s.yaml' % base
+    if not re.search(r'^\s+- \[\w+,\s*c,', read(base_y), re.M):
+        sys.exit('%s has no C splits yet, port %s first.' % (base_y, base))
+    own_y = read('configs/EUR/maps/%s.yaml' % M)
+    eng, other = read(overlay_bin('EUR', base), 'rb'), read(overlay_bin('EUR', M), 'rb')
+    align = Aligner(eng, other)
+
+    out = []
+    in_subsegments = False
+    for l in read(base_y).split('\n'):
+        key = re.match(r'^\s*(\w+):', l)
+        k = key.group(1) if key else None
+        if k in ('name', 'sha1', 'basename', 'target_path') and not l.startswith('  -'):
+            l = next(x for x in own_y.split('\n') if re.match(r'^\s*%s:' % k, x) and not x.startswith('- ') and not x.startswith('  -'))
+            l = re.sub(r'^\s*', '  ' if k not in ('name', 'sha1') else '', l)
+        elif k == 'build_path':
+            l = '  build_path: build/EUR/lang/%s' % PAL_LANGS[lang]
+        elif k == 'src_path':
+            pass
+        elif re.match(r'^\s+subsegments:', l):
+            in_subsegments = True
+        elif in_subsegments:
+            e = ENTRY.match(l)
+            if e and l.startswith('      - ['):
+                o = int(e.group(2), 16)
+                l = '%s0x%X%s' % (e.group(1), 0 if o == 0 else align(o, l.strip()[:40]), e.group(3))
+            elif e:
+                l = '  - [0x%X]' % len(other)
+        else:
+            # paths of generated/per-overlay files (asm, linker script, sym/rel files, segment name)
+            l = l.replace(base, M)
+        out.append(l)
+    write('configs/EUR/maps/%s.yaml' % M, '\n'.join(out))
+
+    eb, ob = yaml_vram(base_y), yaml_vram('configs/EUR/maps/%s.yaml' % M)
+    rows = []
+    for line in read('configs/EUR/maps/sym.%s.txt' % base).split('\n'):
+        m = SYM.match(line)
+        if m:
+            addr = int(m.group(2), 16)
+            if eb <= addr < eb + len(eng):
+                addr = ob + align(addr - eb, m.group(1))
+            rows.append((addr, m.group(1), m.group(3) or ''))
+    rows.sort()
+    write('configs/EUR/maps/sym.%s.txt' % M, '\n'.join('%-44s = 0x%08X;%s' % (n, a, (' ' + ann) if ann else '') for a, n, ann in rows) + '\n')
+    rel = 'configs/EUR/maps/rel.%s.txt' % M
+    if not os.path.exists(rel):
+        write(rel, '')
+    print('%s (%s %s): %.1f%% aligned with %s, %d symbols, %d approximated offsets' % (
+        M, PAL_LANGS[lang], 'language overlay', align.coverage * 100, base, len(rows), len(align.approx)))
+    for off, what in align.approx[:20]:
+        print('  approximated 0x%X (%s)' % (off, what))
+    print('Next: tools/port_map.py --version EUR msgs %s, make GAME_VERSION=EUR regenerate, then check %s' % (base, M))
+
+
 def cmd_port(args):
     M, V = args.map, args.version
     U = M.upper()
+    if V == 'EUR' and pal_lang(M)[0] > 0:
+        return port_pal_language(args)
     usa = read('assets/USA/VIN/%s.BIN' % U, 'rb')
-    other = read('assets/%s/VIN/%s.BIN' % (V, U), 'rb')
+    other = read(overlay_bin(V, M), 'rb')
     ub = yaml_vram('configs/USA/maps/%s.yaml' % M)
     jb = yaml_vram('configs/%s/maps/%s.yaml' % (V, M))
     align = Aligner(usa, other)
@@ -437,7 +549,7 @@ def cmd_check(args):
     U = M.upper()
     log = 'build/port-cache/%s.%s.build.log' % (M, V)
     os.makedirs('build/port-cache', exist_ok=True)
-    text = run('. .venv/bin/activate 2>/dev/null; make -k -j8 GAME_VERSION=%s build/%s/out/VIN/%s.BIN' % (V, V, U), log)
+    text = run('. .venv/bin/activate 2>/dev/null; make -k -j8 GAME_VERSION=%s %s' % (V, built_bin(V, M)), log)
     undefined = {}
     for m in re.finditer(r"undefined reference to `([^']+)'", text):
         undefined[m.group(1)] = undefined.get(m.group(1), 0) + 1
@@ -448,7 +560,7 @@ def cmd_check(args):
             print('  %-40s x%d' % (n, c))
     for e in errors[:8]:
         print('  ' + e)
-    built = 'build/%s/out/VIN/%s.BIN' % (V, U)
+    built = built_bin(V, M)
     if not os.path.exists(built):
         print('No %s was produced, see %s' % (built, log))
         return
@@ -456,7 +568,7 @@ def cmd_check(args):
     subprocess.run([sys.executable, 'tools/postbuild.py', 'maps/' + M], capture_output=True)
 
     # section sizes vs the yaml
-    _, secs = parse_ld_map('build/%s/out/VIN/%s.BIN.map' % (V, U))
+    _, secs = parse_ld_map(built + '.map')
     ents = []
     for l in read('configs/%s/maps/%s.yaml' % (V, M)).split('\n'):
         x = re.match(r'^\s+- \[(0x[0-9A-Fa-f]+)\s*,?\s*(\.?\w+)?(?:,\s*([\w/]+))?', l)
@@ -469,14 +581,14 @@ def cmd_check(args):
             continue
         exp = ents[i + 1][0] - off
         for (obj, s), (a, z) in secs.items():
-            if obj.endswith('/%s.c.o' % n) and 'src/maps/%s' % M in obj and s == sec:
+            if obj.endswith('/%s.c.o' % n) and 'src/maps/%s/' % pal_lang(M)[1] in obj and s == sec:
                 if z != exp and not (z == 0 and exp == 0):
                     print('  %-8s 0x%-6x %-24s built=0x%x expected=0x%x' % (sec, off, n, z, exp))
     # function-level diff of the text
-    b, o = read(built, 'rb'), read('assets/%s/VIN/%s.BIN' % (V, U), 'rb')
+    b, o = read(built, 'rb'), read(overlay_bin(V, M), 'rb')
     print('Sizes: built %d, original %d' % (len(b), len(o)))
     base = yaml_vram('configs/%s/maps/%s.yaml' % (V, M))
-    ld_syms, _ = parse_ld_map('build/%s/out/VIN/%s.BIN.map' % (V, U))
+    ld_syms, _ = parse_ld_map(built + '.map')
     funcs = sorted((a - base, n) for n, (a, s, ob) in ld_syms.items() if s == '.text' and a >= base)
     keys = [f[0] for f in funcs]
 
@@ -589,7 +701,7 @@ def jp_message_table(version, m):
     if addr is None:
         return None
     base = yaml_vram('configs/%s/maps/%s.yaml' % (version, m))
-    data = read('assets/%s/VIN/%s.BIN' % (version, m.upper()), 'rb')
+    data = read(overlay_bin(version, m), 'rb')
     out, off = [], addr - base
     while off + 4 <= len(data):
         p = struct.unpack_from('<I', data, off)[0] - base
@@ -601,8 +713,94 @@ def jp_message_table(version, m):
     return out
 
 
+def pal_message_table(m):
+    """Raw strings of a PAL overlay's MAP_MESSAGES table, found through the map header's `mapMessages` (0x30)."""
+    data = read(overlay_bin('EUR', m), 'rb')
+    base = yaml_vram('configs/EUR/maps/%s.yaml' % m)
+    table = struct.unpack_from('<I', data, 4 + 0x30)[0] - base
+    out, off = [], table
+    while off + 4 <= len(data):
+        p = struct.unpack_from('<I', data, off)[0] - base
+        if not (0 <= p < table) or (p and data[p - 1] != 0):
+            break
+        out.append(data[p:data.index(b'\0', p)])
+        off += 4
+    return out
+
+
+def pal_c_string(raw):
+    """C literal for PAL text. Latin-1 letters are written as UTF-8, the build converts them back."""
+    out = []
+    for c in raw:
+        if c == 0x0A:
+            out.append('\\n')
+        elif c == 0x09:
+            out.append('\\t')
+        elif c in (0x22, 0x5C):
+            out.append('\\' + chr(c))
+        elif 0x20 <= c < 0x7F or c >= 0xA0:
+            out.append(chr(c))
+        else:
+            out.append('\\%03o' % c)
+    return '"%s"' % ''.join(out)
+
+
+def pal_msg_block(tables, first, width):
+    lines = []
+    for lang, table in enumerate(tables):
+        lines.append('#%s LANGUAGE_IS(%s)' % ('if' if lang == 0 else 'elif', PAL_LANGS[lang].upper()))
+        for i in range(first, len(table)):
+            idx = ('%d' % i).ljust(width)
+            lines.append('    /* %s */ %s,' % (idx, pal_c_string(table[i])))
+    lines.append('#endif')
+    return '\n'.join(lines) + '\n'
+
+
+def cmd_msgs_pal(args):
+    """Write the PAL messages of a map (all five languages) into map_msg_pal.h next to its source."""
+    base = pal_lang(args.map)[1]
+    tables = [pal_message_table(pal_lang_map(base, lang)) for lang in range(len(PAL_LANGS))]
+    for lang, table in enumerate(tables):
+        print('  %s %s: %d messages' % (pal_lang_map(base, lang), PAL_LANGS[lang], len(table)))
+    if len({len(t) for t in tables}) != 1:
+        print('  !! the languages have different message counts, check the tables above')
+
+    common = 'include/maps/shared/map_msg_common_pal.h'
+    text = ('// Messages every PAL map starts with, the same in all maps of a language.\n'
+            + pal_msg_block([t[:PAL_COMMON_MSG_COUNT] for t in tables], 0, 2))
+    if not os.path.exists(common):
+        write(common, text)
+        print('Wrote', common)
+    elif read(common) != text:
+        print('  !! %s differs from the common messages of %s, left as is' % (common, base))
+
+    own = 'src/maps/%s/map_msg_pal.h' % base
+    write(own, '// PAL messages of this map after the common ones, the language overlays differ only by these.\n'
+               + pal_msg_block(tables, PAL_COMMON_MSG_COUNT, 2))
+    print('Wrote', own)
+
+    files = [f for f in glob.glob('src/maps/%s/*.c' % base) if 'const char* MAP_MESSAGES[]' in read(f)]
+    if len(files) != 1:
+        print('No single file defines MAP_MESSAGES for %s, include map_msg_pal.h by hand' % base)
+        return
+    f = files[0]
+    text = read(f)
+    body = text.split('MAP_MESSAGES[]')[1].split('};')[0]
+    if '"map_msg_pal.h"' in body:
+        return
+    if '#endif' not in body:
+        print('%s: MAP_MESSAGES has no version blocks, add `#elif VERSION_REGION_IS(PAL)` + the include by hand' % f)
+        return
+    i = body.rindex('#endif')
+    new = body[:i] + '#elif VERSION_REGION_IS(PAL)\n    #include "map_msg_pal.h"\n' + body[i:]
+    write(f, text.replace(body, new, 1))
+    print('Wrote', f)
+
+
 def cmd_msgs(args):
     M, V = args.map, args.version
+    if V == 'EUR':
+        return cmd_msgs_pal(args)
     files = [f for f in glob.glob('src/maps/%s/*.c' % M) if 'const char* MAP_MESSAGES[]' in read(f)]
     if len(files) != 1:
         sys.exit('No single file defines MAP_MESSAGES for %s' % M)
@@ -688,8 +886,15 @@ def split_args(text, start):
 def cmd_wrap(args):
     """Wrap message indices >= THRESH in MAP_MSG(), and add the macro to the map's header."""
     M, V = args.map, args.version
-    thresh = args.thresh
-    macro = args.macro or '((idx) >= %d ? (idx) - %d : (idx))' % (thresh, args.shift)
+    if V == 'EUR':
+        # Same for every PAL map: the extra common message at index 3 moves everything after it up by one.
+        thresh = 3 if args.thresh is None else args.thresh
+        macro = args.macro or '((idx) >= %d ? (idx) + 1 : (idx))' % thresh
+    else:
+        if args.thresh is None:
+            sys.exit('wrap needs THRESH for %s' % V)
+        thresh = args.thresh
+        macro = args.macro or '((idx) >= %d ? (idx) - %d : (idx))' % (thresh, args.shift)
     n = 0
     for f in glob.glob('src/maps/%s/*.c' % M):
         text = read(f)
@@ -725,7 +930,21 @@ def cmd_wrap(args):
         sys.exit('no header include/maps/*/%s.h' % M)
     h = hdrs[0]
     htext = read(h)
-    if 'define MAP_MSG' not in htext:
+    pal_note = '// PAL has an extra common message at index 3, so every message after it is one higher than in USA.\n'
+    if V == 'EUR' and 'define MAP_MSG' not in htext:
+        block = (pal_note + '#if VERSION_REGION_IS(PAL)\n    #define MAP_MSG(idx) %s\n#else\n'
+                 '    #define MAP_MSG(idx) (idx)\n#endif\n' % macro)
+        inc = '#include "maps/shared.h"'
+        i = htext.index(inc) if inc in htext else htext.rindex('#endif')
+        write(h, htext[:i] + block + '\n' + htext[i:])
+    elif V == 'EUR' and 'VERSION_REGION_IS(PAL)' not in htext:
+        # Add a PAL branch to the existing NTSCJ one.
+        d = htext.index('#define MAP_MSG')
+        s = htext.rindex('#if VERSION_REGION_IS', 0, d)
+        e = htext.index('#endif', d)
+        htext = htext[:e] + '#elif VERSION_REGION_IS(PAL)\n    #define MAP_MSG(idx) %s\n' % macro + htext[e:]
+        write(h, htext[:s] + pal_note + htext[s:])
+    elif 'define MAP_MSG' not in htext:
         block = ('\n// JAP0 merges, drops or adds messages compared to USA, so message indices in code differ.\n'
                  '#if VERSION_REGION_IS(NTSC)\n    #define MAP_MSG(idx) (idx)\n#elif VERSION_REGION_IS(NTSCJ)\n'
                  '    #define MAP_MSG(idx) %s\n#endif\n' % macro)
@@ -755,7 +974,7 @@ def cmd_validate(args):
     if M == 'bodyprog':
         map_path, sym_path = 'build/%s/out/1ST/BODYPROG.BIN.map' % V, 'configs/%s/sym.bodyprog.txt' % V
     else:
-        map_path, sym_path = 'build/%s/out/VIN/%s.BIN.map' % (V, M.upper()), 'configs/%s/maps/sym.%s.txt' % (V, M)
+        map_path, sym_path = built_bin(V, M) + '.map', 'configs/%s/maps/sym.%s.txt' % (V, M)
     if not os.path.exists(map_path):
         sys.exit('No %s, build %s for %s first.' % (map_path, M, V))
     linked, _ = parse_ld_map(map_path)
@@ -811,7 +1030,7 @@ def main():
     p.set_defaults(fn=cmd_validate)
     p = sub.add_parser('wrap')
     p.add_argument('map')
-    p.add_argument('thresh', type=int, help='first message index that is shifted in JAP0')
+    p.add_argument('thresh', type=int, nargs='?', help='first message index that is shifted (JAP0), PAL always uses 3')
     p.add_argument('--shift', type=int, default=1)
     p.add_argument('--macro', help='full MAP_MSG(idx) body for non-uniform shifts')
     p.set_defaults(fn=cmd_wrap)
