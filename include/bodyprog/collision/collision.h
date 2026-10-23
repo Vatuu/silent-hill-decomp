@@ -9,8 +9,6 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
-// TODO: "Subcell" should become just "cell"
-
 #define INTERSECTION_BUFFER    Q12(0.1f)
 #define DEFAULT_CEILING_HEIGHT -16.0f
 
@@ -94,6 +92,7 @@ typedef struct
     /* 0x36 */ q7_8                  field_36; // Another radius offset for character collision?
 } s_CollisionState_44;
 
+// Character deltas??
 typedef struct
 {
     /* 0x0  */ DVECTOR_XZ charaVertDiff;
@@ -127,8 +126,8 @@ typedef struct _CollisionCellPoint
     /* 0xF  */ u8                     field_F;               // }
     /* 0x10 */ u8                     disableSurface0Height; /** `bool` */
     /* 0x11 */ u8                     disableSurface1Height; /** `bool` */
-    /* 0x12 */ SVECTOR3               splitVertex0;          /** Q23.8 | Data from `s_IpdCollisionData::cellSplitVertices` */
-    /* 0x18 */ SVECTOR3               splitVertex1;          /** Q23.8 | Data from `s_IpdCollisionData::cellSplitVertices` */
+    /* 0x12 */ SVECTOR3               cellSplitVertex0;      /** Q23.8 | Vertex from `s_IpdCollisionData::cellSplitVertices`. */
+    /* 0x18 */ SVECTOR3               cellSplitVertex1;      /** Q23.8 | Vertex from `s_IpdCollisionData::cellSplitVertices`. */
     /* 0x20 */ s_CollisionState_CC_20 field_20;
 } s_CollisionCellPoint;
 STATIC_ASSERT_SIZEOF(s_CollisionCellPoint, 56);
@@ -192,7 +191,7 @@ typedef struct _CollisionState
                          /* 0x1 */ u8                  closestZCellIdx;
                          /* 0x2 */ u8                  closeFarXCellIdxDiff;
                          /* 0x3 */ u8                  closeFarZCellIdxDiff;
-                         /* 0x4 */ s_IpdCellRange* cellRange;
+                         /* 0x4 */ s_IpdCellRange*     cellRange;
                          /* 0x8 */ s_CollisionState_A8 field_8[4];
                      } s_0;
                      struct
@@ -201,7 +200,7 @@ typedef struct _CollisionState
                          /* 0x2 */ q7_8 top;    // Set to absolute character top height.
                          /* 0x4 */ q7_8 radius;
                          /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
-                         /* 0x8 */ u8*  field_8;
+                         /* 0x8 */ u8*  field_8; // Cell check idx?
                      } s_1;
     /* 0xA0   */ } field_A0; // Ground info? Cell info? Cell state?
 
@@ -260,9 +259,9 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, const s_CollisionTrig
 
 void Ipd_CollisionPtrsInit(s_IpdCollisionData* collData);
 
-void Collision_SubcellChecksReset(s_IpdCollisionData* collData);
+void Collision_CellChecksReset(s_IpdCollisionData* collData);
 
-void Collision_SubcellChecksCountUpdate(s_IpdCollisionData* collData);
+void Collision_CellChecksCountUpdate(s_IpdCollisionData* collData);
 
 // ========================================
 // @split? IPD/ground collision detection.
@@ -387,7 +386,7 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
 
 void Collision_CharaCollisionHandle(s_CollisionState* state, s_IpdCollisionData* collData);
 
-bool Collision_SubcellInit(s_CollisionState* state, const s_IpdCollisionData* collData);
+bool Collision_CellInit(s_CollisionState* state, const s_IpdCollisionData* collData);
 
 bool Collision_CellIdxGet(s_CollisionState* state, const s_IpdCollisionData* collData);
 
@@ -406,10 +405,11 @@ void func_8006B9C8(s_CollisionState* state);
 
 void func_8006BB50(s_CollisionState* state, s32 arg1);
 
+// Computes ground height, accounting for differences in cell split vertex heights?
 q23_8 func_8006BC34(s_CollisionState* state);
 
-/** `arg3` and `arg4` might be XY or XZ position components. */
-void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 arg2, q7_8 distX, q7_8 distZ, q7_8 radiusOffset);
+/** `arg1` is cell check idx? */
+void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 unkState, q7_8 distX, q7_8 distZ, q7_8 radiusOffset);
 
 void func_8006BDDC(s_CollisionState_44_0* arg0, q3_12 rotX, q3_12 rotY);
 
@@ -427,7 +427,7 @@ bool func_8006C3D4(s_CollisionState* state, s_IpdCollisionData* collData, s32 ce
 
 void func_8006C45C(s_CollisionState* state);
 
-void func_8006C794(s_CollisionState* state, s32 arg1, q23_8 dist);
+void func_8006C794(s_CollisionState* state, s32 unkState, q23_8 dist);
 
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData);
 

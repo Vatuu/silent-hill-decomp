@@ -215,7 +215,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
             collData->cellAttribsCount != 0)
         {
             func_8006E0AC(state, collData);
-            Collision_SubcellChecksReset(collData);
+            Collision_CellChecksReset(collData);
 
             for (curUnk = &state->field_8C; curUnk < &state->field_8C[state->field_88]; curUnk++)
             {
