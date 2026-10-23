@@ -2268,7 +2268,3 @@ static void MemCard_DevicePathGenerate(s32 deviceId, char* result)
     result[3] = '0' + (deviceId & 3);
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/memcard", func_80030BC4);
-#endif
-

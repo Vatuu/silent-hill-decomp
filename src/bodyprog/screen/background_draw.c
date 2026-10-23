@@ -18,6 +18,10 @@ s16  D_800A8E5A                  = 3; // Unused.
 // ========================================
 
 #if VERSION_IS(EUR)
+INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", func_80030BC4);
+#endif
+
+#if VERSION_IS(EUR)
 INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", Screen_BackgroundImgDraw);
 #else
 void Screen_BackgroundImgDraw(s_FsImageDesc* image)

@@ -410,16 +410,11 @@ def ninja_write_rules(rulesNinjaName: str, game_version_idx: int):
         "ld", description="link $out",
         command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -r -b binary -o $out $in",
     )
-    if game_version_idx == 0:
-        ninjaRulesFile.rule(
-            "elf", description="elf $out",
-            command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
-        )
-    else:
-        ninjaRulesFile.rule(
-            "elf", description="elf $out",
-            command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -o $out",
-        )
+    
+    ninjaRulesFile.rule(
+        "elf", description="elf $out",
+        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
+    )
     
     ninjaRulesFile.rule(
         "objcopy", description="objcopy $out",

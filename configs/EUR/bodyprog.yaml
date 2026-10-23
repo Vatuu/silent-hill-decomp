@@ -138,7 +138,7 @@ segments:
       
       
       - [0x8678,     c, memcard]
-      - [0xB680,     c, screen/background_draw]
+      - [0xB534,     c, screen/background_draw]
       - [0xC0D0,     c, text/text_debug_draw]
       - [0xC52C,     c, screen/screen_draw]
       - [0xC77C,     c, screen/screen_fade]
