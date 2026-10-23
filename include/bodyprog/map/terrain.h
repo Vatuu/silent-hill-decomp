@@ -5,8 +5,15 @@
 #include "bodyprog/formats/lm.h"
 
 // TODO: "Chunk cells", "cells", and "subcells". Document these terms.
+// Sezz: Those names are bad. Will revise the hierarchy to:
+// - Chunk: 40x40 cells (or 5x5 subchunks).
+// - Subchunk: 8x8 cells.
+// - Cell: 1x1 meter unit.
+// - Surface: cell split for fine-tuned collision (always(?) 2 splits per cell)
 
-#define CHUNK_SIZE                        40.0f
+#define CHUNK_SIZE    40.0f /** 40x40 cells per chunk. */
+#define SUBCHUNK_SIZE 8.0f  /** 8x8 cells per subchunk. */
+    
 #define ACTIVE_CHUNK_COUNT_MAX            4
 #define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
 #define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
@@ -38,8 +45,8 @@ typedef struct _MapChunk
     /* 0x4  */ s32          queueIdx;
     /* 0x8  */ s16          chunkX;
     /* 0xA  */ s16          chunkZ;
-    /* 0xC  */ q19_12       paddedDistanceToEdge0;
-    /* 0x10 */ q19_12       paddedDistanceToEdge1;
+    /* 0xC  */ q19_12       paddedDistanceToEdge;
+    /* 0x10 */ q19_12       projPaddedDistanceToEdge;
     /* 0x14 */ u8           materialCount;
              // 3 bytes of padding.
     /* 0x18 */ s32          outsideCount;

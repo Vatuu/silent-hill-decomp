@@ -93,9 +93,9 @@ D_80025590                                   = 0x80025588;
 //------------------------------------------------------
 D_80025BE4                                   = 0x80025BDC; // Garbage data
 
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 //--- PA: 0x001200   VA: 0x80025D60   subsegment: .rodata, text/text_draw
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------------
 FONT_12X16_GLYPH_WIDTHS                      = 0x80025D64;
 STRING_COLORS                                = 0x80025DB8;
 D_80025EB4                                   = 0x80025EC0;
@@ -627,7 +627,7 @@ WorldGfx_MapReset                            = 0x8003C0E4; // type:func
 WorldGfx_IpdSamplePointStore                 = 0x8003C140; // type:func
 WorldGfx_IpdSamplePointReset                 = 0x8003C178; // type:func
 WorldGfx_CloseRangeChunksInit                = 0x8003C184; // type:func
-WorldGfx_ChunkInitCheck                      = 0x8003C628; // type:func
+WorldGfx_ChunksInitCheck                     = 0x8003C628; // type:func
 WorldGfx_Draw                                = 0x8003C650; // type:func
 WorldObject_ModelNameSet                     = 0x8003C6D0; // type:func
 WorldObjects_Add                             = 0x8003C704; // type:func
@@ -796,11 +796,11 @@ LmHeader_ModelHeaderSearch                   = 0x80043D04; // type:func
 WorldMap_ModelBufferLinkObjectLists          = 0x80043D60; // type:func
 func_80044044                                = 0x80043E1C; // type:func
 WorldMap_Draw                                = 0x80043E68; // type:func
-WorldMap_SubcellVisibleCheck                 = 0x800441F8; // type:func
+WorldMap_SubchunkVisibleCheck                = 0x800441F8; // type:func
 
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------
 //--- PA: 0x01F81C   VA: 0x8004437C   subsegment: c, chara/anim
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------
 Anim_BonesInit                               = 0x8004437C; // type:func
 Anim_BonesUpdate                             = 0x800444B0; // type:func
 Anim_InfoGet                                 = 0x800446F0; // type:func
@@ -811,9 +811,9 @@ Anim_PlayLoop                                = 0x80044910; // type:func
 Anim_BlendLinear                             = 0x80044A7C; // type:func
 Anim_BlendEaseOut                            = 0x80044BC8; // type:func
 
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------
 //--- PA: 0x02018C   VA: 0x80044CEC   subsegment: c, chara/bone
-//-------------------------------------------------------------------------------
+//-------------------------------------------------------------
 Bone_ExtraRotationSet                        = 0x80044CEC; // type:func
 Bone_ModelIdxIterator                        = 0x80044D44; // type:func
 Skeleton_Init                                = 0x80044DB8; // type:func
@@ -932,9 +932,9 @@ vwAngleToVector                              = 0x8004A444; // type:func
 vwVectorToAngle                              = 0x8004A4EC; // type:func
 vwOresenHokan                                = 0x8004A5A0; // type:func
 
-//--------------------------------------------------------------------
+//-----------------------------------------------------------------
 //--- PA: 0x025AF4   VA: 0x8004A654   subsegment: c, text/text_draw
-//--------------------------------------------------------------------
+//-----------------------------------------------------------------
 Gfx_StringPositionSet                        = 0x8004A654; // type:func
 Gfx_StringLayerIdxSet                        = 0x8004A698; // type:func
 Gfx_StringLayerIdxReset                      = 0x8004A6A4; // type:func
@@ -3087,9 +3087,9 @@ IMAGE_FLAME.241                              = 0x800AC468;
 D_800A9FB0                                   = 0x800AC470;
 Y_ARRAY.295                                  = 0x800AC474;
 
-//----------------------------------------------------
-//--- PA: 0x087928   VA: 0x800AC488   subsegment: data
-//----------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x087928   VA: 0x800AC488   subsegment: .data, sound/sound_data
+//-----------------------------------------------------------------------
 g_Sd_VabBuffers                              = 0x800AC488;
 g_Sd_KdtBuffer                               = 0x800AC498;
 D_800A9FDC                                   = 0x800AC49C;
@@ -3105,15 +3105,11 @@ g_Vab_InfoTable                              = 0x800AEF68;
 //-------------------------------------------------------------------
 D_800AD480                                   = 0x800AF940;
 
-//------------------------------------------------------------------------
+//---------------------------------------------------------------------
 //--- PA: 0x08ADF8   VA: 0x800AF958   subsegment: .data, text/text_draw
-//------------------------------------------------------------------------
+//---------------------------------------------------------------------
 g_StringColorId                              = 0x800AF958; // type:s16
 g_StringLayerIdx                             = 0x800AF95C;
-
-//----------------------------------------------------
-//--- PA: 0x08AE00   VA: 0x800AF960   subsegment: data
-//----------------------------------------------------
 g_StringColorId_JP                           = 0x800AF960; // type:s16
 STRING_COLORS_JP                             = 0x800AF964;
 
@@ -3607,9 +3603,9 @@ g_Map_GfxPackets                             = 0x800C2248; // size:0x1420
 activeChunksCollData.0                       = 0x800C3668;
 g_WorldMapWork                               = 0x800C3678; // type:u8 size:0x58C - size from bzero call
 
-//----------------------------------------------------------------------------------
+//----------------------------------------------------------------
 //--- PA: 0x09F0A8   VA: 0x800C3C08   subsegment: .bss, chara/bone
-//----------------------------------------------------------------------------------
+//----------------------------------------------------------------
 D_800C15B0                                   = 0x800C3C08;
 D_800C15B4                                   = 0x800C3C0C;
 
@@ -3668,16 +3664,12 @@ vwViewPointInfo                              = 0x800C5E38; // type:VW_VIEW_WORK 
 D_800C3868                                   = 0x800C5EC0;
 VbWvsMatrix                                  = 0x800C5EE0; // type:MATRIX size:0x20
 
-//-----------------------------------------------------------------------
+//--------------------------------------------------------------------
 //--- PA: 0x0A13A0   VA: 0x800C5F00   subsegment: .bss, text/text_draw
-//-----------------------------------------------------------------------
+//--------------------------------------------------------------------
 g_StringPosition                             = 0x800C5F00; // type:DVECTOR
 D_800C38AA                                   = 0x800C5F02;
 g_StringPositionX1                           = 0x800C5F04; // type:s32
-
-//---------------------------------------------------
-//--- PA: 0x0A13A8   VA: 0x800C5F08   subsegment: bss
-//---------------------------------------------------
 g_MapMsg_GlyphSprite                         = 0x800C5F10;
 g_GlyphSpritePositionX                       = 0x800C5F34;
 D_800C391E                                   = 0x800C5F36;

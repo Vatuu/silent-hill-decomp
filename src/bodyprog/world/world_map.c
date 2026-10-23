@@ -121,11 +121,11 @@ void WorldMap_GlobalLmHeaderInit(s_LmHeader* lmHdr) // 0x80041CEC
     lmHdr->modelCount    = 0;
 }
 
-void WorldMap_ChunkQueueClear(s_MapChunk* chunkBufferPtr, s32 activeChunkCount) // 0x80041D10
+void WorldMap_ChunkQueueClear(s_MapChunk* activeChunks, s32 activeChunkCount) // 0x80041D10
 {
     s_MapChunk* curChunk;
 
-    for (curChunk = &chunkBufferPtr[0]; curChunk < &chunkBufferPtr[activeChunkCount]; curChunk++)
+    for (curChunk = &activeChunks[0]; curChunk < &activeChunks[activeChunkCount]; curChunk++)
     {
         curChunk->queueIdx = NO_VALUE;
     }
@@ -330,6 +330,7 @@ void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunkCount) // 0x80
     chunkBuffer = terrain->chunkBuffer;
     chunkSize   = (terrain->chunkBufferSize / activeChunkCount) & ~0x3;
 
+    // Run through active chunks.
     for (i = 0;
          i < ACTIVE_CHUNK_COUNT_MAX;
          i++, *(u8**)&chunkBuffer += chunkSize)
@@ -345,9 +346,9 @@ void WorldMap_ChunksClear(s_WorldMapWork* terrain, s32 activeChunkCount) // 0x80
             }
         }
 
-        curChunk->queueIdx              = NO_VALUE;
-        curChunk->paddedDistanceToEdge1 = INT_MAX;
-        curChunk->outsideCount          = 0;
+        curChunk->queueIdx                 = NO_VALUE;
+        curChunk->projPaddedDistanceToEdge = INT_MAX;
+        curChunk->outsideCount             = 0;
 
         if (i < activeChunkCount)
         {
@@ -525,19 +526,19 @@ s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800
 
 s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ) // 0x8004287C
 {
-    s_MapChunk* closestChunks[4];
-    q19_12      distsToEdges[4];
-    q23_8       geomX;
-    q23_8       geomZ;
-    s32         chunkX;
-    s32         chunkZ;
-    q19_12      curDistToEdge;
-    s32         i;
-    s32         j;
-    s32         k;
-    s32         chunkCount;
-    s_MapChunk* curChunk;
-    s_GlobalPlm*    globalPlm;
+    s_MapChunk*  closestChunks[4];
+    q19_12       distsToChunkEdges[4];
+    q23_8        geomX;
+    q23_8        geomZ;
+    s32          chunkX;
+    s32          chunkZ;
+    q19_12       curDistToEdge;
+    s32          i;
+    s32          j;
+    s32          k;
+    s32          chunkCount;
+    s_MapChunk*  curChunk;
+    s_GlobalPlm* globalPlm;
 
     globalPlm = &g_WorldMapWork.globalPlm;
 
@@ -594,7 +595,7 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
                 curDistToEdge = WorldMap_DistanceToChunkEdgeGet(geomX, geomZ, curChunk->chunkX, curChunk->chunkZ);
                 for (i = 0; i < chunkCount; i++)
                 {
-                    if (curDistToEdge < distsToEdges[i])
+                    if (curDistToEdge < distsToChunkEdges[i])
                     {
                         break;
                     }
@@ -603,13 +604,13 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
                 // Shift collected chunks to make room for new insertion.
                 for (j = chunkCount; j >= (i + 1); j--)
                 {
-                    distsToEdges[j] = distsToEdges[j - 1];
+                    distsToChunkEdges[j] = distsToChunkEdges[j - 1];
                     closestChunks[j] = closestChunks[j - 1];
                 }
 
                 // Insert chunk.
                 chunkCount++;
-                distsToEdges[j]  = curDistToEdge;
+                distsToChunkEdges[j]  = curDistToEdge;
                 closestChunks[j] = curChunk;
             }
         }
@@ -669,7 +670,8 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
         {
             WorldMap_ChunkPropertiesSet(curChunk->ipdHdr, &g_WorldMapWork.globalPlm.lmHdr, 1,
-                                        &g_WorldMapWork.chunkTextures.fullPage, &g_WorldMapWork.chunkTextures.halfPage, g_WorldMapWork.textureFileIdx);
+                                        &g_WorldMapWork.chunkTextures.fullPage, &g_WorldMapWork.chunkTextures.halfPage,
+                                        g_WorldMapWork.textureFileIdx);
             func_80044044(curChunk->ipdHdr, curChunk->chunkX, curChunk->chunkZ);
         }
     }
@@ -697,47 +699,47 @@ q19_12 WorldMap_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 chunkX, s32
     #define OUTSIDE_DIST(val, min, max) \
         (((val) < (min)) ? ((min) - (val)) : (((max) <= (val)) ? ((val) - (max)) : 0))
 
-    s32 chunkBoundX;
-    s32 chunkBoundZ;
+    s32 chunkEdgeX;
+    s32 chunkEdgeZ;
     s32 chunkPosX;
     s32 chunkPosZ;
 
-    // Compute chunk boundary position.
-    chunkBoundX = chunkX * Q8(CHUNK_SIZE);
-    chunkBoundZ = chunkZ * Q8(CHUNK_SIZE);
+    // Compute chunk edge position.
+    chunkEdgeX = chunkX * Q8(CHUNK_SIZE);
+    chunkEdgeZ = chunkZ * Q8(CHUNK_SIZE);
 
-    chunkPosX = OUTSIDE_DIST(posX, chunkBoundX, chunkBoundX + Q8(CHUNK_SIZE));
-    chunkPosZ = OUTSIDE_DIST(posZ, chunkBoundZ, chunkBoundZ + Q8(CHUNK_SIZE));
+    chunkPosX = OUTSIDE_DIST(posX, chunkEdgeX, chunkEdgeX + Q8(CHUNK_SIZE));
+    chunkPosZ = OUTSIDE_DIST(posZ, chunkEdgeZ, chunkEdgeZ + Q8(CHUNK_SIZE));
     return Vc_VectorMagnitudeCalc(chunkPosX, Q12(0.0f), chunkPosZ);
 }
 
-s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042EBC
+s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ) // 0x80042EBC
 {
-    s32          chunkX0;
-    s32          chunkZ0;
-    s32          chunkZ1;
-    s32          chunkX1;
-    s32          queueIdx;
-    s32          projChunkX;
+    s32          chunkX;
+    s32          chunkZ;
     s32          projChunkZ;
+    s32          projChunkX;
+    s32          queueIdx;
+    s32          nextChunkX;
+    s32          nextChunkZ;
     s32          chunkIdx;
     s32          curQueueIdx;
     s32          curChunkX;
     s32          curChunkZ;
-    s_MapChunk*   freeChunk;
+    s_MapChunk*  freeChunk;
     s_IpdHeader* ipdHdr;
 
     queueIdx = NO_VALUE;
 
-    chunkX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(CHUNK_SIZE));
-    chunkZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(CHUNK_SIZE));
-    chunkX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(CHUNK_SIZE));
-    chunkZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(CHUNK_SIZE));
+    chunkX     = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q8(CHUNK_SIZE));
+    chunkZ     = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q8(CHUNK_SIZE));
+    projChunkX = FLOOR_TO_STEP(Q12_TO_Q8(projPosX), Q8(CHUNK_SIZE));
+    projChunkZ = FLOOR_TO_STEP(Q12_TO_Q8(projPosZ), Q8(CHUNK_SIZE));
 
-    terrain->chunkX = chunkX1;
-    terrain->chunkZ = chunkZ1;
+    terrain->chunkX = projChunkX;
+    terrain->chunkZ = projChunkZ;
 
-    WorldMap_ActiveChunksSample(terrain, posX0, posZ0, posX1, posZ1, terrain->isExterior);
+    WorldMap_ActiveChunksSample(terrain, posX, posZ, projPosX, projPosZ, terrain->isExterior);
     WorldMap_ChunkMaterialsApply(terrain);
 
     // Run through neighboring chunks.
@@ -747,13 +749,13 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
         {
             if (terrain->isExterior || (curChunkX == 0 && curChunkZ == 0))
             {
-                projChunkZ = chunkZ0 + curChunkZ;
-                projChunkX = chunkX0 + curChunkX;
-                chunkIdx  = WorldMap_IpdChunkFileIdxGet(projChunkX, projChunkZ);
+                nextChunkZ = chunkZ + curChunkZ;
+                nextChunkX = chunkX + curChunkX;
+                chunkIdx  = WorldMap_IpdChunkFileIdxGet(nextChunkX, nextChunkZ);
 
                 if (chunkIdx != NO_VALUE &&
-                    WorldMap_PaddedDistanceToChunkEdgeGet(posX0, posZ0, projChunkX, projChunkZ, terrain->isExterior) <= Q12(0.0f) &&
-                    !WorldMap_IsChunkPresentCheck(terrain->activeChunks, projChunkX, projChunkZ))
+                    WorldMap_PaddedDistanceToChunkEdgeGet(posX, posZ, nextChunkX, nextChunkZ, terrain->isExterior) <= Q12(0.0f) &&
+                    !WorldMap_IsChunkPresentCheck(terrain->activeChunks, nextChunkX, nextChunkZ))
                 {
                     freeChunk = WorldMap_FreeChunkSpaceFind(terrain->activeChunks, terrain->isExterior);
 
@@ -766,8 +768,8 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
                         }
                     }
 
-                    curQueueIdx = WorldMap_ChunkLoadStart(freeChunk, chunkIdx, projChunkX, projChunkZ,
-                                                          posX0, posZ0, posX1, posZ1, terrain->isExterior);
+                    curQueueIdx = WorldMap_ChunkLoadStart(freeChunk, chunkIdx, nextChunkX, nextChunkZ,
+                                                          posX, posZ, projPosX, projPosZ, terrain->isExterior);
                     if (curQueueIdx != NO_VALUE)
                     {
                         queueIdx = curQueueIdx;
@@ -780,7 +782,7 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_
     return queueIdx;
 }
 
-void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ,
                                  bool isExterior) // 0x800431E4
 {
     s_MapChunk* curChunk;
@@ -790,12 +792,12 @@ void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 p
     {
         if (curChunk->queueIdx == NO_VALUE)
         {
-            curChunk->paddedDistanceToEdge0 = INT_MAX;
-            curChunk->paddedDistanceToEdge1 = INT_MAX;
+            curChunk->paddedDistanceToEdge     = INT_MAX;
+            curChunk->projPaddedDistanceToEdge = INT_MAX;
         }
         else
         {
-            WorldMap_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, isExterior);
+            WorldMap_DistanceToEdgeCalc(curChunk, posX, posZ, projPosX, projPosZ, isExterior);
         }
 
         if (WorldMap_LoadStateGet(curChunk->queueIdx) < WorldMapLoadState_Loaded || !curChunk->ipdHdr->isLoaded)
@@ -807,8 +809,8 @@ void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 p
             curChunk->materialCount = WorldMap_ChunkHalfPageMaterialCountGet(curChunk->ipdHdr);
         }
 
-        if (curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
-            curChunk->paddedDistanceToEdge1 > Q12(0.0f))
+        if (curChunk->paddedDistanceToEdge     > Q12(0.0f) &&
+            curChunk->projPaddedDistanceToEdge > Q12(0.0f))
         {
             curChunk->outsideCount++;
         }
@@ -819,13 +821,13 @@ void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX0, q19_12 p
     }
 }
 
-void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1,
+void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ,
                                  bool isExterior) // 0x80043338
 {
-    chunk->paddedDistanceToEdge0 = WorldMap_PaddedDistanceToChunkEdgeGet(posX0, posZ0, chunk->chunkX, chunk->chunkZ,
-                                                                         isExterior);
-    chunk->paddedDistanceToEdge1 = WorldMap_PaddedDistanceToChunkEdgeGet(posX1, posZ1, chunk->chunkX, chunk->chunkZ,
-                                                                         isExterior);
+    chunk->paddedDistanceToEdge     = WorldMap_PaddedDistanceToChunkEdgeGet(posX, posZ, chunk->chunkX, chunk->chunkZ,
+                                                                            isExterior);
+    chunk->projPaddedDistanceToEdge = WorldMap_PaddedDistanceToChunkEdgeGet(projPosX, projPosZ, chunk->chunkX, chunk->chunkZ,
+                                                                            isExterior);
 }
 
 void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain) // 0x800433B8
@@ -838,8 +840,8 @@ void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain) // 0x800433B8
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
-                curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
-                curChunk->paddedDistanceToEdge1 > Q12(0.0f))
+                curChunk->paddedDistanceToEdge     > Q12(0.0f) &&
+                curChunk->projPaddedDistanceToEdge > Q12(0.0f))
             {
                 Lm_MaterialRefCountDec(curChunk->ipdHdr->lmHdr);
             }
@@ -852,7 +854,8 @@ void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain) // 0x800433B8
         if (WorldMap_LoadStateGet(curChunk->queueIdx) >= WorldMapLoadState_Loaded)
         {
             if (curChunk->ipdHdr->isLoaded &&
-                (curChunk->paddedDistanceToEdge0 <= Q12(0.0f) || curChunk->paddedDistanceToEdge1 <= Q12(0.0f)))
+                (curChunk->paddedDistanceToEdge     <= Q12(0.0f) ||
+                 curChunk->projPaddedDistanceToEdge <= Q12(0.0f)))
             {
                 WorldMap_ChunkMaterialsLoad(curChunk->ipdHdr,
                                             &terrain->chunkTextures.fullPage, &terrain->chunkTextures.halfPage,
@@ -939,7 +942,7 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
             {
                 matCount = curChunk->materialCount;
 
-                curDist = curChunk->paddedDistanceToEdge0;
+                curDist = curChunk->paddedDistanceToEdge;
                 if (curDist == Q12(0.0f))
                 {
                     continue;
@@ -958,7 +961,8 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
     return activeChunk;
 }
 
-s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32 chunkZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x800436D8
+s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32 chunkZ,
+                            q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ, bool isExterior) // 0x800436D8
 {
     if (fileIdx == NO_VALUE)
     {
@@ -969,7 +973,7 @@ s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32
     chunk->chunkZ   = chunkZ;
     chunk->queueIdx = Fs_QueueStartRead(fileIdx, chunk->ipdHdr);
 
-    WorldMap_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, isExterior);
+    WorldMap_DistanceToEdgeCalc(chunk, posX, posZ, projPosX, projPosZ, isExterior);
 
     return chunk->queueIdx;
 }
@@ -1003,7 +1007,8 @@ bool WorldMap_ActiveModelsLoadStateCheck(void) // 0x80043740
                 continue;
         }
 
-        if (curChunk->paddedDistanceToEdge0 <= Q12(0.0f) || curChunk->paddedDistanceToEdge1 <= Q12(0.0f))
+        if (curChunk->paddedDistanceToEdge     <= Q12(0.0f) ||
+            curChunk->projPaddedDistanceToEdge <= Q12(0.0f))
         {
             return false;
         }
@@ -1026,8 +1031,8 @@ bool WorldMap_NextChunkLoadCheck(void) // 0x80043830
         loadState = WorldMap_ChunkLoadStateGet(curChunk);
         if (loadState == MapModelLoadState_Invalid ||
             loadState == MapModelLoadState_Loaded  ||
-            (curChunk->paddedDistanceToEdge0 > Q12(0.0f) &&
-             curChunk->paddedDistanceToEdge1 > Q12(0.0f)))
+            (curChunk->paddedDistanceToEdge     > Q12(0.0f) &&
+             curChunk->projPaddedDistanceToEdge > Q12(0.0f)))
         {
             continue;
         }
@@ -1060,7 +1065,7 @@ bool WorldMap_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ) // 0x8004393C
     if (g_WorldMapWork.isExterior)
     {
         return WorldMap_DistanceToChunkEdgeGet(Q12_TO_Q8(g_WorldMapWork.positionX), Q12_TO_Q8(g_WorldMapWork.positionZ),
-                                          chunkX, chunkZ) <= Q8(4.5f);
+                                               chunkX, chunkZ) <= Q8(4.5f);
     }
 
     if (chunkX == g_WorldMapWork.chunkX &&
@@ -1310,19 +1315,16 @@ void func_80044044(s_IpdHeader* ipd, s32 chunkX, s32 chunkZ) // 0x80044044
 
 void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 otShift) // 0x80044090
 {
-    // TODO: Rename `CHUNK_SUBCELL_SIZE`
-    #define CHUNK_SUBCELL_SIZE Q8(8.0f)
-    
     s_ModelInfo         modelInfo;
     GsCOORDINATE2       modelCoord;
     MATRIX              viewMat;
     MATRIX              worldMat;
-    s32                 geomX;
-    s32                 geomZ;
-    q23_8               chunkBoundZ;
-    q23_8               chunkBoundX;
-    s32                 subcellZ;
-    s32                 subcellX;
+    s32                 curPosX;
+    s32                 cutPosZ;
+    q23_8               chunkEdgeZ;
+    q23_8               chunkEdgeX;
+    s32                 subchunkZ;
+    s32                 subchunkX;
     s32                 i;
     s_IpdModelBuffer*   modelBuffer;
     s_IpdModelInstance* curModelInst;
@@ -1330,32 +1332,32 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
     SVECTOR*            curUnk;
 
     // Convert position to geometry space.
-    geomX = Q12_TO_Q8(posX);
-    geomZ = Q12_TO_Q8(posZ);
+    curPosX = Q12_TO_Q8(posX);
+    cutPosZ = Q12_TO_Q8(posZ);
 
-    // Compute chunk boundary position.
-    chunkBoundX = ipdHdr->chunkX * Q8(CHUNK_SIZE);
-    chunkBoundZ = ipdHdr->chunkZ * Q8(CHUNK_SIZE);
+    // Compute chunk edge position.
+    chunkEdgeX = ipdHdr->chunkX * Q8(CHUNK_SIZE);
+    chunkEdgeZ = ipdHdr->chunkZ * Q8(CHUNK_SIZE);
 
-    // Compute subcells.
-    subcellX = FLOOR_TO_STEP(geomX - chunkBoundX, CHUNK_SUBCELL_SIZE);
-    subcellZ = FLOOR_TO_STEP(geomZ - chunkBoundZ, CHUNK_SUBCELL_SIZE);
-    subcellX = MAX(subcellX, 0);
-    subcellZ = MAX(subcellZ, 0);
-    subcellX = MIN(subcellX, 4);
-    subcellZ = MIN(subcellZ, 4);
+    // Compute subchunks.
+    subchunkX = FLOOR_TO_STEP(curPosX - chunkEdgeX, Q8(SUBCHUNK_SIZE));
+    subchunkZ = FLOOR_TO_STEP(cutPosZ - chunkEdgeZ, Q8(SUBCHUNK_SIZE));
+    subchunkX = MAX(subchunkX, 0);
+    subchunkZ = MAX(subchunkZ, 0);
+    subchunkX = MIN(subchunkX, 4);
+    subchunkZ = MIN(subchunkZ, 4);
 
     modelInfo.coord  = &modelCoord;
     modelCoord.flg   = true;
     modelInfo.flags  = ModelFlag_None;
     modelCoord.super = NULL;
 
-    temp_fp = &ipdHdr->textureCount + (subcellZ * 10) + (subcellX * 2);
+    temp_fp = &ipdHdr->textureCount + (subchunkZ * 10) + (subchunkX * 2);
     for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)
     {
         modelBuffer = &ipdHdr->modelBuffers[ipdHdr->modelOrderList[i]];
 
-        if (!WorldMap_SubcellVisibleCheck(modelBuffer, geomX - chunkBoundX, geomZ - chunkBoundZ, chunkBoundX, chunkBoundZ))
+        if (!WorldMap_SubchunkVisibleCheck(modelBuffer, curPosX - chunkEdgeX, cutPosZ - chunkEdgeZ, chunkEdgeX, chunkEdgeZ))
         {
             continue;
         }
@@ -1371,8 +1373,8 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
                 modelCoord.workm = curModelInst->mat;
 
                 // Offset model on XZ plane.
-                modelCoord.workm.t[0] += chunkBoundX;
-                modelCoord.workm.t[2] += chunkBoundZ;
+                modelCoord.workm.t[0] += chunkEdgeX;
+                modelCoord.workm.t[2] += chunkEdgeZ;
 
                 Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
                 func_80057090(&modelInfo, ot, otShift, &viewMat, &worldMat, 0);
@@ -1385,53 +1387,52 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
             {
                 case 0:
                     Gfx_BillboardDraw(1,
-                                      Q8_TO_Q12(curUnk->vx + chunkBoundX),
+                                      Q8_TO_Q12(curUnk->vx + chunkEdgeX),
                                       Q8_TO_Q12(curUnk->vy),
-                                      Q8_TO_Q12(curUnk->vz + chunkBoundZ),
+                                      Q8_TO_Q12(curUnk->vz + chunkEdgeZ),
                                       ot, otShift);
                     break;
 
                 case 1:
                     Gfx_BillboardDraw(2,
-                                      Q8_TO_Q12(curUnk->vx + chunkBoundX),
+                                      Q8_TO_Q12(curUnk->vx + chunkEdgeX),
                                       Q8_TO_Q12(curUnk->vy),
-                                      Q8_TO_Q12(curUnk->vz + chunkBoundZ),
+                                      Q8_TO_Q12(curUnk->vz + chunkEdgeZ),
                                       ot, otShift);
                     break;
             }
         }
     }
-
-    #undef CHUNK_SUBCELL_SIZE
 }
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_SubcellVisibleCheck);
+INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_SubchunkVisibleCheck);
 #else
-bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_8 subcellZ, q23_8 posX, q23_8 posZ) // 0x80044420
+bool WorldMap_SubchunkVisibleCheck(s_IpdModelBuffer* modelBuf,
+                                   q7_8 subchunkX, q7_8 subchunkZ, q23_8 chunkEdgeX, q23_8 chunkEdgeZ) // 0x80044420
 {
     GsCOORDINATE2 viewCoord;
     MATRIX        viewMat;
-    SVECTOR*      curSubcellPos; // TODO: Wrong struct.
+    SVECTOR*      curSubchunkPos; // TODO: Wrong struct.
 
-    // Run through subcell positions.
-    for (curSubcellPos = modelBuf->subcellPositions;
-         curSubcellPos < &modelBuf->subcellPositions[modelBuf->subcellCount];
-         curSubcellPos++)
+    // Run through subchunk positions.
+    for (curSubchunkPos = modelBuf->subcellPositions;
+         curSubchunkPos < &modelBuf->subcellPositions[modelBuf->subcellCount];
+         curSubchunkPos++)
     {
-        if (curSubcellPos->vx < subcellX          &&
-            subcellX          < curSubcellPos->vy &&
-            curSubcellPos->vz < subcellZ)
+        if (curSubchunkPos->vx < subchunkX          &&
+            subchunkX          < curSubchunkPos->vy &&
+            curSubchunkPos->vz < subchunkZ)
         {
-            if (subcellZ < curSubcellPos->pad) // TODO: `pad` access indicates different struct.
+            if (subchunkZ < curSubchunkPos->pad) // TODO: `pad` access indicates different struct.
             {
                 viewCoord.flg   = true;
                 viewCoord.super = NULL;
                 viewCoord.workm = GsIDMATRIX;
 
-                viewCoord.workm.t[0] = posX;
+                viewCoord.workm.t[0] = chunkEdgeX;
                 viewCoord.workm.t[1] = Q8(0.0f);
-                viewCoord.workm.t[2] = posZ;
+                viewCoord.workm.t[2] = chunkEdgeZ;
 
                 Vw_CoordToViewSpaceMatrix(&viewCoord, &viewMat);
                 return Vw_AabbVisibleInFrustumCheck(&viewMat,
@@ -1444,5 +1445,5 @@ bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_
 
     return false;
 }
-#endif
 
+#endif

@@ -2,7 +2,7 @@
 Screen_BackgroundImgDraw   = 0x80030D10; // type:func
 MainLoop                   = 0x8003272C; // type:func
 Fs_CharaAnimDataUpdate     = 0x80034E78; // type:func
-WorldGfx_ChunkInitCheck    = 0x8003C298; // type:func
+WorldGfx_ChunksInitCheck    = 0x8003C298; // type:func
 func_80089128              = 0x80088D08; // type:func
 func_800892A4              = 0x80088E84; // type:func
 CHARA_FILE_INFOS           = 0x800A8CD8; // type:CharaFileInfo size:0x2D0
@@ -424,7 +424,7 @@ LmHeader_ModelHeaderSearch                   = 0x80043974; // type:func
 WorldMap_ModelBufferLinkObjectLists          = 0x800439D0; // type:func
 func_80044044                                = 0x80043A8C; // type:func
 WorldMap_Draw                                = 0x80043AD8; // type:func
-WorldMap_SubcellVisibleCheck                 = 0x80043E68; // type:func
+WorldMap_SubchunkVisibleCheck                 = 0x80043E68; // type:func
 Anim_BonesInit                               = 0x80043FE8; // type:func
 Anim_BonesUpdate                             = 0x8004411C; // type:func
 Anim_InfoGet                                 = 0x8004435C; // type:func

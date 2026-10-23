@@ -161,7 +161,7 @@ void GameBoot_InGameStartup(void)
             g_GameWork.gameStateSteps[0]++;
 
         case 8:
-            if (WorldGfx_ChunkInitCheck())
+            if (WorldGfx_ChunksInitCheck())
             {
                 Game_StateStepIncrement(0);
             }
