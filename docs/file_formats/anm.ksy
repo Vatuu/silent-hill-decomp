@@ -103,8 +103,6 @@ types:
         type: translation
 
   translation:
-    doc: Q0.7.
-
     seq:
       - id: x_int
         type: s1
@@ -117,13 +115,13 @@ types:
 
     instances:
       x:
-        value: (x_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
+        value: (x_int << _root.header.translation_shift) / 128.0
 
       y:
-        value: (y_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
+        value: (y_int << _root.header.translation_shift) / 128.0
 
       z:
-        value: (x_int << _root.header.translation_shift).as<f4> / ((1 << 7) << _root.header.translation_shift).as<f4>
+        value: (x_int << _root.header.translation_shift) / 128.0
 
   matrix:
     doc: Q0.7 3x3 matrix.
