@@ -6,6 +6,8 @@
 #include "types.h"
 #include "libkpad.h"
 
+// TODO: Includes will have to be cleaned up once everything is organised project-wide and this header becomes
+// deprecated.
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/chara/model.h"
@@ -13,54 +15,9 @@
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/savegame.h"
+#include "bodyprog/screen/screen_data.h"
 #include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
-
-#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
-#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
-#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
-
-/** @brief Tick rate used in some (but not all) PAL framerate code.
- * Usually seen used by `SECONDS_60_FPS` macros, where the tickrate was
- * changed from 60 to 50.
- * Some code may still use normal `SECONDS_60_FPS` (with 60 tick rate),.
- * Code that does change in PAL is changed to `SECONDS_TO_FRAMES`, which 
- * picks the rate based on which region is being built.
- */
-#define TICKS_PER_SECOND_PAL 50
-
-#if VERSION_REGION_IS(PAL)
-    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND_PAL
-#else
-    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
-#endif
-
-#define SCREEN_WIDTH  320
-#define SCREEN_HEIGHT 240
-#if VERSION_REGION_IS(PAL)
-    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
-#else
-    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
-#endif
-    #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
-#define ORDERING_TABLE_SIZE 2048
-
-/** @brief Converts seconds to frames at 60 FPS.
- *
- * @param sec Seconds to convert.
- * @return Frames at 60 FPS.
- */
-#define SECONDS_60_FPS(sec) \
-    (s32)((sec) * TICKS_PER_SECOND)
-
-/** @brief Converts seconds to frames at the regions full refresh rate.
- * (60FPS for NTSC/NTSCJ, 50FPS for PAL)
- *
- * @param sec Seconds to convert.
- * @return Frames at 60/50 FPS.
- */
-#define SECONDS_TO_FRAMES(sec) \
-    (s32)((sec) * TICKS_PER_SECOND_REGIONAL)
 
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *

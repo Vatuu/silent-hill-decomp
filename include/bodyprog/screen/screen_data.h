@@ -1,7 +1,51 @@
 #ifndef _BODYPROG_SCREEN_SCREENDATA_H
 #define _BODYPROG_SCREEN_SCREENDATA_H
 
-/** @brief Screen display system (not from PSY-Q SDK). */
+#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
+#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
+#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
+
+/** @brief Tick rate used in some (but not all) PAL framerate code.
+ * Usually seen used by `SECONDS_60_FPS` macros, where the tick rate was changed from 60 to 50.
+ * Some code may still use the normal `SECONDS_60_FPS` (with 60 tick rate).
+ * Code that does change in PAL is changed to `SECONDS_TO_FRAMES`,
+ * which picks the rate based on the region being built.
+ */
+#define TICKS_PER_SECOND_PAL 50
+
+#if VERSION_REGION_IS(PAL)
+    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND_PAL
+#else
+    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
+#endif
+
+#define SCREEN_WIDTH  320
+#define SCREEN_HEIGHT 240
+#if VERSION_REGION_IS(PAL)
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
+#else
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
+#endif
+    #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
+
+#define ORDERING_TABLE_SIZE 2048
+
+/** @brief Converts seconds to frames at 60 FPS.
+ *
+ * @param sec Seconds to convert.
+ * @return Frames at 60 FPS.
+ */
+#define SECONDS_60_FPS(sec) \
+    (s32)((sec) * TICKS_PER_SECOND)
+
+/** @brief Converts seconds to frames at the region's full refresh rate.
+ * 60 FPS for NTSC/NTSCJ, 50 FPS for PAL.
+ *
+ * @param sec Seconds to convert.
+ * @return Frames at 50/60 FPS.
+ */
+#define SECONDS_TO_FRAMES(sec) \
+    (s32)((sec) * TICKS_PER_SECOND_REGIONAL)
 
 // ========
 // GLOBALS
@@ -38,11 +82,14 @@ extern GsOT_TAG g_OtTags0[2][16];
 
 /** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
  * Demos override this with the time from a demo file to ensure deos remain in sync.
- * */
-extern q19_12 g_DeltaTime; /** Possible original name: `_shDeltaTimePerFrame` */
+ *
+ * Possible original name: `_shDeltaTimePerFrame`
+ */
+extern q19_12 g_DeltaTime;
 
 extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-extern s32      __pad_bss_800B9CC4;
+
+extern s32 __pad_bss_800B9CC4;
 
 /** Gravity speed for this tick. */
 extern q19_12 g_GravitySpeed;
@@ -50,6 +97,6 @@ extern q19_12 g_GravitySpeed;
 /** Number of ticks since game start. */
 extern s32 g_TickCount;
 
-extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
+extern s32 g_MainLoop_FrameCount;
 
 #endif
