@@ -99,7 +99,7 @@ typedef struct
     /* 0x8  */ u32        subChunkTransDir;   /** `e_SubChunkTransitionDirection` */
     /* 0xC  */ q23_8      radiusCollDiffDist; // Radius?
     /* 0x10 */ q7_8       collDiffDist;
-    /* 0x12 */ s8         __pad[2];
+    /* 0x12 */ s8         __pad_12[2];
     /* 0x14 */ DVECTOR_XZ charaMoveOffset;
 } s_CollisionState_CC_20;
 

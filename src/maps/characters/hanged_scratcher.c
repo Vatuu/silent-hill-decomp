@@ -1304,24 +1304,24 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
 }
 
 // Likely internal to this func, can keep in .c instead of .h.
-extern s_Keyframe sharedData_800D9500_5_s00[];
-extern s_Keyframe sharedData_800D9654_5_s00;
-extern s_Keyframe sharedData_800D9668_5_s00;
-extern s_Keyframe sharedData_800D967C_5_s00[];
-extern s_Keyframe sharedData_800D96F4_5_s00;
-extern s_Keyframe sharedData_800D9708_5_s00[];
-extern s_Keyframe sharedData_800D97F8_5_s00;
-extern s_Keyframe sharedData_800D980C_5_s00;
-extern s_Keyframe sharedData_800D9820_5_s00[];
-extern s_Keyframe sharedData_800D99D8_5_s00;
-extern s_Keyframe sharedData_800D99EC_5_s00;
-extern s_Keyframe sharedData_800D9A00_5_s00[];
-extern s_Keyframe sharedData_800D9A64_5_s00;
-extern s_Keyframe sharedData_800D9A78_5_s00[];
-extern s_Keyframe sharedData_800D9AF0_5_s00;
-extern s_Keyframe sharedData_800D9B04_5_s00;
-extern s_Keyframe sharedData_800D9B18_5_s00;
-extern s_Keyframe sharedData_800D9B2C_5_s00[];
+extern s_CharaKeyframe sharedData_800D9500_5_s00[];
+extern s_CharaKeyframe sharedData_800D9654_5_s00;
+extern s_CharaKeyframe sharedData_800D9668_5_s00;
+extern s_CharaKeyframe sharedData_800D967C_5_s00[];
+extern s_CharaKeyframe sharedData_800D96F4_5_s00;
+extern s_CharaKeyframe sharedData_800D9708_5_s00[];
+extern s_CharaKeyframe sharedData_800D97F8_5_s00;
+extern s_CharaKeyframe sharedData_800D980C_5_s00;
+extern s_CharaKeyframe sharedData_800D9820_5_s00[];
+extern s_CharaKeyframe sharedData_800D99D8_5_s00;
+extern s_CharaKeyframe sharedData_800D99EC_5_s00;
+extern s_CharaKeyframe sharedData_800D9A00_5_s00[];
+extern s_CharaKeyframe sharedData_800D9A64_5_s00;
+extern s_CharaKeyframe sharedData_800D9A78_5_s00[];
+extern s_CharaKeyframe sharedData_800D9AF0_5_s00;
+extern s_CharaKeyframe sharedData_800D9B04_5_s00;
+extern s_CharaKeyframe sharedData_800D9B18_5_s00;
+extern s_CharaKeyframe sharedData_800D9B2C_5_s00[];
 
 void HangedScratcher_CollisionUpdate(s_SubCharacter* scratcher)
 {

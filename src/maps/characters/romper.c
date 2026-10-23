@@ -1398,18 +1398,18 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCO
     romperProps.angle_EC = romper->rotation.vy;
 }
 
-extern s_Keyframe sharedData_800ECC44_2_s02;
-extern s_Keyframe sharedData_800ECC58_2_s02[];
-extern s_Keyframe sharedData_800ECCBC_2_s02;
-extern s_Keyframe sharedData_800ECCD0_2_s02[];
-extern s_Keyframe sharedData_800ECD34_2_s02;
-extern s_Keyframe sharedData_800ECD48_2_s02[];
-extern s_Keyframe sharedData_800ECE24_2_s02[];
-extern s_Keyframe sharedData_800ECF00_2_s02[];
-extern s_Keyframe sharedData_800ECF64_2_s02[];
-extern s_Keyframe sharedData_800ED018_2_s02[];
-extern s_Keyframe sharedData_800ED1D0_2_s02[];
-extern s_Keyframe sharedData_800ED2C0_2_s02;
+extern s_CharaKeyframe sharedData_800ECC44_2_s02;
+extern s_CharaKeyframe sharedData_800ECC58_2_s02[];
+extern s_CharaKeyframe sharedData_800ECCBC_2_s02;
+extern s_CharaKeyframe sharedData_800ECCD0_2_s02[];
+extern s_CharaKeyframe sharedData_800ECD34_2_s02;
+extern s_CharaKeyframe sharedData_800ECD48_2_s02[];
+extern s_CharaKeyframe sharedData_800ECE24_2_s02[];
+extern s_CharaKeyframe sharedData_800ECF00_2_s02[];
+extern s_CharaKeyframe sharedData_800ECF64_2_s02[];
+extern s_CharaKeyframe sharedData_800ED018_2_s02[];
+extern s_CharaKeyframe sharedData_800ED1D0_2_s02[];
+extern s_CharaKeyframe sharedData_800ED2C0_2_s02;
 
 void Romper_CollisionUpdate(s_SubCharacter* romper)
 {

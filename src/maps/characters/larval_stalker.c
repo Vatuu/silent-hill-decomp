@@ -1095,23 +1095,23 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
 
 #include "bodyprog/bodyprog.h"
 
-extern s_Keyframe sharedData_800DA928_1_s00[];
-extern s_Keyframe sharedData_800DA93C_1_s00;
-extern s_Keyframe sharedData_800DA950_1_s00;
-extern s_Keyframe sharedData_800DA964_1_s00[];
+extern s_CharaKeyframe sharedData_800DA928_1_s00[];
+extern s_CharaKeyframe sharedData_800DA93C_1_s00;
+extern s_CharaKeyframe sharedData_800DA950_1_s00;
+extern s_CharaKeyframe sharedData_800DA964_1_s00[];
 
-extern s_Keyframe sharedData_800DAC34_1_s00[];
-extern s_Keyframe sharedData_800DAE28_1_s00[];
+extern s_CharaKeyframe sharedData_800DAC34_1_s00[];
+extern s_CharaKeyframe sharedData_800DAE28_1_s00[];
 
-extern s_Keyframe sharedData_800DAF54_1_s00;
-extern s_Keyframe sharedData_800DAF68_1_s00[];
+extern s_CharaKeyframe sharedData_800DAF54_1_s00;
+extern s_CharaKeyframe sharedData_800DAF68_1_s00[];
 
-extern s_Keyframe sharedData_800DAFF4_1_s00;
+extern s_CharaKeyframe sharedData_800DAFF4_1_s00;
 
-extern s_Keyframe sharedData_800DB008_1_s00;
-extern s_Keyframe sharedData_800DB01C_1_s00;
+extern s_CharaKeyframe sharedData_800DB008_1_s00;
+extern s_CharaKeyframe sharedData_800DB01C_1_s00;
 
-extern s_Keyframe sharedData_800DB030_1_s00;
+extern s_CharaKeyframe sharedData_800DB030_1_s00;
 
 void LarvalStalker_CollisionUpdate(s_SubCharacter* larvalStalker)
 {

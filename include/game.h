@@ -16,34 +16,34 @@
 #include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
 
-#define TICKS_PER_SECOND  60 /** Game has a variable timestep with 60 ticks max. */
-#define TIMESTEP_30_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
-#define TIMESTEP_60_FPS   Q12(1.0f / (float)(TICKS_PER_SECOND))
+#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
+#define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
+#define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
 
-/** @brief Tickrate used in some (but not all) PAL framerate code.
+/** @brief Tick rate used in some (but not all) PAL framerate code.
  * Usually seen used by `SECONDS_60_FPS` macros, where the tickrate was
  * changed from 60 to 50.
- * Some code may still use normal SECONDS_60_FPS though (with 60 tickrate), 
- * code that does change in PAL is changed to `SECONDS_TO_FRAMES`, which 
+ * Some code may still use normal `SECONDS_60_FPS` (with 60 tick rate),.
+ * Code that does change in PAL is changed to `SECONDS_TO_FRAMES`, which 
  * picks the rate based on which region is being built.
-*/
-#define TICKS_PER_SECOND_PAL 50 /** Tick-rate used in some PAL code. */
+ */
+#define TICKS_PER_SECOND_PAL 50
 
 #if VERSION_REGION_IS(PAL)
-#define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND_PAL
+    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND_PAL
 #else
-#define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
+    #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
 #endif
 
-#define SCREEN_WIDTH                   320
-#define SCREEN_HEIGHT                  240
+#define SCREEN_WIDTH  320
+#define SCREEN_HEIGHT 240
 #if VERSION_REGION_IS(PAL)
-#define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
 #else
-#define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
 #endif
-#define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
-#define ORDERING_TABLE_SIZE            2048
+    #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
+#define ORDERING_TABLE_SIZE 2048
 
 /** @brief Converts seconds to frames at 60 FPS.
  *

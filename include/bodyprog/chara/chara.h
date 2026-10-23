@@ -571,11 +571,11 @@ typedef struct _CharaShapeOffsets
 STATIC_ASSERT_SIZEOF(s_CharaShapeOffsets, 8);
 
 /** @brief Character keyframe collision info. */
-typedef struct _Keyframe
+typedef struct _CharaKeyframe
 {
     /* 0x0 */ s_CharaBox          box;
     /* 0xC */ s_CharaShapeOffsets shapeOffsets;
-} s_Keyframe;
+} s_CharaKeyframe;
 
 /** @brief Character collision info for the active animation frame. */
 typedef struct _CharaCollision
@@ -659,7 +659,7 @@ extern s_CharaFileInfo CHARA_FILE_INFOS[Chara_Count]; // 0x800A90FC
 /** @brief Sets the collision shapes of a character from keyframe collision data.
  *
  * @param chara Character to update (`s_SubCharacter`).
- * @param keyframe Keyframe collision data (`s_Keyframe`).
+ * @param keyframe Keyframe collision data (`s_CharaKeyframe`).
  */
 #define Chara_CollisionSet(chara, keyframe)                                        \
 {                                                                                  \

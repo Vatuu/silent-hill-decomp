@@ -58,7 +58,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     #undef playerProps
 }
 
-void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
+void Collision_CharaCollisionSet(s_SubCharacter* chara, s_CharaKeyframe* keyframe0, s_CharaKeyframe* keyframe1) // 0x80070400
 {
     q19_12 alpha;
     q19_12 invAlpha;

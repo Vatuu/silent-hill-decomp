@@ -14,7 +14,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  * @param keyframe0 First keyframe.
  * @param keyframe1 Second keyframe.
  */
-void Collision_CharaCollisionSet(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
+void Collision_CharaCollisionSet(s_SubCharacter* chara, s_CharaKeyframe* keyframe0, s_CharaKeyframe* keyframe1);
 
 /** @brief Sets the scale of a character's model bone.
  *

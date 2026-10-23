@@ -725,19 +725,19 @@ void Creeper_AnimUpdate(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINA
     animInfo->playbackFunc(&creeper->model, anmHdr, boneCoords, animInfo);
 }
 
-extern s_Keyframe sharedData_800E0F78_1_s02[];
-extern s_Keyframe sharedData_800E0FC8_1_s02;
-extern s_Keyframe sharedData_800E0FDC_1_s02;
-extern s_Keyframe sharedData_800E0FF0_1_s02;
-extern s_Keyframe sharedData_800E1004_1_s02[]; // Creeper keyframe data?
-extern s_Keyframe sharedData_800E10CC_1_s02;
-extern s_Keyframe sharedData_800E10E0_1_s02[];
-extern s_Keyframe sharedData_800E1158_1_s02;
-extern s_Keyframe sharedData_800E116C_1_s02;
-extern s_Keyframe sharedData_800E1180_1_s02;
-extern s_Keyframe sharedData_800E1194_1_s02;
-extern s_Keyframe sharedData_800E11A8_1_s02;
-extern s_Keyframe sharedData_800E11BC_1_s02;
+extern s_CharaKeyframe sharedData_800E0F78_1_s02[];
+extern s_CharaKeyframe sharedData_800E0FC8_1_s02;
+extern s_CharaKeyframe sharedData_800E0FDC_1_s02;
+extern s_CharaKeyframe sharedData_800E0FF0_1_s02;
+extern s_CharaKeyframe sharedData_800E1004_1_s02[]; // Creeper keyframe data?
+extern s_CharaKeyframe sharedData_800E10CC_1_s02;
+extern s_CharaKeyframe sharedData_800E10E0_1_s02[];
+extern s_CharaKeyframe sharedData_800E1158_1_s02;
+extern s_CharaKeyframe sharedData_800E116C_1_s02;
+extern s_CharaKeyframe sharedData_800E1180_1_s02;
+extern s_CharaKeyframe sharedData_800E1194_1_s02;
+extern s_CharaKeyframe sharedData_800E11A8_1_s02;
+extern s_CharaKeyframe sharedData_800E11BC_1_s02;
 
 void Creeper_CollisionUpdate(s_SubCharacter* creeper)
 {
