@@ -16,6 +16,7 @@
 #include "bodyprog/items.h"
 #include "bodyprog/savegame.h"
 #include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/vsync.h"
 #include "bodyprog/sys/joy.h"
 #include "maps/characters/harry.h"
 
@@ -91,47 +92,6 @@
 
 #define CLEAR_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
-
-/** @brief Sync modes used by `DrawSync` and `VSync`. */
-typedef enum _SyncMode
-{
-    SyncMode_Count     = -1,
-    SyncMode_Wait      = 0,
-    SyncMode_Immediate = 1,
-    SyncMode_Wait2     = 2,
-    SyncMode_Wait3     = 3,
-    SyncMode_Wait8     = 8
-} e_SyncMode;
-
-/** @brief Paper map indices. Used for the navigation map screen. */
-typedef enum _PaperMapIdx
-{
-    PaperMapIdx_OtherPlaces    = 0,
-    PaperMapIdx_OldTown        = 1,
-    PaperMapIdx_FogCentralTown = 2,
-    PaperMapIdx_AltCentralTown = 3,
-    PaperMapIdx_ResortTown     = 4,
-    PaperMapIdx_FogSchoolBF    = 5,
-    PaperMapIdx_FogSchool1F    = 6,
-    PaperMapIdx_FogSchool2F    = 7,
-    PaperMapIdx_FogSchoolRF    = 8,
-    PaperMapIdx_AltSchoolBF    = 9,
-    PaperMapIdx_AltSchool1F    = 10,
-    PaperMapIdx_AltSchool2F    = 11,
-    PaperMapIdx_AltSchoolRF    = 12,
-    PaperMapIdx_FogSewer1F     = 13,
-    PaperMapIdx_FogSewer2F     = 14,
-    PaperMapIdx_AltSewer       = 15,
-    PaperMapIdx_FogHospitalBF  = 16,
-    PaperMapIdx_FogHospital1F  = 17,
-    PaperMapIdx_FogHospital2F  = 18,
-    PaperMapIdx_FogHospital3F  = 19,
-    PaperMapIdx_AltHospitalBF  = 20,
-    PaperMapIdx_AltHospital1F  = 21,
-    PaperMapIdx_AltHospital2F  = 22,
-    PaperMapIdx_AltHospital3F  = 23,
-    PaperMapIdx_24             = 24
-} e_PaperMapIdx;
 
 /** @brief System flags. TODO: Give this a more specific name. */
 typedef enum _SysFlags

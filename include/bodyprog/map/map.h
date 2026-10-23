@@ -20,17 +20,6 @@ typedef enum _MapFlags
     MapFlag_3                = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
 } e_MapFlags;
 
-/** @brief Character spawn flags. */
-typedef enum _SpawnFlags
-{
-    SpawnFlag_None = 0,
-    SpawnFlag_0    = 1 << 0,
-    SpawnFlag_1    = 1 << 1,
-    SpawnFlag_2    = 1 << 2,
-    SpawnFlag_3    = 1 << 3,
-    SpawnFlag_4    = 1 << 4
-} e_SpawnFlags;
-
 /** @brief Playable map indices. Used for binary overlays. */
 typedef enum _MapIdx
 {
@@ -80,6 +69,36 @@ typedef enum _MapIdx
     MapIdx_MAPT_S00 = 43, // } @unused Empty test maps. Only some code references remain and `HB_MTS00.ANM`/`HB_MTX00.ANM` anim files.
     MapIdx_MAPX_S00 = 44  // }
 } e_MapIdx;
+
+/** @brief Paper map indices. Used for the navigation map screen. */
+typedef enum _PaperMapIdx
+{
+    PaperMapIdx_OtherPlaces    = 0,
+    PaperMapIdx_OldTown        = 1,
+    PaperMapIdx_FogCentralTown = 2,
+    PaperMapIdx_AltCentralTown = 3,
+    PaperMapIdx_ResortTown     = 4,
+    PaperMapIdx_FogSchoolBF    = 5,
+    PaperMapIdx_FogSchool1F    = 6,
+    PaperMapIdx_FogSchool2F    = 7,
+    PaperMapIdx_FogSchoolRF    = 8,
+    PaperMapIdx_AltSchoolBF    = 9,
+    PaperMapIdx_AltSchool1F    = 10,
+    PaperMapIdx_AltSchool2F    = 11,
+    PaperMapIdx_AltSchoolRF    = 12,
+    PaperMapIdx_FogSewer1F     = 13,
+    PaperMapIdx_FogSewer2F     = 14,
+    PaperMapIdx_AltSewer       = 15,
+    PaperMapIdx_FogHospitalBF  = 16,
+    PaperMapIdx_FogHospital1F  = 17,
+    PaperMapIdx_FogHospital2F  = 18,
+    PaperMapIdx_FogHospital3F  = 19,
+    PaperMapIdx_AltHospitalBF  = 20,
+    PaperMapIdx_AltHospital1F  = 21,
+    PaperMapIdx_AltHospital2F  = 22,
+    PaperMapIdx_AltHospital3F  = 23,
+    PaperMapIdx_24             = 24
+} e_PaperMapIdx;
 
 /** @brief Used as index into `MAP_INFOS` array. 
  *
