@@ -302,20 +302,20 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    #define HALF_CELL_SIZE Q12(2.5f) // TODO: 5x5 subchunk thing, check this.
-    #define PROJ_DIST_NEAR Q12(6.0f)
-    #define PROJ_DIST_FAR  Q12(14.0f)
+    #define ALIGN_STEP_SIZE Q12(2.5f)
+    #define PROJ_DIST_NEAR  Q12(6.0f)
+    #define PROJ_DIST_FAR   Q12(14.0f)
 
-    VECTOR3         samplePos;
+    VECTOR3         pos;
     VECTOR3         projPos;
-    SVECTOR         camRot;  // Q19.12
-    s32             alignedPosX;
-    s32             alignedPosZ;
+    SVECTOR         camRot; // Q19.12
+    s32             alignPosX;
+    s32             alignPosZ;
     q19_12          moveDist;
     q19_12          projOffsetX;
     q19_12          projOffsetZ;
-    q19_12          stepsX;
-    q19_12          stepsZ;
+    q19_12          alignStepsX;
+    q19_12          alignStepsZ;
     q19_12          projDist;
     u8              mapFlags;
     s_SubCharacter* player;
@@ -324,25 +324,25 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
 
     if (g_WorldGfxWork.useStoredPoint)
     {
-        samplePos = g_WorldGfxWork.ipdSamplePoint;
+        pos = g_WorldGfxWork.ipdSamplePoint;
     }
     else
     {
-        samplePos = player->position;
+        pos = player->position;
     }
 
-    // Offset sample position.
-    moveDist      = (player->moveSpeed * Q12(5.5f)) / Q12(3.91f);
-    moveDist      = CLAMP(moveDist, Q12(0.0f), Q12(5.5f));
-    samplePos.vx += Q12_MULT_PRECISE(moveDist, Math_Sin(player->headingAngle));
-    samplePos.vz += Q12_MULT_PRECISE(moveDist, Math_Cos(player->headingAngle));
+    // Move current position.
+    moveDist = (player->moveSpeed * Q12(5.5f)) / Q12(3.91f);
+    moveDist = CLAMP(moveDist, Q12(0.0f), Q12(5.5f));
+    pos.vx  += Q12_MULT_PRECISE(moveDist, Math_Sin(player->headingAngle));
+    pos.vz  += Q12_MULT_PRECISE(moveDist, Math_Cos(player->headingAngle));
 
     // Special case for THR map.
     if (g_WorldGfxWork.mapInfo == &MAP_INFOS[MapType_THR] &&
         player->position.vx >= Q12(-40.0f) && player->position.vx <= Q12(40.0f) &&
         player->position.vz >= Q12(200.0f) && player->position.vz <= Q12(240.0f))
     {
-        samplePos.vz = Q12(200.0f);
+        pos.vz = Q12(200.0f);
     }
 
     if (g_WorldEnvWork.isFogEnabled)
@@ -390,31 +390,31 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
     if ((mapFlags & MapFlag_Interior) && (mapFlags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         // Compute aligned X position.
-        stepsX = player->position.vx / HALF_CELL_SIZE;
+        alignStepsX = player->position.vx / ALIGN_STEP_SIZE;
         if (player->position.vx < Q12(0.0f))
         {
-            stepsX--;
+            alignStepsX--;
         }
 
         // Compute aligned Z position.
-        stepsZ      = player->position.vz / HALF_CELL_SIZE;
-        alignedPosX = stepsX * HALF_CELL_SIZE;
+        alignStepsZ = player->position.vz / ALIGN_STEP_SIZE;
+        alignPosX = alignStepsX * ALIGN_STEP_SIZE;
         if (player->position.vz < Q12(0.0f))
         {
-            stepsZ--;
+            alignStepsZ--;
         }
 
-        alignedPosZ = stepsZ * HALF_CELL_SIZE;
+        alignPosZ = alignStepsZ * ALIGN_STEP_SIZE;
 
-        samplePos.vx = CLAMP(samplePos.vx, alignedPosX + 1, alignedPosX + (HALF_CELL_SIZE - 1));
-        samplePos.vz = CLAMP(samplePos.vz, alignedPosZ + 1, alignedPosZ + (HALF_CELL_SIZE - 1));
-        projPos.vx   = CLAMP(projPos.vx,   alignedPosX + 1, alignedPosX + (HALF_CELL_SIZE - 1));
-        projPos.vz   = CLAMP(projPos.vz,   alignedPosZ + 1, alignedPosZ + (HALF_CELL_SIZE - 1));
+        pos.vx     = CLAMP(pos.vx, alignPosX + 1, alignPosX + (ALIGN_STEP_SIZE - 1));
+        pos.vz     = CLAMP(pos.vz, alignPosZ + 1, alignPosZ + (ALIGN_STEP_SIZE - 1));
+        projPos.vx = CLAMP(projPos.vx,   alignPosX + 1, alignPosX + (ALIGN_STEP_SIZE - 1));
+        projPos.vz = CLAMP(projPos.vz,   alignPosZ + 1, alignPosZ + (ALIGN_STEP_SIZE - 1));
     }
 
-    WorldMap_ChunkInit(samplePos.vx, samplePos.vz, projPos.vx, projPos.vz);
+    WorldMap_ChunkInit(pos.vx, pos.vz, projPos.vx, projPos.vz);
 
-    #undef HALF_CELL_SIZE
+    #undef ALIGN_STEP_SIZE
     #undef PROJ_DIST_NEAR
     #undef PROJ_DIST_FAR
 }

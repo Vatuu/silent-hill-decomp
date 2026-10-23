@@ -1139,8 +1139,8 @@ s_IpdCollisionData** WorldMap_ActiveChunksCollisionDataGet(s32* collDataIdx);
 
 /** @brief Gets the collision data at a given position.
  *
- * @param posX X position.
- * @param posZ Z position.
+ * @param posX X search position.
+ * @param posZ Z search position.
  * @return Collision data.
  */
 s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ);
@@ -1149,8 +1149,8 @@ s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ);
  *
  * @param model Model to find.
  * @param metadata TODO
- * @param posX Search X position.
- * @param posZ Search Z position.
+ * @param posX X search position.
+ * @param posZ Z search position.
  * @return World object model location (`e_WorldModelLocation`).
  */
 s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
@@ -1162,8 +1162,8 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
  */
 bool WorldMap_ActiveChunkLoadedCheck(s32 activeChunkIdx);
 
-/** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
-void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ);
+/** @brief Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
+void WorldMap_ChunkInit(q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ);
 
 /** @brief Computes the padded distance from an XZ position to the a chunk edge.
  * For exteriors, the chunk edge is expanded by `Q12(1.0f)`.
@@ -1197,10 +1197,16 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12
 void WorldMap_ActiveChunksSample(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ,
                                  bool isExterior);
 
-/** @brief Computes the distance from a position to the nearest edge of a chunk.
+/** @brief Computes the distance from current and projected positions to the closest edge of a chunk.
+ *
+ * @note The results are stored in the chunk.
  *
  * @param chunk Chunk to check.
- * @param TODO
+ * @param posX Current X position.
+ * @param posZ Current Z position.
+ * @param projX Projected X position.
+ * @param projZ Projected Z position.
+ * @param isExterior `true` for exterior, `false` for interior.
  */
 void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ,
                                  bool isExterior);
@@ -1208,7 +1214,7 @@ void WorldMap_DistanceToEdgeCalc(s_MapChunk* chunk, q19_12 posX, q19_12 posZ, q1
 /** Sets materials for active chunks? */
 void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain);
 
-/** @brief Gets the IPD chunk file index from chunk coordinates.
+/** @brief Gets the IPD chunk file index for a chunk at given coordinates.
  *
  * @param chunkX X chunk coordinate.
  * @param chunkZ Z chunk coordinate.
@@ -1216,10 +1222,34 @@ void WorldMap_ChunkMaterialsApply(s_WorldMapWork* terrain);
  */
 s32 WorldMap_IpdChunkFileIdxGet(s32 chunkX, s32 chunkZ);
 
+/** @brief Checks if an active chunk exists at given coordinates.
+ *
+ * @param activeChunks Active chunkcs to check.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
+ * @return `true` if an active chunk exists at the coordinate, `false` otherwise.
+ */
 bool WorldMap_IsChunkPresentCheck(const s_MapChunk* activeChunks, s32 chunkX, s32 chunkZ);
 
-s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterior);
+/** @brief Finds a free slot for a new chunk.
+ *
+ * @param activeChunks Active chunks to search.
+ * @param isExterior `true` for exterior, `false` for interior.
+ */
+s_MapChunk* WorldMap_FreeChunkGet(s_MapChunk* activeChunks, bool isExterior);
 
+/** @brief Loads a new chunk from an IPD file.
+ *
+ * @param chunk Chunk slot to load into.
+ * @param fileId IPD chunk file index.
+ * @param chunkX X chunk coordinate.
+ * @param chunkZ Z chunk coordinate.
+ * @param posX Current X position from which to compute the distance to the chunk edge.
+ * @param posZ Current Z position from which to compute the distance to the chunk edge.
+ * @param projX Projected X position from which to compute the distance to the chunk edge.
+ * @param projZ Projected Z position from which to compute the distance to the chunk edge.
+ * @param isExterior `true` for exterior, `false` for interior.
+ */
 s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32 chunkZ,
                             q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ, bool isExterior);
 

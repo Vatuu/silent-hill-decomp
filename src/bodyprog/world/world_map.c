@@ -478,20 +478,20 @@ s_IpdCollisionData** WorldMap_ActiveChunksCollisionDataGet(s32* collDataIdx) // 
 
 s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ) // 0x800426E4
 {
-    s32          geomX;
-    s32          geomZ;
+    s32          curPosX;
+    s32          curPosZ;
     s32          chunkX;
     s32          chunkZ;
     s_IpdHeader* curIpdHdr;
     s_MapChunk*  curChunk;
 
     // Convert position to geometry space.
-    geomX = Q12_TO_Q8(posX);
-    geomZ = Q12_TO_Q8(posZ);
+    curPosX = Q12_TO_Q8(posX);
+    curPosZ = Q12_TO_Q8(posZ);
 
     // Compute chunk coordinates.
-    chunkX = FLOOR_TO_STEP(geomX, Q8(CHUNK_SIZE));
-    chunkZ = FLOOR_TO_STEP(geomZ, Q8(CHUNK_SIZE));
+    chunkX = FLOOR_TO_STEP(curPosX, Q8(CHUNK_SIZE));
+    chunkZ = FLOOR_TO_STEP(curPosZ, Q8(CHUNK_SIZE));
 
     // Run through active chunk.
     for (curChunk = &g_WorldMapWork.activeChunks[0];
@@ -528,8 +528,8 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
 {
     s_MapChunk*  closestChunks[4];
     q19_12       distsToChunkEdges[4];
-    q23_8        geomX;
-    q23_8        geomZ;
+    q23_8        curPosX;
+    q23_8        curPosZ;
     s32          chunkX;
     s32          chunkZ;
     q19_12       curDistToEdge;
@@ -543,8 +543,8 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
     globalPlm = &g_WorldMapWork.globalPlm;
 
     // Convert position to geometry space.
-    geomX = Q12_TO_Q8(posX);
-    geomZ = Q12_TO_Q8(posZ);
+    curPosX = Q12_TO_Q8(posX);
+    curPosZ = Q12_TO_Q8(posZ);
 
     if (WorldMap_LoadStateGet(globalPlm->queueIdx) >= WorldMapLoadState_Loaded &&
         globalPlm->lmHdr->isLoaded &&
@@ -553,8 +553,8 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
         return WorldModelLocation_Chunk1;
     }
 
-    chunkX = FLOOR_TO_STEP(geomX, Q8(CHUNK_SIZE));
-    chunkZ = FLOOR_TO_STEP(geomZ, Q8(CHUNK_SIZE));
+    chunkX = FLOOR_TO_STEP(curPosX, Q8(CHUNK_SIZE));
+    chunkZ = FLOOR_TO_STEP(curPosZ, Q8(CHUNK_SIZE));
 
     // Run through active chunks.
     for (curChunk = &g_WorldMapWork.activeChunks[0], chunkCount = 0;
@@ -592,7 +592,7 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
                 curChunk->chunkZ >= (chunkZ - 1) && (chunkZ + 1) >= curChunk->chunkZ)
             {
                 // Check if chunk is closer than any already collected.
-                curDistToEdge = WorldMap_DistanceToChunkEdgeGet(geomX, geomZ, curChunk->chunkX, curChunk->chunkZ);
+                curDistToEdge = WorldMap_DistanceToChunkEdgeGet(curPosX, curPosZ, curChunk->chunkX, curChunk->chunkZ);
                 for (i = 0; i < chunkCount; i++)
                 {
                     if (curDistToEdge < distsToChunkEdges[i])
@@ -610,8 +610,8 @@ s32 WorldMap_ObjectModelLocationGet(s_WorldObjectModel* model, s_WorldObjectMeta
 
                 // Insert chunk.
                 chunkCount++;
-                distsToChunkEdges[j]  = curDistToEdge;
-                closestChunks[j] = curChunk;
+                distsToChunkEdges[j] = curDistToEdge;
+                closestChunks[j]     = curChunk;
             }
         }
     }
@@ -634,7 +634,7 @@ bool WorldMap_ActiveChunkLoadedCheck(s32 activeChunkIdx) // 0x80042C04
     return WorldMap_ChunkLoadStateGet(&g_WorldMapWork.activeChunks[activeChunkIdx]) >= MapModelLoadState_Loaded;
 }
 
-void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 projPosZ) // 0x80042C3C
+void WorldMap_ChunkInit(q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ) // 0x80042C3C
 {
     s32         fullPageTexCount;
     s_MapChunk* curChunk;
@@ -647,8 +647,9 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
         g_WorldMapWork.globalPlm.queueIdx = Fs_QueueStartRead(g_WorldMapWork.globalPlm.fileIdx, g_WorldMapWork.globalPlm.lmHdr);
     }
 
-    WorldMap_ChunkLoad(&g_WorldMapWork, curPosX, curPosZ, projPosX, projPosZ);
+    WorldMap_ChunkLoad(&g_WorldMapWork, posX, posZ, projPosX, projPosZ);
 
+    // Load LM attributes.
     if (WorldMap_LoadStateGet(g_WorldMapWork.globalPlm.queueIdx) >= WorldMapLoadState_Loaded &&
         !g_WorldMapWork.globalPlm.lmHdr->isLoaded)
     {
@@ -663,6 +664,7 @@ void WorldMap_ChunkInit(q19_12 curPosX, q19_12 curPosZ, q19_12 projPosX, q19_12 
         g_WorldMapWork.chunkTextures.fullPage.count = fullPageTexCount;
     }
 
+    // Run through active chunks.
     for (curChunk = &g_WorldMapWork.activeChunks[0];
          curChunk < &g_WorldMapWork.activeChunks[g_WorldMapWork.activeChunkCount];
          curChunk++)
@@ -722,7 +724,7 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12
     s32          queueIdx;
     s32          nextChunkX;
     s32          nextChunkZ;
-    s32          chunkIdx;
+    s32          nextChunkIdx;
     s32          curQueueIdx;
     s32          curChunkX;
     s32          curChunkZ;
@@ -749,15 +751,15 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12
         {
             if (terrain->isExterior || (curChunkX == 0 && curChunkZ == 0))
             {
-                nextChunkZ = chunkZ + curChunkZ;
-                nextChunkX = chunkX + curChunkX;
-                chunkIdx  = WorldMap_IpdChunkFileIdxGet(nextChunkX, nextChunkZ);
+                nextChunkZ   = chunkZ + curChunkZ;
+                nextChunkX   = chunkX + curChunkX;
+                nextChunkIdx = WorldMap_IpdChunkFileIdxGet(nextChunkX, nextChunkZ);
 
-                if (chunkIdx != NO_VALUE &&
+                if (nextChunkIdx != NO_VALUE &&
                     WorldMap_PaddedDistanceToChunkEdgeGet(posX, posZ, nextChunkX, nextChunkZ, terrain->isExterior) <= Q12(0.0f) &&
                     !WorldMap_IsChunkPresentCheck(terrain->activeChunks, nextChunkX, nextChunkZ))
                 {
-                    freeChunk = WorldMap_FreeChunkSpaceFind(terrain->activeChunks, terrain->isExterior);
+                    freeChunk = WorldMap_FreeChunkGet(terrain->activeChunks, terrain->isExterior);
 
                     if (WorldMap_LoadStateGet(freeChunk->queueIdx) >= WorldMapLoadState_Loaded)
                     {
@@ -768,7 +770,7 @@ s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12
                         }
                     }
 
-                    curQueueIdx = WorldMap_ChunkLoadStart(freeChunk, chunkIdx, nextChunkX, nextChunkZ,
+                    curQueueIdx = WorldMap_ChunkLoadStart(freeChunk, nextChunkIdx, nextChunkX, nextChunkZ,
                                                           posX, posZ, projPosX, projPosZ, terrain->isExterior);
                     if (curQueueIdx != NO_VALUE)
                     {
@@ -876,6 +878,7 @@ bool WorldMap_IsChunkPresentCheck(const s_MapChunk* activeChunks, s32 chunkX, s3
 {
     s32 i;
 
+    // Run through active chunks.
     for (i = 0; i < g_WorldMapWork.activeChunkCount; i++)
     {
         if (activeChunks[i].queueIdx != NO_VALUE &&
@@ -889,7 +892,7 @@ bool WorldMap_IsChunkPresentCheck(const s_MapChunk* activeChunks, s32 chunkX, s3
     return false;
 }
 
-s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterior)
+s_MapChunk* WorldMap_FreeChunkGet(s_MapChunk* activeChunks, bool isExterior)
 {
     s32         largestMatCount;
     q19_12      farthestDist;
@@ -897,9 +900,9 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
     u32         largestOutsideCount;
     s32         matCount;
     s_MapChunk* curChunk;
-    s_MapChunk* activeChunk;
+    s_MapChunk* freeChunk;
 
-    activeChunk          = NULL;
+    freeChunk           = NULL;
     largestOutsideCount = 0;
     largestMatCount     = 0;
     farthestDist        = Q12(0.0f);
@@ -911,7 +914,7 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
         {
             if (curChunk->queueIdx == NO_VALUE)
             {
-                activeChunk = curChunk;
+                freeChunk = curChunk;
                 break;
             }
             else
@@ -919,7 +922,7 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
                 if (largestOutsideCount < curChunk->outsideCount)
                 {
                     largestOutsideCount = curChunk->outsideCount;
-                    activeChunk         = curChunk;
+                    freeChunk           = curChunk;
                 }
             }
         }
@@ -952,13 +955,13 @@ s_MapChunk* WorldMap_FreeChunkSpaceFind(s_MapChunk* activeChunks, bool isExterio
             if (largestMatCount < matCount || (matCount == largestMatCount && farthestDist < curDist))
             {
                 farthestDist    = curDist;
-                activeChunk     = curChunk;
+                freeChunk       = curChunk;
                 largestMatCount = matCount;
             }
         }
     }
 
-    return activeChunk;
+    return freeChunk;
 }
 
 s32 WorldMap_ChunkLoadStart(s_MapChunk* chunk, e_FsFile fileIdx, s32 chunkX, s32 chunkZ,
