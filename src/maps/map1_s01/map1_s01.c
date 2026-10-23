@@ -1074,13 +1074,13 @@ void Map_WorldObjectsInit(void) // 0x800D91EC
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, CharaSpawnFlag_None);
     }
     else if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, CharaSpawnFlag_0 | CharaSpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
@@ -1203,27 +1203,27 @@ void func_800D9DDC(void) // 0x800D9DDC
     {
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, CharaSpawnFlag_0 | CharaSpawnFlag_1);
         }
 
         if (Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
         {
-            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, CharaSpawnFlag_0 | CharaSpawnFlag_1);
 
             if (g_SavegamePtr->gameDifficulty == GameDifficulty_Normal)
             {
-                Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2);
+                Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 2, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_2);
             }
         }
     }
 
     if (Savegame_EventFlagGet(EventFlag_77))
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, CharaSpawnFlag_0 | CharaSpawnFlag_1);
 
         if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
         {
-            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 7, SpawnFlag_None);
+            Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 7, CharaSpawnFlag_None);
         }
     }
 }

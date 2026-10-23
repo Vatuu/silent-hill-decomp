@@ -843,16 +843,16 @@ void Map_WorldObjectsInit(void)
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 9, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 3, CharaSpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 9, CharaSpawnFlag_None);
     }
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 11, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 12, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 13, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 10, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 11, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 12, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 13, CharaSpawnFlag_0 | CharaSpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
@@ -1053,7 +1053,7 @@ void func_800DA3FC(void) // 0x800DA3FC
 {
     if (Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
     {
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 0, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 1, CharaSpawnFlag_0 | CharaSpawnFlag_1);
     }
 }

@@ -48,12 +48,12 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     // TODO: Weird code, check.
     if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
     {
-        activeSpawnFlags = SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_3 | SpawnFlag_4;
+        activeSpawnFlags = CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_2 | CharaSpawnFlag_3 | CharaSpawnFlag_4;
         activeSpawnFlags = spawnFlags & activeSpawnFlags;
     }
     else
     {
-        activeSpawnFlags = SpawnFlag_None;
+        activeSpawnFlags = CharaSpawnFlag_None;
     }
 
     if (charaId <= CHARA_LAST_ENEMY_ID)

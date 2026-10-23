@@ -510,7 +510,7 @@ void Map_WorldObjectsInit(void) // 0x800D723C
 
     if (Savegame_EventFlagGet(EventFlag_349) && !Savegame_EventFlagGet(EventFlag_350))
     {
-        Chara_SpawnFlagsSet(Chara_Floatstinger, 0, SpawnFlag_2);
+        Chara_SpawnFlagsSet(Chara_Floatstinger, 0, CharaSpawnFlag_2);
     }
 }
 

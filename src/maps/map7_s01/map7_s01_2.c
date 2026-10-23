@@ -2669,22 +2669,22 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
         {
-            Chara_SpawnFlagsSet(16, 2, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+            Chara_SpawnFlagsSet(16, 2, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3 | CharaSpawnFlag_4);
         }
 
-        Chara_SpawnFlagsSet(16, 3, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 3, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3 | CharaSpawnFlag_4);
     }
     else if (Savegame_EventFlagGet(EventFlag_485))
     {
-        Chara_SpawnFlagsSet(16, 0, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
-        Chara_SpawnFlagsSet(16, 1, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 0, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 1, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_4);
     }
 
     if (Savegame_EventFlagGet(EventFlag_525) && g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(16, 12, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_4);
-        Chara_SpawnFlagsSet(16, 13, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_2 | SpawnFlag_4);
-        Chara_SpawnFlagsSet(16, 14, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3 | SpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 12, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 13, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_2 | CharaSpawnFlag_4);
+        Chara_SpawnFlagsSet(16, 14, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3 | CharaSpawnFlag_4);
     }
 }
 

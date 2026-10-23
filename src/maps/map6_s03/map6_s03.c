@@ -469,9 +469,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             }
 
             Chara_Spawn(Chara_HangedScratcher, 9, Q12(42.2f), Q12(20.9), Q12_ANGLE(90.0f), 6u);
-            Chara_SpawnFlagsSet(Chara_HangedScratcher, 9, SpawnFlag_1 | SpawnFlag_2);
+            Chara_SpawnFlagsSet(Chara_HangedScratcher, 9, CharaSpawnFlag_1 | CharaSpawnFlag_2);
             Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), Q12_ANGLE(90.0f), 6u);
-            Chara_SpawnFlagsSet(Chara_HangedScratcher, 10, SpawnFlag_1 | SpawnFlag_2);
+            Chara_SpawnFlagsSet(Chara_HangedScratcher, 10, CharaSpawnFlag_1 | CharaSpawnFlag_2);
             Sfx_WithFlagsPlay(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
         }
     }

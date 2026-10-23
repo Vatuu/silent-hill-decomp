@@ -1712,18 +1712,18 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
         spawnFlags = g_MapOverlayHdr.charaSpawnInfos[0][airScreamer->field_40].flags;
         switch (spawnFlags)
         {
-            case SpawnFlag_0:
-            case SpawnFlag_3:
-            case SpawnFlag_0 | SpawnFlag_3:
+            case CharaSpawnFlag_0:
+            case CharaSpawnFlag_3:
+            case CharaSpawnFlag_0 | CharaSpawnFlag_3:
                 chance = Q12(0.0f);
                 break;
 
-            case SpawnFlag_1 | SpawnFlag_3:
+            case CharaSpawnFlag_1 | CharaSpawnFlag_3:
                 chance = Q12(1.0f);
                 break;
 
-            case SpawnFlag_1:
-            case SpawnFlag_0 | SpawnFlag_1:
+            case CharaSpawnFlag_1:
+            case CharaSpawnFlag_0 | CharaSpawnFlag_1:
                 chance = Q12(0.3f);
                 break;
 

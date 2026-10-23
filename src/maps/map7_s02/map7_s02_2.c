@@ -3521,16 +3521,16 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
-        Chara_SpawnFlagsSet(Chara_Stalker, 5, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_Stalker, 7, SpawnFlag_None);
-        Chara_SpawnFlagsSet(Chara_Stalker, 8, SpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Stalker, 5, CharaSpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Stalker, 7, CharaSpawnFlag_None);
+        Chara_SpawnFlagsSet(Chara_Stalker, 8, CharaSpawnFlag_None);
     }
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        Chara_SpawnFlagsSet(Chara_Stalker, 9, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-        Chara_SpawnFlagsSet(Chara_Stalker, 12, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_Stalker, 13, SpawnFlag_0 | SpawnFlag_1);
-        Chara_SpawnFlagsSet(Chara_Stalker, 14, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Stalker, 9, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3);
+        Chara_SpawnFlagsSet(Chara_Stalker, 12, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Stalker, 13, CharaSpawnFlag_0 | CharaSpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Stalker, 14, CharaSpawnFlag_0 | CharaSpawnFlag_1);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
@@ -3912,12 +3912,12 @@ void func_800E5628(void) // 0x800E5628
 
     if (Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfAratron))
     {
-        Chara_SpawnFlagsSet(Chara_Stalker, 3, SpawnFlag_0 | SpawnFlag_1);
+        Chara_SpawnFlagsSet(Chara_Stalker, 3, CharaSpawnFlag_0 | CharaSpawnFlag_1);
 
         if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
         {
-            Chara_SpawnFlagsSet(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1 | SpawnFlag_3);
-            Chara_SpawnFlagsSet(Chara_Stalker, 10, SpawnFlag_0 | SpawnFlag_1);
+            Chara_SpawnFlagsSet(Chara_Stalker, 10, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3);
+            Chara_SpawnFlagsSet(Chara_Stalker, 10, CharaSpawnFlag_0 | CharaSpawnFlag_1);
         }
     }
 
