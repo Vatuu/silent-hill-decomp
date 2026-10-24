@@ -721,7 +721,8 @@ def pal_message_table(m):
     out, off = [], table
     while off + 4 <= len(data):
         p = struct.unpack_from('<I', data, off)[0] - base
-        if not (0 <= p < table) or (p and data[p - 1] != 0):
+        # The first string of .rodata can follow non-zero bytes, but strings are word aligned.
+        if not (0 <= p < table) or (p % 4 and data[p - 1] != 0):
             break
         out.append(data[p:data.index(b'\0', p)])
         off += 4

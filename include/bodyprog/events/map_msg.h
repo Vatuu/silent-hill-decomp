@@ -20,18 +20,21 @@ typedef enum _MapMsgIdx
     MapMsgIdx_Yes               = 0,
     MapMsgIdx_No                = 1,
     MapMsgIdx_SaveGame          = 2, /** "Someday, someone may experience..." */
-    MapMsgIdx_NoMap             = 3,
-    MapMsgIdx_TooDarkForMap     = 4,
-    MapMsgIdx_FirstAidSelect    = 5,
-    MapMsgIdx_HealthDrinkSelect = 6,
-    MapMsgIdx_AmpouleSelect     = 7,
-    MapMsgIdx_HandgunAmmoSelect = 8,
-    MapMsgIdx_RifleAmmoSelect   = 9,
-    MapMsgIdx_ShotgunAmmoSelect = 10,
-    MapMsgIdx_DoorJammed        = 11,
-    MapMsgIdx_DoorLocked        = 12,
-    MapMsgIdx_DoorUnlocked      = 13,
-    MapMsgIdx_NowMaking         = 14  /** @unused? */
+#if VERSION_REGION_IS(PAL)
+    MapMsgIdx_SaveGame2         = 3, /** PAL only. Contains latter part of `MapMsgIdx_SaveGame` in languages where it doesn't fit, otherwise "{E}". */
+#endif
+    MapMsgIdx_NoMap,
+    MapMsgIdx_TooDarkForMap,
+    MapMsgIdx_FirstAidSelect,
+    MapMsgIdx_HealthDrinkSelect,
+    MapMsgIdx_AmpouleSelect,
+    MapMsgIdx_HandgunAmmoSelect,
+    MapMsgIdx_RifleAmmoSelect,
+    MapMsgIdx_ShotgunAmmoSelect,
+    MapMsgIdx_DoorJammed,
+    MapMsgIdx_DoorLocked,
+    MapMsgIdx_DoorUnlocked,
+    MapMsgIdx_NowMaking /** @unused? */
 } e_MapMsgIdx;
 
 /** @brief Map message return codes. Returned by `Gfx_MapMsg_StringDraw`. */

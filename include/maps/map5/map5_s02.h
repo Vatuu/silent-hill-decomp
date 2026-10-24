@@ -29,10 +29,16 @@
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
+// PAL has an extra common message at index 3, so every message after it is one higher than in USA.
+// Italian also splits the delivery note (43) in two.
 #if VERSION_REGION_IS(NTSC)
     #define MAP_MSG(idx) (idx)
 #elif VERSION_REGION_IS(NTSCJ)
     #define MAP_MSG(idx) ((idx) >= 33 ? (idx) - 1 : (idx))
+#elif VERSION_REGION_IS(PAL) && LANGUAGE_IS(ITL)
+    #define MAP_MSG(idx) ((idx) >= 44 ? (idx) + 2 : (idx) >= 3 ? (idx) + 1 : (idx))
+#elif VERSION_REGION_IS(PAL)
+    #define MAP_MSG(idx) ((idx) >= 3 ? (idx) + 1 : (idx))
 #endif
 
 #include "maps/shared.h"

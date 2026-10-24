@@ -127,6 +127,8 @@ const char* MAP_MESSAGES[] = {
     /* 47 */ "\t鍵がかかっている ~E ",
     /* 48 */ "\t~C2 領収証 ~C7 を手に入れた ~E ",
     /* 49 */ "\t~C2 カウフマンの鍵 ~C7 を手に入れた ~E "
+#elif VERSION_REGION_IS(PAL)
+    #include "map_msg_pal.h"
 #endif
 };
 
@@ -438,7 +440,7 @@ void func_800D54D0(void) // 0x800D54D0
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_DisplayMapMsg(false, 32, 0, 0, 0, false);
+            Event_DisplayMapMsg(false, MAP_MSG(32), 0, 0, 0, false);
             break;
 
         case 5:
@@ -654,7 +656,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 22:
-            Event_DisplayMapMsgWithAudio(16, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(16), &D_800DA6E8, &D_800D947C);
             break;
 
         case 23:
@@ -662,7 +664,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 24:
-            Event_DisplayMapMsgWithAudio(17, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(17), &D_800DA6E8, &D_800D947C);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(207.0f), Q12(227.0f), true, false);
             break;
 
@@ -672,7 +674,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 26:
-            Event_DisplayMapMsgWithAudio(19, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(19), &D_800DA6E8, &D_800D947C);
             break;
 
         case 27:
@@ -686,7 +688,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 29:
-            Event_DisplayMapMsgWithAudio(30, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(30), &D_800DA6E8, &D_800D947C);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(229.0f), Q12(294.0f), true, false);
             break;
 
@@ -704,7 +706,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             SysWork_StateStepIncrement(0);
 
         case 33:
-            Event_DisplayMapMsgWithAudio(31, &D_800DA6E8, &D_800D947C);
+            Event_DisplayMapMsgWithAudio(MAP_MSG(31), &D_800DA6E8, &D_800D947C);
 
         case 34:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(295.0f), Q12(315.0f), true, true);

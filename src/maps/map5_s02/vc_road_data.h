@@ -165,8 +165,13 @@
       .area_size_type = VC_AREA_WIDE,
       .rd_type = VC_RD_TYPE_ROAD,
       .mv_y_type = VC_MV_SELF_VIEW,
+#if VERSION_REGION_IS(PAL)
+      .lim_rd_max_hy = Q4(-2.7f),
+      .lim_rd_min_hy = Q4(-2.7f),
+#else
       .lim_rd_max_hy = Q4(-2.3f),
       .lim_rd_min_hy = Q4(-2.3f),
+#endif
       .ofs_watch_hy = Q4(0.5f),
       .lens_flare = LensFlareType_Default,
       .cam_mv_type = VC_MV_CHASE,
@@ -240,8 +245,13 @@
       .area_size_type = VC_AREA_WIDE,
       .rd_type = VC_RD_TYPE_EVENT,
       .mv_y_type = VC_MV_SELF_VIEW,
+#if VERSION_REGION_IS(PAL)
+      .lim_rd_max_hy = Q4(-4.68f),
+      .lim_rd_min_hy = Q4(-4.68f),
+#else
       .lim_rd_max_hy = Q4(-4.5f),
       .lim_rd_min_hy = Q4(-4.5f),
+#endif
       .ofs_watch_hy = Q4(0.5f),
       .lens_flare = LensFlareType_Default,
       .cam_mv_type = VC_MV_FIX_ANG,
@@ -256,8 +266,13 @@
         .max_hz = Q4(62.4f),
       },
       .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+        .min_hx = Q4(134.0f),
+        .max_hx = Q4(136.4f),
+#else
         .min_hx = Q4(135.0f),
         .max_hx = Q4(135.0f),
+#endif
         .min_hz = Q4(60.4f),
         .max_hz = Q4(60.4f),
       },
@@ -557,7 +572,11 @@
       },
       .lim_rd = {
         .min_hx = Q4(132.0f),
+#if VERSION_REGION_IS(PAL)
+        .max_hx = Q4(134.7f),
+#else
         .max_hx = Q4(134.4f),
+#endif
         .min_hz = Q4(18.0f),
         .max_hz = Q4(21.0f),
       },
@@ -781,8 +800,13 @@
         .max_hz = Q4(62.6f),
       },
       .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+        .min_hx = Q4(57.4f),
+        .max_hx = Q4(57.2f),
+#else
         .min_hx = Q4(57.1f),
         .max_hx = Q4(57.1f),
+#endif
         .min_hz = Q4(61.7f),
         .max_hz = Q4(61.7f),
       },
@@ -856,8 +880,13 @@
         .max_hz = Q4(22.4f),
       },
       .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+        .min_hx = Q4(60.7f),
+        .max_hx = Q4(60.7f),
+#else
         .min_hx = Q4(60.6f),
         .max_hx = Q4(60.6f),
+#endif
         .min_hz = Q4(17.9f),
         .max_hz = Q4(20.2f),
       },
@@ -865,8 +894,13 @@
       .area_size_type = VC_AREA_SMALL,
       .rd_type = VC_RD_TYPE_EVENT,
       .mv_y_type = VC_MV_SELF_VIEW,
+#if VERSION_REGION_IS(PAL)
+      .lim_rd_max_hy = Q4(-2.2f),
+      .lim_rd_min_hy = Q4(-2.2f),
+#else
       .lim_rd_max_hy = Q4(-1.9f),
       .lim_rd_min_hy = Q4(-1.9f),
+#endif
       .ofs_watch_hy = Q4(-0.4f),
       .lens_flare = LensFlareType_Default,
       .cam_mv_type = VC_MV_CHASE,
@@ -1106,9 +1140,17 @@
         .max_hz = Q4(59.2f),
       },
       .lim_rd = {
+#if VERSION_REGION_IS(PAL)
+        .min_hx = Q4(-20.9f),
+#else
         .min_hx = Q4(-21.2f),
+#endif
         .max_hx = Q4(-17.5f),
+#if VERSION_REGION_IS(PAL)
+        .min_hz = Q4(57.8f),
+#else
         .min_hz = Q4(57.3f),
+#endif
         .max_hz = Q4(61.3f),
       },
       .flags = VC_RD_WARP_IN_OUT_FS,
