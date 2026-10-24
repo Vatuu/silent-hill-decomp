@@ -9300,7 +9300,7 @@ q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
     return g_CollisionPointCache.position.vy;
 }
 
-s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
+s32 Collision_FloorTypeGet(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
     Collision_Fill(posX, posZ);
     return g_CollisionPointCache.floorType;

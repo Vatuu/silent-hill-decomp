@@ -2256,7 +2256,7 @@ bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
 /** @unused */
 bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
 
-/** Fills `g_CollisionPointCache` with collision data at a given 2D position.
+/** @brief Fills `g_CollisionPointCache` with collision data at a given 2D position.
  *
  * @param posX X position.
  * @param posZ Z position.
@@ -2271,8 +2271,13 @@ void Collision_Fill(q19_12 posX, q19_12 posZ);
  */
 q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ);
 
-/** Gets floor type from cached point collision. */
-s32 func_800808AC(q19_12 posX, q19_12 posZ);
+/** @brief Gets the floor type at a given 2D position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @return Floor type.
+ */
+s32 Collision_FloorTypeGet(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_MagnitudeShiftGet(q19_12 mag);

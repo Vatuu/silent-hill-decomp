@@ -965,6 +965,7 @@ Rng_RandQ12                                  = 0x80080514; // type:func
 Math_PreservedSignSubtract                   = 0x80080594; // type:func
 Collision_Fill                               = 0x8008076C; // type:func
 Collision_FloorHeightGet                     = 0x80080884; // type:func
+Collision_FloorTypeGet                       = 0x800808AC; // type:func
 Math_MulFixed                                = 0x800808D4; // type:func
 Math_MagnitudeShiftGet                       = 0x800808F8; // type:func
 

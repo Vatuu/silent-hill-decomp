@@ -1243,7 +1243,7 @@ func_800806AC                                = 0x80080294; // type:func
 func_8008074C                                = 0x80080334; // type:func
 Collision_Fill                               = 0x80080354; // type:func
 Collision_FloorHeightGet                     = 0x8008046C; // type:func
-func_800808AC                                = 0x80080494; // type:func
+Collision_FloorTypeGet                       = 0x80080494; // type:func
 Math_MulFixed                                = 0x800804BC; // type:func
 Math_MagnitudeShiftGet                       = 0x800804E0; // type:func
 
