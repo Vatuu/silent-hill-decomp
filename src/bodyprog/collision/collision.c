@@ -132,10 +132,10 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     collData = WorldMap_CollisionDataGet(posX, posZ);
     if (collData == NULL)
     {
-        surface->groundHeight = Q12(8.0f);
+        surface->floorHeight = Q12(8.0f);
         surface->tiltAngleZ   = Q12_ANGLE(0.0f);
         surface->tiltAngleX   = Q12_ANGLE(0.0f);
-        surface->groundType   = GroundType_Default;
+        surface->floorType   = FloorType_Default;
         return;
     }
 
@@ -156,13 +156,13 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
 
     if (state.heightDisabled == true)
     {
-        surface->groundType   = GroundType_Default;
-        surface->groundHeight = Q12(8.0f);
+        surface->floorType   = FloorType_Default;
+        surface->floorHeight = Q12(8.0f);
     }
     else
     {
-        surface->groundType   = state.groundType;
-        surface->groundHeight = Q8_TO_Q12(Ipd_GroundHeightGet(state.charaState.positionFromX,
+        surface->floorType   = state.floorType;
+        surface->floorHeight = Q8_TO_Q12(Ipd_FloorHeightGet(state.charaState.positionFromX,
                                                               state.charaState.positionFromZ,
                                                               &state));
     }
@@ -193,11 +193,11 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
 
     s_CollisionSurface surface;
     e_CollisionType    collType;
-    q19_12             groundHeight;
+    q19_12             floorHeight;
     q19_12             wallHeightBound;
     s32                i;
     s32                wallCount;
-    s32                groundType; // `e_GroundType`
+    s32                floorType; // `e_FloorType`
 
     if (response == NO_VALUE)
     {
@@ -225,14 +225,14 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
         case Chara_PuppetDoctor:
             wallHeightBound = chara->position.vy - WALL_HEIGHT;
 
-            switch (collResult->surface.groundType)
+            switch (collResult->surface.floorType)
             {
-                case GroundType_None:
-                    collType = CollisionType_Unk2;
+                case FloorType_None:
+                    collType = CollisionType_Floor;
                     break;
 
                 default:
-                    collType = (collResult->surface.groundHeight < wallHeightBound) ? CollisionType_Wall :
+                    collType = (collResult->surface.floorHeight < wallHeightBound) ? CollisionType_Wall :
                                                                                       CollisionType_None;
                     break;
             }
@@ -243,8 +243,8 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                 break;
             }
 
-            // Run through ground heights around character position to detect walls.
-            for (i = 0, groundType = GroundType_None; i < POINT_COUNT; i++)
+            // Run through floor heights around character position to detect walls.
+            for (i = 0, floorType = FloorType_None; i < POINT_COUNT; i++)
             {
                 Collision_SurfaceGet(&surface,
                                      chara->position.vx + Q12_MULT(Math_Sin(i * ANGLE_STEP), Q12(0.2f)),
@@ -254,17 +254,17 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                 {
                     case CollisionType_Wall:
                         // Track wall-height floors.
-                        if (surface.groundHeight < wallHeightBound)
+                        if (surface.floorHeight < wallHeightBound)
                         {
                             wallCount++;
                         }
                         break;
 
-                    case CollisionType_Unk2:
-                        if (surface.groundType != GroundType_None)
+                    case CollisionType_Floor:
+                        if (surface.floorType != FloorType_None)
                         {
-                            groundType   = surface.groundType;
-                            groundHeight = surface.groundHeight;
+                            floorType   = surface.floorType;
+                            floorHeight = surface.floorHeight;
                         }
                         break;
                 }
@@ -276,16 +276,18 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
                     // Ignore wall if too few wall-height floors detected.
                     if (wallCount < WALL_COUNT_THRESHOLD)
                     {
-                        collResult->surface.groundHeight = chara->position.vy;
+                        collResult->surface.floorHeight = chara->position.vy;
                     }
                     break;
 
-                case CollisionType_Unk2:
-                    if (groundType != GroundType_None)
+                case CollisionType_Floor:
+                    if (floorType == FloorType_None)
                     {
-                        collResult->surface.groundHeight = groundHeight;
-                        collResult->surface.groundType   = GroundType_None;
+                        break;
                     }
+
+                    collResult->surface.floorHeight = floorHeight;
+                    collResult->surface.floorType   = FloorType_None;
                     break;
             }
             break;
@@ -299,75 +301,75 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
     #undef WALL_HEIGHT
 }
 
-void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 groundHeight, q19_12 headingAngle) // 0x80069DF0
+void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 floorHeight, q19_12 headingAngle) // 0x80069DF0
 {
     #define POINT_COUNT 16
     #define ANGLE_STEP  Q12_ANGLE(360.0f / POINT_COUNT)
 
-    q19_12             groundHeights[POINT_COUNT];
+    q19_12             floorHeights[POINT_COUNT];
     s_CollisionSurface surface;
     q19_12             pushAngle;
-    q19_12             baseGroundHeight;
-    s32                rightLowestGroundHeightIdx;
-    s32                leftLowestGroundHeightIdx;
+    q19_12             baseFloorHeight;
+    s32                rightLowestFloorHeightIdx;
+    s32                leftLowestFloorHeightIdx;
     s32                i;
-    q19_12             groundHeightMax;
-    q19_12             groundHeightMin;
-    s32                lowestGroundHeightIdx;
+    q19_12             floorHeightMax;
+    q19_12             floorHeightMin;
+    s32                lowestFloorHeightIdx;
 
     // Set base parameters.
-    groundHeightMin       = Q12(-30.0f);
-    groundHeightMax       = Q12(30.0f);
-    lowestGroundHeightIdx = 0;
+    floorHeightMin       = Q12(-30.0f);
+    floorHeightMax       = Q12(30.0f);
+    lowestFloorHeightIdx = 0;
 
-    // Run through ground heights around position.
+    // Run through floor heights around position.
     for (i = 0; i < POINT_COUNT; i++)
     {
         // Collect height.
         Collision_SurfaceGet(&surface,
                              pos->vx + Math_Sin((headingAngle & 0xF) + (i * ANGLE_STEP)),
                              pos->vz + Math_Cos((headingAngle & 0xF) + (i * ANGLE_STEP)));
-        groundHeights[i] = surface.groundHeight;
+        floorHeights[i] = surface.floorHeight;
 
         // Track min height.
-        if (groundHeightMin < surface.groundHeight)
+        if (floorHeightMin < surface.floorHeight)
         {
-            groundHeightMin       = surface.groundHeight;
-            lowestGroundHeightIdx = i;
+            floorHeightMin       = surface.floorHeight;
+            lowestFloorHeightIdx = i;
         }
 
         // Track max height.
-        if (surface.groundHeight < groundHeightMax)
+        if (surface.floorHeight < floorHeightMax)
         {
-            groundHeightMax = surface.groundHeight;
+            floorHeightMax = surface.floorHeight;
         }
     }
 
-    // Cap base ground height.
-    baseGroundHeight = DIV_FAST(groundHeightMin + groundHeightMax, 2);
-    if (baseGroundHeight < (groundHeight - INTERSECTION_BUFFER))
+    // Cap base floor height.
+    baseFloorHeight = DIV_FAST(floorHeightMin + floorHeightMax, 2);
+    if (baseFloorHeight < (floorHeight - INTERSECTION_BUFFER))
     {
-        baseGroundHeight = groundHeight - INTERSECTION_BUFFER;
+        baseFloorHeight = floorHeight - INTERSECTION_BUFFER;
     }
 
     // Search clockwise from lowest point for wall start.
-    for (i = lowestGroundHeightIdx + 1, rightLowestGroundHeightIdx = lowestGroundHeightIdx;
-         i < (lowestGroundHeightIdx + POINT_COUNT) && baseGroundHeight < groundHeights[i & 0xF];
+    for (i = lowestFloorHeightIdx + 1, rightLowestFloorHeightIdx = lowestFloorHeightIdx;
+         i < (lowestFloorHeightIdx + POINT_COUNT) && baseFloorHeight < floorHeights[i & 0xF];
          i++)
     {
-        rightLowestGroundHeightIdx = i;
+        rightLowestFloorHeightIdx = i;
     }
 
     // Search counter-clockwise from lowest point for wall start.
-    for (i = lowestGroundHeightIdx - 1, leftLowestGroundHeightIdx = lowestGroundHeightIdx;
-         i < (lowestGroundHeightIdx - POINT_COUNT) && baseGroundHeight < groundHeights[i & 0xF];
+    for (i = lowestFloorHeightIdx - 1, leftLowestFloorHeightIdx = lowestFloorHeightIdx;
+         i < (lowestFloorHeightIdx - POINT_COUNT) && baseFloorHeight < floorHeights[i & 0xF];
          i--)
     {
-        leftLowestGroundHeightIdx = i;
+        leftLowestFloorHeightIdx = i;
     }
 
     // Compute offset away from wall.
-    pushAngle             = DIV_FAST(Q8(leftLowestGroundHeightIdx + rightLowestGroundHeightIdx), 2);
+    pushAngle             = DIV_FAST(Q8(leftLowestFloorHeightIdx + rightLowestFloorHeightIdx), 2);
     collResult->offset.vx = Q12_MULT_PRECISE(Math_Sin(pushAngle), Q12(1.0f / 16.0f));
     collResult->offset.vz = Q12_MULT_PRECISE(Math_Cos(pushAngle), Q12(1.0f / 16.0f));
 
@@ -424,16 +426,16 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
 }
 
 void Collision_DefaultResultSet(s_CollisionResult* collResult,
-                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight) // 0x8006A178
+                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 floorHeight) // 0x8006A178
 {
     collResult->offset.vx            = offsetX;
     collResult->offset.vy            = offsetY;
     collResult->offset.vz            = offsetZ;
     collResult->surface.tiltAngleZ   = Q12_ANGLE(0.0f);
     collResult->surface.tiltAngleX   = Q12_ANGLE(0.0f);
-    collResult->surface.groundType   = GroundType_Default;
+    collResult->surface.floorType   = FloorType_Default;
     collResult->ceilingHeight        = Q12(DEFAULT_CEILING_HEIGHT);
-    collResult->surface.groundHeight = groundHeight;
+    collResult->surface.floorHeight = floorHeight;
 }
 
 s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubCharacter* excludedChara,
@@ -536,7 +538,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
     q23_8                radius;
     s32                  i;
     bool                 cond;
-    q19_12               groundHeight;
+    q19_12               floorHeight;
     s32                  count;
     s_SubCharacter**     curChara;
     s_IpdCollisionData** curCollData;
@@ -660,17 +662,17 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Co
 
     if (state.heightDisabled == true)
     {
-        groundHeight                   = Q12(8.0f);
-        collResult->surface.groundType = GroundType_Default;
+        floorHeight                   = Q12(8.0f);
+        collResult->surface.floorType = FloorType_Default;
     }
     else
     {
-        collResult->surface.groundType = state.groundType;
-        groundHeight                   = Q8_TO_Q12(Ipd_GroundHeightGet(state.charaState.positionFromX + Q12_TO_Q8(extraOffset.vx),
+        collResult->surface.floorType = state.floorType;
+        floorHeight                   = Q8_TO_Q12(Ipd_FloorHeightGet(state.charaState.positionFromX + Q12_TO_Q8(extraOffset.vx),
                                                                        state.charaState.positionFromZ + Q12_TO_Q8(extraOffset.vz), &state));
     }
 
-    collResult->surface.groundHeight = groundHeight;
+    collResult->surface.floorHeight = floorHeight;
     collResult->surface.tiltAngleX   = state.tiltAngleX;
     collResult->surface.tiltAngleZ   = state.tiltAngleZ;
 
@@ -773,7 +775,7 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
 
     Collision_MoveDirectionCalc(&state->charaState, moveOffset, cylinder);
 
-    state->slopedGroundHeight = Q8(30.0f); // TODO: 30 metres might be a default constant. Also seen in `Collision_OffsetAlphaGet`.
+    state->slopedFloorHeight = Q8(30.0f); // TODO: 30 metres might be a default constant. Also seen in `Collision_OffsetAlphaGet`.
     state->field_34 = 0;
     
     state->field_44.field_0.field_0  = 0;
@@ -785,7 +787,7 @@ void Collision_CollStateInit(s_CollisionState* state, VECTOR3* moveOffset, const
     state->tiltAngleZ     = Q12_ANGLE(0.0f);
     state->tiltAngleX     = Q12_ANGLE(0.0f);
     state->heightDisabled = true;
-    state->groundType     = GroundType_Default;
+    state->floorType     = FloorType_Default;
 }
 
 void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
@@ -1069,7 +1071,7 @@ bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, 
         state->point.disableSurface0Height = curSurface->disableHeight;
 
         if (state->charaState.field_4 &&
-            (curSurface->disableHeight == true || curSurface->groundType == GroundType_None))
+            (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
             state->point.cellSplitVertex0.vy -= Q8(-DEFAULT_CEILING_HEIGHT);
             state->point.cellSplitVertex1.vy -= Q8(-DEFAULT_CEILING_HEIGHT);
@@ -1085,7 +1087,7 @@ bool func_8006B318(s_CollisionState* state, const s_IpdCollisionData* collData, 
         state->point.disableSurface1Height = curSurface->disableHeight;
 
         if (state->charaState.field_4 &&
-            (curSurface->disableHeight == true || curSurface->groundType == GroundType_None))
+            (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
             state->point.cellSplitVertex0.vy = Q8(DEFAULT_CEILING_HEIGHT);
             state->point.cellSplitVertex1.vy = Q8(DEFAULT_CEILING_HEIGHT);
@@ -1401,19 +1403,19 @@ q23_8 func_8006BC34(s_CollisionState* state)
     q7_8 height1;
     q7_8 someX;
     q7_8 height2;
-    q7_8 groundHeight; // Unsure.
+    q7_8 floorHeight; // Unsure.
 
     someX = state->point.field_20.charaVertDiff.vx;
     if (someX < Q8(0.0f))
     {
-        groundHeight = state->point.cellSplitVertex0.vy;
+        floorHeight = state->point.cellSplitVertex0.vy;
     }
     else
     {
         someZ = state->point.field_6.vz;
         if (someZ < someX)
         {
-            groundHeight = state->point.cellSplitVertex1.vy;
+            floorHeight = state->point.cellSplitVertex1.vy;
         }
         else
         {
@@ -1423,16 +1425,16 @@ q23_8 func_8006BC34(s_CollisionState* state)
 
             if (height0 == height1)
             {
-                groundHeight = height2;
+                floorHeight = height2;
             }
             else
             {
-                groundHeight = height2 + ((q23_8)((height1 - height0) * someX) / someZ);
+                floorHeight = height2 + ((q23_8)((height1 - height0) * someX) / someZ);
             }
         }
     }
 
-    return state->charaState.bottom - groundHeight;
+    return state->charaState.bottom - floorHeight;
 }
 
 void func_8006BCC4(s_CollisionState_44* arg0, s8* arg1, u32 unkState, q7_8 distX, q7_8 distZ, q7_8 radiusOffset) // 0x8006BCC4
@@ -1783,10 +1785,10 @@ void func_8006C45C(s_CollisionState* state) // 0x8006C45C
     dist  = Math_Vector2MagCalc(distX, distZ);
 
     if (dist < state->point.field_C.radiusOffset && state->point.heightDisabled != true &&
-        (state->cellIdx == UCHAR_MAX || state->point.field_6.vy < state->groundHeight))
+        (state->cellIdx == UCHAR_MAX || state->point.field_6.vy < state->floorHeight))
     {
         state->cellIdx   = state->point.cellIdx;
-        state->groundHeight = state->point.field_6.vy;
+        state->floorHeight = state->point.field_6.vy;
     }
 
     if (!state->isCharaMoving && !state->field_0_9 || dist < state->point.field_C.radiusOffset)
@@ -1853,7 +1855,7 @@ void func_8006C794(s_CollisionState* state, s32 unkState, q23_8 dist) // 0x8006C
 
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8006C838
 {
-    q19_12                 slopedGroundHeight;
+    q19_12                 slopedFloorHeight;
     s_CollisionState_A8*   curUnk;
     s_IpdCellSurface*      curSurface;
     s_IpdCellAttribs* temp_a0;
@@ -1863,16 +1865,16 @@ void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         return;
     }
 
-    if (state->cellIdx != UCHAR_MAX && state->groundHeight < state->slopedGroundHeight)
+    if (state->cellIdx != UCHAR_MAX && state->floorHeight < state->slopedFloorHeight)
     {
         temp_a0                   = &collData->cellAttribs[state->cellIdx - collData->cellCount];
-        state->slopedGroundHeight = state->groundHeight;
+        state->slopedFloorHeight = state->floorHeight;
         state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
         state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
         state->tiltAngleX         = Q12_ANGLE(0.0f);
         state->tiltAngleZ         = Q12_ANGLE(0.0f);
         state->heightDisabled     = temp_a0->disableHeight;
-        state->groundType         = temp_a0->groundType;
+        state->floorType         = temp_a0->floorType;
     }
 
     for (curUnk = &state->field_A0.s_0.field_8[0]; curUnk < &state->field_A0.s_0.field_8[4]; curUnk++)
@@ -1881,26 +1883,26 @@ void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData) // 0x8
         {
             curSurface = &collData->cellSurfaces[curUnk->surfaceIdx];
 
-            // Compute sloped ground height.
-            slopedGroundHeight = curSurface->baseGroundHeight;
+            // Compute sloped floor height.
+            slopedFloorHeight = curSurface->baseFloorHeight;
             if (curSurface->tiltAngleX != Q12_ANGLE(0.0f))
             {
-                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
+                slopedFloorHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
             }
             if (curSurface->tiltAngleZ != Q12_ANGLE(0.0f))
             {
-                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
+                slopedFloorHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
             }
 
-            if (slopedGroundHeight < state->slopedGroundHeight)
+            if (slopedFloorHeight < state->slopedFloorHeight)
             {
-                state->slopedGroundHeight = slopedGroundHeight;
+                state->slopedFloorHeight = slopedFloorHeight;
                 state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
                 state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
                 state->tiltAngleX         = curSurface->tiltAngleX;
                 state->tiltAngleZ         = curSurface->tiltAngleZ;
                 state->heightDisabled     = curSurface->disableHeight;
-                state->groundType         = curSurface->groundType;
+                state->floorType         = curSurface->floorType;
             }
         }
     }
@@ -1910,7 +1912,7 @@ void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
 {
     s32               startIdx;
     s32               endIdx;
-    q23_8             slopedGroundHeight;
+    q23_8             slopedFloorHeight;
     u8*               curSurfaceIdx;
     s_IpdCellSurface* curSurface;
 
@@ -1931,26 +1933,26 @@ void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
         if (((state->flags >> curSurface->field_6_11) & (1 << 0)) &&
             curSurface->disableHeight != true)
         {
-            // Compute sloped ground height.
-            slopedGroundHeight = curSurface->baseGroundHeight;
+            // Compute sloped floor height.
+            slopedFloorHeight = curSurface->baseFloorHeight;
             if (curSurface->tiltAngleX != Q8_ANGLE(0.0f))
             {
-                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
+                slopedFloorHeight += Q12_MULT(curSurface->tiltAngleX, state->charaPositionFrom.offset.vx - curSurface->field_0);
             }
             if (curSurface->tiltAngleZ != Q8_ANGLE(0.0f))
             {
-                slopedGroundHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
+                slopedFloorHeight += Q12_MULT(curSurface->tiltAngleZ, state->charaPositionFrom.offset.vz - curSurface->field_4);
             }
 
-            if (slopedGroundHeight < state->slopedGroundHeight)
+            if (slopedFloorHeight < state->slopedFloorHeight)
             {
-                state->slopedGroundHeight = slopedGroundHeight;
+                state->slopedFloorHeight = slopedFloorHeight;
                 state->charaCellOffsetX   = state->charaPositionFrom.offset.vx + collData->positionX;
                 state->charaCellOffsetZ   = state->charaPositionFrom.offset.vz + collData->positionZ;
                 state->tiltAngleX         = curSurface->tiltAngleX;
                 state->tiltAngleZ         = curSurface->tiltAngleZ;
                 state->heightDisabled     = curSurface->disableHeight;
-                state->groundType         = curSurface->groundType;
+                state->floorType         = curSurface->floorType;
             }
         }
     }
@@ -1958,31 +1960,31 @@ void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdC
 
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* state) // 0x8006CB90
 {
-    q23_8 groundHeight;
+    q23_8 floorHeight;
 
-    if (state->slopedGroundHeight == Q8(30.0f))
+    if (state->slopedFloorHeight == Q8(30.0f))
     {
         return Q12(1.0f);
     }
 
-    groundHeight = Ipd_GroundHeightGet(state->charaState.positionToX, state->charaState.positionToZ, state);
-    if ((state->charaState.bottom + state->charaState.offset.vy) < groundHeight ||
-        groundHeight == state->slopedGroundHeight)
+    floorHeight = Ipd_FloorHeightGet(state->charaState.positionToX, state->charaState.positionToZ, state);
+    if ((state->charaState.bottom + state->charaState.offset.vy) < floorHeight ||
+        floorHeight == state->slopedFloorHeight)
     {
         return Q12(1.0f);
     }
 
     return Q12_DIV(state->charaState.distance, Math_Vector2MagCalc(state->charaState.distance,
-                                                                   groundHeight - state->charaState.bottom));
+                                                                   floorHeight - state->charaState.bottom));
 }
 
-q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state) // 0x8006CC44
+q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state) // 0x8006CC44
 {
-    if (state->groundType != GroundType_None)
+    if (state->floorType != FloorType_None)
     {
         return Q12_MULT(state->tiltAngleX, posX - state->charaCellOffsetX) +
                Q12_MULT(state->tiltAngleZ, posZ - state->charaCellOffsetZ) +
-               state->slopedGroundHeight;
+               state->slopedFloorHeight;
     }
 
     return Q8(8.0f);

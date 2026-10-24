@@ -89,10 +89,10 @@ void Dahlia_MovementUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
     dahlia->position.vy  = Q12(0.0f);
     dahlia->position.vz += offset.vz;
 
-    // Warp to ground.
-    if (dahlia->position.vy > sharedData_800E39BC_0_s00.surface.groundHeight)
+    // Warp to floor.
+    if (dahlia->position.vy > sharedData_800E39BC_0_s00.surface.floorHeight)
     {
-        dahlia->position.vy = sharedData_800E39BC_0_s00.surface.groundHeight;
+        dahlia->position.vy = sharedData_800E39BC_0_s00.surface.floorHeight;
         dahlia->fallSpeed   = Q12(0.0f);
     }
 
@@ -338,7 +338,7 @@ void Dahlia_ControlUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* boneCoords)
 
     Collision_SurfaceGet(&surface, dahlia->position.vx, dahlia->position.vz);
 
-    Player_FootstepSfxGet(surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.floorType, &sfxId, &pitch0, &pitch1);
 #if defined(MAP6_S01)
     sfxId = Sfx_Unk1606;
 #else

@@ -2253,7 +2253,7 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
 {
     s_CollisionSurface surface;
     SVECTOR            sp20;
-    q19_12             groundHeight;
+    q19_12             floorHeight;
     s32                i;
     s_800F3D48_0*      ret;
     s_800F3D58*        ptr;
@@ -2282,15 +2282,15 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
             {
                 PushMatrix();
 
-                groundHeight = arg0->field_4.field_18.vy + ptr->field_0.vy;
+                floorHeight = arg0->field_4.field_18.vy + ptr->field_0.vy;
 
                 Collision_SurfaceGet(&surface, arg0->field_4.field_18.vx + ptr->field_0.vx,
                                      arg0->field_4.field_18.vz + ptr->field_0.vz);
                 PopMatrix();
 
-                if (surface.groundHeight < groundHeight)
+                if (surface.floorHeight < floorHeight)
                 {
-                    arg0->field_4.field_18.vy = surface.groundHeight;
+                    arg0->field_4.field_18.vy = surface.floorHeight;
                     arg0->field_4.field_48    = NULL;
                     arg0->field_4.field_10    = Q12(5.0f);
                     arg0->field_4.field_C++;

@@ -1753,7 +1753,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
     }
 
     Collision_SurfaceGet(&surface, player->position.vx, player->position.vz);
-    Player_FootstepSfxGet(surface.groundType, &footstepSfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.floorType, &footstepSfxId, &pitch0, &pitch1);
 
     switch (g_SysWork.playerWork.extra.state)
     {

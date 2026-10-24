@@ -28,11 +28,12 @@ typedef enum _CollisionTriggerFlags
 /** @brief Collision types. */
 typedef enum _CollisionType
 {
-    CollisionType_None = 0,
-    CollisionType_Wall = 1,
-    CollisionType_Unk2 = 2
+    CollisionType_None  = 0,
+    CollisionType_Wall  = 1,
+    CollisionType_Floor = 2 // TODO: Unsure.
 } e_CollisionType;
 
+// TODO: "Subchunk" term may be misused here, need to check.
 typedef enum _SubChunkTransitionDirection
 {
     SubChunkTransitionDirection_None = 0,
@@ -43,10 +44,10 @@ typedef enum _SubChunkTransitionDirection
 /** @brief Collision point surface data. */
 typedef struct _CollisionSurface
 {
-    /* 0x0 */ q19_12 groundHeight;
+    /* 0x0 */ q19_12 floorHeight;
     /* 0x4 */ q3_12  tiltAngleX;
     /* 0x6 */ q3_12  tiltAngleZ;
-    /* 0x8 */ s8     groundType; /** `e_GroundType` */
+    /* 0x8 */ s8     floorType; /** `e_FloorType` */
               // 3 bytes of padding.
 } s_CollisionSurface;
 STATIC_ASSERT_SIZEOF(s_CollisionSurface, 12);
@@ -56,7 +57,7 @@ typedef struct _CollisionPoint
 {
     /* 0x0  */ VECTOR3            position;   /** Q19.12 */
     /* 0xC  */ s_CollisionSurface surface;
-    /* 0x18 */ s32                groundType; /** `e_GroundType` */
+    /* 0x18 */ s32                floorType; /** `e_FloorType` */
 } s_CollisionPoint;
 
 /** @brief Collision point probe result. */
@@ -165,13 +166,13 @@ typedef struct _CollisionState
     /* 0x3E   */ q7_8                  field_3E; // Z?
     /* 0x40   */ s8*                   field_40;
     /* 0x44   */ s_CollisionState_44   field_44;
-    /* 0x7C   */ q23_8                 slopedGroundHeight; // TODO: How is `groundHeight` different?
+    /* 0x7C   */ q23_8                 slopedFloorHeight; // TODO: How is `floorHeight` different?
     /* 0x80   */ q23_8                 charaCellOffsetX; // } Character position in cell.
     /* 0x84   */ q23_8                 charaCellOffsetZ; // } 
     /* 0x88   */ q19_12                tiltAngleX;
     /* 0x8C   */ q19_12                tiltAngleZ;
     /* 0x90   */ bool                  heightDisabled; /** `bool` | TODO: Does disabled height indicate a wall or pit? */
-    /* 0x94   */ s32                   groundType;     /** `e_GroundType` */
+    /* 0x94   */ s32                   floorType;     /** `e_FloorType` */
 
                  union
                  {
@@ -202,10 +203,10 @@ typedef struct _CollisionState
                          /* 0x6 */ u8   collisionState; /** `e_CharaCollisionState` */
                          /* 0x8 */ u8*  field_8; // Cell check idx?
                      } s_1;
-    /* 0xA0   */ } field_A0; // Ground info? Cell info? Cell state?
+    /* 0xA0   */ } field_A0; // Floor info? Cell info? Cell state?
 
     /* 0xC8   */ u8                   cellIdx; /** Secondary. Used only if detecting a cell after not finding one. */
-    /* 0xCA   */ q7_8                 groundHeight; // TODO: Base ground height with slope unaccounted for?
+    /* 0xCA   */ q7_8                 floorHeight; // TODO: Base floor height with slope unaccounted for?
     /* 0xCC   */ s_CollisionCellPoint point;
     // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
 } s_CollisionState;
@@ -264,7 +265,7 @@ void Collision_CellChecksReset(s_IpdCollisionData* collData);
 void Collision_CellChecksCountUpdate(s_IpdCollisionData* collData);
 
 // ========================================
-// @split? IPD/ground collision detection.
+// @split? IPD/floor collision detection.
 // ========================================
 
 /** @brief Gets the collision surface at a given 2D world position.
@@ -284,7 +285,7 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
  */
 s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara);
 
-/** @brief Handles a wall collision response by sampling the ground at 9 points around a character.
+/** @brief Handles a wall collision response by sampling the floor at 9 points around a character.
  *
  * @param collResult Output collision result.
  * @param moveOffset Movement offset (unused).
@@ -294,17 +295,17 @@ s32 Collision_WallDetect(s_CollisionResult* collResult, const VECTOR3* moveOffse
  */
 s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara, s32 response);
 
-/** @brief Probes ground heights at 16 radial points to push away from a wall.
+/** @brief Probes floor heights at 16 radial points to push away from a wall.
  * Called in `Collision_WallResponse` and used exclusively for the player.
  *
  * @note Since Y+ is down, the meanings of min/max and lowest/highest are inverted.
  *
  * @param collResult Output collision result with the XZ offset vector adjusted to push away from a wall.
  * @param pos Center position.
- * @param groundHeight Base ground height.
+ * @param floorHeight Base floor height.
  * @param headingAngle Start heading angle on the XZ plane for the probe circle.
  */
-void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 groundHeight, q19_12 headingAngle);
+void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_12 floorHeight, q19_12 headingAngle);
 
 /** @brief Applies collision detection for a character's movement offset.
  *
@@ -315,16 +316,16 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
  */
 bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3* moveOffset, s_SubCharacter* chara);
 
-/** @brief Initializes a default collision result with a position and ground height.
+/** @brief Initializes a default collision result with a position and floor height.
  *
  * @param result Collision result to initialize.
  * @param offsetX X offset.
  * @param offsetY Y offset.
  * @param offsetZ Z offset.
- * @param groundHeight Ground height.
+ * @param floorHeight Floor height.
  */
 void Collision_DefaultResultSet(s_CollisionResult* collResult,
-                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 groundHeight);
+                                q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 floorHeight);
 
 /** @brief Gets an array of collidable characters for collision testing.
  *
@@ -405,7 +406,7 @@ void func_8006B9C8(s_CollisionState* state);
 
 void func_8006BB50(s_CollisionState* state, s32 arg1);
 
-// Computes ground height, accounting for differences in cell split vertex heights?
+// Computes floor height, accounting for differences in cell split vertex heights?
 q23_8 func_8006BC34(s_CollisionState* state);
 
 /** `arg1` is cell check idx? */
@@ -431,14 +432,14 @@ void func_8006C794(s_CollisionState* state, s32 unkState, q23_8 dist);
 
 void func_8006C838(s_CollisionState* state, s_IpdCollisionData* collData);
 
-// Accounts for slopes in ground height?
+// Accounts for slopes in floor height?
 void func_8006CA18(s_CollisionState* state, s_IpdCollisionData* collData, s_IpdCellRange* cellRanges);
 
-// TODO: Computes alpha related to the ground slope?
+// TODO: Computes alpha related to the floor slope?
 q3_12 Collision_OffsetAlphaGet(s_CollisionState* state);
 
-// Gets sloped ground height, not the base height.
-q23_8 Ipd_GroundHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state);
+// Gets sloped floor height, not the base height.
+q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionState* state);
 
 void func_8006CC9C(s_CollisionState* state);
 

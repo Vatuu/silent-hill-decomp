@@ -201,7 +201,7 @@ extern CVECTOR sharedData_800E3258_0_s00;
 
 extern CVECTOR sharedData_800E325C_0_s00;
 
-extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer ground collision heights?
+extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer floor collision heights?
 
 // Each of these holds 8 bytes, passed to `Bgm_LayersUpdate` which loops through each byte.
 // TODO: Should use `s_BgmLayerLimits`?

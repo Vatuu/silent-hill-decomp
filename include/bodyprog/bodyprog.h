@@ -1619,7 +1619,7 @@ void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharac
 
 s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult);
 
-/** Checks `groundType`. */
+/** Checks `floorType`. */
 bool func_8005F680(s_CollisionSurface* surface);
 
 /** Related to camera collision? */
@@ -2223,15 +2223,15 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool resetColl);
 
-/** @brief Gets a player footstep SFX ID according to the ground type and its pitch.
+/** @brief Gets a player footstep SFX ID according to the floor type and its pitch.
  *
- * @param groundType Ground type.
+ * @param floorType Floor type.
  * @param sfxId Output footstep SFX ID.
  * @param pitch0 Output TODO
  * @param pitch1 Output TODO
  * @return Footstep SFX ID.
  */
-void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
+void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);
@@ -2263,15 +2263,15 @@ bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
  */
 void Collision_Fill(q19_12 posX, q19_12 posZ);
 
-/** @brief Gets the ground height at a given 2D position.
+/** @brief Gets the floor height at a given 2D position.
  *
  * @param posX X position.
  * @param posZ Z position.
- * @return Ground height.
+ * @return Floor height.
  */
-q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ);
+q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ);
 
-/** Gets ground type from cached point collision. */
+/** Gets floor type from cached point collision. */
 s32 func_800808AC(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */

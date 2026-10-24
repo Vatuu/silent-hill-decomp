@@ -244,11 +244,11 @@ void func_800D3B68(s_SubCharacter* twinfeeler);
 
 void func_800D3B74(s_SubCharacter* twinfeeler);
 
-/** @brief Teleports a Twinfeeler above ground and clears the `TwinfeelerFlag_Underground` flag.
+/** @brief Teleports a Twinfeeler above floor and clears the `TwinfeelerFlag_Underground` flag.
  *
  * @param twinfeeler Twinfeeler character to update.
  */
-void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler);
+void Twinfeeler_FloorSet(s_SubCharacter* twinfeeler);
 
 /** @brief Teleports a Twinfeeler underground and sets the `TwinfeelerFlag_Underground` flag.
  *

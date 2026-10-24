@@ -26,7 +26,7 @@
  * F:     Boolean or bit flag
  * FIX:   Fixed in place
  * FS:    Bit flags
- * GRND:  Ground
+ * GRND:  Floor
  * H:     Height
  * LIM:   Limit
  * MV:    Move

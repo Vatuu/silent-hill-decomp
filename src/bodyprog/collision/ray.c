@@ -76,13 +76,13 @@ bool Ray_CharaTraceQuery(s_RayTrace* trace, const VECTOR3* from, VECTOR3* offset
 void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, q23_8 dist) // 0x8006DAE4
 {
     trace->hasHit       = false;
-    trace->groundType   = GroundType_Default;
+    trace->floorType    = FloorType_Default;
     trace->target.vx    = from->vx + offset->vx;
     trace->target.vy    = from->vy + offset->vy;
     trace->target.vz    = from->vz + offset->vz;
     trace->character    = NULL;
     trace->hitDistance  = Q8_TO_Q12(dist);
-    trace->groundHeight = Q12(1.875f);      // @bug? Awkward value suggests `Q8(30.0f)` may have been typed by mistake.
+    trace->floorHeight  = Q12(1.875f);      // @bug? Awkward value suggests `Q8(30.0f)` may have been typed by mistake.
     trace->headingAngle = Q12_ANGLE(0.0f);
 }
 
@@ -241,9 +241,9 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayState* state) // 0x8006DEB0
         trace->target.vz    = Q8_TO_Q12(state->target.vz);
         trace->character    = state->character;
         trace->hitDistance  = Q8_TO_Q12(state->hitDistance);
-        trace->groundHeight = Q8_TO_Q12(state->groundHeight);
+        trace->floorHeight  = Q8_TO_Q12(state->floorHeight);
         trace->headingAngle = ratan2(state->offsetX, state->offsetZ);
-        trace->groundType   = state->groundType;
+        trace->floorType    = state->floorType;
         return true;
     }
 
@@ -255,9 +255,9 @@ void func_8006E0AC(s_RayState* state, const s_IpdCollisionData* arg1) // 0x8006E
     // TODO: `state` type might be wrong.
     state->field_6C.positionX    = arg1->positionX;
     state->field_6C.positionZ    = arg1->positionZ;
-    state->field_6C.groundHeight = state->from.vx - state->field_6C.positionX;
+    state->field_6C.floorHeight = state->from.vx - state->field_6C.positionX;
     state->field_6C.topHeight    = state->from.vz - state->field_6C.positionZ;
-    state->field_6C.field_C      = state->field_6C.groundHeight + state->offset.vx;
+    state->field_6C.field_C      = state->field_6C.floorHeight + state->offset.vx;
     state->field_6C.field_E      = state->field_6C.topHeight + state->offset.vz;
     state->field_7C              = arg1->cellCountX;
     state->field_80              = arg1->cellCountZ;
@@ -469,15 +469,15 @@ void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollision
                         cond2 = false;
 
                         if (surfaceIdx0 == UCHAR_MAX ||
-                            collData->cellSurfaces[surfaceIdx0].groundType == GroundType_Default ||
-                            collData->cellSurfaces[surfaceIdx0].groundType == GroundType_None)
+                            collData->cellSurfaces[surfaceIdx0].floorType == FloorType_Default ||
+                            collData->cellSurfaces[surfaceIdx0].floorType == FloorType_None)
                         {
                             cond1 = true;
                         }
 
                         if (surfaceIdx1 == UCHAR_MAX ||
-                            collData->cellSurfaces[surfaceIdx1].groundType == GroundType_Default ||
-                            collData->cellSurfaces[surfaceIdx1].groundType == GroundType_None)
+                            collData->cellSurfaces[surfaceIdx1].floorType == FloorType_Default ||
+                            collData->cellSurfaces[surfaceIdx1].floorType == FloorType_None)
                         {
                             cond2 = true;
                         }
@@ -498,8 +498,8 @@ void func_8006E53C(s_RayState* state, s_IpdCellRange* cellRanges, s_IpdCollision
 
                 if ((temp_v0_2 & (1 << 0)) &&
                     (state->field_0 == true ||
-                     (curCellAttribs->groundType != GroundType_Default &&
-                      curCellAttribs->groundType != GroundType_None)) &&
+                     (curCellAttribs->floorType != FloorType_Default &&
+                      curCellAttribs->floorType != FloorType_None)) &&
                     curCellAttribs->radiusOffset >= state->radiusOffset)
                 {
                     func_8006EB8C(state, curCellAttribs);
@@ -518,13 +518,13 @@ void func_8006E78C(s_RayState* state, s_IpdCell* cell, SVECTOR3* splitVerts, s_I
     q19_12    offsetX;
     q19_12    offsetZ;
     q23_8     maybeRayStep;
-    s32       groundType; // `e_GroundType`
+    s32       floorType; // `e_FloorType`
     SVECTOR3* splitVert1;
     SVECTOR3* splitVert0;
     s32       unkXz;
     s32       var_v1;
 
-    groundType = GroundType_Default;
+    floorType = FloorType_Default;
     splitVert1 = &splitVerts[cell->splitVertexIdx1];
     splitVert0 = &splitVerts[cell->splitVertexIdx0];
 
@@ -532,22 +532,22 @@ void func_8006E78C(s_RayState* state, s_IpdCell* cell, SVECTOR3* splitVerts, s_I
     {
         if (cell->surfaceIdx0 != UCHAR_MAX)
         {
-            groundType = cellSurfaces[cell->surfaceIdx0].groundType;
+            floorType = cellSurfaces[cell->surfaceIdx0].floorType;
         }
         if (cell->surfaceIdx1 != UCHAR_MAX)
         {
-            groundType = cellSurfaces[cell->surfaceIdx1].groundType;
+            floorType = cellSurfaces[cell->surfaceIdx1].floorType;
         }
 
         unkXz = PACKED_XZ16(state->field_58, state->field_5A);
         gte_ldR11R12(unkXz);
         gte_ldR13R21(unkXz);
-        gte_ldvxy0(PACKED_XZ16(splitVert1->vx - state->field_6C.groundHeight, splitVert1->vz - state->field_6C.topHeight));
+        gte_ldvxy0(PACKED_XZ16(splitVert1->vx - state->field_6C.floorHeight, splitVert1->vz - state->field_6C.topHeight));
         gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp0);
 
-        gte_ldvxy0(PACKED_XZ16(splitVert0->vx - state->field_6C.groundHeight, splitVert0->vz - state->field_6C.topHeight));
+        gte_ldvxy0(PACKED_XZ16(splitVert0->vx - state->field_6C.floorHeight, splitVert0->vz - state->field_6C.topHeight));
         gte_ldvz0();
         gte_rtv0();
         gte_stMAC12(&sp8);
@@ -610,11 +610,11 @@ void func_8006E78C(s_RayState* state, s_IpdCell* cell, SVECTOR3* splitVerts, s_I
                         state->target.vx    = maybeSplitDiff.vx + state->field_6C.positionX;
                         state->target.vy    = maybeRayStep - state->field_4E;
                         state->target.vz    = maybeSplitDiff.vz + state->field_6C.positionZ;
-                        state->groundHeight = maybeSplitDiff.vy;
+                        state->floorHeight = maybeSplitDiff.vy;
                         state->offsetX      = offsetX;
                         state->offsetZ      = offsetZ;
                         state->character    = NULL;
-                        state->groundType   = groundType;
+                        state->floorType   = floorType;
                     }
                 }
             }
@@ -640,7 +640,7 @@ void func_8006EB8C(s_RayState* state, s_IpdCellAttribs* arg1) // 0x8006EB8C
     temp_v1 = PACKED_XZ16(state->field_58, state->field_5A);
     gte_ldR11R12(temp_v1);
     gte_ldR13R21(temp_v1);
-    gte_ldvxy0(PACKED_XZ16(arg1->offset.vx - state->field_6C.groundHeight, arg1->offset.vz - state->field_6C.topHeight));
+    gte_ldvxy0(PACKED_XZ16(arg1->offset.vx - state->field_6C.floorHeight, arg1->offset.vz - state->field_6C.topHeight));
     gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&sp10);
@@ -661,14 +661,14 @@ void func_8006EB8C(s_RayState* state, s_IpdCellAttribs* arg1) // 0x8006EB8C
             if ((sp18.vy + state->from.vy + state->field_4E) >= arg1->offset.vy)
             {
                 state->hitDistance  = hitDist;
-                state->target.vx    = sp18.vx + state->field_6C.groundHeight + state->field_6C.positionX;
+                state->target.vx    = sp18.vx + state->field_6C.floorHeight + state->field_6C.positionX;
                 state->target.vy    = sp18.vy + state->from.vy;
                 state->target.vz    = sp18.vz + state->field_6C.topHeight + state->field_6C.positionZ;
-                state->groundHeight = arg1->offset.vy;
-                state->offsetX      = (sp18.vx + state->field_6C.groundHeight) - arg1->offset.vx;
+                state->floorHeight = arg1->offset.vy;
+                state->offsetX      = (sp18.vx + state->field_6C.floorHeight) - arg1->offset.vx;
                 state->offsetZ      = (sp18.vz + state->field_6C.topHeight)    - arg1->offset.vz;
                 state->character    = NULL;
-                state->groundType   = arg1->groundType;
+                state->floorType   = arg1->floorType;
             }
         }
     }
@@ -698,7 +698,7 @@ void func_8006EE0C(s_RayState_6C* arg0, bool useCylinder, const s_SubCharacter* 
     arg0->topHeight    = Q12_TO_Q8(topHeight);
     arg0->positionX    = Q12_TO_Q8(chara->position.vx + offsetX);
     arg0->positionZ    = Q12_TO_Q8(chara->position.vz + offsetZ);
-    arg0->groundHeight = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
+    arg0->floorHeight = Q12_TO_Q8(chara->position.vy + chara->collision.box.top);
 }
 
 void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
@@ -743,7 +743,7 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
 
     if ((state->field_6C.positionZ + bound) < z1 || x1 < (state->field_6C.positionZ - bound) ||
-        ((state->from.vy + state->field_4E) < state->field_6C.groundHeight && (state->field_40 + state->field_4E) < state->field_6C.groundHeight) ||
+        ((state->from.vy + state->field_4E) < state->field_6C.floorHeight && (state->field_40 + state->field_4E) < state->field_6C.floorHeight) ||
         ((state->from.vy + state->field_4C) > state->field_6C.topHeight && state->field_6C.topHeight < (state->field_40 + state->field_4C)))
     {
         return;
@@ -765,7 +765,7 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     }
 
     offset.vy = state->from.vy + (Q12_MULT(state->offset.vy, alpha));
-    if ((offset.vy + state->field_4E) < state->field_6C.groundHeight ||
+    if ((offset.vy + state->field_4E) < state->field_6C.floorHeight ||
         state->field_6C.topHeight < (offset.vy + state->field_4C))
     {
         if (state->offset.vy == Q8(0.0f))
@@ -773,14 +773,14 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
             return;
         }
 
-        if ((offset.vy + state->field_4E) < state->field_6C.groundHeight)
+        if ((offset.vy + state->field_4E) < state->field_6C.floorHeight)
         {
-            var_v1 = Q12(state->field_6C.groundHeight - (state->from.vy + state->field_4E)) / state->offset.vy;
+            var_v1 = Q12(state->field_6C.floorHeight - (state->from.vy + state->field_4E)) / state->offset.vy;
             if (var_v1 > Q12(1.0f))
             {
                 return;
             }
-            offset.vy = state->field_6C.groundHeight - state->field_4E;
+            offset.vy = state->field_6C.floorHeight - state->field_4E;
         }
         else
         {
@@ -809,9 +809,9 @@ void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
     state->target.vx    = offset.vx;
     state->target.vy    = offset.vy;
     state->target.vz    = offset.vz;
-    state->groundHeight = state->field_6C.groundHeight;
+    state->floorHeight = state->field_6C.floorHeight;
     state->offsetX      = offset.vx - state->field_6C.positionX;
     state->offsetZ      = offset.vz - state->field_6C.positionZ;
     state->character    = chara;
-    state->groundType   = GroundType_Default;
+    state->floorType   = FloorType_Default;
 }

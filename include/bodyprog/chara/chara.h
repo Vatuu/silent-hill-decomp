@@ -170,7 +170,7 @@ STATIC_ASSERT_SIZEOF(s_PropsDummy, 64);
 typedef struct _PropsPlayer
 {
     /* 0xE8  */ q19_12        afkTimer; // Increments every tick for 10 seconds before AFK anim starts.
-    /* 0xEC  */ q19_12        groundHeight;
+    /* 0xEC  */ q19_12        floorHeight;
     /* 0xF0  */ q19_12        field_F0;
     /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
     /* 0xF8  */ s32           runStepSfxCount;
@@ -259,7 +259,7 @@ typedef struct _PropsAirScreamer
     /* 0x110   */ VECTOR3 targetPosition2;    /** Q19.12 | TODO: Unknown purpose. */
     /* 0x11C   */ s32     flags; /** `e_AirScreamerFlags` */
     /* 0x120   */ q19_12  timer_120;
-    /* 0x124   */ q19_12  groundHeight;
+    /* 0x124   */ q19_12  floorHeight;
 } s_PropsAirScreamer;
 
 /** @brief Bloodsucker character properties. */

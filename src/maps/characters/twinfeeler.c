@@ -1533,7 +1533,7 @@ s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930
 
             curPtr->chara       = twinfeeler;
             curPtr->position.vx = twinfeeler->position.vx;
-            curPtr->position.vy = surface.groundHeight;
+            curPtr->position.vy = surface.floorHeight;
             curPtr->position.vz = twinfeeler->position.vz;
             curPtr->funcptr_18  = funcptr;
             curPtr->timer       = Q12(0.0f);
@@ -1765,7 +1765,7 @@ void func_800D3B74(s_SubCharacter* twinfeeler) // 0x800D3B74
     }
 }
 
-void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
+void Twinfeeler_FloorSet(s_SubCharacter* twinfeeler) // 0x800D3B98
 {
     s_CollisionSurface surface;
     q3_12              headingAngle;
@@ -1776,10 +1776,10 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
     headingAngle = twinfeeler->rotation.vy;
     dist         = Q12_MULT_PRECISE(Math_Sin(headingAngle), Q12(1.0f));
 
-    // Snap to ground.
+    // Snap to floor.
     Collision_SurfaceGet(&surface, twinfeeler->position.vx + dist,
                          Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + twinfeeler->position.vz);
-    twinfeeler->position.vy = surface.groundHeight;
+    twinfeeler->position.vy = surface.floorHeight;
 
     // Fallback snap.
     if (twinfeeler->position.vy < Q12(-1.0f))
@@ -1788,14 +1788,14 @@ void Twinfeeler_GroundSet(s_SubCharacter* twinfeeler) // 0x800D3B98
         posZ = twinfeeler->position.vz;
         Collision_SurfaceGet(&surface, posX, posZ);
 
-        twinfeeler->position.vy = surface.groundHeight;
+        twinfeeler->position.vy = surface.floorHeight;
         if (twinfeeler->position.vy < Q12(-1.0f))
         {
             twinfeeler->position.vx = Q12(118.5f);
             twinfeeler->position.vz = Q12(137.9f);
 
             Collision_SurfaceGet(&surface, posX, posZ);
-            twinfeeler->position.vy = surface.groundHeight;
+            twinfeeler->position.vy = surface.floorHeight;
         }
     }
 
@@ -2003,7 +2003,7 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
         case 1:
             if (twinfeeler->properties.twinfeeler.digTimer < Q12(0.0f))
             {
-                Twinfeeler_GroundSet(twinfeeler);
+                Twinfeeler_FloorSet(twinfeeler);
 
                 twinfeeler->moveSpeed         = Q12(1.8f);
                 twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_Resurface, false);
@@ -2073,7 +2073,7 @@ void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
         case 1:
             if (twinfeeler->properties.twinfeeler.digTimer < Q12(0.0f))
             {
-                Twinfeeler_GroundSet(twinfeeler);
+                Twinfeeler_FloorSet(twinfeeler);
 
                 twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_23, false);
                 twinfeeler->moveSpeed         = Q12(1.35f);
@@ -2223,7 +2223,7 @@ void Twinfeeler_Control_5(s_SubCharacter* twinfeeler)
             if (twinfeeler->properties.twinfeeler.digTimer < Q12(0.0f))
             {
                 func_800D3B68(twinfeeler);
-                Twinfeeler_GroundSet(twinfeeler);
+                Twinfeeler_FloorSet(twinfeeler);
 
                 twinfeeler->moveSpeed         = Q12(1.8f);
                 twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_Resurface, false);
@@ -2281,7 +2281,7 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords)
             if (twinfeeler->properties.twinfeeler.digTimer < Q12(0.0f))
             {
                 func_800D3B68(twinfeeler);
-                Twinfeeler_GroundSet(twinfeeler);
+                Twinfeeler_FloorSet(twinfeeler);
 
                 twinfeeler->moveSpeed         = Q12(1.8f);
                 twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_Resurface, false);

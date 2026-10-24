@@ -239,7 +239,7 @@ s_800AFBF4 D_800AFBF4[11] = {
 s_CollisionPoint g_CollisionPointCache = {
     .position   = {},
     .surface    = {},
-    .groundType = NO_VALUE
+    .floorType = NO_VALUE
 };
 
 s_800C44F0 D_800C44F0[10];
@@ -2132,7 +2132,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         player->model.stateStep++;
                     }
 
-                    if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.groundHeight)
+                    if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.floorHeight)
                     {
                         extra->model.controlState++;
                         Sfx_WithFlagsPlay(Sfx_Unk1317, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
@@ -2643,7 +2643,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         return;
     }
 
-    stumbleSfxId = (D_800C45C8.groundType == GroundType_10) ? Sfx_Stumble1 : Sfx_Stumble0;
+    stumbleSfxId = (D_800C45C8.floorType == FloorType_10) ? Sfx_Stumble1 : Sfx_Stumble0;
 
     switch (playerExtra.upperBodyState)
     {
@@ -5170,7 +5170,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if ((player->model.anim.keyframeIdx == 43 ||
                  player->model.anim.keyframeIdx == 33) &&
-                player->position.vy == player->properties.player.groundHeight)
+                player->position.vy == player->properties.player.floorHeight)
             {
                 player->fallSpeed = Q12(-1.25f);
             }
@@ -5681,7 +5681,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if ((player->model.anim.keyframeIdx == 139 ||
                  player->model.anim.keyframeIdx == 145) &&
-                player->position.vy == player->properties.player.groundHeight)
+                player->position.vy == player->properties.player.floorHeight)
             {
                 player->fallSpeed = Q12(-1.0f);
             }
@@ -5770,7 +5770,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
             if ((player->model.anim.keyframeIdx == 125 ||
                  player->model.anim.keyframeIdx == 132) &&
-                player->position.vy == player->properties.player.groundHeight)
+                player->position.vy == player->properties.player.floorHeight)
             {
                 player->fallSpeed = Q12(-1.0f);
             }
@@ -6122,7 +6122,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) &&
                 player->model.anim.keyframeIdx == 246)
             {
-                if (player->position.vy < player->properties.player.groundHeight)
+                if (player->position.vy < player->properties.player.floorHeight)
                 {
                     Player_ExtraStateSet(player, extra, PlayerState_FallBackward);
 
@@ -6517,7 +6517,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     s8      pitch0;
     s8      pitch1;
 
-    Player_FootstepSfxGet(g_Player_CollisionResult.surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(g_Player_CollisionResult.surface.floorType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
     if (playerExtra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
@@ -6775,7 +6775,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 playerProps.flags &= ~PlayerFlag_Unk5;
             }
 
-            if (player->position.vy == g_Player_CollisionResult.surface.groundHeight)
+            if (player->position.vy == g_Player_CollisionResult.surface.floorHeight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
@@ -6814,7 +6814,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     moveOffsetX = Q12_MULT(player->moveSpeed, Math_Sin(player->headingAngle));
     moveOffsetZ = Q12_MULT(player->moveSpeed, Math_Cos(player->headingAngle));
 
-    // Compute displacement alpha from ground slope.
+    // Compute displacement alpha from floor slope.
     moveOffsetAlphaX = Math_Cos(DIV_FAST(ABS(surface.tiltAngleX), 8));
     moveOffsetAlphaZ = Math_Cos(DIV_FAST(ABS(surface.tiltAngleZ), 8));
 
@@ -6905,19 +6905,19 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     if (g_SavegamePtr->mapIdx     == MapIdx_MAP1_S00 &&
         g_SavegamePtr->mapRoomIdx == 13)
     {
-        g_Player_CollisionResult.surface.groundHeight = Q12(0.0f);
+        g_Player_CollisionResult.surface.floorHeight = Q12(0.0f);
     }
 
-    // Set collision ground height.
-    if (g_Player_CollisionResult.surface.groundType == GroundType_Default)
+    // Set collision floor height.
+    if (g_Player_CollisionResult.surface.floorType == FloorType_Default)
     {
-        g_Player_CollisionResult.surface.groundHeight = player->properties.player.groundHeight;
+        g_Player_CollisionResult.surface.floorHeight = player->properties.player.floorHeight;
     }
 
-    // Warp to ground if submerged.
-    if (player->position.vy > g_Player_CollisionResult.surface.groundHeight)
+    // Warp to floor if submerged.
+    if (player->position.vy > g_Player_CollisionResult.surface.floorHeight)
     {
-        player->position.vy = g_Player_CollisionResult.surface.groundHeight;
+        player->position.vy = g_Player_CollisionResult.surface.floorHeight;
         player->fallSpeed   = Q12(0.0f);
     }
 
@@ -6931,7 +6931,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
         if (!g_Player_IsInWalkToRunTransition)
         {
             posY = player->position.vy;
-            if ((g_Player_CollisionResult.surface.groundHeight - posY) >= Q12(0.65f))
+            if ((g_Player_CollisionResult.surface.floorHeight - posY) >= Q12(0.65f))
             {
                 if (ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) <  Q12_ANGLE(270.0f))
@@ -6952,7 +6952,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     }
 
     // Set model position.
-    player->properties.player.groundHeight = g_Player_CollisionResult.surface.groundHeight;
+    player->properties.player.floorHeight = g_Player_CollisionResult.surface.floorHeight;
     boneCoords[HarryBone_Root].coord.t[0]  = Q12_TO_Q8(player->position.vx);
     boneCoords[HarryBone_Root].coord.t[1]  = Q12_TO_Q8(player->position.vy);
     boneCoords[HarryBone_Root].coord.t[2]  = Q12_TO_Q8(player->position.vz);
@@ -7675,17 +7675,17 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
         if (traceHits[1])
         {
             arg1->field_14   = DIV_FAST(traces[0].hitDistance + traces[1].hitDistance, 2);
-            arg1->groundType = traces[0].groundType;
+            arg1->floorType = traces[0].floorType;
 
             angle      = Q12_ANGLE_NORM_U(Q12_ANGLE_ABS(DIV_FAST(traces[0].headingAngle + traces[1].headingAngle, 2)));
             angleDelta = ABS_DIFF(angle, player->headingAngle);
             if (angleDelta > Q12_ANGLE(160.0f) && angleDelta < Q12_ANGLE(200.0f))
             {
-                if ((player->position.vy - Q12(1.3f)) < traces[0].groundHeight ||
-                    traces[0].groundType == GroundType_Default ||
-                    traces[0].groundType == GroundType_None)
+                if ((player->position.vy - Q12(1.3f)) < traces[0].floorHeight ||
+                    traces[0].floorType == FloorType_Default ||
+                    traces[0].floorType == FloorType_None)
                 {
-                    if ((player->position.vy - Q12(0.3f)) >= traces[0].groundHeight)
+                    if ((player->position.vy - Q12(0.3f)) >= traces[0].floorHeight)
                     {
                         return PlayerLowerBodyState_RunForward;
                     }
@@ -8874,13 +8874,13 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     }
 }
 
-void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
+void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
     s32 mapIdx;
 
-    switch (groundType)
+    switch (floorType)
     {
-        case GroundType_8:
+        case FloorType_8:
             mapIdx = g_SavegamePtr->mapIdx;
             *sfxId = Sfx_Unk1330;
 
@@ -8905,15 +8905,15 @@ void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1
             }
             break;
 
-        case GroundType_Grass:
+        case FloorType_Grass:
             *sfxId = Sfx_FootstepGrass;
             break;
 
-        case GroundType_4:
+        case FloorType_4:
             *sfxId = Sfx_Unk1313;
             break;
 
-        case GroundType_5:
+        case FloorType_5:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP4_S02)
             {
                 *sfxId = Sfx_Unk1543;
@@ -8924,13 +8924,13 @@ void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1
             }
             break;
 
-        case GroundType_6:
-        case GroundType_10:
-        case GroundType_11:
+        case FloorType_6:
+        case FloorType_10:
+        case FloorType_11:
             *sfxId = Sfx_FootstepMetal;
             break;
 
-        case GroundType_9:
+        case FloorType_9:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP0_S02)
             {
                 *sfxId = Sfx_Unk1388;
@@ -8941,14 +8941,14 @@ void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1
             }
             break;
 
-        case GroundType_2:
+        case FloorType_2:
             *sfxId = Sfx_Unk1389;
             break;
 
         default:
-        case GroundType_Default:
-        case GroundType_1:
-        case GroundType_7:
+        case FloorType_Default:
+        case FloorType_1:
+        case FloorType_7:
             *sfxId = Sfx_FootstepConcrete;
             break;
     }
@@ -8966,7 +8966,7 @@ void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1
                     break;
 
                 case 21:
-                    if (groundType != GroundType_1)
+                    if (floorType != FloorType_1)
                     {
                         *sfxId = Sfx_Unk1346;
                     }
@@ -9012,12 +9012,12 @@ void Player_FootstepSfxGet(s8 groundType, e_SfxId* sfxId, s8* pitch0, s8* pitch1
     }
 
     // TODO: Use range-based rand macro.
-    switch (groundType)
+    switch (floorType)
     {
-        case GroundType_5:
-        case GroundType_6:
-        case GroundType_10:
-        case GroundType_11:
+        case FloorType_5:
+        case FloorType_6:
+        case FloorType_10:
+        case FloorType_11:
             *pitch0 = (Rng_Rand16() % 8)  - 4;
             *pitch1 = (Rng_Rand16() % 16) + 56;
             break;
@@ -9063,7 +9063,7 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     posZ = g_MapOverlayHdr.charaSpawnInfos[0][idx].positionZ;
 
     pos->vx = posX;
-    pos->vy = Collision_GroundHeightGet(posX, posZ);
+    pos->vy = Collision_FloorHeightGet(posX, posZ);
     pos->vz = posZ;
 }
 
@@ -9194,13 +9194,13 @@ bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x800806A
 
     Collision_SurfaceGet(&D_800C4620, posX, posZ);
 
-    result = posY < D_800C4620.groundHeight;
+    result = posY < D_800C4620.floorHeight;
     if (result)
     {
-        result = D_800C4620.groundType != NO_VALUE;
+        result = D_800C4620.floorType != NO_VALUE;
         if (result)
         {
-            result = arg0 & (1 << D_800C4620.groundType);
+            result = arg0 & (1 << D_800C4620.floorType);
             return result != false;
         }
     }
@@ -9215,8 +9215,8 @@ bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8008074
 
 void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 {
-    q19_12              groundHeight;
-    s32                 groundType; // `e_GroundType`
+    q19_12              floorHeight;
+    s32                 floorType; // `e_FloorType`
     q19_12              collX;
     q19_12              collZ;
     s_CollisionSurface* surface;
@@ -9225,7 +9225,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 
     collX = g_CollisionPointCache.position.vx;
     collZ = g_CollisionPointCache.position.vz;
-    if (g_CollisionPointCache.groundType != NO_VALUE &&
+    if (g_CollisionPointCache.floorType != NO_VALUE &&
         collX == posX &&
         collZ == posZ)
     {
@@ -9236,11 +9236,11 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
     g_CollisionPointCache.position.vx = posX;
     g_CollisionPointCache.position.vz = posZ;
 
-    groundType = surface->groundType;
-    switch (surface->groundType)
+    floorType = surface->floorType;
+    switch (surface->floorType)
     {
-        case GroundType_Default:
-            groundHeight = Q12(8.0f);
+        case FloorType_Default:
+            floorHeight = Q12(8.0f);
 
             switch (g_SavegamePtr->mapIdx)
             {
@@ -9249,52 +9249,52 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
                     if (posZ <= Q12(0.0f))
 #endif
                     {
-                        groundHeight = Q12(4.0f);
+                        floorHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                        groundType = GroundType_7;
+                        floorType = FloorType_7;
 #else
-                        surface->groundType = GroundType_7;
+                        surface->floorType = FloorType_7;
 #endif
                     }
                     break;
 
                 case MapIdx_MAP6_S00:
-                    groundHeight = Q12(4.0f);
+                    floorHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                    groundType = GroundType_7;
+                    floorType = FloorType_7;
 #else
-                    surface->groundType = GroundType_7;
+                    surface->floorType = FloorType_7;
 #endif
                     break;
             }
             break;
 
-        case GroundType_None:
-            groundHeight = Q12(8.0f);
+        case FloorType_None:
+            floorHeight = Q12(8.0f);
 
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP6_S00:
-                    groundHeight = Q12(4.0f);
+                    floorHeight = Q12(4.0f);
 #if VERSION_EQUAL_OR_NEWER(USA)
-                    groundType = GroundType_7;
+                    floorType = FloorType_7;
 #else
-                    surface->groundType = GroundType_7;
+                    surface->floorType = FloorType_7;
 #endif
                     break;
             }
             break;
 
         default:
-            groundHeight = surface->groundHeight;
+            floorHeight = surface->floorHeight;
             break;
     }
 
-    g_CollisionPointCache.position.vy = groundHeight;
-    g_CollisionPointCache.groundType  = groundType;
+    g_CollisionPointCache.position.vy = floorHeight;
+    g_CollisionPointCache.floorType  = floorType;
 }
 
-q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
+q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 {
     Collision_Fill(posX, posZ);
     return g_CollisionPointCache.position.vy;
@@ -9303,7 +9303,7 @@ q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
     Collision_Fill(posX, posZ);
-    return g_CollisionPointCache.groundType;
+    return g_CollisionPointCache.floorType;
 }
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4

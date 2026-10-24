@@ -306,7 +306,7 @@ u8 Map_RoomIdxGet(q19_12 posX, q19_12 posZ)
     }
     else if (posZ < Q12(0.0f) && posX < Q12(-80.0f))
     {
-        xIdx = Collision_GroundHeightGet(posX, posZ);
+        xIdx = Collision_FloorHeightGet(posX, posZ);
 
         if (posX < Q12(-160.0f))
         {

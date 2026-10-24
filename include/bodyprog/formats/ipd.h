@@ -16,31 +16,31 @@
 #define CHUNK_SIZE    40.0f /** 40x40 cells per chunk. */
 #define SUBCHUNK_SIZE 8.0f  /** 8x8 cells per subchunk. */
 
-/** @brief Ground material types. */
-typedef enum _GroundType
+/** @brief Floor material types. TODO: SH2 suggests "material"? */
+typedef enum _FloorType
 {
-    GroundType_Default = 0,
-    GroundType_1       = 1,
-    GroundType_2       = 2,
-    GroundType_Grass   = 3,
-    GroundType_4       = 4,
-    GroundType_5       = 5,
-    GroundType_6       = 6,
-    GroundType_7       = 7,
-    GroundType_8       = 8,
-    GroundType_9       = 9,
-    GroundType_10      = 10,
-    GroundType_11      = 11,
-    GroundType_None    = 12
-} e_GroundType;
+    FloorType_Default = 0,
+    FloorType_1       = 1,
+    FloorType_2       = 2,
+    FloorType_Grass   = 3,
+    FloorType_4       = 4,
+    FloorType_5       = 5,
+    FloorType_6       = 6,
+    FloorType_7       = 7,
+    FloorType_8       = 8,
+    FloorType_9       = 9,
+    FloorType_10      = 10,
+    FloorType_11      = 11,
+    FloorType_None    = 12
+} e_FloorType;
 
 /** @brief IPD collision cell surface split. */
 typedef struct _IpdCellSurface
 {
     /* 0x0    */ q7_8 field_0;           // Relative X.
-    /* 0x2    */ q7_8 baseGroundHeight;  // Base ground height with slope unaccounted for?
+    /* 0x2    */ q7_8 baseFloorHeight;   // Base floor height with slope unaccounted for?
     /* 0x4    */ q7_8 field_4;           // Relative Z.
-    /* 0x6+0  */ u16  groundType    : 5; /** `e_GroundType` */
+    /* 0x6+0  */ u16  floorType     : 5; /** `e_FloorType` */
     /* 0x6+5  */ u16  disableHeight : 3; /** `bool` */
     /* 0x6+8  */ u16  field_6_8     : 3; // Causes special collision triggers to behave differently.
                                          // The properties should be based upon a value set at
@@ -74,7 +74,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCell, 10);
 // Name uncertain.
 typedef struct _IpdCellAttribs
 {
-    /* 0x0+0  */ u16      groundType    : 5; /** `e_GroundType` */
+    /* 0x0+0  */ u16      floorType    : 5; /** `e_FloorType` */
     /* 0x0+5  */ u16      disableHeight : 3; /** `bool` */
     /* 0x0+8  */ u16      field_0_8     : 4; // Some flag index.
     /* 0x0+12 */ u16      field_0_12    : 3;

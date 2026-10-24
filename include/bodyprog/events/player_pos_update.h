@@ -6,7 +6,7 @@
  */
 void Chara_PositionSet(s_MapPoint2d* mapPoint);
 
-/** Finds the ground hight and warps the player to it? */
+/** Finds the floor hight and warps the player to it? */
 void Game_PlayerHeightUpdate(void);
 
 #endif

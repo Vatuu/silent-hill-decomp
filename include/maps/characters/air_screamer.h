@@ -160,7 +160,7 @@ void AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOOR
 
 bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-/** Probes collision and sets `airScreamerProps.groundHeight`. */
+/** Probes collision and sets `airScreamerProps.floorHeight`. */
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);
@@ -183,11 +183,11 @@ void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
 
-/** @brief Warps an Air Screamer or Night Flutter character to the ground.
+/** @brief Warps an Air Screamer or Night Flutter character to the floor.
  *
  * @param airScreamer Air Screamer or Night Flutter character to warp.
  */
-void AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
+void AirScreamer_FloorWarp(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
@@ -382,12 +382,12 @@ void AirScreamer_Control_45(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
 
-/** @brief Checks if an Air Screamer is within a thredhold of 2 meters above the ground.
+/** @brief Checks if an Air Screamer is within a thredhold of 2 meters above the floor.
  *
  * @param airScreamer Air Screamer character to check.
- * @param `true` if the character is grounded, `false` otherwise.
+ * @param `true` if the character is floored, `false` otherwise.
  */
-bool AirScreamer_IsGroundedCheck(s_SubCharacter* airScreamer);
+bool AirScreamer_IsFlooredCheck(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult);
 
@@ -395,7 +395,7 @@ bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DC30C_2_s00(s_SubCharacter* airScreamer);
 
-/** Checks if an Air Screamer is near the ground? */
+/** Checks if an Air Screamer is near the floor? */
 bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
 
 /** State step getter. */

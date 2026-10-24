@@ -470,8 +470,8 @@ typedef struct {
 #define GsUIMG0		0x02000000	/* image data with no-clut */
 #define GsUIMG1		0x02000001	/* image data with clut */
 
-#define GsUGNDF		0x05000000	/* ground flat */
-#define GsUGNDFT	0x05000001	/* ground flat texture */
+#define GsUGNDF		0x05000000	/* floor flat */
+#define GsUGNDFT	0x05000001	/* floor flat texture */
 
 #define GsUSCAL2	0x06000100	/* envmap shared calculate */
 #define GsUE1G3		0x0600100c	/* envmap 1D gour tri */

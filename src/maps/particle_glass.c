@@ -244,9 +244,9 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
         Collision_SurfaceGet(&ptr->surface, sharedData_800DFB7C_0_s00[idx].field_0.s_0.field_0, sharedData_800DFB7C_0_s00[idx].field_4.s_0.field_0);
 
-        if ((ptr->surface.groundType == GroundType_Default &&
+        if ((ptr->surface.floorType == FloorType_Default &&
              sharedData_800DFB7C_0_s00[idx].vy_8 > 0) ||
-            ptr->surface.groundHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
+            ptr->surface.floorHeight < sharedData_800DFB7C_0_s00[idx].vy_8)
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }

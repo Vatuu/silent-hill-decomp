@@ -3,7 +3,7 @@
 #include "game.h"
 
 s_CharaFileInfo CHARA_FILE_INFOS[] = {
-/* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode`      `field_8`    `cameraAnchor`          `cameraOffsetY` } */
+/* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode`      `field_8`    `cameraAnchor`          `cameraOffsetY`     } */
 /* None             */ {  NO_VALUE,              FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           },
 /* Harry            */ {  FILE_ANIM_HB_BASE_ANM, FILE_CHARA_HERO_ILM,   FILE_CHARA_HERO_TIM,   Q8(0.25f), BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* AirScreamer      */ {  FILE_ANIM_BIRD_ANM,    FILE_CHARA_BIRD_ILM,   FILE_CHARA_REBIRD_TIM, Q8(0.25f), BlendMode_Subtractive,   &D_800A90B4, CameraAnchor_Character, Q8(-0.6f)          },
@@ -16,7 +16,7 @@ s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* Mumbler          */ {  FILE_ANIM_CLD2_ANM,    FILE_CHARA_CLD4_ILM,   FILE_CHARA_CLD4_TIM,   Q8(0.25f), BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-0.8f)          },
 /* HangedScratcher  */ {  FILE_ANIM_SLT_ANM,     FILE_CHARA_SLT_ILM,    FILE_CHARA_SLT_TIM,    Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.6f)          },
 /* Creeper          */ {  FILE_ANIM_COC_ANM,     FILE_CHARA_COC_ILM,    FILE_CHARA_COC_TIM,    Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.5f)          },
-/* Romper           */ {  FILE_ANIM_JACK_ANM,    FILE_CHARA_JACK_ILM,   FILE_CHARA_JACK_TIM,   Q8(0.3f),  BlendMode_Subtractive,   &D_800A90A4, CameraAnchor_Ground,    Q8(-0.8f)          },
+/* Romper           */ {  FILE_ANIM_JACK_ANM,    FILE_CHARA_JACK_ILM,   FILE_CHARA_JACK_TIM,   Q8(0.3f),  BlendMode_Subtractive,   &D_800A90A4, CameraAnchor_Floor,    Q8(-0.8f)           },
 /* Chicken          */ {  FILE_ANIM_CKN_ANM,     FILE_CHARA_CKN_ILM,    FILE_CHARA_CKN_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.9f)          }, /** @unused */
 /* SplitHead        */ {  FILE_ANIM_FAT_ANM,     FILE_CHARA_FAT_ILM,    FILE_CHARA_FAT_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* Floatstinger     */ {  FILE_ANIM_MTH_ANM,     FILE_CHARA_MTH_ILM,    FILE_CHARA_MOTH_TIM,   Q8(0.0f),  BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-2.3f)          },

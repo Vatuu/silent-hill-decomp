@@ -3254,13 +3254,13 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                if (localPart->position0_0.vy >= surface.groundHeight)
+                if (localPart->position0_0.vy >= surface.floorHeight)
                 {
 #if defined(MAP1_S06)
                     localPart->stateStep_1E = 0;
 #else
-                    localPart->position0_0.vy = surface.groundHeight;
-                    if (surface.groundHeight < Q12(0.0f) && surface.groundHeight > Q12(-0.2))
+                    localPart->position0_0.vy = surface.floorHeight;
+                    if (surface.floorHeight < Q12(0.0f) && surface.floorHeight > Q12(-0.2))
                     {
                         localPart->position0_0.vy = Q12(0.0f);
                     }
@@ -3333,10 +3333,10 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                localPart->position0_0.vy = surface.groundHeight;
-                localPart->movement_18.vx = surface.groundType;
+                localPart->position0_0.vy = surface.floorHeight;
+                localPart->movement_18.vx = surface.floorType;
 
-                if (surface.groundType == GroundType_11)
+                if (surface.floorType == FloorType_11)
                 {
                     localPart->type_1F        = SnowType_HeavyWindy;
                     localPart->position1_C.vx = localPart->position0_0.vx;

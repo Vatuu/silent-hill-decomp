@@ -188,7 +188,7 @@ void func_800DB870(void);
  */
 void MapEvent_CutsceneAlleyNightmare(void);
 
-// Stops sound effects and warps the player to the ground.
+// Stops sound effects and warps the player to the floor.
 void func_800DBE00(void);
 
 void Map_WorldObjectsInit(void);

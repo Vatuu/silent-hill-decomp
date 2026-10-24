@@ -263,7 +263,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     {
         Collision_SurfaceGet(&surface, romper->position.vx, romper->position.vz);
 
-        if (surface.groundType == GroundType_None)
+        if (surface.floorType == FloorType_None)
         {
             if (Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1) < romper->position.vy)
             {
@@ -968,7 +968,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
             romper->moveSpeed = var_a0_2 << 1;
 
             Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-            temp = surface.groundHeight - Q12(0.8f);
+            temp = surface.floorHeight - Q12(0.8f);
 
             romper->fallSpeed  = (temp << 1) - Q12(2.45f);
             romperProps.flags &= ~RomperFlag_9;
@@ -1198,7 +1198,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
         if (romperProps.flags & RomperFlag_10)
         {
-            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.surface.groundHeight)
+            if (romper->model.controlState != RomperControl_10 && romper->position.vy <= collResult.surface.floorHeight)
             {
                 romperProps.flags &= ~RomperFlag_10;
             }
@@ -1218,18 +1218,18 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 {
                     romper->position.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.15f));
                     romper->fallSpeed    = Q12(0.0f);
-                    if (collResult.surface.groundHeight >= romper->position.vy)
+                    if (collResult.surface.floorHeight >= romper->position.vy)
                     {
-                        romper->position.vy = collResult.surface.groundHeight;
+                        romper->position.vy = collResult.surface.floorHeight;
                     }
                 }
             }
             else
             {
                 romper->position.vy += collResult.offset.vy;
-                if (collResult.surface.groundHeight < romper->position.vy)
+                if (collResult.surface.floorHeight < romper->position.vy)
                 {
-                    romper->position.vy = collResult.surface.groundHeight;
+                    romper->position.vy = collResult.surface.floorHeight;
                     romper->fallSpeed   = Q12(0.0f);
                 }
             }
@@ -1237,9 +1237,9 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         else
         {
             romper->position.vy += collResult.offset.vy;
-            if (collResult.surface.groundHeight < romper->position.vy)
+            if (collResult.surface.floorHeight < romper->position.vy)
             {
-                romper->position.vy = collResult.surface.groundHeight;
+                romper->position.vy = collResult.surface.floorHeight;
                 romper->fallSpeed   = Q12(0.0f);
             }
         }

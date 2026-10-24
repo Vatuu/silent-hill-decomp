@@ -93,7 +93,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
     s_CollisionSurface surface;
     q19_12             hero_bottom_y; // Player bottom height.
     q19_12             hero_top_y;    // Player top height.
-    q19_12             grnd_y;        // Absolute ground height.
+    q19_12             grnd_y;        // Absolute floor height.
     s_SubCharacter*    hr_p;          // Player character.
 
     // Step to next debug mode.
@@ -128,7 +128,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             else
             {
                 Collision_SurfaceGet(&surface, hr_p->position.vx, hr_p->position.vz);
-                grnd_y = surface.groundHeight;
+                grnd_y = surface.floorHeight;
 
                 vcMakeHeroHeadPos(&hr_head_pos);
             }

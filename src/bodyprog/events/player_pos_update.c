@@ -56,5 +56,5 @@ void Game_PlayerHeightUpdate(void) // 0x80037334
     }
 
     Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
-    g_SysWork.playerWork.player.position.vy = surface.groundHeight;
+    g_SysWork.playerWork.player.position.vy = surface.floorHeight;
 }

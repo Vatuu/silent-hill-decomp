@@ -23,7 +23,7 @@ typedef struct
 {
     /* 0x0 */ q23_8 positionX;
     /* 0x4 */ q23_8 positionZ;
-    /* 0x8 */ q7_8  groundHeight;
+    /* 0x8 */ q7_8  floorHeight;
     /* 0xA */ q7_8  topHeight; // Ceiling height?
     /* 0xC */ q7_8  field_C;   // Collision cylinder radius?
     /* 0xE */ s16   field_E;
@@ -46,12 +46,12 @@ typedef struct _RayState
     /* 0xA  */ s8               __pad_A[2];
     /* 0xC  */ VECTOR3          target; // Q23.8
     /* 0x18 */ s8               unk_18[4];
-    /* 0x1C */ q7_8             groundHeight;
+    /* 0x1C */ q7_8             floorHeight;
     /* 0x1E */ s8               __pad_1E[2];
     /* 0x20 */ s_SubCharacter*  character;
     /* 0x24 */ q7_8             offsetX;
     /* 0x26 */ q7_8             offsetZ;
-    /* 0x28 */ s32              groundType; /** `e_GroundType` */
+    /* 0x28 */ s32              floorType; /** `e_FloorType` */
     /* 0x2C */ VECTOR3          from;       // Q23.8
     /* 0x38 */ s8               unk_38[4];
     /* 0x3C */ s32              field_3C; // X  } Q23.8 `VECTOR3`?
@@ -82,12 +82,12 @@ typedef struct _RayState
 typedef struct _RayTrace
 {
     /* 0x0  */ s8              hasHit;     /** `bool` */
-    /* 0x1  */ u8              groundType; /** `e_GroundType` */
+    /* 0x1  */ u8              floorType; /** `e_FloorType` */
     /* 0x2  */ s8              __pad_2[2];
     /* 0x4  */ VECTOR3         target;     /** Q19.12 */
     /* 0x10 */ s_SubCharacter* character;
     /* 0x14 */ q19_12          hitDistance;
-    /* 0x18 */ q19_12          groundHeight;
+    /* 0x18 */ q19_12          floorHeight;
     /* 0x1C */ q3_12           headingAngle;
 } s_RayTrace;
 

@@ -116,7 +116,7 @@ STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 typedef enum _CameraAnchor
 {
     CameraAnchor_Character = 0,
-    CameraAnchor_Ground    = 1,
+    CameraAnchor_Floor    = 1,
     CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
 } e_CameraAnchor;
 

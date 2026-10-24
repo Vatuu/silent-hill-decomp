@@ -98,10 +98,10 @@ s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult) 
     chara->position.vy += newCollResult.offset.vy;
     chara->position.vz += newCollResult.offset.vz;
 
-    // Warp to ground.
-    if (chara->position.vy > newCollResult.surface.groundHeight)
+    // Warp to floor.
+    if (chara->position.vy > newCollResult.surface.floorHeight)
     {
-        chara->position.vy = newCollResult.surface.groundHeight;
+        chara->position.vy = newCollResult.surface.floorHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 
@@ -151,9 +151,9 @@ s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, 
     chara->position.vy += newCollResult.offset.vy;
     chara->position.vz += newCollResult.offset.vz;
 
-    if (chara->position.vy > newCollResult.surface.groundHeight)
+    if (chara->position.vy > newCollResult.surface.floorHeight)
     {
-        chara->position.vy = newCollResult.surface.groundHeight;
+        chara->position.vy = newCollResult.surface.floorHeight;
         chara->fallSpeed   = Q12(0.0f);
     }
 

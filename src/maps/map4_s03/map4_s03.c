@@ -192,7 +192,7 @@ void func_800D6774(void) // 0x800D6774
             CutsceneBorder_ForceShow();
             ScreenFade_ResetTimestep();
 
-            playerChara.position.vy = surface.groundHeight;
+            playerChara.position.vy = surface.floorHeight;
 
             Sfx_WithFlagsPlay(Sfx_Unk1556, &Q12_VECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
             func_80089470();

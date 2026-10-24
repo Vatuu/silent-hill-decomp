@@ -114,7 +114,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         g_SysWork.npcs[i].model.stateStep    = stateStep;
         g_SysWork.npcs[i].position.vx        = posX;
         Collision_SurfaceGet(&surface, posX, posZ);
-        g_SysWork.npcs[i].position.vy        = surface.groundHeight;
+        g_SysWork.npcs[i].position.vy        = surface.floorHeight;
         g_SysWork.npcs[i].position.vz        = posZ;
         g_SysWork.npcs[i].rotation.vy        = rotY;
 

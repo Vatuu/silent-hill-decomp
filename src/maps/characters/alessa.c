@@ -174,7 +174,7 @@ void Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* boneCoords)
     }
 
     Collision_SurfaceGet(&surface, alessa->position.vx, alessa->position.vz);
-    Player_FootstepSfxGet(surface.groundType, &sfxId, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.floorType, &sfxId, &pitch0, &pitch1);
 
     switch (alessaProps.controlState)
     {

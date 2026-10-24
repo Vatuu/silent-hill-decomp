@@ -328,7 +328,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
     }
 
     Collision_SurfaceGet(&surface, kaufmann->position.vx, kaufmann->position.vz);
-    Player_FootstepSfxGet(surface.groundType, &sfx, &pitch0, &pitch1);
+    Player_FootstepSfxGet(surface.floorType, &sfx, &pitch0, &pitch1);
 
     switch (kaufmannProps.controlState)
     {

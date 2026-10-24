@@ -142,7 +142,7 @@ typedef struct _VC_WORK
     /* 0x120 */ q19_12                    chara_bottom_y;                            /** Locked-on character bottom height. */
     /* 0x124 */ q19_12                    chara_top_y;                               /** Locked-on character top height. */
     /* 0x128 */ q19_12                    chara_center_y;                            /** Locked-on character center height. */
-    /* 0x12C */ q19_12                    chara_grnd_y;                              /** Locked-on character height from the ground? */
+    /* 0x12C */ q19_12                    chara_grnd_y;                              /** Locked-on character height from the floor? */
     /* 0x130 */ VECTOR3                   chara_head_pos;                            /** Q19.12 | Locked-on character head position. */
     /* 0x13C */ q19_12                    chara_mv_spd;                              /** Locked-on character movement speed. */
     /* 0x140 */ q3_12                     chara_mv_ang_y;                            /** Locked-on character heading angle. */

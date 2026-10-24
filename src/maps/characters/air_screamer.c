@@ -465,12 +465,12 @@ void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
     {
         if (count != 0)
         {
-            airScreamerProps.groundHeight = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+            airScreamerProps.floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
         }
     }
     else if (count != 12)
     {
-        airScreamerProps.groundHeight = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+        airScreamerProps.floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
     }
 }
 
@@ -636,7 +636,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     temp_s0_2 = func_800808AC(posX, posZ);
 
     cond2 = temp_s0_2 == 7;
-    if (airScreamer->position.vy >= (Collision_GroundHeightGet(posX, posZ) - Q12(0.15f)))
+    if (airScreamer->position.vy >= (Collision_FloorHeightGet(posX, posZ) - Q12(0.15f)))
     {
         sp28 = !cond2;
     }
@@ -690,7 +690,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
 
     var_s4 = 0;
 
-    if (airScreamer->position.vy < (Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.1f)))
+    if (airScreamer->position.vy < (Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.1f)))
     {
         switch (func_800808AC(airScreamer->position.vx, airScreamer->position.vz))
         {
@@ -823,7 +823,7 @@ bool AirScreamer_Init(s_SubCharacter* airScreamer)
     sharedFunc_800D2B10_0_s01(airScreamer);
     sharedFunc_800D2B28_0_s01(airScreamer);
     sharedFunc_800D2B4C_0_s01(airScreamer);
-    AirScreamer_GroundWarp(airScreamer);
+    AirScreamer_FloorWarp(airScreamer);
     sharedFunc_800D2BE4_0_s01(airScreamer);
 
     return true;
@@ -881,9 +881,9 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
     sharedFunc_800D82B8_0_s01(airScreamer);
 }
 
-void AirScreamer_GroundWarp(s_SubCharacter* airScreamer)
+void AirScreamer_FloorWarp(s_SubCharacter* airScreamer)
 {
-    airScreamer->position.vy = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+    airScreamer->position.vy = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
 }
 
 void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer)
@@ -1743,7 +1743,7 @@ void AirScreamer_Control_2(s_SubCharacter* airScreamer)
 {
     q19_12 damage;
     bool   cond1;
-    bool   isBelowGround;
+    bool   isBelowFloor;
     bool   temp_s3;
     u32    animStatus;
     s32    animStatus12;
@@ -1761,12 +1761,12 @@ void AirScreamer_Control_2(s_SubCharacter* airScreamer)
     {
         case 0:
             temp_s3       = sharedFunc_800D5F00_0_s01(airScreamer);
-            isBelowGround = false;
+            isBelowFloor = false;
             cond1         = airScreamer->position.vy >= Q12(8.0f);
 
             if (func_800808AC(airScreamer->position.vx, airScreamer->position.vz) == 7)
             {
-                isBelowGround = airScreamer->position.vy >= Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+                isBelowFloor = airScreamer->position.vy >= Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
             }
 
             if (cond1)
@@ -1780,7 +1780,7 @@ void AirScreamer_Control_2(s_SubCharacter* airScreamer)
                 break;
             }
 
-            if (isBelowGround)
+            if (isBelowFloor)
             {
                 AirScreamer_DamageTake(airScreamer, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(airScreamer);
@@ -4338,7 +4338,7 @@ void AirScreamer_Control_18(s_SubCharacter* airScreamer)
                         break;
                     }
 
-                    if (AirScreamer_IsGroundedCheck(airScreamer) != false)
+                    if (AirScreamer_IsFlooredCheck(airScreamer) != false)
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4528,7 +4528,7 @@ void AirScreamer_Control_19(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4765,7 +4765,7 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_6;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -4778,7 +4778,7 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_7;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5006,7 +5006,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5027,7 +5027,7 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5201,7 +5201,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_8;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5414,7 +5414,7 @@ void AirScreamer_Control_23(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_10;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5590,7 +5590,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -5873,7 +5873,7 @@ void AirScreamer_Control_26(s_SubCharacter* airScreamer)
 
                         airScreamer->model.stateStep = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -6030,7 +6030,7 @@ void AirScreamer_Control_27(s_SubCharacter* airScreamer)
                         airScreamer->model.controlState = AirScreamerControl_14;
                         airScreamer->model.stateStep    = 0;
                     }
-                    else if (AirScreamer_IsGroundedCheck(airScreamer))
+                    else if (AirScreamer_IsFlooredCheck(airScreamer))
                     {
                         airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
                     }
@@ -9254,7 +9254,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
 
     func_8006F250(sharedData_800E2370_0_s01, posX, posZ, posDeltaX, posDeltaZ);
 
-    if (arg1 >= sharedData_800E2370_0_s01[0] && (Collision_GroundHeightGet(posX, posZ) + charaFieldC8) >= sharedData_800E2370_0_s01[1])
+    if (arg1 >= sharedData_800E2370_0_s01[0] && (Collision_FloorHeightGet(posX, posZ) + charaFieldC8) >= sharedData_800E2370_0_s01[1])
     {
         if (posDeltaY < Q12(0.0f))
         {
@@ -9275,9 +9275,9 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
     return false;
 }
 
-bool AirScreamer_IsGroundedCheck(s_SubCharacter* airScreamer)
+bool AirScreamer_IsFlooredCheck(s_SubCharacter* airScreamer)
 {
-    return (Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.2f)) < airScreamer->position.vy;
+    return (Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.2f)) < airScreamer->position.vy;
 }
 
 bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult)
@@ -9304,7 +9304,7 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
             return true;
     }
 
-    return (Collision_GroundHeightGet(posX, posZ) + Q12(1.2f)) > airScreamer->position.vy;
+    return (Collision_FloorHeightGet(posX, posZ) + Q12(1.2f)) > airScreamer->position.vy;
 }
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
@@ -9342,7 +9342,7 @@ bool sharedFunc_800DC30C_2_s00(s_SubCharacter* airScreamer)
             return true;
     }
 
-    return (Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) + (airScreamer->collision.box.top * 2)) >= sharedData_800E2370_0_s01[1];
+    return (Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) + (airScreamer->collision.box.top * 2)) >= sharedData_800E2370_0_s01[1];
 }
 
 bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer)
@@ -9355,7 +9355,7 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer)
             return false;
     }
 
-    return Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) <= Q12(3.0f);
+    return Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) <= Q12(3.0f);
 }
 
 s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
@@ -9377,7 +9377,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
         !(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
 #endif
     {
-        if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsGroundedCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
+        if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsFlooredCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {
             if (sharedFunc_800DC0E4_2_s00(airScreamer, Q12(1.0f)))
             {
@@ -9401,7 +9401,7 @@ bool AirScreamer_HasLandedCheck(s_SubCharacter* airScreamer)
 {
     return (airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverVariable, true) || airScreamer->model.anim.status == ANIM_STATUS(AirScreamerAnim_HoverConstant, true)) &&
            sharedFunc_800DC3BC_2_s00(airScreamer) &&
-           ((airScreamer->fallSpeed >= 0 && AirScreamer_IsGroundedCheck(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
+           ((airScreamer->fallSpeed >= 0 && AirScreamer_IsFlooredCheck(airScreamer)) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(1.0f)));
 }
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer)
@@ -9415,7 +9415,7 @@ s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer)
     if (animStatus == ANIM_STATUS(AirScreamerAnim_WalkForward, true) ||
         animStatus == ANIM_STATUS(AirScreamerAnim_StandIdle, true))
     {
-        if (airScreamer->position.vy < (Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.7f)))
+        if (airScreamer->position.vy < (Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) - Q12(0.7f)))
         {
             if (sharedFunc_800DC200_2_s00(airScreamer) && airScreamer->moveSpeed > Q12(1.5f))
             {
@@ -9552,8 +9552,8 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
     bool     hasLosHit;
     s32      temp_v1;
     s32      prevCollState;
-    q19_12   groundHeight;
-    q19_12   groundOffset;
+    q19_12   floorHeight;
+    q19_12   floorOffset;
     q19_12   offsetX;
     q19_12   offsetZ;
     s32      var_a0;
@@ -9644,7 +9644,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             sharedData_800E2330_0_s01.hasHit       = hasHit;
             sharedData_800E2330_0_s01.target.vx    = temp3 + posX;
             sharedData_800E2330_0_s01.target.vy    = temp2 + posY;
-            sharedData_800E2330_0_s01.groundHeight = sharedData_800E2330_0_s01.target.vy;
+            sharedData_800E2330_0_s01.floorHeight = sharedData_800E2330_0_s01.target.vy;
 
             temp2                                 = Q12_MULT_PRECISE(offsetZ, var_v1);
             sharedData_800E2330_0_s01.target.vz  = temp2 + posZ;
@@ -9658,23 +9658,23 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 
         if (hasLosHit)
         {
-            if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.groundHeight)
+            if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.floorHeight)
             {
-                groundOffset                         = (Rng_RandQ12() / 2) + Q12(1.5f);
-                sharedData_800E2330_0_s01.target.vy = sharedData_800E2330_0_s01.groundHeight - groundOffset;
+                floorOffset                         = (Rng_RandQ12() / 2) + Q12(1.5f);
+                sharedData_800E2330_0_s01.target.vy = sharedData_800E2330_0_s01.floorHeight - floorOffset;
             }
             else
             {
-                groundHeight  = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
-                groundOffset  = (Rng_RandQ12() / 2) + Q12(1.5f);
-                groundHeight -= groundOffset;
+                floorHeight  = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+                floorOffset  = (Rng_RandQ12() / 2) + Q12(1.5f);
+                floorHeight -= floorOffset;
 
-                groundOffset                         = (Rng_RandQ12() / 2) - Q12(0.25f);
-                sharedData_800E2330_0_s01.target.vy = airScreamer->position.vy - groundOffset;
+                floorOffset                         = (Rng_RandQ12() / 2) - Q12(0.25f);
+                sharedData_800E2330_0_s01.target.vy = airScreamer->position.vy - floorOffset;
 
-                if (groundHeight < sharedData_800E2330_0_s01.target.vy)
+                if (floorHeight < sharedData_800E2330_0_s01.target.vy)
                 {
-                    sharedData_800E2330_0_s01.target.vy = groundHeight;
+                    sharedData_800E2330_0_s01.target.vy = floorHeight;
                 }
             }
         }
@@ -9740,10 +9740,10 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         sharedData_800DE1C0_0_s01.vz = Math_Cos(rotY) * 2;
 
         if (Ray_LosHitCheck(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) &&
-            sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.groundHeight)
+            sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.floorHeight)
         {
             airScreamerProps.targetPosition2.vx = sharedData_800E2330_0_s01.target.vx;
-            airScreamerProps.targetPosition2.vy = sharedData_800E2330_0_s01.groundHeight - Q12(1.5f);
+            airScreamerProps.targetPosition2.vy = sharedData_800E2330_0_s01.floorHeight - Q12(1.5f);
             airScreamerProps.targetPosition2.vz = sharedData_800E2330_0_s01.target.vz;
             return;
         }
@@ -9913,7 +9913,7 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         newPosX = playerPosX + Q12_MULT_PRECISE(dist, Math_Sin(headingAngle));
         newPosZ = playerPosZ + Q12_MULT_PRECISE(dist, Math_Cos(headingAngle));
 
-        unkDeltaAngle = Collision_GroundHeightGet(newPosX, newPosZ);
+        unkDeltaAngle = Collision_FloorHeightGet(newPosX, newPosZ);
         unkDeltaAngle = MIN(unkDeltaAngle, 0);
 
         airScreamer->position.vy           = unkDeltaAngle + arg1;
@@ -10006,7 +10006,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
 
         curPosX = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(20.0f));
         curPosZ = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(20.0f));
-        curPosY = Collision_GroundHeightGet(curPosX, curPosZ) - Q12(2.0f);
+        curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
             !func_8008F914(curPosX, curPosZ) || !func_800808AC(curPosX, curPosZ))
@@ -10071,7 +10071,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
     {
         curPosX = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(20.0f));
         curPosZ = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(20.0f));
-        curPosY = Collision_GroundHeightGet(curPosX, curPosZ) - Q12(2.0f);
+        curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
             !func_8008F914(curPosX, curPosZ) || !func_800808AC(curPosX, curPosZ))
@@ -10388,7 +10388,7 @@ void sharedFunc_800DDF74_2_s00(s_SubCharacter* airScreamer, q19_12 dist, q19_12 
 
     newPosX += Q12_MULT_PRECISE(dist, Math_Sin(headingAngle));
     newPosZ += Q12_MULT_PRECISE(dist, Math_Cos(headingAngle));
-    newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
+    newPosY  = Collision_FloorHeightGet(newPosX, newPosZ);
 
     airScreamerProps.targetPosition.vx = newPosX;
     airScreamerProps.targetPosition.vy = newPosY;
@@ -10409,7 +10409,7 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12
     posX         = vec->vx + Q12_MULT_PRECISE(scaledRadius, Math_Sin(angle));
     posZ         = vec->vz + Q12_MULT_PRECISE(scaledRadius, Math_Cos(angle));
 
-    posY                                  = Collision_GroundHeightGet(posX, posZ);
+    posY                                  = Collision_FloorHeightGet(posX, posZ);
     airScreamerProps.targetPosition.vx = posX;
     airScreamerProps.targetPosition.vy = posY;
     airScreamerProps.targetPosition.vz = posZ;
@@ -10434,7 +10434,7 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* airScreamer)
     headingAngle = Math_AngleBetweenPositionsGet(g_SysWork.playerWork.player.position, airScreamer->position);
     newPosX      = playerPosX + Q12_MULT_PRECISE(dist, Math_Sin(headingAngle));
     newPosZ      = playerPosZ + Q12_MULT_PRECISE(dist, Math_Cos(headingAngle));
-    newPosY      = Collision_GroundHeightGet(newPosX, newPosZ);
+    newPosY      = Collision_FloorHeightGet(newPosX, newPosZ);
 
     // TODO: Work out which character this is for. Tracking projected player position?
     airScreamerProps.targetPosition.vx = newPosX;
@@ -10452,7 +10452,7 @@ void sharedFunc_800DE1F8_2_s00(s_SubCharacter* airScreamer) // 0x800DE514
 
     newPosX = airScreamerProps.headTargetPosition.vx;
     newPosZ = airScreamerProps.headTargetPosition.vz;
-    newPosY = Collision_GroundHeightGet(newPosX, newPosZ);
+    newPosY = Collision_FloorHeightGet(newPosX, newPosZ);
 
     airScreamerProps.targetPosition.vx = newPosX;
     airScreamerProps.targetPosition.vy = newPosY;
@@ -10464,7 +10464,7 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
 {
     q19_12 posX;
     q19_12 posZ;
-    q19_12 groundHeight;
+    q19_12 floorHeight;
     q19_12 unkPosX;
     q19_12 unkPosZ;
     q19_12 deltaX;
@@ -10481,7 +10481,7 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
     q19_12 unkDist;
     u32    cond1;
     q19_12 targetPosZ;
-    q19_12 groundHeight1;
+    q19_12 floorHeight1;
     q19_12 curAngle;
     s32    i;
     q19_12 dist;
@@ -10496,7 +10496,7 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
 
     posX         = airScreamer->position.vx;
     posZ         = airScreamer->position.vz;
-    groundHeight = airScreamerProps.groundHeight;
+    floorHeight = airScreamerProps.floorHeight;
 
     unkPosX = airScreamerProps.headTargetPosition.vx;
     unkPosZ = airScreamerProps.headTargetPosition.vz;
@@ -10540,18 +10540,18 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
 
             if (!cond)
             {
-                groundHeight1 = Collision_GroundHeightGet(newPosX, newPosZ);
-                if (groundHeight < groundHeight1)
+                floorHeight1 = Collision_FloorHeightGet(newPosX, newPosZ);
+                if (floorHeight < floorHeight1)
                 {
-                    groundHeight1 = groundHeight;
+                    floorHeight1 = floorHeight;
                 }
 
-                groundHeight1 -= Q12(1.5f) + (Rng_RandQ12() / 2);
-                if (groundHeight1 < sharedFunc_800D5274_0_s01())
+                floorHeight1 -= Q12(1.5f) + (Rng_RandQ12() / 2);
+                if (floorHeight1 < sharedFunc_800D5274_0_s01())
                 {
-                    groundHeight1 = sharedFunc_800D5274_0_s01();
+                    floorHeight1 = sharedFunc_800D5274_0_s01();
                 }
-                sharedData_800F21CC_2_s00.vy = groundHeight1;
+                sharedData_800F21CC_2_s00.vy = floorHeight1;
             }
 
             sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800F21CC_2_s00, &sharedData_800F21CC_2_s00);
@@ -10577,7 +10577,7 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
     airScreamerProps.targetPosition.vz = targetPosZ;
     if (cond)
     {
-        airScreamerProps.targetPosition.vy = Collision_GroundHeightGet(targetPosX, targetPosZ);
+        airScreamerProps.targetPosition.vy = Collision_FloorHeightGet(targetPosX, targetPosZ);
     }
     else
     {
@@ -10608,8 +10608,8 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_1
     newPosX = newPosX + Q12_MULT_PRECISE(radius, Math_Sin(headingAngle));
     newPosZ = newPosZ + Q12_MULT_PRECISE(radius, Math_Cos(headingAngle));
 
-    newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
-    newPosY  = MIN(airScreamerProps.groundHeight, newPosY);
+    newPosY  = Collision_FloorHeightGet(newPosX, newPosZ);
+    newPosY  = MIN(airScreamerProps.floorHeight, newPosY);
     newPosY -= Q12(1.5f) + Rng_RandQ12() / 2;
     if (newPosY < sharedFunc_800D5274_0_s01())
     {
@@ -10638,8 +10638,8 @@ void sharedFunc_800DE6A8_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12
     newPosX      = vec->vx + Q12_MULT_PRECISE(scaledRadius, Math_Sin(headingAngle));
     newPosZ      = vec->vz + Q12_MULT_PRECISE(scaledRadius, Math_Cos(headingAngle));
 
-    newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
-    newPosY  = MIN(airScreamerProps.groundHeight, newPosY);
+    newPosY  = Collision_FloorHeightGet(newPosX, newPosZ);
+    newPosY  = MIN(airScreamerProps.floorHeight, newPosY);
     newPosY -= Q12(1.5f) + (Rng_RandQ12() / 2);
 
     // `posY = MAX(posY, sharedFunc_800D5274_0_s01())`? Doesn't currently match.
@@ -10699,7 +10699,7 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     q19_12 targetPosX;
     q19_12 targetPosY;
     q19_12 targetPosZ;
-    q19_12 groundHeight;
+    q19_12 floorHeight;
     q19_12 playerPosX;
     q19_12 playerPosY;
     q19_12 playerPosZ;
@@ -10761,14 +10761,14 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
         targetPosZ = playerPosZ + Q12_MULT_PRECISE(playerRadius / 4, Math_Cos(angleToPlayer));
     }
 
-    // Clamp to ground. TODO: Doesn't match with `MAX` macro.
-    groundHeight = Collision_GroundHeightGet(targetPosX, targetPosZ);
-    groundHeight = MIN(airScreamerProps.groundHeight, groundHeight);
-    if (groundHeight < sharedFunc_800D5274_0_s01())
+    // Clamp to floor. TODO: Doesn't match with `MAX` macro.
+    floorHeight = Collision_FloorHeightGet(targetPosX, targetPosZ);
+    floorHeight = MIN(airScreamerProps.floorHeight, floorHeight);
+    if (floorHeight < sharedFunc_800D5274_0_s01())
     {
-        groundHeight = sharedFunc_800D5274_0_s01();
+        floorHeight = sharedFunc_800D5274_0_s01();
     }
-    targetPosY = MAX(groundHeight - Q12(2.0f), targetPosY);
+    targetPosY = MAX(floorHeight - Q12(2.0f), targetPosY);
 
     // Set Air Screamer position to target.
     airScreamerProps.targetPosition.vx = targetPosX;
@@ -10787,23 +10787,23 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* airScreamer)
 {
     q19_12 newPosX;
-    q19_12 groundHeight;
+    q19_12 floorHeight;
     q19_12 newPosZ;
 
     newPosX = airScreamerProps.headTargetPosition.vx;
     newPosZ = airScreamerProps.headTargetPosition.vz;
 
-    groundHeight  = Collision_GroundHeightGet(newPosX, newPosZ);
-    groundHeight  = MIN(airScreamerProps.groundHeight, groundHeight);
-    groundHeight -= Q12(1.7f);
-    if (groundHeight < sharedFunc_800D5274_0_s01())
+    floorHeight  = Collision_FloorHeightGet(newPosX, newPosZ);
+    floorHeight  = MIN(airScreamerProps.floorHeight, floorHeight);
+    floorHeight -= Q12(1.7f);
+    if (floorHeight < sharedFunc_800D5274_0_s01())
     {
-        groundHeight = sharedFunc_800D5274_0_s01();
+        floorHeight = sharedFunc_800D5274_0_s01();
     }
 
     // TODO: Work out which character this is for.
     airScreamerProps.targetPosition.vx = newPosX;
-    airScreamerProps.targetPosition.vy = groundHeight;
+    airScreamerProps.targetPosition.vy = floorHeight;
     airScreamerProps.targetPosition.vz = newPosZ;
 
     sharedFunc_800D4E84_0_s01(airScreamer);
@@ -10875,7 +10875,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     q19_12 playerOffsetX;
     q19_12 var_s2;
     q19_12 playerMoveSpeed;
-    q19_12 groundHeight;
+    q19_12 floorHeight;
 
     playerheadingAngle = g_SysWork.playerWork.player.headingAngle;
     playerMoveSpeed    = g_SysWork.playerWork.player.moveSpeed;
@@ -10942,12 +10942,12 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     newPlayerPosX = playerPosX + playerOffsetX;
     newPlayerPosZ = playerPosZ + playerOffsetZ;
     playerOffsetX = playerPosY + g_SysWork.playerWork.player.collision.box.top;
-    playerOffsetZ = Collision_GroundHeightGet(newPlayerPosX, newPlayerPosZ);
+    playerOffsetZ = Collision_FloorHeightGet(newPlayerPosX, newPlayerPosZ);
 
-    groundHeight = airScreamerProps.groundHeight;
-    if (groundHeight < playerOffsetZ)
+    floorHeight = airScreamerProps.floorHeight;
+    if (floorHeight < playerOffsetZ)
     {
-        playerOffsetZ = groundHeight;
+        playerOffsetZ = floorHeight;
     }
 
     if (playerOffsetZ < sharedFunc_800D5274_0_s01())
@@ -10955,10 +10955,10 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
         playerOffsetZ = sharedFunc_800D5274_0_s01();
     }
 
-    groundHeight = playerOffsetZ - Q12(2.0f);
-    if (playerOffsetX < groundHeight)
+    floorHeight = playerOffsetZ - Q12(2.0f);
+    if (playerOffsetX < floorHeight)
     {
-        playerOffsetX = groundHeight;
+        playerOffsetX = floorHeight;
     }
 
     airScreamerProps.targetPosition.vx = newPlayerPosX;
@@ -11424,8 +11424,8 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
 s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 dist)
 {
     q19_12 posY;
-    s32    prevGroundHeight;
-    q19_12 groundHeight;
+    s32    prevFloorHeight;
+    q19_12 floorHeight;
     q19_12 vecYCpy;
     q19_12 distCpy;
     q19_12 vec_x;
@@ -11434,39 +11434,39 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     vecYCpy      = vecY;
     posY         = airScreamer->position.vy;
     distCpy      = dist;
-    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+    floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
 
-    // TODO: Not used as ground height in this func?
-    prevGroundHeight = airScreamerProps.groundHeight;
+    // TODO: Not used as floor height in this func?
+    prevFloorHeight = airScreamerProps.floorHeight;
 
     vec_x = airScreamerProps.targetPosition2.vx;
     vec_z = airScreamerProps.targetPosition2.vz;
 
-    if (prevGroundHeight < groundHeight)
+    if (prevFloorHeight < floorHeight)
     {
-        groundHeight = prevGroundHeight;
+        floorHeight = prevFloorHeight;
     }
 
-    groundHeight -= Q12(1.7f);
-    prevGroundHeight         = func_800808AC(vec_x, vec_z); // Collision type? This returns `caseVar` from `Collision_Fill`.
-    if (prevGroundHeight == 12 || prevGroundHeight == 0 || prevGroundHeight == 7)
+    floorHeight -= Q12(1.7f);
+    prevFloorHeight         = func_800808AC(vec_x, vec_z); // Collision type? This returns `caseVar` from `Collision_Fill`.
+    if (prevFloorHeight == 12 || prevFloorHeight == 0 || prevFloorHeight == 7)
     {
         distCpy = Q12(0.0f);
     }
 
-    if (posY < groundHeight)
+    if (posY < floorHeight)
     {
-        groundHeight = posY;
+        floorHeight = posY;
     }
 
     if (distCpy > Q12(12.0f))
     {
-        vecYCpy = groundHeight;
+        vecYCpy = floorHeight;
     }
     else if (distCpy > Q12(4.0f))
     {
-        prevGroundHeight    = Q12_DIV(distCpy - Q12(4.0f), Q12(8.0f));
-        vecYCpy += Q12_MULT_PRECISE((groundHeight - vecYCpy), prevGroundHeight);
+        prevFloorHeight    = Q12_DIV(distCpy - Q12(4.0f), Q12(8.0f));
+        vecYCpy += Q12_MULT_PRECISE((floorHeight - vecYCpy), prevFloorHeight);
     }
 
     if (vecYCpy < sharedFunc_800D5274_0_s01())
@@ -12294,7 +12294,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     q19_12 posX;
     q19_12 posY;
     q19_12 posZ;
-    q19_12 groundHeight;
+    q19_12 floorHeight;
     s32    temp_s0;
     s32    temp_v0_3;
     s32    var_fp;
@@ -12311,14 +12311,14 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     posY = airScreamer->position.vy;
     posZ = airScreamer->position.vz;
 
-    groundHeight = Collision_GroundHeightGet(posX, posZ);
+    floorHeight = Collision_FloorHeightGet(posX, posZ);
 
     if (airScreamer->moveSpeed != Q12(0.0f))
     {
         return false;
     }
 
-    if (posY < groundHeight)
+    if (posY < floorHeight)
     {
         return false;
     }
@@ -12357,12 +12357,12 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
     for (var_s4 = 0x200; var_s4 <= 0x800; var_s4 += 0x800, var_fp++)
     {
-        var_s5 = groundHeight + (var_fp << 7);
+        var_s5 = floorHeight + (var_fp << 7);
 
         for (i = 0, var_s3 = 0; i < 8; i++, var_s3 += 0x200)
         {
             temp_s0   = posX + Q12_MULT_PRECISE(var_s4, Math_Sin(var_s3));
-            temp_v0_3 = Collision_GroundHeightGet(temp_s0, Q12_MULT_PRECISE(var_s4, Math_Cos(var_s3)) + posZ);
+            temp_v0_3 = Collision_FloorHeightGet(temp_s0, Q12_MULT_PRECISE(var_s4, Math_Cos(var_s3)) + posZ);
 
             if (var_s5 < temp_v0_3)
             {
@@ -12426,9 +12426,9 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     posY += g_AirScreamer_CollisionResult.offset.vy;
     posZ += g_AirScreamer_CollisionResult.offset.vz;
 
-    groundHeight = Collision_GroundHeightGet(posX, posZ);
+    floorHeight = Collision_FloorHeightGet(posX, posZ);
 
-    posY = MIN(groundHeight, posY);
+    posY = MIN(floorHeight, posY);
 
     airScreamer->position.vx = posX;
     airScreamer->position.vy = posY;
@@ -12631,7 +12631,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* ai
     s32      vec2X;
     s32      vec2Z;
     q19_12   posY;
-    q19_12   groundHeight;
+    q19_12   floorHeight;
     s32      newVec1Y;
     s32      newVec2Y;
     s32      time;
@@ -12689,8 +12689,8 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* ai
     vec1Y    = vec1->vy;
     vec0Y    = localOffset->vy;
 
-    groundHeight                        = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz);
-    sharedData_800E21D0_0_s01.field_114 = groundHeight;
+    floorHeight                        = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
+    sharedData_800E21D0_0_s01.field_114 = floorHeight;
     retCode1                            = 1;
 
     if (airScreamer->collision.state == CharaCollisionState_Ignore)
@@ -12698,23 +12698,23 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* ai
         newVec2Y = Q12(0.0f);
         newVec1Y = Q12(0.0f);
     }
-    else if (posY >= groundHeight && vec0Y >= Q12(0.0f))
+    else if (posY >= floorHeight && vec0Y >= Q12(0.0f))
     {
         flags   &= ~AirScreamerFlag_30;
-        posY     = groundHeight;
+        posY     = floorHeight;
         newVec2Y = Q12(0.0f);
         newVec1Y = Q12(0.0f);
     }
     else
     {
         posY += vec0Y;
-        if (posY >= groundHeight)
+        if (posY >= floorHeight)
         {
             flags   |= AirScreamerFlag_30;
             ret      = retCode1;
             newVec2Y = Q12(0.0f);
             newVec1Y = -vec1Y;
-            posY     = groundHeight;
+            posY     = floorHeight;
         }
         else
         {
@@ -13027,7 +13027,7 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_1
 
 s32 sharedFunc_800D7440_0_s01(s_CollisionResult* collResult, VECTOR* offset, s_SubCharacter* airScreamer)
 {
-    q19_12             groundHeight;
+    q19_12             floorHeight;
     q19_12             posY;
     s32                wallResponse;
     s32                cond;
@@ -13042,18 +13042,18 @@ s32 sharedFunc_800D7440_0_s01(s_CollisionResult* collResult, VECTOR* offset, s_S
     wallResponse = Collision_WallDetect(localCollResult, offset, airScreamer);
 
     posY         = airScreamer->position.vy;
-    groundHeight = Collision_GroundHeightGet(airScreamer->position.vx + localCollResult->offset.vx,
+    floorHeight = Collision_FloorHeightGet(airScreamer->position.vx + localCollResult->offset.vx,
                                              airScreamer->position.vz + localCollResult->offset.vz);
 
     if (sharedFunc_800D4A80_0_s01(airScreamer) != 4)
     {
-        if (offset->vy > Q12(0.0f) && groundHeight < (posY - Q12(0.5f)))
+        if (offset->vy > Q12(0.0f) && floorHeight < (posY - Q12(0.5f)))
         {
             localCollResult->offset.vx = Q12(0.0f);
             localCollResult->offset.vz = Q12(0.0f);
         }
     }
-    else if (groundHeight < posY)
+    else if (floorHeight < posY)
     {
         localCollResult->offset.vx = Q12(0.0f);
         localCollResult->offset.vz = Q12(0.0f);
@@ -13213,7 +13213,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
     q19_12 moveSpeed;
     q19_12 speed_2;
     q19_12 temp_lo;
-    q19_12 distToGround;
+    q19_12 distToFloor;
     q19_12 speed1;
     q20_12 absRot;
     q20_12 absSpeed;
@@ -13319,11 +13319,11 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
         case ANIM_STATUS(AirScreamerAnim_HoverToStun, true):
         case ANIM_STATUS(AirScreamerAnim_GlideToStun, true):
         case ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, true):
-            distToGround = Collision_GroundHeightGet(airScreamer->position.vx, airScreamer->position.vz) -
+            distToFloor = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz) -
                            airScreamer->position.vy;
             speed1       = Q12(20.0f);
 
-            if (distToGround > Q12(0.0f))
+            if (distToFloor > Q12(0.0f))
             {
                 speed_2  = airScreamer->fallSpeed;
                 animTime = airScreamer->model.anim.time;
@@ -13348,7 +13348,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                         break;
                 }
 
-                temp_lo = Q12_DIV(ret_3 - animTime, distToGround);
+                temp_lo = Q12_DIV(ret_3 - animTime, distToFloor);
                 speed1  = Q12_MULT_PRECISE(speed_2, temp_lo);
             }
 

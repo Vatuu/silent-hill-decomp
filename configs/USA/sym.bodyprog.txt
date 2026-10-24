@@ -885,7 +885,7 @@ Collision_CharaCollisionHandle               = 0x8006AD44; // type:func
 Collision_CellInit                           = 0x8006AEAC;
 Collision_CellIdxGet                         = 0x8006B004;
 Collision_OffsetAlphaGet                     = 0x8006CB90;
-Ipd_GroundHeightGet                          = 0x8006CC44; // type:func
+Ipd_FloorHeightGet                           = 0x8006CC44; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x048DAC   VA: 0x8006D90C   subsegment: c, collision/ray
@@ -964,7 +964,7 @@ Input_SelectClickSet                         = 0x80080458; // type:func
 Rng_RandQ12                                  = 0x80080514; // type:func
 Math_PreservedSignSubtract                   = 0x80080594; // type:func
 Collision_Fill                               = 0x8008076C; // type:func
-Collision_GroundHeightGet                    = 0x80080884; // type:func
+Collision_FloorHeightGet                     = 0x80080884; // type:func
 Math_MulFixed                                = 0x800808D4; // type:func
 Math_MagnitudeShiftGet                       = 0x800808F8; // type:func
 

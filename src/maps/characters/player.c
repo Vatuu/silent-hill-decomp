@@ -128,7 +128,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         moveOffsetZ = Math_Cos(player->headingAngle);
         moveOffsetZ = Q12_MULT(player->moveSpeed, moveOffsetZ);
 
-        // Compute displacement alpha from ground slope.
+        // Compute displacement alpha from floor slope.
         moveOffsetAlphaX = Math_Cos(DIV_FAST(ABS(surface.tiltAngleX), 8));
         moveOffsetAlphaZ = Math_Cos(DIV_FAST(ABS(surface.tiltAngleZ), 8));
 
@@ -177,14 +177,14 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         player->position.vy += UnkStruct.offset.vy;
         player->position.vz += UnkStruct.offset.vz;
 
-        if (UnkStruct.surface.groundType == GroundType_Default)
+        if (UnkStruct.surface.floorType == FloorType_Default)
         {
-            UnkStruct.surface.groundHeight = player->properties.player.groundHeight;
+            UnkStruct.surface.floorHeight = player->properties.player.floorHeight;
         }
 
-        if (player->position.vy > UnkStruct.surface.groundHeight)
+        if (player->position.vy > UnkStruct.surface.floorHeight)
         {
-            player->position.vy = UnkStruct.surface.groundHeight;
+            player->position.vy = UnkStruct.surface.floorHeight;
             player->fallSpeed   = Q12(0.0f);
         }
     }

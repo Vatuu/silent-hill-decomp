@@ -127,7 +127,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX;
             g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ;
             Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
-            g_SysWork.npcs[npcIdx].position.vy        = surface.groundHeight;
+            g_SysWork.npcs[npcIdx].position.vy        = surface.floorHeight;
             g_SysWork.npcs[npcIdx].rotation.vy        = Q8_TO_Q12(curCharaSpawn->rotationY);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);
