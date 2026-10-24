@@ -4,12 +4,13 @@
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
 
-// TODO: "Chunk cells", "cells", and "cells". Document these terms.
-// Sezz: Those names are bad. Will revise the hierarchy to:
-// - Chunk: 40x40 cells (or 5x5 subchunks).
-// - Subchunk: 8x8 cells.
-// - Cell: 1x1 meter unit.
-// - Surface: cell split for fine-tuned collision (always(?) 2 splits per cell)
+/** @brief GLOSSARY OF TERMS
+ *
+ * Chunk:    40x40 cell or 5x5 subchunk area. 1 per IPD file.
+ * Subchunk: 8x8 cell area. 25 per chunk.
+ * Cell:     1x1 collision unit.
+ * Surface:  Cell split containing fine-grained collision attributes. 2 per cell.
+ */
 
 #define IPD_HEADER_MAGIC 20
 
@@ -20,17 +21,17 @@
 typedef enum _FloorType
 {
     FloorType_Default = 0,
-    FloorType_1       = 1,
+    FloorType_1       = 1,  // Uses concrete sound.
     FloorType_2       = 2,
     FloorType_Grass   = 3,
     FloorType_4       = 4,
     FloorType_5       = 5,
-    FloorType_6       = 6,
-    FloorType_7       = 7,
+    FloorType_6       = 6,  // Uses metal sound.
+    FloorType_7       = 7,  // Uses concrete sound.
     FloorType_8       = 8,
     FloorType_9       = 9,
-    FloorType_10      = 10,
-    FloorType_11      = 11,
+    FloorType_10      = 10, // Uses metal sound.
+    FloorType_11      = 11, // Uses metal sound.
     FloorType_None    = 12
 } e_FloorType;
 
@@ -74,7 +75,7 @@ STATIC_ASSERT_SIZEOF(s_IpdCell, 10);
 // Name uncertain.
 typedef struct _IpdCellAttribs
 {
-    /* 0x0+0  */ u16      floorType    : 5; /** `e_FloorType` */
+    /* 0x0+0  */ u16      floorType     : 5; /** `e_FloorType` */
     /* 0x0+5  */ u16      disableHeight : 3; /** `bool` */
     /* 0x0+8  */ u16      field_0_8     : 4; // Some flag index.
     /* 0x0+12 */ u16      field_0_12    : 3;
