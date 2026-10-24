@@ -485,9 +485,6 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/events/game_sys_states", SysState_MapScreen_Update);
-#else
 void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
@@ -530,7 +527,6 @@ void SysState_MapScreen_Update(void) // 0x800396D4
         }
     }
 }
-#endif
 
 void GameState_LoadMapScreen_Update(void) // 0x8003991C
 {
