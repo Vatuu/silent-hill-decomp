@@ -158,7 +158,7 @@ void func_800DE62C(void) // 0x800DE62C
     memset(UNK_FS_BUFFER_6->field_4101, 0, ARRAY_SIZE(UNK_FS_BUFFER_6->field_4101));
 }
 
-void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800DE658
+void func_800DE658(s_func_800DE274* arg0, q23_8 arg1, q23_8 arg2, q23_8 arg3, q23_8 arg4) // 0x800DE658
 {
     s32 temp_a3;
     s32 temp_t9;
@@ -179,10 +179,10 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
 
     ptr0 = UNK_FS_BUFFER_6->field_4101;
 
-    arg1 = arg1 + 0xA6;
-    arg2 = arg2 + 0x70;
+    arg1 = arg1 + Q8(0.65f);
+    arg2 = arg2 + 112;
 
-    if (arg3 == 0)
+    if (arg3 == Q8(0.0f))
     {
         return;
     }
@@ -190,7 +190,7 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     arg3   = Q12_MULT(arg3, arg4);
     var_t0 = arg2 - arg3;
 
-    if (var_t0 > 0xE0)
+    if (var_t0 > Q8(7.0f / 8.0f))
     {
         return;
     }
@@ -198,7 +198,7 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     if (var_t0 < 0)
     {
         var_a0_2 = -var_t0;
-        var_t2   = (var_a0_2 * 0x40) / arg3;
+        var_t2   = (var_a0_2 * 64) / arg3;
         var_t2   = FP_TO(var_t2, Q12_SHIFT);
         var_t0   = 0;
     }
@@ -216,10 +216,10 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
         return;
     }
 
-    temp_t9 = MIN(var_t0, 0xE0) / 12;
+    temp_t9 = MIN(var_t0, Q8(7.0f / 8.0f)) / 12;
     var_t0  = arg1 - arg3;
 
-    if (var_t0 > 0x14C)
+    if (var_t0 > Q8(1.3f))
     {
         return;
     }
@@ -227,13 +227,13 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     if (var_t0 < 0)
     {
         var_a0_2 = -var_t0;
-        var_t7   = (var_a0_2 * 0x40) / arg3;
+        var_t7   = (var_a0_2 * 64) / arg3;
         var_t7   = FP_TO(var_t7, Q12_SHIFT);
         var_t0   = 0;
     }
     else
     {
-        var_t7 = ((var_t0 / 12 * 0xC - var_t0) * 0x40) / arg3;
+        var_t7 = ((((var_t0 / 12) * 12) - var_t0) * 64) / arg3;
         var_t7 = FP_TO(var_t7, Q12_SHIFT);
     }
 
@@ -245,7 +245,7 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
         return;
     }
 
-    var_a0_2 = MIN(var_t0, 0x14C);
+    var_a0_2 = MIN(var_t0, Q8(1.3f));
     temp_a3  = 0x300000 / arg3;
     var_t8   = var_t2;
     temp_v1  = var_a0_2 / 12;
@@ -255,7 +255,7 @@ void func_800DE658(s_func_800DE274* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4
     {
         var_t0  = MAX(FP_FROM(var_t8, Q12_SHIFT), 0);
         var_t8 += temp_s0;
-        ptr1    = &arg0->field_0[var_t0 * 0x81];
+        ptr1    = &arg0->field_0[var_t0 * 129];
         var_t2  = var_t7;
 
         for (j = temp_s2; j <= temp_v1; j++)
@@ -654,7 +654,7 @@ bool func_800DF41C(s_800ED848* arg0) // 0x800DF41C
     for (i = 0; i < 50; i++)
     {
         var_v1 = 332;
-        func_800DE658(ptr0, ((Rng_Rand16() % 332) / 4) + (arg0->field_8 - var_v1), ((Rng_Rand16() % 224) / 2) - 56, Rng_Rand16() % 64 + 10, Rng_Rand16() % 0x800);
+        func_800DE658(ptr0, ((Rng_Rand16() % 332) / 4) + (arg0->field_8 - var_v1), ((Rng_Rand16() % 224) / 2) - 56, (Rng_Rand16() % 64) + 10, Rng_Rand16() % 2048);
     }
 
     return false;

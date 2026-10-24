@@ -9011,20 +9011,19 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             break;
     }
 
-    // TODO: Use range-based rand macro.
     switch (floorType)
     {
         case FloorType_5:
         case FloorType_6:
         case FloorType_10:
         case FloorType_11:
-            *pitch0 = (Rng_Rand16() % 8)  - 4;
-            *pitch1 = (Rng_Rand16() % 16) + 56;
+            *pitch0 = Rng_GenerateInt(-4, 3);
+            *pitch1 = Rng_GenerateInt(56, 71);
             break;
 
         default:
-            *pitch0 = (Rng_Rand16() % 32) - 16;
-            *pitch1 = (Rng_Rand16() % 64) + 32;
+            *pitch0 = Rng_GenerateInt(-16, 15);
+            *pitch1 = Rng_GenerateInt(32, 95);
             break;
     }
 }
@@ -9105,7 +9104,7 @@ q19_12 Rng_RandQ12(void) // 0x80080514
     s32 rand16;
 
     rand16 = Rng_Rand16();
-    return Q12_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
+    return Q12_FRACT(((rand16 * 2) ^ rand16) >> 3);
 }
 
 s32 func_80080540(q19_12 x, q19_12 y, q19_12 z) // 0x80080540

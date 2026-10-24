@@ -843,7 +843,7 @@ void func_800D0500(void) // 0x800D0500
             D_800D3C98 += g_DeltaTime;
             if (D_800D4E2C == 0 && D_800D4E2D == 0)
             {
-                if (Rng_Rand16() % 0x100 == 0)
+                if (Rng_GenerateInt(0, 255) == 0) // 1 in 256 chance.
                 {
                     D_800D4E2C = Rng_GenerateUInt(-8, 7);
                     D_800D4E2D = Rng_GenerateUInt(-8, 7);
@@ -851,7 +851,7 @@ void func_800D0500(void) // 0x800D0500
             }
             else
             {
-                if (Rng_Rand16() % 0x20 == 0)
+                if (Rng_GenerateInt(0, 31) == 0) // 1 in 32 chance.
                 {
                     D_800D4E2C = 0;
                     D_800D4E2D = 0;
@@ -889,13 +889,13 @@ void func_800D0500(void) // 0x800D0500
 
             if (D_800D4E2C == 0 && D_800D4E2D == 0)
             {
-                if (Rng_Rand16() % 0x100 == 0)
+                if (!Rng_GenerateInt(0, 255)) // 1 in 256 chance.
                 {
                     D_800D4E2C = Rng_GenerateUInt(-8, 7);
                     D_800D4E2D = Rng_GenerateUInt(-8, 7);
                 }
             }
-            else if (Rng_Rand16() % 0x20 == 0)
+            else if (!Rng_GenerateInt(0, 31)) // 1 in 32 chance.
             {
                 D_800D4E2C = 0;
                 D_800D4E2D = 0;
@@ -914,13 +914,13 @@ void func_800D0500(void) // 0x800D0500
 
             if (D_800D4E2C == 0 && D_800D4E2D == 0)
             {
-                if (Rng_Rand16() % 0x100 == 0)
+                if (!Rng_GenerateInt(0, 255)) // 1 in 256 chance.
                 {
                     D_800D4E2C = Rng_GenerateUInt(-8, 7);
                     D_800D4E2D = Rng_GenerateUInt(-8, 7);
                 }
             }
-            else if (Rng_Rand16() % 0x20 == 0)
+            else if (!Rng_GenerateInt(0, 31)) // 1 in 32 chance.
             {
                 D_800D4E2C = 0;
                 D_800D4E2D = 0;

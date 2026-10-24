@@ -1585,7 +1585,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybilProps.distanceToPlayer < Q12(0.8f) &&
                 monsterCybilProps.field_106 > 30)
             {
-                if ((Rng_Rand16() % 8) >= 5)
+                if (Rng_GenerateInt(0, 7) >= 5)
                 {
                     if (monsterCybilProps.field_EE == 1)
                     {
@@ -2197,7 +2197,7 @@ void func_800DC018(s_SubCharacter* monsterCybil) // 0x800DC018
 
             if (Ray_TraceQuery(&trace, &from, &to))
             {
-                monsterCybilProps.field_116 = (Rng_Rand16() & 0x1) + 2;
+                monsterCybilProps.field_116 = Rng_GenerateUInt(2, 3);
                 monsterCybilProps.field_106 = Q12_ANGLE(0.0f);
             }
             break;

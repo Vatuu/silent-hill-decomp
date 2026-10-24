@@ -428,13 +428,13 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
 void Collision_DefaultResultSet(s_CollisionResult* collResult,
                                 q19_12 offsetX, q19_12 offsetY, q19_12 offsetZ, q19_12 floorHeight) // 0x8006A178
 {
-    collResult->offset.vx            = offsetX;
-    collResult->offset.vy            = offsetY;
-    collResult->offset.vz            = offsetZ;
-    collResult->surface.tiltAngleZ   = Q12_ANGLE(0.0f);
-    collResult->surface.tiltAngleX   = Q12_ANGLE(0.0f);
+    collResult->offset.vx           = offsetX;
+    collResult->offset.vy           = offsetY;
+    collResult->offset.vz           = offsetZ;
+    collResult->surface.tiltAngleZ  = Q12_ANGLE(0.0f);
+    collResult->surface.tiltAngleX  = Q12_ANGLE(0.0f);
     collResult->surface.floorType   = FloorType_Default;
-    collResult->ceilingHeight        = Q12(DEFAULT_CEILING_HEIGHT);
+    collResult->ceilingHeight       = Q12(DEFAULT_CEILING_HEIGHT);
     collResult->surface.floorHeight = floorHeight;
 }
 
@@ -2425,13 +2425,13 @@ void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, co
 {
     q3_12  headingAngle;
     q19_12 dist;
-    q7_8   z;
+    q7_8   offsetY;
 
     charaState->offset.vx = offset1->vx;
-    z                     = offset1->vy;
+    offsetY               = offset1->vy;
     charaState->offset.vz = offset1->vy;
 
-    dist                 = Math_Vector2MagCalc(charaState->offset.vx, z);
+    dist                 = Math_Vector2MagCalc(charaState->offset.vx, offsetY);
     charaState->distance = dist;
 
     if (dist != Q12(0.0f))

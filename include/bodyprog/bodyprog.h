@@ -2236,9 +2236,10 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);
 
-/** @brief Generates a random Q12 fixed-point number in the range `[0.0f, 1.0f)`. Used for angles and multipliers.
+/** @brief Generates a random normalized Q19.12 fixed-point number, integer range `[0, 4096)`.
+ * Used for angles and multipliers.
  *
- * @return Random Q12 fixed-point number.
+ * @return Random Q19.12 fixed-point number.
  */
 q19_12 Rng_RandQ12(void);
 

@@ -384,9 +384,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         {
             D_800DFEF4 = (Rng_Rand16() & 0x1) + 1;
         }
-        else if (!D_800DFEF4 || !(Rng_Rand16() & 0x1F))
+        else if (!D_800DFEF4 || !Rng_GenerateInt(0, 0x1F))
         {
-            D_800DFEF4 = (Rng_Rand16() % 5) - 2;
+            D_800DFEF4 = Rng_GenerateInt(-2, 2);
         }
 
         ptr       = &D_800DFEF0;
