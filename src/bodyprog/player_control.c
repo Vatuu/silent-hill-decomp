@@ -9213,7 +9213,7 @@ bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8008074
     return func_800806AC(arg0, posX, INT_MAX + 1, posZ);
 }
 
-void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
+void Collision_PointCacheSet(q19_12 posX, q19_12 posZ) // 0x8008076C
 {
     q19_12              floorHeight;
     s32                 floorType; // `e_FloorType`
@@ -9296,13 +9296,13 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 
 q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 {
-    Collision_Fill(posX, posZ);
+    Collision_PointCacheSet(posX, posZ);
     return g_CollisionPointCache.position.vy;
 }
 
 s32 Collision_FloorTypeGet(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
-    Collision_Fill(posX, posZ);
+    Collision_PointCacheSet(posX, posZ);
     return g_CollisionPointCache.floorType;
 }
 

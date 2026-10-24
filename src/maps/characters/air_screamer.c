@@ -453,22 +453,22 @@ bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)
 
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
 {
-    s32 count;
+    s32 floorType; // `e_FloorType`
 
-    count = Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz);
-    if (count == 7)
+    floorType = Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz);
+    if (floorType == FloorType_7)
     {
         return;
     }
 
-    if (count < 8)
+    if (floorType <= FloorType_7)
     {
-        if (count != 0)
+        if (floorType != FloorType_Default)
         {
             airScreamerProps.floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
         }
     }
-    else if (count != 12)
+    else if (floorType != FloorType_None)
     {
         airScreamerProps.floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
     }
@@ -595,8 +595,8 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     s32    bit3;
     q19_12 posX;
     q19_12 posZ;
-    s32    temp_s0_2;
-    bool   cond2;
+    s32    floorType; // `e_FloorType`
+    bool   is7Floor;
     s32    bit22;
     s32    flags;
     s32    bit6;
@@ -633,16 +633,17 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     BIT_GET(bit7, temp_v0, 7);
     BIT_GET(bit0, temp_v0, 0);
 
-    temp_s0_2 = Collision_FloorTypeGet(posX, posZ);
+    floorType = Collision_FloorTypeGet(posX, posZ);
 
-    cond2 = temp_s0_2 == 7;
+    is7Floor = floorType == FloorType_7;
     if (airScreamer->position.vy >= (Collision_FloorHeightGet(posX, posZ) - Q12(0.15f)))
     {
-        sp28 = !cond2;
+        sp28 = !is7Floor;
     }
 
     cond0 = false;
-    if (temp_s0_2 == 12 || temp_s0_2 == 0)
+    if (floorType == FloorType_None ||
+        floorType == FloorType_Default)
     {
         cond0 = true;
     }
@@ -694,9 +695,9 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     {
         switch (Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz))
         {
-            case 7:
-            case 0:
-            case 12:
+            case FloorType_7:
+            case FloorType_Default:
+            case FloorType_None:
                 break;
 
             default:
@@ -1760,11 +1761,11 @@ void AirScreamer_Control_2(s_SubCharacter* airScreamer)
     switch ((u32)airScreamer->model.stateStep)
     {
         case 0:
-            temp_s3       = sharedFunc_800D5F00_0_s01(airScreamer);
+            temp_s3      = sharedFunc_800D5F00_0_s01(airScreamer);
             isBelowFloor = false;
-            cond1         = airScreamer->position.vy >= Q12(8.0f);
+            cond1        = airScreamer->position.vy >= Q12(8.0f);
 
-            if (Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz) == 7)
+            if (Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz) == FloorType_7)
             {
                 isBelowFloor = airScreamer->position.vy >= Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
             }
@@ -9298,9 +9299,9 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 
     switch (Collision_FloorTypeGet(posX, posZ))
     {
-        case 0:
-        case 7:
-        case 12:
+        case FloorType_Default:
+        case FloorType_7:
+        case FloorType_None:
             return true;
     }
 
@@ -9336,9 +9337,9 @@ bool sharedFunc_800DC30C_2_s00(s_SubCharacter* airScreamer)
 
     switch (Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz))
     {
-        case 0:
-        case 7:
-        case 12:
+        case FloorType_Default:
+        case FloorType_7:
+        case FloorType_None:
             return true;
     }
 
@@ -9349,9 +9350,9 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer)
 {
     switch (Collision_FloorTypeGet(airScreamer->position.vx, airScreamer->position.vz))
     {
-        case 0:
-        case 7:
-        case 12:
+        case FloorType_Default:
+        case FloorType_7:
+        case FloorType_None:
             return false;
     }
 
@@ -9921,7 +9922,7 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         airScreamer->position.vz           = newPosZ;
         airScreamerProps.targetPosition.vy = airScreamer->position.vy;
 
-        if (func_8008F914(newPosX, newPosZ) && Collision_FloorTypeGet(newPosX, newPosZ) &&
+        if (func_8008F914(newPosX, newPosZ) && Collision_FloorTypeGet(newPosX, newPosZ) != FloorType_Default &&
             sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition, NULL))
         {
             break;
@@ -10009,7 +10010,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
         curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
-            !func_8008F914(curPosX, curPosZ) || !Collision_FloorTypeGet(curPosX, curPosZ))
+            !func_8008F914(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
         {
             continue;
         }
@@ -10074,7 +10075,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
         curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
-            !func_8008F914(curPosX, curPosZ) || !Collision_FloorTypeGet(curPosX, curPosZ))
+            !func_8008F914(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
         {
             continue;
         }
@@ -10086,7 +10087,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
         newAngle                    = ((Rng_RandQ12() - Q12_ANGLE(180.0f)) >> 4) + Q12_ANGLE(180.0f);
         airScreamer->rotation.vy = curAngle + newAngle;
 
-        sinRotY                               = Math_Sin(airScreamer->rotation.vy);
+        sinRotY                            = Math_Sin(airScreamer->rotation.vy);
         airScreamerProps.targetPosition.vy = curPosY;
         airScreamerProps.targetPosition.vx = curPosX + Q12_MULT_PRECISE(sinRotY, RADIUS);
         airScreamerProps.targetPosition.vz = curPosX + Q12_MULT_PRECISE(Math_Cos(airScreamer->rotation.vy), RADIUS);
@@ -11428,19 +11429,19 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     q19_12 floorHeight;
     q19_12 vecYCpy;
     q19_12 distCpy;
-    q19_12 vec_x;
-    q19_12 vec_z;
+    q19_12 targetPosX;
+    q19_12 targetPosZ;
 
-    vecYCpy      = vecY;
-    posY         = airScreamer->position.vy;
-    distCpy      = dist;
+    vecYCpy     = vecY;
+    posY        = airScreamer->position.vy;
+    distCpy     = dist;
     floorHeight = Collision_FloorHeightGet(airScreamer->position.vx, airScreamer->position.vz);
 
     // TODO: Not used as floor height in this func?
     prevFloorHeight = airScreamerProps.floorHeight;
 
-    vec_x = airScreamerProps.targetPosition2.vx;
-    vec_z = airScreamerProps.targetPosition2.vz;
+    targetPosX = airScreamerProps.targetPosition2.vx;
+    targetPosZ = airScreamerProps.targetPosition2.vz;
 
     if (prevFloorHeight < floorHeight)
     {
@@ -11448,8 +11449,10 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     }
 
     floorHeight -= Q12(1.7f);
-    prevFloorHeight         = Collision_FloorTypeGet(vec_x, vec_z); // Collision type? This returns `caseVar` from `Collision_Fill`.
-    if (prevFloorHeight == 12 || prevFloorHeight == 0 || prevFloorHeight == 7)
+    prevFloorHeight = Collision_FloorTypeGet(targetPosX, targetPosZ);
+    if (prevFloorHeight == FloorType_None || 
+        prevFloorHeight == FloorType_Default ||
+        prevFloorHeight == FloorType_7)
     {
         distCpy = Q12(0.0f);
     }

@@ -2261,7 +2261,7 @@ bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
  * @param posX X position.
  * @param posZ Z position.
  */
-void Collision_Fill(q19_12 posX, q19_12 posZ);
+void Collision_PointCacheSet(q19_12 posX, q19_12 posZ);
 
 /** @brief Gets the floor height at a given 2D position.
  *
@@ -2275,7 +2275,7 @@ q19_12 Collision_FloorHeightGet(q19_12 posX, q19_12 posZ);
  *
  * @param posX X position.
  * @param posZ Z position.
- * @return Floor type.
+ * @return Floor type (`e_FloorType`).
  */
 s32 Collision_FloorTypeGet(q19_12 posX, q19_12 posZ);
 

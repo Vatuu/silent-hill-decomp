@@ -208,23 +208,23 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
         {
             if (interlacingEnabled)
             {
-                #if VERSION_IS(EUR)
-                texOffsetY   = (i == 0) ?                               1 : 0;
-                #else
-                texOffsetY   = (i == 0) ?                              32 : 0;
-                #endif
+#if VERSION_IS(EUR)
+                texOffsetY   = (i == 0) ? 1 : 0;
+#else
+                texOffsetY   = (i == 0) ? 32 : 0;
+#endif
                 offsetY      = (i == 0) ? -FRAMEBUFFER_HEIGHT_PROGRESSIVE : 0;
                 tPageOffsetY = i * 256;
             }
             else
             {
-                #if VERSION_IS(EUR)
+#if VERSION_IS(EUR)
                 texOffsetY   = 0;
                 offsetY      = -127;
-                #else
+#else
                 texOffsetY   = (g_ActiveBufferIdx == 0) * 32;
                 offsetY      = -112;
-                #endif
+#endif
                 tPageOffsetY = g_ActiveBufferIdx * 256;
             }
 
