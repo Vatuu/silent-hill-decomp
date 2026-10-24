@@ -186,9 +186,6 @@ void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image)
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", Screen_BackgroundMotionBlur);
-#else
 bool Screen_BackgroundMotionBlur(s32 vBlanks)
 {
     s32       interlacingEnabled;
@@ -211,14 +208,23 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
         {
             if (interlacingEnabled)
             {
-                texOffsetY   = (i == 0) ?   32 : 0;
-                offsetY      = (i == 0) ? -224 : 0;
+                #if VERSION_IS(EUR)
+                texOffsetY   = (i == 0) ?                               1 : 0;
+                #else
+                texOffsetY   = (i == 0) ?                              32 : 0;
+                #endif
+                offsetY      = (i == 0) ? -FRAMEBUFFER_HEIGHT_PROGRESSIVE : 0;
                 tPageOffsetY = i * 256;
             }
             else
             {
-                offsetY      = -112;
+                #if VERSION_IS(EUR)
+                texOffsetY   = 0;
+                offsetY      = -127;
+                #else
                 texOffsetY   = (g_ActiveBufferIdx == 0) * 32;
+                offsetY      = -112;
+                #endif
                 tPageOffsetY = g_ActiveBufferIdx * 256;
             }
 
@@ -233,7 +239,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
                 setRGBC0(sprt, 128, 128, 128, PRIM_RECT | RECT_TEXTURE);
             }
 
-            setWH(sprt, 256, 224);
+            setWH(sprt, 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE);
             setUV0AndClutSum(sprt, 0, texOffsetY, 0);
 
             setXY0Fast(sprt, (-g_GameWork.gsScreenWidth / 2) + (j * 256), offsetY);
@@ -251,4 +257,3 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
     GsOUT_PACKET_P = sprt;
     return false;
 }
-#endif

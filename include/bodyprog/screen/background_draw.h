@@ -44,7 +44,8 @@ void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image);
 
 /** @brief Applies motion blur to the background from the scene.
  *
- * Scratch: https://decomp.me/scratch/0T9qN
+ * Scratch (USA/JAP): https://decomp.me/scratch/0T9qN
+ * Scratch (EUR): https://decomp.me/scratch/juLOd
  *
  * @note Used only in the loading screen.
  *
